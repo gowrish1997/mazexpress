@@ -17,7 +17,7 @@ export default function handler(
         if (req.query.id) {
           // single response
           const id = req.query.id;
-          const results = executeQuery(
+          executeQuery(
             {
               query: "SELECT * FROM users where id_users=?",
               values: [id],
@@ -29,7 +29,7 @@ export default function handler(
           );
         } else {
           // list response
-          const results = executeQuery(
+          executeQuery(
             {
               query: "SELECT * FROM users",
               values: [],
@@ -45,7 +45,7 @@ export default function handler(
       case "POST":
         // hash pass
 
-        const results = executeQuery(
+        executeQuery(
           {
             query:
               "INSERT INTO users (first_name_users, last_name_users, email_users, phone_users, password_users) VALUES (?, ?, ?, ?, ?)",
@@ -73,7 +73,7 @@ export default function handler(
             phone_users: req.body.phone,
             password_users: req.body.password,
           };
-          const results = executeQuery(
+          executeQuery(
             {
               query: "UPDATE users SET ? WHERE id_users = ? ",
               values: [fields, id],
@@ -91,7 +91,7 @@ export default function handler(
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          const results = executeQuery(
+          executeQuery(
             {
               query: "DELETE FROM users WHERE id_users=?",
               values: [id],
