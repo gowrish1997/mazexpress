@@ -3,12 +3,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LogInWithMail from "./LogInWithMail";
-import Input from "@/common/Input";
-export interface Inputs {
+import ReactHookFormInput from "@/common/ReactHookFormInput";
+export interface IInputs {
     firstName: string;
     lastName: string;
     email: string;
-    mobileNumber: string;
+    mobileNumber: Number;
     password: string;
     confirmPassword: string;
 }
@@ -25,10 +25,10 @@ const SignInComponent = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<Inputs>({
+    } = useForm<IInputs>({
         resolver: yupResolver(schema),
     });
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<IInputs> = (data) => console.log(data);
 
     const [passwordType, setPasswordType] = useState("password");
     const [confirmPasswordType, setConfirmPasswordType] = useState("password");
@@ -53,17 +53,17 @@ const SignInComponent = () => {
             <div className="w-[400px] space-y-[20px] ">
                 <h1 className="text-[26px] text-[#000000] font-[600] leading-[36px] text-left ">Sign up to get started</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex-type6">
-                    <div className="flex-type1 space-x-[10px] w-full">
-                        <Input label="First name" name="firstName" type="string" register={register("firstName")} parentClassName="mb-[10px]" inputClassName="h-[46px]"  />
+                    <div className="flex-type2 space-x-[10px] w-full">
+                        <ReactHookFormInput label="First name" name="firstName" type="string" register={register("firstName")} parentClassName="mb-[10px]" inputClassName="h-[46px]"   />
                         
-                        <Input label="Last name" name="lastName" type="string" register={register("lastName")} parentClassName="mb-[10px]" inputClassName="h-[46px]" />
+                        <ReactHookFormInput label="Last name" name="lastName" type="string" register={register("lastName")} parentClassName="mb-[10px]" inputClassName="h-[46px]" />
                     </div>
 
-                    <Input label="Email" name="email" type="email" register={register("email")} parentClassName="mb-[10px]" inputClassName="h-[46px]"  error={errors.firstName!} />
+                    <ReactHookFormInput label="Email" name="email" type="email" register={register("email")} parentClassName="mb-[10px]" inputClassName="h-[46px]"  error={errors.firstName!} />
 
-                    <Input label="Mobile number" name="mobileNumber" type="string" register={register("mobileNumber")} parentClassName="mb-[10px]" inputClassName="h-[46px]" />
+                    <ReactHookFormInput label="Mobile number" name="mobileNumber" type="number" register={register("mobileNumber")} parentClassName="mb-[10px]" inputClassName="h-[46px]" />
 
-                    <Input
+                    <ReactHookFormInput
                         label="Password"
                         name="password"
                         type={passwordType}
@@ -74,7 +74,7 @@ const SignInComponent = () => {
                         onClick={togglePasswordTypeHandler}
                     />
 
-                    <Input
+                    <ReactHookFormInput
                         label="Confirm Password"
                         name="confirmPassword"
                         type={confirmPasswordType}

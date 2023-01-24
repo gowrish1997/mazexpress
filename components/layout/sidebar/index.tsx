@@ -1,33 +1,66 @@
 import React from "react";
-import Link from "next/link";
+import Image from "next/image";
 import Header from "./Header";
-const index = () => {
+import NavLink from "./NavLink";
+import { nanoid } from "nanoid";
+const sidebarContent = [
+    {
+        id: nanoid(),
+        title: "My Orders",
+        icon: "/orders.png",
+        path:'/myorders'
+    },
+    {
+        id: nanoid(),
+        title: "Order Tracking",
+        icon: "/location.png",
+        path:'/order-tracking'
+    },
+    {
+        id: nanoid(),
+        title: "Warehouse",
+        icon: "/warehouse.png",
+        path:'/warehouse'
+    },
+    {
+        id: nanoid(),
+        title: "Address Book",
+        icon: "/address.png",
+        path:'/address-book'
+    },
+    {
+        id: nanoid(),
+        title: "Settings",
+        icon: "/settings.png",
+        path:'/settings'
+    },
+    {
+        id: nanoid(),
+        title: "Help center",
+        icon: "/help.png",
+        path:'/help-center'
+    },
+];
+const Sidebar = () => {
     return (
-        <div className="text-md bg-[#FCFCFC] border-r border-[#F0F0F0] fixed w-[250px]">
+        <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[250px]">
             <Header />
             <div className="flex flex-col px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
-            <ul className="flex flex-col font-semibold pb-2 leading-[140%] flex-1">
-                <li>gowrish</li>
-                <li>gowrish</li>
-                <li>gowrish</li>
-            </ul>
-                <div
-                    className="rounded self-center bg-purple-300 flex flex-col items-center justify-between min-h-[214px] w-[188px] p-5"
-                    style={{
-                        background: "linear-gradient(94.71deg, #D085F3 12.66%, #A962E3 92.89%)",
-                    }}
-                >
-                    <h3 className="font-semibold text-white">Help Center</h3>
-                    <p className="text-[11px] text-center text-white font-[400]">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    {/* <Link href={"/"}>
-                        <a className="bg-white rounded py-2 px-5">Help Center</a>
-                    </Link> */}
+                <ul className="flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
+                    {sidebarContent.map((content) => {
+                        return <NavLink key={content.id} content={content} />;
+                    })}
+                </ul>
+
+                <div className="rounded self-center  flex flex-row items-center justify-start  w-[188px] bg-[#3672DF] py-[10px] px-[15px] -ml-[15px] cursor-pointer ">
+                    <div className="relative w-[14px] h-[14px] ">
+                        <Image src="/logout.png" layout="fill" objectFit="contain" alt="logout" />
+                    </div>
+                    <span className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] ml-[10px] ">Logout</span>
                 </div>
             </div>
         </div>
     );
 };
 
-export default index;
+export default Sidebar;

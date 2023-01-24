@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import LogInWithMail from "./LoginWithMail";
-import Input from "@/common/Input";
+import LogInWithMail from "./LogInWithMail";
+import ReactHookFormInput from "@/common/ReactHookFormInput";
 type Inputs = {
     password: string;
     confirmPassword: string;
@@ -41,7 +41,7 @@ const ConfirmPasswordComponent = () => {
             <div className="w-[400px] space-y-[20px] ">
                 <h1 className="text-[26px] text-[#000000] font-[600] leading-[36px] text-left ">Reset Password</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex-type6">
-                <Input
+                <ReactHookFormInput
                         label="Password"
                         name="password"
                         type={passwordType}
@@ -52,7 +52,7 @@ const ConfirmPasswordComponent = () => {
                         onClick={togglePasswordTypeHandler}
                     />
 
-                    <Input
+                    <ReactHookFormInput
                         label="Confirm Password"
                         name="confirmPassword"
                         type={confirmPasswordType}
