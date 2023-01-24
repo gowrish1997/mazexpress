@@ -24,12 +24,11 @@ export default function handler(
           res.status(200).json({ msg: "single" });
           // error invalid
         } else {
-          res.status(200).json({ msg: "invalid enter user id in url params" });
+          res.status(200).json({ msg: "invalid url params" });
         }
         break;
 
       case "POST":
-        // const body = JSON.parse(req.body)
         res.status(200).json({ msg: "create", data: req.body });
         break;
 
@@ -38,16 +37,15 @@ export default function handler(
           // update
           res.status(200).json({ msg: "put", data: req.body });
         } else {
-          res.status(200).json({ msg: "invalid enter user id in url params" });
+          res.status(200).json({ msg: "invalid url params" });
         }
         break;
 
       case "DELETE":
         if (req.query.id) {
-          // update
           res.status(200).json({ msg: "delete" });
         } else {
-          res.status(200).json({ msg: "invalid enter user id in url params" });
+          res.status(200).json({ msg: "invalid url params" });
         }
         break;
 

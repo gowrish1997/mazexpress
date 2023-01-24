@@ -10,7 +10,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  //   console.log("");
   return new Promise((resolve, reject) => {
     switch (req.method) {
       case "GET":
@@ -24,13 +23,11 @@ export default function handler(
         break;
 
       case "POST":
-        // const body = JSON.parse(req.body)
         res.status(200).json({ msg: "create", data: req.body });
         break;
 
       case "PUT":
         if (req.query.id) {
-          // update
           res.status(200).json({ msg: "put", data: req.body });
         } else {
           res.status(200).json({ msg: "invalid enter user id in url params" });
@@ -39,7 +36,6 @@ export default function handler(
 
       case "DELETE":
         if (req.query.id) {
-          // update
           res.status(200).json({ msg: "delete" });
         } else {
           res.status(200).json({ msg: "invalid enter user id in url params" });
