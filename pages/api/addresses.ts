@@ -20,7 +20,7 @@ export default function handler(
           // list response
           executeQuery(
             {
-              query: "SELECT * FROM addresses where user_id=?",
+              query: "SELECT * FROM addresses WHERE user_id=?",
               values: [user_id],
             },
             (results) => {
@@ -33,7 +33,7 @@ export default function handler(
           const id = req.query.id;
           executeQuery(
             {
-              query: "SELECT * FROM addresses where id_addresses=?",
+              query: "SELECT * FROM addresses WHERE id_addresses=?",
               values: [id],
             },
             (results) => {
