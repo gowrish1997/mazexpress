@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import SignInComponent from "@/components/home/SignUpComponent";
+import SignUpComponent from "@/components/auth/SignUpComponent";
 
 export default function SignUp() {
     return (
@@ -15,7 +15,7 @@ export default function SignUp() {
                 <div className="w-2/5 relative h-[100vh]  ">
                     <Image src="/homePic.png" layout="fill" alt="homepic" objectFit="cover" />
                 </div>
-                <SignInComponent />
+                <SignUpComponent />
             </div>
         </>
     );

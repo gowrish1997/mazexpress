@@ -1,7 +1,7 @@
 import React from "react";
-import ConfirmPasswordComponent from "@/components/home/ConfirmPasswordComponent";
+import ResetPasswordComponent from "@/components/auth/ResetPasswordComponent";
 const ResetPassword = () => {
-    return <ConfirmPasswordComponent />;
+    return <ResetPasswordComponent />;
 };
 
 export default ResetPassword ;

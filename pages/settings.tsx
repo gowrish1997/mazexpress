@@ -80,7 +80,7 @@ const settings = () => {
                     <form className="flex-type6 w-3/4 gap-y-[10px] " onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex-type1 w-full space-x-[20px] ">
                             <div className="flex-type2 space-x-[10px] w-full">
-                                <ReactHookFormInput label="First name" name="firstName" type="string" register={register("firstName")} inputClassName="h-[46px]" />
+                                <ReactHookFormInput label="First name" name="firstName" type="string" register={register("firstName")}  />
 
                                 <ReactHookFormInput label="Last name" name="lastName" type="string" register={register("lastName")} />
                             </div>

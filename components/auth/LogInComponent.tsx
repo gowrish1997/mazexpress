@@ -31,8 +31,8 @@ const LogInComponent = () => {
         <div className=" h-full flex-1 flex flex-col justify-center items-center">
             <div className="w-[400px] space-y-[20px] ">
                 <h1 className="text-[26px] text-[#000000] font-[600] leading-[36px] text-left ">Log In</h1>
-                <form onSubmit={handleSubmit(onSubmit)} className="flex-type6">
-                    <ReactHookFormInput label="Email" name="email" type="string" register={register("email")} parentClassName="mb-[10px]" inputClassName="h-[46px]" />
+                <form onSubmit={handleSubmit(onSubmit)} className="flex-type6 gap-y-[15px] ">
+                    <ReactHookFormInput label="Email" name="email" type="string" register={register("email")}/>
 
                     <ReactHookFormInput
                         label="Password"
@@ -40,8 +40,7 @@ const LogInComponent = () => {
                         type={passwordType}
                         dropDownIcon={{iconIsEnabled:true,iconSrc:passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png"}}
                         register={register("password")}
-                        parentClassName="mb-[10px]"
-                        inputClassName="h-[46px]"
+                       
                         onClick={togglePasswordTypeHandler}
                     />
                     <p className="text-[14px] text-[#3672DF] font-[500] leading-[13px] cursor-pointer ">Forgot password</p>

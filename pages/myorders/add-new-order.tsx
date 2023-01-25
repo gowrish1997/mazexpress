@@ -118,15 +118,8 @@ const AddNewOrder = () => {
                     </p>
                 </div>
                 <div className="flex-type1 space-x-[10px] mt-[25px]">
-                    <ReactHookFormInput
-                        label="Reference ID"
-                        name="referenceId"
-                        type="string"
-                        register={register("referenceId")}
-                        parentClassName="mb-[10px]"
-                        inputClassName="h-[46px]"
-                    />
-                    <ReactHookFormInput label="Store Link" name="storeLink" type="string" register={register("storeLink")} parentClassName="mb-[10px]" inputClassName="h-[46px]" />
+                    <ReactHookFormInput label="Reference ID" name="referenceId" type="string" register={register("referenceId")} />
+                    <ReactHookFormInput label="Store Link" name="storeLink" type="string" register={register("storeLink")} />
                 </div>
                 <div className="mt-[20px]">
                     <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px]">
