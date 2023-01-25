@@ -3,6 +3,8 @@ import Image from "next/image";
 import Header from "./Header";
 import NavLink from "./NavLink";
 import { nanoid } from "nanoid";
+import axios from "axios";
+import { useRouter } from "next/router";
 const sidebarContent = [
   {
     id: nanoid(),
@@ -41,7 +43,18 @@ const sidebarContent = [
     path: "/help-center",
   },
 ];
+
 const Sidebar = () => {
+  const router = useRouter();
+  const logoutHandler = () => {
+    axios({
+      method: "GET",
+      url: "/api/auth/logout",
+    }).then((response) => {
+      console.log(response.data);
+      router.reload()
+    });
+  };
   return (
     <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[250px]">
       <Header />
@@ -61,9 +74,12 @@ const Sidebar = () => {
               alt="logout"
             />
           </div>
-          <span className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] ml-[10px] ">
+          <button
+            className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] ml-[10px]"
+            onClick={logoutHandler}
+          >
             Logout
-          </span>
+          </button>
         </div>
       </div>
     </div>

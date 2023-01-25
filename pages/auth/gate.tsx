@@ -1,3 +1,4 @@
+import AuthLayout from "@/components/auth/AuthLayout";
 import LogInView from "@/components/auth/LogInView";
 import ResetPasswordView from "@/components/auth/ResetPasswordView";
 import SignUpView from "@/components/auth/SignUpView";
@@ -6,6 +7,7 @@ import React, { useState } from "react";
 
 const Gate = () => {
   const [mode, setMode] = useState<number>(0);
+
   function toggleMode(i: number) {
     setMode(i);
   }
@@ -15,10 +17,11 @@ const Gate = () => {
       <Head>
         <title>Sign in | Register</title>
       </Head>
-
-      {mode === 0 && <SignUpView switch={toggleMode} />}
-      {mode === 1 && <LogInView switch={toggleMode} />}
-      {mode === 2 && <ResetPasswordView switch={toggleMode} />}
+      <AuthLayout>
+        {mode === 0 && <SignUpView switch={toggleMode} />}
+        {mode === 1 && <LogInView switch={toggleMode} />}
+        {mode === 2 && <ResetPasswordView switch={toggleMode} />}
+      </AuthLayout>
     </div>
   );
 };
