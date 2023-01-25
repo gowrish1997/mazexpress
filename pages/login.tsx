@@ -1,8 +1,9 @@
 import React from 'react'
-import LogInComponent from "@/components/home/LoginComponent";
+import LogInComponent from '@/components/auth/LogInComponent'
+
 const LogIn = () => {
   return (
-    <LogInComponent/>
+    <LogInComponent />
   )
 }
 
