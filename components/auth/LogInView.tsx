@@ -35,7 +35,7 @@ const LogInComponent = (props: any) => {
   const [passwordType, setPasswordType] = useState("password");
 
   const togglePasswordTypeHandler = () => {
-    if (passwordType == "string") {
+    if (passwordType === "string") {
       setPasswordType("password");
     } else {
       setPasswordType("string");
@@ -64,7 +64,7 @@ const LogInComponent = (props: any) => {
           dropDownIcon={{
             iconIsEnabled: true,
             iconSrc:
-              passwordType == "string"
+              passwordType === "string"
                 ? "/eyeIconOpen.png"
                 : "/eyeIconClose.png",
           }}
