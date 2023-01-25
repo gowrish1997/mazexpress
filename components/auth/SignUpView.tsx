@@ -21,7 +21,7 @@ const schema = yup
   })
   .required();
 
-const SignUpComponent = () => {
+const SignUpComponent = (props: any) => {
   const {
     register,
     handleSubmit,
@@ -51,7 +51,7 @@ const SignUpComponent = () => {
 
   return (
     <div className=" h-full flex-1 flex flex-col justify-center items-center">
-      <div className="w-[400px] space-y-[20px] ">
+      <div className="w-[400px] space-y-[20px]">
         <h1 className="text-[26px] text-[#000000] font-[600] leading-[36px] text-left ">
           Sign up to get started
         </h1>
@@ -143,7 +143,7 @@ const SignUpComponent = () => {
           </p>
           <p>
             Already have an account?{" "}
-            <span className="text-[#0057FF]">Log in.</span>
+            <span className="text-[#0057FF] cursor-pointer" onClick={() => props.switch(1)}>Log in.</span>
           </p>
         </div>
         <LogInWithMail />
