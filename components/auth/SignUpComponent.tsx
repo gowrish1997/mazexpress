@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
+
 export interface IInputs {
   firstName: string;
   lastName: string;

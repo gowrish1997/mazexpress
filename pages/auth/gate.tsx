@@ -1,5 +1,6 @@
 import LogInComponent from "@/components/auth/LogInComponent";
 import SignUpComponent from "@/components/auth/SignUpComponent";
+import Head from "next/head";
 import React, { useState } from "react";
 
 const Gate = () => {
@@ -7,6 +8,9 @@ const Gate = () => {
 
   return (
     <div>
+      <Head>
+        <title>Sign in | Register</title>
+      </Head>
       {/* <button>Login</button>
       <button>Register</button> */}
       {newUser ? <SignUpComponent /> : <LogInComponent />}
