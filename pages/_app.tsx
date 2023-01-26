@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Frame from "@/common/Frame";
-import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function App({
@@ -11,17 +10,11 @@ export default function App({
   const router = useRouter();
   if (router.pathname.startsWith("/auth/gate")) {
     // no frame
-    return (
-      <SessionProvider session={session}>
-        <Component {...pageProps} />
-      </SessionProvider>
-    );
+    return <Component {...pageProps} />;
   }
   return (
-    <SessionProvider session={session}>
-      <Frame>
-        <Component {...pageProps} />
-      </Frame>
-    </SessionProvider>
+    <Frame>
+      <Component {...pageProps} />
+    </Frame>
   );
 }

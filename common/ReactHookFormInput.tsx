@@ -29,11 +29,11 @@ const ReactHookFormInput = (props: IProp) => {
                     ""
                 )}
 
-                {/* <span>eye</span> */}
-            </div>
-            {props.error && <p>{props.error.message}</p>}
-        </div>
-    );
+        {/* <span>eye</span> */}
+      </div>
+      {props.error && <p>{props.error.message}</p>}
+    </div>
+  );
 };
 
 export default ReactHookFormInput;
