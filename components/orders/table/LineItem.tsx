@@ -21,7 +21,7 @@ const LineItem = ({ row, active, setActiveHandler, index, show, setActive }: IPr
         setActiveHandler(index, e);
     }
 
-    const orderStatusColorHandler= (status:string) => {
+    const orderStatusColorHandler = (status: string) => {
         switch (status) {
             case "In Transit":
                 return "in_transit";
@@ -44,8 +44,11 @@ const LineItem = ({ row, active, setActiveHandler, index, show, setActive }: IPr
                 <td className={`td3`}>{row.referenceId}</td>
                 <td className={`td4`}>{row.estimateDelivery}</td>
                 <td className={`td5`}>{row.address}</td>
-                <td className={`td6 customRadioInput ${orderStatusColorHandler(row.status)}`}>
-                    <input type="radio" checked={true}></input>
+                <td className={`td6`}>
+                    <label className={`customRadioInput ${orderStatusColorHandler(row.status)}`}>
+                        <input type="radio" checked={true} />
+                        <span className="checkmark"></span>
+                    </label>
                     <span className="ml-[5px]">{row.status}</span>
                 </td>
                 <td className="box-border relative cursor-pointer" onClick={(e) => optionModalHandler(e, index)}>
