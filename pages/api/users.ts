@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { hashPassword } from "@/lib/bcrypt";
 import { executeQuery } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -44,21 +45,22 @@ export default function handler(
 
       case "POST":
         // hash pass
-
+        const hash = hashPassword(req.body.password)
         executeQuery(
           {
             query:
-              "INSERT INTO users (first_name_users, last_name_users, email_users, phone_users, password_users) VALUES (?, ?, ?, ?, ?)",
+              "INSERT INTO users (first_name_users, last_name_users, email_users, phone_users, password_users, default_address_users) VALUES (?, ?, ?, ?, ?, ?)",
             values: [
               req.body.first_name,
               req.body.last_name,
               req.body.email,
               req.body.phone,
-              req.body.password,
+              hash,
+              null
             ],
           },
           (results) => {
-            res.status(200).json({ msg: "create", data: results });
+            res.status(200).json(results);
           }
         );
         break;
@@ -66,12 +68,14 @@ export default function handler(
       case "PUT":
         if (req.query.id) {
           const id = req.query.id;
+          const hash = hashPassword(req.body.password)
           const fields = {
             first_name_users: req.body.first_name,
             last_name_users: req.body.last_name,
             email_users: req.body.email,
             phone_users: req.body.phone,
-            password_users: req.body.password,
+            password_users: hash,
+            default_address_users: null
           };
           executeQuery(
             {
@@ -79,7 +83,7 @@ export default function handler(
               values: [fields, id],
             },
             (results) => {
-              res.status(200).json({ msg: "put", data: results });
+              res.status(200).json(results);
             }
           );
         } else {

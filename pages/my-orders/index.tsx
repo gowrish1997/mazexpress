@@ -51,7 +51,8 @@ const data = [
 const MyOrders = () => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
-  const { orders, mutateOrders } = useOrders();
+  const { orders, mutateOrders } = useOrders({ userId: user?.id_users });
+  console.log(orders);
   const [userAllOrders, setUserAllOrders] = useState<IOrder[] | undefined>(
     orders
   );
@@ -65,9 +66,9 @@ const MyOrders = () => {
       <PageHeaders content="My Orders" showCalender={true} />
 
       <div className="flex flex-col justify-between relative flex-1 h-full">
-        {userAllOrders?.length ? (
+        {orders && orders.length > 0 ? (
           <>
-            <Table orders={userAllOrders} tableHeaders={tableHeaders} />
+            <Table orders={orders} tableHeaders={tableHeaders} />
             <AddButton onClick={addNewOrderHandler} />
           </>
         ) : (

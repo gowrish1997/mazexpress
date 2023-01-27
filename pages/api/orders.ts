@@ -27,7 +27,7 @@ export default function handler(
               },
               (results) => {
                 console.log("results", results);
-                res.status(200).json({ msg: "single", data: results });
+                res.status(200).json(results);
               }
             );
           } else {
@@ -37,6 +37,7 @@ export default function handler(
           }
         } else {
           const user_id = req.query.user;
+          console.log(user_id)
           // list response
           executeQuery(
             {
@@ -44,8 +45,8 @@ export default function handler(
               values: [user_id],
             },
             (results) => {
-              console.log("results", results);
-              res.status(200).json({ msg: "list", data: results });
+              // console.log("results", results);
+              res.status(200).json(results);
             }
           );
         }
@@ -66,7 +67,7 @@ export default function handler(
             ],
           },
           (results) => {
-            res.status(200).json({ msg: "create", data: results });
+            res.status(200).json(results);
           }
         );
         break;
@@ -92,7 +93,7 @@ export default function handler(
               values: [fields, id],
             },
             (results) => {
-              res.status(200).json({ msg: "put", data: results });
+              res.status(200).json(results);
             }
           );
         } else {
@@ -109,7 +110,7 @@ export default function handler(
               values: [id],
             },
             (results) => {
-              res.status(200).json({ msg: "delete", data: results });
+              res.status(200).json(results);
             }
           );
         } else {
