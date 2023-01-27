@@ -85,8 +85,8 @@ const AddNewOrder = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<{
-        referenceId?: string;
-        storeLink?: string;
+        referenceId: string;
+        storeLink: string;
         address?: string;
     }>({
         defaultValues: {
@@ -100,8 +100,8 @@ const AddNewOrder = () => {
     };
 
     const onSubmit: SubmitHandler<{
-        referenceId?: string;
-        storeLink?: string;
+        referenceId: string;
+        storeLink: string;
         address?: string;
     }> = (data) => {
         console.log(data);

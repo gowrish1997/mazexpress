@@ -17,8 +17,18 @@ export interface IInputs {
 
 const schema = yup
     .object({
-        firstName: yup.string().required(),
-        email: yup.string().required(),
+        firstName: yup.string().required('First name is required'),
+        lastName: yup.string().required('Last name is required'),
+        email: yup.string().required('Email is required').email('please include @ in the email'),
+        mobileNumber: yup.number().required().typeError("Mobile numbder is required field"),
+        password: yup.string()
+        .min(8, 'Password must be 8 characters long')
+        .matches(/[0-9]/, 'Password requires a number')
+        .matches(/[a-z]/, 'Password requires a lowercase letter')
+        .matches(/[A-Z]/, 'Password requires an uppercase letter')
+        .matches(/[^\w]/, 'Password requires a symbol'),
+        confirmPassword: yup.string()
+           .oneOf([yup.ref('password'), null], 'Passwords must match')
     })
     .required();
 
@@ -53,22 +63,23 @@ const SignUpComponent = (props: any) => {
     return (
         <div className="w-[400px] space-y-[20px]">
             <h1 className="text-[26px] text-[#000000] font-[600] leading-[36px] text-left ">Sign up to get started</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className="flex-type6 gap-y-[13px] ">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex-type6 gap-y-[10px] ">
                 <div className="flex-type2 space-x-[10px] w-full">
-                    <ReactHookFormInput label="First name" name="firstName" type="string" register={register("firstName")} />
+                    <ReactHookFormInput label="First name" name="firstName" type="string" register={register("firstName")} error={errors.firstName!} />
 
-                    <ReactHookFormInput label="Last name" name="lastName" type="string" register={register("lastName")} />
+                    <ReactHookFormInput label="Last name" name="lastName" type="string" register={register("lastName")} error={errors.lastName!} />
                 </div>
 
-                <ReactHookFormInput label="Email" name="email" type="email" register={register("email")} error={errors.firstName!} />
+                <ReactHookFormInput label="Email" name="email" type="string" register={register("email")} error={errors.email!} />
 
-                <ReactHookFormInput label="Mobile number" name="mobileNumber" type="number" register={register("mobileNumber")} />
+                <ReactHookFormInput label="Mobile number" name="mobileNumber" type="number" register={register("mobileNumber")} error={errors.mobileNumber!} />
 
                 <ReactHookFormInput
                     label="Password"
                     name="password"
                     type={passwordType}
                     register={register("password")}
+                    error={errors.password}
                     dropDownIcon={{
                         iconIsEnabled: true,
                         iconSrc: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
@@ -81,6 +92,7 @@ const SignUpComponent = (props: any) => {
                     name="confirmPassword"
                     type={confirmPasswordType}
                     register={register("confirmPassword")}
+                    error={errors.confirmPassword}
                     dropDownIcon={{
                         iconIsEnabled: true,
                         iconSrc: confirmPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
