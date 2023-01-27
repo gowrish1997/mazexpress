@@ -15,7 +15,7 @@ export const middleware = async (req: NextRequest) => {
   });
 
   // do anything with session here:
-  const user = session;
+  const {user} = session;
 
   // like mutate user:
   // user.something = someOtherThing;
@@ -27,14 +27,14 @@ export const middleware = async (req: NextRequest) => {
   // or maybe you want to destroy session:
   // await session.destroy();
 
-  console.log("from middleware");
+  // console.log("from middleware", user);
 
   // demo:
   // if (user?.admin !== "true") {
   //   // unauthorized to see pages inside admin/
   //   return NextResponse.redirect(new URL("/gate", req.url)); // redirect to /unauthorized page
   // }
-  if (!user) return NextResponse.redirect(new URL("/auth/gate", req.url));
+  if (!user || user?.isLoggedIn===false) return NextResponse.redirect(new URL("/auth/gate", req.url));
 
   return res;
 };
@@ -49,6 +49,10 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
+    // deploy
     "/((?!api|_next/static|_next/image|favicon.ico|auth/gate).*)",
+
+    //dev
+    // "/((?!.*)",
   ],
 };

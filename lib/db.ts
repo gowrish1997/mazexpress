@@ -12,7 +12,7 @@ function executeQuery({query, values}: {query: string, values: any[]}, cb: (resu
   connection.query(query, values, function (error: any, results: any, fields: any) {
     if (error) throw error;
     // connection.end();
-    console.log("The solution is: ", results);
+    // console.log("The solution is: ", results);
 
     return cb(results)
   });

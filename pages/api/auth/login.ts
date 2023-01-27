@@ -15,12 +15,18 @@ async function createSessionRoute(
     const { email, password } = req.body;
 
     if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-      req.session.user = {
+      const user = {
+        username: "ronnie",
         email: "test@gmail.com",
         isAdmin: true,
+        isLoggedIn: true,
+        avatarUrl: "/profile.png",
+        id: 3,
+        default_address_users: 1
       };
+      req.session.user = user;
       await req.session.save();
-      res.send({ ok: true });
+      res.json(user);
     }
     return res.status(403).send("");
   }

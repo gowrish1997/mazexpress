@@ -15,17 +15,19 @@ export default function handler(
   return new Promise((resolve, reject) => {
     switch (req.method) {
       case "GET":
+        console.log("from addresses, user=", req.query.user);
         if (req.query.user) {
           const user_id = req.query.user;
           // list response
+
           executeQuery(
             {
               query: "SELECT * FROM addresses WHERE user_id=?",
               values: [user_id],
             },
             (results) => {
-              console.log("results", results);
-              res.status(200).json({ msg: "list", data: results });
+              // console.log("results", results);
+              res.status(200).json(results);
             }
           );
         } else if (req.query.id) {
@@ -37,8 +39,8 @@ export default function handler(
               values: [id],
             },
             (results) => {
-              console.log("results", results);
-              res.status(200).json({ msg: "single", data: results });
+              // console.log("results", results);
+              res.status(200).json(results);
             }
           );
           // error invalid
