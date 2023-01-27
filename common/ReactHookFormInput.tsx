@@ -7,12 +7,14 @@ interface IProp {
     name: string;
     type: string;
     register?: any;
+    value?:string | number
     dropDownIcon?: {
         iconIsEnabled: boolean;
         iconSrc: string;
     };
     error?: FieldError;
     onClick?: () => void;
+
 }
 
 const ReactHookFormInput = (props: IProp) => {
@@ -24,7 +26,7 @@ const ReactHookFormInput = (props: IProp) => {
             <div className={"flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative "}
             style={{borderColor:props.error?'#f02849':""}}
              >
-                <input id={props.name} type={props.type} {...props.register} className="w-full h-full pl-[5px] rounded-[5px] focus:outline-none" name={props.name} />
+                <input id={props.name} type={props.type} {...props.register} value={props.value} className="w-full h-full pl-[5px] rounded-[5px] focus:outline-none" name={props.name} />
                 {props.dropDownIcon?.iconIsEnabled ? (
                     <Image src={props.dropDownIcon?.iconSrc} alt="eyeIcon" height={18} width={18} className="cursor-pointer absolute right-[8px] " onClick={props.onClick} />
                 ) : (

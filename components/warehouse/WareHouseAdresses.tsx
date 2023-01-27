@@ -40,7 +40,7 @@ const WareHouseAddresses = (props: { address: IProp }) => {
     };
 
     return (
-        <div className=" box-border min-w-[32%] h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
+        <div className=" box-border w-[32%] h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
             <div className="flex-type3 space-x-[10px]">
                 <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">{props.address.title}</p>
                 <div className={`flex-type1`}>

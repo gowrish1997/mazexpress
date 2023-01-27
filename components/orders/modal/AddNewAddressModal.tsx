@@ -4,28 +4,16 @@ import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
-
+import { IUserAddress } from "@/models/orders";
 interface IProp {
     show: boolean;
     close: () => void;
 }
 
-interface IInputs {
-    id: string;
-    addressLine01: string;
-    addressLine02: string;
-    country: string;
-    city: string;
-    state: string;
-    postalCode: string;
-    mobileNumber: number;
-    default: string | null;
-}
-
 const schema = yup
     .object({
-        addressLine01: yup.string().required(),
-        addressLine02: yup.string().required(),
+        address_1: yup.string().required(),
+        address_2: yup.string().required(),
     })
     .required();
 
@@ -34,11 +22,11 @@ const AddNewAddressModal = (props: IProp) => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<IInputs>({
+    } = useForm<IUserAddress>({
         defaultValues: {
             id: nanoid(),
         },
-        resolver: yupResolver(schema),
+        // resolver: yupResolver(schema),
     });
 
     const [addressIsDefault, setAddressIsDefault] = useState(false);
@@ -47,7 +35,10 @@ const AddNewAddressModal = (props: IProp) => {
         setAddressIsDefault((prev) => !prev);
     };
 
-    const onSubmit: SubmitHandler<IInputs> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<IUserAddress> = (data) => {
+        console.log(data)
+        props.close();
+    };
 
     return (
         <>
@@ -55,9 +46,15 @@ const AddNewAddressModal = (props: IProp) => {
                 <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-10 flex flex-row justify-center items-center">
                     <form className=" box-border flex-type6  bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] h-[680px] gap-y-[15px]" onSubmit={handleSubmit(onSubmit)}>
                         <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">Add New Address</p>
-                        <p className="text-[18px] text-[#3672DF] font-[700] leading-[25px] mb-[10px]">My Office</p>
-                        <ReactHookFormInput label="Address line 01" name="addressLine01" type="string" register={register("addressLine01")} />
-                        <ReactHookFormInput label="Address line 02" name="addressLine02" type="string" register={register("addressLine02")} />
+                        <input
+                            id="tag"
+                            type="string"
+                            {...register("tag")}
+                            className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
+                            placeholder="Give first title @Home"
+                        />
+                        <ReactHookFormInput label="Address line 01" name="address_1" type="string" register={register("address_1")} />
+                        <ReactHookFormInput label="Address line 02" name="address_2" type="string" register={register("address_2")} />
                         <div className="flex-type2 space-x-[10px] w-full">
                             <ReactHookFormInput label="Country" name="country" type="string" register={register("country")} />
 
@@ -66,9 +63,9 @@ const AddNewAddressModal = (props: IProp) => {
                         <div className="flex-type2 space-x-[10px] w-full">
                             <ReactHookFormInput label="City/Town" name="state" type="string" register={register("state")} />
 
-                            <ReactHookFormInput label="State/Province/Region" name="postalCode" type="string" register={register("postalCode")} />
+                            <ReactHookFormInput label="State/Province/Region" name="pincode" type="string" register={register("pincode")} />
                         </div>
-                        <ReactHookFormInput label="Mobile Numbers" name="mobileNumber" type="number" register={register("mobileNumber")} />
+                        <ReactHookFormInput label="Mobile Numbers" name="phone" type="number" register={register("phone")} />
                         <div className=".flex-type1 space-x-[5px]">
                             <input type="radio" checked={addressIsDefault} onClick={toggleDefaultAddressHandler} {...register("default")} name="default" />
 

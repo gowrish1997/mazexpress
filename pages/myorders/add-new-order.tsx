@@ -5,10 +5,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import PageHeader from "@/components/orders/PageHeader";
-import Input from "@/common/Input";
 import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
+import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
+import { IUserAddress } from "@/models/orders";
 const schema = yup
     .object({
         referenceId: yup.string().required(),
@@ -19,57 +20,22 @@ const schema = yup
 const addresses = [
     {
         id: nanoid(),
-        title: "Gowiesh hpuse",
-        addressLine1: "byndoor udupu",
-        addressLine2: "kundapure",
+        tag: "Gowiesh hpuse",
+        address_1: "byndoor udupu",
+        address_2: "kundapure",
         country: "India",
         city: "byndoor",
         state: "karantak",
-        postalCode: "576214",
-        mobileNumber: 96863993098,
+        pincode: "576214",
+        phone: 96863993098,
         default: null,
     },
-    {
-        id: nanoid(),
-        title: "Gowiesh hpuse",
-        addressLine1: "byndoor udupu",
-        addressLine2: "kundapure",
-        country: "India",
-        city: "byndoor",
-        state: "karantak",
-        postalCode: "576214",
-        mobileNumber: 96863993098,
-        default: "on",
-    },
-    {
-        id: nanoid(),
-        title: "Gowiesh hpuse",
-        addressLine1: "byndoor udupu",
-        addressLine2: "kundapure",
-        country: "India",
-        city: "byndoor",
-        state: "karantak",
-        postalCode: "576214",
-        mobileNumber: 96863993098,
-        default: null,
-    },
-    // {
-    //     id: nanoid(),
-    //     title: "Gowiesh hpuse",
-    //     addressLine1: "byndoor udupu",
-    //     addressLine2: "kundapure",
-    //     country: "India",
-    //     city: "byndoor",
-    //     state: "karantak",
-    //     postalCode: "576214",
-    //     mobileNumber: 96863993098,
-    //     default: null,
-    // },
 ];
 
 const AddNewOrder = () => {
-    const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
-
+    const [userSavedAddresses, setUserSavedAddresses] = useState<IUserAddress[]>(addresses);
+    const [editableAddress, setEditableAddress] = useState<IUserAddress>();
+    const [showEditUserAddressModal, setShowEditUserAddressModal] = useState<boolean>(false);
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
     const defaultAddressHandler = () => {
@@ -99,12 +65,29 @@ const AddNewOrder = () => {
         setShowAddNewAddressModal((prev) => !prev);
     };
 
+    const toggleEditUserAddressModal = (addressId?: string) => {
+        console.log(addressId);
+        if (showEditUserAddressModal) {
+            setShowEditUserAddressModal(false);
+        } else {
+            setShowEditUserAddressModal(true);
+            const address = userSavedAddresses.find((data) => {
+                return data.id == addressId;
+            });
+            setEditableAddress(address);
+        }
+    };
+
     const onSubmit: SubmitHandler<{
         referenceId: string;
         storeLink: string;
         address?: string;
     }> = (data) => {
-        console.log(data);
+        if (userSavedAddresses.length) {
+            console.log(data);
+        } else {
+            setShowAddNewAddressModal(true);
+        }
     };
 
     return (
@@ -118,8 +101,8 @@ const AddNewOrder = () => {
                     </p>
                 </div>
                 <div className="flex-type1 space-x-[10px] mt-[25px]">
-                    <ReactHookFormInput label="Reference ID" name="referenceId" type="string" register={register("referenceId")} />
-                    <ReactHookFormInput label="Store Link" name="storeLink" type="string" register={register("storeLink")} />
+                    <ReactHookFormInput label="Reference ID" name="referenceId" type="string" register={register("referenceId")} error={errors.referenceId} />
+                    <ReactHookFormInput label="Store Link" name="storeLink" type="string" register={register("storeLink")} error={errors.storeLink} />
                 </div>
                 <div className="mt-[20px]">
                     <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px]">
@@ -129,9 +112,9 @@ const AddNewOrder = () => {
                         </span>
                     </p>
                 </div>
-                <div className="flex-type1 flex-wrap mt-[20px] gap-[20px] ">
+                <div className="flex-type1 flex-wrap mt-[20px] gap-[15px] ">
                     {userSavedAddresses.map((data) => {
-                        return <UserSavedAddresses key={data.id} address={data} register={register("address")} />;
+                        return <UserSavedAddresses key={data.id} address={data} register={register("address")} edit={toggleEditUserAddressModal} />;
                     })}
                 </div>
                 <button className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]" type="submit">
@@ -139,6 +122,7 @@ const AddNewOrder = () => {
                 </button>
             </form>
             <AddNewAddressModal show={showAddNewAddressModal} close={toggleAddNewAddressModal} />
+            {showEditUserAddressModal && <EditUserAddressModal show={showEditUserAddressModal} close={toggleEditUserAddressModal} address={editableAddress!} />}
         </>
     );
 };
