@@ -43,9 +43,13 @@ const WareHouseAddresses = (props: { address: IProp }) => {
         <div className=" box-border min-w-[32%] h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
             <div className="flex-type3 space-x-[10px]">
                 <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">{props.address.title}</p>
-                <div className={`flex-type1 customRadioInput_type2 ${wareHouseAddressStatusColorHandler(props.address.status)} `}>
-                    <input type="radio" checked={true} />
-                    <span className="ml-[5px]">{props.address.status}</span>
+                <div className={`flex-type1`}>
+                    <label className={`customRadioInput_type2 ${wareHouseAddressStatusColorHandler(props.address.status)}`}>
+                        <input type="radio" checked={true} />
+                        <span className="checkmark"></span>
+                    </label>
+
+                    <span className="ml-[5px] text-[12px] text-[#2B2B2B] font-[500] leading-[18px] ">{props.address.status}</span>
                 </div>
             </div>
             <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">{props.address.country}</p>

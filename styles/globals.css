@@ -18,6 +18,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 
   font-family: "manRope";
+  letter-spacing: 0.05em
 }
 
 @layer components {
@@ -59,63 +60,152 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-/* .orderTable input[type="radio"]:after {
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  top: -2px;
-  left: -1px;
-  position: relative;
-  background-color: #ffffff;
-  content: "";
-  display: inline-block;
-  visibility: visible;
-  border: 1px solid #b8b8b8;
-} */
 
-.customRadioInput input[type="radio"]:checked:after {
-  width: 13px;
-  height: 13px;
-  border-radius: 15px;
-  top: -4px;
-  left: 0px;
-  position: relative;
-  background-color: #9845db;
-  content: "";
-  display: inline-block;
-  visibility: visible;
-  border: 1px solid white;
+
+
+.customRadioInput {
+    display: block;
+    position: relative;
+    /* padding-left: 35px; */
+    top: 4px;
+    right: 13px;
+    cursor: pointer;
+    /* font-size: 15px; */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
-.customRadioInput_type2 input[type="radio"]:checked:after {
-  width: 14px;
-  height: 14px;
-  border-radius: 15px;
-  top: -5px;
-  left: -1px;
-  position: relative;
-  background-color: #9845db;
-  content: "";
-  display: inline-block;
-  visibility: visible;
-  border: 1px solid white;
+.customRadioInput input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
 }
-.in_transit input[type="radio"]:checked:after {
-  background-color: red;
+.customRadioInput .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    background-color: transparent;
+    border-radius: 50%;
 }
-.delivered input[type="radio"]:checked:after {
-  background-color: green;
+.customRadioInput .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
 }
-.at_warehouse input[type="radio"]:checked:after {
-  background-color: yellow;
+
+/* Show the indicator (dot/circle) when checked */
+.customRadioInput input:checked ~ .checkmark:after {
+    display: block;
 }
-.active input[type="radio"]:checked:after {
-  background-color: green;
+
+/* Style the indicator (dot/circle) */
+.customRadioInput .checkmark:after {
+    top: 1.2px;
+    left: 1.3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: yellow;
 }
-.in_active input[type="radio"]:checked:after {
-  background-color: yellow;
+.delivered .checkmark:after {
+    background: #34a853;
 }
-.closed input[type="radio"]:checked:after {
-  background-color: red;
+
+.at_warehouse .checkmark:after {
+    background: #ffba00;
+}
+.in_transit .checkmark:after {
+    background: #ff0000;
+}
+.customRadioInput_type2 input:checked ~ .checkmark {
+    border: 0.5px solid #34a853;
+}
+
+.delivered input:checked ~ .checkmark {
+    border: 0.5px solid #34a853;
+}
+
+.at_warehouse input:checked ~ .checkmark {
+    border: 0.5px solid #ffba00;
+}
+.in_transit input:checked ~ .checkmark {
+    border: 0.5px solid #ff0000;
+}
+
+
+.customRadioInput_type2 {
+    display: block;
+    position: relative;
+    /* padding-left: 35px; */
+    top: -8px;
+    right: 13px;
+    cursor: pointer;
+    /* font-size: 15px; */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.customRadioInput_type2 input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.customRadioInput_type2 .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    background-color: transparent;
+    border-radius: 50%;
+}
+.customRadioInput_type2 .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.customRadioInput_type2 input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.customRadioInput_type2 .checkmark:after {
+    top: 1.2px;
+    left: 1.1px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: yellow;
+}
+.active .checkmark:after {
+    background: #34a853;
+}
+
+.in_active .checkmark:after {
+    background: #ffba00;
+}
+.closed .checkmark:after {
+    background: #ff0000;
+}
+.customRadioInput_type2 input:checked ~ .checkmark {
+    border: 0.5px solid #34a853;
+}
+
+.active input:checked ~ .checkmark {
+    border: 0.5px solid #34a853;
+}
+
+.in_active input:checked ~ .checkmark {
+    border: 0.5px solid #ffba00;
+}
+.closed input:checked ~ .checkmark {
+    border: 0.5px solid #ff0000;
 }
 
 .table {
@@ -169,95 +259,127 @@ input::-webkit-inner-spin-button {
   width: 11%;
 }
 .indexedStep {
-  color: rgb(190, 190, 190);
-  width: 30px;
-  height: 30px;
-  font-size: 12px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgb(206, 206, 206);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    background-color: #edf5f9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.indexStep_outerLayer {
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .indexedStep.accomplished {
-  background-color: #664de5;
-  color: white;
-  border-style: none;
+    background-color: #664de5;
+}
+.indexedStep.accomplished1 {
+    background-color: red;
+    color: white;
+    border-style: none;
+}
+.indexedStep.accomplished2 {
+    background-color: #ffba00;
+    color: white;
+    border-style: none;
+}
+.indexedStep.accomplished3 {
+    background-color: green;
+    color: white;
+    border-style: none;
 }
 
 .RSPBprogressBar {
-  height: 400px !important;
-  width: 10px !important ;
-  /* line-height: 1; */
-  border-radius: 10px;
-  position: absolute !important;
-  top: 0px !important;
-  left: 0px !important;
-  transform: translatex(-100%) !important;
-  background-color: rgb(207, 207, 207);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 0;
-  margin: 20px auto;
+    height: 470px !important;
+    width: 2px !important ;
+    /* line-height: 1; */
+    position: relative;
+    transform: translatex(15px) !important;
+    background-color: #bbc2cf;
+    z-index: 0;
 }
 
 .RSPBstep {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 0;
-  position: absolute;
-  transform: translatex(-35%) !important;
-  /* top: 10% !important;
-    left: 0% !important; */
-  transition-property: all;
-  transition-timing-function: ease;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    position: absolute;
+    transform: translatex(-31px) !important;
+
+    transition-property: all;
+    transition-timing-function: ease;
 }
 .RSPBprogressBar .RSPBstep:nth-of-type(1) {
   top: 0% !important;
   left: 0% !important;
 }
 .RSPBprogressBar .RSPBstep:nth-of-type(2) {
-  top: 20% !important;
-  left: 0% !important;
+    top: 23% !important;
+    left: 0% !important;
 }
 .RSPBprogressBar .RSPBstep:nth-of-type(3) {
-  top: 60% !important;
-  left: 0% !important;
+    top: 65% !important;
+    left: 0% !important;
 }
 .RSPBprogressBar .RSPBstep:nth-of-type(4) {
   top: 100% !important;
   left: 0% !important;
 }
 
-.gowrish .RSPBprogressBarText {
-  color: red !important;
-  font-size: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.RSPBprogressBar .RSPBprogressBarText {
+    color: red !important;
+    font-size: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-.gowrish .RSPBprogression {
-  width: 10px !important;
-  height: 70% !important;
+.RSPBprogressBar .RSPBprogression::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    transform: translate(-5px);
+    height: 13px;
+    width: 13px;
+    border-radius: 50%;
+    background-color: green;
+}
+.RSPBprogressBar .RSPBprogression {
+    position: absolute;
+    width: 2px !important;
+    height: 0% !important;
+    transition: height 5s linear;
+    background: #009e3f !important;
+    z-index: -1;
+}
+.source_website .RSPBprogression {
+    width: 2px !important;
+    height: 15% !important;
+}
+.warehouse .RSPBprogression {
+    width: 2px !important;
+    height: 42% !important;
 }
 
-.RSPBprogressBar .RSPBprogression {
-  position: absolute;
-  transition: width 0.3s ease;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  border-radius: 10px;
-  background: #664de5;
-  z-index: -1;
+.out_for_delivery .RSPBprogression {
+    width: 2px !important;
+    height: 82% !important;
+}
+.delivered .RSPBprogression {
+    width: 2px !important;
+    height: 100% !important;
 }
 
 @media screen and (max-width: 480px) {
@@ -266,4 +388,13 @@ input::-webkit-inner-spin-button {
     height: 15px;
     font-size: 6px;
   }
+}
+
+.check__icon path {
+    stroke-width: 1px;
+    stroke: #ffffff;
+}
+.wareHouse__icon path {
+    stroke-width: 1px;
+    stroke: #bbc2cf;
 }

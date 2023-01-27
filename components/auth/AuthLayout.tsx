@@ -7,11 +7,11 @@ import img from "../../public/homePic.png";
 // }
 
 const AuthLayout = (props: any) => {
-  return (
-    <div className="flex h-screen w-screen">
-      <div className="relative w-[450px] h-[100vh]">
-        <Image src={img} alt={"maz gate banner"} fill />
-        {/* <Image
+    return (
+        <div className="flex h-screen w-screen overflow-y-auto ">
+            <div className="w-[450px] h-[100vh] fixed ">
+                <Image src={img} alt={"maz gate banner"} fill />
+                {/* <Image
           src={"/homePic.png"}
           alt={"maz gate banner"}
           width={500}
@@ -21,12 +21,10 @@ const AuthLayout = (props: any) => {
             console.log(e);
           }}
         /> */}
-      </div>
-      <div className="p-10 flex flex-1 items-center ml-[10%]">
-        {props.children}
-      </div>
-    </div>
-  );
+            </div>
+            <div className="flex flex-1 items-start ml-[40%] pt-10 ">{props.children}</div>
+        </div>
+    );
 };
 
 export default AuthLayout;

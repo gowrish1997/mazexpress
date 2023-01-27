@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
 import Layout from "@/components/layout";
-
+import ReactSwitch from "react-switch";
 export interface IInputs {
     firstName: string;
     lastName: string;
@@ -58,7 +58,7 @@ const settings = () => {
         <>
             <PageHeader content="Settings" className="border-none pb-[10px]" />
             <Layout>
-                <div className="w-full space-y-[25px] ">
+                <div className="w-full space-y-[30px] ">
                     <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
                         <Image src="/blueexclamatory.png" alt="icon" width={16} height={16} />
                         <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
@@ -66,21 +66,21 @@ const settings = () => {
                         </p>
                     </div>
                     <div>
-                        <p>Account</p>
-                        <p>Review and update your account details</p>
+                        <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">Account</p>
+                        <p className="text-[14px] text-[#525D72] leading-[21px] font-[500] ">Review and update your account details</p>
                     </div>
 
-                    <div className="flex-type1">
+                    <div className="flex-type1 gap-x-[20px] ">
                         <Image src="/profile.png" alt="profile" height={100} width={100} />
                         <div className="flex-type6">
-                            <p>Lincoln Bergson</p>
-                            <p>lincolnbergson96@gmail.com</p>
+                            <p className="text-[24px] text-[#2B2B2B] leading-[32px] font-[600] ">Lincoln Bergson</p>
+                            <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">lincolnbergson96@gmail.com</p>
                         </div>
                     </div>
                     <form className="flex-type6 w-3/4 gap-y-[10px] " onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex-type1 w-full space-x-[20px] ">
                             <div className="flex-type2 space-x-[10px] w-full">
-                                <ReactHookFormInput label="First name" name="firstName" type="string" register={register("firstName")} inputClassName="h-[46px]" />
+                                <ReactHookFormInput label="First name" name="firstName" type="string" register={register("firstName")} />
 
                                 <ReactHookFormInput label="Last name" name="lastName" type="string" register={register("lastName")} />
                             </div>
@@ -111,6 +111,26 @@ const settings = () => {
 
                             <ReactHookFormInput label="Language" name="language" type="string" register={register("language")} />
                         </div>
+                        <div className="flex-type3 w-full space-x-[20px] mt-[10px] ">
+                            <div className="font-[500]">
+                                <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">Notifications</p>
+                                <p className="text-[12px] text-[#525D72] leading-[18px] ">Dummy and update your account details</p>
+                            </div>
+                            <ReactSwitch
+                                onChange={() => {}}
+                                checked={true}
+                                checkedIcon={false}
+                                uncheckedIcon={false}
+                                width={36}
+                                height={20}
+                                handleDiameter={12}
+                                offColor={"#D9D9D9"}
+                            />
+                        </div>
+
+                        <button type="submit" className="w-1/2 h-[46px] border-[1px] bg-[#3672DF] rounded-[4px] text-[#FFFFFF] mt-[10px] ">
+                            Update settings
+                        </button>
                     </form>
                 </div>
             </Layout>
