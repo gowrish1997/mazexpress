@@ -8,6 +8,7 @@ import ReactHookFormInput from "@/common/ReactHookFormInput";
 import Layout from "@/components/layout";
 import ReactSwitch from "react-switch";
 import useUser from "@/lib/useUser";
+
 export interface IInputs {
   firstName: string;
   lastName: string;
@@ -34,6 +35,7 @@ const Settings = () => {
     formState: { errors },
   } = useForm<IInputs>({
     resolver: yupResolver(schema),
+    // defaultValues: user
   });
 
   const [passwordType, setPasswordType] = useState("password");
@@ -55,9 +57,7 @@ const Settings = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<IInputs> = (data) => {
-
-  };
+  const onSubmit: SubmitHandler<IInputs> = (data) => {};
 
   return (
     <>
@@ -107,6 +107,7 @@ const Settings = () => {
                   name="firstName"
                   type="string"
                   register={register("firstName")}
+                  value={user?.first_name_users}
                 />
 
                 <ReactHookFormInput
@@ -114,6 +115,7 @@ const Settings = () => {
                   name="lastName"
                   type="string"
                   register={register("lastName")}
+                  value={user?.last_name_users}
                 />
               </div>
 
@@ -122,9 +124,9 @@ const Settings = () => {
                 name="password"
                 type={passwordType}
                 register={register("password")}
-                dropDownIcon={{
-                  iconIsEnabled: true,
-                  iconSrc:
+                icon={{
+                  isEnabled: true,
+                  src:
                     passwordType == "string"
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
@@ -138,6 +140,7 @@ const Settings = () => {
                 name="email"
                 type="email"
                 register={register("email")}
+                value={user?.email_users}
               />
 
               <ReactHookFormInput
@@ -145,9 +148,9 @@ const Settings = () => {
                 name="newPassword"
                 type={newPasswordType}
                 register={register("newPassword")}
-                dropDownIcon={{
-                  iconIsEnabled: true,
-                  iconSrc:
+                icon={{
+                  isEnabled: true,
+                  src:
                     newPasswordType == "string"
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
@@ -161,6 +164,7 @@ const Settings = () => {
                 name="mobileNumber"
                 type="number"
                 register={register("mobileNumber")}
+                value={user?.phone_users}
               />
 
               <ReactHookFormInput

@@ -44,19 +44,23 @@ export default function handler(
         break;
 
       case "POST":
+        // create new user
+        // default icon avatar url
+        //
         // hash pass
-        const hash = hashPassword(req.body.password)
+        const hash = hashPassword(req.body.password);
         executeQuery(
           {
             query:
-              "INSERT INTO users (first_name_users, last_name_users, email_users, phone_users, password_users, default_address_users) VALUES (?, ?, ?, ?, ?, ?)",
+              "INSERT INTO users (first_name_users, last_name_users, email_users, phone_users, password_users, default_address_users, avatar_url_users) VALUES (?, ?, ?, ?, ?, ?, ?)",
             values: [
               req.body.first_name,
               req.body.last_name,
               req.body.email,
               req.body.phone,
               hash,
-              null
+              null,
+              '/default_user.png'
             ],
           },
           (results) => {
@@ -68,14 +72,14 @@ export default function handler(
       case "PUT":
         if (req.query.id) {
           const id = req.query.id;
-          const hash = hashPassword(req.body.password)
+          const hash = hashPassword(req.body.password);
           const fields = {
             first_name_users: req.body.first_name,
             last_name_users: req.body.last_name,
             email_users: req.body.email,
             phone_users: req.body.phone,
             password_users: hash,
-            default_address_users: null
+            default_address_users: null,
           };
           executeQuery(
             {

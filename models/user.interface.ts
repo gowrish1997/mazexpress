@@ -7,6 +7,7 @@ interface IUser {
   phone_users: string;
   password_users: string;
   isAdmin: 0 | 1;
+  isLoggedIn: true | false;
   id_users: number | null;
   default_address_users: number;
 }

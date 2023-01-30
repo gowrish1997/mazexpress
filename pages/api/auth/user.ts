@@ -21,7 +21,8 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<IUser>) {
       phone_users: "",
       password_users: "",
       isAdmin: 0,
-      default_address_users: 0
+      default_address_users: 0,
+      isLoggedIn: false
     });
   }
 }
