@@ -90,17 +90,7 @@ const AddNewAddressModal = (props: IProp) => {
                                     />
                                 )}
                             />
-                            {/* <div className={"w-full flex-type6"}>
-            <label className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] ">"City/Town</label>
-            <div className={"flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative "} style={{ borderColor: errors.city_addresses ? "#f02849" : "" }}>
-            <Controller name="city_addresses" control={control} render={({ field: { onChange, value, ref } }) => 
-                <RegionDropdown  country={getValues("country_addresses")} value={value} countryValueType="short" classes="menu-regioin" showDefaultOption=""  onChange={onChange} />} />
-
-                    <Image src="/downwardArrow.png" alt="eyeIcon" height={10} width={10} className="cursor-pointer absolute right-[8px] " />
-                
-            </div>
-            {errors.city_addresses && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{errors.city_addresses.message}</p>}
-        </div> */}
+                           
                         </div>
                         <div className="flex-type2 space-x-[10px] w-full">
                             <ReactHookFormInput label="State/Province/Region" name="state_addresses" type="string" register={register("state_addresses")} />

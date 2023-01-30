@@ -20,7 +20,7 @@ interface IAddressProps {
     state_addresses: string;
     pincode_addresses: string;
     phone_addresses: number;
-      default_addresses:string | null
+      default_addresses?:string | null
   }
 export type {
     IAddress,

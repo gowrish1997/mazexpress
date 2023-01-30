@@ -7,17 +7,18 @@ import useUser from "@/lib/useUser";
 
 const UserSavedAddresses = (props: {
   address: IAddressProps;
-  register: any;
-  edit:(id:number)=>void
+  register?: any;
+  edit?:(id:number)=>void
 
 }) => {
+
   const { user, mutateUser } = useUser();
   return (
     <div className=" box-border flex-type2 min-w-[32%] h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
       <input
         type="radio"
         name="address"
-        checked={user?.default_address_users === props.address.id_addresses}
+        defaultChecked={user?.default_address_users === props.address.id_addresses}
         value={props.address.id_addresses}
         {... props.register}
         className="cursor-pointer"
@@ -46,7 +47,7 @@ const UserSavedAddresses = (props: {
         </div>
 
         <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[10px] mt-[15px] ">
-          <button onClick={()=>props.edit(props.address.id_addresses!)} >Edit</button>
+          <button onClick={()=>props.edit?.(props.address.id_addresses!)} >Edit</button>
           <button>Remove</button>
         </div>
       </div>

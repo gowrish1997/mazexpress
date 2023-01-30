@@ -10,87 +10,77 @@ import AddButton from "@/common/AddButton";
 import useUser from "@/lib/useUser";
 import useOrders from "@/lib/useOrders";
 
-const tableHeaders = [
-  "MAZ Tracking ID",
-  "Store",
-  "Reference ID",
-  "Estimated Deliver",
-  "Address",
-  "Status",
-];
+const tableHeaders = ["MAZ Tracking ID", "Store", "Reference ID", "Estimated Deliver", "Address", "Status"];
 
 const data = [
-  {
-    id: nanoid(),
-    mazTrackingId: "asfnaksf",
-    storeLink: "flilkaer",
-    referenceId: "akjsfnka",
-    estimateDelivery: "fknaskf",
-    address: "afanslf",
-    status: "In Transit",
-  },
-  {
-    id: nanoid(),
-    mazTrackingId: "asfnaksf",
-    storeLink: "flilkaer",
-    referenceId: "akjsfnka",
-    estimateDelivery: "fknaskf",
-    address: "afanslf",
-    status: "Delivered",
-  },
-  {
-    id: nanoid(),
-    mazTrackingId: "asfnaksf",
-    storeLink: "flilkaer",
-    referenceId: "akjsfnka",
-    estimateDelivery: "fknaskf",
-    address: "afanslf",
-    status: "At warehouse",
-  },
+    {
+        id: nanoid(),
+        mazTrackingId: "asfnaksf",
+        storeLink: "flilkaer",
+        referenceId: "akjsfnka",
+        estimateDelivery: "fknaskf",
+        address: "afanslf",
+        status: "In Transit",
+    },
+    {
+        id: nanoid(),
+        mazTrackingId: "asfnaksf",
+        storeLink: "flilkaer",
+        referenceId: "akjsfnka",
+        estimateDelivery: "fknaskf",
+        address: "afanslf",
+        status: "Delivered",
+    },
+    {
+        id: nanoid(),
+        mazTrackingId: "asfnaksf",
+        storeLink: "flilkaer",
+        referenceId: "akjsfnka",
+        estimateDelivery: "fknaskf",
+        address: "afanslf",
+        status: "At warehouse",
+    },
 ];
 const MyOrders = () => {
-  const router = useRouter();
-  const { user, mutateUser } = useUser();
-  const { orders, mutateOrders } = useOrders();
-  // const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
-  // );
+    const router = useRouter();
+    const { user, mutateUser } = useUser();
+    const { orders, mutateOrders } = useOrders({ userId: user?.id_users! });
+    // const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
+    // );
 
-  const addNewOrderHandler = () => {
-    router.push(`${router.pathname}/add-new-order`);
-  };
+    console.log(orders);
 
-  return (
-    <>
-      <PageHeaders content="My Orders" showCalender={true} />
+    const addNewOrderHandler = () => {
+        router.push(`${router.pathname}/add-new-order`);
+    };
 
-      <div className="flex flex-col justify-between relative flex-1 h-full">
-        {orders && orders.length > 0 ? (
-          <>
-            <Table orders={orders} tableHeaders={tableHeaders} />
-            <AddButton onClick={addNewOrderHandler} />
-          </>
-        ) : (
-          <div className="flex-1 flex flex-col justify-center items-center w-full ">
-            <div className="relative h-[221px] w-[322px] ">
-              <Image
-                src="/noorder.png"
-                layout="fill"
-                objectFit="cover"
-                alt="happy"
-              />
+    return (
+        <>
+            <PageHeaders content="My Orders" showCalender={true} />
+
+            <div className="flex flex-col justify-between relative flex-1 h-full">
+                {orders && orders.length > 0 ? (
+                    <>
+                        <Table orders={orders} tableHeaders={tableHeaders} />
+                        <AddButton onClick={addNewOrderHandler} />
+                    </>
+                ) : (
+                    <div className="flex-1 flex flex-col justify-center items-center w-full ">
+                        <div className="relative h-[221px] w-[322px] ">
+                            <Image src="/noorder.png" layout="fill" objectFit="cover" alt="happy" />
+                        </div>
+                        <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
+                            Until now, there were no orders on your list; start adding them.
+                            <br />
+                            <Link href={`${router.pathname}/add-new-order`}>
+                                <span className="text-[#0057FF] font-[500]">Add Order Now</span>
+                            </Link>
+                        </div>
+                    </div>
+                )}
             </div>
-            <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
-              Until now, there were no orders on your list; start adding them.
-              <br />
-              <Link href={`${router.pathname}/add-new-order`}>
-                <span className="text-[#0057FF] font-[500]">Add Order Now</span>
-              </Link>
-            </div>
-          </div>
-        )}
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default MyOrders;

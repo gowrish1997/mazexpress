@@ -11,6 +11,8 @@ import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import { IAddressProps } from "@/models/address.interface";
 import { IOrder } from "@/models/order.interface";
+import useUser from "@/lib/useUser";
+import useAddresses from "@/lib/useAddresses";
 
 const schema = yup
   .object({
@@ -71,13 +73,18 @@ const addresses = [
 ];
 
 const AddNewOrder = () => {
-  const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
-
+//   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
+  const [editableAddress, setEditableAddress] = useState<IAddressProps>();
+  const [showEditUserAddressModal, setShowEditUserAddressModal] = useState<boolean>(false);
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
+  const { user, mutateUser } = useUser();
+  const { addresses, mutateAddresses } = useAddresses(user?.id_users);
+  console.log(addresses)
+  console.log(user)
 
   const defaultAddressHandler = () => {
-    const address = userSavedAddresses.find((data) => {
-      return data.default;
+    const address = addresses?.find((data) => {
+      return user?.default_address_users==data.id_addresses
     });
 
     return address;
@@ -90,10 +97,10 @@ const AddNewOrder = () => {
   } = useForm<{
     referenceId: string;
     storeLink: string;
-    address?: string;
+    address?: number;
   }>({
     defaultValues: {
-      address: defaultAddressHandler()?.id,
+      address: defaultAddressHandler()?.id_addresses,
     },
     resolver: yupResolver(schema),
   });
@@ -102,10 +109,23 @@ const AddNewOrder = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
 
+  const toggleEditUserAddressModal = (addressId?: number) => {
+    console.log(addressId);
+    if (showEditUserAddressModal) {
+        setShowEditUserAddressModal(false);
+    } else {
+        setShowEditUserAddressModal(true);
+        const address = addresses?.find((data) => {
+            return data.id_addresses == addressId;
+        });
+        setEditableAddress(address);
+    }
+};
+
   const onSubmit: SubmitHandler<{
     referenceId: string;
     storeLink: string;
-    address?: string;
+    address?: number;
   }> = (data) => {
     console.log(data);
   };
@@ -147,12 +167,13 @@ const AddNewOrder = () => {
           </p>
         </div>
         <div className="flex-type1 flex-wrap mt-[20px] gap-[20px] ">
-          {userSavedAddresses.map((data) => {
+          {addresses?.map((data) => {
             return (
               <UserSavedAddresses
-                key={data.id}
+                key={data.id_addresses}
                 address={data}
                 register={register("address")}
+                edit={toggleEditUserAddressModal}
               />
             );
           })}
@@ -168,6 +189,7 @@ const AddNewOrder = () => {
         show={showAddNewAddressModal}
         close={toggleAddNewAddressModal}
       />
+       {showEditUserAddressModal && <EditUserAddressModal show={showEditUserAddressModal} close={toggleEditUserAddressModal} address={editableAddress!} />}
     </>
   );
 };

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler,Controller } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
 import { IAddressProps } from "@/models/address.interface";
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import CountrySelector from "@/common/CountrySelector";
+import RegionSelector from "@/common/RegionSelector";
 interface IProp {
     show: boolean;
     close: () => void;
@@ -20,10 +22,13 @@ const schema = yup
     .required();
 
 const EditUserAddressModal = (props: IProp) => {
+
+    const [country, setCountry] = useState(props.address.country_addresses);
     const {
         register,
         handleSubmit,
         getValues,
+        control,
         formState: { errors },
     } = useForm<IAddressProps>({
         defaultValues: props.address,
@@ -68,9 +73,38 @@ const EditUserAddressModal = (props: IProp) => {
                     <ReactHookFormInput label="Address line 01" name="address_1_addresses" type="string" register={register("address_1_addresses")} value={props.address.address_1_addresses} />
                     <ReactHookFormInput label="Address line 02" name="address_2_addresses" type="string" register={register("address_2_addresses")} value={props.address.city_addresses} />
                     <div className="flex-type2 space-x-[10px] w-full">
-                        <ReactHookFormInput label="Country" name="country_addresses" type="string" register={register("country_addresses")} value={props.address.country_addresses} />
+                        {/* <ReactHookFormInput label="Country" name="country_addresses" type="string" register={register("country_addresses")} value={props.address.country_addresses} />
 
-                        <ReactHookFormInput label="City/Town" name="city_addresses" type="string" register={register("city_addresses")} value={props.address.city_addresses} />
+                        <ReactHookFormInput label="City/Town" name="city_addresses" type="string" register={register("city_addresses")} value={props.address.city_addresses} /> */}
+                         <Controller
+                                name="country_addresses"
+                                control={control}
+                                // defaultValue="AF"
+                                render={({ field: { onChange, value, ref } }) => (
+                                    <CountrySelector
+                                        label="Country"
+                                        value={value}
+                                        onChange={onChange}
+                                        setCountry={setCountry}
+                                        error={errors.country_addresses}
+                                        dropDownIcon={{ iconIsEnabled: true, iconSrc: "/downwardArrow.png" }}
+                                    />
+                                )}
+                            />
+                            <Controller
+                                name="city_addresses"
+                                control={control}
+                                // defaultValue="Badakhshan"
+                                render={({ field: { onChange, value, ref } }) => (
+                                    <RegionSelector
+                                        label="City/Town"
+                                        dropDownIcon={{ iconIsEnabled: true, iconSrc: "/downwardArrow.png" }}
+                                        value={value}
+                                        country={country}
+                                        onChange={onChange}
+                                    />
+                                )}
+                            />
                     </div>
                     <div className="flex-type2 space-x-[10px] w-full">
                         <ReactHookFormInput label="State/Province/Region" name="state_addresses" type="string" register={register("state_addresses")} value={props.address.state_addresses} />
