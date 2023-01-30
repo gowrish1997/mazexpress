@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { hashPassword } from "@/lib/bcrypt";
 import { executeQuery } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -12,55 +11,58 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  return new Promise(async (resolve, reject) => {
+  //   console.log("");
+  return new Promise((resolve, reject) => {
     switch (req.method) {
       case "GET":
-        if (req.query.id) {
+        // console.log("from addresses, user=", req.query.user);
+        if (req.query.user) {
+          const user_id = req.query.user;
+          // list response
+
+          executeQuery(
+            {
+              query: "SELECT * FROM notifications WHERE user_id=?",
+              values: [user_id],
+            },
+            (results) => {
+              // console.log("results", results);
+              res.status(200).json(results);
+            }
+          );
+        } else if (req.query.id) {
           // single response
           const id = req.query.id;
           executeQuery(
             {
-              query: "SELECT * FROM users where id_users=?",
+              query: "SELECT * FROM notifications WHERE id_notifications=?",
               values: [id],
             },
             (results) => {
-              console.log("results", results);
+              // console.log("results", results);
               res.status(200).json(results);
             }
           );
+          // error invalid
         } else {
-          // list response
-          executeQuery(
-            {
-              query: "SELECT * FROM users",
-              values: [],
-            },
-            (results) => {
-              console.log("results", results);
-              res.status(200).json(results);
-            }
-          );
+          res.status(200).json([]);
         }
         break;
 
       case "POST":
-        // create new user
-        // default icon avatar url
-        //
-        // hash pass
-        const hash = hashPassword(req.body.password);
         executeQuery(
           {
             query:
-              "INSERT INTO users (first_name_users, last_name_users, email_users, phone_users, password_users, default_address_users, avatar_url_users) VALUES (?, ?, ?, ?, ?, ?, ?)",
+              "INSERT INTO addresses (user_id, address_1_addresses, address_2_addresses, city_addresses, country_addresses, pincode_addresses, state_addresses, phone_addresses) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             values: [
-              req.body.first_name,
-              req.body.last_name,
-              req.body.email,
+              req.body.user_id,
+              req.body.address_1,
+              req.body.address_2,
+              req.body.city,
+              req.body.country,
+              req.body.pincode,
+              req.body.state,
               req.body.phone,
-              hash,
-              null,
-              "/default_user.png",
             ],
           },
           (results) => {
@@ -71,26 +73,29 @@ export default function handler(
 
       case "PUT":
         if (req.query.id) {
+          // update
           const id = req.query.id;
-          const fields = { ...req.body };
-          if (req.body.password_users) {
-            // change pass
-            const hash = hashPassword(req.body.password_users);
-            fields.password_users = hash;
-          }
-          console.log(fields, id)
+          const fields = {
+            user_id: req.body.user_id,
+            address_1_addresses: req.body.address_1,
+            address_2_addresses: req.body.address_2,
+            city_addresses: req.body.city,
+            country_addresses: req.body.country,
+            pincode_addresses: req.body.pincode,
+            state_addresses: req.body.state,
+            phone_addresses: req.body.phone,
+            tag_addresses: req.body.tag,
+          };
           executeQuery(
             {
-              query: "UPDATE users SET ? WHERE id_users = ? ",
+              query: "UPDATE addresses SET ? WHERE id_addresses = ? ",
               values: [fields, id],
             },
             (results) => {
               res.status(200).json(results);
-              resolve(results)
             }
           );
         } else {
-          // error response
           res.status(200).json({ msg: "invalid url params" });
         }
         break;
@@ -100,7 +105,7 @@ export default function handler(
           const id = req.query.id;
           executeQuery(
             {
-              query: "DELETE FROM users WHERE id_users=?",
+              query: "DELETE FROM addresses WHERE id_addresses=?",
               values: [id],
             },
             (results) => {
@@ -108,7 +113,6 @@ export default function handler(
             }
           );
         } else {
-          // error response
           res.status(200).json({ msg: "invalid url params" });
         }
         break;

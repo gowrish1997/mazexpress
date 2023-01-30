@@ -7,7 +7,16 @@ export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
 } = {}) {
-  const { data: user, mutate: mutateUser } = useSWR<IUser>("/api/auth/user");
+  const {
+    data: user,
+    mutate: mutateUser,
+    isLoading: userIsLoading,
+  } = useSWR<IUser>("/api/auth/user", {
+    // refreshInterval: 1000,
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 
   useEffect(() => {
     // if no redirect needed, just return (example: already on /dashboard)
@@ -16,13 +25,13 @@ export default function useUser({
 
     if (
       // If redirectTo is set, redirect if the user was not found.
-      (redirectTo && !redirectIfFound && !user?.isLoggedIn) ||
+      (redirectTo && !redirectIfFound && !user?.is_logged_in_users) ||
       // If redirectIfFound is also set, redirect if the user was found
-      (redirectIfFound && user?.isLoggedIn)
+      (redirectIfFound && user?.is_logged_in_users)
     ) {
       Router.push(redirectTo);
     }
   }, [user, redirectIfFound, redirectTo]);
 
-  return { user, mutateUser };
+  return { user, mutateUser, userIsLoading };
 }

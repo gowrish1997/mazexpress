@@ -1,8 +1,10 @@
 import React, { createRef } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import OrderOptionModal from "../modal/OrderOptionModal";
 import useClickOutside from "@/customHook/useClickOutside";
 import { IOrderResponse } from "@/models/order.interface";
+import useAddresses from "@/lib/useAddresses";
 import useUser from "@/lib/useUser";
 interface IProp {
     row: IOrderResponse;
@@ -15,6 +17,9 @@ interface IProp {
 
 const LineItem = ({ row, active, setActiveHandler, index, show, setActive }: IProp) => {
     const { user, mutateUser } = useUser();
+    const { addresses, mutateAddresses } = useAddresses({
+        userId: user?.id_users,
+    });
     const modalTriggerNode = createRef<HTMLTableCellElement>();
 
     const modalNode = useClickOutside(
@@ -52,7 +57,7 @@ const LineItem = ({ row, active, setActiveHandler, index, show, setActive }: IPr
                 <td className={`td3`}>{row.reference_id_orders}</td>
                 <td className={`td4`}>estimated delivery</td>
                 <td className={`td5 flex flex-row items-center gap-x-[10px]`}>
-                    {row.address_id}
+                    {addresses?.find((el) => el.id_addresses === row.address_id)?.tag_addresses}
                     {user?.default_address_users === row.address_id && (
                         <div className="bg-[#FF645A] rounded-[4px] text-[10px] text-[#FFFFFF] font-[500] leading-[15px] py-[5px] px-[10px] ">Default</div>
                     )}
@@ -72,5 +77,3 @@ const LineItem = ({ row, active, setActiveHandler, index, show, setActive }: IPr
         </>
     );
 };
-
-export default LineItem;

@@ -1,7 +1,15 @@
+import PageHeader from "@/components/orders/PageHeader";
 import React from "react";
 
 const HelpCenter = () => {
-    return <div>help-center</div>;
+  return (
+    <>
+      <PageHeader content="Help Center" title="Help Center | MazExpress" />
+      <div className="py-10">
+        <h1>Coming soon...</h1>
+      </div>
+    </>
+  );
 };
 
 export default HelpCenter;

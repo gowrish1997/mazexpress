@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "@/components/orders/PageHeader";
 import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
@@ -64,6 +64,8 @@ const AddressBook = () => {
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
     const { user, mutateUser } = useUser();
     const { addresses, mutateAddresses } = useAddresses(user?.id_users);
+  //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
+ 
 
     const toggleAddNewAddressModal = () => {
         setShowAddNewAddressModal((prev) => !prev);

@@ -47,12 +47,14 @@ const MyOrders = () => {
     const { orders, mutateOrders } = useOrders({ userId: user?.id_users! });
     // const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
     // );
+ 
 
     console.log(orders);
 
     const addNewOrderHandler = () => {
         router.push(`${router.pathname}/add-new-order`);
     };
+
 
     return (
         <>
