@@ -11,7 +11,7 @@ interface IAddress {
     status: string,
 }
 interface IAddressProps {
-    id_addresses: number;
+    id_addresses?: number;
     tag_addresses: string;
     address_1_addresses: string;
     address_2_addresses: string;
@@ -20,7 +20,7 @@ interface IAddressProps {
     state_addresses: string;
     pincode_addresses: string;
     phone_addresses: number;
-    // status_addresses: string;
+      default_addresses:string | null
   }
 export type {
     IAddress,

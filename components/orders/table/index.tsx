@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import LineItem from "./LineItem";
-import { IOrder } from "@/models/order.interface";
+
+import { IOrderResponse } from "@/models/order.interface";
 interface TableProps {
   tableHeaders: Array<string>;
-  orders: Array<IOrder>;
+  orders: Array<IOrderResponse>;
 }
 
 const Table = (props: TableProps) => {

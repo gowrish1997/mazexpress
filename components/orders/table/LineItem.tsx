@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image";
 import OrderOptionModal from "../modal/OrderOptionModal";
 import useClickOutside from "@/customHook/useClickOutside";
-import { IOrder } from "@/models/order.interface";
+import { IOrderResponse } from "@/models/order.interface";
 interface IProp {
-  row: IOrder;
+  row: IOrderResponse;
   active: number;
   setActiveHandler: (index: number, e: any) => void;
   index: number;

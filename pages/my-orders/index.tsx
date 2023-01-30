@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { nanoid } from "nanoid";
 import PageHeaders from "@/components/orders/PageHeader";
 import Table from "@/components/orders/table";
-import { IOrder } from "@/models/order.interface";
+import { IOrderResponse } from "@/models/order.interface";
 import AddButton from "@/common/AddButton";
 import useUser from "@/lib/useUser";
 import useOrders from "@/lib/useOrders";
@@ -51,11 +51,9 @@ const data = [
 const MyOrders = () => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
-  const { orders, mutateOrders } = useOrders({ userId: user?.id_users });
-  console.log(orders);
-  const [userAllOrders, setUserAllOrders] = useState<IOrder[] | undefined>(
-    orders
-  );
+  const { orders, mutateOrders } = useOrders();
+  // const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
+  // );
 
   const addNewOrderHandler = () => {
     router.push(`${router.pathname}/add-new-order`);

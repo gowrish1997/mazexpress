@@ -3,22 +3,13 @@ import Image from "next/image";
 import { IAddressProps } from "@/models/address.interface";
 import useUser from "@/lib/useUser";
 
-interface IProp {
-  id: string;
-  title: string;
-  addressLine1: string;
-  addressLine2: string;
-  country: string;
-  city: string;
-  state: string;
-  postalCode: string;
-  mobileNumber: number;
-  default: string | null;
-}
+
 
 const UserSavedAddresses = (props: {
   address: IAddressProps;
-  register?: any;
+  register: any;
+  edit:(id:number)=>void
+
 }) => {
   const { user, mutateUser } = useUser();
   return (
@@ -28,7 +19,7 @@ const UserSavedAddresses = (props: {
         name="address"
         checked={user?.default_address_users === props.address.id_addresses}
         value={props.address.id_addresses}
-        {...(props.register ? props.register : "")}
+        {... props.register}
         className="cursor-pointer"
       />
       <div className="-mt-[5px] ml-[7px]">
@@ -55,7 +46,7 @@ const UserSavedAddresses = (props: {
         </div>
 
         <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[10px] mt-[15px] ">
-          <button>Edit</button>
+          <button onClick={()=>props.edit(props.address.id_addresses!)} >Edit</button>
           <button>Remove</button>
         </div>
       </div>
