@@ -8,7 +8,7 @@ interface IUser {
   password_users: string;
   isAdmin: 0 | 1;
   isLoggedIn: true | false;
-  id_users: number | null;
+  id_users: number;
   default_address_users: number;
 }
 interface ISignUp {

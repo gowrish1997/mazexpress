@@ -51,7 +51,7 @@ const data = [
 const MyOrders = () => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
-  const { orders, mutateOrders } = useOrders();
+  const { orders, mutateOrders } = useOrders({ userId: user?.id_users });
   // const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
   // );
 
@@ -61,7 +61,7 @@ const MyOrders = () => {
 
   return (
     <>
-      <PageHeaders content="My Orders" showCalender={true} />
+      <PageHeaders content="My Orders" showCalender={true} title='My Orders | MazExpress' />
 
       <div className="flex flex-col justify-between relative flex-1 h-full">
         {orders && orders.length > 0 ? (

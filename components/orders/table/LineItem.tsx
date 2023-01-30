@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import OrderOptionModal from "../modal/OrderOptionModal";
 import useClickOutside from "@/customHook/useClickOutside";
 import { IOrderResponse } from "@/models/order.interface";
+import useAddresses from "@/lib/useAddresses";
+import useUser from "@/lib/useUser";
 interface IProp {
   row: IOrderResponse;
   active: number;
@@ -24,6 +26,11 @@ const LineItem = ({
     setActive(-1);
   });
 
+  const { user, mutateUser } = useUser();
+  const { addresses, mutateAddresses } = useAddresses({
+    userId: user?.id_users,
+  });
+
   function optionModalHandler(e: any, index: number) {
     setActiveHandler(index, e);
   }
@@ -43,14 +50,19 @@ const LineItem = ({
     }
   };
 
+
+  useEffect(() => {
+    console.log(addresses)
+  }, [addresses])
+
   return (
     <>
       <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px]">
-        <td className={`td1`}>{row.reference_id_orders}</td>
+        <td className={`td1`}>{row.id_orders}</td>
         <td className={`td2`}>{row.store_link_orders}</td>
         <td className={`td3`}>{row.reference_id_orders}</td>
         <td className={`td4`}>estimated delivery</td>
-        <td className={`td5`}>{row.address_id}</td>
+        <td className={`td5`}>{addresses?.find(el => el.id_addresses === row.address_id)?.tag_addresses} </td>
         <td className={`td6`}>
           <label
             className={`customRadioInput ${orderStatusColorHandler(

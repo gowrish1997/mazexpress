@@ -1,10 +1,7 @@
 import useSWR from "swr";
 import { IOrderResponse } from "@/models/order.interface";
-export default function useOrders({
-  redirectTo = "",
-  redirectIfFound = false,
-  userId = null,
-} = {}) {
+
+export default function useOrders({ userId }: { userId?: number }) {
   const { data: orders, mutate: mutateOrders } = useSWR<IOrderResponse[]>(
     `/api/orders?user=${userId}`
   );

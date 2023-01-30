@@ -90,7 +90,7 @@ const Settings = () => {
 
   return (
     <>
-      <PageHeader content="Settings" className="border-none pb-[10px]" />
+      <PageHeader content="Settings" className="border-none pb-[10px]" title="User Settings | MazExpress" />
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">

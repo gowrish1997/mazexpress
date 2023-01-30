@@ -59,20 +59,29 @@ const AddressBook = () => {
   //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
   const { user, mutateUser } = useUser();
-  const { addresses, mutateAddresses } = useAddresses(user?.id_users);
+  const { addresses, mutateAddresses } = useAddresses({
+    userId: user?.id_users,
+  });
 
   const toggleAddNewAddressModal = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
 
-  console.log(addresses)
+  // console.log(addresses);
 
   return (
     <>
-      <PageHeader content="AddressBook" />
+      <PageHeader content="AddressBook" title="My Address Book | MazExpress" />
       <div className="flex-type1 flex-wrap mt-[20px] gap-[20px] ">
         {addresses?.map((data) => {
-          return <UserSavedAddresses key={data.id_addresses} address={data} />;
+          return (
+            <UserSavedAddresses
+              key={data.id_addresses}
+              address={data}
+              edit={() => {}}
+              register
+            />
+          );
         })}
       </div>
       <div>

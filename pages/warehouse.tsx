@@ -7,7 +7,7 @@ const Warehouse = () => {
   const { warehouses, mutateWarehouses } = useWarehouses();
   return (
     <>
-      <PageHeader content="Our Warehouse" />
+      <PageHeader content="Our Warehouse" title="Our Warehouses | MazExpress" />
       <div className="flex-type1 flex-wrap mt-[20px] gap-[20px] ">
         {warehouses?.map((data) => {
           return <WarehouseCard key={data.id_warehouses} address={data} />;
