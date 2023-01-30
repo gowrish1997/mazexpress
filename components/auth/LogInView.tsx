@@ -4,7 +4,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
-import axios from "axios";
 import { useRouter } from "next/router";
 import useUser from "@/lib/useUser";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
@@ -42,7 +41,7 @@ const LogInComponent = (props: any) => {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // console.log(data)
+    console.log(data)
     try {
       mutateUser(
         await fetchJson("/api/auth/login", {
@@ -93,9 +92,9 @@ const LogInComponent = (props: any) => {
           label="Password"
           name="password"
           type={passwordType}
-          dropDownIcon={{
-            iconIsEnabled: true,
-            iconSrc:
+          icon={{
+            isEnabled: true,
+            src:
               passwordType === "string"
                 ? "/eyeIconOpen.png"
                 : "/eyeIconClose.png",

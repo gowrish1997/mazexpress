@@ -10,15 +10,15 @@ export default function useAddresses({
 }) {
   if (userId !== null && userId !== undefined) {
     // use addresses for user
-    const { data: addresses, mutate: mutateAddresses } = useSWR<
+    const { data: addresses, mutate: mutateAddresses, isLoading: addressesIsLoading } = useSWR<
       IAddressProps[]
     >(`/api/addresses?user=${userId}`);
 
-    return { addresses, mutateAddresses };
+    return { addresses, mutateAddresses, addressesIsLoading };
   }
-  const { data: addresses, mutate: mutateAddresses } = useSWR<IAddressProps[]>(
+  const { data: addresses, mutate: mutateAddresses, isLoading: addressesIsLoading } = useSWR<IAddressProps[]>(
     `/api/addresses?user=${userId}`
   );
 
-  return { addresses, mutateAddresses };
+  return { addresses, mutateAddresses, addressesIsLoading };
 }

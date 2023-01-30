@@ -127,7 +127,7 @@ const Settings = () => {
                   {...register("avatar_url_users")}
                 />
                 <Image
-                  src={user ? user?.avatar_url_users : '/default_user.png'}
+                  src={user?.avatar_url_users !== undefined ? user.avatar_url_users : '/default_user.png'}
                   alt="profile"
                   height={100}
                   width={100}

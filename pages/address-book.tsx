@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "@/components/orders/PageHeader";
 import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
@@ -58,8 +58,8 @@ const addresses = [
 const AddressBook = () => {
   //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
-  const { user, mutateUser } = useUser();
-  const { addresses, mutateAddresses } = useAddresses({
+  const { user, mutateUser, userIsLoading } = useUser();
+  const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
     userId: user?.id_users,
   });
 
@@ -67,12 +67,11 @@ const AddressBook = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
 
-  // console.log(addresses);
-
   return (
     <>
       <PageHeader content="AddressBook" title="My Address Book | MazExpress" />
       <div className="flex-type1 flex-wrap mt-[20px] gap-[20px] ">
+        {addressesIsLoading && <p>loading addresses</p>}
         {addresses?.map((data) => {
           return (
             <UserSavedAddresses

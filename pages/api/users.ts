@@ -72,17 +72,13 @@ export default function handler(
       case "PUT":
         if (req.query.id) {
           const id = req.query.id;
-          const hash = hashPassword(req.body.password);
-          console.log(req.body);
-          const fields = {
-            first_name_users: req.body.first_name,
-            last_name_users: req.body.last_name,
-            email_users: req.body.email,
-            phone_users: req.body.phone,
-            password_users: hash,
-            default_address_users: parseInt(req.body.default_address),
-            avatar_url_users: req.body.avatar_url,
-          };
+          const fields = { ...req.body };
+          if (req.body.password_users) {
+            // change pass
+            const hash = hashPassword(req.body.password_users);
+            fields.password_users = hash;
+          }
+          console.log(fields, id)
           executeQuery(
             {
               query: "UPDATE users SET ? WHERE id_users = ? ",
@@ -90,6 +86,7 @@ export default function handler(
             },
             (results) => {
               res.status(200).json(results);
+              resolve(results)
             }
           );
         } else {

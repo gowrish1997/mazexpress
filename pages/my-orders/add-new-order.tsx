@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { nanoid } from "nanoid";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -11,6 +11,8 @@ import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import { IAddressProps } from "@/models/address.interface";
 import { IOrder } from "@/models/order.interface";
+import useAddresses from "@/lib/useAddresses";
+import useUser from "@/lib/useUser";
 
 const schema = yup
   .object({
@@ -19,66 +21,18 @@ const schema = yup
   })
   .required();
 
-const addresses = [
-  {
-    id: nanoid(),
-    title: "Gowiesh hpuse",
-    addressLine1: "byndoor udupu",
-    addressLine2: "kundapure",
-    country: "India",
-    city: "byndoor",
-    state: "karantak",
-    postalCode: "576214",
-    mobileNumber: 96863993098,
-    default: null,
-  },
-  {
-    id: nanoid(),
-    title: "Gowiesh hpuse",
-    addressLine1: "byndoor udupu",
-    addressLine2: "kundapure",
-    country: "India",
-    city: "byndoor",
-    state: "karantak",
-    postalCode: "576214",
-    mobileNumber: 96863993098,
-    default: "on",
-  },
-  {
-    id: nanoid(),
-    title: "Gowiesh hpuse",
-    addressLine1: "byndoor udupu",
-    addressLine2: "kundapure",
-    country: "India",
-    city: "byndoor",
-    state: "karantak",
-    postalCode: "576214",
-    mobileNumber: 96863993098,
-    default: null,
-  },
-  // {
-  //     id: nanoid(),
-  //     title: "Gowiesh hpuse",
-  //     addressLine1: "byndoor udupu",
-  //     addressLine2: "kundapure",
-  //     country: "India",
-  //     city: "byndoor",
-  //     state: "karantak",
-  //     postalCode: "576214",
-  //     mobileNumber: 96863993098,
-  //     default: null,
-  // },
-];
 
 const AddNewOrder = () => {
-  const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
-
+  const { user, mutateUser } = useUser();
+  const { addresses, mutateAddresses } = useAddresses({
+    userId: user?.id_users,
+  });
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
   const defaultAddressHandler = () => {
-    const address = userSavedAddresses.find((data) => {
-      return data.default;
-    });
+    const address = addresses?.find(
+      (el) => el.id_addresses === user?.default_address_users
+    );
 
     return address;
   };
@@ -86,14 +40,16 @@ const AddNewOrder = () => {
   const {
     register,
     handleSubmit,
+    
     formState: { errors },
+
   } = useForm<{
     referenceId: string;
     storeLink: string;
-    address?: string;
+    address: number;
   }>({
     defaultValues: {
-      address: defaultAddressHandler()?.id,
+      address: defaultAddressHandler()?.id_addresses,
     },
     resolver: yupResolver(schema),
   });
@@ -105,10 +61,19 @@ const AddNewOrder = () => {
   const onSubmit: SubmitHandler<{
     referenceId: string;
     storeLink: string;
-    address?: string;
+    address: number;
   }> = (data) => {
-    console.log(data);
+    // if (user) {
+    //   let newUserData = { ...user };
+    //   newUserData.default_address_users = data.address;
+    //   mutateUser(newUserData);
+    // }
+    // console.log(data);
   };
+
+  useEffect(() => {
+    console.log(user)
+  }, [user])
 
   return (
     <>
@@ -147,12 +112,14 @@ const AddNewOrder = () => {
           </p>
         </div>
         <div className="flex-type1 flex-wrap mt-[20px] gap-[20px] ">
-          {userSavedAddresses.map((data) => {
+          {addresses?.map((data) => {
             return (
               <UserSavedAddresses
-                key={data.id}
+                key={data.id_addresses}
                 address={data}
+                edit={() => {}}
                 register={register("address")}
+                
               />
             );
           })}
