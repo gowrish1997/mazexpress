@@ -5,12 +5,14 @@ import NavLink from "./NavLink";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import { useRouter } from "next/router";
+import useUser from "@/lib/useUser";
+import fetchJson from "@/lib/fetchJson";
 const sidebarContent = [
   {
     id: nanoid(),
     title: "My Orders",
     icon: "/orders.png",
-    path: "/myorders",
+    path: "/my-orders",
   },
   {
     id: nanoid(),
@@ -46,14 +48,10 @@ const sidebarContent = [
 
 const Sidebar = () => {
   const router = useRouter();
-  const logoutHandler = () => {
-    axios({
-      method: "GET",
-      url: "/api/auth/logout",
-    }).then((response) => {
-      console.log(response.data);
-      router.reload()
-    });
+  const { user, mutateUser } = useUser();
+  const logoutHandler = async () => {
+    mutateUser(await fetchJson("/api/auth/logout", { method: "GET" }), false);
+    router.push("/auth/gate");
   };
   return (
     <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[250px]">
@@ -65,7 +63,10 @@ const Sidebar = () => {
           })}
         </ul>
 
-        <div className="rounded self-center  flex flex-row items-center justify-start  w-[188px] bg-[#3672DF] py-[10px] px-[15px] -ml-[15px] cursor-pointer ">
+        <div
+          className="rounded self-center  flex flex-row items-center justify-start  w-[188px] bg-[#3672DF] py-[10px] px-[15px] -ml-[15px] cursor-pointer"
+          onClick={logoutHandler}
+        >
           <div className="relative w-[14px] h-[14px] ">
             <Image
               src="/logout.png"
@@ -74,12 +75,9 @@ const Sidebar = () => {
               alt="logout"
             />
           </div>
-          <button
-            className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] ml-[10px]"
-            onClick={logoutHandler}
-          >
+          <p className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] ml-[10px]">
             Logout
-          </button>
+          </p>
         </div>
       </div>
     </div>

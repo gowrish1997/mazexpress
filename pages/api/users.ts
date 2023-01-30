@@ -24,7 +24,7 @@ export default function handler(
             },
             (results) => {
               console.log("results", results);
-              res.status(200).json({ msg: "single", data: results });
+              res.status(200).json(results);
             }
           );
         } else {

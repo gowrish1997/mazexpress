@@ -9,7 +9,9 @@ import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
-import { IUserAddress } from "@/models/orders";
+import { IAddressProps } from "@/models/address.interface";
+import { IOrder } from "@/models/order.interface";
+
 const schema = yup
     .object({
         referenceId: yup.string().required(),
@@ -19,28 +21,28 @@ const schema = yup
 
 const addresses = [
     {
-        id: nanoid(),
-        tag: "Gowiesh hpuse",
-        address_1: "byndoor udupu",
-        address_2: "kundapure",
-        country: "India",
-        city: "byndoor",
-        state: "karantak",
-        pincode: "576214",
-        phone: 96863993098,
-        default: null,
+        id_addresses: 12,
+        tag_addresses: "home",
+        address_1_addresses: "yeljitn",
+        address_2_addresses: "kotikero",
+        country_addresses: "india",
+        city_addresses: "banfaloore",
+        state_addresses: "karnatka",
+        pincode_addresses: "57632",
+        phone_addresses: 82344352,
+        default_addresses: "on",
     },
 ];
 
 const AddNewOrder = () => {
-    const [userSavedAddresses, setUserSavedAddresses] = useState<IUserAddress[]>(addresses);
-    const [editableAddress, setEditableAddress] = useState<IUserAddress>();
+    const [userSavedAddresses, setUserSavedAddresses] = useState<IAddressProps[]>(addresses);
+    const [editableAddress, setEditableAddress] = useState<IAddressProps>();
     const [showEditUserAddressModal, setShowEditUserAddressModal] = useState<boolean>(false);
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
     const defaultAddressHandler = () => {
         const address = userSavedAddresses.find((data) => {
-            return data.default;
+            return data.default_addresses;
         });
 
         return address;
@@ -50,13 +52,9 @@ const AddNewOrder = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<{
-        referenceId: string;
-        storeLink: string;
-        address?: string;
-    }>({
+    } = useForm<IOrder>({
         defaultValues: {
-            address: defaultAddressHandler()?.id,
+            address: defaultAddressHandler()?.id_addresses,
         },
         resolver: yupResolver(schema),
     });
@@ -65,24 +63,20 @@ const AddNewOrder = () => {
         setShowAddNewAddressModal((prev) => !prev);
     };
 
-    const toggleEditUserAddressModal = (addressId?: string) => {
+    const toggleEditUserAddressModal = (addressId?: number) => {
         console.log(addressId);
         if (showEditUserAddressModal) {
             setShowEditUserAddressModal(false);
         } else {
             setShowEditUserAddressModal(true);
             const address = userSavedAddresses.find((data) => {
-                return data.id == addressId;
+                return data.id_addresses == addressId;
             });
             setEditableAddress(address);
         }
     };
 
-    const onSubmit: SubmitHandler<{
-        referenceId: string;
-        storeLink: string;
-        address?: string;
-    }> = (data) => {
+    const onSubmit: SubmitHandler<IOrder> = (data) => {
         if (userSavedAddresses.length) {
             console.log(data);
         } else {
@@ -114,7 +108,7 @@ const AddNewOrder = () => {
                 </div>
                 <div className="flex-type1 flex-wrap mt-[20px] gap-[15px] ">
                     {userSavedAddresses.map((data) => {
-                        return <UserSavedAddresses key={data.id} address={data} register={register("address")} edit={toggleEditUserAddressModal} />;
+                        return <UserSavedAddresses key={data.id_addresses} address={data} register={register("address")} edit={toggleEditUserAddressModal} />;
                     })}
                 </div>
                 <button className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]" type="submit">

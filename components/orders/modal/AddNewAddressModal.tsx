@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import Image from "next/image";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
-import { IUserAddress } from "@/models/orders";
+import { IAddressProps } from "@/models/address.interface";
+import CountrySelector from "@/common/CountrySelector";
+import RegionSelector from "@/common/RegionSelector";
+
 interface IProp {
     show: boolean;
     close: () => void;
@@ -12,20 +16,21 @@ interface IProp {
 
 const schema = yup
     .object({
-        address_1: yup.string().required(),
-        address_2: yup.string().required(),
+        address_1_addresses: yup.string().required(),
+        address_2_addresses: yup.string().required(),
     })
     .required();
 
 const AddNewAddressModal = (props: IProp) => {
+    const [country, setCountry] = useState("AF");
     const {
         register,
         handleSubmit,
+        getValues,
+        control,
         formState: { errors },
-    } = useForm<IUserAddress>({
-        defaultValues: {
-            id: nanoid(),
-        },
+    } = useForm<IAddressProps>({
+        defaultValues: {},
         // resolver: yupResolver(schema),
     });
 
@@ -35,8 +40,8 @@ const AddNewAddressModal = (props: IProp) => {
         setAddressIsDefault((prev) => !prev);
     };
 
-    const onSubmit: SubmitHandler<IUserAddress> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<IAddressProps> = (data) => {
+        console.log(data);
         props.close();
     };
 
@@ -47,27 +52,63 @@ const AddNewAddressModal = (props: IProp) => {
                     <form className=" box-border flex-type6  bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] h-[680px] gap-y-[15px]" onSubmit={handleSubmit(onSubmit)}>
                         <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">Add New Address</p>
                         <input
-                            id="tag"
+                            id="tag_addresses"
                             type="string"
-                            {...register("tag")}
+                            {...register("tag_addresses")}
                             className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
                             placeholder="Give first title @Home"
                         />
-                        <ReactHookFormInput label="Address line 01" name="address_1" type="string" register={register("address_1")} />
-                        <ReactHookFormInput label="Address line 02" name="address_2" type="string" register={register("address_2")} />
+                        <ReactHookFormInput label="Address line 01" name="address_1_addresses" type="string" register={register("address_1_addresses")} />
+                        <ReactHookFormInput label="Address line 02" name="address_2_addresses" type="string" register={register("address_2_addresses")} />
                         <div className="flex-type2 space-x-[10px] w-full">
-                            <ReactHookFormInput label="Country" name="country" type="string" register={register("country")} />
+                            <Controller
+                                name="country_addresses"
+                                control={control}
+                                defaultValue="AF"
+                                render={({ field: { onChange, value, ref } }) => (
+                                    <CountrySelector
+                                        label="Country"
+                                        value={value}
+                                        onChange={onChange}
+                                        setCountry={setCountry}
+                                        error={errors.country_addresses}
+                                        dropDownIcon={{ iconIsEnabled: true, iconSrc: "/downwardArrow.png" }}
+                                    />
+                                )}
+                            />
+                            <Controller
+                                name="city_addresses"
+                                control={control}
+                                defaultValue="Badakhshan"
+                                render={({ field: { onChange, value, ref } }) => (
+                                    <RegionSelector
+                                        label="City/Town"
+                                        dropDownIcon={{ iconIsEnabled: true, iconSrc: "/downwardArrow.png" }}
+                                        value={value}
+                                        country={country}
+                                        onChange={onChange}
+                                    />
+                                )}
+                            />
+                            {/* <div className={"w-full flex-type6"}>
+            <label className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] ">"City/Town</label>
+            <div className={"flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative "} style={{ borderColor: errors.city_addresses ? "#f02849" : "" }}>
+            <Controller name="city_addresses" control={control} render={({ field: { onChange, value, ref } }) => 
+                <RegionDropdown  country={getValues("country_addresses")} value={value} countryValueType="short" classes="menu-regioin" showDefaultOption=""  onChange={onChange} />} />
 
-                            <ReactHookFormInput label="Last name" name="city" type="string" register={register("city")} />
+                    <Image src="/downwardArrow.png" alt="eyeIcon" height={10} width={10} className="cursor-pointer absolute right-[8px] " />
+                
+            </div>
+            {errors.city_addresses && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{errors.city_addresses.message}</p>}
+        </div> */}
                         </div>
                         <div className="flex-type2 space-x-[10px] w-full">
-                            <ReactHookFormInput label="City/Town" name="state" type="string" register={register("state")} />
-
-                            <ReactHookFormInput label="State/Province/Region" name="pincode" type="string" register={register("pincode")} />
+                            <ReactHookFormInput label="State/Province/Region" name="state_addresses" type="string" register={register("state_addresses")} />
+                            <ReactHookFormInput label="Zip/Postal Code" name="pincode_addresses" type="string" register={register("pincode_addresses")} />
                         </div>
-                        <ReactHookFormInput label="Mobile Numbers" name="phone" type="number" register={register("phone")} />
+                        <ReactHookFormInput label="Mobile Numbers" name="phone_addresses" type="number" register={register("phone_addresses")} />
                         <div className=".flex-type1 space-x-[5px]">
-                            <input type="radio" checked={addressIsDefault} onClick={toggleDefaultAddressHandler} {...register("default")} name="default" />
+                            <input type="radio" checked={addressIsDefault} onClick={toggleDefaultAddressHandler} {...register("default_addresses")} name="default_addresses" />
 
                             <span>Set as Default</span>
                         </div>

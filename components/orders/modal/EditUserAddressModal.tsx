@@ -4,18 +4,18 @@ import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
-import { IUserAddress } from "@/models/orders";
+import { IAddressProps } from "@/models/address.interface";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 interface IProp {
     show: boolean;
     close: () => void;
-    address: IUserAddress;
+    address: IAddressProps;
 }
 
 const schema = yup
     .object({
-        address_1: yup.string().required(),
-        address_2: yup.string().required(),
+        address_1_addresses: yup.string().required(),
+        address_2_addresses: yup.string().required(),
     })
     .required();
 
@@ -23,8 +23,9 @@ const EditUserAddressModal = (props: IProp) => {
     const {
         register,
         handleSubmit,
+        getValues,
         formState: { errors },
-    } = useForm<IUserAddress>({
+    } = useForm<IAddressProps>({
         defaultValues: props.address,
         resolver: yupResolver(schema),
     });
@@ -33,7 +34,7 @@ const EditUserAddressModal = (props: IProp) => {
 
     useEffect(() => {
         console.log("useEffext");
-        setAddressIsDefault(props.address.default ? true : false);
+        setAddressIsDefault(props.address.default_addresses ? true : false);
     }, []);
 
     const toggleDefaultAddressHandler = () => {
@@ -46,7 +47,7 @@ const EditUserAddressModal = (props: IProp) => {
         }
     };
 
-    const onSubmit: SubmitHandler<IUserAddress> = (data) => {
+    const onSubmit: SubmitHandler<IAddressProps> = (data) => {
         console.log(data);
         props.close();
     };
@@ -59,26 +60,26 @@ const EditUserAddressModal = (props: IProp) => {
                     <input
                         id="title"
                         type="string"
-                        {...register("tag")}
+                        {...register("tag_addresses")}
                         className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
                         placeholder="Give first title @Home"
-                        value={props.address.tag}
+                        value={props.address.tag_addresses}
                     />
-                    <ReactHookFormInput label="Address line 01" name="addressLine01" type="string" register={register("address_1")} value={props.address.address_1} />
-                    <ReactHookFormInput label="Address line 02" name="addressLine02" type="string" register={register("address_2")} value={props.address.address_2} />
+                    <ReactHookFormInput label="Address line 01" name="address_1_addresses" type="string" register={register("address_1_addresses")} value={props.address.address_1_addresses} />
+                    <ReactHookFormInput label="Address line 02" name="address_2_addresses" type="string" register={register("address_2_addresses")} value={props.address.city_addresses} />
                     <div className="flex-type2 space-x-[10px] w-full">
-                        <ReactHookFormInput label="Country" name="country" type="string" register={register("country")} value={props.address.country} />
+                        <ReactHookFormInput label="Country" name="country_addresses" type="string" register={register("country_addresses")} value={props.address.country_addresses} />
 
-                        <ReactHookFormInput label="Last name" name="city" type="string" register={register("city")} value={props.address.city} />
+                        <ReactHookFormInput label="City/Town" name="city_addresses" type="string" register={register("city_addresses")} value={props.address.city_addresses} />
                     </div>
                     <div className="flex-type2 space-x-[10px] w-full">
-                        <ReactHookFormInput label="City/Town" name="state" type="string" register={register("state")} value={props.address.state} />
+                        <ReactHookFormInput label="State/Province/Region" name="state_addresses" type="string" register={register("state_addresses")} value={props.address.state_addresses} />
 
-                        <ReactHookFormInput label="State/Province/Region" name="postalCode" type="string" register={register("pincode")} value={props.address.phone} />
+                        <ReactHookFormInput label="Zip/Postal Code" name="postalCode" type="string" register={register("pincode_addresses")} value={props.address.pincode_addresses} />
                     </div>
-                    <ReactHookFormInput label="Mobile Numbers" name="mobileNumber" type="number" register={register("phone")} value={props.address.phone} />
+                    <ReactHookFormInput label="Mobile Numbers" name="phone_addresses" type="number" register={register("phone_addresses")} value={props.address.phone_addresses} />
                     <div className=".flex-type1 space-x-[5px]">
-                        <input type="radio" checked={addressIsDefault} onClick={toggleDefaultAddressHandler} {...register("default")} name="default" />
+                        <input type="radio" checked={addressIsDefault} onClick={toggleDefaultAddressHandler} {...register("default_addresses")} name="default_addresses" />
 
                         <span>Set as Default</span>
                     </div>
