@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import LineItem from "./LineItem";
-import { IOrderDetail } from "@/models/orders";
 import { IOrder } from "@/models/order.interface";
 interface TableProps {
   tableHeaders: Array<string>;

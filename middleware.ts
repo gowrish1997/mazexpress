@@ -45,9 +45,11 @@ export const config = {
      * - favicon.ico (favicon file)
      */
     // deploy
-    "/((?!api|_next/static|_next/image|favicon.ico|auth/gate).*)",
+    // match all except these links
+    // "/((?!api|_next/static|_next/image|favicon.ico|auth/gate).*)",
 
     //dev
-    // "/((?!.*)",
+    // match none
+    "/((?!.*).*)",
   ],
 };
