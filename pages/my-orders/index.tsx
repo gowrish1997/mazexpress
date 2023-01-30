@@ -52,8 +52,8 @@ const MyOrders = () => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
   const { orders, mutateOrders } = useOrders();
-  const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
-  );
+  // const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
+  // );
 
   const addNewOrderHandler = () => {
     router.push(`${router.pathname}/add-new-order`);
@@ -64,9 +64,9 @@ const MyOrders = () => {
       <PageHeaders content="My Orders" showCalender={true} />
 
       <div className="flex flex-col justify-between relative flex-1 h-full">
-        {userAllOrders?.length ? (
+        {orders && orders.length > 0 ? (
           <>
-            <Table orders={userAllOrders} tableHeaders={tableHeaders} />
+            <Table orders={orders} tableHeaders={tableHeaders} />
             <AddButton onClick={addNewOrderHandler} />
           </>
         ) : (

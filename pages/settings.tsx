@@ -7,19 +7,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
 import Layout from "@/components/layout";
-import { TUserProfile } from "@/models/user.interface";
+import { IUserProfile,IUser } from "@/models/user.interface";
 import LanguageSelector from "@/common/LanguageSelector";
-const sing = {
-    first_name_users: "string",
-    last_name_users: "string",
-    email_users: "strin@gmail.com",
-    phone_users: 1234567890,
-    password_users: "string",
-    newPassword_users: "Efla$321",
-    avatarURL_users: "string",
-    notification_users: true,
-    language_users: "en",
-};
+// const sing = {
+//     first_name_users: "string",
+//     last_name_users: "string",
+//     email_users: "strin@gmail.com",
+//     phone_users: 1234567890,
+//     password_users: "string",
+//     newPassword_users: "Efla$321",
+//     avatarURL_users: "string",
+//     notification_users: true,
+//     language_users: "en",
+// };
 
 const schema = yup
     .object({
@@ -40,9 +40,9 @@ const schema = yup
             .matches(/[a-z]/, "Password requires a lowercase letter")
             .matches(/[A-Z]/, "Password requires an uppercase letter")
             .matches(/[^\w]/, "Password requires a symbol"),
-        avatarURL_users: yup.string(),
+            avatar_url_users: yup.string(),
         notification_users: yup.boolean().required(),
-        language_users: yup.string().required(),
+        default_language_users: yup.string().required(),
     })
     .required();
 
@@ -52,9 +52,9 @@ const settings = () => {
         handleSubmit,
         control,
         formState: { errors },
-    } = useForm<TUserProfile>({
+    } = useForm<IUserProfile>({
         resolver: yupResolver(schema),
-        defaultValues: sing,
+        // defaultValues: sing,
     });
 
     const [passwordType, setPasswordType] = useState("password");
@@ -75,7 +75,7 @@ const settings = () => {
         }
     };
 
-    const onSubmit: SubmitHandler<TUserProfile> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<IUserProfile> = (data) => console.log(data);
 
     return (
         <>
@@ -96,7 +96,7 @@ const settings = () => {
                     <form className="flex-type6 w-3/4 gap-y-[10px] " onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex-type1 gap-x-[20px] mb-[20px] ">
                             <label htmlFor="user_profile">
-                                <input type="file" className="hidden" id="user_profile" {...register("avatarURL_users")} />
+                                <input type="file" className="hidden" id="user_profile" {...register("avatar_url_users")} />
                                 <Image src="/profile.png" alt="profile" height={100} width={100} />
                             </label>
 
@@ -146,12 +146,12 @@ const settings = () => {
                             <ReactHookFormInput label="Mobile number" name="phone_users" type="number" register={register("phone_users")} error={errors.phone_users} />
 
                             <Controller
-                                name="language_users"
+                                name="default_language_users"
                                 control={control}
                                 render={({ field: { onChange, value, ref } }) => (
                                     <LanguageSelector
                                         label="Language"
-                                        error={errors.language_users}
+                                        error={errors.default_language_users}
                                         dropDownIcon={{ iconIsEnabled: true, iconSrc: "/downwardArrow.png" }}
                                         onChange={onChange}
                                         value={value}

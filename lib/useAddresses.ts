@@ -3,7 +3,7 @@ import Router from "next/router";
 import useSWR from "swr";
 import { IAddressProps } from "@/models/address.interface";
 
-export default function useAddresses(id: number | undefined) {
+export default function useAddresses(id: number | undefined | null) {
   const { data: addresses, mutate: mutateAddresses } = useSWR<IAddressProps[]>(
     `/api/addresses?user=${id}`
   );

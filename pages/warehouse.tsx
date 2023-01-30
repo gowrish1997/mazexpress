@@ -1,5 +1,4 @@
 import React from "react";
-import { nanoid } from "nanoid";
 import PageHeader from "@/components/orders/PageHeader";
 import useWarehouses from "@/lib/useWarehouses";
 import WarehouseCard from "@/components/warehouse/WarehouseCard";

@@ -1,10 +1,12 @@
 interface IUser {
-    isLoggedIn: boolean;
-    avatarUrl: string;
-    email: string;
-    username: string;
-    isAdmin: boolean;
-    id: number;
+    avatar_url_users: string;
+    email_users: string;
+    first_name_users: string;
+    last_name_users: string;
+    phone_users: string;
+    password_users: string;
+    isAdmin: 0 | 1;
+    id_users: number | null;
     default_address_users: number;
 }
 interface ISignUp {
@@ -15,20 +17,25 @@ interface ISignUp {
     password_users: string;
     confirmPassword_users: string;
 }
-type RemoveKindField<Type> = {
-    [Property in keyof Type as Exclude<Property, "confirmPassword_users">]: Type[Property];
-};
+// type RemoveKindField<Type> = {
+//     [Property in keyof Type as Exclude<Property,[ "isAdmin","id_users","default_address_users"]>]: Type[Property];
+// };
 
 // type TUserProfile = ISignUp & {
 //     avatarURL_users: string;
 //     notification_users: string;
 //     language_users: string;
 // };
-type TUserProfile = RemoveKindField<ISignUp> & {
+interface IUserProfile{
+    avatar_url_users: string;
+    email_users: string;
+    first_name_users: string;
+    last_name_users: string;
+    phone_users: string;
+    password_users: string;
     newPassword_users: string;
-    avatarURL_users: string;
     notification_users: boolean;
-    language_users: string;
+    default_language_users: string;
 };
 
-export type { IUser, ISignUp, TUserProfile };
+export type { IUser, ISignUp, IUserProfile };

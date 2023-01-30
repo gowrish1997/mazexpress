@@ -34,9 +34,9 @@ const Topbar = () => {
           <Image src={"/bell.png"} height={16} width={17} alt="notification" />
         </span>
 
-        {user && user.avatarUrl ? (
+        {user && user.avatar_url_users ? (
           <Image
-            src={user.avatarUrl}
+            src={user.avatar_url_users}
             className="rounded-full"
             width={31}
             height={30}
@@ -46,7 +46,7 @@ const Topbar = () => {
           <FontAwesomeIcon icon={faUser} />
         )}
         <p className="font-[500] text-[#525D72] text-[14px] leading-[19px] mx-2">
-          {user?.username}
+          {user?.first_name_users} {user?.last_name_users}
         </p>
         <FontAwesomeIcon icon={faAngleDown} size="xs" />
       </div>

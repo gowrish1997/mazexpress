@@ -66,7 +66,7 @@ export default function handler(
             ],
           },
           (results) => {
-            res.status(200).json({ msg: "create", data: results });
+            res.status(200).json(results);
           }
         );
         break;
@@ -84,6 +84,7 @@ export default function handler(
             pincode_addresses: req.body.pincode,
             state_addresses: req.body.state,
             phone_addresses: req.body.phone,
+            tag_addresses: req.body.tag,
           };
           executeQuery(
             {
@@ -91,7 +92,7 @@ export default function handler(
               values: [fields, id],
             },
             (results) => {
-              res.status(200).json({ msg: "put", data: results });
+              res.status(200).json(results);
             }
           );
         } else {
@@ -108,7 +109,7 @@ export default function handler(
               values: [id],
             },
             (results) => {
-              res.status(200).json({ msg: "delete", data: results });
+              res.status(200).json(results);
             }
           );
         } else {

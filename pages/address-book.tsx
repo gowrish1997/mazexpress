@@ -59,7 +59,7 @@ const AddressBook = () => {
   //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
   const { user, mutateUser } = useUser();
-  const { addresses, mutateAddresses } = useAddresses(user?.id);
+  const { addresses, mutateAddresses } = useAddresses(user?.id_users);
 
   const toggleAddNewAddressModal = () => {
     setShowAddNewAddressModal((prev) => !prev);

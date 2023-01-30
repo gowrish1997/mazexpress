@@ -52,6 +52,7 @@ const LogInComponent = (props: any) => {
         }),
         false
       );
+      router.push("/");
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);
