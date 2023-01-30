@@ -15,7 +15,7 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<IUser>) {
     res.json({
       first_name_users: "",
       email_users: "",
-      avatar_url_users: "",
+      avatar_url_users: "/default_user.png",
       id_users: null,
       last_name_users: "",
       phone_users: "",

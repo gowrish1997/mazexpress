@@ -9,6 +9,7 @@ import ReactHookFormInput from "@/common/ReactHookFormInput";
 import Layout from "@/components/layout";
 import { IUserProfile, IUser } from "@/models/user.interface";
 import LanguageSelector from "@/common/LanguageSelector";
+import useUser from "@/lib/useUser";
 // const sing = {
 //     first_name_users: "string",
 //     last_name_users: "string",
@@ -53,7 +54,8 @@ const schema = yup
   })
   .required();
 
-const settings = () => {
+const Settings = () => {
+  const { user, mutateUser } = useUser();
   const {
     register,
     handleSubmit,
@@ -61,7 +63,7 @@ const settings = () => {
     formState: { errors },
   } = useForm<IUserProfile>({
     resolver: yupResolver(schema),
-    // defaultValues: sing,
+    defaultValues: user,
   });
 
   const [passwordType, setPasswordType] = useState("password");
@@ -82,7 +84,9 @@ const settings = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<IUserProfile> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IUserProfile> = (data) => {
+    console.log('submit settings', data)
+  };
 
   return (
     <>
@@ -123,7 +127,7 @@ const settings = () => {
                   {...register("avatar_url_users")}
                 />
                 <Image
-                  src="/profile.png"
+                  src={user ? user?.avatar_url_users : '/default_user.png'}
                   alt="profile"
                   height={100}
                   width={100}
@@ -132,10 +136,10 @@ const settings = () => {
 
               <div className="flex-type6">
                 <p className="text-[24px] text-[#2B2B2B] leading-[32px] font-[600] ">
-                  Lincoln Bergson
+                  {user?.first_name_users} {user?.last_name_users}
                 </p>
                 <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">
-                  lincolnbergson96@gmail.com
+                  {user?.email_users}
                 </p>
               </div>
             </div>
@@ -164,9 +168,9 @@ const settings = () => {
                 type={passwordType}
                 register={register("password_users")}
                 error={errors.password_users}
-                dropDownIcon={{
-                  iconIsEnabled: true,
-                  iconSrc:
+                icon={{
+                  isEnabled: true,
+                  src:
                     passwordType == "string"
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
@@ -190,9 +194,9 @@ const settings = () => {
                 type={newPasswordType}
                 register={register("newPassword_users")}
                 error={errors.newPassword_users}
-                dropDownIcon={{
-                  iconIsEnabled: true,
-                  iconSrc:
+                icon={{
+                  isEnabled: true,
+                  src:
                     newPasswordType == "string"
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
@@ -209,7 +213,7 @@ const settings = () => {
                 error={errors.phone_users}
               />
 
-              <Controller
+              {/* <Controller
                 name="default_language_users"
                 control={control}
                 render={({ field: { onChange, value, ref } }) => (
@@ -224,7 +228,7 @@ const settings = () => {
                     value={value}
                   />
                 )}
-              />
+              /> */}
             </div>
             <div className="flex-type3 w-full space-x-[20px] mt-[10px] ">
               <div className="font-[500]">
@@ -267,4 +271,4 @@ const settings = () => {
   );
 };
 
-export default settings;
+export default Settings;

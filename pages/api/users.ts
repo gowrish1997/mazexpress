@@ -37,7 +37,7 @@ export default function handler(
             },
             (results) => {
               console.log("results", results);
-              res.status(200).json({ msg: "list", data: results });
+              res.status(200).json(results);
             }
           );
         }
@@ -60,7 +60,7 @@ export default function handler(
               req.body.phone,
               hash,
               null,
-              '/default_user.png'
+              "/default_user.png",
             ],
           },
           (results) => {
@@ -73,13 +73,15 @@ export default function handler(
         if (req.query.id) {
           const id = req.query.id;
           const hash = hashPassword(req.body.password);
+          console.log(req.body);
           const fields = {
             first_name_users: req.body.first_name,
             last_name_users: req.body.last_name,
             email_users: req.body.email,
             phone_users: req.body.phone,
             password_users: hash,
-            default_address_users: null,
+            default_address_users: parseInt(req.body.default_address),
+            avatar_url_users: req.body.avatar_url,
           };
           executeQuery(
             {
@@ -105,7 +107,7 @@ export default function handler(
               values: [id],
             },
             (results) => {
-              res.status(200).json({ msg: "delete", data: results });
+              res.status(200).json(results);
             }
           );
         } else {
