@@ -24,7 +24,7 @@ const UserSavedAddresses = (props: {
       let newUserData = { default_address_users: id };
 
       // update user backend
-      
+
       const updatedUser = await mutateUser(
         await fetchJson(`/api/users?id=${user.id_users}`, {
           method: "PUT",
@@ -35,14 +35,13 @@ const UserSavedAddresses = (props: {
           populateCache: (result, current) => {
             // console.log(result, 'result')
             // console.log(current, 'current')
-            
-            return current!
+
+            return current!;
           },
           // revalidate: true
         }
-        
       );
-      console.log('mutate return', updatedUser)
+      console.log("mutate return", updatedUser);
       // axios
       //   .put(`/api/users?id=${user?.id_users}`, { default_address_users: id })
       //   .then((response) => {

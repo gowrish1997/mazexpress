@@ -51,9 +51,9 @@ const LineItem = ({
   };
 
 
-  useEffect(() => {
-    console.log(addresses)
-  }, [addresses])
+  // useEffect(() => {
+  //   console.log(addresses)
+  // }, [addresses])
 
   return (
     <>
