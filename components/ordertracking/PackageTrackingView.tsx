@@ -7,7 +7,7 @@ import Vehicle from "../../public/svgVehicle.svg";
 import WareHouse from "../../public/svgWareHouse.svg";
 import Check from "../../public/svgCheck.svg";
 
-const MultiStepProgressBar = (props: {packageStatus: number }) => {
+const PackageTrackingView = (props: {packageStatus: number }) => {
     const progressBarStatusHandler = () => {
         switch (props.packageStatus) {
             case 0:
@@ -94,4 +94,4 @@ const MultiStepProgressBar = (props: {packageStatus: number }) => {
     );
 };
 
-export default MultiStepProgressBar;
+export default PackageTrackingView;
