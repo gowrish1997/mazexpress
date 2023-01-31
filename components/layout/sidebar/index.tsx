@@ -49,9 +49,10 @@ const sidebarContent = [
 const Sidebar = () => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
+
   const logoutHandler = async () => {
-    mutateUser(await fetchJson("/api/auth/logout", { method: "GET" }), false);
     router.push("/auth/gate");
+    mutateUser(await fetchJson("/api/auth/logout", { method: "GET" }), false);
   };
   return (
     <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[250px]">
