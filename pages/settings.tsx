@@ -92,10 +92,7 @@ const Settings = () => {
     delete updateObj.default_language_users;
     updateObj.id_users = user?.id_users;
 
-    // console.log("submit settings", updateObj);
     if (user && user.id_users) {
-      //   updateUser(user?.id_users, updateObj);
-
       // update user
       try {
         mutateUser(
@@ -114,7 +111,6 @@ const Settings = () => {
           console.error("An unexpected error happened:", error);
         }
       }
-      // router.reload()
     }
   };
 
@@ -251,23 +247,6 @@ const Settings = () => {
                 register={register("phone_users")}
                 error={errors.phone_users}
               />
-
-              {/* <Controller
-                name="default_language_users"
-                control={control}
-                render={({ field: { onChange, value, ref } }) => (
-                  <LanguageSelector
-                    label="Language"
-                    error={errors.default_language_users}
-                    dropDownIcon={{
-                      iconIsEnabled: true,
-                      iconSrc: "/downwardArrow.png",
-                    }}
-                    onChange={onChange}
-                    value={value}
-                  />
-                )}
-              /> */}
 
               <CustomDropDown
                 label="Language"
