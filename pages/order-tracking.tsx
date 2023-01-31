@@ -3,7 +3,7 @@ import Image from "next/image";
 import PageHeader from "@/components/orders/PageHeader";
 import Layout from "@/components/layout";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
-import MultiStepProgressBar from "@/components/ordertracking/MultiStepProgressBar";
+import PackageTrackingView from "@/components/ordertracking/PackageTrackingView";
 import WarehouseTracking from "@/components/ordertracking/WarehouseTracking";
 const allOrder = [
     {
@@ -45,7 +45,7 @@ const OrderTracking = () => {
                         </div>
 
                         <div className="flex-type2 justify-start w-[100%] space-x-[50px] ">
-                            <MultiStepProgressBar packageStatus={packageStatus} />
+                            <PackageTrackingView packageStatus={packageStatus} />
                             <div className="flex-type6 text-[#525D72] font-[500] leading-[21px] text-[14px] ">
                                 <div className="flex-type6 gap-y-[5px] mt-[20px]  ">
                                     <p className={`${packageStatus >= 0 ? "text-[#2B2B2B] font-[600] " : ""}`}>Source website</p>

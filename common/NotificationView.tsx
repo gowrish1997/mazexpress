@@ -17,7 +17,7 @@ const NotificationView = (props: IProp) => {
         <>
             <div
                 className="z-50 fixed right-0  h-[100vh] overflow-y-auto  box-border  border-[1px] border-[#BBC2CF] pt-[30px] pb-[20px] px-[20px] translate-x-[0%] bg-[#FFFFFF] w-[413px]  rounded-[4px] transition-transform duration-500 space-y-[30px] "
-                style={props.show ? { transform: "translateX(100%)" } : { transform: "translateX(0%)" }}
+                style={!props.show? { transform: "translateX(100%)" } : { transform: "translateX(0%)" }}
             >
                 {/* <div className=" overflow-x-hidden pt-[30px] pb-[20px] px-[20px]"> */}
                 <div className="flex-type3">
