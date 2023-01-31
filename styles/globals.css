@@ -27,7 +27,6 @@ body {
 }
 
 @layer components {
-<<<<<<< HEAD
     .flex-type1 {
         @apply flex flex-row justify-start items-center;
     }
@@ -56,32 +55,6 @@ body {
     .secondWarehouse {
         @apply after:absolute after:-left-[0.5px]  after:h-[25px] after:w-[2px] after:rounded after:bg-[#006400];
     }
-=======
-  .flex-type1 {
-    @apply flex flex-row justify-start items-center;
-  }
-  .flex-type2 {
-    @apply flex flex-row justify-start items-start;
-  }
-  .flex-type3 {
-    @apply flex flex-row justify-between items-center;
-  }
-  .flex-type4 {
-    @apply flex flex-row justify-between items-start;
-  }
-  .flex-type5 {
-    @apply flex flex-col justify-start items-center;
-  }
-  .flex-type6 {
-    @apply flex flex-col justify-start items-start;
-  }
-  .flex-type7 {
-    @apply flex flex-col justify-between items-center;
-  }
-  .flex-type8 {
-    @apply flex flex-col justify-between items-start;
-  }
->>>>>>> raunak
 }
 #searchbar::placeholder {
   font-size: 14px;
