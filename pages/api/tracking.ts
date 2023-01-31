@@ -50,13 +50,22 @@ export default function handler(
                 values: [req.query.order],
               },
               (results) => {
-                console.log("results", results);
+                // console.log("results", results);
                 res.status(200).json(results);
               }
             );
           }
-          res.status(500).json({ msg: "error invalid req" });
-          reject();
+          executeQuery(
+            {
+              query: "SELECT * FROM tracking",
+              values: [],
+            },
+            (results) => {
+            //   console.log("results", results);
+              res.status(200).json(results);
+              resolve(results)
+            }
+          );
         }
         break;
 
