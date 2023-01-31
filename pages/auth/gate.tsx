@@ -6,7 +6,7 @@ import ResetPasswordView from "@/components/auth/ResetPasswordView";
 import SignUpView from "@/components/auth/SignUpView";
 
 const Gate = () => {
-  const [mode, setMode] = useState<number>(0);
+  const [mode, setMode] = useState<number>(1);
 
   function toggleMode(i: number) {
     setMode(i);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export const getTimeInHourAndMinuteFormat = (time: any) => {
     if (time) {
         return new Date(time).toLocaleString("en-US", {
@@ -20,3 +21,19 @@ export const getDateInStringFormat = (date: any) => {
         return data
     }
 };
+=======
+
+
+const capitalizeFirstLetter = (s: string): string => {
+    let newString = s[0].toUpperCase() + s.slice(1, s.length)
+    return (newString)
+}
+
+const capitalizeAllFirstLetters = () => {
+
+}
+export {
+    capitalizeFirstLetter,
+    capitalizeAllFirstLetters
+}
+>>>>>>> raunak

@@ -1,7 +1,8 @@
-import React, { SyntheticEvent } from "react";
+import React from "react";
 
 import Image from "next/image";
 import { FieldError } from "react-hook-form";
+
 interface IProp {
   label: string;
   name: string;
@@ -11,13 +12,16 @@ interface IProp {
   icon?: {
     isEnabled: boolean;
     src: string;
+    onClick?: () => void;
   };
   error?: FieldError;
   onClick?: () => void;
   disabled?: boolean;
+  autoComplete?: string;
 }
 
 const ReactHookFormInput = (props: IProp) => {
+  
   return (
     <div className={"w-full flex-type6"}>
       <label
@@ -40,6 +44,7 @@ const ReactHookFormInput = (props: IProp) => {
           className="w-full h-full pl-[5px] rounded-[5px] focus:outline-none"
           name={props.name}
           disabled={props.disabled}
+          autoComplete={props.autoComplete ? props.autoComplete : "on"}
         />
         {props.icon?.isEnabled ? (
           <Image
@@ -48,13 +53,11 @@ const ReactHookFormInput = (props: IProp) => {
             height={18}
             width={18}
             className="cursor-pointer absolute right-[8px] "
-            onClick={props.onClick}
+            onClick={props.icon.onClick}
           />
         ) : (
           ""
         )}
-
-        {/* <span>eye</span> */}
       </div>
       {props.error && (
         <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">

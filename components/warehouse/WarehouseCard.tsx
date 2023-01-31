@@ -2,9 +2,10 @@ import React from "react";
 import Image from "next/image";
 import copy from "copy-to-clipboard";
 import { IWarehouse, IWarehouseProps } from "@/models/warehouse.interface";
+import { capitalizeFirstLetter } from "@/lib/helper";
 
 const WarehouseCard = (props: { address: IWarehouseProps }) => {
-  // console.log()
+
   const wareHouseAddressStatusColorHandler = (status: string) => {
     switch (status) {
       case "active":
@@ -30,10 +31,10 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
   };
 
   return (
-    <div className=" box-border min-w-[32%] h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
+    <div className=" box-border min-w-[32%] min-h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
       <div className="flex-type3 space-x-[10px]">
         <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
-          {props.address.tag_warehouses}
+          {capitalizeFirstLetter(props.address.tag_warehouses)}
         </p>
         <div className={`flex-type1`}>
           <label
@@ -51,9 +52,12 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
         </div>
       </div>
       <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">
-        {props.address.country_warehouses}
+        Turkey
       </p>
-      <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">{`${props.address.address_1_warehouses}, ${props.address.address_2_warehouses}, ${props.address.city_warehouses}, ${props.address.state_warehouses}, ${props.address.country_warehouses}`}</p>
+      <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">{`${props.address.address_1_warehouses}, ${props.address.address_2_warehouses}`}</p>
+      <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
+        {props.address.city_warehouses}
+      </p>
 
       <div className="flex-type1 mt-[15px]">
         <Image src="/mobile.png" height={12} width={12} alt="mobile" />
@@ -63,7 +67,7 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
       </div>
 
       <div
-        className="flex-type1 text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[5px] mt-[15px] cursor-pointer "
+        className="flex justify-end text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[5px] mt-[15px] cursor-pointer "
         onClick={copyToClipboard}
       >
         <Image src="/copy.png" alt="copy" height={12} width={12} />

@@ -20,11 +20,12 @@ export default function handler(
           const id = req.query.id;
           executeQuery(
             {
-              query: "SELECT * FROM users where id_users=?",
+              query:
+                "SELECT id_users, first_name_users, last_name_users, email_users, phone_users, default_address_users, avatar_url_users, is_notifications_enabled_users, is_admin_users, is_logged_in_users FROM users where id_users=?",
               values: [id],
             },
             (results) => {
-              console.log("results", results);
+              // console.log("results", results);
               res.status(200).json(results);
             }
           );
@@ -32,7 +33,8 @@ export default function handler(
           // list response
           executeQuery(
             {
-              query: "SELECT * FROM users",
+              query:
+                "SELECT id_users, first_name_users, last_name_users, email_users, phone_users, default_address_users, avatar_url_users, is_notifications_enabled_users, is_admin_users, is_logged_in_users FROM users",
               values: [],
             },
             (results) => {
@@ -70,6 +72,7 @@ export default function handler(
         break;
 
       case "PUT":
+        console.log("got put req in users");
         if (req.query.id) {
           const id = req.query.id;
           const fields = { ...req.body };
@@ -78,15 +81,26 @@ export default function handler(
             const hash = hashPassword(req.body.password_users);
             fields.password_users = hash;
           }
-          console.log(fields, id)
+          // console.log(fields, id);
           executeQuery(
             {
               query: "UPDATE users SET ? WHERE id_users = ? ",
               values: [fields, id],
             },
             (results) => {
-              res.status(200).json(results);
-              resolve(results)
+              // res.status(200).json(results);
+              // resolve(results);
+            }
+          );
+          executeQuery(
+            {
+              query:
+                "SELECT id_users, first_name_users, last_name_users, email_users, phone_users, default_address_users, avatar_url_users, is_notifications_enabled_users, is_admin_users, is_logged_in_users FROM users WHERE id_users = ? ",
+              values: [id],
+            },
+            (results) => {
+              res.status(200).json(results[0]);
+              resolve(results[0]);
             }
           );
         } else {

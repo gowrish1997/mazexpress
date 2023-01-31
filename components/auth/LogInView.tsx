@@ -41,7 +41,7 @@ const LogInComponent = (props: any) => {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data)
+    // console.log(data);
     try {
       mutateUser(
         await fetchJson("/api/auth/login", {
@@ -116,12 +116,12 @@ const LogInComponent = (props: any) => {
           Log In
         </button>
       </form>
-      <div className="text-center text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[10px] ">
+      <div className="text-center text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[16px] ">
         <p>
-          By Logging in, you agree to our{" "}
+          By logging in, you agree to our{" "}
           <span className="text-[#0057FF]">Terms of Service.</span>
         </p>
-        <p>
+        <p className="">
           New to MAZ Express?{" "}
           <span
             className="text-[#0057FF] cursor-pointer"
