@@ -13,12 +13,13 @@ export default function useUser({
     isLoading: userIsLoading,
   } = useSWR<IUser>("/api/auth/user", {
     // refreshInterval: 1000,
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
+    // revalidateIfStale: false,
+    // revalidateOnFocus: false,
+    // revalidateOnReconnect: false,
   });
 
   useEffect(() => {
+    // console.log(user)
     // if no redirect needed, just return (example: already on /dashboard)
     // if user data not yet there (fetch in progress, logged in or not) then don't do anything yet
     if (!redirectTo || !user) return;

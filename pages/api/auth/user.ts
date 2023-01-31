@@ -7,17 +7,17 @@ import { executeQuery } from "@/lib/db";
 export default withIronSessionApiRoute(userRoute, sessionOptions);
 
 async function userRoute(req: NextApiRequest, res: NextApiResponse<IUser>) {
-
   if (req.session.user) {
     // in a real world application you might read the user id from the session and then do a database request
     // to get more information on the user if needed
     executeQuery(
       {
-        query: "SELECT * FROM users WHERE id_users = ?",
+        query:
+          "SELECT id_users, first_name_users, last_name_users, email_users, phone_users, default_address_users, avatar_url_users, is_notifications_enabled_users, is_admin_users, is_logged_in_users FROM users WHERE id_users = ?",
         values: [req.session.user.id_users],
       },
       (results) => {
-        // console.log(results[0]);
+        console.log(results[0]);
         res.json(results[0]);
       }
     );

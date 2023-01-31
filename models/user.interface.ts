@@ -35,8 +35,8 @@ interface IUserProfile{
     first_name_users: string;
     last_name_users: string;
     phone_users: string;
-    password_users: string;
-    newPassword_users: string;
+    password_users?: string;
+    newPassword_users?: string;
     notification_users: boolean;
     default_language_users: string;
 };

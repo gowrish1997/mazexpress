@@ -1,4 +1,3 @@
-import axios from "axios";
 import { hashPassword } from "./bcrypt";
 import { executeQuery } from "./db";
 
@@ -9,7 +8,7 @@ function updateUser(id: number, data: any) {
     const hash = hashPassword(fields.password_users);
     fields.password_users = hash;
   }
-  console.log(fields, id);
+//   console.log(fields, id);
   executeQuery(
     {
       query: "UPDATE users SET ? WHERE id_users = ? ",
