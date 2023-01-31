@@ -42,10 +42,10 @@ const EditUserAddressModal = (props: IProp) => {
 
   const toggleDefaultAddressHandler = () => {
     if (addressIsDefault) {
-    //   console.log("making null");
+      //   console.log("making null");
       setAddressIsDefault(false);
     } else {
-    //   console.log("making true");
+      //   console.log("making true");
       setAddressIsDefault(true);
     }
   };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import LineItem from "./LineItem";
 
 import { IOrderResponse } from "@/models/order.interface";
+import { nanoid } from "nanoid";
 interface TableProps {
   tableHeaders: Array<string>;
   orders: Array<IOrderResponse>;
@@ -44,7 +45,7 @@ const Table = (props: TableProps) => {
               ? props.orders.map((data, index) => {
                   return (
                     <LineItem
-                      key={index}
+                      key={nanoid()}
                       row={data}
                       active={active}
                       setActiveHandler={setActiveHandler}
