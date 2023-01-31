@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { nanoid } from "nanoid";
 import PageHeaders from "@/components/orders/PageHeader";
 import Table from "@/components/orders/table";
-import { IOrderResponse } from "@/models/order.interface";
 import AddButton from "@/common/AddButton";
 import useUser from "@/lib/useUser";
 import useOrders from "@/lib/useOrders";
@@ -20,12 +18,13 @@ const tableHeaders = [
 ];
 
 const MyOrders = () => {
-
   const router = useRouter();
   const { user, mutateUser } = useUser();
   const { orders, mutateOrders } = useOrders({ userId: user?.id_users });
   // const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
   // );
+
+  console.log(orders);
 
   const addNewOrderHandler = () => {
     router.push(`${router.pathname}/add-new-order`);
@@ -33,11 +32,7 @@ const MyOrders = () => {
 
   return (
     <>
-      <PageHeaders
-        content="My Orders"
-        showCalender={true}
-        title="My Orders | MazExpress"
-      />
+      <PageHeaders content="My Orders" showCalender={true} />
 
       <div className="flex flex-col justify-between relative flex-1 h-full">
         {orders && orders.length > 0 ? (

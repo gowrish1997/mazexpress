@@ -9,7 +9,7 @@ import fetchJson from "@/lib/fetchJson";
 
 const UserSavedAddresses = (props: {
   address: IAddressProps;
-  register: any;
+  register?: any;
   edit: (id: number) => void;
 }) => {
   const { user, mutateUser, userIsLoading } = useUser();

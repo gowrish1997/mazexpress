@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { executeQuery } from "@/lib/db";
+import { INotification } from "@/models/notification.interface";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -28,6 +29,7 @@ export default function handler(
             (results) => {
               // console.log("results", results);
               res.status(200).json(results);
+              resolve(results);
             }
           );
         } else if (req.query.id) {
@@ -41,32 +43,32 @@ export default function handler(
             (results) => {
               // console.log("results", results);
               res.status(200).json(results);
+              resolve(results);
             }
           );
           // error invalid
         } else {
-          res.status(200).json({ msg: "invalid url params" });
+          res.status(500).end();
+          reject();
         }
         break;
 
       case "POST":
+        const obj: INotification = req.body;
+
         executeQuery(
           {
             query:
-              "INSERT INTO notifications (user_id, address_1_addresses, address_2_addresses, city_addresses, country_addresses, pincode_addresses, state_addresses, phone_addresses) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+              "INSERT INTO notifications (user_id, title_notifications, content_notifications) VALUES (?, ?, ?)",
             values: [
-              req.body.user_id,
-              req.body.address_1,
-              req.body.address_2,
-              req.body.city,
-              req.body.country,
-              req.body.pincode,
-              req.body.state,
-              req.body.phone,
+              obj.user_id,
+              obj.title_notifications,
+              obj.content_notifications,
             ],
           },
           (results) => {
             res.status(200).json(results);
+            resolve(results);
           }
         );
         break;
@@ -83,10 +85,12 @@ export default function handler(
             },
             (results) => {
               res.status(200).json(results);
+              resolve(results)
             }
           );
         } else {
           res.status(200).json({ msg: "invalid url params" });
+          reject()
         }
         break;
 
@@ -95,20 +99,23 @@ export default function handler(
           const id = req.query.id;
           executeQuery(
             {
-              query: "DELETE FROM notifications WHERE id_notifications = ?",
+              query: "DELETE FROM notifications WHERE id_notifications=?",
               values: [id],
             },
             (results) => {
               res.status(200).json(results);
+              resolve(results)
             }
           );
         } else {
           res.status(200).json({ msg: "invalid url params" });
+          reject()
         }
         break;
 
       default:
-        res.status(200).json({ msg: "default" });
+        res.status(500).json({ msg: "not allowed" });
+        reject()
     }
   });
 }

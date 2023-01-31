@@ -23,11 +23,17 @@ const schema = yup
 
 
 const AddNewOrder = () => {
+//   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
+  const [editableAddress, setEditableAddress] = useState<IAddressProps>();
+  const [showEditUserAddressModal, setShowEditUserAddressModal] = useState<boolean>(false);
   const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses } = useAddresses({
     userId: user?.id_users,
   });
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
+
+  console.log(addresses)
+  console.log(user)
 
   const defaultAddressHandler = () => {
     const address = addresses?.find(
@@ -57,6 +63,19 @@ const AddNewOrder = () => {
   const toggleAddNewAddressModal = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
+
+  const toggleEditUserAddressModal = (addressId?: number) => {
+    console.log(addressId);
+    if (showEditUserAddressModal) {
+        setShowEditUserAddressModal(false);
+    } else {
+        setShowEditUserAddressModal(true);
+        const address = addresses?.find((data) => {
+            return data.id_addresses == addressId;
+        });
+        setEditableAddress(address);
+    }
+};
 
   const onSubmit: SubmitHandler<{
     referenceId: string;
@@ -117,9 +136,9 @@ const AddNewOrder = () => {
               <UserSavedAddresses
                 key={data.id_addresses}
                 address={data}
-                edit={() => {}}
+              
                 register={register("address")}
-                
+                edit={toggleEditUserAddressModal}
               />
             );
           })}
@@ -135,6 +154,7 @@ const AddNewOrder = () => {
         show={showAddNewAddressModal}
         close={toggleAddNewAddressModal}
       />
+       {showEditUserAddressModal && <EditUserAddressModal show={showEditUserAddressModal} close={toggleEditUserAddressModal} address={editableAddress!} />}
     </>
   );
 };

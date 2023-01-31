@@ -76,9 +76,9 @@ const SignUpComponent = (props: any) => {
                     type={passwordType}
                     register={register("password_users")}
                     error={errors.password_users}
-                    dropDownIcon={{
-                        iconIsEnabled: true,
-                        iconSrc: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
+                    icon={{
+                        isEnabled: true,
+                        src: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
                     }}
                     onClick={togglePasswordTypeHandler}
                 />
@@ -89,9 +89,9 @@ const SignUpComponent = (props: any) => {
                     type={confirmPasswordType}
                     register={register("confirmPassword_users")}
                     error={errors.confirmPassword_users}
-                    dropDownIcon={{
-                        iconIsEnabled: true,
-                        iconSrc: confirmPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
+                    icon={{
+                        isEnabled: true,
+                        src: confirmPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
                     }}
                     onClick={toggleConfirmPasswordTypeHandler}
                 />
