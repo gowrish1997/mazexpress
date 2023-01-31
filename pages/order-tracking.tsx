@@ -23,6 +23,7 @@ const allOrder = [
 
 
 const OrderTracking = () => {
+
     const [packageStatus, setPackageStatus] = useState(5);
  
 
@@ -44,7 +45,7 @@ const OrderTracking = () => {
                         </div>
 
                         <div className="flex-type2 justify-start w-[100%] space-x-[50px] ">
-                            <MultiStepProgressBar stepPercentage={packageStatus} />
+                            <MultiStepProgressBar packageStatus={packageStatus} />
                             <div className="flex-type6 text-[#525D72] font-[500] leading-[21px] text-[14px] ">
                                 <div className="flex-type6 gap-y-[5px] mt-[20px]  ">
                                     <p className={`${packageStatus >= 0 ? "text-[#2B2B2B] font-[600] " : ""}`}>Source website</p>
@@ -66,7 +67,7 @@ const OrderTracking = () => {
                                         {" "}
                                         {packageStatus >= 1 ? (packageStatus >3 ? "Completed" : "Received") : "Pending"}
                                     </button>
-                                    <WarehouseTracking status={packageStatus} />
+                                    <WarehouseTracking packageStatus={packageStatus} />
                                 </div>
                                 <div className="flex-type6 gap-y-[5px] mt-[25px] ">
                                     <p className={`${packageStatus >= 4 ? "text-[#2B2B2B] font-[600] " : ""}`}>Out for delivery</p>

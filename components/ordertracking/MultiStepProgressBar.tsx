@@ -7,9 +7,9 @@ import Vehicle from "../../public/svgVehicle.svg";
 import WareHouse from "../../public/svgWareHouse.svg";
 import Check from "../../public/svgCheck.svg";
 
-const MultiStepProgressBar = (props: { stepPercentage: number }) => {
+const MultiStepProgressBar = (props: {packageStatus: number }) => {
     const progressBarStatusHandler = () => {
-        switch (props.stepPercentage) {
+        switch (props.packageStatus) {
             case 0:
                 return "source_website";
             case 1:
@@ -52,11 +52,11 @@ const MultiStepProgressBar = (props: { stepPercentage: number }) => {
 
     return (
         <div className={`${progressBarStatusHandler()}`}>
-            <ProgressBar percent={percentHandler(props.stepPercentage)}>
+            <ProgressBar percent={percentHandler(props.packageStatus)}>
                 <Step>
                     {({ accomplished }: { accomplished: boolean }) => (
                         <div className="indexStep_outerLayer">
-                            <div className={`indexedStep ${props.stepPercentage == 0 ? "accomplished" : ""} ${props.stepPercentage > 0 ? "accomplished1" : ""}`}>
+                            <div className={`indexedStep ${props.packageStatus == 0 ? "accomplished" : ""} ${props.packageStatus > 0 ? "accomplished1" : ""}`}>
                                 <Vehicle />
                             </div>
                         </div>
@@ -65,7 +65,7 @@ const MultiStepProgressBar = (props: { stepPercentage: number }) => {
                 <Step>
                     {({ accomplished }: { accomplished: boolean }) => (
                         <div className="indexStep_outerLayer">
-                            <div className={`indexedStep ${props.stepPercentage >= 1 ? "accomplished" : ""} ${props.stepPercentage > 3 ? "accomplished1" : ""}`}>
+                            <div className={`indexedStep ${props.packageStatus >= 1 ? "accomplished" : ""} ${props.packageStatus > 3 ? "accomplished1" : ""}`}>
                                 <WareHouse className={`${accomplished ? "" : "wareHouse__icon"}`} />
                             </div>
                         </div>
@@ -74,7 +74,7 @@ const MultiStepProgressBar = (props: { stepPercentage: number }) => {
                 <Step>
                     {({ accomplished }: { accomplished: boolean }) => (
                         <div className="indexStep_outerLayer">
-                            <div className={`indexedStep ${props.stepPercentage == 4 ? "accomplished" : ""} ${props.stepPercentage > 4 ? "accomplished1" : ""}`}>
+                            <div className={`indexedStep ${props.packageStatus == 4 ? "accomplished" : ""} ${props.packageStatus > 4 ? "accomplished1" : ""}`}>
                                 <Vehicle className={`${accomplished ? "" : "wareHouse__icon"}`} />
                             </div>
                         </div>
@@ -83,7 +83,7 @@ const MultiStepProgressBar = (props: { stepPercentage: number }) => {
                 <Step>
                     {({ accomplished }: { accomplished: boolean }) => (
                         <div className="indexStep_outerLayer">
-                            <div className={`indexedStep ${props.stepPercentage == 5 ? "accomplished" : ""}`}>
+                            <div className={`indexedStep ${props.packageStatus == 5 ? "accomplished" : ""}`}>
                                 <Check className={`${accomplished ? "check__icon" : ""}`} />
                             </div>
                         </div>
