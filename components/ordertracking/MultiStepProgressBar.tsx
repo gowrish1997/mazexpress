@@ -1,3 +1,4 @@
+
 import React from "react";
 import Image from "next/image";
 import "react-step-progress-bar/styles.css";
@@ -9,15 +10,40 @@ import Check from "../../public/svgCheck.svg";
 const MultiStepProgressBar = (props: { stepPercentage: number }) => {
     const progressBarStatusHandler = () => {
         switch (props.stepPercentage) {
-            case 30:
+            case 0:
                 return "source_website";
-            case 50:
+            case 1:
                 return "warehouse";
-            case 80:
+            case 2:
+                return "warehouse";
+            case 3:
+                return "warehouse";
+            case 4:
                 return "out_for_delivery";
 
-            case 100:
+            case 5:
                 return "delivered";
+
+            default:
+                return "";
+        }
+    };
+
+    const percentHandler = (status: number) => {
+        switch (status) {
+            case 0:
+                return 0;
+            case 1:
+                return 50;
+            case 2:
+                return 50;
+            case 3:
+                return 50;
+            case 4:
+                return 80;
+
+            case 5:
+                return 100;
 
             default:
                 return "";
@@ -26,11 +52,11 @@ const MultiStepProgressBar = (props: { stepPercentage: number }) => {
 
     return (
         <div className={`${progressBarStatusHandler()}`}>
-            <ProgressBar percent={props.stepPercentage}>
+            <ProgressBar percent={percentHandler(props.stepPercentage)}>
                 <Step>
                     {({ accomplished }: { accomplished: boolean }) => (
                         <div className="indexStep_outerLayer">
-                            <div className={`indexedStep ${accomplished ? "accomplished" : null}`}>
+                            <div className={`indexedStep ${props.stepPercentage == 0 ? "accomplished" : ""} ${props.stepPercentage > 0 ? "accomplished1" : ""}`}>
                                 <Vehicle />
                             </div>
                         </div>
@@ -39,7 +65,7 @@ const MultiStepProgressBar = (props: { stepPercentage: number }) => {
                 <Step>
                     {({ accomplished }: { accomplished: boolean }) => (
                         <div className="indexStep_outerLayer">
-                            <div className={`indexedStep ${accomplished ? "accomplished1" : null}`}>
+                            <div className={`indexedStep ${props.stepPercentage >= 1 ? "accomplished" : ""} ${props.stepPercentage > 3 ? "accomplished1" : ""}`}>
                                 <WareHouse className={`${accomplished ? "" : "wareHouse__icon"}`} />
                             </div>
                         </div>
@@ -48,7 +74,7 @@ const MultiStepProgressBar = (props: { stepPercentage: number }) => {
                 <Step>
                     {({ accomplished }: { accomplished: boolean }) => (
                         <div className="indexStep_outerLayer">
-                            <div className={`indexedStep ${accomplished ? "accomplished2" : null}`}>
+                            <div className={`indexedStep ${props.stepPercentage == 4 ? "accomplished" : ""} ${props.stepPercentage > 4 ? "accomplished1" : ""}`}>
                                 <Vehicle className={`${accomplished ? "" : "wareHouse__icon"}`} />
                             </div>
                         </div>
@@ -57,7 +83,7 @@ const MultiStepProgressBar = (props: { stepPercentage: number }) => {
                 <Step>
                     {({ accomplished }: { accomplished: boolean }) => (
                         <div className="indexStep_outerLayer">
-                            <div className={`indexedStep ${accomplished ? "accomplished3" : null}`}>
+                            <div className={`indexedStep ${props.stepPercentage == 5 ? "accomplished" : ""}`}>
                                 <Check className={`${accomplished ? "check__icon" : ""}`} />
                             </div>
                         </div>
