@@ -61,11 +61,13 @@ const AddressBook = () => {
     //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
     const [showEditUserAddressModal, setShowEditUserAddressModal] = useState<boolean>(false);
     const [editableAddress, setEditableAddress] = useState<IAddressProps>();
-    const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
-    const { user, mutateUser } = useUser();
-    const { addresses, mutateAddresses } = useAddresses(user?.id_users);
+
   //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
- 
+  const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
+  const { user, mutateUser, userIsLoading } = useUser();
+  const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
+    userId: user?.id_users,
+  });
 
     const toggleAddNewAddressModal = () => {
         setShowAddNewAddressModal((prev) => !prev);

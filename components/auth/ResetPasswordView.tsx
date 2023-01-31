@@ -58,9 +58,9 @@ const ResetPasswordView = (props: any) => {
                     type={passwordType}
                     register={register("password")}
                     error={errors.password}
-                    dropDownIcon={{
-                        iconIsEnabled: true,
-                        iconSrc: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
+                    icon={{
+                        isEnabled: true,
+                        src: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
                     }}
                     onClick={togglePasswordTypeHandler}
                 />
@@ -71,9 +71,9 @@ const ResetPasswordView = (props: any) => {
                     type={confirmPasswordType}
                     register={register("confirmPassword")}
                     error={errors.confirmPassword}
-                    dropDownIcon={{
-                        iconIsEnabled: true,
-                        iconSrc: confirmPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
+                    icon={{
+                        isEnabled: true,
+                        src: confirmPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
                     }}
                     onClick={toggleConfirmPasswordTypeHandler}
                 />

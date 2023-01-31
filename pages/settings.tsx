@@ -108,7 +108,7 @@ const Settings = () => {
                         <div className="flex-type1 gap-x-[20px] mb-[20px] ">
                             <label htmlFor="user_profile">
                                 <input type="file" className="hidden" id="user_profile" {...register("avatar_url_users")} />
-                                <Image src={user ? user?.avatar_url_users : "/default_user.png"} alt="profile" height={100} width={100} className='rounded-[50%]' />
+                                <Image src={user ? user?.avatar_url_users! : "/default_user.png"} alt="profile" height={100} width={100} className='rounded-[50%]' />
                             </label>
 
                             <div className="flex-type6">

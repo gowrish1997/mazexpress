@@ -77,3 +77,4 @@ const LineItem = ({ row, active, setActiveHandler, index, show, setActive }: IPr
         </>
     );
 };
+export default LineItem
