@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { createRef, useRef } from "react";
 import { useEffect } from "react";
 import Image from "next/image";
 import OrderOptionModal from "../modal/OrderOptionModal";
@@ -27,13 +27,15 @@ const LineItem = ({
   const { addresses, mutateAddresses } = useAddresses({
     userId: user?.id_users,
   });
-  const modalTriggerNode = createRef<HTMLTableCellElement>();
+  // const modalTriggerNode = createRef<HTMLTableCellElement>();
+  const trigger = useRef<any>()
 
   const modalNode = useClickOutside(
-    () => {
+    (e) => {
       setActive(-1);
+      // setActiveHandler(index, e)
     },
-    modalTriggerNode,
+    trigger,
     active
   );
 
@@ -87,7 +89,7 @@ const LineItem = ({
         </td>
         <td
           className="box-border relative cursor-pointer"
-          ref={modalTriggerNode}
+          ref={trigger}
           onClick={(e) => optionModalHandler(e, index)}
         >
           <Image src="/editicon.png" height={13} width={4} alt="editIcon" />
