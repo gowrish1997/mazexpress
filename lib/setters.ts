@@ -3,6 +3,7 @@ import { executeQuery } from "./db";
 
 function updateUser(id: number, data: any) {
   const fields = { ...data };
+  console.log(fields)
   if (fields.password_users) {
     // change pass
     const hash = hashPassword(fields.password_users);
@@ -15,6 +16,7 @@ function updateUser(id: number, data: any) {
       values: [fields, id],
     },
     (results) => {
+      console.log(results)
       return(results)
     }
   );

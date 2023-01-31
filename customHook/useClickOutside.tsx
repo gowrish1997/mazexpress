@@ -8,7 +8,7 @@ let useClickOutside = (
   let modalNode = createRef<HTMLDivElement>();
   useEffect(() => {
     let outsideClickHandler = (event: MouseEvent) => {
-      //   console.log(trigger.current, event.target, gate);
+      // console.log(trigger.current, event.target, gate);
       if (gate) {
         // console.log(trigger.current?.contains(event.target));
         // if trigger is clicked or if trigger contains clicked

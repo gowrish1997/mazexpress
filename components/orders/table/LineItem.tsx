@@ -28,7 +28,7 @@ const LineItem = ({
     userId: user?.id_users,
   });
   // const modalTriggerNode = createRef<HTMLTableCellElement>();
-  const trigger = useRef<any>()
+  const trigger = useRef<any>();
 
   const modalNode = useClickOutside(
     (e) => {
@@ -62,7 +62,7 @@ const LineItem = ({
     <>
       <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px]">
         <td className={`td1`}>{row.id_orders}</td>
-        <td className={`td2`}>{row.store_link_orders}</td>
+        <td className={`td2 text-[#3672DF]`}>{row.store_link_orders}</td>
         <td className={`td3`}>{row.reference_id_orders}</td>
         <td className={`td4`}>...</td>
         <td className={`td5 flex flex-row items-center gap-x-[10px]`}>

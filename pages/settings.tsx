@@ -8,9 +8,10 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/common/ReactHookFormInput";
 import Layout from "@/components/layout";
 import { IUserProfile, IUser } from "@/models/user.interface";
-import LanguageSelector from "@/common/LanguageSelector";
 import CustomDropDown from "@/common/CustomDropDown";
 import useUser from "@/lib/useUser";
+import fetchJson, { FetchError } from "@/lib/fetchJson";
+import { useRouter } from "next/router";
 
 const schema = yup
   .object({
@@ -19,7 +20,7 @@ const schema = yup
     email_users: yup
       .string()
       .required("Email is required")
-      .email("please include @ in the email"),
+      .email("Please provide valid email"),
     phone_users: yup
       .number()
       .test(
@@ -28,25 +29,27 @@ const schema = yup
         (val) => val?.toString().length === 10
       )
       .required()
-      .typeError("Mobile numbder is required field"),
+      .typeError("Mobile number is required field"),
 
-    password_users: yup.string().required(),
-    newPassword_users: yup
-      .string()
-      .min(8, "Password must be 8 characters long")
-      .matches(/[0-9]/, "Password requires a number")
-      .matches(/[a-z]/, "Password requires a lowercase letter")
-      .matches(/[A-Z]/, "Password requires an uppercase letter")
-      .matches(/[^\w]/, "Password requires a symbol"),
+    // password_users: yup.string().required(),
+    password_users: yup.string(),
+    newPassword_users: yup.string(),
+    //   .min(8, "Password must be 8 characters long")
+    //   .matches(/[0-9]/, "Password requires a number")
+    //   .matches(/[a-z]/, "Password requires a lowercase letter"),
+    //   .matches(/[A-Z]/, "Password requires an uppercase letter")
+    //   .matches(/[^\w]/, "Password requires a symbol"),
     avatar_url_users: yup.string(),
-    notification_users: yup.boolean().required(),
+    is_notifications_enabled_users: yup.boolean().required(),
     //  default_language_users: yup.string().required(),
   })
   .required();
 
 const Settings = () => {
-  const { user, mutateUser } = useUser();
+  const { user, mutateUser, userIsLoading } = useUser();
+  const [errorMsg, setErrorMsg] = useState("");
 
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -55,11 +58,11 @@ const Settings = () => {
     formState: { errors },
   } = useForm<IUserProfile>({
     resolver: yupResolver(schema),
-    // defaultValues: user,
+    defaultValues: user,
   });
 
   useEffect(() => {
-    // console.log(user)
+    console.log(user);
     reset(user);
   }, [user]);
 
@@ -81,13 +84,49 @@ const Settings = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<IUserProfile> = (data) => {
-    console.log("submit settings", data);
+  const onSubmit: SubmitHandler<IUserProfile> = async (data) => {
+    // console.log(data)
+    let updateObj = { ...data };
+    delete updateObj.newPassword_users;
+    delete updateObj.password_users;
+    delete updateObj.default_language_users;
+    updateObj.id_users = user?.id_users;
+
+    // console.log("submit settings", updateObj);
+    if (user && user.id_users) {
+      //   updateUser(user?.id_users, updateObj);
+
+      // update user
+      try {
+        mutateUser(
+          await fetchJson(`/api/users?id=${user.id_users}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updateObj),
+          }),
+          false
+        );
+        // router.push("/");
+      } catch (error) {
+        if (error instanceof FetchError) {
+          setErrorMsg(error.data.message);
+        } else {
+          console.error("An unexpected error happened:", error);
+        }
+      }
+      // router.reload()
+    }
   };
+
+  if (userIsLoading) return <div>loading</div>;
 
   return (
     <>
-      <PageHeader content="Settings" className="border-none pb-[10px]" />
+      <PageHeader
+        content="Settings"
+        className="border-none pb-[10px]"
+        title="My Settings | MazExpress"
+      />
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
@@ -124,7 +163,7 @@ const Settings = () => {
                   {...register("avatar_url_users")}
                 />
                 <Image
-                  src={user ? user?.avatar_url_users! : "/default_user.png"}
+                  src={user?.avatar_url_users!}
                   alt="profile"
                   height={100}
                   width={100}
@@ -248,17 +287,17 @@ const Settings = () => {
                   Notifications
                 </p>
                 <p className="text-[12px] text-[#525D72] leading-[18px] ">
-                  Dummy and update your account details
+                  Enable or disable notifications for your account
                 </p>
               </div>
               <Controller
-                name="notification_users"
+                name="is_notifications_enabled_users"
                 control={control}
                 defaultValue={false}
                 render={({ field: { onChange, value } }) => (
                   <ReactSwitch
                     onChange={onChange}
-                    checked={value}
+                    checked={value as boolean}
                     checkedIcon={false}
                     uncheckedIcon={false}
                     width={36}

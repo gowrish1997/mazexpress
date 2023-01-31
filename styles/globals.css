@@ -3,8 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: "manRope";
-    src: url("../public/fonts/manrope/manrope-regular.otf");
+  font-family: "manRope";
+  src: url("../public/fonts/manrope/manrope-regular.otf");
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter/static/Inter-Regular.ttf");
 }
 
 * {
@@ -12,226 +17,227 @@
 
 html,
 body {
-    padding: 0;
-    margin: 0;
-    /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  padding: 0;
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 
-    font-family: "manRope";
-    letter-spacing: 0.05em;
+  font-family: "manRope";
+  letter-spacing: 0.05em;
 }
 
 @layer components {
-    .flex-type1 {
-        @apply flex flex-row justify-start items-center;
-    }
-    .flex-type2 {
-        @apply flex flex-row justify-start items-start;
-    }
-    .flex-type3 {
-        @apply flex flex-row justify-between items-center;
-    }
-    .flex-type4 {
-        @apply flex flex-row justify-between items-start;
-    }
-    .flex-type5 {
-        @apply flex flex-col justify-start items-center;
-    }
-    .flex-type6 {
-        @apply flex flex-col justify-start items-start;
-    }
-    .flex-type7 {
-        @apply flex flex-col justify-between items-center;
-    }
-    .flex-type8 {
-        @apply flex flex-col justify-between items-start;
-    }
+  .flex-type1 {
+    @apply flex flex-row justify-start items-center;
+  }
+  .flex-type2 {
+    @apply flex flex-row justify-start items-start;
+  }
+  .flex-type3 {
+    @apply flex flex-row justify-between items-center;
+  }
+  .flex-type4 {
+    @apply flex flex-row justify-between items-start;
+  }
+  .flex-type5 {
+    @apply flex flex-col justify-start items-center;
+  }
+  .flex-type6 {
+    @apply flex flex-col justify-start items-start;
+  }
+  .flex-type7 {
+    @apply flex flex-col justify-between items-center;
+  }
+  .flex-type8 {
+    @apply flex flex-col justify-between items-start;
+  }
 }
 #searchbar::placeholder {
-    font-size: 14px;
-    line-height: 21px;
-    font-weight: 500;
-    color: #bbc2cf;
-    letter-spacing: -0.011em;
-    padding-left: 0px;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: #bbc2cf;
+  letter-spacing: -0.011em;
+  padding-left: 0px;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .customRadioInput {
-    display: block;
-    position: relative;
-    /* padding-left: 35px; */
-    top: 4px;
-    right: 13px;
-    cursor: pointer;
-    /* font-size: 15px; */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  display: block;
+  position: relative;
+  /* padding-left: 35px; */
+  top: 4px;
+  right: 13px;
+  cursor: pointer;
+  /* font-size: 15px; */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .customRadioInput input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 .customRadioInput .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 14px;
-    width: 14px;
-    background-color: transparent;
-    border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  background-color: transparent;
+  border-radius: 50%;
 }
 .customRadioInput .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
+  content: "";
+  position: absolute;
+  display: none;
 }
 
 /* Show the indicator (dot/circle) when checked */
 .customRadioInput input:checked ~ .checkmark:after {
-    display: block;
+  display: block;
 }
 
 /* Style the indicator (dot/circle) */
 .customRadioInput .checkmark:after {
-    top: 1.2px;
-    left: 1.3px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: yellow;
+  top: 1.2px;
+  left: 1.3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: yellow;
 }
 .delivered .checkmark:after {
-    background: #34a853;
+  background: #34a853;
 }
 
 .at_warehouse .checkmark:after {
-    background: #ffba00;
+  background: #ffba00;
 }
 .in_transit .checkmark:after {
-    background: #ff0000;
+  background: #ff0000;
 }
 .customRadioInput_type2 input:checked ~ .checkmark {
-    border: 0.5px solid #34a853;
+  border: 0.5px solid #34a853;
 }
 
 .delivered input:checked ~ .checkmark {
-    border: 0.5px solid #34a853;
+  border: 0.5px solid #34a853;
 }
 
 .at_warehouse input:checked ~ .checkmark {
-    border: 0.5px solid #ffba00;
+  border: 0.5px solid #ffba00;
 }
 .in_transit input:checked ~ .checkmark {
-    border: 0.5px solid #ff0000;
+  border: 0.5px solid #ff0000;
 }
 
 .customRadioInput_type2 {
-    display: block;
-    position: relative;
-    /* padding-left: 35px; */
-    top: -8px;
-    right: 13px;
-    cursor: pointer;
-    /* font-size: 15px; */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  display: block;
+  position: relative;
+  /* padding-left: 35px; */
+  top: -8px;
+  right: 13px;
+  cursor: pointer;
+  /* font-size: 15px; */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .customRadioInput_type2 input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 .customRadioInput_type2 .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 14px;
-    width: 14px;
-    background-color: transparent;
-    border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  background-color: transparent;
+  border-radius: 50%;
 }
 .customRadioInput_type2 .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
+  content: "";
+  position: absolute;
+  display: none;
 }
 
 /* Show the indicator (dot/circle) when checked */
 .customRadioInput_type2 input:checked ~ .checkmark:after {
-    display: block;
+  display: block;
 }
 
 /* Style the indicator (dot/circle) */
 .customRadioInput_type2 .checkmark:after {
-    top: 1.2px;
-    left: 1.1px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: yellow;
+  top: 1.2px;
+  left: 1.1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: yellow;
 }
 .active .checkmark:after {
-    background: #34a853;
+  background: #34a853;
 }
 
 .in_active .checkmark:after {
-    background: #ffba00;
+  background: #ffba00;
 }
 .closed .checkmark:after {
-    background: #ff0000;
+  background: #ff0000;
 }
 .customRadioInput_type2 input:checked ~ .checkmark {
-    border: 0.5px solid #34a853;
+  border: 0.5px solid #34a853;
 }
 
 .active input:checked ~ .checkmark {
-    border: 0.5px solid #34a853;
+  border: 0.5px solid #34a853;
 }
 
 .in_active input:checked ~ .checkmark {
-    border: 0.5px solid #ffba00;
+  border: 0.5px solid #ffba00;
 }
 .closed input:checked ~ .checkmark {
-    border: 0.5px solid #ff0000;
+  border: 0.5px solid #ff0000;
 }
 
 .table {
-    /* font-family: Arial, Helvetica, sans-serif; */
-    
-    border-collapse: collapse;
-    width: 100%;
-    table-layout: fixed;
-    word-wrap: break-word;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: 'Inter';
+
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  word-wrap: break-word;
 }
 .table tr {
-    width: 100%;
+  width: 100%;
 }
 .table td,
 .table th {
-    box-sizing: border-box;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    text-align: left;
+  box-sizing: border-box;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: left;
 
-    padding-right: 5px;
+  padding-right: 5px;
 }
 .table .th0,
 .table .td0 {
-    width: 2%;
+  width: 2%;
 }
 .table .th7,
 .table .td7 {
-    width: 1%;
+  width: 1%;
 }
 .table .th1,
 .table .td1,
@@ -239,7 +245,7 @@ input::-webkit-inner-spin-button {
 .table .th3,
 .table .td2,
 .table .td3 {
-    width: 12%;
+  width: 12%;
 }
 
 /* .table .th2 {
@@ -248,388 +254,388 @@ input::-webkit-inner-spin-button {
 
 .table .th4,
 .table .td4 {
-    width: 17%;
+  width: 17%;
 }
 .table .th5,
 .table .th6,
 .table .td5,
 .table .td6 {
-    width: 11%;
+  width: 11%;
 }
 .indexedStep {
-    width: 30px;
-    height: 30px;
-    font-size: 12px;
-    background-color: #edf5f9;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  background-color: #edf5f9;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .indexStep_outerLayer {
-    height: 65px;
-    width: 65px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  height: 65px;
+  width: 65px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .indexedStep.accomplished {
-    background-color: #664de5;
+  background-color: #664de5;
 }
 .indexedStep.accomplished1 {
-    background-color: red;
-    color: white;
-    border-style: none;
+  background-color: red;
+  color: white;
+  border-style: none;
 }
 .indexedStep.accomplished2 {
-    background-color: #ffba00;
-    color: white;
-    border-style: none;
+  background-color: #ffba00;
+  color: white;
+  border-style: none;
 }
 .indexedStep.accomplished3 {
-    background-color: green;
-    color: white;
-    border-style: none;
+  background-color: green;
+  color: white;
+  border-style: none;
 }
 
 .RSPBprogressBar {
-    height: 470px !important;
-    width: 2px !important ;
-    /* line-height: 1; */
-    position: relative;
-    transform: translatex(15px) !important;
-    background-color: #bbc2cf;
-    z-index: 0;
+  height: 470px !important;
+  width: 2px !important ;
+  /* line-height: 1; */
+  position: relative;
+  transform: translatex(15px) !important;
+  background-color: #bbc2cf;
+  z-index: 0;
 }
 
 .RSPBstep {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 0;
-    position: absolute;
-    transform: translatex(-31px) !important;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+  position: absolute;
+  transform: translatex(-31px) !important;
 
-    transition-property: all;
-    transition-timing-function: ease;
+  transition-property: all;
+  transition-timing-function: ease;
 }
 .RSPBprogressBar .RSPBstep:nth-of-type(1) {
-    top: 0% !important;
-    left: 0% !important;
+  top: 0% !important;
+  left: 0% !important;
 }
 .RSPBprogressBar .RSPBstep:nth-of-type(2) {
-    top: 23% !important;
-    left: 0% !important;
+  top: 23% !important;
+  left: 0% !important;
 }
 .RSPBprogressBar .RSPBstep:nth-of-type(3) {
-    top: 65% !important;
-    left: 0% !important;
+  top: 65% !important;
+  left: 0% !important;
 }
 .RSPBprogressBar .RSPBstep:nth-of-type(4) {
-    top: 100% !important;
-    left: 0% !important;
+  top: 100% !important;
+  left: 0% !important;
 }
 
 .RSPBprogressBar .RSPBprogressBarText {
-    color: red !important;
-    font-size: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  color: red !important;
+  font-size: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .RSPBprogressBar .RSPBprogression::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    transform: translate(-5px);
-    height: 13px;
-    width: 13px;
-    border-radius: 50%;
-    background-color: green;
+  content: "";
+  position: absolute;
+  top: 100%;
+  transform: translate(-5px);
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background-color: green;
 }
 .RSPBprogressBar .RSPBprogression {
-    position: absolute;
-    width: 2px !important;
-    height: 0% !important;
-    transition: height 5s linear;
-    background: #009e3f !important;
-    z-index: -1;
+  position: absolute;
+  width: 2px !important;
+  height: 0% !important;
+  transition: height 5s linear;
+  background: #009e3f !important;
+  z-index: -1;
 }
 .source_website .RSPBprogression {
-    width: 2px !important;
-    height: 15% !important;
+  width: 2px !important;
+  height: 15% !important;
 }
 .warehouse .RSPBprogression {
-    width: 2px !important;
-    height: 42% !important;
+  width: 2px !important;
+  height: 42% !important;
 }
 
 .out_for_delivery .RSPBprogression {
-    width: 2px !important;
-    height: 82% !important;
+  width: 2px !important;
+  height: 82% !important;
 }
 .delivered .RSPBprogression {
-    width: 2px !important;
-    height: 100% !important;
+  width: 2px !important;
+  height: 100% !important;
 }
 
 @media screen and (max-width: 480px) {
-    .indexedStep {
-        width: 15px;
-        height: 15px;
-        font-size: 6px;
-    }
+  .indexedStep {
+    width: 15px;
+    height: 15px;
+    font-size: 6px;
+  }
 }
 
 .check__icon path {
-    stroke-width: 1px;
-    stroke: #ffffff;
+  stroke-width: 1px;
+  stroke: #ffffff;
 }
 .wareHouse__icon path {
-    stroke-width: 1px;
-    stroke: #bbc2cf;
+  stroke-width: 1px;
+  stroke: #bbc2cf;
 }
 .menu-languages {
-    width: 100%;
-    padding-bottom: 0px !important;
-    font-weight: 500;
-    font-size: 14px;
-    color: #030303;
-    color: red;
-    line-height: 14px;
-    height: auto;
-    position: relative;
+  width: 100%;
+  padding-bottom: 0px !important;
+  font-weight: 500;
+  font-size: 14px;
+  color: #030303;
+  color: red;
+  line-height: 14px;
+  height: auto;
+  position: relative;
 }
 .menu-languages button {
-    height: 100%;
-    padding-left: 0px;
+  height: 100%;
+  padding-left: 0px;
 }
 .menu-languages button::after {
-    content: none !important;
+  content: none !important;
 }
 
 .menu-languages ul {
-    position: absolute;
-    width: 100%;
-    max-height: 300px !important;
-    color: red;
-    font-weight: 500;
-    font-size: 16px;
-    color: #030303;
-    overflow-x: hidden;
-    line-height: 25.92px;
+  position: absolute;
+  width: 100%;
+  max-height: 300px !important;
+  color: red;
+  font-weight: 500;
+  font-size: 16px;
+  color: #030303;
+  overflow-x: hidden;
+  line-height: 25.92px;
 }
 .menu-languages li {
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
 }
 .menu-languages span {
-    font-weight: 500;
-    font-size: 16px;
-    color: #030303;
+  font-weight: 500;
+  font-size: 16px;
+  color: #030303;
 
-    line-height: 25.92px;
+  line-height: 25.92px;
 }
 
 /* End React Calendar */
 
 .menu-languages ul::-webkit-scrollbar {
-    width: 10px;
-    padding: 0px 5px;
+  width: 10px;
+  padding: 0px 5px;
 }
 
 .menu-languages ul::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px #f0f0f0;
-    background-color: #f0f0f0;
+  box-shadow: inset 0 0 6px #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .menu-languages ul::-webkit-scrollbar-thumb {
-    background-color: #c18beb;
-    /* outline: 1px solid slategrey; */
-    border-radius: 10px;
+  background-color: #c18beb;
+  /* outline: 1px solid slategrey; */
+  border-radius: 10px;
 }
 .menu-flags {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .menu-flags button {
-    border: none !important;
-    width: 100% !important;
-    padding-left: 0px;
-    padding-right: 0px;
+  border: none !important;
+  width: 100% !important;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .menu-flags button:after {
-    display: none !important;
-    content: none !important;
+  display: none !important;
+  content: none !important;
 }
 .menu-flags ul::-webkit-scrollbar {
-    width: 10px;
-    padding: 0px 5px;
+  width: 10px;
+  padding: 0px 5px;
 }
 
 .menu-flags ul::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px #f0f0f0;
-    background-color: #f0f0f0;
+  box-shadow: inset 0 0 6px #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .menu-flags ul::-webkit-scrollbar-thumb {
-    background-color: #c18beb;
-    /* outline: 1px solid slategrey; */
-    border-radius: 10px;
+  background-color: #c18beb;
+  /* outline: 1px solid slategrey; */
+  border-radius: 10px;
 }
 .menu-regioin {
-    width: 100%;
-    height: 100%;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !;
-    appearance: none !important;
-    padding-left: 5px;
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !;
+  appearance: none !important;
+  padding-left: 5px;
 }
 .menu-regioin:focus {
-    outline: none !important;
+  outline: none !important;
 }
 .customDropDown select {
-    width: 100%;
-    height: 100%;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !;
-    appearance: none !important;
-    border-radius: 5px;
-    padding-left: 5px;
-    outline: none !important;
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !;
+  appearance: none !important;
+  border-radius: 5px;
+  padding-left: 5px;
+  outline: none !important;
 }
 .react-calendar {
-    /* width: 350px; */
-    width: 260px;
-    max-width: 100%;
-    background: white;
-    /* border: 1px solid #a0a096; */
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.125em;
+  /* width: 350px; */
+  width: 260px;
+  max-width: 100%;
+  background: white;
+  /* border: 1px solid #a0a096; */
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
 }
 .react-calendar--doubleView {
-    width: 700px;
+  width: 700px;
 }
 .react-calendar--doubleView .react-calendar__viewContainer {
-    display: flex;
-    margin: -0.5em;
+  display: flex;
+  margin: -0.5em;
 }
 .react-calendar--doubleView .react-calendar__viewContainer > * {
-    width: 50%;
-    margin: 0.5em;
+  width: 50%;
+  margin: 0.5em;
 }
 .react-calendar,
 .react-calendar *,
 .react-calendar *:before,
 .react-calendar *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .react-calendar button {
-    margin: 0;
-    border: 0;
-    outline: none;
+  margin: 0;
+  border: 0;
+  outline: none;
 }
 .react-calendar button:enabled:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 .react-calendar__navigation {
-    display: flex;
-    height: 30px;
-    /* height: 44px; */
-    margin-bottom: 1em;
-    font-size: 14px;
+  display: flex;
+  height: 30px;
+  /* height: 44px; */
+  margin-bottom: 1em;
+  font-size: 14px;
 }
 .react-calendar__navigation button {
-    min-width: 44px;
-    background: none;
+  min-width: 44px;
+  background: none;
 }
 .react-calendar__navigation button:disabled {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-    /* background-color: #e6e6e6; */
+  /* background-color: #e6e6e6; */
 }
 .react-calendar__month-view__weekdays {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 400;
-    font-size: 0.75em;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.75em;
 }
 .react-calendar__month-view__weekdays__weekday {
-    padding: 0.5em;
-    color: #afafaf;
+  padding: 0.5em;
+  color: #afafaf;
 }
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75em;
-    font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  font-weight: bold;
 }
 .react-calendar__month-view__days__day--weekend {
-    color: #d10000;
+  color: #d10000;
 }
 .react-calendar__month-view__days__day--neighboringMonth {
-    color: #757575;
+  color: #757575;
 }
 .react-calendar__year-view .react-calendar__tile,
 .react-calendar__decade-view .react-calendar__tile,
 .react-calendar__century-view .react-calendar__tile {
-    padding: 2em 0.5em;
+  padding: 2em 0.5em;
 }
 .react-calendar__tile {
-    max-width: 100%;
-    padding: 10px 6.6667px;
-    background: none;
-    text-align: center;
-    line-height: 16px;
-    font-size: 12px;
+  max-width: 100%;
+  padding: 10px 6.6667px;
+  background: none;
+  text-align: center;
+  line-height: 16px;
+  font-size: 12px;
 }
 .react-calendar__tile:disabled {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-    background-color: #e6e6e6;
-    border-radius: 100%;
+  background-color: #e6e6e6;
+  border-radius: 100%;
 }
 .react-calendar__tile--now {
-    background: #ffff76;
-    border-radius: 100%;
+  background: #ffff76;
+  border-radius: 100%;
 }
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-    background: #ffffa9;
+  background: #ffffa9;
 }
 .react-calendar__tile--hasActive {
-    background: #76baff;
+  background: #76baff;
 }
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-    background: #a9d4ff;
+  background: #a9d4ff;
 }
 .react-calendar__tile--active {
-    /* background: #006edc; */
-    background: #870cf7;
-    border-radius: 100%;
-    color: white;
+  /* background: #006edc; */
+  background: #870cf7;
+  border-radius: 100%;
+  color: white;
 }
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-    background: #870cf7;
-    border-radius: 100%;
-    /* background: #1087ff; */
+  background: #870cf7;
+  border-radius: 100%;
+  /* background: #1087ff; */
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
-    background-color: #e6e6e6;
+  background-color: #e6e6e6;
 }

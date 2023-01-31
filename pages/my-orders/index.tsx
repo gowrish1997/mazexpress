@@ -32,7 +32,7 @@ const MyOrders = () => {
 
   return (
     <>
-      <PageHeaders content="My Orders" showCalender={true} />
+      <PageHeaders content="My Orders" showCalender={true} title='My Orders | MazExpress' />
 
       <div className="flex flex-col justify-between relative flex-1 h-full">
         {orders && orders.length > 0 ? (
@@ -51,7 +51,7 @@ const MyOrders = () => {
               />
             </div>
             <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
-              Until now, there were no orders on your list; start adding them.
+              Oops, there are no orders on your list yet... Start adding now.
               <br />
               <Link href={`${router.pathname}/add-new-order`}>
                 <span className="text-[#0057FF] font-[500]">Add Order Now</span>

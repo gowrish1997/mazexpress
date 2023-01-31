@@ -41,7 +41,7 @@ const LogInComponent = (props: any) => {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data)
+    // console.log(data);
     try {
       mutateUser(
         await fetchJson("/api/auth/login", {
