@@ -85,33 +85,33 @@ const Settings = () => {
   };
 
   const onSubmit: SubmitHandler<IUserProfile> = async (data) => {
-    // console.log(data)
-    let updateObj = { ...data };
-    delete updateObj.newPassword_users;
-    delete updateObj.password_users;
-    delete updateObj.default_language_users;
-    updateObj.id_users = user?.id_users;
+    console.log(data);
+    // let updateObj = { ...data };
+    // delete updateObj.newPassword_users;
+    // delete updateObj.password_users;
+    // delete updateObj.default_language_users;
+    // updateObj.id_users = user?.id_users;
 
-    if (user && user.id_users) {
-      // update user
-      try {
-        mutateUser(
-          await fetchJson(`/api/users?id=${user.id_users}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updateObj),
-          }),
-          false
-        );
-        // router.push("/");
-      } catch (error) {
-        if (error instanceof FetchError) {
-          setErrorMsg(error.data.message);
-        } else {
-          console.error("An unexpected error happened:", error);
-        }
-      }
-    }
+    // if (user && user.id_users) {
+    //   // update user
+    //   try {
+    //     mutateUser(
+    //       await fetchJson(`/api/users?id=${user.id_users}`, {
+    //         method: "PUT",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(updateObj),
+    //       }),
+    //       false
+    //     );
+    //     // router.push("/");
+    //   } catch (error) {
+    //     if (error instanceof FetchError) {
+    //       setErrorMsg(error.data.message);
+    //     } else {
+    //       console.error("An unexpected error happened:", error);
+    //     }
+    //   }
+    // }
   };
 
   if (userIsLoading) return <div>loading</div>;
@@ -150,21 +150,22 @@ const Settings = () => {
             className="flex-type6 w-3/4 gap-y-[10px] "
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="flex-type1 gap-x-[20px] mb-[20px] ">
+            <div className="flex items-center gap-x-[20px] mb-[20px] ">
               <label htmlFor="user_profile">
-                <input
-                  type="file"
-                  className="hidden"
-                  id="user_profile"
-                  {...register("avatar_url_users")}
-                />
-                <Image
-                  src={user?.avatar_url_users!}
-                  alt="profile"
-                  height={100}
-                  width={100}
-                  className="rounded-[50%]"
-                />
+                <div className="w-[100px] h-[100px] relative rounded-full overflow-hidden">
+                  <input
+                    type="file"
+                    className="hidden"
+                    id="user_profile"
+                    {...register("avatar_url_users")}
+                  />
+                  <Image
+                    src={user?.avatar_url_users!}
+                    alt="profile"
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
               </label>
 
               <div className="flex-type6">

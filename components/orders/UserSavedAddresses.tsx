@@ -25,42 +25,19 @@ const UserSavedAddresses = (props: {
 
       // update user backend
 
-      const updatedUser = await mutateUser(
+      mutateUser(
         await fetchJson(`/api/users?id=${user.id_users}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newUserData),
         }),
-        {
-          populateCache: (result, current) => {
-            // console.log(result, 'result')
-            // console.log(current, 'current')
-
-            return current!;
-          },
-          // revalidate: true
-        }
+        false
       );
-      console.log("mutate return", updatedUser);
-      // axios
-      //   .put(`/api/users?id=${user?.id_users}`, { default_address_users: id })
-      //   .then((response) => {
-      //     console.log(response.data);
-      //     mutateUser(newUserData, false);
-      //     mutateUser(
-      //       await fetchJson("/api/auth/login", {
-      //         method: "POST",
-      //         headers: { "Content-Type": "application/json" },
-      //         body: JSON.stringify(data),
-      //       }),
-      //       false
-      //     );
-      //   });
     }
   };
 
   return (
-    <div className=" box-border flex-type2 min-w-[32%] h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
+    <div className="box-border flex-type2 min-w-[32%] min-h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
       <input
         type="radio"
         name="address"
@@ -88,7 +65,11 @@ const UserSavedAddresses = (props: {
         <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">
           {props.address.country_addresses}
         </p>
-        <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">{`${props.address.address_1_addresses}, ${props.address.address_2_addresses}, ${props.address.city_addresses}, ${props.address.state_addresses}, ${props.address.country_addresses}`}</p>
+        <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">{`${props.address.address_1_addresses}, ${props.address.address_2_addresses}`}</p>
+        <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
+          {" "}
+          {props.address.city_addresses}, {props.address.state_addresses}
+        </p>
 
         <div className="flex-type1 mt-[15px]">
           <Image src="/mobile.png" height={12} width={12} alt="mobile" />
@@ -97,7 +78,7 @@ const UserSavedAddresses = (props: {
           </div>
         </div>
 
-        <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[10px] mt-[15px] ">
+        <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[20px] flex justify-end mt-2">
           <button onClick={() => props.edit(props.address.id_addresses!)}>
             Edit
           </button>

@@ -91,7 +91,7 @@ const AddressBook = () => {
   return (
     <>
       <PageHeader content="My Address Book" title="Address Book | MazExpress" />
-      <div className="flex-type1 flex-wrap mt-[20px] gap-[20px] ">
+      <div className="grid grid-cols-3 gap-3 py-5">
         {addresses &&
           addresses?.map((data) => {
             return (
