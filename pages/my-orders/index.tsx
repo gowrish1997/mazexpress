@@ -14,41 +14,13 @@ const tableHeaders = [
   "MAZ Tracking ID",
   "Store",
   "Reference ID",
-  "Estimated Deliver",
+  "Estimated Delivery",
   "Address",
   "Status",
 ];
 
-const data = [
-  {
-    id: nanoid(),
-    mazTrackingId: "asfnaksf",
-    storeLink: "flilkaer",
-    referenceId: "akjsfnka",
-    estimateDelivery: "fknaskf",
-    address: "afanslf",
-    status: "In Transit",
-  },
-  {
-    id: nanoid(),
-    mazTrackingId: "asfnaksf",
-    storeLink: "flilkaer",
-    referenceId: "akjsfnka",
-    estimateDelivery: "fknaskf",
-    address: "afanslf",
-    status: "Delivered",
-  },
-  {
-    id: nanoid(),
-    mazTrackingId: "asfnaksf",
-    storeLink: "flilkaer",
-    referenceId: "akjsfnka",
-    estimateDelivery: "fknaskf",
-    address: "afanslf",
-    status: "At warehouse",
-  },
-];
 const MyOrders = () => {
+
   const router = useRouter();
   const { user, mutateUser } = useUser();
   const { orders, mutateOrders } = useOrders({ userId: user?.id_users });
@@ -61,7 +33,11 @@ const MyOrders = () => {
 
   return (
     <>
-      <PageHeaders content="My Orders" showCalender={true} title='My Orders | MazExpress' />
+      <PageHeaders
+        content="My Orders"
+        showCalender={true}
+        title="My Orders | MazExpress"
+      />
 
       <div className="flex flex-col justify-between relative flex-1 h-full">
         {orders && orders.length > 0 ? (

@@ -45,7 +45,7 @@ export default function handler(
           );
           // error invalid
         } else {
-          res.status(200).json([]);
+          res.status(200).json({ msg: "invalid url params" });
         }
         break;
 
@@ -53,7 +53,7 @@ export default function handler(
         executeQuery(
           {
             query:
-              "INSERT INTO addresses (user_id, address_1_addresses, address_2_addresses, city_addresses, country_addresses, pincode_addresses, state_addresses, phone_addresses) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+              "INSERT INTO notifications (user_id, address_1_addresses, address_2_addresses, city_addresses, country_addresses, pincode_addresses, state_addresses, phone_addresses) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             values: [
               req.body.user_id,
               req.body.address_1,
@@ -75,20 +75,10 @@ export default function handler(
         if (req.query.id) {
           // update
           const id = req.query.id;
-          const fields = {
-            user_id: req.body.user_id,
-            address_1_addresses: req.body.address_1,
-            address_2_addresses: req.body.address_2,
-            city_addresses: req.body.city,
-            country_addresses: req.body.country,
-            pincode_addresses: req.body.pincode,
-            state_addresses: req.body.state,
-            phone_addresses: req.body.phone,
-            tag_addresses: req.body.tag,
-          };
+          const fields = { ...req.body };
           executeQuery(
             {
-              query: "UPDATE addresses SET ? WHERE id_addresses = ? ",
+              query: "UPDATE notifications SET ? WHERE id_notifications = ? ",
               values: [fields, id],
             },
             (results) => {
@@ -105,7 +95,7 @@ export default function handler(
           const id = req.query.id;
           executeQuery(
             {
-              query: "DELETE FROM addresses WHERE id_addresses=?",
+              query: "DELETE FROM notifications WHERE id_notifications = ?",
               values: [id],
             },
             (results) => {
