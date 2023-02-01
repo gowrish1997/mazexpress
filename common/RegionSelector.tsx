@@ -31,6 +31,7 @@ const RegionSelector = (props: IProp) => {
         style={{ borderColor: props.error ? "#f02849" : "" }}
       >
         <RegionDropdown
+       
           country={props.country}
           value={props.value}
           countryValueType="short"

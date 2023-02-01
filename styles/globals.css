@@ -27,30 +27,34 @@ body {
 }
 
 @layer components {
-  .flex-type1 {
-    @apply flex flex-row justify-start items-center;
-  }
-  .flex-type2 {
-    @apply flex flex-row justify-start items-start;
-  }
-  .flex-type3 {
-    @apply flex flex-row justify-between items-center;
-  }
-  .flex-type4 {
-    @apply flex flex-row justify-between items-start;
-  }
-  .flex-type5 {
-    @apply flex flex-col justify-start items-center;
-  }
-  .flex-type6 {
-    @apply flex flex-col justify-start items-start;
-  }
-  .flex-type7 {
-    @apply flex flex-col justify-between items-center;
-  }
-  .flex-type8 {
-    @apply flex flex-col justify-between items-start;
-  }
+    .flex-type1 {
+        @apply flex flex-row justify-start items-center;
+    }
+    .flex-type2 {
+        @apply flex flex-row justify-start items-start;
+    }
+    .flex-type3 {
+        @apply flex flex-row justify-between items-center;
+    }
+    .flex-type4 {
+        @apply flex flex-row justify-between items-start;
+    }
+    .flex-type5 {
+        @apply flex flex-col justify-start items-center;
+    }
+    .flex-type6 {
+        @apply flex flex-col justify-start items-start;
+    }
+    .flex-type7 {
+        @apply flex flex-col justify-between items-center;
+    }
+    .flex-type8 {
+        @apply flex flex-col justify-between items-start;
+    }
+   
+    .secondWarehouse {
+        @apply after:absolute after:-left-[0.5px]  after:h-[25px] after:w-[2px] after:rounded after:bg-[#006400];
+    }
 }
 #searchbar::placeholder {
   font-size: 14px;
@@ -286,23 +290,23 @@ input::-webkit-inner-spin-button {
 }
 
 .indexedStep.accomplished {
-  background-color: #664de5;
+    background-color: #ffba00;
 }
 .indexedStep.accomplished1 {
-  background-color: red;
-  color: white;
-  border-style: none;
+    background-color: green;
+    color: white;
+    border-style: none;
 }
-.indexedStep.accomplished2 {
-  background-color: #ffba00;
-  color: white;
-  border-style: none;
-}
-.indexedStep.accomplished3 {
-  background-color: green;
-  color: white;
-  border-style: none;
-}
+/* .indexedStep.accomplished2 {
+    background-color: red;
+    color: white;
+    border-style: none;
+} */
+/* .indexedStep.accomplished3 {
+    background-color: #664de5;
+    color: white;
+    border-style: none;
+} */
 
 .RSPBprogressBar {
   height: 470px !important;
@@ -350,16 +354,16 @@ input::-webkit-inner-spin-button {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.RSPBprogressBar .RSPBprogression::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  transform: translate(-5px);
-  height: 13px;
-  width: 13px;
-  border-radius: 50%;
-  background-color: green;
-}
+/* .RSPBprogressBar .RSPBprogression::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    transform: translate(-5px);
+    height: 13px;
+    width: 13px;
+    border-radius: 50%;
+    background-color: green;
+} */
 .RSPBprogressBar .RSPBprogression {
   position: absolute;
   width: 2px !important;
@@ -369,17 +373,17 @@ input::-webkit-inner-spin-button {
   z-index: -1;
 }
 .source_website .RSPBprogression {
-  width: 2px !important;
-  height: 15% !important;
+    width: 2px !important;
+    height:0% !important;
 }
 .warehouse .RSPBprogression {
-  width: 2px !important;
-  height: 42% !important;
+    width: 2px !important;
+    height:23% !important;
 }
 
 .out_for_delivery .RSPBprogression {
-  width: 2px !important;
-  height: 82% !important;
+    width: 2px !important;
+    height: 65% !important;
 }
 .delivered .RSPBprogression {
   width: 2px !important;
@@ -497,11 +501,12 @@ input::-webkit-inner-spin-button {
   -moz-appearance: none !;
   appearance: none !important;
   padding-left: 5px;
+  border-radius: 5px !important;
 }
 .menu-regioin:focus {
   outline: none !important;
 }
-.customDropDown select {
+#customDropDown select {
   width: 100%;
   height: 100%;
   -webkit-appearance: none !important;
@@ -510,7 +515,12 @@ input::-webkit-inner-spin-button {
   border-radius: 5px;
   padding-left: 5px;
   outline: none !important;
+  line-height:30px !important;
 }
+ option{
+line-height:30px !important;
+}
+
 .react-calendar {
   /* width: 350px; */
   width: 260px;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,13 +11,21 @@ import {
 import useUser from "@/lib/useUser";
 import useNotifications from "@/lib/useNotifications";
 import { INotification } from "@/models/notification.interface";
+import NotificationView from "@/common/NotificationView";
 const Topbar = () => {
+
   const { user, mutateUser } = useUser();
   const { notifications, notificationsIsLoading } = useNotifications({
     userId: user?.id_users!,
   });
+  const [showNotification,setShowNotification]=useState(false)
+
+  const togglingNotificationHandler=()=>{
+      setShowNotification((prev)=>!prev)
+  }
 
   return (
+    <>
     <div className="flex w-full min-h-[60px] py-5 items-center justify-between">
       <div className="flex-1 h-[46px] border-[0.5px] boder-[#8794AD] rounded-[6px] p-[5px] pl-[15px] relative">
         <input
@@ -35,7 +43,7 @@ const Topbar = () => {
           />
         </div>
       </div>
-      <div className="flex min-h-[65px] items-center justify-end">
+      <div className="flex min-h-[65px] items-center justify-end" onClick={togglingNotificationHandler} >
         <span className="relative top-0.5 px-7">
           {notifications && notifications.length > 0 && (
             <span className="rounded-full block -top-[1px] h-[7px] w-[7px] right-[28.5px] bg-[#FF2323] absolute"></span>
@@ -60,6 +68,8 @@ const Topbar = () => {
         <FontAwesomeIcon icon={faAngleDown} size="xs" color="#525D72" />
       </div>
     </div>
+    <NotificationView close={togglingNotificationHandler} show={showNotification} />
+    </>
   );
 };
 
