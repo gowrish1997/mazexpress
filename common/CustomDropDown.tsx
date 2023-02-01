@@ -14,7 +14,7 @@ interface IProp {
 }
 const CustomDropDown = (props: IProp) => {
     return (
-        <div className="w-full flex-type6 customDropDown ">
+        <div className="w-full flex-type6" id="customDropDown">
             <label htmlFor={props.name} className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] ">
                 {props.label}
             </label>
@@ -23,7 +23,7 @@ const CustomDropDown = (props: IProp) => {
                     {props.value.map((data) => {
                         return (
                             <option key={data} value={data}>
-                                {data}
+                                <div className="bg-[red] py-[10px]" >{data}</div>
                             </option>
                         );
                     })}
