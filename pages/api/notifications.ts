@@ -85,12 +85,12 @@ export default function handler(
             },
             (results) => {
               res.status(200).json(results);
-              resolve(results)
+              resolve(results);
             }
           );
         } else {
           res.status(200).json({ msg: "invalid url params" });
-          reject()
+          reject();
         }
         break;
 
@@ -104,18 +104,18 @@ export default function handler(
             },
             (results) => {
               res.status(200).json(results);
-              resolve(results)
+              resolve(results);
             }
           );
         } else {
           res.status(200).json({ msg: "invalid url params" });
-          reject()
+          reject();
         }
         break;
 
       default:
         res.status(500).json({ msg: "not allowed" });
-        reject()
+        reject();
     }
   });
 }

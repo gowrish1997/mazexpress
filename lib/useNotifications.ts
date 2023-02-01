@@ -13,7 +13,7 @@ export default function useNotifications({
     data: notifications,
     // mutate: mutateUser,
     isLoading: notificationsIsLoading,
-  } = useSWR<INotification[]>(`/api/notifications?user=${userId}&id=${id}`);
+  } = useSWR<INotification[]>(`/api/notifications?user=${userId}`);
 
   return { notifications, notificationsIsLoading };
 }
