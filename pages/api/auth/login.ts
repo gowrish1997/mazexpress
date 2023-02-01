@@ -1,5 +1,5 @@
 import { withSessionRoute } from "@/lib/config/withSession";
-import { executeQuery } from "@/lib/db";
+import { db, executeQuery } from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import { IUser } from "@/models/user.interface";
@@ -19,36 +19,30 @@ async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
       // console.log(email, password);
       // get user from db from pass and username
       try {
-        const sql = "SELECT * FROM users WHERE email_users = ?";
-        executeQuery(
-          { query: sql, values: [email] },
-          async (results: IUser[]) => {
+        db("users")
+          .where("email_users", email)
+          .first()
+          .then(async (data: any) => {
             // check if pass is same
-            const match = bcrypt.compareSync(
-              password,
-              results[0].password_users!
-            ); // true
-            // console.log(match);
-            // console.log("login results", results[0]);
+            const match = bcrypt.compareSync(password, data.password_users!);
+
             if (match) {
               // login with user
-              req.session.user = results[0];
+              req.session.user = data;
               req.session.user.is_logged_in_users = 1;
               await req.session.save();
 
-              updateUser(results[0].id_users, {is_logged_in_users: 1})
-              
+              updateUser(data.id_users, { is_logged_in_users: 1 });
 
-              res.json(results[0]);
-              resolve(results[0]);
+              res.json(data);
+              resolve(data);
               return;
             } else {
               res.status(403).send("");
               reject();
               return;
             }
-          }
-        );
+          });
       } catch (error) {
         res.status(500).json({ message: (error as Error).message });
         reject();

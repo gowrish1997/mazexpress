@@ -13,7 +13,7 @@ const TrackOrder = (props: any) => {
   const { user, mutateUser, userIsLoading } = useUser();
   const { orders, ordersIsLoading } = useOrders({ userId: user?.id_users });
 
-  const [packageStatus, setPackageStatus] = useState(5);
+  const [packageStatus, setPackageStatus] = useState(0);
 
   return (
     <>

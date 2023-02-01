@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const WarehouseTracking = (props: { packageStatus: number }) => {
+  console.log(props.packageStatus)
   const [packageStatus, setPackageStatus] = useState(props.packageStatus);
 
   return (
@@ -8,7 +9,7 @@ const WarehouseTracking = (props: { packageStatus: number }) => {
       <div className="flex-type1 ">
         <div
           className="h-[10px] w-[10px]  rounded-[50%] bg-[#A9A9A9]"
-          style={packageStatus >= 2 ? { backgroundColor: "#3672DF" } : {}}
+          style={props.packageStatus >= 2 ? { backgroundColor: "#3672DF" } : {}}
         />
         <p className="flex-1 ml-[10px]">
           Package left warehouse in Istanbul, Turkey.
@@ -20,7 +21,7 @@ const WarehouseTracking = (props: { packageStatus: number }) => {
       <div className="flex-type1">
         <div
           className="h-[10px] w-[10px] rounded-[50%] bg-[#A9A9A9]"
-          style={packageStatus >= 3 ? { backgroundColor: "#3672DF" } : {}}
+          style={props.packageStatus >= 3 ? { backgroundColor: "#3672DF" } : {}}
         />
         <p className="flex-1 ml-[10px]">Package arrived at warehouse in Libya.</p>
       </div>
@@ -30,7 +31,7 @@ const WarehouseTracking = (props: { packageStatus: number }) => {
       <div className="flex-type1 ">
         <div
           className="h-[10px] w-[10px] rounded-[50%] bg-[#A9A9A9]"
-          style={packageStatus >= 4 ? { backgroundColor: "#3672DF" } : {}}
+          style={props.packageStatus >= 4 ? { backgroundColor: "#3672DF" } : {}}
         />
         <p className="flex-1 ml-[10px]">
           Package left warehouse in Libya.
