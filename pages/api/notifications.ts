@@ -75,19 +75,20 @@ export default function handler(
 
       case "PUT":
         if (req.query.id) {
-          // update
-          const id = req.query.id;
-          const fields = { ...req.body };
-          executeQuery(
-            {
-              query: "UPDATE notifications SET ? WHERE id_notifications = ? ",
-              values: [fields, id],
-            },
-            (results) => {
-              res.status(200).json(results);
-              resolve(results)
-            }
-          );
+          // // update
+          // const id = req.query.id;
+          // const fields = { ...req.body };
+          // console.log(fields)
+          // executeQuery(
+          //   {
+          //     query: "UPDATE notifications SET status_notifications=? WHERE id_notifications = ? ",
+          //     values: [fields.status_notifications, id],
+          //   },
+          //   (results) => {
+          //     res.status(200).json(results);
+          //     resolve(results)
+          //   }
+          // );
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject()

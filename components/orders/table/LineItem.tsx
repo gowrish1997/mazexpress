@@ -40,7 +40,7 @@ const LineItem = ({
   );
 
   function optionModalHandler(e: any, index: number) {
-    setActiveHandler(index, e);
+  setActiveHandler(index, e);
   }
 
   const orderStatusColorHandler = (status: string) => {
@@ -58,10 +58,11 @@ const LineItem = ({
     }
   };
 
+
   return (
     <>
       <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px]">
-        <td className={`td1`}>{row.id_orders}</td>
+        <td className={`td1`}  >{row.id_orders}</td>
         <td className={`td2 text-[#3672DF]`}>{row.store_link_orders}</td>
         <td className={`td3`}>{row.reference_id_orders}</td>
         <td className={`td4`}>...</td>
@@ -88,12 +89,13 @@ const LineItem = ({
           <span className="ml-[5px]">{row.status_orders}</span>
         </td>
         <td
+       id='parent'
           className="box-border relative cursor-pointer"
-          ref={trigger}
+          
           onClick={(e) => optionModalHandler(e, index)}
         >
-          <Image src="/editicon.png" height={13} width={4} alt="editIcon" />
-          {show && <OrderOptionModal ref={modalNode} />}
+          <Image src="/editicon.png" height={13} width={4} alt="editIcon" className="-z-50" ref={trigger} />
+          {show && <OrderOptionModal  ref={modalNode}  />}
         </td>
       </tr>
     </>

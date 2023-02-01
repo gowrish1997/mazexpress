@@ -48,11 +48,12 @@ const Settings = () => {
         handleSubmit,
         control,
         setValue,
+        setError,
         reset,
         formState: { errors },
     } = useForm<IUserProfile>({
         resolver: yupResolver(schema),
-        defaultValues: user,
+        // defaultValues: user,
     });
 
     useEffect(() => {
@@ -130,8 +131,8 @@ const Settings = () => {
                         <div className="flex items-center gap-x-[20px] mb-[20px] ">
                             <label htmlFor="user_profile">
                                 <div className="w-[100px] h-[100px] relative rounded-full overflow-hidden">
-                                    <input type="file" className="hidden" id="user_profile" {...register("avatar_url_users")} />
-                                    <Image src={user?.avatar_url_users!} alt="profile" fill style={{ objectFit: "cover" }} />
+                                    {/* <input type="file" className="hidden" id="user_profile" {...register("avatar_url_users")} />
+                                    <Image src={user?.avatar_url_users!} alt="profile" fill style={{ objectFit: "cover" }} /> */}
                                 </div>
                             </label>
 
