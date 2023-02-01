@@ -45,23 +45,10 @@ export default async function handler(
       });
     }
 
-    // create new file
-    // map_path = path.join(
-    //   __dirname,
-    //   "..",
-    //   "..",
-    //   "..",
-    //   "..",
-    //   "public",
-    //   "maps",
-    //   data.fields.map_path[0] + ".jpg"
-    // );
-
     // write file to public/maps with name of path
     fs.rename(data.files.image[0].path, image_path, (err) => {
       if (err) throw err;
-      console.log('rename complete!');
-      // console.log("req data", data.files, data.fields);
+      console.log("rename complete!");
     });
 
     res.status(200).json({ msg: "done" });

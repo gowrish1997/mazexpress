@@ -23,7 +23,8 @@ export default function handler(
 
           executeQuery(
             {
-              query: "SELECT * FROM notifications WHERE user_id=? AND status_notifications != 'deleted'",
+              query:
+                "SELECT * FROM notifications WHERE user_id=? AND status_notifications != 'deleted'",
               values: [user_id],
             },
             (results) => {

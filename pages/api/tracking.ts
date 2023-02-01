@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { hashPassword } from "@/lib/bcrypt";
-import { executeQuery } from "@/lib/db";
+import { db, executeQuery } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -18,92 +18,64 @@ export default function handler(
         if (req.query.id) {
           // single response
           const id = req.query.id;
-          executeQuery(
-            {
-              query: "SELECT * FROM tracking where id_tracking=?",
-              values: [id],
-            },
-            (results) => {
-              //   console.log("results", results);
-              res.status(200).json(results);
-              resolve(results);
-            }
-          );
+          db("tracking")
+            .where("id_tracking", id)
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         } else {
           // list response
           if (req.query.user) {
-            executeQuery(
-              {
-                query: "SELECT * FROM tracking WHERE user_id = ?",
-                values: [req.query.user],
-              },
-              (results) => {
-                //   console.log("results", results);
-                res.status(200).json(results);
-              }
-            );
+            db("tracking")
+              .where("user_id", req.query.user)
+              .then((data: any) => {
+                res.status(200).json(data);
+                resolve(data);
+              });
           }
           if (req.query.order) {
-            executeQuery(
-              {
-                query: "SELECT * FROM tracking WHERE order_id = ?",
-                values: [req.query.order],
-              },
-              (results) => {
-                // console.log("results", results);
-                res.status(200).json(results);
-              }
-            );
+            db("tracking")
+              .where("order_id", req.query.order)
+              .then((data: any) => {
+                res.status(200).json(data);
+                resolve(data);
+              });
           }
-          executeQuery(
-            {
-              query: "SELECT * FROM tracking",
-              values: [],
-            },
-            (results) => {
-            //   console.log("results", results);
-              res.status(200).json(results);
-              resolve(results)
-            }
-          );
+
+          db("tracking").then((data: any) => {
+            res.status(200).json(data);
+            resolve(data);
+          });
         }
         break;
 
       case "POST":
-        executeQuery(
-          {
-            query:
-              "INSERT INTO tracking (order_id, stage_tracking, poc_tracking, user_id) VALUES (?, ?, ?, ?)",
-            values: [
-              req.body.order_id,
-              req.body.stage_tracking,
-              req.body.poc_tracking,
-              req.body.user_id,
-            ],
-          },
-          (results) => {
-            res.status(200).json(results);
-            resolve(results);
-          }
-        );
+        db("tracking")
+          .insert({
+            order_id: req.body.order_id,
+            stage_tracking: req.body.stage_tracking,
+            poc_tracking: req.body.poc_tracking,
+            user_id: req.body.user_id,
+          })
+          .then((data: any) => {
+            res.status(200).json(data);
+            resolve(data);
+          });
+
         break;
 
       case "PUT":
         if (req.query.id) {
           const id = req.query.id;
           const fields = { ...req.body };
-
-          console.log(fields, id);
-          executeQuery(
-            {
-              query: "UPDATE tracking SET ? WHERE id_tracking = ? ",
-              values: [fields, id],
-            },
-            (results) => {
-              res.status(200).json(results);
-              resolve(results);
-            }
-          );
+          db("tracking")
+            .where("id_tracking", id)
+            .update(fields)
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         } else {
           // error response
           res.status(500).json({ msg: "invalid url params" });
@@ -114,16 +86,13 @@ export default function handler(
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          executeQuery(
-            {
-              query: "DELETE FROM tracking WHERE id_tracking = ?",
-              values: [id],
-            },
-            (results) => {
-              res.status(200).json(results);
-              resolve(results);
-            }
-          );
+          db("tracking")
+            .where("id_tracking", id)
+            .del()
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         } else {
           // error response
           res.status(500).json({ msg: "invalid url params" });
@@ -133,6 +102,7 @@ export default function handler(
 
       default:
         res.status(500).json({ msg: "default" });
+        reject();
     }
   });
 }
