@@ -43,33 +43,6 @@ async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
               return;
             }
           });
-        // const sql = "SELECT * FROM users WHERE email_users = ?";
-        // executeQuery(
-        //   { query: sql, values: [email] },
-        //   async (results: IUser[]) => {
-        //     // check if pass is same
-        //     const match = bcrypt.compareSync(
-        //       password,
-        //       results[0].password_users!
-        //     );
-        //     if (match) {
-        //       // login with user
-        //       req.session.user = results[0];
-        //       req.session.user.is_logged_in_users = 1;
-        //       await req.session.save();
-
-        //       updateUser(results[0].id_users, { is_logged_in_users: 1 });
-
-        //       res.json(results[0]);
-        //       resolve(results[0]);
-        //       return;
-        //     } else {
-        //       res.status(403).send("");
-        //       reject();
-        //       return;
-        //     }
-        //   }
-        // );
       } catch (error) {
         res.status(500).json({ message: (error as Error).message });
         reject();
