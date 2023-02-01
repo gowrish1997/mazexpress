@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import EachNotification from "./EachNotification";
 import useUser from "@/lib/useUser";
 import useNotifications from "@/lib/useNotifications";
+import { INotification } from "@/models/notification.interface";
+import axios from "axios";
 interface IProp {
   close: () => void;
   show: boolean;
@@ -10,9 +12,40 @@ interface IProp {
 
 const NotificationView = (props: IProp) => {
   const { user, mutateUser } = useUser();
-  const { notifications, notificationsIsLoading } = useNotifications({
-    userId: user?.id_users!,
-  });
+  const { notifications, notificationsIsLoading, mutateNotifications } =
+    useNotifications({
+      userId: user?.id_users!,
+    });
+
+  const [userNotifications, setUserNotifications] = useState<INotification[]>();
+
+  const deleteNotification = (id: number) => {
+    // console.log("delete");
+    setUserNotifications((prev) => {
+      if (prev !== undefined) {
+        let newObjs: INotification[] = prev.filter(
+          (el) => el.id_notifications !== id
+        );
+
+        // console.log(newObjs);
+        return newObjs;
+      }
+    });
+    // update db
+    // axios.put(`/api/notifications?id=${id}`, {
+    //   status_notifications: "deleted",
+    // });
+  };
+
+  useEffect(() => {
+    if (notifications !== undefined) {
+      setUserNotifications(notifications);
+    }
+  }, [notificationsIsLoading, notifications]);
+
+  useEffect(() => {
+    console.log(userNotifications);
+  }, userNotifications);
 
   return (
     <>
@@ -39,11 +72,16 @@ const NotificationView = (props: IProp) => {
           />
         </div>
         <div className="space-y-[20px]">
-          {notifications
-            ?.filter((el) => el.status_notifications !== "deleted")
-            .map((data) => {
+          {userNotifications
+            // ?.filter((el) => el.status_notifications !== "deleted")
+            ?.map((data) => {
               return (
-                <EachNotification id={data.id_notifications} data={data} key={data.id_notifications} />
+                <EachNotification
+                  id={data.id_notifications}
+                  data={data}
+                  key={data.id_notifications}
+                  delete={deleteNotification}
+                />
               );
             })}
         </div>

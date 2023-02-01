@@ -23,7 +23,7 @@ export default function handler(
 
           executeQuery(
             {
-              query: "SELECT * FROM notifications WHERE user_id=?",
+              query: "SELECT * FROM notifications WHERE user_id=? AND status_notifications != 'deleted'",
               values: [user_id],
             },
             (results) => {
@@ -42,7 +42,7 @@ export default function handler(
             },
             (results) => {
               // console.log("results", results);
-              res.status(200).json(results);
+              res.status(200).json(results[0]);
               resolve(results);
             }
           );

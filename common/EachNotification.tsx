@@ -5,9 +5,11 @@ import { getTimeInHourAndMinuteFormat } from "@/lib/helper";
 import useNotification from "@/lib/useNotification";
 import fetchJson from "@/lib/fetchJson";
 import { INotification } from "@/models/notification.interface";
+import axios from "axios";
 interface IProp {
   data: any;
   id: number;
+  delete: (id: number) => void;
 }
 
 const EachNotification = (props: IProp) => {
@@ -15,16 +17,21 @@ const EachNotification = (props: IProp) => {
     useNotification({ id: props.id });
 
   const [data, setData] = useState<INotification>(props.data);
-//   console.log(data);
+  // console.log(props.data);
+
   const markAsDeleted = async () => {
-    mutateNotification(
-      await fetchJson(`/api/notifications?id=${props.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status_notifications: "deleted" }),
-      }),
-      false
-    );
+    props.delete(props.id);
+
+    if (notification !== undefined) {
+      mutateNotification(
+        await fetchJson(`/api/notifications?id=${props.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status_notifications: "deleted" }),
+        }),
+        false
+      );
+    }
   };
 
   const markAsRead = async () => {
@@ -38,9 +45,12 @@ const EachNotification = (props: IProp) => {
     );
   };
 
-  useEffect(() => {
-    console.log(notification);
-  }, [notification]);
+  // useEffect(() => {
+  //   // console.log(notification);
+  //   if(notification !== undefined){
+  //     setData(notification)
+  //   }
+  // }, [notification]);
 
   if (notificationIsLoading) {
     return <div>loading notification</div>;

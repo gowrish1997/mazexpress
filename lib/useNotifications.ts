@@ -11,7 +11,7 @@ export default function useNotifications({
   //   if (!userId && !id) return [];
   const {
     data: notifications,
-    // mutate: mutateUser,
+    mutate: mutateNotifications,
     isLoading: notificationsIsLoading,
   } = useSWR<INotification[]>(`/api/notifications?user=${userId}`, {
     refreshInterval: 1000,
@@ -20,5 +20,5 @@ export default function useNotifications({
     revalidateOnReconnect: true,
   });
 
-  return { notifications, notificationsIsLoading };
+  return { notifications, mutateNotifications, notificationsIsLoading };
 }

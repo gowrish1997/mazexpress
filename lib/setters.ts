@@ -11,4 +11,6 @@ function updateUser(id: number, data: any) {
   db("users").where("id_users", id).update(fields);
 }
 
+
+
 export { updateUser };
