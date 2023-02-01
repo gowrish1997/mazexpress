@@ -23,21 +23,27 @@ export default async function handler(
     });
 
     console.log("req data", data.files, data.fields);
-    console.log("req data", util.inspect(data.fields))
+    // console.log("req data", util.inspect(data.fields))
 
-    // delete file from public folder
-    // let map_path = path.join(
-    //   __dirname,
-    //   "..",
-    //   "..",
-    //   "..",
-    //   "..",
-    //   "public",
-    //   "user-images",
-    //   data.fields.map_path[0] + ".jpg"
-    // );
-    // console.log(map_path);
-    // await unlink(map_path);
+    // if file exists delete file
+    let image_path = path.join(
+      __dirname,
+      "..",
+      "..",
+      "..",
+      "..",
+      "public",
+      "user-images",
+      data.fields.name[0]
+    );
+    if (fs.existsSync(image_path)) {
+      //file exists
+      // delete file from public folder
+      unlink(image_path, (err) => {
+        if (err) throw err;
+        console.log(`${image_path} was deleted`);
+      });
+    }
 
     // create new file
     // map_path = path.join(
@@ -52,12 +58,13 @@ export default async function handler(
     // );
 
     // write file to public/maps with name of path
-    // fs.rename(data.files.map_file[0].path, map_path, () => {
-    //   console.log(map_path);
-    //   // console.log("req data", data.files, data.fields);
-    // });
+    fs.rename(data.files.image[0].path, image_path, (err) => {
+      if (err) throw err;
+      console.log('rename complete!');
+      // console.log("req data", data.files, data.fields);
+    });
 
-    res.json({ msg: "done" });
+    res.status(200).json({ msg: "done" });
   } catch (error) {
     console.log(error);
   }

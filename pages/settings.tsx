@@ -33,8 +33,8 @@ const schema = yup
       .required()
       .typeError("Mobile number is required field"),
 
-    // password_users: yup.string().required(),
-    password_users: yup.string().required("Password is required field"),
+    // password_users: yup.string().required("Password is required field"),
+    password_users: yup.string(),
     newPassword_users: yup.string(),
     //   .min(8, "Password must be 8 characters long")
     //   .matches(/[0-9]/, "Password requires a number")
@@ -107,10 +107,18 @@ const Settings = () => {
         }, {
           headers: { "Content-Type": "multipart/form-data" }
         })
-        .then((response) => {
+        .then(async (response) => {
           if (response.status === 200) {
             // mutate user with new user data
             setValue("avatar_url_users", fileName);
+            mutateUser(
+              await fetchJson(`/api/users?id=${user?.id_users}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({avatar_url_users: fileName}),
+              }),
+              false
+            )
           }
         });
     }
@@ -194,7 +202,7 @@ const Settings = () => {
                     })}
                   />
                   <Image
-                    src={user?.avatar_url_users!}
+                    src={'/user-images/' + user?.avatar_url_users!}
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}

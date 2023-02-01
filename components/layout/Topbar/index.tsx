@@ -53,7 +53,7 @@ const Topbar = () => {
 
         {user && user.avatar_url_users ? (
           <Image
-            src={user.avatar_url_users}
+            src={'/user-images/' + user?.avatar_url_users!}
             className="rounded-full"
             width={31}
             height={30}
