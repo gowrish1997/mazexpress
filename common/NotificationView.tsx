@@ -13,6 +13,7 @@ const NotificationView = (props: IProp) => {
   const { notifications, notificationsIsLoading } = useNotifications({
     userId: user?.id_users!,
   });
+
   return (
     <>
       <div
@@ -38,9 +39,13 @@ const NotificationView = (props: IProp) => {
           />
         </div>
         <div className="space-y-[20px]">
-          {notifications?.map((data) => {
-            return <EachNotification id={data.id_notifications} />;
-          })}
+          {notifications
+            ?.filter((el) => el.status_notifications !== "deleted")
+            .map((data) => {
+              return (
+                <EachNotification id={data.id_notifications} data={data} key={data.id_notifications} />
+              );
+            })}
         </div>
       </div>
       {/* </div> */}

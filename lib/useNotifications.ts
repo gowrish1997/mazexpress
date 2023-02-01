@@ -8,12 +8,17 @@ export default function useNotifications({
   userId: number;
   id?: number;
 }) {
-//   if (!userId && !id) return [];
+  //   if (!userId && !id) return [];
   const {
     data: notifications,
     // mutate: mutateUser,
     isLoading: notificationsIsLoading,
-  } = useSWR<INotification[]>(`/api/notifications?user=${userId}`);
+  } = useSWR<INotification[]>(`/api/notifications?user=${userId}`, {
+    refreshInterval: 1000,
+    revalidateIfStale: true,
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+  });
 
   return { notifications, notificationsIsLoading };
 }

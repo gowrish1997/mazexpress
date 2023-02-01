@@ -15,7 +15,7 @@ export default function handler(
   return new Promise((resolve, reject) => {
     switch (req.method) {
       case "GET":
-        console.log("from addresses, user=", req.query.user);
+        // console.log("from addresses, user=", req.query.user);
         if (req.query.user) {
           const user_id = req.query.user;
           // list response
