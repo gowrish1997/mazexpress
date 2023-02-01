@@ -6,26 +6,39 @@ import { INotification } from "@/models/notification.interface";
 import { FetchError } from "@/lib/fetchJson";
 import fetchJson from "@/lib/fetchJson";
 import useUser from "@/lib/useUser";
+import useNotifications from "@/lib/useNotifications";
+
 interface IProp {
     content: INotification;
 }
 
 const EachNotification = (props: IProp) => {
     const { user, mutateUser, userIsLoading } = useUser();
+    const { notifications, mutateNotification, notificationsIsLoading } = useNotifications({
+        userId: user?.id_users!,
+    });
+
     const [errorMag, setErrorMsg] = useState("");
 
     const notificatoinHandler = async () => {
         if (user && user.id_users) {
+            let data={}
+            if (notifications && notifications.length > 0) {
+                data = notifications?.filter((data) => {
+                    return data.id_notifications != props.content.id_notifications;
+                });
+            }
             // update user
             try {
-                mutateUser(
-                    await fetchJson(`/api/notifications?id=${props.content.id_notifications}`, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({status_notifications:'read'}),
-                    }),
-                    false
-                );
+                mutateNotification(`/api/notifications?user=${user.id_users}&id=${props.content.id_notifications}`, data, false);
+
+                await fetchJson(`/api/notifications?id=${props.content.id_notifications}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ status_notifications: "read" }),
+                });
+                mutateNotification(`/api/notifications?user=${user.id_users}&id=${props.content.id_notifications}`);
+
                 // router.push("/");
             } catch (error) {
                 if (error instanceof FetchError) {

@@ -39,15 +39,15 @@ const EditUserAddressModal = (props: IProp) => {
 
     const [addressIsDefault, setAddressIsDefault] = useState(user?.default_address_users === props.address.id_addresses);
 
-    const toggleDefaultAddressHandler = () => {
-        if (addressIsDefault) {
-            //   console.log("making null");
-            setAddressIsDefault(false);
-        } else {
-            //   console.log("making true");
-            setAddressIsDefault(true);
-        }
-    };
+  const toggleDefaultAddressHandler = () => {
+    if (addressIsDefault) {
+      //   console.log("making null");
+      setAddressIsDefault(false);
+    } else {
+      //   console.log("making true");
+      setAddressIsDefault(true);
+    }
+  };
 
     const onSubmit: SubmitHandler<IAddressProps> = (data) => {
         console.log(data);

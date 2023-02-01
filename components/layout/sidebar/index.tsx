@@ -18,7 +18,7 @@ const sidebarContent = [
     id: nanoid(),
     title: "Order Tracking",
     icon: "/location.png",
-    path: "/order-tracking",
+    path: "/track",
   },
   {
     id: nanoid(),

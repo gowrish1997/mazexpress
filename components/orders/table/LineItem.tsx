@@ -32,11 +32,12 @@ const LineItem = ({
 
   const modalNode = useClickOutside(
     (e) => {
-      setActive(-1);
-      // setActiveHandler(index, e)
+      // setActive(-1);
+      if (show) setActive(-1);
+      else setActive(index);
     },
     trigger,
-    active
+    show
   );
 
   function optionModalHandler(e: any, index: number) {
@@ -61,8 +62,8 @@ const LineItem = ({
 
   return (
     <>
-      <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px]">
-        <td className={`td1`}  >{row.id_orders}</td>
+      <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
+        <td className={`td1`}>{row.id_orders}</td>
         <td className={`td2 text-[#3672DF]`}>{row.store_link_orders}</td>
         <td className={`td3`}>{row.reference_id_orders}</td>
         <td className={`td4`}>...</td>
@@ -89,14 +90,14 @@ const LineItem = ({
           <span className="ml-[5px]">{row.status_orders}</span>
         </td>
         <td
-       id='parent'
           className="box-border relative cursor-pointer"
           
           onClick={(e) => optionModalHandler(e, index)}
         >
-          <Image src="/editicon.png" height={13} width={4} alt="editIcon" className="-z-50" ref={trigger} />
-          {show && <OrderOptionModal  ref={modalNode}  />}
+          <Image src="/editicon.png" ref={trigger} height={13} width={4} alt="editIcon" />
+          {show && <OrderOptionModal ref={modalNode} />}
         </td>
+      
       </tr>
     </>
   );
