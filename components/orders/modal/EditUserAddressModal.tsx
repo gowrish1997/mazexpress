@@ -132,7 +132,7 @@ const EditUserAddressModal = (props: IProp) => {
                             }}
                         />
                     </div>
-                    <div className="flex-type2 space-x-[10px] w-full">
+                    {/* <div className="flex-type2 space-x-[10px] w-full">
                         <ReactHookFormInput
                             label="State/Province/Region"
                             name="state_addresses"
@@ -147,8 +147,8 @@ const EditUserAddressModal = (props: IProp) => {
                             type="string"
                             register={register("pincode_addresses")}
                             value={props.address.pincode_addresses}
-                        />
-                    </div>
+                        /> */}
+                    {/* </div> */}
                     <ReactHookFormInput label="Mobile Numbers" name="phone_addresses" type="number" register={register("phone_addresses")} value={props.address.phone_addresses} />
                     <div className=".flex-type1 space-x-[5px]">
                         <input type="radio" checked={addressIsDefault} onClick={toggleDefaultAddressHandler} {...register("default_addresses")} name="default_addresses" />

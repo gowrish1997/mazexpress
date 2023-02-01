@@ -113,7 +113,7 @@ const AddNewAddressModal = (props: IProp) => {
                             />
                         </div>
                         <div className="flex-type2 space-x-[10px] w-full">
-                            <ReactHookFormInput label="State/Province/Region" name="state_addresses" type="string" register={register("state_addresses")} />
+                            {/* <ReactHookFormInput label="State/Province/Region" name="state_addresses" type="string" register={register("state_addresses")} /> */}
                             {/* <ReactHookFormInput
                 label="Zip/Postal Code"
                 name="pincode_addresses"
