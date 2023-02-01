@@ -57,7 +57,7 @@ const EditUserAddressModal = (props: IProp) => {
     return (
         <>
             <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-10 flex flex-row justify-center items-center">
-                <form className=" box-border flex-type6  bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] h-[680px] gap-y-[15px]" onSubmit={handleSubmit(onSubmit)}>
+                <form className=" box-border flex-type6  bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] h-[620px] gap-y-[15px]" onSubmit={handleSubmit(onSubmit)}>
                     <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">Edit Address</p>
                     <input
                         id="title"
