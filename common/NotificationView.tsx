@@ -21,7 +21,7 @@ const NotificationView = (props: IProp) => {
             >
                 {/* <div className=" overflow-x-hidden pt-[30px] pb-[20px] px-[20px]"> */}
                 <div className="flex-type3">
-                    <p className="text-[#2B2B2B] text-[18px] font-[700] leading-[25px] ">Notification</p>
+                    <p className="text-[#2B2B2B] text-[18px] font-[700] leading-[25px] ">Notifications</p>
                     <Image src="/cancel.png" height={22} width={22} alt="cancel" className="cursor-pointer" onClick={() => props.close()} />
                 </div>
                 <div className="space-y-[20px]">

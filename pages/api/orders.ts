@@ -26,7 +26,7 @@ export default function handler(
                 values: [id],
               },
               (results) => {
-                console.log("results", results);
+                // console.log("results", results);
                 res.status(200).json(results);
               }
             );
@@ -37,7 +37,7 @@ export default function handler(
           }
         } else {
           const user_id = req.query.user;
-          console.log(user_id)
+          // console.log(user_id)
           // list response
           executeQuery(
             {

@@ -14,7 +14,7 @@ interface IProps {
 export type Ref = HTMLDivElement;
 
 const OrderOptionModal = forwardRef<HTMLDivElement, any>((props, ref) => {
-  console.log(ref);
+  // console.log(ref);
   return (
     <div
       className="absolute top-[35px] right-[10px] w-[150px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-10 flex flex-col justify-between items-start p-[5px]"
@@ -27,13 +27,13 @@ const OrderOptionModal = forwardRef<HTMLDivElement, any>((props, ref) => {
             <span className="ml-[15px]">{options[0].option}</span>
           </div>
         </li> */}
-        {/* <Link href={options[0].path}> */}
-        <li className="hover:bg-[#EDF5F9] w-full rounded-[4px] ">
-          <div className="cursor-pointer">
-            <span className="ml-[15px] w-full ">{options[0].option}</span>
-          </div>
-        </li>
-        {/* </Link> */}
+        <Link href={options[0].path}>
+          <li className="hover:bg-[#EDF5F9] w-full rounded-[4px] ">
+            <div className="cursor-pointer">
+              <span className="ml-[15px] w-full ">{options[0].option}</span>
+            </div>
+          </li>
+        </Link>
       </ul>
     </div>
   );
