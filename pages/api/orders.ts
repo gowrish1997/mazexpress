@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { executeQuery } from "@/lib/db";
+import { db, executeQuery } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -20,39 +20,30 @@ export default function handler(
           if (req.query.id) {
             // single response
             const id = req.query.id;
-            executeQuery(
-              {
-                query: "SELECT * FROM orders WHERE id_orders=?",
-                values: [id],
-              },
-              (results) => {
-                // console.log("results", results);
-                res.status(200).json(results);
-              }
-            );
+            db("orders")
+              .where("id_orders", id)
+              .then((data: any) => {
+                res.status(200).json(data);
+                resolve(data);
+              });
           } else {
-            res
-              .status(200)
-              .json({ msg: "invalid enter user id in url params" });
+            res.status(200).json({ msg: "invalid url params" });
+            reject();
           }
         } else {
           const user_id = req.query.user;
-          // console.log(user_id)
-          // list response
-          executeQuery(
-            {
-              query: "SELECT * FROM orders WHERE user_id=?",
-              values: [user_id],
-            },
-            (results) => {
-              // console.log("results", results);
-              res.status(200).json(results);
-            }
-          );
+
+          db("orders")
+            .where("user_id", user_id)
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         }
         break;
 
       case "POST":
+        
         executeQuery(
           {
             query:
