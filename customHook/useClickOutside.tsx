@@ -1,41 +1,38 @@
 import React, { useEffect, createRef } from "react";
 
-let useClickOutside = (
-  handler: (e: any) => void,
-  trigger: React.RefObject<HTMLElement>,
-  gate: boolean
-) => {
-  let modalNode = createRef<HTMLDivElement>();
-  useEffect(() => {
-    let outsideClickHandler = (event: MouseEvent) => {
-      console.log(modalNode.current?.contains(event.target as Node));
-      if (gate) {
-        if (
-          // if you click the trigger do action
-          trigger.current === event.target ||
-          trigger.current?.contains(event.target as Node)
-        ) {
-          handler(event);
-        } else if (
-          // if you click the modal do nothing
-          event.target === modalNode.current ||
-          modalNode.current?.contains(event.target as Node)
-        ) {
-          //   handler()
-          
-        } else {
-          // if you click outside the trigger and outside the modal do action
-          handler(event);
-        }
-      }
-    };
+let useClickOutside = (handler: (e: any) => void, trigger: any, gate: boolean | number) => {
+    let modalNode = createRef<any>();
 
-    document.addEventListener("mousedown", outsideClickHandler);
-    return () => {
-      document.removeEventListener("mousedown", outsideClickHandler);
-    };
-  }, []);
+    useEffect(() => {
+        let outsideClickHandler = (event: MouseEvent) => {
+            event.stopImmediatePropagation();
+            console.log(gate);
+            // console.log(trigger.current, event.target, gate);
+            // if (gate >= 0) {
+            //     console.log("gate is greater than one");
 
-  return modalNode;
+            if (
+                // trigger.current == event.target ||
+                // trigger.current?.contains(event.target as Node) ||
+                // event.target == modalNode.current
+                // modalNode.current?.contains(event.target as Node)
+                trigger.current?.src === event.target?.src
+            ) {
+            } else {
+                handler(event);
+            }
+
+            // } else {
+            //     // console.log("gate is closed");
+            // }
+        };
+
+        document.addEventListener("mousedown", outsideClickHandler);
+        return () => {
+            document.removeEventListener("mousedown", outsideClickHandler);
+        };
+    }, []);
+
+    return modalNode;
 };
 export default useClickOutside;

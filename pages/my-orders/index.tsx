@@ -18,6 +18,9 @@ const tableHeaders = [
 ];
 
 const MyOrders = () => {
+
+  console.log('my orderpage')
+
   const router = useRouter();
   const { user, mutateUser } = useUser();
   const { orders, mutateOrders, ordersIsLoading } = useOrders({

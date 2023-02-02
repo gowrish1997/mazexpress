@@ -23,7 +23,7 @@ const CustomDropDown = (props: IProp) => {
                     {props.value.map((data) => {
                         return (
                             <option key={data} value={data}>
-                                <div className="bg-[red] py-[10px]" >{data}</div>
+                                {data}
                             </option>
                         );
                     })}

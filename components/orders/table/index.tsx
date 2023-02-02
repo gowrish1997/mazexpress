@@ -12,13 +12,15 @@ const Table = (props: TableProps) => {
   // to prevent multiple option box opening
   const [active, setActive] = useState<number>(-1);
 
-  // console.log(active);
+
 
   function setActiveHandler(index: number, e: any) {
-    if (active === index) {
+    if (active === index+1) {
+     
       setActive(-1);
       e.stopPropagation();
     } else {
+
       setActive(index + 1);
       e.stopPropagation();
     }

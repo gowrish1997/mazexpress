@@ -41,7 +41,7 @@ const LineItem = ({
   );
 
   function optionModalHandler(e: any, index: number) {
-    setActiveHandler(index, e);
+  setActiveHandler(index, e);
   }
 
   const orderStatusColorHandler = (status: string) => {
@@ -58,6 +58,7 @@ const LineItem = ({
       default:
     }
   };
+
 
   return (
     <>
@@ -90,13 +91,13 @@ const LineItem = ({
         </td>
         <td
           className="box-border relative cursor-pointer"
-          ref={trigger}
+          
           onClick={(e) => optionModalHandler(e, index)}
         >
-          <Image src="/editicon.png" height={13} width={4} alt="editIcon" />
-          {/* {show && <OrderOptionModal ref={modalNode} />} */}
+          <Image src="/editicon.png" ref={trigger} height={13} width={4} alt="editIcon" />
+          {show && <OrderOptionModal ref={modalNode} />}
         </td>
-        {show && <OrderOptionModal ref={modalNode} />}
+      
       </tr>
     </>
   );

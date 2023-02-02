@@ -31,9 +31,6 @@ const AddNewOrder = () => {
     });
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
-    console.log(addresses);
-    console.log(user);
-
     const defaultAddressHandler = () => {
         const address = addresses?.find((el) => el.id_addresses === user?.default_address_users);
 
@@ -43,8 +40,7 @@ const AddNewOrder = () => {
     const {
         register,
         handleSubmit,
-        trigger,
-        setError,
+
         formState: { errors },
     } = useForm<{
         referenceId: string;
@@ -88,9 +84,7 @@ const AddNewOrder = () => {
         // console.log(data);
     };
 
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
+    useEffect(() => {}, [user]);
 
     return (
         <>

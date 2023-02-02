@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleDown,
-  faUserCircle,
-  faBell,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faUserCircle, faBell, faUser } from "@fortawesome/free-solid-svg-icons";
 import useUser from "@/lib/useUser";
 import useNotifications from "@/lib/useNotifications";
 import { INotification } from "@/models/notification.interface";

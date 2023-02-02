@@ -45,7 +45,7 @@ const NotificationView = (props: IProp) => {
 
   useEffect(() => {
     console.log(userNotifications);
-  }, userNotifications);
+  },[ userNotifications]);
 
   return (
     <>

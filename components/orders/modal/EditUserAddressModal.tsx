@@ -39,15 +39,15 @@ const EditUserAddressModal = (props: IProp) => {
 
     const [addressIsDefault, setAddressIsDefault] = useState(user?.default_address_users === props.address.id_addresses);
 
-  const toggleDefaultAddressHandler = () => {
-    if (addressIsDefault) {
-      //   console.log("making null");
-      setAddressIsDefault(false);
-    } else {
-      //   console.log("making true");
-      setAddressIsDefault(true);
-    }
-  };
+    const toggleDefaultAddressHandler = () => {
+        if (addressIsDefault) {
+            //   console.log("making null");
+            setAddressIsDefault(false);
+        } else {
+            //   console.log("making true");
+            setAddressIsDefault(true);
+        }
+    };
 
     const onSubmit: SubmitHandler<IAddressProps> = (data) => {
         console.log(data);
@@ -65,22 +65,9 @@ const EditUserAddressModal = (props: IProp) => {
                         {...register("tag_addresses")}
                         className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
                         placeholder="Give first title @Home"
-                        value={props.address.tag_addresses}
                     />
-                    <ReactHookFormInput
-                        label="Address line 01"
-                        name="address_1_addresses"
-                        type="string"
-                        register={register("address_1_addresses")}
-                        value={props.address.address_1_addresses}
-                    />
-                    <ReactHookFormInput
-                        label="Address line 02"
-                        name="address_2_addresses"
-                        type="string"
-                        register={register("address_2_addresses")}
-                        value={props.address.city_addresses}
-                    />
+                    <ReactHookFormInput label="Address line 01" name="address_1_addresses" type="string" register={register("address_1_addresses")} />
+                    <ReactHookFormInput label="Address line 02" name="address_2_addresses" type="string" register={register("address_2_addresses")} />
                     <div className="flex-type2 space-x-[10px] w-full">
                         {/* <ReactHookFormInput label="Country" name="country_addresses" type="string" register={register("country_addresses")} value={props.address.country_addresses} />
 
@@ -98,7 +85,7 @@ const EditUserAddressModal = (props: IProp) => {
                                     error={errors.country_addresses}
                                     dropDownIcon={{
                                         iconIsEnabled: true,
-                                        iconSrc: "/downwardArrow.png",
+                                        iconSrc: "/lock.png",
                                     }}
                                 />
                             )}
@@ -149,7 +136,7 @@ const EditUserAddressModal = (props: IProp) => {
                             value={props.address.pincode_addresses}
                         /> */}
                     {/* </div> */}
-                    <ReactHookFormInput label="Mobile Numbers" name="phone_addresses" type="number" register={register("phone_addresses")} value={props.address.phone_addresses} />
+                    <ReactHookFormInput label="Mobile Numbers" name="phone_addresses" type="number" register={register("phone_addresses")} />
                     <div className=".flex-type1 space-x-[5px]">
                         <input type="radio" checked={addressIsDefault} onClick={toggleDefaultAddressHandler} {...register("default_addresses")} name="default_addresses" />
 

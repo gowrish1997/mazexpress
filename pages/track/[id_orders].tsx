@@ -29,7 +29,7 @@ const TrackOrder = (props: any) => {
     // console.log(tracking);
     if (tracking !== undefined) {
       let sorted = [...tracking];
-      sorted.sort((a: any, b: any) => a.stage_tracking - b.stage_tracking);
+      sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
       //   console.log(sorted.pop().stage_tracking);
       setPackageStatus(sorted.pop().stage_tracking);
     }
