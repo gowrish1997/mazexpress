@@ -82,6 +82,7 @@ const EachNotification = (props: IProp) => {
                 <button className="text-[#3672DF] text-[12px] font-[500] leading-[18px]" onClick={markAsDeleted}>
                     Clear
                 </button>
+                
             </div>
         </div>
     );

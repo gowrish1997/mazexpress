@@ -12,10 +12,10 @@ export default function useUser({
     mutate: mutateUser,
     isLoading: userIsLoading,
   } = useSWR<IUser>("/api/auth/user", {
-    refreshInterval: 3000,
-    revalidateIfStale: true,
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
+    // refreshInterval: 3000,
+    // revalidateIfStale: true,
+    // revalidateOnFocus: true,
+    // revalidateOnReconnect: true,
   });
 
   useEffect(() => {
