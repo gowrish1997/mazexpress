@@ -9,20 +9,33 @@ import useOrders from "@/lib/useOrders";
 import useUser from "@/lib/useUser";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { createToast } from "@/lib/toasts";
 
 const TrackOrder = (props: any) => {
   const router = useRouter();
 
-  const searchInputRef = useRef(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const { user, mutateUser, userIsLoading } = useUser();
   const { orders, ordersIsLoading } = useOrders({ userId: user?.id_users });
 
   const [packageStatus, setPackageStatus] = useState(0);
 
   const trackHandler = () => {
-    const id = searchInputRef.current.value;
-    if (id !== null && id !== undefined) {
-      router.push(`/track/${id}`);
+    if (
+      searchInputRef.current !== null &&
+      searchInputRef.current !== undefined
+    ) {
+      const id = searchInputRef.current.value;
+      if (id !== "") {
+        router.push(`/track/${id}`);
+      } else {
+        createToast({
+          type: "warning",
+          title: "Track failed",
+          message: "Enter a valid Maz tracking id",
+          timeOut: 3000,
+        });
+      }
     }
   };
 
