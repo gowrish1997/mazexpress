@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getDateInStringFormat } from "@/lib/helper";
 import { getTimeInHourAndMinuteFormat } from "@/lib/helper";
 import useNotification from "@/lib/useNotification";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson, { FetchError } from "@/lib/fetchJson";
 import { INotification } from "@/models/notification.interface";
 import axios from "axios";
 interface IProp {
@@ -13,8 +13,12 @@ interface IProp {
 }
 
 const EachNotification = (props: IProp) => {
-  const { notification, mutateNotification, notificationIsLoading } =
-    useNotification({ id: props.id });
+  const {
+    notification,
+    mutateNotification,
+    notificationIsLoading,
+    notificationError,
+  } = useNotification({ id: props.id });
 
   const [data, setData] = useState<INotification>(props.data);
   // console.log(props.data);
@@ -23,14 +27,24 @@ const EachNotification = (props: IProp) => {
     props.delete(props.id);
 
     if (notification !== undefined) {
-      mutateNotification(
-        await fetchJson(`/api/notifications?id=${props.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status_notifications: "deleted" }),
-        }),
-        false
-      );
+      // console.log(notificationError);
+      try {
+        mutateNotification(
+          await fetchJson(`/api/notifications?id=${props.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status_notifications: "deleted" }),
+          }),
+          false
+        );
+      } catch (error) {
+        if (error instanceof FetchError) {
+          // setErrorMsg(error.data.message);
+          console.log(error.data.message);
+        } else {
+          console.error("An unexpected error happened:", error);
+        }
+      }
     }
   };
 

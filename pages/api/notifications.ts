@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { executeQuery } from "@/lib/db";
+import { db, executeQuery } from "@/lib/db";
 import { INotification } from "@/models/notification.interface";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -21,32 +21,29 @@ export default function handler(
           const user_id = req.query.user;
           // list response
 
-          executeQuery(
-            {
-              query:
-                "SELECT * FROM notifications WHERE user_id=? AND status_notifications != 'deleted'",
-              values: [user_id],
-            },
-            (results) => {
-              // console.log("results", results);
-              res.status(200).json(results);
-              resolve(results);
-            }
-          );
+          db("notifications")
+            .where({
+              user_id: user_id,
+            })
+            .whereNot({
+              status_notifications: "deleted",
+            })
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         } else if (req.query.id) {
           // single response
           const id = req.query.id;
-          executeQuery(
-            {
-              query: "SELECT * FROM notifications WHERE id_notifications=?",
-              values: [id],
-            },
-            (results) => {
-              // console.log("results", results);
-              res.status(200).json(results[0]);
-              resolve(results);
-            }
-          );
+          db("notifications")
+            .where({
+              id_notifications: id,
+            })
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
+
           // error invalid
         } else {
           res.status(500).end();
@@ -57,21 +54,17 @@ export default function handler(
       case "POST":
         const obj: INotification = req.body;
 
-        executeQuery(
-          {
-            query:
-              "INSERT INTO notifications (user_id, title_notifications, content_notifications) VALUES (?, ?, ?)",
-            values: [
-              obj.user_id,
-              obj.title_notifications,
-              obj.content_notifications,
-            ],
-          },
-          (results) => {
-            res.status(200).json(results);
-            resolve(results);
-          }
-        );
+        db("notifications")
+          .insert({
+            user_id: obj.user_id,
+            title_notifications: obj.title_notifications,
+            content_notifications: obj.content_notifications,
+          })
+          .then((data: any) => {
+            res.status(200).json(data);
+            resolve(data);
+          });
+
         break;
 
       case "PUT":
@@ -79,16 +72,13 @@ export default function handler(
           // update
           const id = req.query.id;
           const fields = { ...req.body };
-          executeQuery(
-            {
-              query: "UPDATE notifications SET ? WHERE id_notifications = ? ",
-              values: [fields, id],
-            },
-            (results) => {
-              res.status(200).json(results);
-              resolve(results);
-            }
-          );
+          db("notifications")
+            .where("id_notifications", id)
+            .update(fields)
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();
@@ -98,16 +88,13 @@ export default function handler(
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          executeQuery(
-            {
-              query: "DELETE FROM notifications WHERE id_notifications=?",
-              values: [id],
-            },
-            (results) => {
-              res.status(200).json(results);
-              resolve(results);
-            }
-          );
+          db("notifications")
+            .where("id_notifications", id)
+            .del()
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();
