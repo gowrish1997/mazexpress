@@ -42,11 +42,11 @@ const Topbar = () => {
             />
           </div>
         </div>
-        <div
-          className="flex min-h-[65px] items-center justify-end"
-          onClick={togglingNotificationHandler}
-        >
-          <span className="relative top-0.5 px-7 cursor-pointer">
+        <div className="flex min-h-[65px] items-center justify-end">
+          <span
+            className="relative top-0.5 px-7 cursor-pointer"
+            onClick={togglingNotificationHandler}
+          >
             {notifications && notifications.length > 0 && (
               <span className="rounded-full block -top-[1px] h-[7px] w-[7px] right-[28.5px] bg-[#FF2323] absolute"></span>
             )}

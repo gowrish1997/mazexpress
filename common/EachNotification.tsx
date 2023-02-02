@@ -29,7 +29,7 @@ const EachNotification = (props: IProp) => {
     if (notification !== undefined) {
       // console.log(notificationError);
       try {
-        mutateNotification(
+        const resp = await mutateNotification(
           await fetchJson(`/api/notifications?id=${props.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
