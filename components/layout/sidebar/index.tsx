@@ -12,7 +12,7 @@ const sidebarContent = [
     id: nanoid(),
     title: "My Orders",
     icon: "/orders.png",
-    path: "/my-orders",
+    path: "/",
   },
   {
     id: nanoid(),

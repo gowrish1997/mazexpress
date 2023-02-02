@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faUserCircle, faBell, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import useUser from "@/lib/useUser";
 import useNotifications from "@/lib/useNotifications";
-import { INotification } from "@/models/notification.interface";
 import NotificationView from "@/common/NotificationView";
 const Topbar = () => {
   const { user, mutateUser } = useUser();
+
   const { notifications, notificationsIsLoading } = useNotifications({
     userId: user?.id_users!,
   });
+
   const [showNotification, setShowNotification] = useState(false);
 
   const togglingNotificationHandler = () => {
