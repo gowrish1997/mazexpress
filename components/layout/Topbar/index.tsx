@@ -63,7 +63,7 @@ const Topbar = () => {
               <Image
                 src={"/user-images/" + user?.avatar_url_users!}
                 fill
-                style={{objectFit: 'cover'}}
+                style={{ objectFit: "cover" }}
                 alt="profileImage"
               />
             </div>
