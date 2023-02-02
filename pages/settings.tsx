@@ -62,12 +62,12 @@ const Settings = () => {
     formState: { errors },
   } = useForm<IUserProfile>({
     resolver: yupResolver(schema),
-    defaultValues: user,
+    defaultValues: {...user, password_users: ''},
   });
 
   useEffect(() => {
     console.log(user);
-    reset(user);
+    reset({...user, password_users: ''});
   }, [user]);
 
   const [passwordType, setPasswordType] = useState("password");
@@ -132,12 +132,12 @@ const Settings = () => {
   const onSubmit: SubmitHandler<IUserProfile> = async (data) => {
     console.log(data);
     createToast({
-      title: 'Success',
-      type: 'success',
-      message: 'Updated user info.',
+      title: "Success",
+      type: "success",
+      message: "Updated user info.",
       timeOut: 2000,
-      onClick: () => alert('click')
-    })
+      onClick: () => alert("click"),
+    });
     // let updateObj = { ...data };
     // delete updateObj.newPassword_users;
     // delete updateObj.password_users;

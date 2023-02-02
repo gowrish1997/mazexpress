@@ -6,7 +6,7 @@ let useClickOutside = (handler: (e: any) => void, trigger: any, gate: boolean | 
     useEffect(() => {
         let outsideClickHandler = (event: MouseEvent) => {
             event.stopImmediatePropagation();
-            console.log(gate);
+            // console.log(gate);
             // console.log(trigger.current, event.target, gate);
             // if (gate >= 0) {
             //     console.log("gate is greater than one");

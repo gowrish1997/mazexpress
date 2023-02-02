@@ -1,4 +1,4 @@
-import React, { createRef, useRef } from "react";
+import React, { createRef, useRef, useState } from "react";
 import { useEffect } from "react";
 import Image from "next/image";
 import OrderOptionModal from "../modal/OrderOptionModal";
@@ -6,6 +6,9 @@ import useClickOutside from "@/customHook/useClickOutside";
 import { IOrderResponse } from "@/models/order.interface";
 import useAddresses from "@/lib/useAddresses";
 import useUser from "@/lib/useUser";
+import useTracking from "@/lib/useTracking";
+import { getDateInStringFormat } from "@/lib/helper";
+
 interface IProp {
   row: IOrderResponse;
   active: number;
@@ -27,6 +30,12 @@ const LineItem = ({
   const { addresses, mutateAddresses } = useAddresses({
     userId: user?.id_users,
   });
+  const { tracking, trackingIsLoading, mutateTracking } = useTracking({
+    order_id: row.id_orders,
+  });
+
+  const [estDelivery, setEstDelivery] = useState();
+
   // const modalTriggerNode = createRef<HTMLTableCellElement>();
   const trigger = useRef<any>();
 
@@ -41,7 +50,7 @@ const LineItem = ({
   );
 
   function optionModalHandler(e: any, index: number) {
-  setActiveHandler(index, e);
+    setActiveHandler(index, e);
   }
 
   const orderStatusColorHandler = (status: string) => {
@@ -59,6 +68,19 @@ const LineItem = ({
     }
   };
 
+  useEffect(() => {
+    // console.log(tracking);
+    if (tracking !== undefined) {
+      // sort and set delivery
+      let latestUpdate = [...tracking].sort(
+        (a, b) => b.stage_tracking - a.stage_tracking
+      )[0];
+      let newDate = new Date(latestUpdate.created_on_tracking);
+      newDate.setDate(newDate.getDate() + 7);
+      const newDateString = getDateInStringFormat(newDate);
+      setEstDelivery(newDateString);
+    }
+  }, [tracking]);
 
   return (
     <>
@@ -66,7 +88,7 @@ const LineItem = ({
         <td className={`td1`}>{row.id_orders}</td>
         <td className={`td2 text-[#3672DF]`}>{row.store_link_orders}</td>
         <td className={`td3`}>{row.reference_id_orders}</td>
-        <td className={`td4`}>...</td>
+        <td className={`td4`}>{estDelivery ? estDelivery : "..."}</td>
         <td className={`td5 flex flex-row items-center gap-x-[10px]`}>
           {
             addresses?.find((el) => el.id_addresses === row.address_id)
@@ -91,13 +113,17 @@ const LineItem = ({
         </td>
         <td
           className="box-border relative cursor-pointer"
-          
           onClick={(e) => optionModalHandler(e, index)}
         >
-          <Image src="/editicon.png" ref={trigger} height={13} width={4} alt="editIcon" />
+          <Image
+            src="/editicon.png"
+            ref={trigger}
+            height={13}
+            width={4}
+            alt="editIcon"
+          />
           {show && <OrderOptionModal ref={modalNode} />}
         </td>
-      
       </tr>
     </>
   );
