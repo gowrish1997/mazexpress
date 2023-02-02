@@ -23,14 +23,20 @@ const EachNotification = (props: IProp) => {
     props.delete(props.id);
 
     if (notification !== undefined) {
-      mutateNotification(
-        await fetchJson(`/api/notifications?id=${props.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status_notifications: "deleted" }),
-        }),
-        false
-      );
+      try{
+        mutateNotification(
+          await fetchJson(`/api/notifications?id=${props.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status_notifications: "deleted" }),
+          }),
+          false
+        );
+      }
+      catch(error){
+        console.log('just for experemnt')
+      }
+     
     }
   };
 

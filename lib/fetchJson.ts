@@ -11,7 +11,8 @@ export default async function fetchJson<JSON = unknown>(
   // response.ok is true when res.status is 2xx
   // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
   if (response.ok) {
-    return data;
+    // return data;
+    throw new Error('jst forr expredfas')
   }
 
   throw new FetchError({

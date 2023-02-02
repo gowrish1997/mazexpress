@@ -14,10 +14,10 @@ export default function useNotifications({
     mutate: mutateNotifications,
     isLoading: notificationsIsLoading,
   } = useSWR<INotification[]>(`/api/notifications?user=${userId}`, {
-    refreshInterval: 1000,
-    revalidateIfStale: true,
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
+    // refreshInterval: 1000,
+    // revalidateIfStale: true,
+    // revalidateOnFocus: true,
+    // revalidateOnReconnect: true,
   });
 
   return { notifications, mutateNotifications, notificationsIsLoading };

@@ -8,9 +8,9 @@ export default function useNotification({ id }: { id: number }) {
     isLoading: notificationIsLoading,
   } = useSWR<INotification>(`/api/notifications?id=${id}`, {
     // refreshInterval: 3000,
-    revalidateIfStale: true,
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
+    // revalidateIfStale: true,
+    // revalidateOnFocus: true,
+    // revalidateOnReconnect: true,
   });
 
   return { notification, mutateNotification, notificationIsLoading };
