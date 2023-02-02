@@ -22,7 +22,7 @@ export default async function handler(
       });
     });
 
-    console.log("req data", data.files, data.fields);
+    // console.log("req data", data.files, data.fields);
     // console.log("req data", util.inspect(data.fields))
 
     // if file exists delete file

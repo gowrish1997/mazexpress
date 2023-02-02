@@ -4,36 +4,32 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import PageHeaders from "@/components/orders/PageHeader";
 import Table from "@/components/orders/table";
-import AddButton from "@/common/AddButton";
+import AddButton from "@/components/common/AddButton";
 import useUser from "@/lib/useUser";
 import useOrders from "@/lib/useOrders";
+import { FetchError } from "@/lib/fetchJson";
 
 const tableHeaders = [
   "MAZ Tracking ID",
-  "Store",
+  "Store Link",
   "Reference ID",
-  "Estimated Delivery",
+  "Est. Delivery",
   "Address",
   "Status",
 ];
 
 const MyOrders = () => {
-  console.log("my orderpage");
-
   const router = useRouter();
   const { user, mutateUser } = useUser();
-  const { orders, mutateOrders, ordersIsLoading } = useOrders({
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     userId: user?.id_users,
   });
-  // const [userAllOrders, setUserAllOrders] = useState<IOrderResponse[] | undefined>(data
-  // );
-
-  // console.log(orders);
 
   const addNewOrderHandler = () => {
     router.push(`${router.pathname}/add-new-order`);
   };
 
+  if (ordersError) throw ordersError;
   return (
     <>
       <PageHeaders
@@ -67,7 +63,7 @@ const MyOrders = () => {
           ))}
         {orders && orders.length > 0 && (
           <>
-            <Table orders={orders} tableHeaders={tableHeaders} />
+            <Table rows={orders} headings={tableHeaders} />
             <AddButton onClick={addNewOrderHandler} />
           </>
         )}

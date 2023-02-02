@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import useUser from "@/lib/useUser";
 import useNotifications from "@/lib/useNotifications";
-import NotificationView from "@/common/NotificationView";
+import NotificationView from "@/components/common/NotificationView";
+import useClickOutside from "@/customHook/useClickOutside";
 const Topbar = () => {
   const { user, mutateUser } = useUser();
 
@@ -12,12 +13,17 @@ const Topbar = () => {
     userId: user?.id_users!,
   });
 
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
-  const togglingNotificationHandler = () => {
-    setShowNotification((prev) => !prev);
+  const toggleNotificationsHandler = () => {
+    setShowNotifications((prev) => !prev);
   };
 
+  const smartToggleNotificationsHandler = () => {
+    setShowNotifications(false)
+  }
+
+  let trigger = useRef(null);
   return (
     <>
       <div className="flex w-full min-h-[60px] py-5 items-center justify-between">
@@ -40,7 +46,8 @@ const Topbar = () => {
         <div className="flex min-h-[65px] items-center justify-end">
           <span
             className="relative top-0.5 px-7 cursor-pointer"
-            onClick={togglingNotificationHandler}
+            onClick={toggleNotificationsHandler}
+            ref={trigger}
           >
             {notifications && notifications.length > 0 && (
               <span className="rounded-full block -top-[1px] h-[7px] w-[7px] right-[28.5px] bg-[#FF2323] absolute"></span>
@@ -72,8 +79,10 @@ const Topbar = () => {
         </div>
       </div>
       <NotificationView
-        close={togglingNotificationHandler}
-        show={showNotification}
+        close={toggleNotificationsHandler}
+        show={showNotifications}
+        trigger={trigger}
+        handler={smartToggleNotificationsHandler}
       />
     </>
   );

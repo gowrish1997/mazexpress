@@ -28,7 +28,7 @@ export default function handler(
               });
           } else {
             res.status(200).json({ msg: "invalid url params" });
-            reject();
+            reject("invalid url params");
           }
         } else {
           const user_id = req.query.user;
@@ -43,24 +43,20 @@ export default function handler(
         break;
 
       case "POST":
-        
-        executeQuery(
-          {
-            query:
-              "INSERT INTO orders (user_id, address_id, reference_id_orders, store_link_orders, status_orders, shipping_amt_orders) VALUES (?, ?, ?, ?, ?, ?)",
-            values: [
-              req.body.user_id,
-              req.body.address_id,
-              req.body.reference_id,
-              req.body.store_link,
-              "processing",
-              req.body.shipping_amt,
-            ],
-          },
-          (results) => {
-            res.status(200).json(results);
-          }
-        );
+        db("orders")
+          .insert({
+            user_id: req.body.user_id,
+            address_id: req.body.address_id,
+            reference_id_orders: req.body.reference_id,
+            store_link_orders: req.body.store_link,
+            status_orders: "processing",
+            shipping_amt_orders: req.body.shipping_amt,
+          })
+          .then((data: any) => {
+            res.status(200).json(data);
+            resolve(data);
+          });
+
         break;
 
       case "PUT":
@@ -78,39 +74,39 @@ export default function handler(
             status_orders: req.body.status,
             store_link_orders: req.body.store_link,
           };
-          executeQuery(
-            {
-              query: "UPDATE orders SET ? WHERE id_orders = ? ",
-              values: [fields, id],
-            },
-            (results) => {
-              res.status(200).json(results);
-            }
-          );
+
+          db("orders")
+            .where("id_orders", id)
+            .update(fields)
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         } else {
           res.status(200).json({ msg: "invalid url params" });
+          reject();
         }
         break;
 
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          executeQuery(
-            {
-              query: "DELETE FROM orders WHERE id_orders=?",
-              values: [id],
-            },
-            (results) => {
-              res.status(200).json(results);
-            }
-          );
+          db("orders")
+            .where("id_orders", id)
+            .del()
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
         } else {
           res.status(200).json({ msg: "invalid url params" });
+          reject();
         }
         break;
 
       default:
         res.status(200).json({ msg: "default" });
+        reject();
     }
   });
 }

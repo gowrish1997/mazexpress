@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LogInWithMail from "./LogInWithMail";
-import ReactHookFormInput from "@/common/ReactHookFormInput";
+import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import AuthLayout from "./AuthLayout";
 
 type Inputs = {

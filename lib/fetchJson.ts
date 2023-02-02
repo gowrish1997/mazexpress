@@ -9,7 +9,6 @@ export default async function fetchJson<JSON = unknown>(input: RequestInfo, init
     // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
     if (response.ok) {
         return data;
-        //  throw new Error("sending some eroor");
     }
 
     throw new FetchError({

@@ -3,12 +3,12 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import ReactHookFormInput from "@/common/ReactHookFormInput";
+import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { IAddressProps } from "@/models/address.interface";
 import { faL } from "@fortawesome/free-solid-svg-icons";
-import CountrySelector from "@/common/CountrySelector";
-import RegionSelector from "@/common/RegionSelector";
-import CustomDropDown from "@/common/CustomDropDown";
+import CountrySelector from "@/components/common/CountrySelector";
+import RegionSelector from "@/components/common/RegionSelector";
+import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/useUser";
 interface IProp {
     show: boolean;

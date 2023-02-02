@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import PageHeader from "@/components/orders/PageHeader";
 import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
-import ReactHookFormInput from "@/common/ReactHookFormInput";
+import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import { IAddressProps } from "@/models/address.interface";

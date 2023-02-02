@@ -7,37 +7,16 @@ import PackageTrackingView from "@/components/ordertracking/PackageTrackingView"
 import WarehouseTracking from "@/components/ordertracking/WarehouseTracking";
 import useOrders from "@/lib/useOrders";
 import useUser from "@/lib/useUser";
-import { useRouter } from "next/router";
-import useOrder from "@/lib/useOrder";
-import useTracking from "@/lib/useTracking";
-import Link from "next/link";
 
-const TrackOrder = (props: any) => {
-  const router = useRouter();
+const OrderTracking = () => {
   const { user, mutateUser, userIsLoading } = useUser();
   const { orders, ordersIsLoading } = useOrders({ userId: user?.id_users });
-  const { order, mutateOrder, orderIsLoading } = useOrder({
-    id: router.query.id_orders as string,
-  });
-  const { tracking, trackingIsLoading } = useTracking({
-    order_id: router.query.id_orders as string,
-  });
 
-  const [packageStatus, setPackageStatus] = useState(0);
+  const [packageStatus, setPackageStatus] = useState(5);
 
-  useEffect(() => {
-    // console.log(tracking);
-    if (tracking !== undefined) {
-      let sorted = [...tracking];
-      sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
-      setPackageStatus(sorted.pop().stage_tracking);
-    }
-  }, [tracking]);
-
-  if (trackingIsLoading) return <div>loading tracking</div>;
   return (
     <>
-      <PageHeader content="Order Tracking" className="border-none pb-[10px]" title="Track order | MazExpress" />
+      <PageHeader content="Order Tracking" className="border-none pb-[10px]" />
       <Layout>
         <div className="flex-type2 w-full ">
           <div className="flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
@@ -159,11 +138,9 @@ const TrackOrder = (props: any) => {
             <div className="space-y-[10px]">
               {orders?.map((data) => {
                 return (
-                  <Link href={`/track/${data.id_orders}`}>
-                    <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
-                      {data.id_orders}
-                    </p>
-                  </Link>
+                  <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
+                    {data.id_orders}
+                  </p>
                 );
               })}
             </div>
@@ -174,4 +151,4 @@ const TrackOrder = (props: any) => {
   );
 };
 
-export default TrackOrder;
+export default OrderTracking;

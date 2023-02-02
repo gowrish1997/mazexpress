@@ -134,7 +134,7 @@ export default function handler(
 
       default:
         res.status(200).json({ msg: "default" });
-        reject();
+        reject()
     }
   });
 }
