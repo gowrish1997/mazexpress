@@ -2,7 +2,7 @@ import React, { createRef, useRef, useState } from "react";
 import { useEffect } from "react";
 import Image from "next/image";
 import OrderOptionModal from "../modal/OrderOptionModal";
-import useClickOutside from "@/customHook/useClickOutside";
+import useClickOutside from "@/lib/useClickOutside";
 import { IOrderResponse } from "@/models/order.interface";
 import useAddresses from "@/lib/useAddresses";
 import useUser from "@/lib/useUser";

@@ -1,4 +1,4 @@
-import PageHeader from "@/components/orders/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import React from "react";
 
 const HelpCenter = () => {

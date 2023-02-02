@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import PageHeaders from "@/components/orders/PageHeader";
+import PageHeaders from "@/components/common/PageHeader";
 import Table from "@/components/orders/table";
 import AddButton from "@/components/common/AddButton";
 import useUser from "@/lib/useUser";

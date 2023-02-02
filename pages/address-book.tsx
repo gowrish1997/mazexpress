@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "@/components/orders/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import { nanoid } from "nanoid";

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import PageHeader from "@/components/orders/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import Layout from "@/components/layout";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import PackageTrackingView from "@/components/ordertracking/PackageTrackingView";

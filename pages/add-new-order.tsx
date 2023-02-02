@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import PageHeader from "@/components/orders/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";

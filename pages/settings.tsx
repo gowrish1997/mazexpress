@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import PageHeader from "@/components/orders/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import ReactSwitch from "react-switch";
 import Image from "next/image";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";

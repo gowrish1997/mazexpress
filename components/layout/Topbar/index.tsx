@@ -5,7 +5,7 @@ import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import useUser from "@/lib/useUser";
 import useNotifications from "@/lib/useNotifications";
 import NotificationView from "@/components/common/NotificationView";
-import useClickOutside from "@/customHook/useClickOutside";
+import useClickOutside from "@/lib/useClickOutside";
 const Topbar = () => {
   const { user, mutateUser } = useUser();
 
