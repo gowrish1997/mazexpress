@@ -1,18 +1,13 @@
-import React, { forwardRef, RefObject, useEffect, useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import React, { forwardRef, RefObject } from "react";
 import Link from "next/link";
 import ClickOutside from "@/components/common/ClickOutside";
-
-const options = [
-  //   { option: "Cancel Order", path: "edit" },
-  { option: "Track Order", path: "/order-tracking" },
-];
+import { IOrderResponse } from "@/models/order.interface";
 
 interface IProps {
   ref: React.RefObject<HTMLDivElement>;
   handler: () => void;
   trigger: RefObject<HTMLDivElement>;
+  row: IOrderResponse;
 }
 export type Ref = HTMLDivElement;
 
@@ -25,10 +20,10 @@ const OrderOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
         // ref={ref}
       >
         <ul className=" w-full text-[#525D72] text-[14px] font-[400] leading-[39px]  ">
-          <Link href={options[0].path}>
+          <Link href={`/track/${props.row.id_orders}`}>
             <li className="hover:bg-[#EDF5F9] w-full rounded-[4px] ">
               <div className="cursor-pointer">
-                <span className="ml-[15px] w-full ">{options[0].option}</span>
+                <span className="ml-[15px] w-full ">Track order</span>
               </div>
             </li>
           </Link>

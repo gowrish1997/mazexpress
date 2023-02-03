@@ -37,7 +37,7 @@ const UserSavedAddresses = (props: {
   };
 
   return (
-    <div className="box-border flex-type2 min-w-[32%] min-h-[180px] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
+    <div className="transition duration-300 flex items-start border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
       <input
         type="radio"
         name="address"
@@ -51,7 +51,7 @@ const UserSavedAddresses = (props: {
         onClick={(e) => updateUser(props.address.id_addresses!)}
       />
 
-      <div className="-mt-[5px] ml-[7px]">
+      <div className="flex-1 -mt-[5px] ml-[7px]">
         <div className="flex-type1 space-x-[10px] ">
           <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
             {props.address.tag_addresses}

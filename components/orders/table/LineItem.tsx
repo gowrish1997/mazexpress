@@ -22,7 +22,7 @@ const LineItem = (props: IProp) => {
     order_id: props.row.id_orders,
   });
 
-  const [estDelivery, setEstDelivery] = useState();
+  const [estDelivery, setEstDelivery] = useState<string>("...");
   const [gate, setGate] = useState(false);
 
   // console.log("tracking render");
@@ -52,17 +52,17 @@ const LineItem = (props: IProp) => {
   };
 
   useEffect(() => {
-    console.log("tracking rerender");
-    // if (tracking !== undefined) {
-    //   // sort and set delivery
-    //   let latestUpdate = [...tracking].sort(
-    //     (a, b) => b.stage_tracking - a.stage_tracking
-    //   )[0];
-    //   let newDate = new Date(latestUpdate.created_on_tracking);
-    //   newDate.setDate(newDate.getDate() + 7);
-    //   const newDateString = getDateInStringFormat(newDate);
-    //   setEstDelivery(newDateString);
-    // }
+    // console.log("tracking rerender");
+    if (tracking !== undefined) {
+      // sort and set delivery
+      let latestUpdate = [...tracking].sort(
+        (a, b) => b.stage_tracking - a.stage_tracking
+      )[0];
+      let newDate = new Date(latestUpdate.created_on_tracking);
+      newDate.setDate(newDate.getDate() + 7);
+      const newDateString = getDateInStringFormat(newDate);
+      setEstDelivery(newDateString!);
+    }
   }, [tracking]);
 
   return (
@@ -73,7 +73,7 @@ const LineItem = (props: IProp) => {
       <td className={`td1`}>{props.row.id_orders}</td>
       <td className={`td2 text-[#3672DF]`}>{props.row.store_link_orders}</td>
       <td className={`td3`}>{props.row.reference_id_orders}</td>
-      <td className={`td4`}>{estDelivery ? estDelivery : "..."}</td>
+      <td className={`td4`}>{estDelivery}</td>
       <td className={`td5 flex flex-row items-center gap-x-[10px]`}>
         {
           addresses?.find((el) => el.id_addresses === props.row.address_id)
@@ -117,6 +117,7 @@ const LineItem = (props: IProp) => {
           {gate && (
             <OrderOptionModal
               // ref={modalNode}
+              row={props.row}
               handler={smartToggleGateHandler}
               trigger={trigger}
             />

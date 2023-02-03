@@ -42,7 +42,7 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
               props.address.status_warehouses
             )}`}
           >
-            <input type="radio" checked={true} />
+            {/* <input type="radio" checked={true} /> */}
             <span className="checkmark"></span>
           </label>
 
