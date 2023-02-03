@@ -1,5 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withSessionRoute } from "@/lib/config/withSession";
 import { db, executeQuery } from "@/lib/db";
+import { mazID } from "@/lib/helper";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -7,7 +9,9 @@ type Data = {
   data?: any;
 };
 
-export default function handler(
+export default withSessionRoute(handler);
+
+function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
@@ -43,19 +47,17 @@ export default function handler(
         break;
 
       case "POST":
-        db("orders")
-          .insert({
-            user_id: req.body.user_id,
-            address_id: req.body.address_id,
-            reference_id_orders: req.body.reference_id,
-            store_link_orders: req.body.store_link,
-            status_orders: "processing",
-            shipping_amt_orders: req.body.shipping_amt,
-          })
-          .then((data: any) => {
-            res.status(200).json(data);
-            resolve(data);
-          });
+        db('addresses').where('id_addresses', req.body.address_id).first().then((data: any) => {
+          let maz = mazID(data.city_addresses)
+          const fields = {...req.body, id_orders: maz}
+          db("orders")
+            .insert(fields)
+            .then((data2: any) => {
+              res.status(200).json(data2);
+              resolve(data);
+            });
+
+        })
 
         break;
 

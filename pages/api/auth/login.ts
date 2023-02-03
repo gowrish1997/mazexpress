@@ -1,9 +1,7 @@
 import { withSessionRoute } from "@/lib/config/withSession";
-import { db, executeQuery } from "@/lib/db";
+import { db } from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
-import { IUser } from "@/models/user.interface";
-import useUser from "@/lib/useUser";
 import { updateUser } from "@/lib/setters";
 
 // const VALID_EMAIL = "test@gmail.com";

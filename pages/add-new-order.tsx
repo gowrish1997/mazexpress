@@ -12,6 +12,8 @@ import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal
 import { IAddressProps } from "@/models/address.interface";
 import useAddresses from "@/lib/useAddresses";
 import useUser from "@/lib/useUser";
+import fetchJson from "@/lib/fetchJson";
+import { createToast } from "@/lib/toasts";
 
 const schema = yup
   .object({
@@ -76,8 +78,37 @@ const AddNewOrder = () => {
     referenceId: string;
     storeLink: string;
     address: number;
-  }> = (data) => {
-    console.log(data);
+  }> = async (data) => {
+    // console.log(data);
+    try {
+      let obj = {
+        user_id: user?.id_users,
+        address_id: data.address,
+        reference_id_orders: data.referenceId,
+        store_link_orders: data.storeLink,
+        status_orders: "pending",
+        shipping_amt_orders: 499,
+      };
+      const result = await fetchJson(`/api/orders`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(obj),
+      });
+      console.log(result);
+      createToast({
+        type: "success",
+        title: "Success",
+        message: "Created order successfully",
+      });
+    } catch (err) {
+      console.log(err);
+      createToast({
+        type: "error",
+        title: "An error occurred",
+        message: "Check console for more info.",
+        timeOut: 3000,
+      });
+    }
     // if (user) {
     //   let newUserData = { ...user };
     //   newUserData.default_address_users = data.address;
@@ -134,6 +165,7 @@ const AddNewOrder = () => {
                 address={data}
                 register={register("address")}
                 edit={toggleEditUserAddressModal}
+                update={mutateAddresses}
               />
             );
           })}
@@ -149,6 +181,7 @@ const AddNewOrder = () => {
       <AddNewAddressModal
         show={showAddNewAddressModal}
         close={toggleAddNewAddressModal}
+        update={mutateAddresses}
       />
       {showEditUserAddressModal && (
         <EditUserAddressModal

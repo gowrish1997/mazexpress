@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+
 const getTimeInHourAndMinuteFormat = (time: any) => {
   if (time) {
     return new Date(time).toLocaleString("en-US", {
@@ -33,9 +35,26 @@ const capitalizeFirstLetter = (s: string): string => {
 
 const capitalizeAllFirstLetters = () => {};
 
+const mazID = (city: string) => {
+  // format BNG-MAZ-
+  let append = nanoid();
+
+  switch (city) {
+    case "tripoli":
+      return "TRI" + "-MAZ-" + append;
+    case "benghazi":
+      return "BNG" + "-MAZ-" + append;
+    case "misrata":
+      return "MIS" + "-MAZ-" + append;
+    default:
+      return "TRI" + "-MAZ-" + append;
+  }
+};
+
 export {
   capitalizeFirstLetter,
   capitalizeAllFirstLetters,
   getDateInStringFormat,
   getTimeInHourAndMinuteFormat,
+  mazID,
 };

@@ -3,7 +3,7 @@ import useSWR from "swr";
 export default function useTracking({
   order_id,
 }: {
-  order_id?: number | string;
+  order_id?: string;
 }) {
   const {
     data: tracking,

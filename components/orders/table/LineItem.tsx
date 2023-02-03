@@ -38,22 +38,25 @@ const LineItem = (props: IProp) => {
 
   const orderStatusColorHandler = (status: string) => {
     switch (status) {
-      case "processing":
+      case "in-transit":
         return "in_transit";
 
-      case "completed":
+      case "delivered":
         return "delivered";
 
-      case "At warehouse":
+      case "at-warehouse":
         return "at_warehouse";
-
+      case "pending":
+        return "pending";
       default:
+        return "pending";
     }
   };
 
   useEffect(() => {
-    // console.log("tracking rerender");
-    if (tracking !== undefined) {
+    // console.log(tracking);
+    console.log(props.row);
+    if (tracking !== undefined && tracking.length > 0) {
       // sort and set delivery
       let latestUpdate = [...tracking].sort(
         (a, b) => b.stage_tracking - a.stage_tracking

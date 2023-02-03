@@ -1,5 +1,5 @@
 interface IOrderResponse {
-  id_orders: number;
+  id_orders: string;
   user_id: number;
   address_id: number;
   reference_id_orders: string;
