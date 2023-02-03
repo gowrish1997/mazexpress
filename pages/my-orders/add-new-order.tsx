@@ -29,10 +29,15 @@ const AddNewOrder = () => {
     const { addresses, mutateAddresses } = useAddresses({
         userId: user?.id_users,
     });
+
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
+    // useEffect(() => {
+    //     setAdd(addresses);
+    // }, [addresses]);
+
     const defaultAddressHandler = () => {
-        const address = addresses?.find((el) => el.id_addresses === user?.default_address_users);
+        const address =addresses?.find((el) => el.id_addresses === user?.default_address_users);
 
         return address;
     };
@@ -63,7 +68,7 @@ const AddNewOrder = () => {
             setShowEditUserAddressModal(false);
         } else {
             setShowEditUserAddressModal(true);
-            const address = addresses?.find((data) => {
+            const address =addresses?.find((data) => {
                 return data.id_addresses == addressId;
             });
             setEditableAddress(address);
@@ -110,8 +115,8 @@ const AddNewOrder = () => {
                 </div>
                 <div className="flex-type1 flex-wrap mt-[20px] gap-[20px] ">
                     {addresses?.map((data) => {
-                        return <UserSavedAddresses key={data.id_addresses} address={data} register={register("address")} edit={toggleEditUserAddressModal} />;
-                    })}
+                            return <UserSavedAddresses key={data.id_addresses} address={data} register={register("address")} edit={toggleEditUserAddressModal} />;
+                        })}
                 </div>
                 <button className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]" type="submit">
                     Place order

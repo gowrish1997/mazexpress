@@ -11,33 +11,31 @@ interface IProp {
     title?: string;
 }
 const PageHeader = (props: IProp) => {
-    const { user, mutateUser, userIsLoading } = useUser();
-    const { tracking, trackingIsLoading } = useTrackings({
-        user_id: user?.id_users,
-    });
+    
+    // const { user, mutateUser, userIsLoading } = useUser();
+    // const { tracking, trackingIsLoading } = useTrackings({
+    //     user_id: user?.id_users,
+    // });
 
-    const [allOrderDeliveryDate, setAllOrderDeliveryDate] = useState<string[] | null>(null);
+    // const [allOrderDeliveryDate, setAllOrderDeliveryDate] = useState<string[] | null>(null);
 
-    useEffect(() => {
-        const deliveryDate = tracking?.map((data) => {
-            return moment(data.created_on_tracking).format("DD-MM-YYYY");
-        });
+    // useEffect(() => {
+    //     const deliveryDate = tracking?.map((data) => {
+    //         return moment(data.created_on_tracking).format("DD-MM-YYYY");
+    //     });
 
-        setAllOrderDeliveryDate(deliveryDate!);
-    }, [tracking]);
+    //     setAllOrderDeliveryDate(deliveryDate!);
+    // }, [tracking]);
 
-    console.log(allOrderDeliveryDate);
+    // const [showArrivalCalender, setShowArrivalCalender] = useState<boolean>(false);
 
-    const [showArrivalCalender, setShowArrivalCalender] = useState<boolean>(false);
-
-    const toggleArrivalCalender = () => {
-        console.log("arrival calendar ");
-        setShowArrivalCalender((prev) => !prev);
-    };
+    // const toggleArrivalCalender = () => {
+    //     setShowArrivalCalender((prev) => !prev);
+    // };
 
     return (
         <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative " + " " + props.className}>
-            <Head>
+            {/* <Head>
                 <title>{props.title ? props.title : "MazExpress | dev"}</title>
             </Head>
             <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px]">{props.content}</p>
@@ -58,7 +56,7 @@ const PageHeader = (props: IProp) => {
                         />
                     </div>
                 ) : null}
-            </div>
+            </div> */}
         </div>
     );
 };

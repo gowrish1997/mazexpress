@@ -56,7 +56,7 @@ const NavLink = (props: IProp) => {
                 style={{ backgroundColor: router.pathname.includes(props.content.path) ? "#EDF5F9" : "" }}
             >
                 <div className=" flex flex-row justify-start items-center w-full">
-                    <div className={`${router.pathname.includes(props.content.path) ? "sidebar_icon_hover" : "sidebar_icon"} hover:sidebar_icon_hover`}>{Icon(props.id)}</div>
+                    <div className={`${router.pathname.includes(props.content.path) ? "sidebar_icon_hover" : "sidebar_icon"} `}>{Icon(props.id)}</div>
 
                     <div
                         className="ml-3 text-[#525D72] font-[500] text-[14px] leading-[21px] hover:text-[#2B2B2B] hover:font-[600] py-2 transition duration-300 cursor-pointer"
