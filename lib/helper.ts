@@ -40,11 +40,11 @@ const mazID = (city: string) => {
   let append = nanoid();
 
   switch (city) {
-    case "tripoli":
+    case "Tripoli":
       return "TRI" + "-MAZ-" + append;
-    case "benghazi":
+    case "Benghazi":
       return "BNG" + "-MAZ-" + append;
-    case "misrata":
+    case "Misrata":
       return "MIS" + "-MAZ-" + append;
     default:
       return "TRI" + "-MAZ-" + append;

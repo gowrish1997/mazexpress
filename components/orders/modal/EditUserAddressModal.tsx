@@ -10,10 +10,12 @@ import CountrySelector from "@/components/common/CountrySelector";
 import RegionSelector from "@/components/common/RegionSelector";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/useUser";
+import fetchJson from "@/lib/fetchJson";
 interface IProp {
   show: boolean;
   close: () => void;
   address: IAddressProps;
+  update: () => Promise<IAddressProps[] | undefined>;
 }
 
 const schema = yup
@@ -51,9 +53,38 @@ const EditUserAddressModal = (props: IProp) => {
     }
   };
 
-  const onSubmit: SubmitHandler<IAddressProps> = (data) => {
-    console.log(data);
-    // props.close();
+  const onSubmit: SubmitHandler<IAddressProps> = async (data) => {
+    // console.log(data);
+    let address: any = { ...data };
+    delete address.default_addresses;
+    address.user_id = user?.id_users;
+
+    // console.log(address);
+    // add address
+    if (user?.is_logged_in_users) {
+      // update user default
+      let newUserData = { ...user, default_address_user: data.id_addresses };
+      mutateUser(newUserData, false);
+    }
+    const addressResult = await fetchJson(
+      `/api/addresses?id=${data.id_addresses}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(address),
+      }
+    );
+
+    // console.log(addressResult)
+    if (data.default_addresses === "on") {
+      const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ default_address_users: data.id_addresses }),
+      });
+    }
+    props.close();
+    props.update();
   };
 
   return (
@@ -162,7 +193,9 @@ const EditUserAddressModal = (props: IProp) => {
           <div className=".flex-type1 space-x-[5px]">
             <input
               type="radio"
-              checked={addressIsDefault}
+              defaultChecked={
+                props.address.id_addresses === user?.default_address_users
+              }
               onClick={toggleDefaultAddressHandler}
               {...register("default_addresses")}
               name="default_addresses"

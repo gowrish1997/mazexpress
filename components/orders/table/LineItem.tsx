@@ -55,7 +55,7 @@ const LineItem = (props: IProp) => {
 
   useEffect(() => {
     // console.log(tracking);
-    console.log(props.row);
+    // console.log(props.row);
     if (tracking !== undefined && tracking.length > 0) {
       // sort and set delivery
       let latestUpdate = [...tracking].sort(

@@ -10,6 +10,7 @@ interface IOrderResponse {
   status_orders: string;
   store_link_orders: string;
 }
+
 interface IOrder {
     referenceId: string;
     storeLink: string;

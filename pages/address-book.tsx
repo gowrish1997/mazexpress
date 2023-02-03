@@ -68,6 +68,7 @@ const AddressBook = () => {
       />
       {showEditUserAddressModal && (
         <EditUserAddressModal
+          update={mutateAddresses}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
           address={editableAddress!}
