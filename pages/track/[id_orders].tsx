@@ -53,7 +53,7 @@ const TrackOrder = (props: any) => {
                 information, <span className="text-[#3672DF]">Link here →</span>
               </p>
             </div>
-            <div className="font-[500]">
+            <div className="font-[500] space-y-[5px]">
               <p className="text-[14px] text-[#2B2B2B] leading-[21px]">
                 Tracking
               </p>

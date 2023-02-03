@@ -5,19 +5,99 @@ import { IWarehouse, IWarehouseProps } from "@/models/warehouse.interface";
 import { capitalizeFirstLetter } from "@/lib/helper";
 
 const WarehouseCard = (props: { address: IWarehouseProps }) => {
-
-  const wareHouseAddressStatusColorHandler = (status: string) => {
+  const getBg = (status: string) => {
     switch (status) {
       case "active":
-        return "active";
+        return {
+          // color: "#34A853",
+          backgroundColor: "#34A853",
+          // borderColor: "#34A853",
+        };
 
       case "inactive":
-        return "in_active";
+        return {
+          // color: "#34A853",
+          backgroundColor: "#34A853",
+          // borderColor: "#34A853",
+        };
 
       case "closed":
-        return "closed";
+        return {
+          // color: "#34A853",
+          backgroundColor: "#34A853",
+          // borderColor: "#34A853",
+        };
 
       default:
+        return {
+          // color: "#34A853",
+          backgroundColor: "black",
+          // borderColor: "#34A853",
+        };
+    }
+  };
+
+  const getBorder = (status: string) => {
+    switch (status) {
+      case "active":
+        return {
+          // color: "#34A853",
+          // backgroundColor: "#34A853",
+          borderColor: "#34A853",
+        };
+
+      case "inactive":
+        return {
+          // color: "#34A853",
+          // backgroundColor: "#34A853",
+          borderColor: "#34A853",
+        };
+
+      case "closed":
+        return {
+          // color: "#34A853",
+          // backgroundColor: "#34A853",
+          borderColor: "#34A853",
+        };
+
+      default:
+        return {
+          // color: "#34A853",
+          // backgroundColor: "black",
+          borderColor: "#34A853",
+        };
+    }
+  };
+
+  const getColor = (status: string) => {
+    switch (status) {
+      case "active":
+        return {
+          color: "#34A853",
+          // backgroundColor: "#34A853",
+          // borderColor: "#34A853",
+        };
+
+      case "inactive":
+        return {
+          color: "#34A853",
+          // backgroundColor: "#34A853",
+          // borderColor: "#34A853",
+        };
+
+      case "closed":
+        return {
+          color: "#34A853",
+          // backgroundColor: "#34A853",
+          // borderColor: "#34A853",
+        };
+
+      default:
+        return {
+          color: "#34A853",
+          // backgroundColor: "black",
+          // borderColor: "#34A853",
+        };
     }
   };
 
@@ -36,18 +116,18 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
         <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
           {capitalizeFirstLetter(props.address.tag_warehouses)}
         </p>
-        <div className={`flex-type1`}>
-          <label
-            className={`customRadioInput_type2 ${wareHouseAddressStatusColorHandler(
-              props.address.status_warehouses
-            )}`}
+        <div className="flex items-center">
+          <div
+            className="border box-border p-[2px] rounded-full flex flex-col items-center justify-center"
+            style={getBorder(props.address.status_warehouses)}
           >
-            {/* <input type="radio" checked={true} /> */}
-            <span className="checkmark"></span>
-          </label>
-
+            <span
+              className="min-h-[10px] min-w-[10px] block rounded-full flex-1 box-border"
+              style={getBg(props.address.status_warehouses)}
+            ></span>
+          </div>
           <span className="ml-[5px] text-[12px] text-[#2B2B2B] font-[500] leading-[18px] ">
-            {props.address.status_warehouses}
+            {capitalizeFirstLetter(props.address.status_warehouses)}
           </span>
         </div>
       </div>

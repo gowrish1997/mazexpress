@@ -28,7 +28,7 @@ export const middleware = async (req: NextRequest) => {
   //   // unauthorized to see pages inside admin/
   //   return NextResponse.redirect(new URL("/gate", req.url)); // redirect to /unauthorized page
   // }
-  if (!user || user?.id_users === null)
+  if (!user || user?.is_logged_in_users === 0)
     return NextResponse.redirect(new URL("/auth/gate", req.url));
 
   return res;

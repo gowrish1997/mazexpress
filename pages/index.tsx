@@ -26,7 +26,7 @@ const MyOrders = () => {
   });
 
   const addNewOrderHandler = () => {
-    router.push(`${router.pathname}/add-new-order`);
+    router.push(`${router.pathname}add-new-order`);
   };
 
   if (ordersError) throw ordersError;
@@ -45,8 +45,8 @@ const MyOrders = () => {
               <div className="relative h-[221px] w-[322px] ">
                 <Image
                   src="/noorder.png"
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "contain" }}
                   alt="happy"
                 />
               </div>

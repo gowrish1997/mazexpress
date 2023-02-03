@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import PageHeader from "@/components/common/PageHeader";
-import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
+import UserSavedAddresses from "@/components/orders/UserSavedAddress";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";

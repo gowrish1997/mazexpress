@@ -3,10 +3,10 @@ import Image from "next/image";
 import Header from "./Header";
 import NavLink from "./NavLink";
 import { nanoid } from "nanoid";
-import axios from "axios";
 import { useRouter } from "next/router";
 import useUser from "@/lib/useUser";
 import fetchJson from "@/lib/fetchJson";
+
 const sidebarContent = [
   {
     id: nanoid(),
@@ -51,8 +51,11 @@ const Sidebar = () => {
   const { user, mutateUser } = useUser();
 
   const logoutHandler = async () => {
+    await mutateUser(
+      await fetchJson("/api/auth/logout", { method: "GET" }),
+      false
+    );
     router.push("/auth/gate");
-    mutateUser(await fetchJson("/api/auth/logout", { method: "GET" }), false);
   };
   return (
     <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[250px]">
@@ -71,8 +74,8 @@ const Sidebar = () => {
           <div className="relative w-[14px] h-[14px] ">
             <Image
               src="/logout.png"
-              layout="fill"
-              objectFit="contain"
+              fill
+              style={{ objectFit: "contain" }}
               alt="logout"
             />
           </div>

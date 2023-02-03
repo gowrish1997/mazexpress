@@ -1,69 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
-import UserSavedAddresses from "@/components/orders/UserSavedAddresses";
+import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
-import { nanoid } from "nanoid";
 import useAddresses from "@/lib/useAddresses";
 import useUser from "@/lib/useUser";
 import { IAddressProps } from "@/models/address.interface";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
-const addresses = [
-  {
-    id: nanoid(),
-    title: "Gowiesh hpuse",
-    addressLine1: "byndoor udupu",
-    addressLine2: "kundapure",
-    country: "India",
-    city: "byndoor",
-    state: "karantak",
-    postalCode: "576214",
-    mobileNumber: 96863993098,
-    default: null,
-  },
-  {
-    id: nanoid(),
-    title: "Gowiesh hpuse",
-    addressLine1: "byndoor udupu",
-    addressLine2: "kundapure",
-    country: "India",
-    city: "byndoor",
-    state: "karantak",
-    postalCode: "576214",
-    mobileNumber: 96863993098,
-    default: "on",
-  },
-  //     {
-  //         id: nanoid(),
-  //         title: "Gowiesh hpuse",
-  //         addressLine1: "byndoor udupu",
-  //         addressLine2: "kundapure",
-  //         country: "India",
-  //         city: "byndoor",
-  //         state: "karantak",
-  //         postalCode: "576214",
-  //         mobileNumber: 96863993098,
-  //         default: null,
-  //     },
-  //     {
-  //         id: nanoid(),
-  //         title: "Gowiesh hpuse",
-  //         addressLine1: "byndoor udupu",
-  //         addressLine2: "kundapure",
-  //         country: "India",
-  //         city: "byndoor",
-  //         state: "karantak",
-  //         postalCode: "576214",
-  //         mobileNumber: 96863993098,
-  //         default: null,
-  //     },
-];
+
 const AddressBook = () => {
-  //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
   const [editableAddress, setEditableAddress] = useState<IAddressProps>();
 
-  //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
   const { user, mutateUser, userIsLoading } = useUser();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
@@ -74,9 +22,9 @@ const AddressBook = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
 
-  console.log(addresses);
+  // console.log(addresses);
   const toggleEditUserAddressModal = (addressId?: number) => {
-    console.log(addressId);
+    // console.log(addressId);
     if (showEditUserAddressModal) {
       setShowEditUserAddressModal(false);
     } else {
@@ -93,12 +41,13 @@ const AddressBook = () => {
       <PageHeader content="My Address Book" title="Address Book | MazExpress" />
       <div className="grid grid-cols-3 gap-3 py-5">
         {addresses &&
-          addresses?.map((data) => {
+          addresses?.filter(el => el.status_addresses === 1).map((data) => {
             return (
-              <UserSavedAddresses
+              <UserSavedAddress
                 key={data.id_addresses}
                 address={data}
                 edit={toggleEditUserAddressModal}
+                update={mutateAddresses}
               />
             );
           })}
@@ -115,6 +64,7 @@ const AddressBook = () => {
       <AddNewAddressModal
         show={showAddNewAddressModal}
         close={toggleAddNewAddressModal}
+        update={mutateAddresses}
       />
       {showEditUserAddressModal && (
         <EditUserAddressModal
