@@ -36,7 +36,7 @@ const Topbar = () => {
                 </div>
                 <div className="flex min-h-[65px] items-center justify-end">
                     <span className="relative top-0.5 px-7 cursor-pointer" onClick={toggleNotificationsHandler} ref={trigger}>
-                        {notifications && notifications.length > 0 && <span className="rounded-full block -top-[1px] h-[7px] w-[7px] right-[28.5px] bg-[#FF2323] absolute"></span>}
+                        {notifications && notifications.length > 0 && <span className="rounded-full block top-[3px] h-[7px] w-[7px] right-[34.5px] bg-[#FF2323] absolute"></span>}
                         <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
                             {/* <Image src={"/bell.png"} height={16} width={17} alt="notification" className="" /> */}
                             <Bell className="bell_svg" />

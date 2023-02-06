@@ -131,6 +131,8 @@ input::-webkit-inner-spin-button {
     background: #ff0000;
 }
 .pending .checkmark:after {
+  top: 1.2px;
+  left: 1px;
   background: #BBC2CF;
 }
 .customRadioInput_type2 input:checked ~ .checkmark {
@@ -241,9 +243,19 @@ input::-webkit-inner-spin-button {
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: left;
+padding-left: 5px;
 
-    padding-right: 5px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+ 
 }
+.table td:hover{
+  white-space:wrap;
+  overflow:visible;
+
+}
+
 .table .th0,
 .table .td0 {
     width: 2%;
@@ -273,7 +285,16 @@ input::-webkit-inner-spin-button {
 .table .th6,
 .table .td5,
 .table .td6 {
-    width: 9%;
+    width:9%;
+
+}
+.table .address_table{
+  width: 70px;
+
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+
 
 }
 .indexedStep {

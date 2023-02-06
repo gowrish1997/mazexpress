@@ -29,40 +29,42 @@ const LineItem = (props: IProp) => {
     // const modalTriggerNode = createRef<HTMLTableCellElement>();
     const trigger = useRef<any>();
 
-  function smartToggleGateHandler() {
-    setGate(false);
-  }
-  function toggleGateHandler() {
-    setGate((prev) => !prev);
-  }
-
-  const orderStatusColorHandler = (status: string) => {
-    switch (status) {
-      case "in-transit":
-        return "in_transit";
-
-      case "delivered":
-        return "delivered";
-
-      case "at-warehouse":
-        return "at_warehouse";
-      case "pending":
-        return "pending";
-      default:
-        return "pending";
+    function smartToggleGateHandler() {
+        setGate(false);
     }
-  };
+    function toggleGateHandler() {
+        setGate((prev) => !prev);
+    }
 
+    const orderStatusColorHandler = (status: string) => {
+        switch (status) {
+            case "in-transit":
+                return "in_transit";
 
+            case "delivered":
+                return "delivered";
+
+            case "at-warehouse":
+                return "at_warehouse";
+            case "pending":
+                return "pending";
+            default:
+                return "pending";
+        }
+    };
 
     useEffect(() => {
         // console.log("tracking rerender");
         if (tracking !== undefined) {
+            console.log(tracking);
             // sort and set delivery
             let latestUpdate = [...tracking].sort((a, b) => b.stage_tracking - a.stage_tracking)[0];
+            // console.log(latestUpdate);
             let newDate = new Date(latestUpdate?.created_on_tracking);
+            console.log(newDate);
             newDate.setDate(newDate.getDate() + 7);
             const newDateString = getDateInStringFormat(newDate);
+
             setEstDelivery(newDateString!);
         }
     }, [tracking]);
@@ -75,18 +77,19 @@ const LineItem = (props: IProp) => {
             <td className={`td4`}>{estDelivery}</td>
             <td className={`td5 `} style={{}}>
                 <div className="flex flex-row items-center gap-x-[10px] ">
-                    {addresses?.find((el) => el.id_addresses === props.row.address_id)?.tag_addresses}
+                    <span className="address_table" >{addresses?.find((el) => el.id_addresses === props.row.address_id)?.tag_addresses}</span>
+
                     {user?.default_address_users === props.row.address_id && (
                         <div className="bg-[#FF645A] rounded-[4px] text-[10px] text-[#FFFFFF] font-[500] leading-[15px] py-[5px] px-[10px] ">Default</div>
                     )}
                 </div>
             </td>
             <td className={`td6`}>
-                <label className={`customRadioInput ${orderStatusColorHandler(props.row.status_orders)}`}>
+                <label className={`customRadioInput ml-[12px] ${orderStatusColorHandler(props.row.status_orders)}`} >
                     <input type="radio" defaultChecked={true} />
                     <span className="checkmark"></span>
                 </label>
-                <span className="ml-[5px]">{props.row.status_orders}</span>
+                <span className="ml-[20px] flex-1 ">{props.row.status_orders}</span>
             </td>
             <td
                 className=""
