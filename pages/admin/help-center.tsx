@@ -4,12 +4,12 @@ import Image from "next/image";
 import EditHelpModal from "@/components/admin/help-center/modal/EditHelpModal";
 
 const HelpCenter = () => {
-  const [showEditHelpModal, setShowEditHelpModal] =
-    useState(false);
+  const [showEditHelpModal, setShowEditHelpModal] = useState(false);
 
   const toggleEditHelpModal = () => {
     setShowEditHelpModal((prev) => !prev);
   };
+
   return (
     <>
       <PageHeader
@@ -56,8 +56,8 @@ const HelpCenter = () => {
 
           <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] flex justify-end flex-1 grow">
             <div className="space-x-[20px] flex items-end  ">
-              <button className="hover:font-[600] ">Edit</button>
-              <button className="hover:font-[600] ">Remove</button>
+              <button className="hover:font-[600]" onClick={toggleEditHelpModal}>Edit</button>
+              <button className="hover:font-[600]">Remove</button>
             </div>
           </div>
         </div>

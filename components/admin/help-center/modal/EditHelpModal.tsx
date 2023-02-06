@@ -22,6 +22,12 @@ const schema = yup
   })
   .required();
 
+interface IHelpForm {
+  num1: number;
+  num2: number;
+  num3: number;
+}
+
 const EditHelpModal = (props: IProp) => {
   const [country, setCountry] = useState("LY");
   const { user, mutateUser, userIsLoading } = useUser();
@@ -31,7 +37,7 @@ const EditHelpModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<IAddressProps>({
+  } = useForm<>({
     defaultValues: {
       // address_1_addresses: "V5RH+HVQ",
       // address_2_addresses: "Amr Bin al A'ss St",
@@ -57,7 +63,7 @@ const EditHelpModal = (props: IProp) => {
     // delete address.default_addresses;
     // address.user_id = user?.id_users;
 
-      console.log(data);
+    console.log(data);
 
     // add address
     // const addressResult = await fetchJson(`/api/addresses`, {
@@ -94,7 +100,7 @@ const EditHelpModal = (props: IProp) => {
             onSubmit={handleSubmit(onSubmit)}
           >
             <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">
-              Add New Warehouse
+              Edit Contact Details
             </p>
             <input
               id="tag_addresses"
