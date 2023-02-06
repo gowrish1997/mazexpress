@@ -29,7 +29,7 @@ const AdminPageHeader = (props: IProp) => {
             <div className="flex-type1 space-x-[10px] ">
                 <ReactDropdown />
                 <ReactDropdown />
-                <button className="box-border border-[1px] border-[#BBC2CF] py-[7px] px-[10px] rounded-[4px]">Move to shipments</button>
+                <button className="box-border border-[1px] border-[#BBC2CF] py-[8px] px-[10px] rounded-[4px] mt-[5px] ">Move to shipments</button>
             </div>
         </div>
     );
