@@ -37,10 +37,10 @@ function executeQuery(
 const registerService = (name: string, initFn: () => void) => {
   if (process.env.NODE_ENV === "development") {
     // console.log(global);
-    if (typeof globalThis.Intl === "undefined") {
+    if (typeof globalThis[name as keyof typeof globalThis] === "undefined") {
       Object.defineProperty(global, name, {
         value: initFn(),
-        enumerable: false,
+        enumerable: true,
         configurable: true,
         writable: true,
       });
