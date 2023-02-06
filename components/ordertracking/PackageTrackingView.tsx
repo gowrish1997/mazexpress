@@ -1,9 +1,8 @@
 import React from "react";
-import Image from "next/image";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import Vehicle from "../../public/svgVehicle.svg";
-import WareHouse from "../../public/svgWareHouse.svg";
+import WareHouse from "../../public/svgWarehouse.svg";
 import Check from "../../public/svgCheck.svg";
 
 const PackageTrackingView = (props: { packageStatus: number }) => {
