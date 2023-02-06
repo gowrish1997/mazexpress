@@ -11,10 +11,7 @@ type Data = {
 
 export default withSessionRoute(handler);
 
-function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   //   console.log("");
   return new Promise((resolve, reject) => {
     switch (req.method) {
@@ -31,8 +28,10 @@ function handler(
                 resolve(data);
               });
           } else {
-            res.status(200).json({ msg: "invalid url params" });
-            reject("invalid url params");
+            db("orders").then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
           }
         } else {
           const user_id = req.query.user;
@@ -47,17 +46,19 @@ function handler(
         break;
 
       case "POST":
-        db('addresses').where('id_addresses', req.body.address_id).first().then((data: any) => {
-          let maz = mazID(data.city_addresses)
-          const fields = {...req.body, id_orders: maz}
-          db("orders")
-            .insert(fields)
-            .then((data2: any) => {
-              res.status(200).json(data2);
-              resolve(data);
-            });
-
-        })
+        db("addresses")
+          .where("id_addresses", req.body.address_id)
+          .first()
+          .then((data: any) => {
+            let maz = mazID(data.city_addresses);
+            const fields = { ...req.body, id_orders: maz };
+            db("orders")
+              .insert(fields)
+              .then((data2: any) => {
+                res.status(200).json(data2);
+                resolve(data);
+              });
+          });
 
         break;
 
