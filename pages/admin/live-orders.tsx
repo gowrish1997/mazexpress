@@ -1,9 +1,12 @@
-import React from 'react'
-
+import React from "react";
+import Head from "next/head";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
 const LiveOrders = () => {
-  return (
-    <div>LiveOrders</div>
-  )
-}
+    return (
+        <div>
+            <AdminPageHeader content="Live Oeders" />
+        </div>
+    );
+};
 
-export default LiveOrders
+export default LiveOrders;

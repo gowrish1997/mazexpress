@@ -26,6 +26,8 @@ interface IHelpForm {
   num1: number;
   num2: number;
   num3: number;
+  email: string
+  name: string
 }
 
 const EditHelpModal = (props: IProp) => {
@@ -37,15 +39,9 @@ const EditHelpModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<>({
+  } = useForm<IHelpForm>({
     defaultValues: {
-      // address_1_addresses: "V5RH+HVQ",
-      // address_2_addresses: "Amr Bin al A'ss St",
-      // city_addresses: "Tripoli",
-      // country_addresses: "Libya",
-      // default_addresses: "on",
-      // phone_addresses: 214441792,
-      // tag_addresses: "Al Mshket Hotel",
+      
     },
     // resolver: yupResolver(schema),
   });
@@ -105,77 +101,36 @@ const EditHelpModal = (props: IProp) => {
             <input
               id="tag_addresses"
               type="string"
-              {...register("tag_addresses")}
+              {...register("name")}
               className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give first title @Home"
             />
             <ReactHookFormInput
-              label="Address line 01"
-              name="address_1_addresses"
-              type="string"
-              register={register("address_1_addresses")}
-            />
-            <ReactHookFormInput
-              label="Address line 02"
-              name="address_2_addresses"
-              type="string"
-              register={register("address_2_addresses")}
-            />
-            <div className="flex-type2 space-x-[10px] w-full">
-              <Controller
-                name="country_addresses"
-                control={control}
-                defaultValue="Libya"
-                render={({ field: { onChange, value, ref } }) => (
-                  <CountrySelector
-                    label="Country"
-                    value={value}
-                    onChange={onChange}
-                    setCountry={setCountry}
-                    error={errors.country_addresses}
-                    dropDownIcon={{
-                      iconIsEnabled: true,
-                      iconSrc: "/lock.png",
-                    }}
-                  />
-                )}
-              />
-              <CustomDropDown
-                label="City/Town"
-                name="city_addresses"
-                value={["Tripoli", "Benghazi", "Misrata"]}
-                register={register("city_addresses")}
-                error={errors.city_addresses}
-                dropDownIcon={{
-                  iconIsEnabled: true,
-                  iconSrc: "/downwardArrow.png",
-                }}
-              />
-            </div>
-            <ReactHookFormInput
               label="Mobile Number"
-              name="phone_addresses"
+              name="num1"
               type="number"
-              register={register("phone_addresses")}
+              register={register("num1")}
             />
-            {/* <ReactHookFormInput
+            <ReactHookFormInput
+              label="Mobile Number 2"
+              name="num2"
+              type="number"
+              register={register("num2")}
+            />
+            <ReactHookFormInput
+              label="Mobile Number 3"
+              name="num3"
+              type="number"
+              register={register("num3")}
+            />
+            
+            <ReactHookFormInput
               label="Email ID"
-              name="address_1_addresses"
+              name="email"
               type="string"
-              register={register("address_1_addresses")}
-            /> */}
-            <div className=".flex-type1 space-x-[5px]">
-              <input
-                type="radio"
-                // defaultChecked={user?.default_address_users === }
-                checked={addressIsDefault}
-                onClick={toggleDefaultAddressHandler}
-                {...register("default_addresses")}
-                name="default_addresses"
-              />
-
-              <span>Set as Default</span>
-            </div>
+              register={register("email")}
+            />
+            
             <div className="flex-type1 space-x-[10px] mt-[5px] ">
               <button
                 className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"

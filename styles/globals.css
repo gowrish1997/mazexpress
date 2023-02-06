@@ -51,8 +51,8 @@ body {
     .flex-type8 {
         @apply flex flex-col justify-between items-start;
     }
-    .td5{
-    @apply w-[11%]
+    .td5 {
+        @apply w-[11%];
     }
 
     .secondWarehouse {
@@ -131,7 +131,9 @@ input::-webkit-inner-spin-button {
     background: #ff0000;
 }
 .pending .checkmark:after {
-  background: #BBC2CF;
+    top: 1.2px;
+    left: 1px;
+    background: #bbc2cf;
 }
 .customRadioInput_type2 input:checked ~ .checkmark {
     border: 0.5px solid #34a853;
@@ -148,7 +150,7 @@ input::-webkit-inner-spin-button {
     border: 0.5px solid #ff0000;
 }
 .pending input:checked ~ .checkmark {
-  border: 0.5px solid #BBC2CF;
+    border: 0.5px solid #bbc2cf;
 }
 
 .customRadioInput_type2 {
@@ -241,9 +243,17 @@ input::-webkit-inner-spin-button {
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: left;
+    padding-left: 5px;
 
-    padding-right: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
+.table td:hover {
+    white-space: wrap;
+    overflow: visible;
+}
+
 .table .th0,
 .table .td0 {
     width: 2%;
@@ -274,7 +284,13 @@ input::-webkit-inner-spin-button {
 .table .td5,
 .table .td6 {
     width: 9%;
+}
+.table .address_table {
+    width: 70px;
 
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .indexedStep {
     width: 30px;
@@ -692,7 +708,31 @@ abbr:where([title]) {
     stroke: #009e3f;
     fill: transparent;
 }
-.canel_svg path:hover{
-  fill: transparent;
+.canel_svg path:hover {
+    fill: transparent;
     stroke: #030303;
 }
+.pageHeaderDropdown{
+    height: 36px;
+    width: 156px;
+}
+.pageHeaderDropdown .Dropdown-control {
+    border:1px solid #BBC2CF ;
+    border-radius: 4px;
+}
+.pageHeaderDropdown .Dropdown-arrow{
+    display:none;
+}
+.pageHeaderDropdown .Dropdown-menu{
+    margin-top: 10px;
+    border-radius: 4px;
+   padding:0px 5px 5px;
+
+}
+.pageHeaderDropdown .Dropdown-option{
+    margin-top: 10px;
+    border-radius: 4px;
+
+
+}
+ 

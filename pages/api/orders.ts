@@ -12,7 +12,6 @@ type Data = {
 export default withSessionRoute(handler);
 
 function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  //   console.log("");
   return new Promise((resolve, reject) => {
     switch (req.method) {
       case "GET":
@@ -35,7 +34,7 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
           }
         } else {
           const user_id = req.query.user;
-
+          // console.log(req.query.user);
           db("orders")
             .where("user_id", user_id)
             .then((data: any) => {
