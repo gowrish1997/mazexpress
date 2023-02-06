@@ -15,7 +15,7 @@ import fetchJson from "@/lib/fetchJson";
 interface IProp {
   show: boolean;
   close: () => void;
-  update: () => Promise<IAddressProps[] | undefined>
+  update: () => Promise<IAddressProps[] | undefined>;
 }
 
 const schema = yup
@@ -70,21 +70,22 @@ const AddNewAddressModal = (props: IProp) => {
     });
 
     // console.log(addressResult)
-
-    const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ default_address_users: addressResult }),
-    });
-
-    if(user?.is_logged_in_users){
+    if (data.default_addresses === "on") {
+      const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ default_address_users: addressResult }),
+      });
+      if (user?.is_logged_in_users) {
         // update user default
-        let newUserData = {...user, default_address_user: addressResult}
+        let newUserData = { ...user, default_address_user: addressResult };
         mutateUser(newUserData, false);
+      }
     }
+
     // console.log(result);
     props.close();
-    props.update()
+    props.update();
   };
 
   return (
@@ -156,7 +157,7 @@ const AddNewAddressModal = (props: IProp) => {
               <CustomDropDown
                 label="City/Town"
                 name="city_addresses"
-                value={["Tripoli", "Banghāzī", "Mişrātah"]}
+                value={["Tripoli", "Benghazi", "Misrata"]}
                 register={register("city_addresses")}
                 error={errors.city_addresses}
                 dropDownIcon={{

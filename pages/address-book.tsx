@@ -22,9 +22,7 @@ const AddressBook = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
 
-  // console.log(addresses);
   const toggleEditUserAddressModal = (addressId?: number) => {
-    // console.log(addressId);
     if (showEditUserAddressModal) {
       setShowEditUserAddressModal(false);
     } else {
@@ -41,16 +39,18 @@ const AddressBook = () => {
       <PageHeader content="My Address Book" title="Address Book | MazExpress" />
       <div className="grid grid-cols-3 gap-3 py-5">
         {addresses &&
-          addresses?.filter(el => el.status_addresses === 1).map((data) => {
-            return (
-              <UserSavedAddress
-                key={data.id_addresses}
-                address={data}
-                edit={toggleEditUserAddressModal}
-                update={mutateAddresses}
-              />
-            );
-          })}
+          addresses
+            ?.filter((el) => el.status_addresses === 1)
+            .map((data) => {
+              return (
+                <UserSavedAddress
+                  key={data.id_addresses}
+                  address={data}
+                  edit={toggleEditUserAddressModal}
+                  update={mutateAddresses}
+                />
+              );
+            })}
       </div>
       <div>
         <button
@@ -68,6 +68,7 @@ const AddressBook = () => {
       />
       {showEditUserAddressModal && (
         <EditUserAddressModal
+          update={mutateAddresses}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
           address={editableAddress!}

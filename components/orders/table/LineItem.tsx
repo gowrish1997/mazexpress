@@ -29,29 +29,31 @@ const LineItem = (props: IProp) => {
     // const modalTriggerNode = createRef<HTMLTableCellElement>();
     const trigger = useRef<any>();
 
-    function smartToggleGateHandler() {
-        setGate(false);
+  function smartToggleGateHandler() {
+    setGate(false);
+  }
+  function toggleGateHandler() {
+    setGate((prev) => !prev);
+  }
+
+  const orderStatusColorHandler = (status: string) => {
+    switch (status) {
+      case "in-transit":
+        return "in_transit";
+
+      case "delivered":
+        return "delivered";
+
+      case "at-warehouse":
+        return "at_warehouse";
+      case "pending":
+        return "pending";
+      default:
+        return "pending";
     }
-    function toggleGateHandler() {
-        setGate((prev) => !prev);
-    }
+  };
 
-    const orderStatusColorHandler = (status: string) => {
-        switch (status) {
-            case "in-transit":
-                return "in_transit";
 
-            case "delivered":
-                return "delivered";
-
-            case "at-warehouse":
-                return "at_warehouse";
-            case "pending":
-                return "pending";
-            default:
-                return "pending";
-        }
-    };
 
     useEffect(() => {
         // console.log("tracking rerender");
