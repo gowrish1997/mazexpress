@@ -1,6 +1,5 @@
 export default async function fetchJson<JSON = unknown>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
     const response = await fetch(input, init);
-    console.log("just calleds");
     // if the server replies, there's always some data in json
     // if there's a network error, it will throw at the previous line
     const data = await response.json();

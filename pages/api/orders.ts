@@ -15,13 +15,17 @@ function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  //   console.log("");
+     
   return new Promise((resolve, reject) => {
     switch (req.method) {
+     
       case "GET":
         if (!req.query.user) {
+          console.log(req.query.user,'gowish')
+         
           // error invalid
           if (req.query.id) {
+            console.log('oinsdie quert id')
             // single response
             const id = req.query.id;
             db("orders")
@@ -31,12 +35,16 @@ function handler(
                 resolve(data);
               });
           } else {
-            res.status(200).json({ msg: "invalid url params" });
-            reject("invalid url params");
+           
+            db("orders").then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
           }
         } else {
+         
           const user_id = req.query.user;
-
+console.log(req.query.user)
           db("orders")
             .where("user_id", user_id)
             .then((data: any) => {

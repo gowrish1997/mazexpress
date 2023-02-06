@@ -51,55 +51,55 @@ const adminSidebarPanel = [
         id: nanoid(),
         title: "Dashboard",
         icon: "/orders.png",
-        path: "/",
+        path: "/admin",
     },
     {
         id: nanoid(),
         title: "Live Orders",
         icon: "/location.png",
-        path: "/track",
+        path: "/admin/live-orders",
     },
     {
         id: nanoid(),
         title: "Today Shipments",
         icon: "/warehouse.png",
-        path: "/warehouse",
+        path: "/admin/shipments",
     },
     {
         id: nanoid(),
         title: "Delivered Order",
         icon: "/address.png",
-        path: "/address-book",
+        path: "/admin/delivered",
     },
     {
         id: nanoid(),
         title: "Warehouse",
         icon: "/settings.png",
-        path: "/settings",
+        path: "/admin/warehouse",
     },
     {
         id: nanoid(),
         title: "User Base",
         icon: "/help.png",
-        path: "/help-center",
+        path: "/admin/users",
     },
     {
         id: nanoid(),
         title: "Notification Panel",
         icon: "/address.png",
-        path: "/address-book",
+        path: "/admin/notification-panel",
     },
     {
         id: nanoid(),
         title: "Settings",
         icon: "/settings.png",
-        path: "/settings",
+        path: "/admin/settings",
     },
     {
         id: nanoid(),
-        title: "Settings",
+        title: "Help center",
         icon: "/help.png",
-        path: "/help-center",
+        path: "/admin/help-center",
     },
 ];
 
@@ -116,9 +116,9 @@ const Sidebar = () => {
 
     const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
-    const toggleLogoutConfirmModal = () => {
-        setShowLogoutConfirmModal((prev) => !prev);
-    };
+  const toggleLogoutConfirmModal = () => {
+    setShowLogoutConfirmModal((prev) => !prev);
+  };
 
     const logoutHandler = async () => {
         await mutateUser(await fetchJson("/api/auth/logout", { method: "GET" }), false);
@@ -149,6 +149,7 @@ const Sidebar = () => {
             <LogoutConfirmModal show={showLogoutConfirmModal} close={toggleLogoutConfirmModal} confirm={logoutHandler} />
         </>
     );
-};
-
+    router.push("/auth/gate");
+  };
+  
 export default Sidebar;
