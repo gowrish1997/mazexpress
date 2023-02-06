@@ -46,15 +46,8 @@ const EditHelpModal = (props: IProp) => {
     // resolver: yupResolver(schema),
   });
 
-  const [addressIsDefault, setAddressIsDefault] = useState(
-    user?.default_address_users === 1
-  );
 
-  const toggleDefaultAddressHandler = () => {
-    setAddressIsDefault((prev) => !prev);
-  };
-
-  const onSubmit: SubmitHandler<IAddressProps> = async (data) => {
+  const onSubmit: SubmitHandler<IHelpForm> = async (data) => {
     // let address: any = { ...data };
     // delete address.default_addresses;
     // address.user_id = user?.id_users;
