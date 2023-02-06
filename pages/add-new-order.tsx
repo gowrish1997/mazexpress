@@ -4,8 +4,9 @@ import { nanoid } from "nanoid";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
 import PageHeader from "@/components/common/PageHeader";
-import UserSavedAddresses from "@/components/orders/UserSavedAddress";
+import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
@@ -14,6 +15,7 @@ import useAddresses from "@/lib/useAddresses";
 import useUser from "@/lib/useUser";
 import fetchJson from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
+
 
 const schema = yup
   .object({
@@ -154,7 +156,7 @@ const AddNewOrder = () => {
           <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px]">
             Address Book
             <span
-              className="text-[#3672DF] ml-[10px] cursor-pointer"
+              className="text-[#3672DF] ml-[10px] cursor-pointer hover:bg-[#EDF5F9] p-[5px] rounded-[4px]  "
               onClick={toggleAddNewAddressModal}
             >
               + Add New{" "}
@@ -166,7 +168,7 @@ const AddNewOrder = () => {
             ?.filter((el) => el.status_addresses === 1)
             .map((data) => {
               return (
-                <UserSavedAddresses
+                <UserSavedAddress
                   key={data.id_addresses}
                   address={data}
                   register={register("address")}

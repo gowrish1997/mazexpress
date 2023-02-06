@@ -54,7 +54,7 @@ const MyOrders = () => {
                 Oops, there are no orders on your list yet... Start adding now.
                 <br />
                 <Link href={`${router.pathname}/add-new-order`}>
-                  <span className="text-[#0057FF] font-[500]">
+                  <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
                     Add Order Now
                   </span>
                 </Link>

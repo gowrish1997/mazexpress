@@ -11,6 +11,8 @@ const schema = yup
     .object({
         firstName: yup.string().required("First name is required"),
         lastName: yup.string().required("Last name is required"),
+        age: yup.string().required("Age is required"),
+        gender: yup.string().required("Gender is required"),
         email: yup.string().required("Email is required").email("please include @ in the email"),
         mobileNumber: yup
             .number()
@@ -64,6 +66,11 @@ const SignUpComponent = (props: any) => {
                     <ReactHookFormInput label="First name" name="first_name_users" type="string" register={register("first_name_users")} error={errors.first_name_users!} />
 
                     <ReactHookFormInput label="Last name" name="last_name_users" type="string" register={register("last_name_users")} error={errors.last_name_users!} />
+                </div>
+                <div className="flex-type2 space-x-[10px] w-full">
+                    <ReactHookFormInput label="Age" name="age" type="string" register={register("age")} error={errors.first_name_users!} />
+
+                    <ReactHookFormInput label="Gender" name="gender" type="string" register={register("gender")} error={errors.last_name_users!} />
                 </div>
 
                 <ReactHookFormInput label="Email" name="email_users" type="string" register={register("email_users")} error={errors.email_users!} />

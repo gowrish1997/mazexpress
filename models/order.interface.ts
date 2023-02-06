@@ -15,7 +15,14 @@ interface IOrder {
     referenceId: string;
     storeLink: string;
     address?: number;
- 
+}
+interface ITracking {
+    id_tracking: number;
+    order_id: number;
+    stage_tracking: number;
+    poc_tracking: string;
+    created_on_tracking: Date;
+    user_id: number;
 }
 
-export type { IOrderResponse, IOrder };
+export type { IOrderResponse, IOrder,ITracking };
