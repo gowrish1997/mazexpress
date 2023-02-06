@@ -21,5 +21,6 @@ interface IAddressProps {
   pincode_addresses: string;
   phone_addresses: number;
   default_addresses: string | null;
+  status_addresses: 0 | 1;
 }
 export type { IAddress, IAddressProps };

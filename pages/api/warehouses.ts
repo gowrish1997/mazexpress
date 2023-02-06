@@ -97,7 +97,7 @@ export default function handler(
 
       default:
         res.status(500).json({ msg: "default" });
-        reject();
+        reject("invalid url params");
     }
   });
 }

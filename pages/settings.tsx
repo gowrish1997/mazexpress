@@ -1,19 +1,20 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import PageHeader from "@/components/orders/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import ReactSwitch from "react-switch";
 import Image from "next/image";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import ReactHookFormInput from "@/common/ReactHookFormInput";
+import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
 import { IUserProfile, IUser } from "@/models/user.interface";
-import CustomDropDown from "@/common/CustomDropDown";
+import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/useUser";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { nanoid } from "nanoid";
+import { createToast } from "@/lib/toasts";
 
 const schema = yup
   .object({
@@ -61,12 +62,12 @@ const Settings = () => {
     formState: { errors },
   } = useForm<IUserProfile>({
     resolver: yupResolver(schema),
-    defaultValues: user,
+    defaultValues: {...user, password_users: ''},
   });
 
   useEffect(() => {
     console.log(user);
-    reset(user);
+    reset({...user, password_users: ''});
   }, [user]);
 
   const [passwordType, setPasswordType] = useState("password");
@@ -100,13 +101,17 @@ const Settings = () => {
 
       // send file to api to write
       axios
-        .post("/api/upload-user-image", {
-          image: e.target.files[0],
-          userId: user?.id_users,
-          name: fileName,
-        }, {
-          headers: { "Content-Type": "multipart/form-data" }
-        })
+        .post(
+          "/api/upload-user-image",
+          {
+            image: e.target.files[0],
+            userId: user?.id_users,
+            name: fileName,
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
         .then(async (response) => {
           if (response.status === 200) {
             // mutate user with new user data
@@ -115,10 +120,10 @@ const Settings = () => {
               await fetchJson(`/api/users?id=${user?.id_users}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({avatar_url_users: fileName}),
+                body: JSON.stringify({ avatar_url_users: fileName }),
               }),
               false
-            )
+            );
           }
         });
     }
@@ -126,6 +131,13 @@ const Settings = () => {
 
   const onSubmit: SubmitHandler<IUserProfile> = async (data) => {
     console.log(data);
+    createToast({
+      title: "Success",
+      type: "success",
+      message: "Updated user info.",
+      timeOut: 2000,
+      onClick: () => alert("click"),
+    });
     // let updateObj = { ...data };
     // delete updateObj.newPassword_users;
     // delete updateObj.password_users;
@@ -202,7 +214,7 @@ const Settings = () => {
                     })}
                   />
                   <Image
-                    src={'/user-images/' + user?.avatar_url_users!}
+                    src={"/user-images/" + user?.avatar_url_users!}
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}

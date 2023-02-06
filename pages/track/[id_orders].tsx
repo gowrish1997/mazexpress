@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import PageHeader from "@/components/orders/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import Layout from "@/components/layout";
-import ReactHookFormInput from "@/common/ReactHookFormInput";
+import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import PackageTrackingView from "@/components/ordertracking/PackageTrackingView";
 import WarehouseTracking from "@/components/ordertracking/WarehouseTracking";
 import useOrders from "@/lib/useOrders";
@@ -25,40 +25,42 @@ const TrackOrder = (props: any) => {
 
     const [packageStatus, setPackageStatus] = useState(0);
 
-    useEffect(() => {
-        // console.log(tracking);
-        if (tracking !== undefined) {
-            let sorted = [...tracking];
-            sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
-            //   console.log(sorted.pop().stage_tracking);
-            setPackageStatus(sorted.pop()?.stage_tracking!);
-        }
-        // let sorted: any = [];
-        // if (!trackingIsLoading) {
-        //   sorted = [...tracking];
-        //   sorted.sort((a: any, b: any) => a.stage_tracking - b.stage_tracking);
-        //   console.log(sorted.pop().stage_tracking);
-        //   setPackageStatus(sorted.pop().stage_tracking);
-        // }
-    }, [tracking]);
+  useEffect(() => {
+    // console.log(tracking);
+    if (tracking !== undefined) {
+      let sorted = [...tracking];
+      sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
+      setPackageStatus(sorted.pop()?.stage_tracking);
+    }
+  }, [tracking]);
 
-    if (trackingIsLoading) return <div>loading tracking</div>;
-    return (
-        <>
-            <PageHeader content="Order Tracking" className="border-none pb-[10px]" />
-            <Layout>
-                <div className="flex-type2 w-full ">
-                    <div className="flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
-                        <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px]">
-                            <Image src="/blueexclamatory.png" alt="icon" width={16} height={16} />
-                            <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-                                Here is a link to some fake information that contains crucial information, <span className="text-[#3672DF]">Link here →</span>
-                            </p>
-                        </div>
-                        <div className="font-[500]">
-                            <p className="text-[14px] text-[#2B2B2B] leading-[21px]">Tracking</p>
-                            <p className="text-[12px] text-[#8794AD] leading-[17px]">Some fake information lines here</p>
-                        </div>
+  if (trackingIsLoading) return <div>loading tracking</div>;
+  return (
+    <>
+      <PageHeader content="Order Tracking" className="border-none pb-[10px]" title="Track order | MazExpress" />
+      <Layout>
+        <div className="flex-type2 w-full ">
+          <div className="flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
+            <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px]">
+              <Image
+                src="/blueexclamatory.png"
+                alt="icon"
+                width={16}
+                height={16}
+              />
+              <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
+                Here is a link to some fake information that contains crucial
+                information, <span className="text-[#3672DF]">Link here →</span>
+              </p>
+            </div>
+            <div className="font-[500] space-y-[5px]">
+              <p className="text-[14px] text-[#2B2B2B] leading-[21px]">
+                Tracking
+              </p>
+              <p className="text-[12px] text-[#8794AD] leading-[17px]">
+                Some fake information lines here
+              </p>
+            </div>
 
                         <div className="flex-type2 justify-start w-[100%] space-x-[50px] ">
                             <PackageTrackingView packageStatus={packageStatus} />

@@ -4,7 +4,7 @@ import { db, executeQuery } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
-  msg: string;
+  msg?: string;
   data?: any;
 };
 
@@ -33,20 +33,19 @@ export default function handler(
                 res.status(200).json(data);
                 resolve(data);
               });
-          }
-          if (req.query.order) {
+          } else if (req.query.order) {
             db("tracking")
               .where("order_id", req.query.order)
               .then((data: any) => {
                 res.status(200).json(data);
                 resolve(data);
               });
+          } else {
+            db("tracking").then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
           }
-
-          db("tracking").then((data: any) => {
-            res.status(200).json(data);
-            resolve(data);
-          });
         }
         break;
 
@@ -78,7 +77,7 @@ export default function handler(
             });
         } else {
           // error response
-          res.status(500).json({ msg: "invalid url params" });
+          res.json({ msg: "invalid url params" });
           reject();
         }
         break;

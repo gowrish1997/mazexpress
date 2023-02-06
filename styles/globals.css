@@ -51,6 +51,9 @@ body {
     .flex-type8 {
         @apply flex flex-col justify-between items-start;
     }
+    .td5{
+    @apply w-[11%]
+    }
 
     .secondWarehouse {
         @apply after:absolute after:-left-[0.5px]  after:h-[25px] after:w-[2px] after:rounded after:bg-[#006400];
@@ -127,6 +130,9 @@ input::-webkit-inner-spin-button {
 .in_transit .checkmark:after {
     background: #ff0000;
 }
+.pending .checkmark:after {
+  background: #BBC2CF;
+}
 .customRadioInput_type2 input:checked ~ .checkmark {
     border: 0.5px solid #34a853;
 }
@@ -140,6 +146,9 @@ input::-webkit-inner-spin-button {
 }
 .in_transit input:checked ~ .checkmark {
     border: 0.5px solid #ff0000;
+}
+.pending input:checked ~ .checkmark {
+  border: 0.5px solid #BBC2CF;
 }
 
 .customRadioInput_type2 {
@@ -258,13 +267,14 @@ input::-webkit-inner-spin-button {
 
 .table .th4,
 .table .td4 {
-    width: 17%;
+    width: 10%;
 }
 .table .th5,
 .table .th6,
 .table .td5,
 .table .td6 {
-    width: 11%;
+    width: 9%;
+
 }
 .indexedStep {
     width: 30px;
@@ -675,5 +685,14 @@ abbr:where([title]) {
 }
 .bell_svg path:hover {
     fill: transparent;
+    stroke: #030303;
+}
+.cancel_svg path {
+    stroke: #525d72;
+    stroke: #009e3f;
+    fill: transparent;
+}
+.canel_svg path:hover{
+  fill: transparent;
     stroke: #030303;
 }

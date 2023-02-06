@@ -34,7 +34,7 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<IUser>) {
     } else {
       res.json({
         id_users: 0,
-        avatar_url_users: "/default_user.png",
+        avatar_url_users: "default_user.png",
         first_name_users: "",
         last_name_users: "",
         email_users: "",
@@ -47,7 +47,7 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<IUser>) {
       });
       resolve({
         id_users: 0,
-        avatar_url_users: "/default_user.png",
+        avatar_url_users: "default_user.png",
         first_name_users: "",
         last_name_users: "",
         email_users: "",

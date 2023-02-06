@@ -20,7 +20,7 @@ export default function handler(
           const user_id = req.query.user;
           // list response
           db("addresses")
-            .where("user_id", user_id)
+            .where({ user_id: user_id })
             .then((data: any) => {
               res.status(200).json(data);
               resolve(data);
@@ -42,17 +42,9 @@ export default function handler(
         break;
 
       case "POST":
+        const fields = { ...req.body };
         db("addresses")
-          .insert({
-            user_id: req.body.user_id,
-            address_1_addresses: req.body.address_1,
-            address_2_addresses: req.body.address_2,
-            city_addresses: req.body.city,
-            country_addresses: req.body.country,
-            pincode_addresses: req.body.pincode,
-            state_addresses: req.body.state,
-            phone_addresses: req.body.phone,
-          })
+          .insert(fields)
           .then((data: any) => {
             res.status(200).json(data);
             resolve(data);
@@ -65,15 +57,7 @@ export default function handler(
           // update
           const id = req.query.id;
           const fields = {
-            user_id: req.body.user_id,
-            address_1_addresses: req.body.address_1,
-            address_2_addresses: req.body.address_2,
-            city_addresses: req.body.city,
-            country_addresses: req.body.country,
-            pincode_addresses: req.body.pincode,
-            state_addresses: req.body.state,
-            phone_addresses: req.body.phone,
-            tag_addresses: req.body.tag,
+            ...req.body,
           };
 
           db("addresses")
@@ -94,7 +78,7 @@ export default function handler(
           const id = req.query.id;
           db("addresses")
             .where("id_addresses", id)
-            .del()
+            .update({ status_addresses: 0 })
             .then((data: any) => {
               res.status(200).json(data);
               resolve(data);

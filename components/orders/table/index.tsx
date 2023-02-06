@@ -3,59 +3,33 @@ import LineItem from "./LineItem";
 
 import { IOrderResponse } from "@/models/order.interface";
 import { nanoid } from "nanoid";
+
 interface TableProps {
-  tableHeaders: Array<string>;
-  orders: Array<IOrderResponse>;
+  headings: Array<string>;
+  rows: Array<IOrderResponse>;
 }
 
 const Table = (props: TableProps) => {
-  // to prevent multiple option box opening
-  const [active, setActive] = useState<number>(-1);
-
-
-
-  function setActiveHandler(index: number, e: any) {
-    if (active === index+1) {
-     
-      setActive(-1);
-      e.stopPropagation();
-    } else {
-
-      setActive(index + 1);
-      e.stopPropagation();
-    }
-  }
-
   return (
     <div className="flex-1">
-      {props.orders && (
+      {props.rows && (
         <table className="table">
           <thead className="w-full">
             <tr className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px] border-b-[1px] border-[#e3e3e3] ">
-              {props.tableHeaders.map((data, index) => {
+              {props.headings.map((data, index) => {
                 return (
                   <th key={index} className={`th${index + 1}`}>
                     {data}
                   </th>
                 );
               })}
-              <th className={`th${props.tableHeaders?.length + 1}`}></th>
+              <th className={`th${props.headings?.length + 1}`}></th>
             </tr>
           </thead>
           <tbody className="">
-            {props.orders && props.orders.length > 0
-              ? props.orders.map((data, index) => {
-                  return (
-                    <LineItem
-                      key={nanoid()}
-                      row={data}
-                      active={active}
-                      setActiveHandler={setActiveHandler}
-                      index={index}
-                      show={active === index + 1 ? true : false}
-                      setActive={setActive}
-                    />
-                  );
+            {props.rows && props.rows.length > 0
+              ? props.rows.map((data, index) => {
+                  return <LineItem key={nanoid()} row={data} />;
                 })
               : null}
           </tbody>
