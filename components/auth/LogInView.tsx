@@ -7,6 +7,7 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import useUser from "@/lib/useUser";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
+import { IUser } from "@/models/user.interface";
 
 type Inputs = {
   password: string;
@@ -43,15 +44,18 @@ const LogInComponent = (props: any) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // console.log(data);
     try {
-      mutateUser(
-        await fetchJson("/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }),
-        false
-      );
-      router.push("/");
+      const result: IUser = await fetchJson("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      // console.log(result);
+      mutateUser(result, false);
+      if (result.is_admin_users === 1) {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);

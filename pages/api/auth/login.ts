@@ -1,3 +1,4 @@
+import { IUser } from '@/models/user.interface';
 import { withSessionRoute } from "@/lib/config/withSession";
 import { db } from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -20,7 +21,7 @@ async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
         db("users")
           .where("email_users", email)
           .first()
-          .then(async (data: any) => {
+          .then(async (data: IUser) => {
             // check if pass is same
             const match = bcrypt.compareSync(password, data.password_users!);
 
@@ -30,8 +31,8 @@ async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
               req.session.user.is_logged_in_users = 1;
               await req.session.save();
 
-              updateUser(data.id_users, { is_logged_in_users: 1 });
-
+              await updateUser(data.id_users, { is_logged_in_users: 1 });
+              delete data.password_users
               res.json(data);
               resolve(data);
               return;

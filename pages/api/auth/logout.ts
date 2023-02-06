@@ -9,7 +9,7 @@ async function logout(
   res: NextApiResponse,
 ) {
   // set logged in false
-  updateUser(req.session.user.id_users, { is_logged_in_users: 0 });
+  await updateUser(req.session.user.id_users, { is_logged_in_users: 0 });
   req.session.destroy();
   res.send({ ok: true });
 }
