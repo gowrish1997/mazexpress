@@ -2,14 +2,20 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import useUser from "@/lib/useUser";
 import Order from "../../../public/order_svg.svg";
 import Location from "../../../public/location_svg.svg";
 import Warehosue from "../../../public/warehouse_svg.svg";
 import Address from "../../../public/address_svg.svg";
 import Settings from "../../../public/settings_svg.svg";
 import Helpcenter from "../../../public/help_svg.svg";
+import Dashboard from "../../../public/dashboard_svg.svg";
+import LiveOrder from "../../../public/liveorder_svg.svg";
+import TodayShip from "../../../public/todayship_svg.svg";
+import User from "../../../public/user_svg.svg";
+import Notification from "../../../public/bell_svg.svg";
 
-const Icon = (id: number) => {
+const userIcon = (id: number) => {
     switch (id) {
         case 0:
             return <Order />;
@@ -29,6 +35,33 @@ const Icon = (id: number) => {
             return "";
     }
 };
+const adminIcon = (id: number) => {
+    switch (id) {
+        case 0:
+            return <Dashboard />;
+        case 1:
+            return <LiveOrder />;
+        case 2:
+            return <TodayShip />;
+        case 3:
+            return <TodayShip />;
+        case 4:
+            return <Warehosue />;
+
+        case 5:
+            return <User />;
+        case 6:
+            return <Notification />;
+        case 7:
+            return <Settings />;
+
+        case 8:
+            return <Helpcenter />;
+
+        default:
+            return "";
+    }
+};
 
 interface IProp {
     content: {
@@ -42,7 +75,7 @@ interface IProp {
 
 const NavLink = (props: IProp) => {
     const router = useRouter();
-
+    const { user, mutateUser } = useUser();
     const isActivePath = (obj: any): boolean => {
         if (router.pathname === "/" && obj.path === "/") return true;
         else {
@@ -66,7 +99,9 @@ const NavLink = (props: IProp) => {
                 }}
             >
                 <div className=" flex flex-row justify-start items-center w-full">
-                    <div className={`${router.pathname.includes(props.content.path) ? "sidebar_icon_hover" : "sidebar_icon"} `}>{Icon(props.id)}</div>
+                    <div className={`${router.pathname.includes(props.content.path) ? "sidebar_icon_hover" : "sidebar_icon"} `}>
+                        {user?.is_admin_users ? adminIcon(props.id) : userIcon(props.id)}
+                    </div>
                     <div
                         className="ml-3 text-[#525D72] font-[500] text-[14px] leading-[21px] hover:text-[#2B2B2B] hover:font-[600] py-2 transition duration-300 cursor-pointer"
                         style={
