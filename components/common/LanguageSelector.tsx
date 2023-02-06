@@ -1,7 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { useState } from "react";
-import { useEffect } from "react";
 import ReactLanguageSelect from "react-languages-select";
 import "react-languages-select/css/react-languages-select.css";
 

@@ -66,9 +66,9 @@ const Settings = () => {
   });
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     reset({ ...user, password_users: "" });
-  }, [user]);
+  }, [user, reset]);
 
   const [passwordType, setPasswordType] = useState("password");
   const [newPasswordType, setNewPasswordType] = useState("password");

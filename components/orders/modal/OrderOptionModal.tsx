@@ -33,4 +33,5 @@ const OrderOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
   );
 });
 
+OrderOptionModal.displayName = "OrderOptionModal"
 export default OrderOptionModal;

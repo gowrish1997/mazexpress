@@ -22,21 +22,21 @@ export const middleware = async (req: NextRequest) => {
     } else {
       // true user
       // check if admin
-      // if (
-      //   user.is_admin_users === 1 &&
-      //   !req.nextUrl.pathname.startsWith("/admin")
-      // ) {
-      //   // admin user check for restricted paths
-      //   // console.log("illegal route");
-      //   return NextResponse.redirect(new URL("/admin", req.url));
-      // }
-      // if (
-      //   user.is_admin_users === 0 &&
-      //   req.nextUrl.pathname.startsWith("/admin")
-      // ) {
-      //   // console.log("illegal route2");
-      //   return NextResponse.redirect(new URL("/", req.url));
-      // }
+      if (
+        user.is_admin_users === 1 &&
+        !req.nextUrl.pathname.startsWith("/admin")
+      ) {
+        // admin user check for restricted paths
+        // console.log("illegal route");
+        return NextResponse.redirect(new URL("/admin", req.url));
+      }
+      if (
+        user.is_admin_users === 0 &&
+        req.nextUrl.pathname.startsWith("/admin")
+      ) {
+        // console.log("illegal route2");
+        return NextResponse.redirect(new URL("/", req.url));
+      }
     }
   } else {
     return NextResponse.redirect(new URL("/auth/gate", req.url));

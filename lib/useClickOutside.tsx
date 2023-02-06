@@ -15,7 +15,6 @@ let useClickOutside = (
         !trigger.current?.contains(event.target as Node)
       ) {
         // alert("You clicked outside of me!");
-
         handler();
       }
     }
@@ -23,7 +22,7 @@ let useClickOutside = (
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, handler, trigger]);
 
   return modalNode;
 };

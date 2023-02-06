@@ -34,12 +34,18 @@ function executeQuery(
  * @arg {function} initFn Function returning the service instance.
  * @return {*} Service instance.
  */
-const registerService = (name: any, initFn: () => void) => {
+const registerService = (name: string, initFn: () => void) => {
   if (process.env.NODE_ENV === "development") {
-    if (!(name in global)) {
-      global[name] = initFn();
+    // console.log(global);
+    if (typeof globalThis.Intl === "undefined") {
+      Object.defineProperty(global, name, {
+        value: initFn(),
+        enumerable: false,
+        configurable: true,
+        writable: true,
+      });
     }
-    return global[name];
+    return global[name as keyof typeof global];
   }
   return initFn();
 };

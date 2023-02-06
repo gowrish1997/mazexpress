@@ -13,17 +13,17 @@ import useTracking from "@/lib/useTracking";
 import Link from "next/link";
 
 const TrackOrder = (props: any) => {
-    const router = useRouter();
-    const { user, mutateUser, userIsLoading } = useUser();
-    const { orders, ordersIsLoading } = useOrders({ userId: user?.id_users });
-    const { order, mutateOrder, orderIsLoading } = useOrder({
-        id: router.query.id_orders as string,
-    });
-    const { tracking, trackingIsLoading } = useTracking({
-        order_id: router.query.id_orders as string,
-    });
+  const router = useRouter();
+  const { user, mutateUser, userIsLoading } = useUser();
+  const { orders, ordersIsLoading } = useOrders({ userId: user?.id_users });
+  const { order, mutateOrder, orderIsLoading } = useOrder({
+    id: router.query.id_orders as string,
+  });
+  const { tracking, trackingIsLoading } = useTracking({
+    order_id: router.query.id_orders as string,
+  });
 
-    const [packageStatus, setPackageStatus] = useState(0);
+  const [packageStatus, setPackageStatus] = useState(0);
 
   useEffect(() => {
     // console.log(tracking);
@@ -37,7 +37,11 @@ const TrackOrder = (props: any) => {
   if (trackingIsLoading) return <div>loading tracking</div>;
   return (
     <>
-      <PageHeader content="Order Tracking" className="border-none pb-[10px]" title="Track order | MazExpress" />
+      <PageHeader
+        content="Order Tracking"
+        className="border-none pb-[10px]"
+        title="Track order | MazExpress"
+      />
       <Layout>
         <div className="flex-type2 w-full ">
           <div className="flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
@@ -62,72 +66,116 @@ const TrackOrder = (props: any) => {
               </p>
             </div>
 
-                        <div className="flex-type2 justify-start w-[100%] space-x-[50px] ">
-                            <PackageTrackingView packageStatus={packageStatus} />
-                            <div className="flex-type6 text-[#525D72] font-[500] leading-[21px] text-[14px] ">
-                                <div className="flex-type6 gap-y-[5px] mt-[20px]  ">
-                                    <p className={`${packageStatus >= 0 ? "text-[#2B2B2B] font-[600] " : ""}`}>Source website</p>
-                                    <button
-                                        className={`text-[10px] leading-[15px] bg-[#EDF5F9] rounded-[15px] p-[7px] px-[9px] ${
-                                            packageStatus > 0 ? "text-[green] bg-[#DEFDED]" : "text-[#FFBA00] bg-[#FFF8E3]"
-                                        }`}
-                                    >
-                                        {packageStatus > 0 ? "Delivered" : "Received"}
-                                    </button>
-                                </div>
-                                <div className="flex-type6 gap-y-[5px] mt-[55px] ">
-                                    <p className={`${packageStatus >= 1 ? "text-[#2B2B2B] font-[600] " : ""}`}>Warehouse</p>
-                                    <button
-                                        className={`text-[10px] leading-[15px] bg-[#EDF5F9] rounded-[15px] p-[7px] px-[9px] ${
-                                            packageStatus >= 1 ? (packageStatus > 3 ? "text-[green] bg-[#DEFDED] " : " text-[#FFBA00] bg-[#FFF8E3]") : ""
-                                        }`}
-                                    >
-                                        {" "}
-                                        {packageStatus >= 1 ? (packageStatus > 3 ? "Completed" : "Received") : "Pending"}
-                                    </button>
-                                    <WarehouseTracking packageStatus={packageStatus} />
-                                </div>
-                                <div className="flex-type6 gap-y-[5px] mt-[25px] ">
-                                    <p className={`${packageStatus >= 4 ? "text-[#2B2B2B] font-[600] " : ""}`}>Out for delivery</p>
-                                    <button
-                                        className={`text-[10px] leading-[15px] bg-[#EDF5F9] rounded-[15px] p-[7px] px-[9px] ${
-                                            packageStatus >= 4 ? (packageStatus == 4 ? "text-[#FFBA00] bg-[#FFF8E3] " : "text-[green] bg-[#DEFDED]") : ""
-                                        }`}
-                                    >
-                                        {packageStatus >= 4 ? (packageStatus == 4 ? " Received" : "Completed") : "Pending"}
-                                    </button>
-                                </div>
-                                <div className="flex-type6 gap-y-[5px] mt-[110px] ">
-                                    <p className={`${packageStatus >= 5 ? "text-[#2B2B2B] font-[600] " : ""}`}>Delivered</p>
-                                    <button
-                                        className={`text-[10px] leading-[15px] bg-[#EDF5F9] rounded-[15px] p-[7px] px-[9px] ${
-                                            packageStatus == 5 ? "text-[#FFBA00] bg-[#FFF8E3]" : ""
-                                        }`}
-                                    >
-                                        {packageStatus == 5 ? "Enjoy" : "pending"}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-1/4 h-full pl-[20px] border-l-[0.4px] border-l-[#BBC2CF] space-y-[5px] ">
-                        <div className="text-[#2B2B2B] text-[14px] leading-[21px] font-[500] border-b-[1px] border-b-[#BBC2CF] pb-[20px] ">MAZ Tracking ID</div>
-                        <div className="space-y-[10px]">
-                            {orders?.map((data) => {
-                                return (
-                                    <Link href={`/track/${data.id_orders}`}>
-                                        <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
-                                            {data.id_orders}
-                                        </p>
-                                    </Link>
-                                );
-                            })}
-                        </div>
-                    </div>
+            <div className="flex-type2 justify-start w-[100%] space-x-[50px] ">
+              <PackageTrackingView packageStatus={packageStatus} />
+              <div className="flex-type6 text-[#525D72] font-[500] leading-[21px] text-[14px] ">
+                <div className="flex-type6 gap-y-[5px] mt-[20px]  ">
+                  <p
+                    className={`${
+                      packageStatus >= 0 ? "text-[#2B2B2B] font-[600] " : ""
+                    }`}
+                  >
+                    Source website
+                  </p>
+                  <button
+                    className={`text-[10px] leading-[15px] bg-[#EDF5F9] rounded-[15px] p-[7px] px-[9px] ${
+                      packageStatus > 0
+                        ? "text-[green] bg-[#DEFDED]"
+                        : "text-[#FFBA00] bg-[#FFF8E3]"
+                    }`}
+                  >
+                    {packageStatus > 0 ? "Delivered" : "Received"}
+                  </button>
                 </div>
-            </Layout>
-        </>
-    );
+                <div className="flex-type6 gap-y-[5px] mt-[55px] ">
+                  <p
+                    className={`${
+                      packageStatus >= 1 ? "text-[#2B2B2B] font-[600] " : ""
+                    }`}
+                  >
+                    Warehouse
+                  </p>
+                  <button
+                    className={`text-[10px] leading-[15px] bg-[#EDF5F9] rounded-[15px] p-[7px] px-[9px] ${
+                      packageStatus >= 1
+                        ? packageStatus > 3
+                          ? "text-[green] bg-[#DEFDED] "
+                          : " text-[#FFBA00] bg-[#FFF8E3]"
+                        : ""
+                    }`}
+                  >
+                    {" "}
+                    {packageStatus >= 1
+                      ? packageStatus > 3
+                        ? "Completed"
+                        : "Received"
+                      : "Pending"}
+                  </button>
+                  <WarehouseTracking packageStatus={packageStatus} />
+                </div>
+                <div className="flex-type6 gap-y-[5px] mt-[25px] ">
+                  <p
+                    className={`${
+                      packageStatus >= 4 ? "text-[#2B2B2B] font-[600] " : ""
+                    }`}
+                  >
+                    Out for delivery
+                  </p>
+                  <button
+                    className={`text-[10px] leading-[15px] bg-[#EDF5F9] rounded-[15px] p-[7px] px-[9px] ${
+                      packageStatus >= 4
+                        ? packageStatus == 4
+                          ? "text-[#FFBA00] bg-[#FFF8E3] "
+                          : "text-[green] bg-[#DEFDED]"
+                        : ""
+                    }`}
+                  >
+                    {packageStatus >= 4
+                      ? packageStatus == 4
+                        ? " Received"
+                        : "Completed"
+                      : "Pending"}
+                  </button>
+                </div>
+                <div className="flex-type6 gap-y-[5px] mt-[110px] ">
+                  <p
+                    className={`${
+                      packageStatus >= 5 ? "text-[#2B2B2B] font-[600] " : ""
+                    }`}
+                  >
+                    Delivered
+                  </p>
+                  <button
+                    className={`text-[10px] leading-[15px] bg-[#EDF5F9] rounded-[15px] p-[7px] px-[9px] ${
+                      packageStatus == 5 ? "text-[#FFBA00] bg-[#FFF8E3]" : ""
+                    }`}
+                  >
+                    {packageStatus == 5 ? "Enjoy" : "pending"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-1/4 h-full pl-[20px] border-l-[0.4px] border-l-[#BBC2CF] space-y-[5px] ">
+            <div className="text-[#2B2B2B] text-[14px] leading-[21px] font-[500] border-b-[1px] border-b-[#BBC2CF] pb-[20px] ">
+              MAZ Tracking ID
+            </div>
+            <div className="space-y-[10px]">
+              {orders?.map((data) => {
+                return (
+                  <Link href={`/track/${data.id_orders}`} key={data.id_orders} >
+                    <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
+                      {data.id_orders}
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </Layout>
+    </>
+  );
 };
 
 export default TrackOrder;
