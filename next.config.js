@@ -4,14 +4,21 @@ const nextConfig = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"]
+      use: ["@svgr/webpack"],
     });
 
     return config;
   },
   images: {
-    domains: ['mazexpress.portfolios.digital']
-  }
-}
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "mazexpress.portfolios.digital",
+        port: "",
+        pathname: "/_next/image",
+      },
+    ],
+  },
+};
 
 module.exports = nextConfig;
