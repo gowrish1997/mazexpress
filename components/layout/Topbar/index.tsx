@@ -25,6 +25,7 @@ const Topbar = () => {
   };
 
   let trigger = useRef(null);
+
   return (
     <>
       <div className="flex w-full min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-10">
@@ -83,7 +84,7 @@ const Topbar = () => {
         <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
           {user?.first_name_users} {user?.last_name_users}
         </p>
-        <div className="w-3 h-3">
+        <div className="w-3 h-3 flex items-center">
           <FontAwesomeIcon icon={faAngleDown} size="xs" color="#525D72" />
         </div>
       </div>
