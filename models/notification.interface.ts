@@ -8,4 +8,11 @@ interface INotification {
   status_notifications: 'read' | 'unread' | 'deleted';
 }
 
-export type { INotification };
+interface INotificationConfig {
+  title: string;
+  is_enabled: boolean;
+  desc: string;
+  id: string;
+}
+
+export type { INotification, INotificationConfig };

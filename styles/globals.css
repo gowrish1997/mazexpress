@@ -732,7 +732,17 @@ abbr:where([title]) {
 .pageHeaderDropdown .Dropdown-option{
     margin-top: 10px;
     border-radius: 4px;
-
-
 }
+
+/* added by raunak for admin react switch customisation */
+.gray_border {
+    border: 1px solid #BBC2CF;
+}
+.blue_border {
+    border: 1px solid #3672DF;
+}
+.Inter{
+    font-family: 'Inter'
+}
+/* end of addition by raunak */
  

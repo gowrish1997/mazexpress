@@ -18,18 +18,10 @@ interface ISignUp {
     phone_users: number;
     password_users: string;
     confirmPassword_users: string;
-    age: string;
-    gender: string;
+    age_users: string;
+    gender_users: string;
 }
-// type RemoveKindField<Type> = {
-//     [Property in keyof Type as Exclude<Property,[ "isAdmin","id_users","default_address_users"]>]: Type[Property];
-// };
 
-// type TUserProfile = ISignUp & {
-//     avatarURL_users: string;
-//     notification_users: string;
-//     language_users: string;
-// };
 interface IUserProfile {
     id_users?: number;
 
