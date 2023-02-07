@@ -179,7 +179,7 @@ const Settings = () => {
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
             <Image
-              src="/blueexclamatory.png"
+              src="/blueExclamatory.png"
               alt="icon"
               width={16}
               height={16}
