@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { createToast } from "@/lib/toasts";
+import blueExclamatory from '@/public/blueExclamatory.png'
 
 const schema = yup
   .object({
@@ -179,7 +180,7 @@ const Settings = () => {
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
             <Image
-              src="/blueExclamatory.png"
+              src={blueExclamatory}
               alt="icon"
               width={16}
               height={16}
