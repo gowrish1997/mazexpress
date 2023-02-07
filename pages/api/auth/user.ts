@@ -2,7 +2,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 import { IUser } from "@/models/user.interface";
-import { db, executeQuery } from "@/lib/db";
+import { db } from "@/lib/db";
 
 export default withIronSessionApiRoute(userRoute, sessionOptions);
 

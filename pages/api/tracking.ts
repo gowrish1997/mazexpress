@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { hashPassword } from "@/lib/bcrypt";
-import { db, executeQuery } from "@/lib/db";
+import { db } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {

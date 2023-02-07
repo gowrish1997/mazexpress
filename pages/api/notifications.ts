@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { db, executeQuery } from "@/lib/db";
+import { db } from "@/lib/db";
 import { INotification } from "@/models/notification.interface";
 import type { NextApiRequest, NextApiResponse } from "next";
 

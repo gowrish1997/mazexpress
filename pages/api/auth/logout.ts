@@ -1,6 +1,5 @@
 import { withSessionRoute } from "@/lib/config/withSession";
 import { updateUser } from "@/lib/setters";
-import { IronSession } from "iron-session";
 import { NextApiRequest, NextApiResponse } from "next";
 export default withSessionRoute(logout);
 

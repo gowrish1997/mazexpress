@@ -53,7 +53,7 @@ const NotificationPanel = () => {
       />
       <div className="grid grid-cols-3 gap-3 py-5">
         {data.map((el) => {
-          return <ConfigCard data={el} toggle={toggle} />;
+          return <ConfigCard data={el} toggle={toggle} key={el.id} />;
         })}
       </div>
       {/* <EditHelpModal

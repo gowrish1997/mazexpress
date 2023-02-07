@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { withSessionRoute } from "@/lib/config/withSession";
-import { db, executeQuery } from "@/lib/db";
+import { db } from "@/lib/db";
 import { mazID } from "@/lib/helper";
 import type { NextApiRequest, NextApiResponse } from "next";
 
