@@ -10,6 +10,9 @@ export const sessionOptions: IronSessionOptions = {
   // cookieOptions: {
   //   secure: process.env.NODE_ENV === "production" ? true : false,
   // },
+  cookieOptions: {
+    secure: false,
+  },
 };
 
 // This is where we specify the typings of req.session.*
