@@ -1,4 +1,4 @@
-import { IUser } from '@/models/user.interface';
+import { IUser } from "@/models/user.interface";
 import { withSessionRoute } from "@/lib/config/withSession";
 import { db } from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -30,9 +30,10 @@ async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
               req.session.user = data;
               req.session.user.is_logged_in_users = 1;
               await req.session.save();
-
+              console.log(req.session);
+              
               await updateUser(data.id_users, { is_logged_in_users: 1 });
-              delete data.password_users
+              delete data.password_users;
               res.json(data);
               resolve(data);
               return;
