@@ -1,6 +1,7 @@
 import { withSessionRoute } from "@/lib/config/withSession";
 import { updateUser } from "@/lib/setters";
 import { NextApiRequest, NextApiResponse } from "next";
+
 export default withSessionRoute(logout);
 
 async function logout(

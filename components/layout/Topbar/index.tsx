@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { SyntheticEvent, useRef, useState } from "react";
 import Image from "next/image";
 import Bell from "@/public/bell_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -41,7 +41,7 @@ const Topbar = () => {
               fill
               style={{ objectFit: "contain" }}
               alt="search"
-                sizes="(max-width: 768px) 100vw,
+              sizes="(max-width: 768px) 100vw,
                   (max-width: 1200px) 100vw,
                   100vw"
             />
@@ -65,14 +65,19 @@ const Topbar = () => {
 
         <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
           <Image
-            src={user?.avatar_url_users ? "/user-images/" + user?.avatar_url_users : "/user-images/default_user.png"}
+            // src={
+            //   user?.avatar_url_users
+            //     ? "/user-images/" + user?.avatar_url_users
+            //     : "/user-images/default_user.png"
+            // }
+            src={"/user-images/" + user?.avatar_url_users}
             fill
             style={{ objectFit: "cover" }}
             alt="profileImage"
             sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 100vw,
                 100vw"
-            onError={() => console.log('error')}
+            onError={(e: SyntheticEvent) => console.log("error at user image", e)}
           />
         </div>
         <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
