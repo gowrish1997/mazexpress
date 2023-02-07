@@ -7,7 +7,7 @@ import { sessionOptions } from "./lib/session";
 export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
   const session = await getIronSession(req, res, sessionOptions);
-  const { user } = session;
+  const { user } = session; 
   console.log(user, 'from middleware')
 
   // check if user exists and logged in

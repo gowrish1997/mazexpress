@@ -11,11 +11,11 @@ import { updateUser } from "@/lib/setters";
 export default withSessionRoute(createSessionRoute);
 
 async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
-  // const { user, mutateUser, userIsLoading } = useUser();
   return new Promise((resolve, reject) => {
     if (req.method === "POST") {
       const { email, password } = req.body;
       // console.log(email, password);
+      console.log(req.session);
       // get user from db from pass and username
       try {
         db("users")
