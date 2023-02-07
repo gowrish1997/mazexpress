@@ -62,12 +62,12 @@ const Settings = () => {
     formState: { errors },
   } = useForm<IUserProfile>({
     resolver: yupResolver(schema),
-    defaultValues: {...user, password_users: ''},
+    defaultValues: { ...user, password_users: "" },
   });
 
   useEffect(() => {
     // console.log(user);
-    reset({...user, password_users: ''});
+    reset({ ...user, password_users: "" });
   }, [user, reset]);
 
   const [passwordType, setPasswordType] = useState("password");

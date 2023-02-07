@@ -8,6 +8,9 @@ const nextConfig = {
     });
 
     return config;
+  },
+  images: {
+    domains: ['mazexpress.portfolios.digital']
   }
 }
 
