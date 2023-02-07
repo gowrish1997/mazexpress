@@ -16,7 +16,6 @@ import useUser from "@/lib/useUser";
 import fetchJson from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
 
-
 const schema = yup
   .object({
     referenceId: yup.string().required(),
@@ -33,6 +32,7 @@ const AddNewOrder = () => {
   const { addresses, mutateAddresses } = useAddresses({
     userId: user?.id_users,
   });
+
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
   const defaultAddressHandler = () => {
@@ -53,9 +53,9 @@ const AddNewOrder = () => {
     storeLink: string;
     address: number;
   }>({
-    defaultValues: {
-      address: defaultAddressHandler()?.id_addresses,
-    },
+    // defaultValues: {
+    //   address: defaultAddressHandler()?.id_addresses,
+    // },
     resolver: yupResolver(schema),
   });
 
@@ -119,7 +119,10 @@ const AddNewOrder = () => {
     // console.log(data);
   };
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    console.log(addresses);
+    console.log(errors)
+  }, [addresses]);
 
   return (
     <>
@@ -164,19 +167,20 @@ const AddNewOrder = () => {
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3 py-5">
-          {addresses
-            ?.filter((el) => el.status_addresses === 1)
-            .map((data) => {
-              return (
-                <UserSavedAddress
-                  key={data.id_addresses}
-                  address={data}
-                  register={register("address")}
-                  edit={toggleEditUserAddressModal}
-                  update={mutateAddresses}
-                />
-              );
-            })}
+          {addresses !== undefined && addresses.length > 0 &&
+            addresses
+              .filter((el) => el.status_addresses === 1)
+              .map((data) => {
+                return (
+                  <UserSavedAddress
+                    key={data.id_addresses}
+                    address={data}
+                    register={register("address")}
+                    edit={toggleEditUserAddressModal}
+                    update={mutateAddresses}
+                  />
+                );
+              })}
         </div>
         <button
           className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"

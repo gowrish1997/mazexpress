@@ -97,7 +97,7 @@ const Settings = () => {
       const fileName =
         nanoid() + "." + String(e.target.files[0].name).split(".").pop();
       // dev
-      console.log(fileName);
+      // console.log(fileName);
 
       // send file to api to write
       axios
@@ -331,7 +331,7 @@ const Settings = () => {
                 render={({ field: { onChange, value } }) => (
                   <ReactSwitch
                     onChange={onChange}
-                    checked={value as boolean}
+                    checked={value === 1 ? true : false}
                     checkedIcon={false}
                     uncheckedIcon={false}
                     width={36}

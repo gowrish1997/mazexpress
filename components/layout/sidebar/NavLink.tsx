@@ -104,7 +104,7 @@ const NavLink = (props: IProp) => {
       <div
         className=" box-border w-full flex flex-row justify-between items-center relative cursor-pointer px-[10px] rounded-[4px] py-[5px]   hover:bg-[#EDF5F9]"
         style={{
-          backgroundColor: isActivePath(props.content) ? "#EDF5F9" : "",
+          backgroundColor: isActivePath(props.content) ? "#EDF5F9" : "#fff",
         }}
       >
         <div className=" flex flex-row justify-start items-center w-full">

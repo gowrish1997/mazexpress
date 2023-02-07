@@ -48,12 +48,16 @@ const MyOrders = () => {
                   fill
                   style={{ objectFit: "contain" }}
                   alt="happy"
+                  sizes="(max-width: 768px) 100vw,
+                (max-width: 1200px) 100vw,
+                100vw"
+                  priority={true}
                 />
               </div>
               <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
                 Oops, there are no orders on your list yet... Start adding now.
                 <br />
-                <Link href={`${router.pathname}/add-new-order`}>
+                <Link href={`${router.pathname}add-new-order`}>
                   <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
                     Add Order Now
                   </span>

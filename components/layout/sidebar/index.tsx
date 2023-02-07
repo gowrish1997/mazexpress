@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import useUser from "@/lib/useUser";
 import fetchJson from "@/lib/fetchJson";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
+import logoutImage from '@/public/logout.png'
 
 const userSidebarContent = [
   {
@@ -128,7 +129,6 @@ const Sidebar = () => {
     router.push("/auth/gate");
   };
 
-  
   return (
     <>
       <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[250px]">
@@ -150,10 +150,13 @@ const Sidebar = () => {
           >
             <div className="relative w-[14px] h-[14px] ">
               <Image
-                src="/logout.png"
+                src={logoutImage}
                 fill
                 style={{ objectFit: "contain" }}
                 alt="logout"
+                sizes="(max-width: 768px) 100vw,
+                (max-width: 1200px) 50vw,
+                33vw"
               />
             </div>
             <p className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] ml-[10px]">

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import useUser from "@/lib/useUser";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
 import { IUser } from "@/models/user.interface";
+import user from "@/pages/api/auth/user";
 
 type Inputs = {
   password: string;
@@ -28,7 +29,7 @@ const LogInComponent = (props: any) => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
 
-  const { mutateUser } = useUser();
+  const { user, mutateUser } = useUser();
   const {
     register,
     handleSubmit,
@@ -38,21 +39,21 @@ const LogInComponent = (props: any) => {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    // console.log(data);
     try {
       const result: IUser = await fetchJson("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      console.log(result);
+      // console.log(result);
       await mutateUser(result, false);
-      
-      if (result.is_admin_users === 1) {
-        console.log('push to admin')
+
+      if (user?.is_admin_users === 1) {
+        // console.log('push to admin')
         router.push("/admin");
       } else {
-        console.log('push to home')
+        // console.log('push to home')
         router.push("/");
       }
     } catch (error) {

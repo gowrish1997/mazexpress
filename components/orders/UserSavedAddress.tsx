@@ -45,7 +45,7 @@ const UserSavedAddress = (props: {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUserData),
       });
-      mutateUser(newUserData, false);
+      await mutateUser(newUserData, false);
 
       // console.log(data)
     }
@@ -94,11 +94,19 @@ const UserSavedAddress = (props: {
         </div>
 
         <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] flex justify-end flex-1 grow">
-          <div className="space-x-[20px] flex items-end  ">
-            <button onClick={() => props.edit(props.address.id_addresses!)} className='hover:font-[600] '>
+          <div className="space-x-[20px] flex items-end">
+            <button
+              onClick={() => props.edit(props.address.id_addresses!)}
+              className="hover:font-[600]"
+            >
               Edit
             </button>
-            <button onClick={deleteAddressHandler} className='hover:font-[600] '>Remove</button>
+            <button
+              onClick={deleteAddressHandler}
+              className="hover:font-[600]"
+            >
+              Remove
+            </button>
           </div>
         </div>
       </div>
