@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -45,8 +45,8 @@ const LogInComponent = (props: any) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      // console.log(result);
-      mutateUser(result, false);
+      console.log(result);
+      await mutateUser(result, false);
       if (result.is_admin_users === 1) {
         router.push("/admin");
       } else {
@@ -70,6 +70,10 @@ const LogInComponent = (props: any) => {
       setPasswordType("string");
     }
   };
+
+  // useEffect(() => {
+  //   console.log()
+  // })
 
   return (
     <div className="w-[400px] space-y-[20px] ">
