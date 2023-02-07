@@ -20,7 +20,6 @@ const schema = yup
       .string()
       .required("Email is required")
       .email("please include @ in the email"),
-    // mobileNumber: yup.number().required().typeError("Mobile numbder is required field"),
     password: yup.string().required("Password is required field"),
   })
   .required();
@@ -29,10 +28,7 @@ const LogInComponent = (props: any) => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
 
-  const { mutateUser } = useUser({
-    redirectTo: "/",
-    redirectIfFound: true,
-  });
+  const { mutateUser } = useUser();
   const {
     register,
     handleSubmit,
@@ -42,7 +38,7 @@ const LogInComponent = (props: any) => {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // console.log(data);
+    console.log(data);
     try {
       const result: IUser = await fetchJson("/api/auth/login", {
         method: "POST",
