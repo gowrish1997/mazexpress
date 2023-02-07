@@ -127,6 +127,7 @@ const Sidebar = () => {
       false
     );
     router.push("/auth/gate");
+    // router.reload()
   };
 
   return (

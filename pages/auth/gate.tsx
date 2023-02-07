@@ -1,17 +1,22 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthLayout from "@/components/auth/AuthLayout";
 import LogInView from "@/components/auth/LogInView";
 import ResetPasswordView from "@/components/auth/ResetPasswordView";
 import SignUpView from "@/components/auth/SignUpView";
+import useUser from "@/lib/useUser";
 
 const Gate = () => {
   const [mode, setMode] = useState<number>(1);
 
+  const { user, mutateUser, userIsLoading } = useUser();
   function toggleMode(i: number) {
     setMode(i);
   }
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   return (
     <div>
       <Head>
