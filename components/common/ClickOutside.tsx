@@ -3,7 +3,7 @@ import React, { ReactNode, Ref, RefObject, useEffect, useRef } from "react";
 
 interface IProp {
   children: ReactNode;
-  handler: () => void;
+  handler: (e?: any) => void;
   trigger: RefObject<HTMLDivElement | HTMLButtonElement>;
   className?: string 
 }

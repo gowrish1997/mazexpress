@@ -72,7 +72,8 @@ const CreateNotificationModal = (props: IProp) => {
     setFiles(Array.from(e.target.files));
   };
 
-  const toggleFileInputHandler = () => {
+  const toggleFileInputHandler = (e: any) => {
+    e.preventDefault()
     // console.log("open");
     setShowFileInputModal((prev) => !prev);
   };

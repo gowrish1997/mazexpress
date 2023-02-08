@@ -1,7 +1,7 @@
 import React, { useEffect, createRef, RefObject } from "react";
 
 let useClickOutside = (
-  handler: () => void,
+  handler: (e?: any) => void,
   trigger: RefObject<HTMLDivElement | HTMLButtonElement>,
   ref: RefObject<HTMLDivElement>
 ) => {
@@ -15,7 +15,7 @@ let useClickOutside = (
         !trigger.current?.contains(event.target as Node)
       ) {
         // alert("You clicked outside of me!");
-        handler();
+        handler(event);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
