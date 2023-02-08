@@ -34,14 +34,21 @@ const UserSelect = () => {
 
   const updateSelectedUsers = (e: any, id: number) => {
     // console.log(e.target.value, id);
+    // e.stopPropagation();
+    // e.preventDefault();
+
     if (e.target.checked) {
       // add
       if (selectedUsers.find((item) => item === id)) {
         // ignore
       } else {
+        if (selectedUsers.length === users.length - 1) {
+          setMarkAll(true);
+        }
         setSelectedUsers((prev) => [...prev, id]);
       }
     } else {
+      setMarkAll(false);
       if (selectedUsers.find((item) => item === id)) {
         // delete
         setSelectedUsers((prev) => prev.filter((item) => item !== id));
@@ -68,6 +75,7 @@ const UserSelect = () => {
 
   const clearAllHandler = (e: any) => {
     e.stopPropagation();
+    e.preventDefault();
     setSelectedUsers([]);
     setMarkAll(false);
   };
@@ -172,7 +180,7 @@ const UserSelect = () => {
                   name="select_all"
                   className="mr-2"
                   onChange={updateAllHandler}
-                  defaultChecked={markAll}
+                  checked={markAll}
                 />
                 <label
                   htmlFor="select_all"
