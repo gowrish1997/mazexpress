@@ -60,11 +60,12 @@ const UserSelect = () => {
       setSelectedUsers(newList);
       setMarkAll(true);
     } else {
-      clearAllHandler();
+      clearAllHandler(e);
     }
   };
 
-  const clearAllHandler = () => {
+  const clearAllHandler = (e: any) => {
+    e.preventDefault()
     setSelectedUsers([]);
     setMarkAll(false);
   };
@@ -178,7 +179,7 @@ const UserSelect = () => {
                   Select all
                 </label>
               </div>
-              <button className="text-[14px] font-[600] text-[#3672DF]" onClick={clearAllHandler}>
+              <button className="text-[14px] font-[600] text-[#3672DF] cursor-pointer" onClick={clearAllHandler}>
                 Clear all
               </button>
             </div>
