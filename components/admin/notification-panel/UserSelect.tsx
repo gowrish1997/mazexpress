@@ -16,7 +16,7 @@ const UserSelect = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef(null);
 
-  const fetchMatchingUsers = (e) => {
+  const fetchMatchingUsers = (e: any) => {
     console.log(e.target.value);
 
   };
@@ -33,7 +33,7 @@ const UserSelect = () => {
     setShowDropdown((prev) => !prev);
   };
 
-  const updateSelectedUsers = (e, id) => {
+  const updateSelectedUsers = (e: any, id: number) => {
     // console.log(e.target.value, id);
     if (e.target.checked) {
       // add
@@ -50,7 +50,7 @@ const UserSelect = () => {
     }
   };
 
-  const updateAllHandler = (e) => {
+  const updateAllHandler = (e: any) => {
     // mark all
     console.log(e.target.checked);
     if (e.target.checked) {
@@ -188,7 +188,7 @@ const UserSelect = () => {
             <div className="space-y-[14px]">
               {users.map((el) => {
                 return (
-                  <div className="flex items-center w-full">
+                  <div className="flex items-center w-full" key={el.id_users}>
                     <div className="w-10 h-10 rounded-full relative overflow-hidden">
                       <Image
                         src={

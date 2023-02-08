@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import useUser from "@/lib/useUser";
@@ -67,7 +67,7 @@ const CreateNotificationModal = (props: IProp) => {
     fileInputRef.current?.click();
   };
 
-  const fileInputChangeHandler = (e) => {
+  const fileInputChangeHandler = (e: any) => {
     // console.log(e.target.files[0]);
     setFiles(Array.from(e.target.files));
   };
@@ -193,7 +193,7 @@ const CreateNotificationModal = (props: IProp) => {
               <div>
                 {files?.map((file: any, index: number) => {
                   return (
-                    <div className="flex items-center">
+                    <div className="flex items-center" key={file.name}>
                       <p className="text-[#3672DF] font-[500] text-[14px] ml-5">
                         {file.name}
                       </p>

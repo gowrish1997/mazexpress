@@ -49,7 +49,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
     }, [notificationsIsLoading, notifications]);
 
     useEffect(() => {
-    //   console.log(userNotifications);
+      console.log(userNotifications);
     }, [userNotifications]);
 
     return (
@@ -89,7 +89,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
               ?.map((data) => {
                 return (
                   <EachNotification
-                    id={data.id_notifications}
+                    id={data.id_notifications!}
                     data={data}
                     key={data.id_notifications}
                     delete={deleteNotification}
