@@ -18,12 +18,11 @@ const UserSelect = () => {
 
   const fetchMatchingUsers = (e: any) => {
     console.log(e.target.value);
-
   };
 
   const openDropdown = () => {
     setShowDropdown(true);
-    inputRef.current
+    inputRef.current;
   };
   const closeDropdown = () => {
     setShowDropdown(false);
@@ -52,6 +51,8 @@ const UserSelect = () => {
 
   const updateAllHandler = (e: any) => {
     // mark all
+    e.stopPropagation();
+
     console.log(e.target.checked);
     if (e.target.checked) {
       let newList = users.map((item) => {
@@ -60,12 +61,13 @@ const UserSelect = () => {
       setSelectedUsers(newList);
       setMarkAll(true);
     } else {
-      clearAllHandler(e);
+      setSelectedUsers([]);
+      setMarkAll(false);
     }
   };
 
   const clearAllHandler = (e: any) => {
-    e.preventDefault()
+    e.stopPropagation();
     setSelectedUsers([]);
     setMarkAll(false);
   };
@@ -79,8 +81,8 @@ const UserSelect = () => {
   }, []);
 
   useEffect(() => {
-    inputRef.current?.focus()
-  }, [showDropdown])
+    inputRef.current?.focus();
+  }, [showDropdown]);
 
   return (
     <div className="relative">
@@ -170,7 +172,7 @@ const UserSelect = () => {
                   name="select_all"
                   className="mr-2"
                   onChange={updateAllHandler}
-                  checked={markAll}
+                  defaultChecked={markAll}
                 />
                 <label
                   htmlFor="select_all"
@@ -179,7 +181,10 @@ const UserSelect = () => {
                   Select all
                 </label>
               </div>
-              <button className="text-[14px] font-[600] text-[#3672DF] cursor-pointer" onClick={clearAllHandler}>
+              <button
+                className="text-[14px] font-[600] text-[#3672DF] cursor-pointer"
+                onClick={clearAllHandler}
+              >
                 Clear all
               </button>
             </div>
@@ -223,7 +228,12 @@ const UserSelect = () => {
                 );
               })}
             </div>
-            <button className="bg-[#3672DF] text-[14px] rounded text-white w-full mt-4 px-4 py-2 self-center" onClick={closeDropdown}>Done!</button>
+            <button
+              className="bg-[#3672DF] text-[14px] rounded text-white w-full mt-4 px-4 py-2 self-center"
+              onClick={closeDropdown}
+            >
+              Done!
+            </button>
           </div>
         </ClickOutside>
       )}

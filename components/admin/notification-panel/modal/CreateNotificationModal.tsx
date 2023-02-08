@@ -63,7 +63,8 @@ const CreateNotificationModal = (props: IProp) => {
     });
   };
 
-  const uploadFilesHandler: any = () => {
+  const uploadFilesHandler: any = (e: any) => {
+    e.preventDefault()
     fileInputRef.current?.click();
   };
 
