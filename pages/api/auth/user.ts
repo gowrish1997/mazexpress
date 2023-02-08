@@ -32,32 +32,20 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<IUser>) {
           resolve(data);
         });
     } else {
-      res.json({
+      const nullUser = {
         id_users: 0,
         avatar_url_users: "default_user.png",
         first_name_users: "",
         last_name_users: "",
         email_users: "",
-        password_users: "",
         phone_users: "",
         default_address_users: 0,
         is_admin_users: 0,
         is_logged_in_users: 0,
         is_notifications_enabled_users: 0,
-      });
-      resolve({
-        id_users: 0,
-        avatar_url_users: "default_user.png",
-        first_name_users: "",
-        last_name_users: "",
-        email_users: "",
-        password_users: "",
-        phone_users: "",
-        default_address_users: 0,
-        is_admin_users: 0,
-        is_logged_in_users: 0,
-        is_notifications_enabled_users: 0,
-      });
+      }
+      res.json(nullUser as any);
+      resolve(nullUser);
     }
   });
 }

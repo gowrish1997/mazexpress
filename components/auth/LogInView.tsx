@@ -49,13 +49,13 @@ const LogInComponent = (props: any) => {
       // console.log(result);
       await mutateUser(result, false);
 
-      if (user?.is_admin_users === 1) {
-        // console.log('push to admin')
-        router.push("/admin");
-      } else {
-        // console.log('push to home')
-        router.push("/");
-      }
+      // if (user?.is_admin_users === 1) {
+      //   // console.log('push to admin')
+      //   router.push("/admin");
+      // } else {
+      //   // console.log('push to home')
+      //   router.push("/");
+      // }
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);

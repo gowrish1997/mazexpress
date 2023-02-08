@@ -215,7 +215,7 @@ const Settings = () => {
                     })}
                   />
                   <Image
-                    src={"/user-images/" + user?.avatar_url_users!}
+                    src={"/user-images/" + user?.avatar_url_users}
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import useUser from "@/lib/useUser";
 import fetchJson from "@/lib/fetchJson";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
-import logoutImage from '@/public/logout.png'
+import logoutImage from "@/public/logout.png";
 
 const userSidebarContent = [
   {
@@ -122,10 +122,8 @@ const Sidebar = () => {
   };
 
   const logoutHandler = async () => {
-    await mutateUser(
-      await fetchJson("/api/auth/logout", { method: "GET" }),
-      false
-    );
+    const nullUser = await fetchJson("/api/auth/logout", { method: "GET" });
+    await mutateUser();
     router.push("/auth/gate");
     // router.reload()
   };

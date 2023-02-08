@@ -8,7 +8,7 @@ interface IUser {
   id_users: number;
   default_address_users?: number;
   is_admin_users: 0 | 1;
-  is_logged_in_users: 0 | 1;
+  is_logged_in_users: number | 0 | 1 ;
   is_notifications_enabled_users: boolean | 0 | 1;
 }
 interface ISignUp {

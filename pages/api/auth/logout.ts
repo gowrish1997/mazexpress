@@ -11,5 +11,8 @@ async function logout(
   // set logged in false
   await updateUser(req.session.user.id_users, { is_logged_in_users: 0 });
   req.session.destroy();
+  const nullUser = {
+    
+  }
   res.send({ ok: true });
 }
