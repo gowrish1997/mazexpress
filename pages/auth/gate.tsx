@@ -14,9 +14,7 @@ const Gate = () => {
     setMode(i);
   }
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  
   return (
     <div>
       <Head>

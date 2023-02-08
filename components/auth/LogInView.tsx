@@ -29,7 +29,7 @@ const LogInComponent = (props: any) => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
 
-  const { user, mutateUser } = useUser();
+  const { user, mutateUser } = useUser({redirectIfFound: true});
   const {
     register,
     handleSubmit,

@@ -8,7 +8,7 @@ export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
   const session = await getIronSession(req, res, sessionOptions);
   const { user } = session; 
-  console.log(user, 'from middleware')
+  // console.log(user, 'from middleware')
 
   // check if user exists and logged in
   if (user && user !== undefined && user.is_logged_in_users === 1) {
