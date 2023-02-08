@@ -2,7 +2,7 @@ import React, { useEffect, createRef, RefObject } from "react";
 
 let useClickOutside = (
   handler: () => void,
-  trigger: RefObject<HTMLDivElement>,
+  trigger: RefObject<HTMLDivElement | HTMLButtonElement>,
   ref: RefObject<HTMLDivElement>
 ) => {
   let modalNode = createRef<any>();

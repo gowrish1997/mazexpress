@@ -4,7 +4,7 @@ import React, { ReactNode, Ref, RefObject, useEffect, useRef } from "react";
 interface IProp {
   children: ReactNode;
   handler: () => void;
-  trigger: RefObject<HTMLDivElement>;
+  trigger: RefObject<HTMLDivElement | HTMLButtonElement>;
   className?: string 
 }
 const ClickOutside = (props: IProp) => {

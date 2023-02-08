@@ -13,15 +13,17 @@ const UserSelect = () => {
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [markAll, setMarkAll] = useState<boolean>(false);
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef(null);
 
-  const fetchMatchingUsers = () => {
-    console.log("fetching users");
+  const fetchMatchingUsers = (e) => {
+    console.log(e.target.value);
+
   };
 
   const openDropdown = () => {
     setShowDropdown(true);
+    inputRef.current
   };
   const closeDropdown = () => {
     setShowDropdown(false);
@@ -33,7 +35,7 @@ const UserSelect = () => {
 
   const updateSelectedUsers = (e, id) => {
     // console.log(e.target.value, id);
-    if (e.target.value === "on") {
+    if (e.target.checked) {
       // add
       if (selectedUsers.find((item) => item === id)) {
         // ignore
@@ -75,6 +77,10 @@ const UserSelect = () => {
     });
   }, []);
 
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [showDropdown])
+
   return (
     <div className="relative">
       <div
@@ -85,7 +91,7 @@ const UserSelect = () => {
         {showDropdown && (
           <input
             type={"text"}
-            className="focus:outline-0 px-2 py-2 w-full rounded"
+            className="focus:outline-0 px-2 py-2 w-full rounded h-[45px]"
             onChange={fetchMatchingUsers}
             //   onFocus={openDropdown}
             //   onBlur={closeDropdown}
@@ -94,8 +100,8 @@ const UserSelect = () => {
           />
         )}
         {!showDropdown && selectedUsers.length > 0 && !markAll && (
-          <div className="flex items-center w-full h-[40px] p-2">
-            <div className="w-10 h-10 rounded-full relative overflow-hidden">
+          <div className="flex items-center w-full h-[45px] p-3">
+            <div className="w-7 h-7 rounded-full relative overflow-hidden">
               <Image
                 src={
                   users.find((item) => item.id_users === selectedUsers[0])
@@ -113,7 +119,7 @@ const UserSelect = () => {
                 alt={"user image"}
               />
             </div>
-            <p className="text-[#2B2B2B] text-[14px] mr-2">
+            <p className="text-[#2B2B2B] text-[14px] mx-2">
               {
                 users.find((item) => item.id_users === selectedUsers[0])
                   ?.first_name_users
@@ -155,7 +161,7 @@ const UserSelect = () => {
           trigger={triggerRef}
           className={""}
         >
-          <div className="absolute flex flex-col w-[400px] h-[200px] z-10 top-[130%] rounded border bg-white shadow-lg p-4 overflow-y-scroll">
+          <div className="absolute flex flex-col w-[400px] h-[350px] z-10 top-[130%] rounded border bg-white shadow-lg p-4 overflow-y-scroll">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -216,6 +222,7 @@ const UserSelect = () => {
                 );
               })}
             </div>
+            <button className="bg-[#3672DF] text-[14px] rounded text-white w-full mt-4 px-4 py-2 self-center" onClick={closeDropdown}>Done!</button>
           </div>
         </ClickOutside>
       )}

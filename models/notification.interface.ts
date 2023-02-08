@@ -19,7 +19,8 @@ interface INotificationForm {
   title_notifications: string;
   content_notifications: string;
   users_notifications: string[]
-  reusable_notifications: 'on' | 'off' 
+  reusable_notifications: 'on' | 'off'
+  files_notifications?: any
 }
 
 export type { INotification, INotificationConfig, INotificationForm };
