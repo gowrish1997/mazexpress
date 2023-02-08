@@ -1,5 +1,5 @@
 interface INotification {
-  id_notifications: number;
+  id_notifications?: number;
   user_id: number;
   title_notifications: string;
   content_notifications: string;
@@ -15,4 +15,11 @@ interface INotificationConfig {
   id: string;
 }
 
-export type { INotification, INotificationConfig };
+interface INotificationForm {
+  title_notifications: string;
+  content_notifications: string;
+  users_notifications: string[]
+  reusable_notifications: 'on' | 'off' 
+}
+
+export type { INotification, INotificationConfig, INotificationForm };

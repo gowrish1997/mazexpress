@@ -23,9 +23,9 @@ const ConfigCard = (props: IProp) => {
         </p>
 
         <div className="flex items-center self-start">
-          <label className="text-[10px] Inter mr-1">
+          {/* <label className="text-[10px] Inter mr-1">
             {props.data.is_enabled ? "Enabled" : "Disabled"}
-          </label>
+          </label> */}
           <ReactSwitch
             checked={props.data.is_enabled}
             onChange={() => props.toggle(props.data.id)}
@@ -46,9 +46,7 @@ const ConfigCard = (props: IProp) => {
         Turkey
       </p> */}
       <p className="text-[13px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
-        Here is a link to some fake information that contains crucial
-        information, link to some fake information that contains crucial
-        information
+        {props.data.desc}
       </p>
     </div>
   );
