@@ -1,16 +1,34 @@
 import Dropdown from "react-dropdown";
 import Image from "next/image";
 import "react-dropdown/style.css";
-const options = ["one", "two", "three"];
-const defaultOption = options[0];
-const ReactDropdown = () => {
+
+interface IProp {
+    options: string[];
+    onChange?: (value: string) => void;
+}
+
+const ReactDropdown = (props: IProp) => {
+    const dropDownOnChangeHandler = (e: any) => {
+        console.log(e);
+        if (e.value == "status") {
+            props?.onChange?.("");
+        } else {
+            props?.onChange?.(e.value);
+        }
+    };
+
+    const defaultOption = props?.options?.[0];
     return (
-        <div className="relative">
-            <Dropdown options={options} onChange={() => console.log("gowrish")} value={defaultOption} placeholder="Select an option" className="pageHeaderDropdown" />
-            <div className="absolute h-[6px] w-[8px] top-[17px] right-[10px] ">
-                <Image src="/downwardArrow.png" fill={true} alt="arrow" objectFit="cover" />
-            </div>
-        </div>
+        <>
+            {props.options && (
+                <div className="relative">
+                    <Dropdown options={props.options} onChange={dropDownOnChangeHandler} value={defaultOption} placeholder="Select an option" className="pageHeaderDropdown" />
+                    <div className="absolute h-[6px] w-[8px] top-[17px] right-[10px] ">
+                        <Image src="/downwardArrow.png" fill={true} alt="arrow" objectFit="cover" />
+                    </div>
+                </div>
+            )}
+        </>
     );
 };
 

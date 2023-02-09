@@ -63,7 +63,7 @@ const MyOrders = () => {
           ))}
         {orders && orders.length > 0 && (
           <>
-            <Table rows={orders} headings={tableHeaders} />
+            <Table rows={orders} headings={tableHeaders} type='order' />
             <AddButton onClick={addNewOrderHandler} />
           </>
         )}

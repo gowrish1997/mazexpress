@@ -1,6 +1,8 @@
 import Head from "next/head";
 import React, { useEffect, useState, useRef } from "react";
 import Calendar from "react-calendar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import useUser from "@/lib/useUser";
 import useTrackings from "@/lib/useTrackings";
@@ -12,12 +14,17 @@ interface IProp {
     title?: string;
 }
 const PageHeader = (props: IProp) => {
+
+    let trigger = useRef(null);
+
     const { user, mutateUser, userIsLoading } = useUser();
     const { tracking, trackingIsLoading } = useTrackings({
         user_id: user?.id_users,
     });
 
+    const [showCalender, setShowCalender] = useState<boolean>(false);
     const [allOrderDeliveryDate, setAllOrderDeliveryDate] = useState<string[] | null>(null);
+    const [calendarValue, setCalendarValue] = useState<Date>(new Date());
 
     useEffect(() => {
         const deliveryDate = tracking?.map((data) => {
@@ -27,16 +34,20 @@ const PageHeader = (props: IProp) => {
         setAllOrderDeliveryDate(deliveryDate!);
     }, [tracking]);
 
-    const [showArrivalCalender, setShowArrivalCalender] = useState<boolean>(false);
-
     const toggleArrivalCalender = () => {
-        setShowArrivalCalender((prev) => !prev);
+        setShowCalender((prev) => !prev);
     };
-    const smarttoggleArrivalCalenderHandler = () => {
-        setShowArrivalCalender(false);
+    const smarttoggleCalenderHandler = () => {
+        setShowCalender(false);
     };
 
-    let trigger = useRef(null);
+    const calendarChange = (value: Date, event: any) => {
+        // get clicked day and calc datePointer
+        // console.log(value)
+        // console.log(new Date())
+        // console.log((value - new Date())/(1000 * 3600 * 24))
+        // console.log(event)
+    };
 
     return (
         <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative " + " " + props.className}>
@@ -53,10 +64,17 @@ const PageHeader = (props: IProp) => {
                         Order Calendar
                     </button>
                 )}
-                {showArrivalCalender ? (
-                    <ClickOutside trigger={trigger} handler={smarttoggleArrivalCalenderHandler}>
+                {showCalender ? (
+                    <ClickOutside trigger={trigger} handler={smarttoggleCalenderHandler}>
                         <div className="absolute top-[50px] right-0 bg-white rounded shadow z-40 p-5">
                             <Calendar
+                                onChange={calendarChange}
+                                value={calendarValue}
+                                next2Label={null}
+                                prev2Label={null}
+                                nextLabel={<FontAwesomeIcon icon={faAngleRight} size="xs" />}
+                                prevLabel={<FontAwesomeIcon icon={faAngleLeft} size="xs" />}
+                                view={"month"}
                                 tileClassName={({ date, view }) => {
                                     if (allOrderDeliveryDate?.find((x) => x === moment(date).format("DD-MM-YYYY"))) {
                                         return "highlight" as any;

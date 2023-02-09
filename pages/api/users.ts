@@ -13,6 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         switch (req.method) {
             case "GET":
                 if (req.query.id) {
+                    
                     // single response
                     const id = req.query.id;
                     db.select(
@@ -34,6 +35,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
                             resolve(data);
                         });
                 } else {
+              
                     // list response
                     db.select(
                         "id_users",
