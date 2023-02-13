@@ -3,13 +3,18 @@ import Router from "next/router";
 import useSWR from "swr";
 import { IUser } from "@/models/user.interface";
 
-export default function useAllUser({user_id}:{user_id:number | undefined}) {
+export default function useAllUser(props:{user_id?:number | undefined}) {
+  let queryString = "";
+  if (props?.user_id) {
+      queryString += `?id=${props.user_id}`;
+  }
 
   const {
     data: allUser,
     mutate: mutateAllUser,
     isLoading: allUserIsLoading,
-  } = useSWR<IUser[]>(`/api/users?id=${user_id}`, {
+    error:error
+  } = useSWR<IUser[]>(`/api/users`+queryString, {
    // revalidateIfStale: true,
     // revalidateOnFocus: true,
     // revalidateOnReconnect: true,
@@ -18,5 +23,5 @@ export default function useAllUser({user_id}:{user_id:number | undefined}) {
 
 
 
-  return { allUser, mutateAllUser, allUserIsLoading };
+  return { allUser, mutateAllUser, allUserIsLoading,error };
 }

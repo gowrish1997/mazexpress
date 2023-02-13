@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import ReactDropdown from "../common/ReactDropdown";
+import FilterOptionDropDown from "./FilterOptionDropDown";
 import { IOrderResponse } from "@/models/order.interface";
 import ScheduleShipmentModal from "./modal/ScheduleShipmentModal";
-import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
+import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 
 interface IProp {
     content: string;
     title?: string;
-    onChangeWarehouse?: (value: string) => void;
     selectedOrder?: string[];
     allLiveOrders: IOrderResponse[];
+    filterByDate: (value: Date | string ) => void;
 }
 
 const adminOption = ["Moved Out"];
@@ -23,7 +24,7 @@ const ShipmentsPageHeader = (props: IProp) => {
     // const [showSheduleShipmentModal, setShowSheduleShipmentModal] = useState(false);
     const [showMovedOutConfirmModal, setMovedOutConfirmModal] = useState(false);
 
-    const [shipmentSelectedDate, setShipmentSelectedDate] = useState<Date | null>(null);
+    // const [shipmentSelectedDate, setShipmentSelectedDate] = useState<Date | null>(null);
 
     // const toggleScheduleShipmentModal = () => {
     //     setShowSheduleShipmentModal((prev) => !prev);
@@ -47,10 +48,11 @@ const ShipmentsPageHeader = (props: IProp) => {
                 <Head>
                     <title></title>
                 </Head>
-                <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} />
+                <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} filterByDate={props.filterByDate} />
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px]  ">
-                        <ReactDropdown options={warehousesDropDownOptoin} onChange={props.onChangeWarehouse!} />
+                        {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
+                        <FilterOptionDropDown options={warehousesDropDownOptoin}/>
                         {/* <button
                             className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px] mt-[5px] text-[14px] font-[700] text-[#525D72] leading-[19px] tracking-wider hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50"
                             disabled={!props.selectedOrder?.length}
@@ -80,7 +82,7 @@ const ShipmentsPageHeader = (props: IProp) => {
                 setShipmentSelectedDate={setShipmentSelectedDate}
                 confirm={scheduleSelectedShipmentsHandler}
             /> */}
-            <MarkAsDeliveredConfirmModal close={toggleMovedOutConfirmModal} show={showMovedOutConfirmModal} total={props.selectedOrder?.length!} confirm={MovedOutHanlder} />
+            <MovedOutConfirmModal close={toggleMovedOutConfirmModal} show={showMovedOutConfirmModal} total={props.selectedOrder?.length!} confirm={MovedOutHanlder} />
         </>
     );
 };

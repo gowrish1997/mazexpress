@@ -46,16 +46,18 @@ const adminIcon = (id: number) => {
         case 3:
             return <TodayShip />;
         case 4:
+            return <TodayShip />;
+        case 5:
             return <Warehosue />;
 
-        case 5:
-            return <User />;
         case 6:
-            return <Notification />;
+            return <User />;
         case 7:
+            return <Notification />;
+        case 8:
             return <Settings />;
 
-        case 8:
+        case 9:
             return <Helpcenter />;
 
         default:

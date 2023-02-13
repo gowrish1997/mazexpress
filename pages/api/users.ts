@@ -35,6 +35,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
                             resolve(data);
                         });
                 } else {
+                    console.log('use else')
               
                     // list response
                     db.select(
@@ -47,7 +48,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
                         "avatar_url_users",
                         "is_notifications_enabled_users",
                         "is_admin_users",
-                        "is_logged_in_users"
+                        "is_logged_in_users",
+                        "age_users",
+                        "gender_users",
+                        "created_on_user"
+
                     )
                         .from("users")
                         .then((data: any) => {

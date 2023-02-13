@@ -87,16 +87,18 @@ const LineItem = (props: IProp) => {
                     )}
                 </div>
             </td>
-            <td className={`flex flex-row justify-start items-center h-full `}>
-                <div className="pending__icon">{orderStatusColorHandler(props.row.status_orders)}</div>
-                <span className="ml-[5px] capitalize">{props.row.status_orders}</span>
+            <td className={`td6 `}>
+                <div className="h-full flex flex-row justify-start items-center ">
+                    <div className="pending__icon">{orderStatusColorHandler(props.row.status_orders)}</div>
+                    <span className="ml-[5px] capitalize">{props.row.status_orders}</span>
+                </div>
             </td>
             <td
                 className=""
                 // onClick={(e) => optionModalHandler(e, index)}
             >
-                <div className="w-full h-full relative">
-                    <div onClick={toggleGateHandler} ref={trigger} className="cursor-pointer">
+                <div className="w-full h-full ">
+                    <div onClick={toggleGateHandler} ref={trigger} className="cursor-pointer relative">
                         <Image
                             src="/editicon.png"
                             // ref={trigger}

@@ -1,6 +1,7 @@
 import Dropdown from "react-dropdown";
 import Image from "next/image";
 import "react-dropdown/style.css";
+import ClickOutside from "./ClickOutside";
 
 interface IProp {
     options: string[];

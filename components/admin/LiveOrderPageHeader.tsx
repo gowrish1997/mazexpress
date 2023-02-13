@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import ReactDropdown from "../common/ReactDropdown";
+import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
 import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
 import { IOrderResponse } from "@/models/order.interface";
@@ -11,12 +12,13 @@ interface IProp {
     content: string;
     title?: string;
     onChangeStatus?: (value: string) => void;
-    selectedOrder?: string[];
+    selectedOrder: string[];
     allLiveOrders: IOrderResponse[];
+    filterByDate: (value: Date | string) => void;
 }
 
 const warehouse = ["istanbul"];
-const adminOption=['Move to Shipments']
+const adminOption = ["Move to Shipments"];
 
 const LiveOrderPageHeader = (props: IProp) => {
     const [showMoveToShipmentConfirmModal, setShowMoveToShipmentConfirmModal] = useState(false);
@@ -50,25 +52,13 @@ const LiveOrderPageHeader = (props: IProp) => {
                 <Head>
                     <title></title>
                 </Head>
-                <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} />
+                <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} filterByDate={props.filterByDate} />
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px] ">
-                        <ReactDropdown options={packageStatusDropDownOptoin} onChange={props.onChangeStatus!} />
-                        <ReactDropdown options={warehousesDropDownOptoin} />
-                        {/* <button className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50 flex flex-row justify-start items-center  ">
-                            <Image src={download} height={13} width={13} alt="download" />
-                            <span>download</span>
-                        </button>
-                        <button
-                            className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50 "
-                            onClick={toggleMoveToShipmentHandler}
-                            disabled={!props.selectedOrder?.length}
-                            style={showMoveToShipmentConfirmModal ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
-                        >
-                            Move to shipments
-                        </button> */}
-                        <AdminOptionDropDown option={adminOption} toggle={toggleMoveToShipmentHandler} disabled={!props.selectedOrder?.length} orders={props.allLiveOrders}  />
+                        <FilterOptionDropDown options={packageStatusDropDownOptoin} onChange={props.onChangeStatus!} />
+                        <FilterOptionDropDown options={warehousesDropDownOptoin} />
 
+                        <AdminOptionDropDown option={adminOption} toggle={toggleMoveToShipmentHandler} disabled={!props.selectedOrder?.length} orders={props.allLiveOrders} />
                     </div>
                 )}
             </div>

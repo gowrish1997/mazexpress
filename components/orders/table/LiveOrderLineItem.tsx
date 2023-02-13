@@ -1,4 +1,4 @@
-import React, { createRef, SyntheticEvent, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,10 +10,11 @@ import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
 import GreyRadioButton from "../../../public/grey_svg.svg";
 import useAllUser from "@/lib/useAllUsers";
+import { getDateInStringFormat } from "@/lib/helper";
 interface IProp {
     row: IOrderResponse;
     type: string;
-    onSelect: (e: any,type:string) => void;
+    onSelect: (e: string, type: string) => void;
     selectedOrder: string[];
 }
 
@@ -23,7 +24,7 @@ const LiveOrderLineItem = (props: IProp) => {
     const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
         user_id: props.row.user_id,
     });
-    const [estDelivery, setEstDelivery] = useState<string>("...");
+
     const [gate, setGate] = useState(false);
 
     function smartToggleGateHandler() {
@@ -82,7 +83,7 @@ const LiveOrderLineItem = (props: IProp) => {
                     value={props.row.id_orders}
                     name={props.row.id_orders}
                     checked={inputCheckedStateHandler()}
-                    onChange={(e) => props.onSelect(e.target.value,'selectSingleOrder')}
+                    onChange={(e) => props.onSelect(e.target.value, "selectSingleOrder")}
                     className="h-[10px] w-[10px] cursor-pointer "
                 />
             </td>
@@ -98,10 +99,10 @@ const LiveOrderLineItem = (props: IProp) => {
                 )}
                 <span className="ml-[5px]">{allUser?.[0].first_name_users + "" + allUser?.[0].last_name_users}</span>
             </td>
-            <td className={`td2`}>{props.row.id_orders}</td>
+            <td className={`td2`} style={{wordWrap:'break-word',overflowWrap:"break-word",width:"100%"}} >{props.row.id_orders}</td>
             <td className={`td3 text-[#3672DF]`}>{props.row.store_link_orders}</td>
             <td className={`td4`}>{props.row.reference_id_orders}</td>
-            <td className={`td5`}>{estDelivery}</td>
+            <td className={`td5`}>{getDateInStringFormat(props.row.created_on_orders)}</td>
 
             <td className={`td6 capitalize `}>Istanbul</td>
             <td className={`td7`}>
@@ -111,9 +112,9 @@ const LiveOrderLineItem = (props: IProp) => {
                     <span className="ml-[5px] capitalize ">{props.row.status_orders}</span>
                 </div>
             </td>
-            <td className="" style={props.type == "delivered" ? { visibility: "hidden" } : {}}>
-                <div className="w-full h-full relative">
-                    <div onClick={toggleGateHandler} ref={trigger} className="cursor-pointer">
+            <td className="" style={props.type == "delivered" ? { visibility: "hidden" } : {}} ref={trigger}>
+                <div className="w-full h-full ">
+                    <div onClick={toggleGateHandler}  className="cursor-pointer relative">
                         <Image
                             src="/editicon.png"
                             // ref={trigger}

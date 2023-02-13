@@ -67,6 +67,12 @@ const adminSidebarPanel = [
     },
     {
         id: nanoid(),
+        title: "Out From Warehouse",
+        icon: "/warehouse.png",
+        path: "/admin/in-transit",
+    },
+    {
+        id: nanoid(),
         title: "Delivered Order",
         icon: "/address.png",
         path: "/admin/delivered",

@@ -7,7 +7,9 @@ import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import { IOrderResponse } from "@/models/order.interface";
 import DeliveredPageHeader from "@/components/admin/DeliveredPageHeader";
-import { useSelectOrder } from "@/components/customHook.ts/useSelectOrder";
+import { useSelectOrder } from "@/components/customHook/useSelectOrder";
+import BlankPage from "@/components/admin/BlankPage";
+import { useFilter } from "@/components/customHook/useFilter";
 
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
@@ -18,8 +20,8 @@ const DeliveredOrders = () => {
     const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
     const [filteredLiveOrders, setFilteredAllLiveOrders] = useState<IOrderResponse[]>();
 
-    const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>();
-    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string>("");
+    const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string | Date>("");
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
     useEffect(() => {
@@ -32,11 +34,12 @@ const DeliveredOrders = () => {
 
     const filterByMazTrackingId = (value: string) => {
         setMazTrackingIdFilterKey(value);
-        const liveOrder = allLiveOrders?.filter((el) => {
-            return el.id_orders.toLocaleLowerCase().includes(value.toLocaleLowerCase());
-        });
+        setFilteredAllLiveOrders(useFilter(allLiveOrders!, createdDateFilterKey, value));
+    };
 
-        setFilteredAllLiveOrders(liveOrder);
+    const filterByCreatedDate = (value: Date | string) => {
+        setCreatedDateFilterKey(value);
+        setFilteredAllLiveOrders(useFilter(allLiveOrders!, value, mazTrackingIdFilterKey!));
     };
 
     const selectOrderHandler = (value: string, type: string) => {
@@ -52,23 +55,10 @@ const DeliveredOrders = () => {
     return (
         <>
             <div>
-                <DeliveredPageHeader content="Delivered" allLiveOrders={allLiveOrders!} selectedOrder={selectedOrder} />
+                <DeliveredPageHeader content="Delivered" allLiveOrders={allLiveOrders!} selectedOrder={selectedOrder} filterByDate={filterByCreatedDate} />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!filteredLiveOrders && (
-                        <div className="flex-1 flex flex-col justify-center items-center w-full ">
-                            <div className="relative h-[221px] w-[322px] ">
-                                <Image src="/noorder.png" fill style={{ objectFit: "contain" }} alt="happy" />
-                            </div>
-                            <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
-                                Oops, there are no orders on your list yet... Start adding now.
-                                <br />
-                                <Link href={`${router.pathname}/add-new-order`}>
-                                    <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">Add Order Now</span>
-                                </Link>
-                            </div>
-                        </div>
-                    )}
+                    {!filteredLiveOrders && <BlankPage />}
                     {filteredLiveOrders && (
                         <>
                             <Table

@@ -248,9 +248,9 @@ input::-webkit-inner-spin-button {
     text-align: left;
     padding-left: 5px;
 
-    overflow: hidden;
+    /* overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
 }
 .order_table td:hover {
     white-space: wrap;
@@ -259,12 +259,13 @@ input::-webkit-inner-spin-button {
 
 .order_table .th0,
 .order_table .td0 {
-    width: 2%;
+    width: 1.5%;
 }
 .order_table .th7,
 .order_table .td7 {
-    width: 1%;
+    width: 0.5%;
 }
+
 .order_table .th1,
 .order_table .td1,
 .order_table .th2,
@@ -304,6 +305,117 @@ input::-webkit-inner-spin-button {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.order_table .th1,
+.order_table .th2,
+.order_table .td1,
+.order_table .td2,
+.order_table .th3,
+.order_table .td3,.order_table .th4,
+.order_table .th5,
+.order_table .td4,
+.order_table .td5,
+.order_table .th6,
+.order_table .td6 {
+overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.user_table {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: "Inter";
+
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+.user_table tr {
+    width: 100%;
+}
+.user_table td,
+.user_table th {
+    box-sizing: border-box;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+    padding-left: 5px;
+
+    /* overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; */
+}
+.user_table td:hover {
+    white-space: wrap;
+    overflow: visible;
+}
+
+.user_table .th0,
+.user_table .td0 {
+    width: 1.5%;
+}
+.order_table .th7,
+.order_table .td7 {
+    width: 0.5%;
+}
+.user_table .th7,
+.user_table .td7{
+    width: 0.5%;
+}
+
+.user_table .th1,
+.user_table .td1,
+.user_table .th2,
+.user_table .th3,
+.user_table .td2,
+.user_table .td3 {
+    width: 12%;
+}
+
+.user_table .th2,
+.user_table .td2 {
+    width: 20%;
+}
+
+/* .user_table .th2 {
+    width: 19%;
+} */
+
+.user_table .th4,
+.user_table .td4 {
+    width: 7%;
+}
+.user_table .th5,
+.user_table .th6,
+.user_table .td5,
+.user_table .td6 {
+    width: 5%;
+}
+
+.user_table .th6,
+.user_table .td6 {
+    width: 8%;
+}
+.user_table .address_td {
+    width: 70px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.user_table .th1,
+.user_table .th2,
+.user_table .td1,
+.user_table .td2,
+.user_table .th3,
+.user_table .td3,.user_table .th4,
+.user_table .th5,
+.user_table .td4,
+.user_table .td5,
+.user_table .th6,
+.user_table .td6 {
+overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 .live_order_table {
     /* font-family: Arial, Helvetica, sans-serif; */
@@ -313,6 +425,22 @@ input::-webkit-inner-spin-button {
     width: 100%;
     table-layout: fixed;
     word-wrap: break-word;
+}
+.live_order_table .th1,
+.live_order_table .th2,
+.live_order_table .td1,
+.live_order_table .td2,
+.live_order_table .th3,
+.live_order_table .td3,.live_order_table .th4,
+.live_order_table .th5,
+.live_order_table .td4,
+.live_order_table .td5,
+.live_order_table .th7,
+.live_order_table .td7,.live_order_table .th6,
+.live_order_table .td6 {
+overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .live_order_table tr {
     width: 100%;
@@ -325,9 +453,6 @@ input::-webkit-inner-spin-button {
     text-align: left;
     padding-left: 5px;
 
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 .live_order_table td:hover {
     white-space: wrap;
@@ -338,10 +463,7 @@ input::-webkit-inner-spin-button {
 .live_order_table .td0 {
     width: 1.5%;
 }
-.live_order_table .th7,
-.live_order_table .td7 {
-    width: 1%;
-}
+
 
 .live_order_table .th1,
 .live_order_table .td1 {

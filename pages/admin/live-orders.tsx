@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 import useOrders from "@/lib/useOrders";
 import LiveOrderPageHeader from "@/components/admin/LiveOrderPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { useSelectOrder } from "@/components/customHook.ts/useSelectOrder";
+import { useSelectOrder } from "@/components/customHook/useSelectOrder";
 import { IOrderResponse } from "@/models/order.interface";
-
+import BlankPage from "@/components/admin/BlankPage";
+import moment from "moment";
+import { useFilter } from "@/components/customHook/useFilter";
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
 const LiveOrders = () => {
@@ -21,7 +20,7 @@ const LiveOrders = () => {
 
     const [statusFilterKey, setStatusFilterKey] = useState<string>("");
     const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
-    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string>("");
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<Date | string>("");
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
     useEffect(() => {
@@ -34,30 +33,75 @@ const LiveOrders = () => {
 
     const filterByStatusHandler = (value: string) => {
         setStatusFilterKey(value);
-        const liveOrder = allLiveOrders
-            ?.filter((el) => {
-                return el.status_orders.includes(value);
-            })
-            .filter((el) => {
-                return el.id_orders.toLocaleLowerCase().includes(mazTrackingIdFilterKey?.toLocaleLowerCase()!);
-            });
-        setFilteredAllLiveOrders(liveOrder);
+        const liveOrders = useFilter(allLiveOrders!, createdDateFilterKey, mazTrackingIdFilterKey).filter((el) => {
+            return el.status_orders.includes(value);
+        });
+        // .filter((el) => {
+        //     if (createdDateFilterKey) {
+        //         console.log("valye countable");
+        //         return moment(el.created_on_orders).format("DD-MM-YYYY") === moment(createdDateFilterKey).format("DD-MM-YYYY");
+        //     } else {
+        //         console.log("vakuye nit cobnasjdb");
+        //         return el;
+        //     }
+        // })
+        // .filter((el) => {
+        //     return el.id_orders.toLocaleLowerCase().includes(mazTrackingIdFilterKey?.toLocaleLowerCase()!);
+        // });
+        setFilteredAllLiveOrders(liveOrders);
     };
 
     const filterByMazTrackingId = (value: string) => {
         setMazTrackingIdFilterKey(value);
-        const liveOrder = allLiveOrders
-            ?.filter((el) => {
-                return el.id_orders.toLocaleLowerCase().includes(value.toLocaleLowerCase());
-            })
-            .filter((el) => {
-                return el.status_orders.includes(statusFilterKey);
-            });
-        setFilteredAllLiveOrders(liveOrder);
+        const liveOrders = useFilter(allLiveOrders!, createdDateFilterKey, value).filter((el) => {
+            return el.status_orders.includes(statusFilterKey);
+        });
+        // const liveOrder = allLiveOrders
+        //     ?.filter((el) => {
+        //         return el.id_orders.toLocaleLowerCase().includes(value.toLocaleLowerCase());
+        //     })
+        //     .filter((el) => {
+        //         if (createdDateFilterKey) {
+        //             console.log("valye countable");
+        //             return moment(el.created_on_orders).format("DD-MM-YYYY") === moment(createdDateFilterKey).format("DD-MM-YYYY");
+        //         } else {
+        //             console.log("vakuye nit cobnasjdb");
+        //             return el;
+        //         }
+        //     })
+        //     .filter((el) => {
+        //         return el.status_orders.includes(statusFilterKey);
+        //     });
+        setFilteredAllLiveOrders(liveOrders);
     };
 
-    const selectOrderHandler = (value:string, type: string) => {
-        useSelectOrder(value, type, setSelectedOrder, allLiveOrders!,selectedOrder!);
+    const filterByCreatedDate = (value: Date | string) => {
+        console.log(value);
+        setCreatedDateFilterKey(value);
+        const liveOrders = useFilter(allLiveOrders!, value, mazTrackingIdFilterKey).filter((el) => {
+            return el.status_orders.includes(statusFilterKey);
+        });
+        // const liveOrder = allLiveOrders
+        //     ?.filter((el) => {
+        //         if (value) {
+        //             console.log("valye countable");
+        //             return moment(el.created_on_orders).format("DD-MM-YYYY") === moment(value).format("DD-MM-YYYY");
+        //         } else {
+        //             console.log("vakuye nit cobnasjdb");
+        //             return el;
+        //         }
+        //     })
+        //     .filter((el) => {
+        //         return el.id_orders.toLocaleLowerCase().includes(mazTrackingIdFilterKey.toLocaleLowerCase());
+        //     })
+        //     .filter((el) => {
+        //         return el.status_orders.includes(statusFilterKey);
+        //     });
+        setFilteredAllLiveOrders(liveOrders);
+    };
+
+    const selectOrderHandler = (value: string, type: string) => {
+        useSelectOrder(value, type, setSelectedOrder, filteredLiveOrders!, selectedOrder!);
     };
 
     if (ordersIsLoading) {
@@ -69,22 +113,15 @@ const LiveOrders = () => {
     return (
         <>
             <div>
-                <LiveOrderPageHeader content="Live Orders" allLiveOrders={allLiveOrders!} onChangeStatus={filterByStatusHandler} selectedOrder={selectedOrder} />
+                <LiveOrderPageHeader
+                    content="Live Orders"
+                    allLiveOrders={allLiveOrders!}
+                    onChangeStatus={filterByStatusHandler}
+                    selectedOrder={selectedOrder!}
+                    filterByDate={filterByCreatedDate}
+                />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!filteredLiveOrders && (
-                        <div className="flex-1 flex flex-col justify-center items-center w-full ">
-                            <div className="relative h-[221px] w-[322px] ">
-                                <Image src="/noorder.png" fill style={{ objectFit: "contain" }} alt="happy" />
-                            </div>
-                            <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
-                                Oops, there are no orders on your list yet... Start adding now.
-                                <br />
-                                <Link href={`${router.pathname}/add-new-order`}>
-                                    <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">Add Order Now</span>
-                                </Link>
-                            </div>
-                        </div>
-                    )}
+                    {!filteredLiveOrders && <BlankPage />}
                     {filteredLiveOrders && (
                         <>
                             <Table

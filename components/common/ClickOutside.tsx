@@ -10,7 +10,7 @@ const ClickOutside = (props: IProp) => {
   const wrapperRef = useRef(null);
   useClickOutside(props.handler, props.trigger, wrapperRef);
   return (
-    <div ref={wrapperRef} className="absolute top-0 left-0 z-50">
+    <div ref={wrapperRef} className="w-full absolute top-0 left-0">
       {props.children}
     </div>
   );
