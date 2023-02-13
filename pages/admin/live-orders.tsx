@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import AdminPageHeader from "@/components/admin/AdminPageHeader";
-const LiveOrders = () => {
-  return (
-    <div>
-      <AdminPageHeader
-        content="Live Orders"
-        title="Live Orders | MazExpress Admin"
-      />
-    </div>
-  );
-=======
 import React, { useEffect, useState } from "react";
 import useOrders from "@/lib/useOrders";
 import LiveOrderPageHeader from "@/components/admin/LiveOrderPageHeader";
@@ -154,7 +141,6 @@ const LiveOrders = () => {
             </div>
         </>
     );
->>>>>>> gowrish
 };
 
 export default LiveOrders;

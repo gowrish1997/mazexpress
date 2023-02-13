@@ -824,6 +824,10 @@ option {
 }
 .react-calendar__navigation button {
   min-width: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+padding-top: 10px;
   background: none;
 }
 .react-calendar__navigation button:disabled {

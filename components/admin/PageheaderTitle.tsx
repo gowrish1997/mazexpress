@@ -55,14 +55,14 @@ const PageheaderTitle = (props: IProp) => {
 
                 {showCalendar ? (
                     <ClickOutside handler={smartToggleGateHandler} trigger={trigger}>
-                        <div className="absolute top-[40px] left-[10px] bg-white rounded shadow z-[50]">
+                        <div className="absolute top-[40px] left-[10px] bg-white rounded shadow z-[50] border-[1px] p-3 ">
                             <Calendar
                                 onChange={calendarChangeHandler}
                                 // value={calendarValue}
                                 next2Label={null}
                                 prev2Label={null}
-                                nextLabel={<FontAwesomeIcon icon={faAngleRight} size="xs" />}
-                                prevLabel={<FontAwesomeIcon icon={faAngleLeft} size="xs" />}
+                                nextLabel={<FontAwesomeIcon icon={faAngleRight} className='w-2'/>}
+                                prevLabel={<FontAwesomeIcon icon={faAngleLeft} className='w-2' />}
                                 view={"month"}
                                 tileClassName={({ date, view }) => {
                                     if (props.allLiveOrders?.find((x:any) => moment(x.created_on_orders).format("DD-MM-YYYY") === moment(date).format("DD-MM-YYYY"))) {

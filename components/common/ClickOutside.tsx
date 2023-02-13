@@ -11,7 +11,7 @@ const ClickOutside = (props: IProp) => {
   const wrapperRef = useRef(null);
   useClickOutside(props.handler, props.trigger, wrapperRef);
   return (
-    <div ref={wrapperRef} className={props.className !== undefined ? props.className+''+'' : 'absolute top-0 left-0'}>
+    <div ref={wrapperRef} className={props.className !== undefined ? props.className+''+'' : 'absolute top-0 left-0 w-full'}>
 
       {props.children}
     </div>

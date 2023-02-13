@@ -113,8 +113,8 @@ const LiveOrderLineItem = (props: IProp) => {
                 </div>
             </td>
             <td className="" style={props.type == "delivered" ? { visibility: "hidden" } : {}} ref={trigger}>
-                <div className="w-full h-full ">
-                    <div onClick={toggleGateHandler}  className="cursor-pointer relative">
+                <div className="w-full h-full  ">
+                    <div onClick={toggleGateHandler}  className="cursor-pointer relative ">
                         <Image
                             src="/editicon.png"
                             // ref={trigger}

@@ -51,7 +51,7 @@ const AdminOptionDropDown = (props: Iprop) => {
             </button>
             {showAdminOptionCard && (
                 <ClickOutside trigger={trigger} handler={smartToggleGateHandler}>
-                    <div className="w-full  bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px]">
+                    <div className="w-full bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px]">
                         <button
                             className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize flex flex-row justify-start items-center space-x-[5px]"
                             onClick={exportToCSV}
