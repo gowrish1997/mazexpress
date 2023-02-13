@@ -60,9 +60,10 @@ const AdminOptionDropDown = (props: Iprop) => {
                             <span>download</span>
                         </button>
                         {props.option &&
-                            props.option.map((data) => {
+                            props.option.map((data,index) => {
                                 return (
                                     <button
+                                    key={index}
                                         className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
                                         onClick={props.toggle}
                                         disabled={props.disabled}

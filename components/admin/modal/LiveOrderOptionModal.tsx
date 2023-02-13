@@ -71,5 +71,5 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => 
         </ClickOutside>
     );
 });
-
+LiveOrderOptionModal.displayName = "LiveOrderOptionModal";
 export default LiveOrderOptionModal;

@@ -5,8 +5,8 @@ import ShipmentsPageHeader from "@/components/admin/ShipmentsPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import { IOrderResponse } from "@/models/order.interface";
-import useSelectOrder from "@/lib/useSelectOrder";
-import useFilter from "@/lib/useFilter";
+import { selectOrder } from "@/lib/selectOrder";
+import { filter } from "@/lib/filter";
 import BlankPage from "@/components/admin/BlankPage";
 const tableHeaders = [
   "Customer",
@@ -20,9 +20,7 @@ const tableHeaders = [
 
 const Shipments = () => {
   const router = useRouter();
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    // userId: 1,
-  });
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
 
   const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
   const [filteredLiveOrders, setFilteredAllLiveOrders] =
@@ -43,27 +41,22 @@ const Shipments = () => {
     setFilteredAllLiveOrders(liveOrders);
   }, [orders]);
 
-  function filterByMazTrackingId(value: string) {
+  const filterByMazTrackingId = (value: string) => {
     setMazTrackingIdFilterKey(value);
-    let liveOrder = useFilter(allLiveOrders!, createdDateFilterKey, value);
-    setFilteredAllLiveOrders(liveOrder);
-  }
+    setFilteredAllLiveOrders(
+      filter(allLiveOrders!, createdDateFilterKey, value)
+    );
+  };
 
-  function filterByCreatedDate(value: Date | string){
+  const filterByCreatedDate = (value: Date | string) => {
     setCreatedDateFilterKey(value);
     setFilteredAllLiveOrders(
-      useFilter(allLiveOrders!, value, mazTrackingIdFilterKey!)
+      filter(allLiveOrders!, value, mazTrackingIdFilterKey!)
     );
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    useSelectOrder(
-      value,
-      type,
-      setSelectedOrder,
-      allLiveOrders!,
-      selectedOrder!
-    );
+    selectOrder(value, type, setSelectedOrder, allLiveOrders!, selectedOrder!);
   };
 
   if (ordersIsLoading) {

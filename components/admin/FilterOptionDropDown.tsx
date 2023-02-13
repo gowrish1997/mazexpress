@@ -58,9 +58,10 @@ const FilterOptionDropDown = (props: Iprop) => {
                 <ClickOutside trigger={trigger} handler={smartToggleGateHandler}>
                     <div className="w-full  bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px]">
                         {props.options &&
-                            props.options.map((data) => {
+                            props.options.map((data,index) => {
                                 return (
                                     <button
+                                    key={index}
                                         className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
                                         style={currentValue == data ? { backgroundColor: "#f2f9fc" } : {}}
                                         onClick={() => dropDownOnChangeHandler(data)}
