@@ -6,7 +6,7 @@ interface IProp {
     setSelectedOrder: React.Dispatch<React.SetStateAction<string[] | undefined>>;
     filteredLiveOrders: IOrderResponse[] & IUser[] ;
 }
-export const useSelectOrder = (
+export const selectOrder = (
     value:any,
     type: any,
     setSelectedOrder:any,
@@ -41,5 +41,5 @@ export const useSelectOrder = (
             setSelectedOrder(filteredOrder);
         }
     }
-    return "gowrish";
+
 };

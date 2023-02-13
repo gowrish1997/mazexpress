@@ -7,15 +7,15 @@ import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import { IOrderResponse } from "@/models/order.interface";
 import DeliveredPageHeader from "@/components/admin/DeliveredPageHeader";
-import { useSelectOrder } from "@/components/customHook/useSelectOrder";
+import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import { useFilter } from "@/components/customHook/useFilter";
+import { filter } from "@/lib/filter";
 
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
 const DeliveredOrders = () => {
     const router = useRouter();
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders();
+    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
 
     const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
     const [filteredLiveOrders, setFilteredAllLiveOrders] = useState<IOrderResponse[]>();
@@ -34,16 +34,16 @@ const DeliveredOrders = () => {
 
     const filterByMazTrackingId = (value: string) => {
         setMazTrackingIdFilterKey(value);
-        setFilteredAllLiveOrders(useFilter(allLiveOrders!, createdDateFilterKey, value));
+        setFilteredAllLiveOrders(filter(allLiveOrders!, createdDateFilterKey, value));
     };
 
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
-        setFilteredAllLiveOrders(useFilter(allLiveOrders!, value, mazTrackingIdFilterKey!));
+        setFilteredAllLiveOrders(filter(allLiveOrders!, value, mazTrackingIdFilterKey!));
     };
 
     const selectOrderHandler = (value: string, type: string) => {
-        useSelectOrder(value, type, setSelectedOrder, allLiveOrders!, selectedOrder!);
+        selectOrder(value, type, setSelectedOrder, allLiveOrders!, selectedOrder!);
     };
 
     if (ordersIsLoading) {

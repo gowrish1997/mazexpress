@@ -6,7 +6,7 @@ import fetchJson from "@/lib/fetchJson";
 
 const HelpCenter = () => {
   const [showEditHelpModal, setShowEditHelpModal] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState<any>();
 
   const toggleEditHelpModal = () => {
     setShowEditHelpModal((prev) => !prev);

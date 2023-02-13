@@ -3,7 +3,7 @@ import useOrders from "@/lib/useOrders";
 import UserbasePageHeader from "@/components/admin/UserbasePageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { useSelectOrder } from "@/components/customHook/useSelectOrder";
+import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import useAllUser from "@/lib/useAllUsers";
 import { IUser } from "@/models/user.interface";
@@ -14,7 +14,7 @@ const tableHeaders = ["Customer", "Email ID", "Mobile numbers", "Created Date", 
 const UserBase = () => {
     const router = useRouter();
 
-    const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser();
+    const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({});
     console.log(allUser);
 
     const [allUsers, setAllUsers] = useState<IUser[]>(allUser!);
@@ -31,18 +31,16 @@ const UserBase = () => {
         setCreatedDateFilterKey(value);
         const users = allUsers?.filter((el) => {
             if (value) {
-                console.log("valye countable");
                 return moment(el.created_on_user).format("DD-MM-YYYY") === moment(value).format("DD-MM-YYYY");
             } else {
-                console.log("vakuye nit cobnasjdb");
                 return el;
             }
         });
-      setFilteredUsers(users)
+        setFilteredUsers(users);
     };
 
     const selectOrderHandler = (value: string, type: string) => {
-        useSelectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
+        selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
     };
 
     if (allUserIsLoading) {

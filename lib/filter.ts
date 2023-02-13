@@ -1,6 +1,6 @@
 import moment from "moment";
 import { IOrderResponse } from "@/models/order.interface";
-export const useFilter = (allLiveOrders: IOrderResponse[], createdDateFilterKey: Date | string, mazTrackingIdFilterKey: string) => {
+export const filter = (allLiveOrders: IOrderResponse[], createdDateFilterKey: Date | string, mazTrackingIdFilterKey: string) => {
     const liveOrder = allLiveOrders
         ?.filter((el) => {
             if (createdDateFilterKey) {
