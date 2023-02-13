@@ -16,11 +16,8 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
         switch (req.method) {
             case "GET":
                 if (!req.query.user) {
-                    console.log(req.query.user, "gowish");
-
                     // error invalid
                     if (req.query.id) {
-                        console.log("oinsdie quert id");
                         // single response
                         const id = req.query.id;
                         db("orders")
@@ -30,7 +27,6 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
                                 resolve(data);
                             });
                     } else {
-                        console.log('order last else blick is trunning')
                         db("orders").then((data: any) => {
                             res.status(200).json(data);
                             resolve(data);
