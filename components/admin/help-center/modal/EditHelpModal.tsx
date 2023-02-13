@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
@@ -8,11 +8,13 @@ import useUser from "@/lib/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import fetchJson from "@/lib/fetchJson";
 import { IWarehouseProps } from "@/models/warehouse.interface";
+import { createToast } from "@/lib/toasts";
 
 interface IProp {
   show: boolean;
   close: () => void;
   update: () => Promise<IWarehouseProps[] | undefined>;
+  data: any
 }
 
 const schema = yup
@@ -23,16 +25,17 @@ const schema = yup
   .required();
 
 interface IHelpForm {
-  num1: number;
-  num2: number;
-  num3: number;
-  email: string
-  name: string
+  num1_warehouse: number;
+  num2_warehouse: number;
+  num3_warehouse: number;
+  email_warehouse: string;
+  name_warehouse: string;
 }
 
 const EditHelpModal = (props: IProp) => {
-  const [country, setCountry] = useState("LY");
   const { user, mutateUser, userIsLoading } = useUser();
+  // const [data, setData] = useState(props.data);
+
   const {
     register,
     handleSubmit,
@@ -41,25 +44,32 @@ const EditHelpModal = (props: IProp) => {
     formState: { errors },
   } = useForm<IHelpForm>({
     defaultValues: {
-      
+      name_warehouse: props.data.name,
+      email_warehouse: props.data.email,
+      num1_warehouse: parseInt(props.data.num1),
+      num2_warehouse: parseInt(props.data.num2),
+      num3_warehouse: parseInt(props.data.num3),
     },
     // resolver: yupResolver(schema),
   });
 
-
   const onSubmit: SubmitHandler<IHelpForm> = async (data) => {
-    // let address: any = { ...data };
-    // delete address.default_addresses;
-    // address.user_id = user?.id_users;
-
     console.log(data);
 
-    // add address
-    // const addressResult = await fetchJson(`/api/addresses`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(address),
-    // });
+    // update help center info
+    const helpUpdateResult = await fetchJson(`/api/help-center`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    props.close()
+    createToast({
+      type: 'success',
+      title: 'Success',
+      message: 'Successfully updated help center info',
+      timeOut: 3000
+    })
+    // props.update()
 
     // console.log(addressResult)
     // if (data.default_addresses === "on") {
@@ -80,6 +90,7 @@ const EditHelpModal = (props: IProp) => {
     // props.update();
   };
 
+
   return (
     <>
       {props.show && (
@@ -92,38 +103,38 @@ const EditHelpModal = (props: IProp) => {
               Edit Contact Details
             </p>
             <input
-              id="tag_addresses"
+              id="name_warehouse"
               type="string"
-              {...register("name")}
+              {...register("name_warehouse")}
               className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give first title @Home"
             />
             <ReactHookFormInput
-              label="Mobile Number"
-              name="num1"
+              label="Mobile Number 1"
+              name="num1_warehouse"
               type="number"
-              register={register("num1")}
+              register={register("num1_warehouse")}
             />
             <ReactHookFormInput
               label="Mobile Number 2"
-              name="num2"
+              name="num2_warehouse"
               type="number"
-              register={register("num2")}
+              register={register("num2_warehouse")}
             />
             <ReactHookFormInput
               label="Mobile Number 3"
-              name="num3"
+              name="num3_warehouse"
               type="number"
-              register={register("num3")}
+              register={register("num3_warehouse")}
             />
-            
+
             <ReactHookFormInput
               label="Email ID"
-              name="email"
+              name="email_warehouse"
               type="string"
-              register={register("email")}
+              register={register("email_warehouse")}
             />
-            
+
             <div className="flex-type1 space-x-[10px] mt-[5px] ">
               <button
                 className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"

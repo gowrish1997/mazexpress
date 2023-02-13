@@ -71,7 +71,11 @@ const NotificationPanel = () => {
           Create notification
         </button>
       </div>
-      <CreateNotificationModal show={showCreateNotificationModal} close={toggleShowCreateNotificationModal} update={()=>new Promise((resolve, reject)=>{})} />
+      <CreateNotificationModal
+        show={showCreateNotificationModal}
+        close={toggleShowCreateNotificationModal}
+        // update={() => new Promise((resolve, reject) => {})}
+      />
     </>
   );
 };

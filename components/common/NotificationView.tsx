@@ -85,7 +85,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
           </div>
           <div className="space-y-[20px]">
             {userNotifications
-              // ?.filter((el) => el.status_notifications !== "deleted")
+              ?.sort((a,b) => b.id_notifications! - a.id_notifications!)
               ?.map((data) => {
                 return (
                   <EachNotification

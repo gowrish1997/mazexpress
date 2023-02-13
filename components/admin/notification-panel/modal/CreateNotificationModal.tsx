@@ -11,11 +11,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import ClickOutside from "@/components/common/ClickOutside";
 import { createToast } from "@/lib/toasts";
+import axios from "axios";
 
 interface IProp {
   show: boolean;
   close: () => void;
-  update: () => Promise<any>;
+  // update: () => Promise<any>;
 }
 
 // const schema = yup
@@ -29,6 +30,7 @@ const CreateNotificationModal = (props: IProp) => {
   const { user, mutateUser, userIsLoading } = useUser();
   const [showFileInputModal, setShowFileInputModal] = useState<boolean>(false);
   const [files, setFiles] = useState<any>([]);
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([])
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileUploadTriggerRef = useRef<HTMLButtonElement>(null);
@@ -53,6 +55,24 @@ const CreateNotificationModal = (props: IProp) => {
   const onSubmit: SubmitHandler<INotificationForm> = async (data) => {
     console.log(data);
     console.log(files);
+
+    // multiparty here
+    axios
+    .post(
+      "/api/notifications",
+      {
+        data: data,
+        files: files,
+        users: selectedUsers
+      },
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    ).then(response => {
+      console.log(response.data)
+    })
+    
+
     // console.log(fileInputRef.current?.files)
     props.close();
     createToast({
@@ -83,6 +103,11 @@ const CreateNotificationModal = (props: IProp) => {
     // delete file
   };
 
+  const updateSelectedUsers = (list: number[]) => {
+    console.log(list)
+    setSelectedUsers(list)
+  }
+
   useEffect(() => {
     console.log(files);
   }, [files]);
@@ -100,7 +125,7 @@ const CreateNotificationModal = (props: IProp) => {
             </p>
 
             <div className="w-full">
-              <UserSelect />
+              <UserSelect update={updateSelectedUsers} />
             </div>
             <input
               id="title_notifications"

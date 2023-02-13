@@ -1,14 +1,20 @@
 import PageHeader from "@/components/common/PageHeader";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import EditHelpModal from "@/components/admin/help-center/modal/EditHelpModal";
+import fetchJson from "@/lib/fetchJson";
 
 const HelpCenter = () => {
   const [showEditHelpModal, setShowEditHelpModal] = useState(false);
+  const [data, setData] = useState();
 
   const toggleEditHelpModal = () => {
     setShowEditHelpModal((prev) => !prev);
   };
+
+  useEffect(() => {
+    fetchJson("/api/help-center").then((data) => setData(data));
+  }, []);
 
   return (
     <>
@@ -20,16 +26,16 @@ const HelpCenter = () => {
         <div className="min-w-[32%] min-h-[180px] bg-[#EDF5F9] rounded-[4px] p-[25px] ">
           <div className="flex-type3 space-x-[10px]">
             <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
-              MAZ Express A267
+              {data && data.name}
             </p>
           </div>
           <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">
-            Turkey
+            Istanbul, Turkey
           </p>
           <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
             Write us on{" "}
             <span className="font-[700] text-[#2B2B2B]">
-              help.mazexpress@gmail.com
+              {data && data.email}
             </span>
           </p>
 
@@ -37,36 +43,44 @@ const HelpCenter = () => {
             <div className="flex items-center mb-2">
               <Image src="/mobile.png" height={12} width={12} alt="mobile" />
               <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] ml-[10px]">
-                01632 960230
+                {data && data.num1}
               </p>
             </div>
             <div className="flex items-center mb-2">
               <Image src="/mobile.png" height={12} width={12} alt="mobile" />
               <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] ml-[10px]">
-                01632 960230
+                {data && data.num2}
               </p>
             </div>
             <div className="flex items-center">
               <Image src="/mobile.png" height={12} width={12} alt="mobile" />
               <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] ml-[10px]">
-                01632 960230
+                {data && data.num3}
               </p>
             </div>
           </div>
 
           <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] flex justify-end flex-1 grow">
             <div className="space-x-[20px] flex items-end  ">
-              <button className="hover:font-[600]" onClick={toggleEditHelpModal}>Edit</button>
+              <button
+                className="hover:font-[600]"
+                onClick={toggleEditHelpModal}
+              >
+                Edit
+              </button>
               <button className="hover:font-[600]">Remove</button>
             </div>
           </div>
         </div>
       </div>
-      <EditHelpModal
-        show={showEditHelpModal}
-        close={toggleEditHelpModal}
-        update={() => new Promise((resolve, reject) => {})}
-      />
+      {data && (
+        <EditHelpModal
+          show={showEditHelpModal}
+          close={toggleEditHelpModal}
+          update={() => new Promise((resolve, reject) => {})}
+          data={data}
+        />
+      )}
     </>
   );
 };

@@ -120,8 +120,10 @@ const NavLink = (props: IProp) => {
               <span className="absolute top-0 bg-green-600 rounded-full h-[12px] w-[12px] flex items-center justify-center">
                 <FontAwesomeIcon
                   icon={faCheck}
-                  className="text-[8px] font-[600]"
+                  className="font-[600] w-[7px]"
                   color="white"
+                  // size="xs"
+                  // style={{fontSize: '8px'}}
                 />
               </span>
             ) : null}

@@ -38,6 +38,7 @@ const EachNotification = (props: IProp) => {
           }),
           false
         );
+        // console.log(resp)
       } catch (error) {
         if (error instanceof FetchError) {
           // setErrorMsg(error.data.message);
@@ -74,7 +75,7 @@ const EachNotification = (props: IProp) => {
     <div className=" border-[0.5px] border-[#BBC2CF] p-[15px] bg-[#ffffff] rounded-[4px] space-y-[25px]">
       <div className="space-y-[10px]">
         <p className="text-[#2B2B2B] text-[14px] font-[600] leading-[19px] ">
-          {data.title_notifications} {data.id_notifications}
+          {data.title_notifications}
         </p>
         <p className="text-[#2B2B2B] text-[13px] font-[400] leading-[18px]">
           {data.content_notifications}

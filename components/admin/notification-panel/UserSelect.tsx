@@ -7,7 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
-const UserSelect = () => {
+
+interface IProp {
+  update: (list: number[]) => void
+}
+
+const UserSelect = (props: any) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
@@ -60,7 +65,7 @@ const UserSelect = () => {
     // mark all
     e.stopPropagation();
 
-    console.log(e.target.checked);
+    // console.log(e.target.checked);
     if (e.target.checked) {
       let newList = users.map((item) => {
         return item.id_users;
@@ -91,6 +96,10 @@ const UserSelect = () => {
   useEffect(() => {
     inputRef.current?.focus();
   }, [showDropdown]);
+
+  useEffect(() => {
+    props.update(selectedUsers)
+  }, [selectedUsers]);
 
   return (
     <div className="relative">

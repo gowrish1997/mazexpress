@@ -43,7 +43,7 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<IUser>) {
         is_admin_users: 0,
         is_logged_in_users: 0,
         is_notifications_enabled_users: 0,
-      }
+      };
       res.json(nullUser as any);
       resolve(nullUser);
     }

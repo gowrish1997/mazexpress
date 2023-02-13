@@ -7,6 +7,9 @@ import fetchJson, { FetchError } from "@/lib/fetchJson";
 import "react-notifications/lib/notifications.css";
 import { NotificationContainer } from "react-notifications";
 import { createToast } from "@/lib/toasts";
+import { config } from "@fortawesome/fontawesome-svg-core";
+
+config.autoAddCss = false;
 
 export default function App({
   Component,
