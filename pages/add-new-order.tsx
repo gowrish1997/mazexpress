@@ -119,11 +119,6 @@ const AddNewOrder = () => {
     // console.log(data);
   };
 
-  useEffect(() => {
-    console.log(addresses);
-    console.log(errors)
-  }, [addresses]);
-
   return (
     <>
       <PageHeader

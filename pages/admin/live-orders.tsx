@@ -3,11 +3,11 @@ import useOrders from "@/lib/useOrders";
 import LiveOrderPageHeader from "@/components/admin/LiveOrderPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { useSelectOrder } from "@/components/customHook/useSelectOrder";
+import { useSelectOrder } from "@/lib/useSelectOrder";
 import { IOrderResponse } from "@/models/order.interface";
 import BlankPage from "@/components/admin/BlankPage";
 import moment from "moment";
-import { useFilter } from "@/components/customHook/useFilter";
+import { useFilter } from "@/lib/useFilter";
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
 const LiveOrders = () => {

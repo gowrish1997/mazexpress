@@ -3,7 +3,7 @@ import useOrders from "@/lib/useOrders";
 import UserbasePageHeader from "@/components/admin/UserbasePageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { useSelectOrder } from "@/components/customHook/useSelectOrder";
+import { useSelectOrder } from "@/lib/useSelectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import useAllUser from "@/lib/useAllUsers";
 import { IUser } from "@/models/user.interface";

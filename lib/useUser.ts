@@ -36,7 +36,7 @@ export default function useUser({
         router.push("/");
       }
     }
-  }, [user, mutateUser, userIsLoading]);
+  }, [user, mutateUser, userIsLoading, redirectIfFound, router]);
 
   return { user, mutateUser, userIsLoading };
 }

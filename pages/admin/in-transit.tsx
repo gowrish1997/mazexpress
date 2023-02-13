@@ -5,9 +5,9 @@ import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import { IOrderResponse } from "@/models/order.interface";
-import { useSelectOrder } from "@/components/customHook/useSelectOrder";
+import { useSelectOrder } from "@/lib/useSelectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import { useFilter } from "@/components/customHook/useFilter";
+import { useFilter } from "@/lib/useFilter";
 
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
