@@ -37,6 +37,8 @@ export default function handler(
               resolve(data);
             });
         } else {
+          console.log("use else");
+
           // list response
           db.select(
             "id_users",
@@ -48,7 +50,10 @@ export default function handler(
             "avatar_url_users",
             "is_notifications_enabled_users",
             "is_admin_users",
-            "is_logged_in_users"
+            "is_logged_in_users",
+            "age_users",
+            "gender_users",
+            "created_on_user"
           )
             .from("users")
             .then((data: any) => {
@@ -63,13 +68,13 @@ export default function handler(
         // default icon avatar url
         //
         // hash pass
-        const hash = hashPassword(req.body.password_users);
+        const hash = hashPassword(req.body.password);
         db("users")
           .insert({
-            first_name_users: req.body.first_name_users,
-            last_name_users: req.body.last_name_users,
-            email_users: req.body.email_users,
-            phone_users: req.body.phone_users,
+            first_name_users: req.body.first_name,
+            last_name_users: req.body.last_name,
+            email_users: req.body.email,
+            phone_users: req.body.phone,
             password_users: hash,
             default_address_users: null,
             avatar_url_users: "default_user.png",
@@ -81,7 +86,7 @@ export default function handler(
         break;
 
       case "PUT":
-        // console.log("request received");
+        console.log("request received");
         if (req.query.id) {
           const id = req.query.id;
           const fields = { ...req.body };

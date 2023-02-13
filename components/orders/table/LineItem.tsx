@@ -1,20 +1,29 @@
 import React, { createRef, useRef, useState } from "react";
 import { useEffect } from "react";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import OrderOptionModal from "../modal/OrderOptionModal";
-import useClickOutside from "@/lib/useClickOutside";
+
 import { IOrderResponse } from "@/models/order.interface";
 import useAddresses from "@/lib/useAddresses";
 import useUser from "@/lib/useUser";
 import useTracking from "@/lib/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
-
+import GreenRadioButton from "../../../public/green_svg.svg";
+import RedRadioButton from "../../../public/red_svg.svg";
+import YellowRadioButton from "../../../public/yellow_svg.svg";
+import useAllUser from "@/lib/useAllUsers";
 interface IProp {
     row: IOrderResponse;
+    type: string;
 }
 
 const LineItem = (props: IProp) => {
+    const trigger = useRef<any>();
+
     const { user, mutateUser } = useUser();
+
     const { addresses, mutateAddresses } = useAddresses({
         userId: user?.id_users,
     });
@@ -24,30 +33,28 @@ const LineItem = (props: IProp) => {
 
     const [estDelivery, setEstDelivery] = useState<string>("...");
     const [gate, setGate] = useState(false);
-
-    // console.log("tracking render");
-    // const modalTriggerNode = createRef<HTMLTableCellElement>();
-    const trigger = useRef<any>();
+    console.log(gate);
 
     function smartToggleGateHandler() {
         setGate(false);
     }
     function toggleGateHandler() {
+        console.log("toggle gate");
         setGate((prev) => !prev);
     }
 
     const orderStatusColorHandler = (status: string) => {
         switch (status) {
             case "in-transit":
-                return "in_transit";
+                return <RedRadioButton />;
 
             case "delivered":
-                return "delivered";
+                return <GreenRadioButton />;
 
             case "at-warehouse":
-                return "at_warehouse";
+                return <YellowRadioButton />;
             case "pending":
-                return "pending";
+                return <YellowRadioButton />;
             default:
                 return "pending";
         }
@@ -56,15 +63,11 @@ const LineItem = (props: IProp) => {
     useEffect(() => {
         // console.log("tracking rerender");
         if (tracking !== undefined) {
-            console.log(tracking);
             // sort and set delivery
             let latestUpdate = [...tracking].sort((a, b) => b.stage_tracking - a.stage_tracking)[0];
-            // console.log(latestUpdate);
             let newDate = new Date(latestUpdate?.created_on_tracking);
-            console.log(newDate);
             newDate.setDate(newDate.getDate() + 7);
             const newDateString = getDateInStringFormat(newDate);
-
             setEstDelivery(newDateString!);
         }
     }, [tracking]);
@@ -77,26 +80,25 @@ const LineItem = (props: IProp) => {
             <td className={`td4`}>{estDelivery}</td>
             <td className={`td5 `} style={{}}>
                 <div className="flex flex-row items-center gap-x-[10px] ">
-                    <span className="address_table" >{addresses?.find((el) => el.id_addresses === props.row.address_id)?.tag_addresses}</span>
+                    <span className="address_td capitalize "> {addresses?.find((el) => el.id_addresses === props.row.address_id)?.tag_addresses}</span>
 
                     {user?.default_address_users === props.row.address_id && (
                         <div className="bg-[#FF645A] rounded-[4px] text-[10px] text-[#FFFFFF] font-[500] leading-[15px] py-[5px] px-[10px] ">Default</div>
                     )}
                 </div>
             </td>
-            <td className={`td6`}>
-                <label className={`customRadioInput ml-[12px] ${orderStatusColorHandler(props.row.status_orders)}`} >
-                    <input type="radio" defaultChecked={true} />
-                    <span className="checkmark"></span>
-                </label>
-                <span className="ml-[20px] flex-1 ">{props.row.status_orders}</span>
+            <td className={`td6 `}>
+                <div className="h-full flex flex-row justify-start items-center ">
+                    <div className="pending__icon">{orderStatusColorHandler(props.row.status_orders)}</div>
+                    <span className="ml-[5px] capitalize">{props.row.status_orders}</span>
+                </div>
             </td>
             <td
                 className=""
                 // onClick={(e) => optionModalHandler(e, index)}
             >
-                <div className="w-full h-full relative">
-                    <div onClick={toggleGateHandler} ref={trigger} className="cursor-pointer">
+                <div className="w-full h-full ">
+                    <div onClick={toggleGateHandler} ref={trigger} className="cursor-pointer relative">
                         <Image
                             src="/editicon.png"
                             // ref={trigger}

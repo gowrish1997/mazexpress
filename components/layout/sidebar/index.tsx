@@ -48,60 +48,66 @@ const userSidebarContent = [
   },
 ];
 const adminSidebarPanel = [
-  {
-    id: nanoid(),
-    title: "Dashboard",
-    icon: "/orders.png",
-    path: "/admin",
-  },
-  {
-    id: nanoid(),
-    title: "Live Orders",
-    icon: "/location.png",
-    path: "/admin/live-orders",
-  },
-  {
-    id: nanoid(),
-    title: "Today Shipments",
-    icon: "/warehouse.png",
-    path: "/admin/shipments",
-  },
-  {
-    id: nanoid(),
-    title: "Delivered Order",
-    icon: "/address.png",
-    path: "/admin/delivered",
-  },
-  {
-    id: nanoid(),
-    title: "Warehouse",
-    icon: "/settings.png",
-    path: "/admin/warehouse",
-  },
-  {
-    id: nanoid(),
-    title: "User Base",
-    icon: "/help.png",
-    path: "/admin/users",
-  },
-  {
-    id: nanoid(),
-    title: "Notification Panel",
-    icon: "/address.png",
-    path: "/admin/notification-panel",
-  },
-  {
-    id: nanoid(),
-    title: "Settings",
-    icon: "/settings.png",
-    path: "/admin/settings",
-  },
-  {
-    id: nanoid(),
-    title: "Help center",
-    icon: "/help.png",
-    path: "/admin/help-center",
-  },
+    {
+        id: nanoid(),
+        title: "Dashboard",
+        icon: "/orders.png",
+        path: "/admin",
+    },
+    {
+        id: nanoid(),
+        title: "Live Orders",
+        icon: "/location.png",
+        path: "/admin/live-orders",
+    },
+    {
+        id: nanoid(),
+        title: "Today Shipments",
+        icon: "/warehouse.png",
+        path: "/admin/shipments",
+    },
+    {
+        id: nanoid(),
+        title: "Out From Warehouse",
+        icon: "/warehouse.png",
+        path: "/admin/in-transit",
+    },
+    {
+        id: nanoid(),
+        title: "Delivered Order",
+        icon: "/address.png",
+        path: "/admin/delivered",
+    },
+    {
+        id: nanoid(),
+        title: "Warehouse",
+        icon: "/settings.png",
+        path: "/admin/warehouse",
+    },
+    {
+        id: nanoid(),
+        title: "User Base",
+        icon: "/help.png",
+        path: "/admin/users",
+    },
+    {
+        id: nanoid(),
+        title: "Notification Panel",
+        icon: "/address.png",
+        path: "/admin/notification-panel",
+    },
+    {
+        id: nanoid(),
+        title: "Settings",
+        icon: "/settings.png",
+        path: "/admin/settings",
+    },
+    {
+        id: nanoid(),
+        title: "Help center",
+        icon: "/help.png",
+        path: "/admin/help-center",
+    },
 ];
 
 const sidebarContentHandler = (user: number) => {

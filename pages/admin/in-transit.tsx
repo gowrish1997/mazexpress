@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import useOrders from "@/lib/useOrders";
-import ShipmentsPageHeader from "@/components/admin/ShipmentsPageHeader";
+import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import { IOrderResponse } from "@/models/order.interface";
 import { useSelectOrder } from "@/components/customHook/useSelectOrder";
-import { useFilter } from "@/components/customHook/useFilter";
 import BlankPage from "@/components/admin/BlankPage";
+import { useFilter } from "@/components/customHook/useFilter";
+
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
-const Shipments = () => {
+const Intransit = () => {
     const router = useRouter();
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders();
 
@@ -23,7 +24,7 @@ const Shipments = () => {
 
     useEffect(() => {
         const liveOrders = orders?.filter((el) => {
-            return el.status_orders == "at-warehouse";
+            return el.status_orders == "in-transit";
         });
         setAllLiveOrders(liveOrders);
         setFilteredAllLiveOrders(liveOrders);
@@ -31,7 +32,7 @@ const Shipments = () => {
 
     const filterByMazTrackingId = (value: string) => {
         setMazTrackingIdFilterKey(value);
-      setFilteredAllLiveOrders(useFilter(allLiveOrders!, createdDateFilterKey, value));
+        setFilteredAllLiveOrders(useFilter(allLiveOrders!, createdDateFilterKey, value));
     };
 
     const filterByCreatedDate = (value: Date | string) => {
@@ -52,7 +53,7 @@ const Shipments = () => {
     return (
         <>
             <div>
-                <ShipmentsPageHeader content="Today Shipments" allLiveOrders={allLiveOrders!} selectedOrder={selectedOrder} filterByDate={filterByCreatedDate} />
+                <InTransitPageHeader content="In-transit" allLiveOrders={allLiveOrders!} filterByDate={filterByCreatedDate} selectedOrder={selectedOrder} />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">
                     {!filteredLiveOrders && <BlankPage />}
@@ -61,7 +62,7 @@ const Shipments = () => {
                             <Table
                                 rows={filteredLiveOrders}
                                 headings={tableHeaders}
-                                type="shipments"
+                                type="in-transit"
                                 onSelect={selectOrderHandler}
                                 selectedOrder={selectedOrder!}
                                 filterById={filterByMazTrackingId}
@@ -77,4 +78,4 @@ const Shipments = () => {
     );
 };
 
-export default Shipments;
+export default Intransit;

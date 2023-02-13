@@ -59,7 +59,8 @@ const adminIcon = (id: number) => {
 
     case 8:
       return <Helpcenter />;
-
+    case 9:
+      return <Helpcenter />;
     default:
       return "";
   }
@@ -120,7 +121,7 @@ const NavLink = (props: IProp) => {
               <span className="absolute top-0 bg-green-600 rounded-full h-[12px] w-[12px] flex items-center justify-center">
                 <FontAwesomeIcon
                   icon={faCheck}
-                  className="font-[600] w-[7px]"
+                  className="font-[600] w-[7px] "
                   color="white"
                   // size="xs"
                   // style={{fontSize: '8px'}}
@@ -128,9 +129,17 @@ const NavLink = (props: IProp) => {
               </span>
             ) : null}
             {props.content.title === "Live Orders" ? (
-              <span className="absolute left-0 transition duration-300 rounded-full h-[12px] w-[12px] flex items-center justify-center" style={{top: 'calc(50% - 5.5px)', left: 'calc(50% - 5.5px)', backgroundColor: router.pathname === '/admin/live-orders'?"#2B2B2B":"#8794AD"}}>
-                
-              </span>
+              <span
+                className="absolute left-0 transition duration-300 rounded-full h-[12px] w-[12px] flex items-center justify-center"
+                style={{
+                  top: "calc(50% - 5.5px)",
+                  left: "calc(50% - 5.5px)",
+                  backgroundColor:
+                    router.pathname === "/admin/live-orders"
+                      ? "#2B2B2B"
+                      : "#8794AD",
+                }}
+              ></span>
             ) : null}
             {/* {props.content.title === "Live Orders" && router.pathname !== '/admin/live-orders' ? (
               <span className="absolute left-0 bg-[#8794AD] rounded-full h-[12px] w-[12px] flex items-center justify-center" style={{top: 'calc(50% - 5.5px)', left: 'calc(50% - 5.5px)', }}>

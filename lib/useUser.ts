@@ -8,6 +8,7 @@ export default function useUser({
   redirectIfFound = false,
 } = {}) {
   const router = useRouter();
+
   const {
     data: user,
     mutate: mutateUser,
