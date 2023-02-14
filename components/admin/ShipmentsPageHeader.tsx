@@ -9,19 +9,11 @@ import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 
 interface IProp {
-<<<<<<< HEAD
-    content: string;
-    title?: string;
-    selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[];
-    filterByDate: (value: Date | string) => void;
-=======
   content: string;
   title?: string;
   selectedOrder?: string[];
   allLiveOrders: IOrderResponse[];
   filterByDate: (value: Date | string) => void;
->>>>>>> raunak
 }
 
 const adminOption = ["Moved out"];
@@ -38,16 +30,9 @@ const ShipmentsPageHeader = (props: IProp) => {
   //     setShowSheduleShipmentModal((prev) => !prev);
   // };
 
-<<<<<<< HEAD
-    const toggleMovedOutConfirmModal = () => {
-      
-        setMovedOutConfirmModal((prev) => !prev);
-    };
-=======
   const toggleMovedOutConfirmModal = () => {
     setMovedOutConfirmModal((prev) => !prev);
   };
->>>>>>> raunak
 
   // const scheduleSelectedShipmentsHandler = () => {
   //     console.log(props.selectedOrder, shipmentSelectedDate);
@@ -57,20 +42,6 @@ const ShipmentsPageHeader = (props: IProp) => {
     console.log(props.selectedOrder);
   };
 
-<<<<<<< HEAD
-    return (
-        <>
-            <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative "}>
-                <Head>
-                    <title></title>
-                </Head>
-                <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} filterByDate={props.filterByDate} />
-                {props.allLiveOrders && props.allLiveOrders.length > 0 && (
-                    <div className="flex-type1 space-x-[10px]  ">
-                        {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
-                        <FilterOptionDropDown options={warehousesDropDownOptoin} />
-                        {/* <button
-=======
   return (
     <>
       <div
@@ -91,7 +62,6 @@ const ShipmentsPageHeader = (props: IProp) => {
             {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
             <FilterOptionDropDown options={warehousesDropDownOptoin} />
             {/* <button
->>>>>>> raunak
                             className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px] mt-[5px] text-[14px] font-[700] text-[#525D72] leading-[19px] tracking-wider hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50"
                             disabled={!props.selectedOrder?.length}
                             onClick={toggleScheduleShipmentModal}
