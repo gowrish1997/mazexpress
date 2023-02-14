@@ -1,8 +1,7 @@
 import React, { useRef, useState } from "react";
-import { useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import LiveOrderOptionModal from "@/components/admin/modal/LiveOrderOptionModal";
 import { IOrderResponse } from "@/models/order.interface";
 import GreenRadioButton from "../../../public/green_svg.svg";

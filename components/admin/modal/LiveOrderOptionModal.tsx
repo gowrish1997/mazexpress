@@ -74,6 +74,9 @@ const actionHandler = async (type: string, row: unknown, user: IUser) => {
 
       break;
     case "in-transit":
+        // increment stage for 
+        let rowFixed3: IOrderResponse = row as IOrderResponse;
+        console.log(rowFixed3.id_orders)
       break;
     case "user_base":
       console.log("user_base");
@@ -106,7 +109,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             {props.type == "in-transit" && (
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
-                // onClick={commentHandler}
+                onClick={() => actionHandler(props.type, props.row, user!)}
               >
                 <div className="cursor-pointer">
                   <span className="w-full ">Received in Libya</span>
@@ -116,7 +119,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             {props.type == "in-transit" && (
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
-                // onClick={commentHandler}
+                onClick={() => actionHandler(props.type, props.row, user!)}
               >
                 <div className="cursor-pointer">
                   <span className="w-full ">Out for delivery</span>
