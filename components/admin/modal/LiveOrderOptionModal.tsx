@@ -38,7 +38,7 @@ const actionHandler = async (type: string, row: unknown, user: IUser) => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ status_orders: "at-warehouse" }),
       });
-      console.log(result0);
+      //   console.log(result0);
       const result0_2 = await fetchJson(`/api/tracking`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -48,7 +48,7 @@ const actionHandler = async (type: string, row: unknown, user: IUser) => {
           stage_tracking: 1,
         }),
       });
-      console.log(result0_2);
+      //   console.log(result0_2);
       break;
     case "shipments":
       let rowFixed2: IOrderResponse = row as IOrderResponse;
@@ -59,7 +59,7 @@ const actionHandler = async (type: string, row: unknown, user: IUser) => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ status_orders: "in-transit" }),
       });
-      console.log(result1);
+      //   console.log(result1);
       const result1_2 = await fetchJson("/api/tracking", {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -69,12 +69,11 @@ const actionHandler = async (type: string, row: unknown, user: IUser) => {
           stage_tracking: 2,
         }),
       });
-      console.log(result1_2);
+      //   console.log(result1_2);
       // post to tracking
 
       break;
     case "in-transit":
-        
       break;
     case "user_base":
       console.log("user_base");
@@ -93,7 +92,11 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
   (props, ref) => {
     const { user, mutateUser } = useUser();
     return (
-      <ClickOutside handler={props.handler} trigger={props.trigger} className='z-50 absolute top-0 left-0 w-full'>
+      <ClickOutside
+        handler={props.handler}
+        trigger={props.trigger}
+        className="z-50 absolute top-0 left-0 w-full"
+      >
         <div
           className="absolute top-[40px] right-[15px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] flex flex-col justify-between items-start p-[10px]"
           style={{ boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)" }}
@@ -116,7 +119,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                 // onClick={commentHandler}
               >
                 <div className="cursor-pointer">
-                  <span className="w-full ">Left Libya Warehouse</span>
+                  <span className="w-full ">Out for delivery</span>
                 </div>
               </li>
             )}
