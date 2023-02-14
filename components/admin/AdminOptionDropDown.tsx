@@ -8,10 +8,11 @@ import ClickOutside from "../common/ClickOutside";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 interface Iprop {
-  option?: string[];
-  toggle?: () => void;
-  disabled?: boolean;
-  orders: any;
+    option?: string[];
+    toggle?: () => void;
+    toggleCommentModal?: () => void;
+    disabled?: boolean;
+    orders: any;
 }
 
 const AdminOptionDropDown = (props: Iprop) => {
@@ -23,13 +24,11 @@ const AdminOptionDropDown = (props: Iprop) => {
     setShowAdminOptionCard((prev) => !prev);
   };
 
-  const smartToggleGateHandler = () => {
-    // console.log("smart togglere");
-    setShowAdminOptionCard(false);
-  };
-  const fileType =
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-  const fileExtension = ".xlsx";
+    const smartToggleGateHandler = () => {
+        setShowAdminOptionCard(false);
+    };
+    const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    const fileExtension = ".xlsx";
 
   const exportToCSV = () => {
     // console.log("downloading");

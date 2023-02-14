@@ -36,13 +36,13 @@ const LiveOrders = () => {
   >("");
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  useEffect(() => {
-    const liveOrders = orders?.filter((el) => {
-      return el.status_orders !== "delivered";
-    });
-    setAllLiveOrders(liveOrders);
-    setFilteredAllLiveOrders(liveOrders);
-  }, [orders]);
+    useEffect(() => {
+        // const liveOrders = orders?.filter((el) => {
+        //     return el.status_orders !== "delivered";
+        // });
+        setAllLiveOrders(orders);
+        setFilteredAllLiveOrders(orders);
+    }, [orders]);
 
   const filterByStatusHandler = (value: string) => {
     setStatusFilterKey(value);

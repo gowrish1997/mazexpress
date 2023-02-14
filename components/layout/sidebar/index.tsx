@@ -61,6 +61,12 @@ const adminSidebarPanel = [
         path: "/admin/live-orders",
     },
     {
+      id: nanoid(),
+      title: "Pending Orders",
+      icon: "/location.png",
+      path: "/admin/pending",
+  },
+    {
         id: nanoid(),
         title: "Today Shipments",
         icon: "/warehouse.png",

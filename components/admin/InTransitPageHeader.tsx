@@ -23,7 +23,7 @@ const InTransitPageHeader = (props: IProp) => {
     const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] = useState(false);
     const [showAddCommentModal, setShowAddCommentModal] = useState(false);
 
-    const toggleMarkedAsConfirmModal = () => {
+    const toggleMarkedAsDeliveredConfirmModal = () => {
         setShowMarkedAsConfirmModal((prev) => !prev);
     };
     const toggleAddCommentModal = () => {
@@ -34,8 +34,8 @@ const InTransitPageHeader = (props: IProp) => {
         console.log(props.selectedOrder);
     };
 
-    const addCommentHandler = () => {
-        console.log("add commnet");
+    const addCommentHandler = (comment: string) => {
+        console.log(props.selectedOrder, comment);
     };
     return (
         <>
@@ -49,18 +49,24 @@ const InTransitPageHeader = (props: IProp) => {
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
                         <FilterOptionDropDown options={warehousesDropDownOptoin} />
 
-                        <AdminOptionDropDown option={adminOption} toggle={toggleMarkedAsConfirmModal} disabled={!props.selectedOrder?.length} orders={props.allLiveOrders} />
+                        <AdminOptionDropDown
+                            option={adminOption}
+                            toggle={toggleMarkedAsDeliveredConfirmModal}
+                            toggleCommentModal={toggleAddCommentModal}
+                            disabled={!props.selectedOrder?.length}
+                            orders={props.allLiveOrders}
+                        />
                     </div>
                 )}
             </div>
 
             <MarkAsDeliveredConfirmModal
-                close={toggleMarkedAsConfirmModal}
+                close={toggleMarkedAsDeliveredConfirmModal}
                 show={showMarkedAsConfirmModal}
                 total={props.selectedOrder?.length!}
                 confirm={markedAsDeliveredHandler}
             />
-            <CommentModal close={toggleMarkedAsConfirmModal} show={showMarkedAsConfirmModal}  confirm={addCommentHandler} />
+            <CommentModal close={toggleAddCommentModal} show={showAddCommentModal} total={props.selectedOrder!} confirm={addCommentHandler} />
         </>
     );
 };

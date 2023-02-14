@@ -15,21 +15,23 @@ interface IProps {
 export type Ref = HTMLDivElement;
 
 const optionHandler = (type: string) => {
-  switch (type) {
-    case "live_order":
-      return "Move to shipments";
-    case "shipments":
-      return "Moved out";
-    case "in-transit":
-      return "Mark as delivered";
-    case "user_base":
-      return "Send notificaton";
-  }
+    switch (type) {
+        case "pending":
+            return "Move to shipments";
+        case "shipments":
+            return "Moved out";
+        case "in-transit":
+            return "Mark as delivered";
+        case "user_base":
+            return "Send notificaton";
+    }
 };
+
+
 
 const actionHandler = async (type: string, row: unknown) => {
   switch (type) {
-    case "live_order":
+    case "pending":
       let rowFixed: IOrderResponse = row as IOrderResponse;
 
       const result0 = await fetchJson(`/api/orders?id=${rowFixed.id_orders}`, {
