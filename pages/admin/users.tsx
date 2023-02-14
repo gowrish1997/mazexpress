@@ -22,7 +22,7 @@ const UserBase = () => {
   const router = useRouter();
 
   const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({});
-  console.log(allUser);
+  // console.log(allUser);
 
   const [allUsers, setAllUsers] = useState<IUser[]>(allUser!);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>(allUser!);
@@ -69,6 +69,7 @@ const UserBase = () => {
           allUsers={allUsers!}
           selectedUser={selectedUser}
           filterByDate={filterByCreatedDate}
+          title="User Base | MazExpress Admin"
         />
         <div className="flex flex-col justify-between relative flex-1 h-full">
           {!filteredUsers && <BlankPage />}

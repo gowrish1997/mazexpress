@@ -8,17 +8,17 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
 interface IProp {
-    content: string;
-    title?: string;
-    selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[];
-    filterByDate: (value: Date | string) => void;
+  content: string;
+  title?: string;
+  selectedOrder?: string[];
+  allLiveOrders: IOrderResponse[];
+  filterByDate: (value: Date | string) => void;
 }
 
 const adminOption = [ "Received in Libya", "Out for delivery", "Mark as delivered","Add comment"];
 
 const InTransitPageHeader = (props: IProp) => {
-    const warehousesDropDownOptoin = ["istanbul"];
+  const warehousesDropDownOptoin = ["istanbul"];
 
     const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] = useState(false);
     const [showAddCommentModal, setShowAddCommentModal] = useState(false);

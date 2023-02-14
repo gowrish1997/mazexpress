@@ -36,13 +36,13 @@ const LiveOrders = () => {
   >("");
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-    useEffect(() => {
-        // const liveOrders = orders?.filter((el) => {
-        //     return el.status_orders !== "delivered";
-        // });
-        setAllLiveOrders(orders);
-        setFilteredAllLiveOrders(orders);
-    }, [orders]);
+  useEffect(() => {
+    // const liveOrders = orders?.filter((el) => {
+    //     return el.status_orders !== "delivered";
+    // });
+    setAllLiveOrders(orders);
+    setFilteredAllLiveOrders(orders);
+  }, [orders]);
 
   const filterByStatusHandler = (value: string) => {
     setStatusFilterKey(value);
@@ -108,6 +108,7 @@ const LiveOrders = () => {
           onChangeStatus={filterByStatusHandler}
           selectedOrder={selectedOrder!}
           filterByDate={filterByCreatedDate}
+          title="Live Orders | MazExpress Admin"
         />
         <div className="flex flex-col justify-between relative flex-1 h-full">
           {!filteredLiveOrders && <BlankPage />}

@@ -5,6 +5,8 @@ import download from "../../public/download.png";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 interface Iprop {
     option?: string[];
     toggle?: (value?: string) => void;
@@ -14,13 +16,13 @@ interface Iprop {
 }
 
 const AdminOptionDropDown = (props: Iprop) => {
-    const trigger = useRef<any>(null);
+  const trigger = useRef<any>(null);
 
-    const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
+  const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
 
-    const toggleAdminOptionCard = () => {
-        setShowAdminOptionCard((prev) => !prev);
-    };
+  const toggleAdminOptionCard = () => {
+    setShowAdminOptionCard((prev) => !prev);
+  };
 
     const smartToggleGateHandler = () => {
         setShowAdminOptionCard(false);
@@ -28,21 +30,20 @@ const AdminOptionDropDown = (props: Iprop) => {
     const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
 
-    const exportToCSV = () => {
-        console.log("downloading");
-        const ws = XLSX.utils.json_to_sheet(props.orders);
-        const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-        const data1 = new Blob([excelBuffer], { type: fileType });
-        FileSaver.saveAs(data1, "download" + fileExtension);
-    };
+  const exportToCSV = () => {
+    // console.log("downloading");
+    const ws = XLSX.utils.json_to_sheet(props.orders);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data1 = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data1, "download" + fileExtension);
+  };
 
     return (
         <div className="relative z-40">
             <button
-                className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[180px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative"
-                style={showAdminOptionCard ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
-                onClick={toggleAdminOptionCard}
+              className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize flex flex-row justify-start items-center space-x-[5px]"
+              onClick={exportToCSV}
             >
                 <span>actions</span>
                 <div className="relative h-[6px] w-[8px]  ">
