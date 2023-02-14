@@ -40,12 +40,13 @@ const AdminOptionDropDown = (props: Iprop) => {
   };
 
     return (
-        <div className="relative z-40">
+        <div className="relative z-50">
             <button
-              className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize flex flex-row justify-start items-center space-x-[5px]"
-              onClick={exportToCSV}
+                className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[180px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative"
+                style={showAdminOptionCard ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
+                onClick={toggleAdminOptionCard}
             >
-                <span>actions</span>
+                <span>select option</span>
                 <div className="relative h-[6px] w-[8px]  ">
                     <Image src="/downwardArrow.png" fill={true} alt="arrow" objectFit="cover" />
                 </div>
@@ -61,12 +62,12 @@ const AdminOptionDropDown = (props: Iprop) => {
                             <span>download</span>
                         </button>
                         {props.option &&
-                            props.option.map((data, index) => {
+                            props.option.map((data,index) => {
                                 return (
                                     <button
-                                        key={index}
-                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] disabled:opacity-50 text-left "
-                                        onClick={() => props.toggle?.(data)}
+                                    key={index}
+                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                        onClick={()=>props.toggle?.(data)}
                                         disabled={props.disabled}
                                     >
                                         {data}
