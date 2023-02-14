@@ -7,12 +7,12 @@ import { IUser } from "@/models/user.interface";
 import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
 interface TableProps {
-    headings: Array<string>;
-    rows: Array<IOrderResponse> | Array<IUser>;
-    type: string;
-    onSelect?: (e: any, type: string) => void;
-    selectedOrder?: string[] | number[];
-    filterById?: (value: string) => void;
+  headings: Array<string>;
+  rows: Array<IOrderResponse> | Array<IUser>;
+  type: string;
+  onSelect?: (e: any, type: string) => void;
+  selectedOrder?: string[] | number[];
+  filterById?: (value: string) => void;
 }
 
 const Table = (props: TableProps) => {

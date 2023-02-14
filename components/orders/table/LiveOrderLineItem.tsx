@@ -76,7 +76,7 @@ const LiveOrderLineItem = (props: IProp) => {
 
     return (
         <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative" style={{ transform: "scale(1)" }}>
-            {(props.type == "pending" || props.type == "shipments" || props.type == "in-transit" || props.type == "user_base")  && (
+            {(props.type == "pending" || props.type == "shipments" || props.type == "in-transit" || props.type == "user_base") && (
                 <td className={`td0`}>
                     <input
                         type="checkbox"
@@ -117,7 +117,7 @@ const LiveOrderLineItem = (props: IProp) => {
                     <span className="ml-[5px] capitalize ">{props.row.status_orders}</span>
                 </div>
             </td>
-            <td className="" style={(props.type == "delivered" || props.type == "live_order" ) ? { visibility: "hidden" } : {}} ref={trigger}>
+            <td className="" style={props.type == "delivered" || props.type == "live_order" ? { visibility: "hidden" } : {}} ref={trigger}>
                 <div className="w-full h-full  ">
                     <div onClick={toggleGateHandler} className="cursor-pointer relative ">
                         <Image

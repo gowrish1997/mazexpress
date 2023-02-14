@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
-import ReactDropdown from "../common/ReactDropdown";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
 
@@ -9,12 +7,12 @@ import { IOrderResponse } from "@/models/order.interface";
 
 import AdminOptionDropDown from "./AdminOptionDropDown";
 interface IProp {
-    content: string;
-    title?: string;
-    onChangeStatus?: (value: string) => void;
-    selectedOrder: string[];
-    allLiveOrders: IOrderResponse[];
-    filterByDate: (value: Date | string) => void;
+  content: string;
+  title?: string;
+  onChangeStatus?: (value: string) => void;
+  selectedOrder: string[];
+  allLiveOrders: IOrderResponse[];
+  filterByDate: (value: Date | string) => void;
 }
 
 const warehouse = ["istanbul"];
@@ -30,11 +28,18 @@ const LiveOrderPageHeader = (props: IProp) => {
                 packageStatus.add(object.status_orders);
             }
 
-            setPackageStatusDropDownOptoin((prev) => {
-                return ["status", ...(Array.from(packageStatus) as string[])];
-            });
-        }
-    }, [props.allLiveOrders]);
+      setPackageStatusDropDownOptoin((prev) => {
+        return ["status", ...(Array.from(packageStatus) as string[])];
+      });
+    }
+  }, [props.allLiveOrders]);
+
+
+
+  
+
+
+ 
 
     return (
         <>

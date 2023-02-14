@@ -50,12 +50,7 @@ export default function handler(
 
       case "POST":
         db("tracking")
-          .insert({
-            order_id: req.body.order_id,
-            stage_tracking: req.body.stage_tracking,
-            poc_tracking: req.body.poc_tracking,
-            user_id: req.body.user_id,
-          })
+          .insert({...req.body})
           .then((data: any) => {
             res.status(200).json(data);
             resolve(data);

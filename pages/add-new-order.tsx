@@ -18,8 +18,8 @@ import { createToast } from "@/lib/toasts";
 
 const schema = yup
   .object({
-    referenceId: yup.string().required(),
-    storeLink: yup.string().required(),
+    reference_id_orders: yup.string().required(),
+    store_link_orders: yup.string().required(),
   })
   .required();
 
@@ -36,6 +36,7 @@ const AddNewOrder = () => {
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
   const defaultAddressHandler = () => {
+    mutateAddresses();
     const address = addresses?.find(
       (el) => el.id_addresses === user?.default_address_users
     );
@@ -49,13 +50,13 @@ const AddNewOrder = () => {
 
     formState: { errors },
   } = useForm<{
-    referenceId: string;
-    storeLink: string;
-    address: number;
+    reference_id_orders: string;
+    store_link_orders: string;
+    address_id: number;
   }>({
-    // defaultValues: {
-    //   address: defaultAddressHandler()?.id_addresses,
-    // },
+    defaultValues: {
+      address_id: defaultAddressHandler()?.id_addresses,
+    },
     resolver: yupResolver(schema),
   });
 
@@ -77,26 +78,40 @@ const AddNewOrder = () => {
   };
 
   const onSubmit: SubmitHandler<{
-    referenceId: string;
-    storeLink: string;
-    address: number;
+    reference_id_orders: string;
+    store_link_orders: string;
+    address_id: number;
   }> = async (data) => {
     // console.log(data);
     try {
-      let obj = {
+      let orderObj = {
         user_id: user?.id_users,
-        address_id: data.address,
-        reference_id_orders: data.referenceId,
-        store_link_orders: data.storeLink,
+        address_id: data.address_id,
+        reference_id_orders: data.reference_id_orders,
+        store_link_orders: data.store_link_orders,
         status_orders: "pending",
         shipping_amt_orders: 499,
       };
-      const result = await fetchJson(`/api/orders`, {
+      const result1 = await fetchJson(`/api/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(obj),
+        body: JSON.stringify(orderObj),
       });
-      console.log(result);
+      console.log(result1);
+
+      let trackingObj = {
+        order_id: result1.data,
+        // stage_tracking: req.body.stage_tracking,
+        // poc_tracking: req.body.poc_tracking,
+        user_id: user?.id_users,
+      };
+      const result2 = await fetchJson(`/api/tracking`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(trackingObj),
+      });
+      console.log(result2);
+
       createToast({
         type: "success",
         title: "Success",
@@ -113,16 +128,11 @@ const AddNewOrder = () => {
     }
     // if (user) {
     //   let newUserData = { ...user };
-    //   newUserData.default_address_users = data.address;
+    //   newUserData.default_address_users = data.address_id;
     //   mutateUser(newUserData);
     // }
     // console.log(data);
   };
-
-  useEffect(() => {
-    console.log(addresses);
-    console.log(errors)
-  }, [addresses]);
 
   return (
     <>
@@ -142,17 +152,17 @@ const AddNewOrder = () => {
         <div className="flex-type1 space-x-[10px] mt-[25px]">
           <ReactHookFormInput
             label="Reference ID"
-            name="referenceId"
+            name="reference_id_orders"
             type="string"
-            register={register("referenceId")}
-            error={errors.referenceId}
+            register={register("reference_id_orders")}
+            error={errors.reference_id_orders}
           />
           <ReactHookFormInput
             label="Store Link"
-            name="storeLink"
+            name="store_link_orders"
             type="string"
-            register={register("storeLink")}
-            error={errors.storeLink}
+            register={register("store_link_orders")}
+            error={errors.store_link_orders}
           />
         </div>
         <div className="mt-[20px]">
@@ -167,7 +177,8 @@ const AddNewOrder = () => {
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3 py-5">
-          {addresses !== undefined && addresses.length > 0 &&
+          {addresses !== undefined &&
+            addresses.length > 0 &&
             addresses
               .filter((el) => el.status_addresses === 1)
               .map((data) => {
@@ -175,7 +186,7 @@ const AddNewOrder = () => {
                   <UserSavedAddress
                     key={data.id_addresses}
                     address={data}
-                    register={register("address")}
+                    register={register("address_id")}
                     edit={toggleEditUserAddressModal}
                     update={mutateAddresses}
                   />
