@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { createToast } from "@/lib/toasts";
-import blueExclamatory from '@/public/blueExclamatory.png'
+import blueExclamatory from "@/public/blueExclamatory.png";
 
 const schema = yup
   .object({
@@ -179,12 +179,7 @@ const Settings = () => {
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
-            <Image
-              src={blueExclamatory}
-              alt="icon"
-              width={16}
-              height={16}
-            />
+            <Image src={blueExclamatory} alt="icon" width={16} height={16} />
             <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
               Here is a link to some fake information that contains crucial
               information, <span className="text-[#3672DF]">Link here →</span>
@@ -332,7 +327,7 @@ const Settings = () => {
                 render={({ field: { onChange, value } }) => (
                   <ReactSwitch
                     onChange={onChange}
-                    checked={value === 1 ? true : false}
+                    checked={value as boolean}
                     checkedIcon={false}
                     uncheckedIcon={false}
                     width={36}

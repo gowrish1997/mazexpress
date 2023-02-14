@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { db } from "@/lib/db";
+import fetchJson from "@/lib/fetchJson";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -49,12 +50,30 @@ export default function handler(
         break;
 
       case "POST":
-        db("tracking")
-          .insert({...req.body})
-          .then((data: any) => {
-            res.status(200).json(data);
-            resolve(data);
+        // console.log(req.body)
+        if (req.body.orders !== undefined) {
+          // orders exists send back latest tracking update for all ids in orders
+          let order_ids: string[] = [...req.body.orders];
+          const bulk_tracking_results = order_ids.map((order_id) => {
+            // fetch latest tracking for order id
+            return db("tracking")
+              .max("stage_tracking as stage")
+              .where("order_id", order_id)
+              .first();
           });
+          Promise.all(bulk_tracking_results).then((results) => {
+            console.log(results);
+            res.status(200).json({ data: results });
+            resolve(results);
+          });
+        } else {
+          db("tracking")
+            .insert({ ...req.body })
+            .then((data: any) => {
+              res.status(200).json(data);
+              resolve(data);
+            });
+        }
 
         break;
 
