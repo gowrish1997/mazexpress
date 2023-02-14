@@ -53,7 +53,7 @@ const LiveOrderLineItem = (props: IProp) => {
             case 4:
                 return "Out for delivery";
             default:
-                return "Pending";
+                return "Delivered";
         }
     };
 
