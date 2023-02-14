@@ -113,8 +113,8 @@ const LiveOrderLineItem = (props: IProp) => {
         className={`td2`}
         style={{
           wordWrap: "break-word",
-          overflowWrap: "break-word",
-          width: "100%",
+          // overflowWrap: "break-word",
+          // width: "100%",
         }}
       >
         {props.row.id_orders}

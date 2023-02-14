@@ -253,8 +253,8 @@ input::-webkit-inner-spin-button {
     text-overflow: ellipsis; */
 }
 .order_table td:hover {
-  white-space: wrap;
-  overflow: visible;
+  /* white-space: wrap; */
+  /* overflow: visible; */
 }
 
 .order_table .th0,
@@ -308,7 +308,7 @@ input::-webkit-inner-spin-button {
 .order_table .th1,
 .order_table .th2,
 .order_table .td1,
-.order_table .td2,
+/* .order_table .td2, */
 .order_table .th3,
 .order_table .td3,
 .order_table .th4,
@@ -446,6 +446,13 @@ input::-webkit-inner-spin-button {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+/* .live_order_table .td2:hover  {
+  overflow: visible;
+  white-space: normal;
+  word-wrap: break-word;
+} */
+
 .live_order_table tr {
   width: 100%;
 }
@@ -457,10 +464,7 @@ input::-webkit-inner-spin-button {
   text-align: left;
   padding-left: 5px;
 }
-.live_order_table td:hover {
-  white-space: wrap;
-  overflow: visible;
-}
+
 
 .live_order_table .th0,
 .live_order_table .td0 {
@@ -827,7 +831,7 @@ option {
   display: flex;
   justify-content: center;
   align-items: center;
-padding-top: 10px;
+  padding-top: 10px;
   background: none;
 }
 .react-calendar__navigation button:disabled {

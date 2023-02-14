@@ -22,7 +22,7 @@ const UserBase = () => {
   const router = useRouter();
 
   const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({});
-  console.log(allUser);
+  // console.log(allUser);
 
   const [allUsers, setAllUsers] = useState<IUser[]>(allUser!);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>(allUser!);
