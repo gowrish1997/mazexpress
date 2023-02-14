@@ -49,7 +49,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                 style={showAdminOptionCard ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
                 onClick={toggleAdminOptionCard}
             >
-                <span>{currentValue}</span>
+                <span className="capitalize">{currentValue}</span>
                 <div className="relative h-[6px] w-[8px]  ">
                     <Image src="/downwardArrow.png" fill={true} alt="arrow" objectFit="cover" />
                 </div>

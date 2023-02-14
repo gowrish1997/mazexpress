@@ -7,6 +7,7 @@ import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import useTracking from "@/lib/useTracking";
 interface Iprop {
     option?: string[];
     toggle?: (value?: string) => void;
@@ -16,13 +17,15 @@ interface Iprop {
 }
 
 const AdminOptionDropDown = (props: Iprop) => {
-  const trigger = useRef<any>(null);
+    console.log(props)
+    const trigger = useRef<any>(null);
 
-  const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
+    const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
+    const [selectedOrdersTrackingId, setSelectedOrdersTrackingId] = useState([]);
 
-  const toggleAdminOptionCard = () => {
-    setShowAdminOptionCard((prev) => !prev);
-  };
+    const toggleAdminOptionCard = () => {
+        setShowAdminOptionCard((prev) => !prev);
+    };
 
     const smartToggleGateHandler = () => {
         setShowAdminOptionCard(false);
@@ -30,14 +33,28 @@ const AdminOptionDropDown = (props: Iprop) => {
     const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
 
-  const exportToCSV = () => {
-    // console.log("downloading");
-    const ws = XLSX.utils.json_to_sheet(props.orders);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data1 = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data1, "download" + fileExtension);
-  };
+    const exportToCSV = () => {
+        // console.log("downloading");
+        const ws = XLSX.utils.json_to_sheet(props.orders);
+        const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+        const data1 = new Blob([excelBuffer], { type: fileType });
+        FileSaver.saveAs(data1, "download" + fileExtension);
+    };
+
+    if (props.type == "In-transit" && props.orders) {
+   console.log('in transit')
+        let array=[]
+        for (let i = 0; i < props.orders.length; i++) {
+            const { tracking, mutateTracking, trackingIsLoading } = useTracking({
+                order_id: props.orders[i],
+            });
+            console.log(tracking)
+            array.push(tracking)
+        }
+
+    }
+
 
     return (
         <div className="relative z-50">
@@ -62,12 +79,12 @@ const AdminOptionDropDown = (props: Iprop) => {
                             <span>download</span>
                         </button>
                         {props.option &&
-                            props.option.map((data,index) => {
+                            props.option.map((data, index) => {
                                 return (
                                     <button
-                                    key={index}
+                                        key={index}
                                         className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                        onClick={()=>props.toggle?.(data)}
+                                        onClick={() => props.toggle?.(data)}
                                         disabled={props.disabled}
                                     >
                                         {data}

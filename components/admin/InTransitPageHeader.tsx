@@ -70,7 +70,7 @@ const InTransitPageHeader = (props: IProp) => {
                             option={adminOption}
                             toggle={toggleIntransitChangeStatusConfirmModal}
                             disabled={!props.selectedOrder?.length}
-                            orders={props.allLiveOrders}
+                            orders={props.selectedOrder}
                             type={props.content}
                         />
                     </div>
