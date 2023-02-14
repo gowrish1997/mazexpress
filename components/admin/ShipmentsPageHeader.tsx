@@ -16,7 +16,7 @@ interface IProp {
   filterByDate: (value: Date | string) => void;
 }
 
-const adminOption = ["Moved Out"];
+const adminOption = ["Moved out"];
 
 const ShipmentsPageHeader = (props: IProp) => {
   const warehousesDropDownOptoin = ["istanbul"];

@@ -73,7 +73,7 @@ const LineItem = (props: IProp) => {
     }, [tracking]);
 
     return (
-        <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative" style={{ transform: "scale(1)" }}>
+        <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative" >
             <td className={`td1`}>{props.row.id_orders}</td>
             <td className={`td2 text-[#3672DF]`}>{props.row.store_link_orders}</td>
             <td className={`td3`}>{props.row.reference_id_orders}</td>

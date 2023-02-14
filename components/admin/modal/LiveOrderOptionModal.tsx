@@ -12,6 +12,7 @@ interface IProps {
   trigger: RefObject<HTMLDivElement>;
   row: IOrderResponse | IUser;
   type: string;
+  stage?: number;
 }
 export type Ref = HTMLDivElement;
 
@@ -20,7 +21,7 @@ const optionHandler = (type: string) => {
     case "pending":
       return "Arrived at Istanbul";
     case "shipments":
-      return "Left Istanbul";
+      return "Left Istanbul Warehouse";
     case "in-transit":
       return "Mark as delivered";
     case "user_base":
@@ -74,9 +75,9 @@ const actionHandler = async (type: string, row: unknown, user: IUser) => {
 
       break;
     case "in-transit":
-        // increment stage for 
-        let rowFixed3: IOrderResponse = row as IOrderResponse;
-        console.log(rowFixed3.id_orders)
+      // increment stage for
+      let rowFixed3: IOrderResponse = row as IOrderResponse;
+      console.log(rowFixed3.id_orders);
       break;
     case "user_base":
       console.log("user_base");
@@ -106,20 +107,20 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
           // ref={ref}
         >
           <ul className=" w-full text-[#525D72] text-[14px] font-[400] leading-[39px] cursor-pointer  ">
-            {props.type == "in-transit" && (
+            {props.type == "in-transit" && props.stage == 2 && (
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
-                onClick={() => actionHandler(props.type, props.row, user!)}
+                // onClick={commentHandler}
               >
                 <div className="cursor-pointer">
                   <span className="w-full ">Received in Libya</span>
                 </div>
               </li>
             )}
-            {props.type == "in-transit" && (
+            {props.type == "in-transit" && props.stage == 3 && (
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
-                onClick={() => actionHandler(props.type, props.row, user!)}
+                // onClick={commentHandler}
               >
                 <div className="cursor-pointer">
                   <span className="w-full ">Out for delivery</span>
@@ -131,7 +132,17 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
               onClick={() => actionHandler(props.type, props.row, user!)}
             >
               <div className="cursor-pointer">
-                <span className="w-full ">{optionHandler(props.type)}</span>
+                <span className="w-full ">
+                  {props.type == "in-transit" ? (
+                    props.stage == 4 ? (
+                      optionHandler(props.type)
+                    ) : (
+                      <></>
+                    )
+                  ) : (
+                    <>{optionHandler(props.type)}</>
+                  )}
+                </span>
               </div>
             </li>
             {props.type == "in-transit" && (

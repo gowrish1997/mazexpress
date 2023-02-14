@@ -6,6 +6,7 @@ interface IProp {
     close: () => void;
     confirm: (value: string) => void;
     total?: string[];
+    orderId?:string
     // update: () => Promise<any>;
 }
 
@@ -40,13 +41,8 @@ const CommentModal = (props: IProp) => {
                                 <input
                                     type={"text"}
                                     className="focus:outline-0 px-2 py-2 rounded h-[45px]"
-                                    style={props.total && props.total.length >1 ? { overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" } : {}}
+                                    style={props.total && props.total.length > 1 ? { overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" } : {}}
                                     value={props.total && props.total[0]}
-                                    // onChange={fetchMatchingUsers}
-                                    //   onFocus={openDropdown}
-                                    //   onBlur={closeDropdown}
-                                    //   onClick={openDropdown}
-                                    // ref={inputRef}
                                 />
                                 {props.total && props.total?.length > 1 && <span className="text-[#3672DF] text-[14px]">{`${props.total.length - 1}+more`}</span>}
                             </div>

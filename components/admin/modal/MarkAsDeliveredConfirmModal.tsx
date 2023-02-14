@@ -1,6 +1,6 @@
 interface IProp {
     show: boolean;
-    close: () => void;
+    close: (value?:string) => void;
     total: number;
     confirm: () => void;
 }
@@ -15,9 +15,9 @@ const MarkAsDeliveredConfirmModal = (props: IProp) => {
             {props.show && (
                 <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-50 flex flex-row justify-center items-center">
                     <div className="bg-[#FFFFFF] rounded-[4px] p-[20px] w-[379px] flex-type7 gap-y-[20px] ">
-                        <p className="text-[18px] text-[#2B2B2B] leading-[25px] font-[700] ">Mark as Delivered</p>
+                        <p className="text-[18px] text-[#2B2B2B] leading-[25px] font-[700] ">Change the status</p>
                         <p className="text-center text-[14px] text-[#2B2B2B] leading-[19px] font-[500]  ">
-                            {`you selected ${props.total} orders to Mark as delivered`}
+                            {`you selected ${props.total} orders to change the status`}
                         </p>
                         <div className="flex-type1 space-x-[10px] mt-[5px] ">
                             <button
