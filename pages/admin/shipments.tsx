@@ -73,6 +73,7 @@ const Shipments = () => {
           allLiveOrders={allLiveOrders!}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
+          title='Shipments for today | MazExpress Admin'
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">

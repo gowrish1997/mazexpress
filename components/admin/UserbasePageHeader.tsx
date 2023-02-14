@@ -39,7 +39,7 @@ const UserbasePageHeader = (props: IProp) => {
         }
       >
         <Head>
-          <title></title>
+          <title>{props.title}</title>
         </Head>
         <PageheaderTitle
           content={props.content}

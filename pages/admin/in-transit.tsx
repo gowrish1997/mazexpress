@@ -74,6 +74,7 @@ const Intransit = () => {
           allLiveOrders={allLiveOrders!}
           filterByDate={filterByCreatedDate}
           selectedOrder={selectedOrder}
+          title="In-Transit | MazExpress Admin"
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">

@@ -77,7 +77,6 @@ const LiveOrderLineItem = (props: IProp) => {
   return (
     <tr
       className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative"
-      style={{ transform: "scale(1)" }}
     >
       {(props.type == "pending" ||
         props.type == "shipments" ||

@@ -8,67 +8,81 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
 interface IProp {
-    content: string;
-    title?: string;
-    selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[];
-    filterByDate: (value: Date | string) => void;
+  content: string;
+  title?: string;
+  selectedOrder?: string[];
+  allLiveOrders: IOrderResponse[];
+  filterByDate: (value: Date | string) => void;
 }
 
 const adminOption = ["Add Comment", "Mark as Delivered"];
 
 const InTransitPageHeader = (props: IProp) => {
-    const warehousesDropDownOptoin = ["istanbul"];
+  const warehousesDropDownOptoin = ["istanbul"];
 
-    const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] = useState(false);
-    const [showAddCommentModal, setShowAddCommentModal] = useState(false);
+  const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] =
+    useState(false);
+  const [showAddCommentModal, setShowAddCommentModal] = useState(false);
 
-    const toggleMarkedAsDeliveredConfirmModal = () => {
-        setShowMarkedAsConfirmModal((prev) => !prev);
-    };
-    const toggleAddCommentModal = () => {
-        setShowAddCommentModal((prev) => !prev);
-    };
+  const toggleMarkedAsDeliveredConfirmModal = () => {
+    setShowMarkedAsConfirmModal((prev) => !prev);
+  };
+  const toggleAddCommentModal = () => {
+    setShowAddCommentModal((prev) => !prev);
+  };
 
-    const markedAsDeliveredHandler = () => {
-        console.log(props.selectedOrder);
-    };
+  const markedAsDeliveredHandler = () => {
+    console.log(props.selectedOrder);
+  };
 
-    const addCommentHandler = (comment: string) => {
-        console.log(props.selectedOrder, comment);
-    };
-    return (
-        <>
-            <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative "}>
-                <Head>
-                    <title></title>
-                </Head>
-                <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} filterByDate={props.filterByDate} />
-                {props.allLiveOrders && props.allLiveOrders.length > 0 && (
-                    <div className="flex-type1 space-x-[10px]  ">
-                        {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
-                        <FilterOptionDropDown options={warehousesDropDownOptoin} />
+  const addCommentHandler = (comment: string) => {
+    console.log(props.selectedOrder, comment);
+  };
+  return (
+    <>
+      <div
+        className={
+          "w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative "
+        }
+      >
+        <Head>
+          <title>{props.title}</title>
+        </Head>
+        <PageheaderTitle
+          content={props.content}
+          allLiveOrders={props.allLiveOrders}
+          filterByDate={props.filterByDate}
+        />
+        {props.allLiveOrders && props.allLiveOrders.length > 0 && (
+          <div className="flex-type1 space-x-[10px]  ">
+            {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
+            <FilterOptionDropDown options={warehousesDropDownOptoin} />
 
-                        <AdminOptionDropDown
-                            option={adminOption}
-                            toggle={toggleMarkedAsDeliveredConfirmModal}
-                            toggleCommentModal={toggleAddCommentModal}
-                            disabled={!props.selectedOrder?.length}
-                            orders={props.allLiveOrders}
-                        />
-                    </div>
-                )}
-            </div>
-
-            <MarkAsDeliveredConfirmModal
-                close={toggleMarkedAsDeliveredConfirmModal}
-                show={showMarkedAsConfirmModal}
-                total={props.selectedOrder?.length!}
-                confirm={markedAsDeliveredHandler}
+            <AdminOptionDropDown
+              option={adminOption}
+              toggle={toggleMarkedAsDeliveredConfirmModal}
+              toggleCommentModal={toggleAddCommentModal}
+              disabled={!props.selectedOrder?.length}
+              orders={props.allLiveOrders}
             />
-            <CommentModal close={toggleAddCommentModal} show={showAddCommentModal} total={props.selectedOrder!} confirm={addCommentHandler} />
-        </>
-    );
+          </div>
+        )}
+      </div>
+
+      <MarkAsDeliveredConfirmModal
+        close={toggleMarkedAsDeliveredConfirmModal}
+        show={showMarkedAsConfirmModal}
+        total={props.selectedOrder?.length!}
+        confirm={markedAsDeliveredHandler}
+      />
+      <CommentModal
+        close={toggleAddCommentModal}
+        show={showAddCommentModal}
+        total={props.selectedOrder!}
+        confirm={addCommentHandler}
+      />
+    </>
+  );
 };
 
 export default InTransitPageHeader;

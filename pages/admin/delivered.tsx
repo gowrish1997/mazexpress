@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 import useOrders from "@/lib/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -76,6 +73,7 @@ const DeliveredOrders = () => {
           allLiveOrders={allLiveOrders!}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
+          title='Delivered orders | MazExpress Admin'
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">

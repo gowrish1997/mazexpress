@@ -69,6 +69,7 @@ const UserBase = () => {
           allUsers={allUsers!}
           selectedUser={selectedUser}
           filterByDate={filterByCreatedDate}
+          title="User Base | MazExpress Admin"
         />
         <div className="flex flex-col justify-between relative flex-1 h-full">
           {!filteredUsers && <BlankPage />}
