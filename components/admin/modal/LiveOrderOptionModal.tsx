@@ -29,7 +29,12 @@ const optionHandler = (type: string) => {
   }
 };
 
-const actionHandler = async (type: string, row: unknown, user: IUser) => {
+const actionHandler = async (
+  type: string,
+  row: unknown,
+  user: IUser,
+  stage?: number
+) => {
   switch (type) {
     case "pending":
       let rowFixed: IOrderResponse = row as IOrderResponse;
@@ -77,7 +82,49 @@ const actionHandler = async (type: string, row: unknown, user: IUser) => {
     case "in-transit":
       // increment stage for
       let rowFixed3: IOrderResponse = row as IOrderResponse;
-      console.log(rowFixed3.id_orders);
+      console.log(rowFixed3.id_orders, stage);
+
+      if (stage === 2) {
+        // received in libya action
+        const result2_2 = await fetchJson("/api/tracking", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            user_id: user.id_users,
+            order_id: rowFixed3.id_orders,
+            stage_tracking: 3,
+          }),
+        });
+      }
+      if (stage === 3) {
+        // out for delivery action
+        const result2_2 = await fetchJson("/api/tracking", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            user_id: user.id_users,
+            order_id: rowFixed3.id_orders,
+            stage_tracking: 4,
+          }),
+        });
+      }
+      if (stage === 4) {
+        // delivered action
+        const result2 = await fetchJson(`/api/orders?id=${rowFixed3.id_orders}`, {
+            method: "PUT",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({ status_orders: "delivered" }),
+          });
+        const result2_2 = await fetchJson("/api/tracking", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            user_id: user.id_users,
+            order_id: rowFixed3.id_orders,
+            stage_tracking: 5,
+          }),
+        });
+      }
       break;
     case "user_base":
       console.log("user_base");
@@ -110,7 +157,9 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             {props.type == "in-transit" && props.stage == 2 && (
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
-                // onClick={commentHandler}
+                onClick={() =>
+                  actionHandler(props.type, props.row, user!, props.stage)
+                }
               >
                 <div className="cursor-pointer">
                   <span className="w-full ">Received in Libya</span>
@@ -120,7 +169,9 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             {props.type == "in-transit" && props.stage == 3 && (
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
-                // onClick={commentHandler}
+                onClick={() =>
+                  actionHandler(props.type, props.row, user!, props.stage)
+                }
               >
                 <div className="cursor-pointer">
                   <span className="w-full ">Out for delivery</span>
@@ -129,7 +180,9 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             )}
             <li
               className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
-              onClick={() => actionHandler(props.type, props.row, user!)}
+              onClick={() =>
+                actionHandler(props.type, props.row, user!, props.stage)
+              }
             >
               <div className="cursor-pointer">
                 <span className="w-full ">
