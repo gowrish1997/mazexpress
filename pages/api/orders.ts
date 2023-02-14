@@ -5,7 +5,7 @@ import { mazID } from "@/lib/helper";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
-  msg: string;
+  msg?: string;
   data?: any;
 };
 
@@ -45,8 +45,11 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
         break;
 
       case "POST":
+          let addr_id_int = parseInt(req.body.address_id)
+        //   console.log(addr_id_int)
+
         db("addresses")
-          .where("id_addresses", req.body.address_id)
+          .where("id_addresses", addr_id_int)
           .first()
           .then((data: any) => {
             let maz = mazID(data.city_addresses);
@@ -54,7 +57,7 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
             db("orders")
               .insert(fields)
               .then((data2: any) => {
-                res.status(200).json(data2);
+                res.status(200).json({ data: maz });
                 resolve(data);
               });
           });
