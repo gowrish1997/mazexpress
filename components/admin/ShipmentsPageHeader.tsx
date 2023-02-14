@@ -13,10 +13,10 @@ interface IProp {
     title?: string;
     selectedOrder?: string[];
     allLiveOrders: IOrderResponse[];
-    filterByDate: (value: Date | string ) => void;
+    filterByDate: (value: Date | string) => void;
 }
 
-const adminOption = ["Moved Out"];
+const adminOption = ["Moved out"];
 
 const ShipmentsPageHeader = (props: IProp) => {
     const warehousesDropDownOptoin = ["istanbul"];
@@ -31,6 +31,7 @@ const ShipmentsPageHeader = (props: IProp) => {
     // };
 
     const toggleMovedOutConfirmModal = () => {
+      
         setMovedOutConfirmModal((prev) => !prev);
     };
 
@@ -52,7 +53,7 @@ const ShipmentsPageHeader = (props: IProp) => {
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
-                        <FilterOptionDropDown options={warehousesDropDownOptoin}/>
+                        <FilterOptionDropDown options={warehousesDropDownOptoin} />
                         {/* <button
                             className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px] mt-[5px] text-[14px] font-[700] text-[#525D72] leading-[19px] tracking-wider hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50"
                             disabled={!props.selectedOrder?.length}

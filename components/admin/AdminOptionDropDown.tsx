@@ -7,10 +7,10 @@ import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
 interface Iprop {
     option?: string[];
-    toggle?: () => void;
-    toggleCommentModal?: () => void;
+    toggle?: (value?: string) => void;
     disabled?: boolean;
     orders: any;
+    type?: string;
 }
 
 const AdminOptionDropDown = (props: Iprop) => {
@@ -38,13 +38,13 @@ const AdminOptionDropDown = (props: Iprop) => {
     };
 
     return (
-        <div className="relative z-50">
+        <div className="relative z-40">
             <button
                 className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[180px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative"
                 style={showAdminOptionCard ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
                 onClick={toggleAdminOptionCard}
             >
-                <span>select option</span>
+                <span>actions</span>
                 <div className="relative h-[6px] w-[8px]  ">
                     <Image src="/downwardArrow.png" fill={true} alt="arrow" objectFit="cover" />
                 </div>
@@ -61,24 +61,11 @@ const AdminOptionDropDown = (props: Iprop) => {
                         </button>
                         {props.option &&
                             props.option.map((data, index) => {
-                                if (data === "Add Comment") {
-                                    return (
-                                        <button
-                                            key={index}
-                                            className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                            onClick={props.toggleCommentModal}
-                                            disabled={props.disabled}
-                                        >
-                                            {data}
-                                        </button>
-                                    );
-                                } else {
-                                }
                                 return (
                                     <button
                                         key={index}
-                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                        onClick={props.toggle}
+                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] disabled:opacity-50 text-left "
+                                        onClick={() => props.toggle?.(data)}
                                         disabled={props.disabled}
                                     >
                                         {data}

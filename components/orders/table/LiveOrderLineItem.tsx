@@ -10,6 +10,7 @@ import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
 import GreyRadioButton from "../../../public/grey_svg.svg";
 import useAllUser from "@/lib/useAllUsers";
+import useTracking from "@/lib/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
 interface IProp {
     row: IOrderResponse;
@@ -24,6 +25,20 @@ const LiveOrderLineItem = (props: IProp) => {
     const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
         user_id: props.row.user_id,
     });
+    const { tracking, mutateTracking, trackingIsLoading } = useTracking({
+        order_id: props.row.id_orders,
+    });
+
+    const [packageStatus, setPackageStatus] = useState(0);
+    console.log(packageStatus);
+
+    useEffect(() => {
+        if (tracking !== undefined) {
+            let sorted = [...tracking];
+            sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
+            setPackageStatus(sorted.pop()?.stage_tracking);
+        }
+    }, [tracking]);
 
     const [gate, setGate] = useState(false);
 
@@ -62,6 +77,24 @@ const LiveOrderLineItem = (props: IProp) => {
         }
     };
 
+    const packageWareHouseHandler = () => {
+        switch (packageStatus) {
+            case 0:
+                return "pending";
+            case 1:
+                return "Istanbul";
+            case 2:
+                return "Libya";
+            case 3:
+                return "Libya";
+            case 4:
+                return "Out for delivery";
+            default:
+                "pending";
+                break;
+        }
+    };
+
     // const inputDisabledStateHandler = () => {
     //     if (props.type == "shipments") {
     //         return false;
@@ -75,7 +108,7 @@ const LiveOrderLineItem = (props: IProp) => {
     // };
 
     return (
-        <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative" style={{ transform: "scale(1)" }}>
+        <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative" >
             {(props.type == "pending" || props.type == "shipments" || props.type == "in-transit" || props.type == "user_base") && (
                 <td className={`td0`}>
                     <input
@@ -109,27 +142,33 @@ const LiveOrderLineItem = (props: IProp) => {
             <td className={`td4`}>{props.row.reference_id_orders}</td>
             <td className={`td5`}>{getDateInStringFormat(props.row.created_on_orders)}</td>
 
-            <td className={`td6 capitalize `}>Istanbul</td>
-            <td className={`td7`}>
+            <td className={`td6 capitalize `}>{packageWareHouseHandler()}</td>
+            <td className={`td7  `}>
                 <div className="h-full flex flex-row justify-start items-center ">
                     <span>{orderStatusColorHandler(props.row.status_orders)} </span>
 
-                    <span className="ml-[5px] capitalize ">{props.row.status_orders}</span>
+                    <span className="ml-[5px] capitalize">{props.row.status_orders}</span>
                 </div>
             </td>
-            <td className="" style={props.type == "delivered" || props.type == "live_order" ? { visibility: "hidden" } : {}} ref={trigger}>
-                <div className="w-full h-full  ">
+            <td
+                className="cursor-pointer"
+                style={props.type == "delivered" || props.type == "live_order" ? { visibility: "hidden" } : {}}
+                ref={trigger}
+                
+            >
+                <div className="w-full h-full">
                     <div onClick={toggleGateHandler} className="cursor-pointer relative ">
-                        <Image
-                            src="/editicon.png"
-                            // ref={trigger}
-                            height={13}
-                            width={4}
-                            alt="editIcon"
-                        />
-                    </div>
-                    {gate && <LiveOrderOptionModal type={props.type} row={props.row} handler={smartToggleGateHandler} trigger={trigger} />}
+                <Image
+                    src="/editicon.png"
+                    // ref={trigger}
+                    height={13}
+                    width={4}
+                    alt="editIcon"
+                />
                 </div>
+                   
+             </div>
+                {gate && <LiveOrderOptionModal type={props.type} row={props.row} handler={smartToggleGateHandler} trigger={trigger} />}
             </td>
         </tr>
     );

@@ -15,28 +15,45 @@ interface IProp {
     filterByDate: (value: Date | string) => void;
 }
 
-const adminOption = ["Add Comment", "Mark as Delivered"];
+const adminOption = [ "Received in Libya", "Out for delivery", "Mark as delivered","Add comment"];
 
 const InTransitPageHeader = (props: IProp) => {
     const warehousesDropDownOptoin = ["istanbul"];
 
     const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] = useState(false);
     const [showAddCommentModal, setShowAddCommentModal] = useState(false);
+    const [inTrasitCurrentStatus, setIntransitCurrentStatus] = useState("");
 
-    const toggleMarkedAsDeliveredConfirmModal = () => {
-        setShowMarkedAsConfirmModal((prev) => !prev);
-    };
-    const toggleAddCommentModal = () => {
-        setShowAddCommentModal((prev) => !prev);
+    const toggleIntransitChangeStatusConfirmModal = (value?: string) => {
+        if (value == "Add comment") {
+            setShowAddCommentModal(true);
+        } else {
+            setIntransitCurrentStatus(value!);
+            setShowMarkedAsConfirmModal((prev) => !prev);
+        }
     };
 
-    const markedAsDeliveredHandler = () => {
-        console.log(props.selectedOrder);
+    const inTransitChangeStatusHandler = () => {
+        switch (inTrasitCurrentStatus) {
+            case "Received in Libya":
+                console.log("Received in Libya");
+                break;
+            case "Out for delivery":
+                console.log("out for delivery");
+                break;
+            case "Mark as Delivered":
+                console.log("mark as delivered");
+        }
     };
 
     const addCommentHandler = (comment: string) => {
         console.log(props.selectedOrder, comment);
     };
+
+    const closeAddCommentModal = () => {
+        setShowAddCommentModal(false);
+    };
+
     return (
         <>
             <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative "}>
@@ -51,22 +68,22 @@ const InTransitPageHeader = (props: IProp) => {
 
                         <AdminOptionDropDown
                             option={adminOption}
-                            toggle={toggleMarkedAsDeliveredConfirmModal}
-                            toggleCommentModal={toggleAddCommentModal}
+                            toggle={toggleIntransitChangeStatusConfirmModal}
                             disabled={!props.selectedOrder?.length}
                             orders={props.allLiveOrders}
+                            type={props.content}
                         />
                     </div>
                 )}
             </div>
 
             <MarkAsDeliveredConfirmModal
-                close={toggleMarkedAsDeliveredConfirmModal}
+                close={toggleIntransitChangeStatusConfirmModal}
                 show={showMarkedAsConfirmModal}
                 total={props.selectedOrder?.length!}
-                confirm={markedAsDeliveredHandler}
+                confirm={inTransitChangeStatusHandler}
             />
-            <CommentModal close={toggleAddCommentModal} show={showAddCommentModal} total={props.selectedOrder!} confirm={addCommentHandler} />
+            <CommentModal close={closeAddCommentModal} show={showAddCommentModal} total={props.selectedOrder!} confirm={addCommentHandler} />
         </>
     );
 };

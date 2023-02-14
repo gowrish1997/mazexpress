@@ -39,7 +39,7 @@ const UserLineItem = (props: IProp) => {
     
 
     return (
-        <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative" style={{ transform: "scale(1)" }}>
+        <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative" >
               <td className={`td0`}>
                 <input
                     type="checkbox"

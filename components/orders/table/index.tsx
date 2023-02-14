@@ -28,7 +28,7 @@ const Table = (props: TableProps) => {
     };
 
     return (
-        <div className="flex-1 z-10 ">
+        <div className="flex-1">
             {props.rows && (
                 <table className={tableClassNameHandler()}>
                     <TableHeader type={props.type} headings={props.headings} filterById={props.filterById!} onSelect={props.onSelect!} />
