@@ -17,7 +17,7 @@ interface TableProps {
 
 const Table = (props: TableProps) => {
     const tableClassNameHandler = () => {
-        if (props.type == "live_order" || props.type == "shipments" || props.type == "delivered" || props.type == "in-transit") {
+        if (props.type == "live_order" || props.type == "pending" || props.type == "shipments" || props.type == "delivered" || props.type == "in-transit") {
             return "live_order_table";
         }
         else if(props.type=='user_base'){
@@ -35,7 +35,7 @@ const Table = (props: TableProps) => {
                     <tbody className="">
                         {props.rows && props.rows.length > 0
                             ? props.rows.map((data, index) => {
-                                  if (props.type == "live_order" || props.type == "shipments" || props.type == "delivered" || props.type == "in-transit") {
+                                  if (props.type == "live_order" || props.type == "pending" || props.type == "shipments" || props.type == "delivered" || props.type == "in-transit") {
                                       return <LiveOrderLineItem key={nanoid()} onSelect={props.onSelect!} row={data as IOrderResponse} type={props.type} selectedOrder={props.selectedOrder as string[]} />;
                                   } else if (props.type == "user_base") {
                                       return <UserLineItem key={nanoid()} row={data as IUser} type={props.type}  onSelect={props.onSelect!} selectedOrder={props.selectedOrder as number[]} />;

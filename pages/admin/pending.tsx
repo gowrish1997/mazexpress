@@ -1,66 +1,49 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 import useOrders from "@/lib/useOrders";
-import LiveOrderPageHeader from "@/components/admin/LiveOrderPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-
 import { IOrderResponse } from "@/models/order.interface";
-import BlankPage from "@/components/admin/BlankPage";
-import moment from "moment";
-import { filter } from "@/lib/filter";
+import PendingPageHeader from "@/components/admin/PendingPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
+import BlankPage from "@/components/admin/BlankPage";
+import { filter } from "@/lib/filter";
+
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
-const LiveOrders = () => {
+const PendingOrders = () => {
     const router = useRouter();
-
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
 
-    const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
+    const [allPendingOrders, setAllPendingOrders] = useState<IOrderResponse[]>();
     const [filteredLiveOrders, setFilteredAllLiveOrders] = useState<IOrderResponse[]>();
 
-    const [statusFilterKey, setStatusFilterKey] = useState<string>("");
     const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
-    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<Date | string>("");
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string | Date>("");
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
     useEffect(() => {
-        // const liveOrders = orders?.filter((el) => {
-        //     return el.status_orders !== "delivered";
-        // });
-        setAllLiveOrders(orders);
-        setFilteredAllLiveOrders(orders);
-    }, [orders]);
-
-    const filterByStatusHandler = (value: string) => {
-        setStatusFilterKey(value);
-        const liveOrders = filter(allLiveOrders!, createdDateFilterKey, mazTrackingIdFilterKey).filter((el) => {
-            return el.status_orders.includes(value);
+        const liveOrders = orders?.filter((el) => {
+            return el.status_orders == "pending";
         });
-
+        setAllPendingOrders(liveOrders);
         setFilteredAllLiveOrders(liveOrders);
-    };
+    }, [orders]);
 
     const filterByMazTrackingId = (value: string) => {
         setMazTrackingIdFilterKey(value);
-        const liveOrders = filter(allLiveOrders!, createdDateFilterKey, value).filter((el) => {
-            return el.status_orders.includes(statusFilterKey);
-        });
-
-        setFilteredAllLiveOrders(liveOrders);
+        setFilteredAllLiveOrders(filter(allPendingOrders!, createdDateFilterKey, value));
     };
 
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
-        const liveOrders = filter(allLiveOrders!, value, mazTrackingIdFilterKey).filter((el) => {
-            return el.status_orders.includes(statusFilterKey);
-        });
-
-        setFilteredAllLiveOrders(liveOrders);
+        setFilteredAllLiveOrders(filter(allPendingOrders!, value, mazTrackingIdFilterKey!));
     };
 
     const selectOrderHandler = (value: string, type: string) => {
-        selectOrder(value, type, setSelectedOrder, filteredLiveOrders!, selectedOrder!);
+        selectOrder(value, type, setSelectedOrder, allPendingOrders!, selectedOrder!);
     };
 
     if (ordersIsLoading) {
@@ -72,13 +55,8 @@ const LiveOrders = () => {
     return (
         <>
             <div>
-                <LiveOrderPageHeader
-                    content="Live Orders"
-                    allLiveOrders={allLiveOrders!}
-                    onChangeStatus={filterByStatusHandler}
-                    selectedOrder={selectedOrder!}
-                    filterByDate={filterByCreatedDate}
-                />
+                <PendingPageHeader content="pending" allLiveOrders={allPendingOrders!} selectedOrder={selectedOrder} filterByDate={filterByCreatedDate} />
+
                 <div className="flex flex-col justify-between relative flex-1 h-full">
                     {!filteredLiveOrders && <BlankPage />}
                     {filteredLiveOrders && (
@@ -86,7 +64,7 @@ const LiveOrders = () => {
                             <Table
                                 rows={filteredLiveOrders}
                                 headings={tableHeaders}
-                                type="live_order"
+                                type="pending"
                                 onSelect={selectOrderHandler}
                                 selectedOrder={selectedOrder!}
                                 filterById={filterByMazTrackingId}
@@ -102,4 +80,4 @@ const LiveOrders = () => {
     );
 };
 
-export default LiveOrders;
+export default PendingOrders;

@@ -39,7 +39,7 @@ const TableHeader = (props: IProp) => {
     return (
         <thead className="w-full z-40">
             <tr className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px] border-b-[1px] border-[#e3e3e3] ">
-                {(props.type == "live_order" || props.type == "shipments" || props.type == "delivered" || props.type == "in-transit" || props.type == "user_base") && (
+                {(props.type == "pending" || props.type == "shipments"  || props.type == "in-transit" || props.type == "user_base") && (
                     <th className="th0">
                         <input type="checkbox" className="h-[10px] w-[10px] cursor-pointer" onClick={selectAllCheckboxClickHandler} />
                     </th>

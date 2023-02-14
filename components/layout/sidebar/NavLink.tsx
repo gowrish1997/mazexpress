@@ -44,22 +44,24 @@ const adminIcon = (id: number) => {
         case 1:
             return <LiveOrder />;
         case 2:
-            return <TodayShip />;
+            return <LiveOrder />;
         case 3:
             return <TodayShip />;
         case 4:
             return <TodayShip />;
-
         case 5:
-            return <Warehosue />;
+            return <TodayShip />;
+
         case 6:
-            return <User />;
+            return <Warehosue />;
         case 7:
+            return <User />;
+        case 8:
             return <Notification />;
 
-        case 8:
-            return <Settings />;
         case 9:
+            return <Settings />;
+        case 10:
             return <Helpcenter />;
         default:
             return "";

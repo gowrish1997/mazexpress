@@ -15,7 +15,7 @@ export type Ref = HTMLDivElement;
 
 const optionHandler = (type: string) => {
     switch (type) {
-        case "live_order":
+        case "pending":
             return "Move to shipments";
         case "shipments":
             return "Moved out";
@@ -28,8 +28,8 @@ const optionHandler = (type: string) => {
 
 const actionHandler = (type: string) => {
     switch (type) {
-        case "live_order":
-            console.log("live order");
+        case "pending":
+            console.log("pending order");
             break;
         case "shipments":
             console.log("shipmebts");

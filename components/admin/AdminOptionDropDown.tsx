@@ -8,8 +8,9 @@ import ClickOutside from "../common/ClickOutside";
 interface Iprop {
     option?: string[];
     toggle?: () => void;
+    toggleCommentModal?: () => void;
     disabled?: boolean;
-    orders:any;
+    orders: any;
 }
 
 const AdminOptionDropDown = (props: Iprop) => {
@@ -22,7 +23,6 @@ const AdminOptionDropDown = (props: Iprop) => {
     };
 
     const smartToggleGateHandler = () => {
-        console.log("smart togglere");
         setShowAdminOptionCard(false);
     };
     const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -60,10 +60,23 @@ const AdminOptionDropDown = (props: Iprop) => {
                             <span>download</span>
                         </button>
                         {props.option &&
-                            props.option.map((data,index) => {
+                            props.option.map((data, index) => {
+                                if (data === "Add Comment") {
+                                    return (
+                                        <button
+                                            key={index}
+                                            className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                            onClick={props.toggleCommentModal}
+                                            disabled={props.disabled}
+                                        >
+                                            {data}
+                                        </button>
+                                    );
+                                } else {
+                                }
                                 return (
                                     <button
-                                    key={index}
+                                        key={index}
                                         className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
                                         onClick={props.toggle}
                                         disabled={props.disabled}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import ReactDropdown from "../common/ReactDropdown";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
-import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
+
 import { IOrderResponse } from "@/models/order.interface";
 
 import AdminOptionDropDown from "./AdminOptionDropDown";
@@ -18,10 +18,8 @@ interface IProp {
 }
 
 const warehouse = ["istanbul"];
-const adminOption = ["Move to Shipments"];
 
 const LiveOrderPageHeader = (props: IProp) => {
-    const [showMoveToShipmentConfirmModal, setShowMoveToShipmentConfirmModal] = useState(false);
     const [packageStatusDropDownOptoin, setPackageStatusDropDownOptoin] = useState<string[]>([]);
     const [warehousesDropDownOptoin, setWarehousesDropdownOption] = useState<string[]>(warehouse);
 
@@ -29,7 +27,7 @@ const LiveOrderPageHeader = (props: IProp) => {
         const packageStatus = new Set();
         if (props.allLiveOrders) {
             for (const object of props.allLiveOrders) {
-                if (object.status_orders != "delivered") packageStatus.add(object.status_orders);
+                packageStatus.add(object.status_orders);
             }
 
             setPackageStatusDropDownOptoin((prev) => {
@@ -37,14 +35,6 @@ const LiveOrderPageHeader = (props: IProp) => {
             });
         }
     }, [props.allLiveOrders]);
-
-    const toggleMoveToShipmentHandler = () => {
-        setShowMoveToShipmentConfirmModal((prev) => !prev);
-    };
-
-    const moveToShipmentsHandler = () => {
-        console.log(props.selectedOrder);
-    };
 
     return (
         <>
@@ -58,16 +48,10 @@ const LiveOrderPageHeader = (props: IProp) => {
                         <FilterOptionDropDown options={packageStatusDropDownOptoin} onChange={props.onChangeStatus!} />
                         <FilterOptionDropDown options={warehousesDropDownOptoin} />
 
-                        <AdminOptionDropDown option={adminOption} toggle={toggleMoveToShipmentHandler} disabled={!props.selectedOrder?.length} orders={props.allLiveOrders} />
+                        <AdminOptionDropDown disabled={!props.selectedOrder?.length} orders={props.allLiveOrders} />
                     </div>
                 )}
             </div>
-            <MoveToShipmentConfirmModal
-                close={toggleMoveToShipmentHandler}
-                show={showMoveToShipmentConfirmModal}
-                total={props.selectedOrder?.length!}
-                confirm={moveToShipmentsHandler}
-            />
         </>
     );
 };
