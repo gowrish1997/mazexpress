@@ -68,17 +68,7 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
         if (req.query.id) {
           // update
           const id = req.query.id;
-          const fields = {
-            user_id: req.body.user_id,
-            address_id: req.body.address_id,
-            reference_id_orders: req.body.reference_id,
-            shipping_amt_orders: req.body.shipping_amt,
-            shipped_on_orders: req.body.shipped_on,
-            received_on_orders: req.body.received_on,
-            delivered_on_orders: req.body.delivered_on,
-            status_orders: req.body.status,
-            store_link_orders: req.body.store_link,
-          };
+          const fields = {...req.body};
 
           db("orders")
             .where("id_orders", id)
