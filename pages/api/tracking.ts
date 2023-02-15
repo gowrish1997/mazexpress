@@ -52,7 +52,7 @@ export default function handler(
       case "POST":
         // console.log(req.body)
         if (req.body.orders !== undefined) {
-          // orders exists send back latest tracking update for all ids in orders
+          // orders field exists send back latest tracking update for all ids in orders
           let order_ids: string[] = [...req.body.orders];
           const bulk_tracking_results = order_ids.map((order_id) => {
             // fetch latest tracking for order id

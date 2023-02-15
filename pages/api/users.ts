@@ -35,14 +35,12 @@ export default function handler(
           )
             .from("users")
             .where("id_users", id)
+            .first()
             .then((data: any) => {
               res.status(200).json(data);
               resolve(data);
             });
         } else {
-          console.log("use else");
-
-          // list response
           db.select(
             "id_users",
             "first_name_users",
@@ -69,7 +67,7 @@ export default function handler(
       case "POST":
         // create new user
         // default icon avatar url
-        console.log(req.body);
+        // console.log(req.body);
         // hash pass
         try {
           const hash = hashPassword(req.body.password_users);

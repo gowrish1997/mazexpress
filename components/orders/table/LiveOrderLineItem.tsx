@@ -11,6 +11,7 @@ import GreyRadioButton from "../../../public/grey_svg.svg";
 import useAllUser from "@/lib/useAllUsers";
 import useTracking from "@/lib/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
+import { IUser } from "@/models/user.interface";
 interface IProp {
   row: IOrderResponse;
   type: string;
@@ -129,10 +130,10 @@ const LiveOrderLineItem = (props: IProp) => {
       )}
 
       <td className={`flex flex-row justify-start items-center capitalize`}>
-        {allUser && allUser?.[0].avatar_url_users ? (
+        {allUser && (allUser as IUser)?.avatar_url_users !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
             <Image
-              src={"/user-images/" + allUser?.[0].avatar_url_users}
+              src={"/user-images/" + (allUser as IUser)?.avatar_url_users}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"
@@ -144,7 +145,7 @@ const LiveOrderLineItem = (props: IProp) => {
           </div>
         )}
         <span className="ml-[5px]">
-          {allUser?.[0].first_name_users + "" + allUser?.[0].last_name_users}
+          {(allUser as IUser)?.first_name_users + "" + (allUser as IUser)?.last_name_users}
         </span>
       </td>
       <td

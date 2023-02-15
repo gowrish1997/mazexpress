@@ -5,6 +5,8 @@ import { IOrderResponse } from "@/models/order.interface";
 import { IUser } from "@/models/user.interface";
 import fetchJson from "@/lib/fetchJson";
 import useUser from "@/lib/useUser";
+import axios from "axios";
+import { createToast } from "@/lib/toasts";
 
 interface IProps {
   ref: React.RefObject<HTMLDivElement>;
@@ -29,16 +31,18 @@ const optionHandler = (type: string) => {
   }
 };
 
-const actionHandler = async (
-  type: string,
-  row: unknown,
-  user: IUser,
-  stage?: number
-) => {
+const actionHandler = async (type: string, row: unknown, stage?: number) => {
+  const user: IUser = await fetchJson(
+    `/api/users?id=${(row as IOrderResponse).user_id}`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
   switch (type) {
     case "pending":
       let rowFixed: IOrderResponse = row as IOrderResponse;
-
+      console.log("outer user", user);
       const result0 = await fetchJson(`/api/orders?id=${rowFixed.id_orders}`, {
         method: "PUT",
         headers: { "Content-type": "application/json" },
@@ -49,11 +53,44 @@ const actionHandler = async (
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
-          user_id: user.id_users,
+          user_id: rowFixed.user_id,
           order_id: rowFixed.id_orders,
           stage_tracking: 1,
         }),
       });
+      // check notifications for user and send notification
+      // get notification for user
+      if (user.is_notifications_enabled_users === 1) {
+        // get admin notification on backend
+        // send notification post
+        const deliveredMessage = {
+          title_notifications: "Order arrived at Istanbul warehouse!",
+          content_notifications: `Your order number ${rowFixed.id_orders} has been received at our Istanbul warehouse and will be shipped soon.`,
+        };
+        axios
+          .post(
+            "/api/notifications",
+            {
+              data: deliveredMessage,
+              files: null,
+              users: [String(rowFixed.user_id)],
+              notification_config: 1,
+            },
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          )
+          .then((response) => {
+            createToast({
+              type: "success",
+              title: "Notified User",
+              message: `Sent order received notification to userID ${rowFixed.user_id}`,
+              timeOut: 2000,
+            });
+
+            //   console.log(response.data);
+          });
+      }
       //   console.log(result0_2);
       break;
     case "shipments":
@@ -70,7 +107,7 @@ const actionHandler = async (
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
-          user_id: user.id_users,
+          user_id: rowFixed2.user_id,
           order_id: rowFixed2.id_orders,
           stage_tracking: 2,
         }),
@@ -82,7 +119,7 @@ const actionHandler = async (
     case "in-transit":
       // increment stage for
       let rowFixed3: IOrderResponse = row as IOrderResponse;
-      console.log(rowFixed3.id_orders, stage);
+      //   console.log(rowFixed3.id_orders, stage);
 
       if (stage === 2) {
         // received in libya action
@@ -90,7 +127,7 @@ const actionHandler = async (
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({
-            user_id: user.id_users,
+            user_id: rowFixed3.user_id,
             order_id: rowFixed3.id_orders,
             stage_tracking: 3,
           }),
@@ -102,7 +139,7 @@ const actionHandler = async (
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({
-            user_id: user.id_users,
+            user_id: rowFixed3.user_id,
             order_id: rowFixed3.id_orders,
             stage_tracking: 4,
           }),
@@ -110,20 +147,57 @@ const actionHandler = async (
       }
       if (stage === 4) {
         // delivered action
-        const result2 = await fetchJson(`/api/orders?id=${rowFixed3.id_orders}`, {
+
+        // set order status
+        const result2 = await fetchJson(
+          `/api/orders?id=${rowFixed3.id_orders}`,
+          {
             method: "PUT",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({ status_orders: "delivered" }),
-          });
+          }
+        );
+
+        // enter tracking data
         const result2_2 = await fetchJson("/api/tracking", {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({
-            user_id: user.id_users,
+            user_id: rowFixed3.user_id,
             order_id: rowFixed3.id_orders,
             stage_tracking: 5,
           }),
         });
+
+        // send notification
+
+        const deliveredMessage = {
+          title_notifications: "Order Delivered!",
+          content_notifications: `Your order number ${rowFixed3.id_orders} has been delivered successfully, please leave a review if you liked our service.`,
+        };
+        axios
+          .post(
+            "/api/notifications",
+            {
+              data: deliveredMessage,
+              files: null,
+              users: [String(rowFixed3.user_id)],
+              notification_config: 2,
+            },
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          )
+          .then((response) => {
+            createToast({
+              type: "success",
+              title: "Notified User",
+              message: `Sent order delivered notification to userID ${rowFixed3.user_id}`,
+              timeOut: 2000,
+            });
+
+            //   console.log(response.data);
+          });
       }
       break;
     case "user_base":
@@ -142,6 +216,7 @@ const commentHandler = () => {
 const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
   (props, ref) => {
     const { user, mutateUser } = useUser();
+
     return (
       <ClickOutside
         handler={props.handler}
@@ -158,7 +233,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
                 onClick={() =>
-                  actionHandler(props.type, props.row, user!, props.stage)
+                  actionHandler(props.type, props.row, props.stage)
                 }
               >
                 <div className="cursor-pointer">
@@ -170,7 +245,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
                 onClick={() =>
-                  actionHandler(props.type, props.row, user!, props.stage)
+                  actionHandler(props.type, props.row, props.stage)
                 }
               >
                 <div className="cursor-pointer">
@@ -180,9 +255,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             )}
             <li
               className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
-              onClick={() =>
-                actionHandler(props.type, props.row, user!, props.stage)
-              }
+              onClick={() => actionHandler(props.type, props.row, props.stage)}
             >
               <div className="cursor-pointer">
                 <span className="w-full ">
