@@ -7,6 +7,7 @@ import DeliveredPageHeader from "@/components/admin/DeliveredPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import { filter } from "@/lib/filter";
+import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 
 const tableHeaders = [
   "Customer",
@@ -32,6 +33,11 @@ const DeliveredOrders = () => {
     string | Date
   >("");
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
+  const [itemsPerPage, setItemPerPage] = useState(4);
+  const [itemOffset, setItemOffset] = useState(0);
+  const endOffset = itemOffset + itemsPerPage;
+  const currentOrders = filteredLiveOrders?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filteredLiveOrders?.length! / itemsPerPage);
 
   useEffect(() => {
     const liveOrders = orders?.filter((el) => {
@@ -41,7 +47,13 @@ const DeliveredOrders = () => {
     setFilteredAllLiveOrders(liveOrders);
   }, [orders]);
 
+  
+  const itemOffsetHandler = (value: number) => {
+    setItemOffset(value);
+};
+
   const filterByMazTrackingId = (value: string) => {
+    setItemOffset(0)
     setMazTrackingIdFilterKey(value);
     setFilteredAllLiveOrders(
       filter(allLiveOrders!, createdDateFilterKey, value)
@@ -49,6 +61,7 @@ const DeliveredOrders = () => {
   };
 
   const filterByCreatedDate = (value: Date | string) => {
+    setItemOffset(0)
     setCreatedDateFilterKey(value);
     setFilteredAllLiveOrders(
       filter(allLiveOrders!, value, mazTrackingIdFilterKey!)
@@ -82,13 +95,15 @@ const DeliveredOrders = () => {
           {filteredLiveOrders && (
             <>
               <Table
-                rows={filteredLiveOrders}
+                rows={currentOrders!}
                 headings={tableHeaders}
                 type="delivered"
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
                 
               />
+                 <ReactPaginateComponent pageCount={pageCount} offsetHandler={itemOffsetHandler} itemsPerPage={itemsPerPage} item={filteredLiveOrders} />
+            
             </>
           )}
         </div>

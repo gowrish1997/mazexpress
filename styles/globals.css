@@ -997,3 +997,48 @@ abbr:where([title]) {
 input[type="checkbox"]:disabled {
     cursor: not-allowed;
 }
+
+
+.pagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .page-item{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  padding-left: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+   border: 1px solid black;
+   margin-left: 5px;
+  }
+  .prev-page-link,.prev-page-item{
+    background-color: transparent;
+    margin-right: 10px;
+  }
+  .prev-page-item1{
+    display: none;
+  }
+  .prev-page-item:hover{
+    color:#3672DF;
+  }
+  .next-page-item,.next-page-link{
+    background-color: transparent;
+    margin-left: 5px;
+  }
+  .next-page-item1{
+    display: none;
+  }
+  .next-page-item:hover{
+    color: #3672DF;
+  }
+  .active{
+    background-color:#3672DF;
+    border: none;
+  }
