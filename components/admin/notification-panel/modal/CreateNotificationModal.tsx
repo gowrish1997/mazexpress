@@ -57,30 +57,30 @@ const CreateNotificationModal = (props: IProp) => {
     // console.log(files);
 
     // multiparty here
-    // axios
-    // .post(
-    //   "/api/notifications",
-    //   {
-    //     data: data,
-    //     files: files,
-    //     users: selectedUsers
-    //   },
-    //   {
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   }
-    // ).then(response => {
-    //   console.log(response.data)
-    // })
+    axios
+    .post(
+      "/api/notifications",
+      {
+        data: data,
+        files: files,
+        users: selectedUsers
+      },
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    ).then(response => {
+      console.log(response.data)
+    })
     
 
-    // // console.log(fileInputRef.current?.files)
-    // props.close();
-    // createToast({
-    //   type: "success",
-    //   title: "Success!",
-    //   message: "Notification sent successfully",
-    //   timeOut: 3000,
-    // });
+    // console.log(fileInputRef.current?.files)
+    props.close();
+    createToast({
+      type: "success",
+      title: "Success!",
+      message: "Notification sent successfully",
+      timeOut: 3000,
+    });
   };
 
   const uploadFilesHandler: any = (e: any) => {
