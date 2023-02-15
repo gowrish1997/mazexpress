@@ -17,6 +17,7 @@ interface IProps {
 export type Ref = HTMLDivElement;
 
 const optionHandler = (type: string) => {
+    
   switch (type) {
     case "pending":
       return "Arrived at Istanbul";
@@ -24,8 +25,7 @@ const optionHandler = (type: string) => {
       return "Left Istanbul Warehouse";
     case "in-transit":
       return "Mark as delivered";
-    case "user_base":
-      return "Send notificaton";
+    
   }
 };
 
@@ -135,13 +135,17 @@ const actionHandler = async (
   }
 };
 
+
 const commentHandler = () => {
   console.log("commnet");
 };
 
+
 const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
+
   (props, ref) => {
     const { user, mutateUser } = useUser();
+    console.log(props.stage)    
     return (
       <ClickOutside
         handler={props.handler}

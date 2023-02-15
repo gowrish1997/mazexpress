@@ -83,6 +83,7 @@ const PendingOrders = () => {
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Pending Orders | MazExpress Admin"
+          filterById={filterByMazTrackingId}
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
@@ -95,7 +96,7 @@ const PendingOrders = () => {
                 type="pending"
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
-                filterById={filterByMazTrackingId}
+              
               />
             </>
           )}

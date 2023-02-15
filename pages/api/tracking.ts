@@ -50,8 +50,9 @@ export default function handler(
         break;
 
       case "POST":
-        // console.log(req.body)
+         console.log('gowrsj')
         if (req.body.orders !== undefined) {
+          console.log('insdie if bleick')
           // orders exists send back latest tracking update for all ids in orders
           let order_ids: string[] = [...req.body.orders];
           const bulk_tracking_results = order_ids.map((order_id) => {
@@ -67,6 +68,7 @@ export default function handler(
             resolve(results);
           });
         } else {
+          console.log('else id foignij')
           db("tracking")
             .insert({ ...req.body })
             .then((data: any) => {

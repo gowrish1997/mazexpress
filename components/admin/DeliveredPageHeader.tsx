@@ -6,12 +6,14 @@ import { IOrderResponse } from "@/models/order.interface";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
+import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 interface IProp {
   content: string;
   title?: string;
   selectedOrder?: string[];
   allLiveOrders: IOrderResponse[];
   filterByDate: (value: Date | string) => void;
+  filterById:(value:string)=>void
 }
 
 const DeliveredPageHeader = (props: IProp) => {
@@ -35,6 +37,7 @@ const DeliveredPageHeader = (props: IProp) => {
         {props.allLiveOrders && props.allLiveOrders.length > 0 && (
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown   /> */}
+            <SearchMazTrackingIdInputField filterById={props.filterById} />
             <FilterOptionDropDown options={warehousesDropDownOptoin} />
 
             <AdminOptionDropDown orders={props.allLiveOrders} />

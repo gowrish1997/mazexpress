@@ -74,6 +74,7 @@ const Shipments = () => {
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title='Shipments for today | MazExpress Admin'
+          filterById={filterByMazTrackingId}
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
@@ -86,7 +87,7 @@ const Shipments = () => {
                 type="shipments"
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
-                filterById={filterByMazTrackingId}
+               
               />
             </>
           )}

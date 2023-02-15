@@ -7,13 +7,14 @@ import ScheduleShipmentModal from "./modal/ScheduleShipmentModal";
 import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
-
+import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 interface IProp {
   content: string;
   title?: string;
   selectedOrder?: string[];
   allLiveOrders: IOrderResponse[];
   filterByDate: (value: Date | string) => void;
+  filterById:(value:string)=>void
 }
 
 const adminOption = ["Moved out"];
@@ -59,6 +60,7 @@ const ShipmentsPageHeader = (props: IProp) => {
         />
         {props.allLiveOrders && props.allLiveOrders.length > 0 && (
           <div className="flex-type1 space-x-[10px]  ">
+             <SearchMazTrackingIdInputField filterById={props.filterById} />
             {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
             <FilterOptionDropDown options={warehousesDropDownOptoin} />
             {/* <button

@@ -70,11 +70,12 @@ const Intransit = () => {
     <>
       <div>
         <InTransitPageHeader
-          content="In-transit"
+          content="in-transit"
           allLiveOrders={allLiveOrders!}
           filterByDate={filterByCreatedDate}
           selectedOrder={selectedOrder}
           title="In-Transit | MazExpress Admin"
+          filterById={filterByMazTrackingId}
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
@@ -87,7 +88,7 @@ const Intransit = () => {
                 type="in-transit"
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
-                filterById={filterByMazTrackingId}
+         
               />
             </>
           )}
