@@ -84,7 +84,7 @@ export default async function handler(
             });
           });
 
-          console.log("req data", data.fields["users[]"]);
+          // console.log("req data", data.fields["users[]"]);
           Promise.all(
             data.fields["users[]"].map((user: string) => {
               return db("notifications")
@@ -100,7 +100,7 @@ export default async function handler(
                 });
             })
           ).then((result) => {
-            console.log(result);
+            // console.log(result);
             res.json({ msg: "done" });
             resolve({ msg: "done" });
           });

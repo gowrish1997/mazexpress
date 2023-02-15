@@ -67,7 +67,7 @@ const SignUpComponent = (props: any) => {
   });
 
   const onSubmit: SubmitHandler<ISignUp> = async (data) => {
-    // console.log(data);
+    console.log(data);
 
     try {
       const result = await fetchJson("/api/users", {
