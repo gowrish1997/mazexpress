@@ -7,15 +7,17 @@ import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
+import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 interface IProp {
     content: string;
     title?: string;
     selectedOrder?: string[];
     allLiveOrders: IOrderResponse[];
     filterByDate: (value: Date | string) => void;
+    filterById:(value:string)=>void
 }
 
-const adminOption = ["Received in Libya", "Out for delivery", "Mark as delivered", "Add comment"];
+const adminOption = ["Received in Libya", "Out for delivery", "Mark as delivered"];
 
 const InTransitPageHeader = (props: IProp) => {
     const warehousesDropDownOptoin = ["istanbul"];
@@ -39,9 +41,9 @@ const InTransitPageHeader = (props: IProp) => {
                 console.log("Received in Libya");
                 break;
             case "Out for delivery":
-                console.log("out for delivery");
+                console.log("out for Delivery");
                 break;
-            case "Mark as Delivered":
+            case "Mark as delivered":
                 console.log("mark as delivered");
         }
     };
@@ -58,19 +60,20 @@ const InTransitPageHeader = (props: IProp) => {
         <>
             <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative "}>
                 <Head>
-                    <title></title>
+                    <title>{props.title}</title>
                 </Head>
                 <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} filterByDate={props.filterByDate} />
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
+                        <SearchMazTrackingIdInputField filterById={props.filterById} />
                         <FilterOptionDropDown options={warehousesDropDownOptoin} />
 
                         <AdminOptionDropDown
                             option={adminOption}
                             toggle={toggleIntransitChangeStatusConfirmModal}
                             disabled={!props.selectedOrder?.length}
-                            orders={props.allLiveOrders}
+                            orders={props.selectedOrder}
                             type={props.content}
                         />
                     </div>

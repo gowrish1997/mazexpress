@@ -140,11 +140,11 @@ const LiveOrderLineItem = (props: IProp) => {
             />
           </div>
         ) : (
-          <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden  bg-slate-500">
+          <div className="relative h-[30px] w-[30px] rounded-full   bg-slate-500">
             <FontAwesomeIcon icon={faUser} />
           </div>
         )}
-        <span className="ml-[5px]">
+        <span className="ml-[5px] overflow-hidden whitespace-nowrap text-ellipsis ">
           {(allUser as IUser)?.first_name_users + "" + (allUser as IUser)?.last_name_users}
         </span>
       </td>

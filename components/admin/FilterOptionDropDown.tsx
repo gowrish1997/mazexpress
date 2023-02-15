@@ -7,26 +7,48 @@ import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
 interface Iprop {
     options: string[];
-    onChange?: (value: string) => void;
+    onChange?: (value: string[]) => void;
+    type: string;
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
+    console.log("filter optin down com");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
-    const [currentValue, setCurrentValue] = useState(props.options[0]);
+    const [currentValue, setCurrentValue] = useState<Array<string>>([]);
+    const [filteredAdminOptions, setFilteredAdminOptions] = useState<Array<string>>([]);
 
     useEffect(() => {
-        setCurrentValue(props.options[0]);
+        setCurrentValue([props.options[0]]);
+        setFilteredAdminOptions(props.options);
     }, [props.options]);
+
+    useEffect(() => {
+        if (!(props.type == "warehouse")) {
+            setFilteredAdminOptions((prev) => {
+                return [...props.options.filter((value) => !currentValue.includes(value))];
+            });
+        }
+    }, [currentValue]);
 
     const dropDownOnChangeHandler = (value: string) => {
         if (props.onChange) {
-            if (value == "status") {
-                props?.onChange?.("");
-                setCurrentValue("status");
+            if (value == "all status") {
+                props?.onChange?.([]);
+                setCurrentValue(["all status"]);
             } else {
-                setCurrentValue(value);
-                props?.onChange?.(value);
+                setCurrentValue((prev) => {
+                    if (prev[0] == "all status") {
+                        return [value];
+                    } else {
+                        return [...(prev ? prev : []), value];
+                    }
+                });
+                if (currentValue[0] == "all status") {
+                    props?.onChange?.([value]);
+                } else {
+                    props?.onChange?.([...currentValue, value]);
+                }
             }
         }
 
@@ -49,7 +71,10 @@ const FilterOptionDropDown = (props: Iprop) => {
                 style={showAdminOptionCard ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
                 onClick={toggleAdminOptionCard}
             >
-                <span>{currentValue}</span>
+                <span className="capitalize">{currentValue[0]}</span>
+                {currentValue && currentValue?.length > 1 && (
+                    <span className="text-[#3672DF] text-[14px]" style={showAdminOptionCard ? { color: "#FFFFFF" } : {}}>{`${currentValue.length - 1}+more`}</span>
+                )}
                 <div className="relative h-[6px] w-[8px]  ">
                     <Image src="/downwardArrow.png" fill={true} alt="arrow" objectFit="cover" />
                 </div>
@@ -57,13 +82,12 @@ const FilterOptionDropDown = (props: Iprop) => {
             {showAdminOptionCard && (
                 <ClickOutside trigger={trigger} handler={smartToggleGateHandler}>
                     <div className="w-full  bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px]">
-                        {props.options &&
-                            props.options.map((data,index) => {
+                        {filteredAdminOptions &&
+                            filteredAdminOptions.map((data, index) => {
                                 return (
                                     <button
-                                    key={index}
+                                        key={index}
                                         className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                        style={currentValue == data ? { backgroundColor: "#f2f9fc" } : {}}
                                         onClick={() => dropDownOnChangeHandler(data)}
                                     >
                                         {data}
