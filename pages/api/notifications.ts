@@ -1,6 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { db } from "@/lib/db";
-import { INotification } from "@/models/notification.interface";
+import {
+  INotification,
+  INotificationConfig,
+} from "@/models/notification.interface";
 import type { NextApiRequest, NextApiResponse } from "next";
 import multiparty from "multiparty";
 var bodyParser = require("body-parser");
@@ -73,7 +76,6 @@ export default async function handler(
         break;
 
       case "POST":
-        const obj: INotification = req.body;
         try {
           // console.log(req)
           const form = new multiparty.Form();
@@ -83,8 +85,45 @@ export default async function handler(
               resolve({ fields, files });
             });
           });
-
-          console.log("req data", data.fields["users[]"]);
+          if (
+            data.fields["notification_config"] !== undefined &&
+            data.fields["notification_config"] !== null
+          ) {
+            // its from an automated notification
+            // check if notification config is on for this id
+            db("notification_config")
+              .where(
+                "id_notification_config",
+                data.fields["notification_config"]
+              )
+              .first()
+              .then((conf: INotificationConfig) => {
+                if (conf.is_enabled_notification_config === 1) {
+                  // send notification
+                  Promise.all(
+                    data.fields["users[]"].map((user: string) => {
+                      return db("notifications")
+                        .insert({
+                          user_id: parseInt(user),
+                          title_notifications:
+                            data.fields["data[title_notifications]"][0],
+                          content_notifications:
+                            data.fields["data[content_notifications]"][0],
+                        })
+                        .then((data: any) => {
+                          return true;
+                        });
+                    })
+                  ).then((result) => {
+                    // console.log(result);
+                    res.json({ msg: "done" });
+                    resolve({ msg: "done" });
+                    return;
+                  });
+                }
+              });
+          }
+          // console.log("req data", data.fields["users[]"]);
           Promise.all(
             data.fields["users[]"].map((user: string) => {
               return db("notifications")
@@ -100,7 +139,7 @@ export default async function handler(
                 });
             })
           ).then((result) => {
-            console.log(result);
+            // console.log(result);
             res.json({ msg: "done" });
             resolve({ msg: "done" });
           });

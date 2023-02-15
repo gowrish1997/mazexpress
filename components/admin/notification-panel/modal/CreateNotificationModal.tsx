@@ -54,7 +54,7 @@ const CreateNotificationModal = (props: IProp) => {
 
   const onSubmit: SubmitHandler<INotificationForm> = async (data) => {
     console.log(data);
-    console.log(files);
+    // console.log(files);
 
     // multiparty here
     axios

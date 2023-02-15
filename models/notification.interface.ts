@@ -9,10 +9,12 @@ interface INotification {
 }
 
 interface INotificationConfig {
-  title: string;
-  is_enabled: boolean;
-  desc: string;
-  id: string;
+  title_notification_config: string;
+  desc_notification_config: string;
+  id_notification_config: number;
+  is_enabled_notification_config: boolean | 0 | 1;
+  is_custom_notification_config: boolean | 0 | 1
+  is_reusable_notification_config: boolean | 0 | 1
 }
 
 interface INotificationForm {
