@@ -28,6 +28,43 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
               resolve(data);
             });
         }
+
+        if (req.query.status !== undefined) {
+          // send back status filtered res
+          let statusArray = (req.query.status as string).split(',')
+          console.log(typeof req.query.status)
+          const queryOrders = db("orders")
+            .havingIn("status_orders", statusArray)
+            .limit(req.query.per_page)
+            .offset(
+              parseInt(req.query.per_page as string) *
+                parseInt(req.query.page as string)
+            )
+            .then((data: any) => {
+              console.log(data);
+              return data;
+            });
+
+          const allOrdersCount = db("orders")
+            .count("id_orders as count")
+            .first()
+            .then((count: any) => {
+              return count;
+            });
+
+          Promise.all([queryOrders, allOrdersCount]).then((result) => {
+            console.log(result);
+            let responseObj: Data = {
+              data: result[0],
+              total_count: result[1].count,
+              msg: "successful",
+            };
+            res.status(200).json(responseObj);
+            resolve(responseObj);
+            
+          });
+          break
+        }
         if (!req.query.user) {
           // error invalid
           if (req.query.id) {
@@ -52,8 +89,8 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
                 console.log(data);
                 return data;
               });
-            
-            const allOrdersCount = db('orders')
+
+            const allOrdersCount = db("orders")
               .count("id_orders as count")
               // You actually can use string|function with this = knex builder|another knex builder
               .first()

@@ -7,8 +7,9 @@ import fetchJson from "@/lib/fetchJson";
 import axios from "axios";
 
 type Data = {
-  msg: string;
+  msg?: string;
   data?: any;
+  total_count?: number;
 };
 
 export default function handler(
@@ -18,6 +19,18 @@ export default function handler(
   return new Promise(async (resolve, reject) => {
     switch (req.method) {
       case "GET":
+        // search
+        if (req.query.search !== undefined) {
+          // send back search res
+          // getting maz id from search
+          // db("users")
+          //   .whereLike("id_orders", req.query.search)
+          //   .then((data: IOrderResponse[]) => {
+          //     res.status(200).json({ data: data });
+          //     resolve(data);
+          //   });
+        }
+
         if (req.query.id) {
           // single response
           const id = req.query.id;
@@ -41,27 +54,55 @@ export default function handler(
               resolve(data);
             });
         } else {
-          db.select(
-            "id_users",
-            "first_name_users",
-            "last_name_users",
-            "email_users",
-            "phone_users",
-            "default_address_users",
-            "avatar_url_users",
-            "is_notifications_enabled_users",
-            "is_admin_users",
-            "is_logged_in_users",
-            "age_users",
-            "gender_users",
-            "created_on_user"
-          )
+          // paginate
+          // get results and count of results
+          const queryOrders = db
+            .select(
+              "id_users",
+              "first_name_users",
+              "last_name_users",
+              "email_users",
+              "phone_users",
+              "default_address_users",
+              "avatar_url_users",
+              "is_notifications_enabled_users",
+              "is_admin_users",
+              "is_logged_in_users",
+              "age_users",
+              "gender_users",
+              "created_on_user"
+            )
             .from("users")
+            .limit(req.query.per_page)
+            .offset(
+              parseInt(req.query.per_page as string) *
+                parseInt(req.query.page as string)
+            )
             .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
+              console.log(data);
+              return data;
             });
+
+          const allUsersCount = db("users")
+            .count("id_users as count")
+            // You actually can use string|function with this = knex builder|another knex builder
+            .first()
+            .then((count: any) => {
+              return count;
+            });
+
+          Promise.all([queryOrders, allUsersCount]).then((result) => {
+            console.log(result);
+            let responseObj: Data = {
+              data: result[0],
+              total_count: result[1].count,
+              msg: "successful",
+            };
+            res.status(200).json(responseObj);
+            resolve(responseObj);
+          });
         }
+
         break;
 
       case "POST":

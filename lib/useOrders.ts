@@ -6,8 +6,8 @@ interface IProps {
   search?: string;
   page?: number;
   per_page?: number;
-  status?: string;
-  date_offset?: number;
+  status?: string[];
+  date_offset?: string;
   // future warehouse addition
 }
 type Data = {
@@ -18,8 +18,8 @@ type Data = {
 
 
 export default function useOrders(props: IProps) {
-  console.log('calling use orders')
-  console.log(props.page)
+//   console.log('calling use orders')
+//   console.log(props.page)
   let queryString = "";
 
   queryString += `?page=${props.page !== undefined ? props.page : 0}&per_page=${
@@ -34,10 +34,10 @@ export default function useOrders(props: IProps) {
     queryString += `&search=${props.search}`;
   }
 
-  
   if (props?.status) {
     queryString += `&status=${props.status}`;
   }
+
   const {
     data: orders,
     mutate: mutateOrders,

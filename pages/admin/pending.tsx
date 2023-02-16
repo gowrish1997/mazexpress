@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 import useOrders from "@/lib/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -18,7 +15,6 @@ import LoadingPage from "@/components/common/LoadingPage";
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
 const PendingOrders = () => {
-
     const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
     const router = useRouter();
 
@@ -27,23 +23,18 @@ const PendingOrders = () => {
     const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string | Date>("");
 
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({ per_page: itemsPerPage, page: currentPage });
-
-    const [allPendingOrders, setAllPendingOrders] = useState<IOrderResponse[]>();
-
-    useEffect(() => {
-        // const liveOrders = orders?.data?.filter((el) => {
-        //     return el.status_orders == "pending";
-        // });
-
-        setAllPendingOrders(orders?.data);
-    }, [orders]);
+    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+        per_page: itemsPerPage,
+        page: currentPage,
+        status: ["pending"],
+    });
+    console.log(orders)
 
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
     const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
 
-    const  currentPageHandler = (value: number) => {
+    const currentPageHandler = (value: number) => {
         setCurrentPage(value);
     };
 
@@ -52,12 +43,12 @@ const PendingOrders = () => {
     };
 
     const selectOrderHandler = (value: string, type: string) => {
-        selectOrder(value, type, setSelectedOrder, allPendingOrders!, selectedOrder!);
+        selectOrder(value, type, setSelectedOrder, orders?.data!, selectedOrder!);
     };
 
     if (ordersIsLoading) {
-      return <LoadingPage/>
-  }
+        return <LoadingPage />;
+    }
     if (ordersError) {
         return <div>some error happened</div>;
     }
@@ -67,7 +58,7 @@ const PendingOrders = () => {
             <div>
                 <PendingPageHeader
                     content="pending"
-                    allLiveOrders={allPendingOrders!}
+                    allLiveOrders={orders?.data!}
                     selectedOrder={selectedOrder}
                     filterByDate={filterByCreatedDate}
                     title="Pending Orders | MazExpress Admin"
@@ -75,11 +66,11 @@ const PendingOrders = () => {
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!allPendingOrders && <BlankPage />}
-                    {allPendingOrders && (
+                    {!orders?.data && <BlankPage />}
+                    {orders?.data && (
                         <>
-                            <Table rows={allPendingOrders!} headings={tableHeaders} type="pending" onSelect={selectOrderHandler} selectedOrder={selectedOrder!} />
-                            <ReactPaginateComponent pageCount={pageCount}  currentPageHandler={ currentPageHandler} itemsPerPage={itemsPerPage} currentPage={currentPage} />
+                            <Table rows={orders?.data!} headings={tableHeaders} type="pending" onSelect={selectOrderHandler} selectedOrder={selectedOrder!} />
+                            <ReactPaginateComponent pageCount={pageCount} currentPageHandler={currentPageHandler} itemsPerPage={itemsPerPage} currentPage={currentPage} />
                         </>
                     )}
                 </div>

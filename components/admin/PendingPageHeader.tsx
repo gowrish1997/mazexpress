@@ -11,7 +11,7 @@ interface IProp {
     content: string;
     title?: string;
     selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[];
+    allLiveOrders: IOrderResponse[] | undefined;
     filterByDate: (value: Date | string) => void;
     //  filterById: (value: string) => void;
 }

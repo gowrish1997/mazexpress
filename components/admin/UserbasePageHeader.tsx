@@ -9,49 +9,64 @@ import SendNotificatonConfirmModal from "./modal/SendNotificatonConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 interface IProp {
-    content: string;
-    title?: string;
-    selectedUser?: number[];
-    allUsers: IUser[];
-    filterByDate: (value: Date | string) => void;
-    // filterByUser:(value:string)=>void
+  content: string;
+  title?: string;
+  selectedUser?: number[];
+  allUsers: IUser[];
+  filterByDate: (value: Date | string) => void;
+  // filterByUser:(value:string)=>void
 }
 
 const UserbasePageHeader = (props: IProp) => {
-    const [showSendNotificatoinConfirmModal, setShowSendNotificatoinConfirmModal] = useState(false);
+  const [
+    showSendNotificatoinConfirmModal,
+    setShowSendNotificatoinConfirmModal,
+  ] = useState(false);
 
-    const toggleSendNotificatoinConfirmModal = () => {
-        setShowSendNotificatoinConfirmModal((prev) => !prev);
-    };
+  const toggleSendNotificatoinConfirmModal = () => {
+    setShowSendNotificatoinConfirmModal((prev) => !prev);
+  };
 
-    const sendNotificatoinHanlder = () => {
-        console.log();
-    };
+  const sendNotificatoinHanlder = () => {
+    console.log();
+  };
 
-    return (
-        <>
-            <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative "}>
-                <Head>
-                    <title>{props.title}</title>
-                </Head>
-                <PageheaderTitle content={props.content} allLiveOrders={props.allUsers} filterByDate={props.filterByDate} />
-                {props.allUsers && props.allUsers.length > 0 && (
-                    <div className="flex-type1 space-x-[10px]  ">
-                        {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
-                        {/* <FilterOptionDropDown options={warehousesDropDownOptoin} /> */}
-                        {/* <SearchUserInputField filterByUser={props.filterByUser}/> */}
-                        <AdminOptionDropDown orders={props.allUsers} toggle={toggleSendNotificatoinConfirmModal} disabled={!props.selectedUser?.length} />
-                    </div>
-                )}
-            </div>
-            <SendNotificatonConfirmModal
-                close={toggleSendNotificatoinConfirmModal}
-                show={showSendNotificatoinConfirmModal}
-                total={props.selectedUser?.length!}
-                confirm={sendNotificatoinHanlder}
+  return (
+    <>
+      <div
+        className={
+          "w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative "
+        }
+      >
+        <Head>
+          <title>{props.title}</title>
+        </Head>
+        <PageheaderTitle
+          content={props.content}
+          allLiveOrders={props.allUsers}
+          filterByDate={props.filterByDate}
+        />
+        {props.allUsers && props.allUsers.length > 0 && (
+          <div className="flex-type1 space-x-[10px]  ">
+            {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
+            {/* <FilterOptionDropDown options={warehousesDropDownOptoin} /> */}
+            {/* <SearchUserInputField filterByUser={props.filterByUser}/> */}
+            <AdminOptionDropDown
+              orders={props.allUsers}
+              toggle={toggleSendNotificatoinConfirmModal}
+              disabled={!props.selectedUser?.length}
             />
-        </>
-    );
+          </div>
+        )}
+      </div>
+      <SendNotificatonConfirmModal
+        close={toggleSendNotificatoinConfirmModal}
+        show={showSendNotificatoinConfirmModal}
+        total={props.selectedUser?.length!}
+        confirm={sendNotificatoinHanlder}
+      />
+    </>
+  );
 };
 
 export default UserbasePageHeader;
