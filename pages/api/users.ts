@@ -7,8 +7,9 @@ import fetchJson from "@/lib/fetchJson";
 import axios from "axios";
 
 type Data = {
-  msg: string;
+  msg?: string;
   data?: any;
+  
 };
 
 export default function handler(

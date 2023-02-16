@@ -13,7 +13,7 @@ interface IProp {
     selectedOrder?: string[];
     allLiveOrders: IOrderResponse[] | undefined;
     filterByDate: (value: Date | string) => void;
-    filterById: (value: string) => void;
+    //  filterById: (value: string) => void;
 }
 
 const adminOption = ["Move to Shipments"];
@@ -39,8 +39,8 @@ const PendingPageHeader = (props: IProp) => {
                 <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} filterByDate={props.filterByDate} />
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px]  ">
-                        <SearchMazTrackingIdInputField filterById={props.filterById} />
-                        <FilterOptionDropDown options={warehousesDropDownOptoin} />
+                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+                        <FilterOptionDropDown options={warehousesDropDownOptoin} type='warehouse' />
 
                         <AdminOptionDropDown option={adminOption} toggle={toggleMoveToShipmentHandler} disabled={!props.selectedOrder?.length} orders={props.allLiveOrders} />
                     </div>

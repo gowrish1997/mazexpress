@@ -4,27 +4,28 @@ import { IUser } from "@/models/user.interface";
 import { IOrderResponse } from "@/models/order.interface";
 interface IProp {
     pageCount: number;
-    offsetHandler: (value: number) => void;
+    currentPageHandler: (value: number) => void;
     itemsPerPage: number;
-    item: IUser[] | IOrderResponse[];
+    currentPage:number
+    // item: IUser[] | IOrderResponse[];
 }
 
 const ReactPaginateComponent = (props: IProp) => {
     const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
-        setCurrentPage(0);
-    }, [props.item]);
+        setCurrentPage(props.currentPage);
+    }, [props.currentPage]);
 
     // Invoke when user click to request another page.
     const handlePageClick = (event: any) => {
         setCurrentPage(event.selected);
-        const newOffset = (event.selected * props.itemsPerPage) % props.item.length;
-        props.offsetHandler(newOffset);
+        // const newOffset = (event.selected * props.itemsPerPage) % props.item.length;
+        props. currentPageHandler(event.selected);
     };
 
     return (
-        <div className="fixed bottom-[10px] flex flex-row justify-center items-center right-[0%] w-full">
+    <div className="fixed bottom-[10px] flex flex-row justify-center items-center right-[0%] w-full">
             <ReactPaginate
                 nextLabel="next >"
                 onPageChange={handlePageClick}

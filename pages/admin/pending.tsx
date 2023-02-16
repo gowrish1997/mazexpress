@@ -8,6 +8,9 @@ import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 import { filter } from "@/lib/filter";
+import { ISearchKeyContext } from "@/models/SearchContextInterface";
+import { SearchKeyContext } from "@/components/common/Frame";
+import LoadingPage from "@/components/common/LoadingPage";
 
 const tableHeaders = [
   "Customer",
@@ -20,44 +23,43 @@ const tableHeaders = [
 ];
 
 const PendingOrders = () => {
+  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
   const router = useRouter();
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    status: "pending",
-  });
 
-
-
+  const [itemsPerPage, setItemPerPage] = useState(7);
+  const [currentPage, setCurrentPage] = useState(0);
   const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
     useState<string>("");
-
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
     string | Date
   >("");
 
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    per_page: itemsPerPage,
+    page: currentPage,
+    status: 'pending'
+  });
+
+  const [allPendingOrders, setAllPendingOrders] = useState<IOrderResponse[]>();
+
+  useEffect(() => {
+    // const liveOrders = orders?.data?.filter((el) => {
+    //     return el.status_orders == "pending";
+    // });
+
+    setAllPendingOrders(orders?.data);
+  }, [orders]);
+
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const [perPage, setPerPage] = useState(20);
-  const [page, setPerPage] = useState(20);
-  const pageCount = Math.ceil(filteredLiveOrders?.length! / itemsPerPage);
+  const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
 
-  const itemOffsetHandler = (value: number) => {
-    setItemOffset(value);
-  };
-
-  const filterByMazTrackingId = (value: string) => {
-    setItemOffset(0);
-    setMazTrackingIdFilterKey(value);
-    setFilteredAllLiveOrders(
-      filter(allPendingOrders!, createdDateFilterKey, value)
-    );
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
   };
 
   const filterByCreatedDate = (value: Date | string) => {
-    setItemOffset(0);
     setCreatedDateFilterKey(value);
-    setFilteredAllLiveOrders(
-      filter(allPendingOrders!, value, mazTrackingIdFilterKey!)
-    );
   };
 
   const selectOrderHandler = (value: string, type: string) => {
@@ -71,29 +73,30 @@ const PendingOrders = () => {
   };
 
   if (ordersIsLoading) {
-    return <div>this is loading</div>;
+    return <LoadingPage />;
   }
   if (ordersError) {
     return <div>some error happened</div>;
   }
+
   return (
     <>
       <div>
         <PendingPageHeader
           content="pending"
-          allLiveOrders={orders?.data}
+          allLiveOrders={allPendingOrders!}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Pending Orders | MazExpress Admin"
-          filterById={filterByMazTrackingId}
+          //   filterById={filterByMazTrackingId}
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders && <BlankPage />}
-          {orders && (
+          {!allPendingOrders && <BlankPage />}
+          {allPendingOrders && (
             <>
               <Table
-                rows={orders.data!}
+                rows={allPendingOrders!}
                 headings={tableHeaders}
                 type="pending"
                 onSelect={selectOrderHandler}
@@ -101,9 +104,9 @@ const PendingOrders = () => {
               />
               <ReactPaginateComponent
                 pageCount={pageCount}
-                offsetHandler={itemOffsetHandler}
+                currentPageHandler={currentPageHandler}
                 itemsPerPage={itemsPerPage}
-                item={orders.data!}
+                currentPage={currentPage}
               />
             </>
           )}

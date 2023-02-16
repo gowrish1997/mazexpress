@@ -8,6 +8,9 @@ import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import { filter } from "@/lib/filter";
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
+import { ISearchKeyContext } from "@/models/SearchContextInterface";
+import { SearchKeyContext } from "@/components/common/Frame";
+import LoadingPage from "@/components/common/LoadingPage";
 
 const tableHeaders = [
   "Customer",
@@ -20,60 +23,49 @@ const tableHeaders = [
 ];
 
 const DeliveredOrders = () => {
+  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
   const router = useRouter();
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
 
-  const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
-  const [filteredLiveOrders, setFilteredAllLiveOrders] =
-    useState<IOrderResponse[]>();
+  const [itemsPerPage, setItemPerPage] = useState(7);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
     useState<string>("");
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-    string | Date
+    Date | string
   >("");
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    per_page: itemsPerPage,
+    page: currentPage,
+    status: 'delivered'
+  });
+
+  const [allDeliveredOrders, setAllDeliveredOrders] =
+    useState<IOrderResponse[]>();
+
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
-  const [itemsPerPage, setItemPerPage] = useState(4);
-  const [itemOffset, setItemOffset] = useState(0);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentOrders = filteredLiveOrders?.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(filteredLiveOrders?.length! / itemsPerPage);
 
-  useEffect(() => {
-    const liveOrders = orders?.filter((el) => {
-      return el.status_orders == "delivered";
-    });
-    setAllLiveOrders(liveOrders);
-    setFilteredAllLiveOrders(liveOrders);
-  }, [orders]);
+  const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
 
-  
-  const itemOffsetHandler = (value: number) => {
-    setItemOffset(value);
-};
-
-  const filterByMazTrackingId = (value: string) => {
-    setItemOffset(0)
-    setMazTrackingIdFilterKey(value);
-    setFilteredAllLiveOrders(
-      filter(allLiveOrders!, createdDateFilterKey, value)
-    );
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
   };
 
   const filterByCreatedDate = (value: Date | string) => {
-    setItemOffset(0)
     setCreatedDateFilterKey(value);
-    setFilteredAllLiveOrders(
-      filter(allLiveOrders!, value, mazTrackingIdFilterKey!)
-    );
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    selectOrder(value, type, setSelectedOrder, allLiveOrders!, selectedOrder!);
+    selectOrder(
+      value,
+      type,
+      setSelectedOrder,
+      allDeliveredOrders!,
+      selectedOrder!
+    );
   };
-
   if (ordersIsLoading) {
-    return <div>this is loading</div>;
+    return <LoadingPage />;
   }
   if (ordersError) {
     return <div>some error happened</div>;
@@ -83,27 +75,29 @@ const DeliveredOrders = () => {
       <div>
         <DeliveredPageHeader
           content="Delivered"
-          allLiveOrders={allLiveOrders!}
+          allLiveOrders={orders?.data!}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
-          title='Delivered orders | MazExpress Admin'
-          filterById={filterByMazTrackingId}
+          title="Delivered orders | MazExpress Admin"
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!filteredLiveOrders && <BlankPage />}
-          {filteredLiveOrders && (
+          {!orders?.data && <BlankPage />}
+          {orders?.data && (
             <>
               <Table
-                rows={currentOrders!}
+                rows={orders?.data!}
                 headings={tableHeaders}
                 type="delivered"
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
-                
               />
-                 <ReactPaginateComponent pageCount={pageCount} offsetHandler={itemOffsetHandler} itemsPerPage={itemsPerPage} item={filteredLiveOrders} />
-            
+              <ReactPaginateComponent
+                pageCount={pageCount}
+                itemsPerPage={itemsPerPage}
+                currentPageHandler={currentPageHandler}
+                currentPage={currentPage}
+              />
             </>
           )}
         </div>

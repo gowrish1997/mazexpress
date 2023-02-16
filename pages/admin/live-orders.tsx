@@ -8,6 +8,10 @@ import { IOrderResponse } from "@/models/order.interface";
 import BlankPage from "@/components/admin/BlankPage";
 import { filter } from "@/lib/filter";
 import { selectOrder } from "@/lib/selectOrder";
+import { ISearchKeyContext } from "@/models/SearchContextInterface";
+import { SearchKeyContext } from "@/components/common/Frame";
+import LoadingPage from "@/components/common/LoadingPage";
+
 const tableHeaders = [
   "Customer",
   "MAZ Tracking ID",
@@ -19,107 +23,44 @@ const tableHeaders = [
 ];
 
 const LiveOrders = () => {
+  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+
   const router = useRouter();
-
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    per_page: 7,
-    page: 0,
-  });
-
-  const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
-  const [filteredLiveOrders, setFilteredAllLiveOrders] =
-    useState<IOrderResponse[]>();
-
+  const [itemsPerPage, setItemPerPage] = useState(7);
+  const [currentPage, setCurrentPage] = useState(0);
   const [statusFilterKey, setStatusFilterKey] = useState<string[]>([]);
-  const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
-    useState<string>("");
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
     Date | string
   >("");
-  const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const [itemsPerPage, setItemPerPage] = useState(4);
-  const [itemOffset, setItemOffset] = useState(0);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentUsers = filteredLiveOrders?.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(filteredLiveOrders?.length! / itemsPerPage);
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    per_page: itemsPerPage,
+    page: currentPage,
+  });
+
+  const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
 
   useEffect(() => {
     console.log(orders);
     setAllLiveOrders(orders?.data);
-    // setFilteredAllLiveOrders(orders);
   }, [orders]);
 
-  const itemOffsetHandler = (value: number) => {
-    setItemOffset(value);
+  const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
+
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
   };
 
   const filterByStatusHandler = (value: string[]) => {
-    setItemOffset(0);
     setStatusFilterKey(value);
-    const liveOrders = filter(
-      allLiveOrders!,
-      createdDateFilterKey,
-      mazTrackingIdFilterKey
-    ).filter((el) => {
-      if (value.length > 0) {
-        return value.includes(el.status_orders);
-      } else {
-        return el;
-      }
-    });
-
-    setFilteredAllLiveOrders(liveOrders);
-  };
-
-  const filterByMazTrackingId = (value: string) => {
-    setItemOffset(0);
-    setMazTrackingIdFilterKey(value);
-    const liveOrders = filter(
-      allLiveOrders!,
-      createdDateFilterKey,
-      value
-    ).filter((el) => {
-      if (statusFilterKey.length > 0) {
-        return statusFilterKey.includes(el.status_orders);
-      } else {
-        return el;
-      }
-    });
-
-    setFilteredAllLiveOrders(liveOrders);
   };
 
   const filterByCreatedDate = (value: Date | string) => {
-    setItemOffset(0);
     setCreatedDateFilterKey(value);
-    const liveOrders = filter(
-      allLiveOrders!,
-      value,
-      mazTrackingIdFilterKey
-    ).filter((el) => {
-      if (statusFilterKey.length > 0) {
-        return statusFilterKey.includes(el.status_orders);
-      } else {
-        return el;
-      }
-    });
-
-    setFilteredAllLiveOrders(liveOrders);
-  };
-
-  const selectOrderHandler = (value: string, type: string) => {
-    selectOrder(
-      value,
-      type,
-      setSelectedOrder,
-      filteredLiveOrders!,
-      selectedOrder!
-    );
   };
 
   if (ordersIsLoading) {
-    return <div>this is loading</div>;
+    return <LoadingPage />;
   }
   if (ordersError) {
     return <div>some error happened</div>;
@@ -131,33 +72,28 @@ const LiveOrders = () => {
           content="Live Orders"
           allLiveOrders={allLiveOrders!}
           onChangeStatus={filterByStatusHandler}
-          selectedOrder={selectedOrder!}
           filterByDate={filterByCreatedDate}
-          filterById={filterByMazTrackingId}
           title="Live Orders | MazExpress Admin"
         />
         <div className="flex flex-col justify-between relative flex-1 h-full">
+          {/* {!filteredLiveOrders && <BlankPage />} */}
+
           {allLiveOrders && (
             <>
               <Table
                 rows={allLiveOrders!}
                 headings={tableHeaders}
                 type="live_order"
-                onSelect={selectOrderHandler}
-                selectedOrder={selectedOrder!}
               />
               <ReactPaginateComponent
                 pageCount={pageCount}
-                offsetHandler={itemOffsetHandler}
+                currentPageHandler={currentPageHandler}
                 itemsPerPage={itemsPerPage}
-                item={allLiveOrders}
+                currentPage={currentPage}
               />
             </>
           )}
         </div>
-        {selectedOrder?.length! > 0 && (
-          <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedOrder?.length} orders are selected`}</div>
-        )}
       </div>
     </>
   );

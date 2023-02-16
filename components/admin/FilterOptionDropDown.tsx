@@ -12,10 +12,9 @@ interface Iprop {
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
-    console.log("filter optin down com");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
-    const [currentValue, setCurrentValue] = useState<Array<string>>([]);
+    const [currentValue, setCurrentValue] = useState<Array<string>>(["all status"]);
     const [filteredAdminOptions, setFilteredAdminOptions] = useState<Array<string>>([]);
 
     useEffect(() => {
@@ -23,13 +22,13 @@ const FilterOptionDropDown = (props: Iprop) => {
         setFilteredAdminOptions(props.options);
     }, [props.options]);
 
-    useEffect(() => {
-        if (!(props.type == "warehouse")) {
-            setFilteredAdminOptions((prev) => {
-                return [...props.options.filter((value) => !currentValue.includes(value))];
-            });
-        }
-    }, [currentValue]);
+    // useEffect(() => {
+    //     if (!(props.type == "warehouse")) {
+    //         setFilteredAdminOptions((prev) => {
+    //             return [...props.options.filter((value) => !currentValue.includes(value))];
+    //         });
+    //     }
+    // }, [currentValue]);
 
     const dropDownOnChangeHandler = (value: string) => {
         if (props.onChange) {
@@ -37,17 +36,36 @@ const FilterOptionDropDown = (props: Iprop) => {
                 props?.onChange?.([]);
                 setCurrentValue(["all status"]);
             } else {
-                setCurrentValue((prev) => {
-                    if (prev[0] == "all status") {
-                        return [value];
+                if (currentValue[0] == "all status") {
+                    setCurrentValue([value]);
+                } else {
+                    if (currentValue.includes(value)) {
+                        const filter = currentValue.filter((el) => el != value);
+
+                        if (filter.length) {
+                            setCurrentValue(filter);
+                        } else {
+                            setCurrentValue(["all status"]);
+                        }
                     } else {
-                        return [...(prev ? prev : []), value];
+                        setCurrentValue((prev) => {
+                            return [...(prev ? prev : []), value];
+                        });
                     }
-                });
+                }
+
                 if (currentValue[0] == "all status") {
                     props?.onChange?.([value]);
                 } else {
-                    props?.onChange?.([...currentValue, value]);
+                    if (currentValue.includes(value)) {
+                        const filter = currentValue.filter((el) => el != value);
+                        if (filter.length == 0) {
+                            props?.onChange?.([]);
+                        }
+                        props?.onChange?.(filter);
+                    } else {
+                        props?.onChange?.([...currentValue, value]);
+                    }
                 }
             }
         }
@@ -63,6 +81,7 @@ const FilterOptionDropDown = (props: Iprop) => {
         console.log("smart togglere");
         setShowAdminOptionCard(false);
     };
+    console.log(currentValue);
 
     return (
         <div className="relative z-40">
@@ -81,17 +100,21 @@ const FilterOptionDropDown = (props: Iprop) => {
             </button>
             {showAdminOptionCard && (
                 <ClickOutside trigger={trigger} handler={smartToggleGateHandler}>
-                    <div className="w-full  bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px]">
+                    <div className="w-full  bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
                         {filteredAdminOptions &&
                             filteredAdminOptions.map((data, index) => {
                                 return (
-                                    <button
-                                        key={index}
-                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                        onClick={() => dropDownOnChangeHandler(data)}
-                                    >
-                                        {data}
-                                    </button>
+                                    <div className="flex flex-row justify-start items-center">
+                                        <button
+                                            key={index}
+                                            className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                            onClick={() => dropDownOnChangeHandler(data)}
+                                            style={currentValue.includes(data) ? { backgroundColor: "#f2f9fc" } : {}}
+                                        >
+                                            {data}
+                                        </button>
+                                        {currentValue.includes(data) ? <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#3672DF] " /> : <></>}
+                                    </div>
                                 );
                             })}
                     </div>
