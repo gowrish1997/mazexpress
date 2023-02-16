@@ -42,7 +42,8 @@ const LiveOrders = () => {
   const pageCount = Math.ceil(filteredLiveOrders?.length! / itemsPerPage);
 
   useEffect(() => {
-    setAllLiveOrders(orders);
+    console.log(orders)
+    setAllLiveOrders(orders?.data);
     // setFilteredAllLiveOrders(orders);
   }, [orders]);
 

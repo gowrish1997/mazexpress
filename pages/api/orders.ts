@@ -8,6 +8,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 type Data = {
   msg?: string;
   data?: any;
+  total_count?: number;
 };
 
 export default withSessionRoute(handler);
@@ -40,16 +41,36 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
                 resolve(data);
               });
           } else {
-            db("orders")
+            // get results and count of results
+            const queryOrders = db("orders")
               .limit(req.query.per_page)
               .offset(
                 parseInt(req.query.per_page as string) *
                   parseInt(req.query.page as string)
               )
               .then((data: any) => {
-                res.status(200).json(data);
-                resolve(data);
+                console.log(data);
+                return data;
               });
+            
+            const allOrdersCount = db('orders')
+              .count("id_orders as count")
+              // You actually can use string|function with this = knex builder|another knex builder
+              .first()
+              .then((count: any) => {
+                return count;
+              });
+
+            Promise.all([queryOrders, allOrdersCount]).then((result) => {
+              console.log(result);
+              let responseObj: Data = {
+                data: result[0],
+                total_count: result[1].count,
+                msg: "successful",
+              };
+              res.status(200).json(responseObj);
+              resolve(responseObj);
+            });
           }
         } else {
           const user_id = req.query.user;
