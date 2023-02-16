@@ -7,18 +7,29 @@ interface IProps {
   page?: number;
   per_page?: number;
   status?: string;
-  date_offset?: number
+  date_offset?: number;
   // future warehouse addition
 }
+type Data = {
+    msg?: string;
+    data?: IOrderResponse[];
+    total_count?: number;
+  };
+
 
 export default function useOrders(props: IProps) {
+  console.log('calling use orders')
+  console.log(props.page)
   let queryString = "";
+
   queryString += `?page=${props.page !== undefined ? props.page : 0}&per_page=${
     props.per_page !== undefined ? props.per_page : 20
-  }`;   
+  }`;
+
   if (props?.user_id) {
     queryString += `&user=${props.user_id}`;
   }
+
   if (props?.search) {
     queryString += `&search=${props.search}`;
   }
@@ -28,7 +39,7 @@ export default function useOrders(props: IProps) {
     mutate: mutateOrders,
     isLoading: ordersIsLoading,
     error: ordersError,
-  } = useSWR<IOrderResponse[]>(`/api/orders` + queryString);
+  } = useSWR<Data>(`/api/orders` + queryString);
 
   return { orders, mutateOrders, ordersIsLoading, ordersError };
 }

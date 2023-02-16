@@ -9,56 +9,52 @@ import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import { filter } from "@/lib/filter";
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
+import { ISearchKeyContext } from "@/models/SearchContextInterface";
+import { SearchKeyContext } from "@/components/common/Frame";
+import LoadingPage from "@/components/common/LoadingPage";
 
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
 const Intransit = () => {
     const router = useRouter();
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
 
-    const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
-    const [filteredLiveOrders, setFilteredAllLiveOrders] = useState<IOrderResponse[]>();
+    const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
 
+    const [itemsPerPage, setItemPerPage] = useState(7);
+    const [currentPage, setCurrentPage] = useState(0);
     const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string | Date>("");
-    const [selectedOrder, setSelectedOrder] = useState<string[]>();
-    const [itemsPerPage, setItemPerPage] = useState(4);
-    const [itemOffset, setItemOffset] = useState(0);
-    const endOffset = itemOffset + itemsPerPage;
-    const currentOrders = filteredLiveOrders?.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(filteredLiveOrders?.length! / itemsPerPage);
+    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({ per_page: itemsPerPage, page: currentPage });
+
+    const [allInTransitOrders, setallInTransitOrders] = useState<IOrderResponse[]>();
 
     useEffect(() => {
-        const liveOrders = orders?.filter((el) => {
-            return el.status_orders == "in-transit";
-        });
-        setAllLiveOrders(liveOrders);
-        setFilteredAllLiveOrders(liveOrders);
+        // const liveOrders = orders?.filter((el) => {
+        //     return el.status_orders == "in-transit";
+        // });
+        setallInTransitOrders(orders?.data);
     }, [orders]);
 
-    const itemOffsetHandler = (value: number) => {
-        setItemOffset(value);
-    };
+    const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-    const filterByMazTrackingId = (value: string) => {
-        setItemOffset(0);
-        setMazTrackingIdFilterKey(value);
-        setFilteredAllLiveOrders(filter(allLiveOrders!, createdDateFilterKey, value));
+    const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
+
+    const currentPageHandler = (value: number) => {
+        setCurrentPage(value);
     };
 
     const filterByCreatedDate = (value: Date | string) => {
-        setItemOffset(0);
         setCreatedDateFilterKey(value);
-        setFilteredAllLiveOrders(filter(allLiveOrders!, value, mazTrackingIdFilterKey!));
     };
 
     const selectOrderHandler = (value: string, type: string) => {
-        selectOrder(value, type, setSelectedOrder, allLiveOrders!, selectedOrder!);
+        selectOrder(value, type, setSelectedOrder, allInTransitOrders!, selectedOrder!);
     };
 
     if (ordersIsLoading) {
-        return <div>this is loading</div>;
+        return <LoadingPage />;
     }
+
     if (ordersError) {
         return <div>some error happened</div>;
     }
@@ -67,19 +63,18 @@ const Intransit = () => {
             <div>
                 <InTransitPageHeader
                     content="in-transit"
-                    allLiveOrders={allLiveOrders!}
+                    allLiveOrders={allInTransitOrders!}
                     filterByDate={filterByCreatedDate}
                     selectedOrder={selectedOrder}
                     title="In-Transit | MazExpress Admin"
-                    filterById={filterByMazTrackingId}
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!filteredLiveOrders && <BlankPage />}
-                    {filteredLiveOrders && (
+                    {!allInTransitOrders && <BlankPage />}
+                    {allInTransitOrders && (
                         <>
-                            <Table rows={currentOrders!} headings={tableHeaders} type="in-transit" onSelect={selectOrderHandler} selectedOrder={selectedOrder!} />
-                            <ReactPaginateComponent pageCount={pageCount} offsetHandler={itemOffsetHandler} itemsPerPage={itemsPerPage} item={filteredLiveOrders} />
+                            <Table rows={allInTransitOrders!} headings={tableHeaders} type="in-transit" onSelect={selectOrderHandler} selectedOrder={selectedOrder!} />
+                            <ReactPaginateComponent pageCount={pageCount} currentPageHandler={currentPageHandler} itemsPerPage={itemsPerPage} currentPage={currentPage} />
                         </>
                     )}
                 </div>
