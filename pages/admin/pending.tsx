@@ -37,7 +37,7 @@ const PendingOrders = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     per_page: itemsPerPage,
     page: currentPage,
-    status: ['pending']
+    status: ["pending"],
   });
 
   const [allPendingOrders, setAllPendingOrders] = useState<IOrderResponse[]>();
@@ -46,7 +46,7 @@ const PendingOrders = () => {
     // const liveOrders = orders?.data?.filter((el) => {
     //     return el.status_orders == "pending";
     // });
-
+    console.log(orders);
     setAllPendingOrders(orders?.data);
   }, [orders]);
 

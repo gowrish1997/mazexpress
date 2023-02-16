@@ -23,8 +23,11 @@ const tableHeaders = [
 const UserBase = () => {
   const router = useRouter();
 
-  const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({per_page: 3, page: 0});
-//   console.log(allUser);
+  const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({
+    per_page: 3,
+    page: 0,
+  });
+  //   console.log(allUser);
 
   const [allUsers, setAllUsers] = useState<IUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
@@ -37,7 +40,7 @@ const UserBase = () => {
   const [itemsPerPage, setItemPerPage] = useState(4);
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
-//   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
+  //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(filteredUsers?.length / itemsPerPage);
 
   useEffect(() => {
