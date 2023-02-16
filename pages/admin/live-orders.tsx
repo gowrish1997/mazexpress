@@ -21,7 +21,10 @@ const tableHeaders = [
 const LiveOrders = () => {
   const router = useRouter();
 
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({per_page: 7, page: 1});
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    per_page: 7,
+    page: 0,
+  });
 
   const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
   const [filteredLiveOrders, setFilteredAllLiveOrders] =
@@ -42,7 +45,7 @@ const LiveOrders = () => {
   const pageCount = Math.ceil(filteredLiveOrders?.length! / itemsPerPage);
 
   useEffect(() => {
-    console.log(orders)
+    console.log(orders);
     setAllLiveOrders(orders?.data);
     // setFilteredAllLiveOrders(orders);
   }, [orders]);
@@ -134,24 +137,6 @@ const LiveOrders = () => {
           title="Live Orders | MazExpress Admin"
         />
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {/* {!filteredLiveOrders && <BlankPage />} */}
-          {/* {filteredLiveOrders && (
-            <>
-              <Table
-                rows={currentUsers!}
-                headings={tableHeaders}
-                type="live_order"
-                onSelect={selectOrderHandler}
-                selectedOrder={selectedOrder!}
-              />
-              <ReactPaginateComponent
-                pageCount={pageCount}
-                offsetHandler={itemOffsetHandler}
-                itemsPerPage={itemsPerPage}
-                item={filteredLiveOrders}
-              />
-            </>
-          )} */}
           {allLiveOrders && (
             <>
               <Table

@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 import useOrders from "@/lib/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -24,33 +21,24 @@ const tableHeaders = [
 
 const PendingOrders = () => {
   const router = useRouter();
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    status: "pending",
+  });
 
-  const [allPendingOrders, setAllPendingOrders] = useState<IOrderResponse[]>();
-  const [filteredLiveOrders, setFilteredAllLiveOrders] =
-    useState<IOrderResponse[]>();
+
 
   const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
     useState<string>("");
+
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
     string | Date
   >("");
+
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const [itemsPerPage, setItemPerPage] = useState(4);
-  const [itemOffset, setItemOffset] = useState(0);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentOrders = filteredLiveOrders?.slice(itemOffset, endOffset);
+  const [perPage, setPerPage] = useState(20);
+  const [page, setPerPage] = useState(20);
   const pageCount = Math.ceil(filteredLiveOrders?.length! / itemsPerPage);
-
-  useEffect(() => {
-    const liveOrders = orders?.filter((el) => {
-      return el.status_orders == "pending";
-    });
-
-    setAllPendingOrders(liveOrders);
-    setFilteredAllLiveOrders(liveOrders);
-  }, [orders]);
 
   const itemOffsetHandler = (value: number) => {
     setItemOffset(value);
@@ -93,7 +81,7 @@ const PendingOrders = () => {
       <div>
         <PendingPageHeader
           content="pending"
-          allLiveOrders={allPendingOrders!}
+          allLiveOrders={orders?.data}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Pending Orders | MazExpress Admin"
@@ -101,11 +89,11 @@ const PendingOrders = () => {
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!filteredLiveOrders && <BlankPage />}
-          {filteredLiveOrders && (
+          {!orders && <BlankPage />}
+          {orders && (
             <>
               <Table
-                rows={currentOrders!}
+                rows={orders.data!}
                 headings={tableHeaders}
                 type="pending"
                 onSelect={selectOrderHandler}
@@ -115,7 +103,7 @@ const PendingOrders = () => {
                 pageCount={pageCount}
                 offsetHandler={itemOffsetHandler}
                 itemsPerPage={itemsPerPage}
-                item={filteredLiveOrders}
+                item={orders.data!}
               />
             </>
           )}

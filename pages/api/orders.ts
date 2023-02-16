@@ -28,6 +28,15 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
               resolve(data);
             });
         }
+        if (req.query.status !== undefined) {
+          // send back status filtered res
+          db("orders")
+            .where("status_orders", req.query.status)
+            .then((data: IOrderResponse[]) => {
+              res.status(200).json({ data: data });
+              resolve(data);
+            });
+        }
         if (!req.query.user) {
           // error invalid
           if (req.query.id) {
@@ -52,8 +61,8 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
                 console.log(data);
                 return data;
               });
-            
-            const allOrdersCount = db('orders')
+
+            const allOrdersCount = db("orders")
               .count("id_orders as count")
               // You actually can use string|function with this = knex builder|another knex builder
               .first()
