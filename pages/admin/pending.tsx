@@ -37,7 +37,7 @@ const PendingOrders = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     per_page: itemsPerPage,
     page: currentPage,
-    status: 'pending'
+    status: ['pending']
   });
 
   const [allPendingOrders, setAllPendingOrders] = useState<IOrderResponse[]>();

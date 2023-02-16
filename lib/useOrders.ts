@@ -6,7 +6,7 @@ interface IProps {
   search?: string;
   page?: number;
   per_page?: number;
-  status?: string;
+  status?: string[];
   date_offset?: string;
   // future warehouse addition
 }

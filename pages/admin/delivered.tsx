@@ -37,7 +37,7 @@ const DeliveredOrders = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     per_page: itemsPerPage,
     page: currentPage,
-    status: 'delivered'
+    status: ['delivered']
   });
 
   const [allDeliveredOrders, setAllDeliveredOrders] =

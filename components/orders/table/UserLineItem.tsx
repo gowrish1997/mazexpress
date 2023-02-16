@@ -30,43 +30,14 @@ const UserLineItem = (props: IProp) => {
       case "f":
         return "female";
       case "o":
-        return "not interested ";
+        return "other";
       case "u":
         return "unknown";
     }
   };
 
-  // function smartToggleGateHandler() {
-  //   setGate(false);
-  // }
-  // function toggleGateHandler() {
-  //   console.log("toggle gate");
-  //   setGate((prev) => !prev);
-  // }
-  // const inputCheckedStateHandler = () => {
-  //   const data = props?.selectedOrder?.find((el) => {
-  //     return el == props.row.id_users;
-  //   });
-  //   if (data) {
-  //     return true;
-  //   } else {
-  //     false;
-  //   }
-  // };
-
   return (
     <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
-      {/* <td className={`td0`}>
-        <input
-          type="checkbox"
-          // disabled={inputDisabledStateHandler()}
-          value={props.row.id_users}
-          name={props.row.id_users.toString()}
-          checked={inputCheckedStateHandler()}
-          onChange={(e) => props.onSelect(e.target.value, "selectSingleOrder")}
-          className="h-[10px] w-[10px] cursor-pointer "
-        />
-      </td> */}
       <td className={`flex flex-row justify-start items-center capitalize `}>
         {" "}
         {props.row && (props.row as IUser)?.avatar_url_users !== undefined ? (
@@ -98,36 +69,7 @@ const UserLineItem = (props: IProp) => {
         {/* {props.row.age_users} */}5
       </td>
       <td className={`td6 `}>{genderHanlder(props.row.gender_users)}</td>
-      <td className={`td7 `}>{orders?.length}</td>
-      {/* <td
-        className=""
-        // onClick={(e) => optionModalHandler(e, index)}
-      >
-        <div className="w-full h-full">
-          <div
-            onClick={toggleGateHandler}
-            ref={trigger}
-            className="cursor-pointer relative"
-          >
-            <Image
-              src="/editicon.png"
-              // ref={trigger}
-              height={13}
-              width={4}
-              alt="editIcon"
-            />
-          </div>
-          {gate && (
-            <LiveOrderOptionModal
-              // ref={modalNode}
-              type={props.type}
-              row={props.row}
-              handler={smartToggleGateHandler}
-              trigger={trigger}
-            />
-          )}
-        </div>
-      </td> */}
+      <td className={`td7 `}>{orders?.data?.length}</td>
     </tr>
   );
 };

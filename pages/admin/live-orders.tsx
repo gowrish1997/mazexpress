@@ -36,14 +36,8 @@ const LiveOrders = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     per_page: itemsPerPage,
     page: currentPage,
+    status: ['pending', 'in-transit', 'at-warehouse', 'delivered'],
   });
-
-  const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
-
-  useEffect(() => {
-    console.log(orders);
-    setAllLiveOrders(orders?.data);
-  }, [orders]);
 
   const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
 
@@ -65,12 +59,16 @@ const LiveOrders = () => {
   if (ordersError) {
     return <div>some error happened</div>;
   }
+
+//   useEffect(() => {
+//     console.log(orders?.data)
+//   }, [orders])
   return (
     <>
       <div>
         <LiveOrderPageHeader
           content="Live Orders"
-          allLiveOrders={allLiveOrders!}
+          allLiveOrders={orders?.data!}
           onChangeStatus={filterByStatusHandler}
           filterByDate={filterByCreatedDate}
           title="Live Orders | MazExpress Admin"
@@ -78,10 +76,10 @@ const LiveOrders = () => {
         <div className="flex flex-col justify-between relative flex-1 h-full">
           {/* {!filteredLiveOrders && <BlankPage />} */}
 
-          {allLiveOrders && (
+          {orders?.data && (
             <>
               <Table
-                rows={allLiveOrders!}
+                rows={orders.data!}
                 headings={tableHeaders}
                 type="live_order"
               />

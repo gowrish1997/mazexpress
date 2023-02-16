@@ -39,7 +39,7 @@ const Shipments = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     per_page: itemsPerPage,
     page: currentPage,
-    status: 'at-warehouse'
+    status: ['at-warehouse']
   });
 
   const [allShipmentOrders, setAllShipmentOrders] =
