@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import ReactDropdown from "../common/ReactDropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { IOrderResponse } from "@/models/order.interface";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
@@ -13,7 +15,7 @@ interface IProp {
   selectedOrder?: string[];
   allLiveOrders: IOrderResponse[];
   filterByDate: (value: Date | string) => void;
-  filterById:(value:string)=>void
+  // filterById:(value:string)=>void
 }
 
 const DeliveredPageHeader = (props: IProp) => {
@@ -37,8 +39,8 @@ const DeliveredPageHeader = (props: IProp) => {
         {props.allLiveOrders && props.allLiveOrders.length > 0 && (
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown   /> */}
-            <SearchMazTrackingIdInputField filterById={props.filterById} />
-            <FilterOptionDropDown options={warehousesDropDownOptoin} />
+            {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+            <FilterOptionDropDown options={warehousesDropDownOptoin} type='warehouse' />
 
             <AdminOptionDropDown orders={props.allLiveOrders} />
           </div>

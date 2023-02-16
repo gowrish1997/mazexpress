@@ -14,7 +14,7 @@ interface IProp {
     selectedUser?: number[];
     allUsers: IUser[];
     filterByDate: (value: Date | string) => void;
-    filterByUser:(value:string)=>void
+    // filterByUser:(value:string)=>void
 }
 
 const UserbasePageHeader = (props: IProp) => {
@@ -39,7 +39,7 @@ const UserbasePageHeader = (props: IProp) => {
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
                         {/* <FilterOptionDropDown options={warehousesDropDownOptoin} /> */}
-                        <SearchUserInputField filterByUser={props.filterByUser}/>
+                        {/* <SearchUserInputField filterByUser={props.filterByUser}/> */}
                         <AdminOptionDropDown orders={props.allUsers} toggle={toggleSendNotificatoinConfirmModal} disabled={!props.selectedUser?.length} />
                     </div>
                 )}

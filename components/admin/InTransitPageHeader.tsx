@@ -14,7 +14,7 @@ interface IProp {
     selectedOrder?: string[];
     allLiveOrders: IOrderResponse[];
     filterByDate: (value: Date | string) => void;
-    filterById:(value:string)=>void
+    // filterById:(value:string)=>void
 }
 
 const adminOption = ["Received in Libya", "Out for delivery", "Mark as delivered"];
@@ -66,8 +66,8 @@ const InTransitPageHeader = (props: IProp) => {
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
-                        <SearchMazTrackingIdInputField filterById={props.filterById} />
-                        <FilterOptionDropDown options={warehousesDropDownOptoin} />
+                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+                        <FilterOptionDropDown options={warehousesDropDownOptoin} type='warehouse' />
 
                         <AdminOptionDropDown
                             option={adminOption}

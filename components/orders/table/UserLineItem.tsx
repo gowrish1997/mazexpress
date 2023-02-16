@@ -1,7 +1,8 @@
 import React, { createRef, useRef, useState } from "react";
 import { useEffect } from "react";
 import Image from "next/image";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { IUser } from "@/models/user.interface";
 import { getDateInStringFormat } from "@/lib/helper";
 import useOrders from "@/lib/useOrders";
@@ -64,7 +65,23 @@ const UserLineItem = (props: IProp) => {
           className="h-[10px] w-[10px] cursor-pointer "
         />
       </td> */}
-            <td className={`td1 capitalize `}>{`${props.row.first_name_users} ${props.row.last_name_users}`}</td>
+            <td className={`flex flex-row justify-start items-center capitalize `}>    {props.row && (props.row as IUser)?.avatar_url_users !== undefined ? (
+          <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
+            <Image
+              src={"/user-images/" + (props.row as IUser)?.avatar_url_users}
+              fill
+              style={{ objectFit: "cover" }}
+              alt="profileImage"
+            />
+          </div>
+        ) : (
+          <div className="relative h-[30px] w-[30px] rounded-full   bg-slate-500">
+            <FontAwesomeIcon icon={faUser} />
+          </div>
+        )}
+        <span className="ml-[5px] overflow-hidden whitespace-nowrap text-ellipsis ">
+          {(props.row as IUser)?.first_name_users + "" + (props.row as IUser)?.last_name_users}
+        </span></td>
             <td className={`td2 text-[#3672DF]`}>{props.row.email_users}</td>
             <td className={`td3`}>{props.row.phone_users}</td>
             <td className={`td4`}>{getDateInStringFormat(props.row.created_on_user)}</td>

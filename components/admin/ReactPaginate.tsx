@@ -24,7 +24,7 @@ const ReactPaginateComponent = (props: IProp) => {
     };
 
     return (
-        <div className="fixed bottom-[10px] flex flex-row justify-center items-center right-[0%] w-full">
+    <div className="fixed bottom-[10px] flex flex-row justify-center items-center right-[0%] w-full">
             <ReactPaginate
                 nextLabel="next >"
                 onPageChange={handlePageClick}

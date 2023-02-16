@@ -1,11 +1,17 @@
-import React from "react";
+import React,{useState} from "react";
 import Sidebar from "@/components/layout/sidebar";
 import Topbar from "@/components/layout/Topbar";
+import { ISearchKeyContext } from "@/models/SearchContextInterface";
 interface IFrameProps {
   children: React.ReactNode;
+  
 }
+export const SearchKeyContext = React.createContext<ISearchKeyContext | null>(null);
 const Frame = (props: IFrameProps) => {
+
+  const [searchKey,setSearchKey] = useState<string>("");
   return (
+    <SearchKeyContext.Provider value={{ searchKey,setSearchKey }}>
     <div className="flex bg-[#FFFFFF] relative min-h-screen">
       <Sidebar />
 
@@ -14,6 +20,7 @@ const Frame = (props: IFrameProps) => {
         {props.children}
       </div>
     </div>
+    </SearchKeyContext.Provider>
   );
 };
 

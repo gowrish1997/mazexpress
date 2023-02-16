@@ -13,10 +13,10 @@ interface IProp {
     selectedOrder: string[];
     allLiveOrders: IOrderResponse[];
     filterByDate: (value: Date | string) => void;
-    filterById: (value: string) => void;
+    // filterById: (value: string) => void;
 }
 
-const warehouse = ["istanbul","istanbul"];
+const warehouse = ["istanbul"];
 
 const LiveOrderPageHeader = (props: IProp) => {
     const [packageStatusDropDownOptoin, setPackageStatusDropDownOptoin] = useState<string[]>([]);
@@ -45,7 +45,7 @@ const LiveOrderPageHeader = (props: IProp) => {
 
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px] ">
-                        <SearchMazTrackingIdInputField filterById={props.filterById} />
+                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
                         <FilterOptionDropDown options={packageStatusDropDownOptoin} type='packageStatus' onChange={props.onChangeStatus!} />
                         <FilterOptionDropDown options={warehousesDropDownOptoin} type="warehouse" />
 

@@ -11,10 +11,13 @@ import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 import { filter } from "@/lib/filter";
+import { ISearchKeyContext } from "@/models/SearchContextInterface";
+import { SearchKeyContext } from "@/components/common/Frame";
 
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
 const PendingOrders = () => {
+    const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
     const router = useRouter();
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
 
@@ -40,18 +43,20 @@ const PendingOrders = () => {
         setFilteredAllLiveOrders(liveOrders);
     }, [orders]);
 
-    const itemOffsetHandler = (value: number) => {
-      setItemOffset(value);
-  };
+    useEffect(() => {
+        if (allPendingOrders && allPendingOrders.length > 0) {
+            setItemOffset(0);
+            setMazTrackingIdFilterKey(searchKey);
+            setFilteredAllLiveOrders(filter(allPendingOrders!, createdDateFilterKey, searchKey));
+        }
+    }, [searchKey]);
 
-    const filterByMazTrackingId = (value: string) => {
-      setItemOffset(0)
-        setMazTrackingIdFilterKey(value);
-        setFilteredAllLiveOrders(filter(allPendingOrders!, createdDateFilterKey, value));
+    const itemOffsetHandler = (value: number) => {
+        setItemOffset(value);
     };
 
     const filterByCreatedDate = (value: Date | string) => {
-      setItemOffset(0)
+        setItemOffset(0);
         setCreatedDateFilterKey(value);
         setFilteredAllLiveOrders(filter(allPendingOrders!, value, mazTrackingIdFilterKey!));
     };
@@ -75,7 +80,6 @@ const PendingOrders = () => {
                     selectedOrder={selectedOrder}
                     filterByDate={filterByCreatedDate}
                     title="Pending Orders | MazExpress Admin"
-                    filterById={filterByMazTrackingId}
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">

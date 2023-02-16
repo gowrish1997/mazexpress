@@ -9,9 +9,14 @@ import BlankPage from "@/components/admin/BlankPage";
 import moment from "moment";
 import { filter } from "@/lib/filter";
 import { selectOrder } from "@/lib/selectOrder";
+import { ISearchKeyContext } from "@/models/SearchContextInterface";
+import { SearchKeyContext } from "@/components/common/Frame";
+
 const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
 
 const LiveOrders = () => {
+    const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+    console.log(searchKey);
     const router = useRouter();
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
@@ -24,7 +29,7 @@ const LiveOrders = () => {
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<Date | string>("");
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-    const [itemsPerPage, setItemPerPage] = useState(4);
+    const [itemsPerPage, setItemPerPage] = useState(7);
     const [itemOffset, setItemOffset] = useState(0);
     const endOffset = itemOffset + itemsPerPage;
     const currentUsers = filteredLiveOrders?.slice(itemOffset, endOffset);
@@ -35,12 +40,28 @@ const LiveOrders = () => {
         setFilteredAllLiveOrders(orders);
     }, [orders]);
 
+    useEffect(() => {
+        if(allLiveOrders && allLiveOrders.length>0){
+        setItemOffset(0);
+        setMazTrackingIdFilterKey(searchKey);
+        const liveOrders = filter(allLiveOrders!, createdDateFilterKey, searchKey).filter((el) => {
+            if (statusFilterKey.length > 0) {
+                return statusFilterKey.includes(el.status_orders);
+            } else {
+                return el;
+            }
+        });
+
+        setFilteredAllLiveOrders(liveOrders);
+    }
+    }, [searchKey]);
+
     const itemOffsetHandler = (value: number) => {
         setItemOffset(value);
     };
 
     const filterByStatusHandler = (value: string[]) => {
-        setItemOffset(0)
+        setItemOffset(0);
         setStatusFilterKey(value);
         const liveOrders = filter(allLiveOrders!, createdDateFilterKey, mazTrackingIdFilterKey).filter((el) => {
             if (value.length > 0) {
@@ -53,22 +74,22 @@ const LiveOrders = () => {
         setFilteredAllLiveOrders(liveOrders);
     };
 
-    const filterByMazTrackingId = (value: string) => {
-        setItemOffset(0)
-        setMazTrackingIdFilterKey(value);
-        const liveOrders = filter(allLiveOrders!, createdDateFilterKey, value).filter((el) => {
-            if (statusFilterKey.length > 0) {
-                return statusFilterKey.includes(el.status_orders);
-            } else {
-                return el;
-            }
-        });
+    // const filterByMazTrackingId = (value: string) => {
+    //     setItemOffset(0);
+    //     setMazTrackingIdFilterKey(value);
+    //     const liveOrders = filter(allLiveOrders!, createdDateFilterKey, value).filter((el) => {
+    //         if (statusFilterKey.length > 0) {
+    //             return statusFilterKey.includes(el.status_orders);
+    //         } else {
+    //             return el;
+    //         }
+    //     });
 
-        setFilteredAllLiveOrders(liveOrders);
-    };
+    //     setFilteredAllLiveOrders(liveOrders);
+    // };
 
     const filterByCreatedDate = (value: Date | string) => {
-        setItemOffset(0)
+        setItemOffset(0);
         setCreatedDateFilterKey(value);
         const liveOrders = filter(allLiveOrders!, value, mazTrackingIdFilterKey).filter((el) => {
             if (statusFilterKey.length > 0) {
@@ -100,7 +121,7 @@ const LiveOrders = () => {
                     onChangeStatus={filterByStatusHandler}
                     selectedOrder={selectedOrder!}
                     filterByDate={filterByCreatedDate}
-                    filterById={filterByMazTrackingId}
+                    // filterById={filterByMazTrackingId}
                     title="Live Orders | MazExpress Admin"
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
