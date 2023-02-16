@@ -36,7 +36,7 @@ const LiveOrderPageHeader = (props: IProp) => {
 
     return (
         <>
-            <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative z-50 "}>
+            <div className={"w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative z-10 "}>
                 <Head>
                     <title>{props.title}</title>
                 </Head>

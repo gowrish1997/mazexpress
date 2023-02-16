@@ -24,7 +24,7 @@ const Intransit = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string | Date>("");
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({ per_page: itemsPerPage, page: currentPage });
+    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({ per_page: itemsPerPage, page: currentPage,status:'in-transit' });
 
     const [allInTransitOrders, setallInTransitOrders] = useState<IOrderResponse[]>();
 

@@ -34,6 +34,10 @@ export default function useOrders(props: IProps) {
     queryString += `&search=${props.search}`;
   }
 
+  
+  if (props?.status) {
+    queryString += `&status=${props.status}`;
+  }
   const {
     data: orders,
     mutate: mutateOrders,
