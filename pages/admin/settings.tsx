@@ -173,7 +173,6 @@ const Settings = () => {
                   className="w-[100px] h-[100px] relative rounded-full overflow-hidden cursor-pointer"
                   onClick={toggleProfilePicPop}
                 >
-                  
                   <Image
                     src={"/user-images/" + user?.avatar_url_users}
                     alt="profile"

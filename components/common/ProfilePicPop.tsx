@@ -79,7 +79,7 @@ const ProfilePicPop = (props: IProp) => {
           <input
             type="file"
             // className="hidden"
-            style={{display: 'none'}}
+            style={{ display: "none" }}
             id="user_profile"
             ref={imageInputRef}
             onChange={updateUserImage}

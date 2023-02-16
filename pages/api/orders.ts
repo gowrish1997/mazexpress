@@ -1,3 +1,4 @@
+import { IOrderResponse } from "@/models/order.interface";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { withSessionRoute } from "@/lib/config/withSession";
 import { db } from "@/lib/db";
@@ -15,6 +16,17 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   return new Promise((resolve, reject) => {
     switch (req.method) {
       case "GET":
+        // search
+        if (req.query.search !== undefined) {
+          // send back search res
+          // getting maz id from search
+          db("orders")
+            .whereLike("id_orders", req.query.search)
+            .then((data: IOrderResponse[]) => {
+              res.status(200).json({ data: data });
+              resolve(data);
+            });
+        }
         if (!req.query.user) {
           // error invalid
           if (req.query.id) {
@@ -22,15 +34,22 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
             const id = req.query.id;
             db("orders")
               .where("id_orders", id)
+              .first()
               .then((data: any) => {
                 res.status(200).json(data);
                 resolve(data);
               });
           } else {
-            db("orders").then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+            db("orders")
+              .limit(req.query.per_page)
+              .offset(
+                parseInt(req.query.per_page as string) *
+                  parseInt(req.query.page as string)
+              )
+              .then((data: any) => {
+                res.status(200).json(data);
+                resolve(data);
+              });
           }
         } else {
           const user_id = req.query.user;
@@ -45,7 +64,7 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
         break;
 
       case "POST":
-          let addr_id_int = parseInt(req.body.address_id)
+        let addr_id_int = parseInt(req.body.address_id);
         //   console.log(addr_id_int)
 
         db("addresses")
@@ -68,7 +87,7 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
         if (req.query.id) {
           // update
           const id = req.query.id;
-          const fields = {...req.body};
+          const fields = { ...req.body };
 
           db("orders")
             .where("id_orders", id)
