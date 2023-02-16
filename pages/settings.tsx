@@ -16,6 +16,7 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
+import ProfilePicPop from "@/components/common/ProfilePicPop";
 
 const schema = yup
   .object({
@@ -52,6 +53,7 @@ const schema = yup
 const Settings = () => {
   const { user, mutateUser, userIsLoading } = useUser();
   const [errorMsg, setErrorMsg] = useState("");
+  const [showProfilePicPop, setShowProfilePicPop] = useState<boolean>(false);
 
   const router = useRouter();
   const {
@@ -88,46 +90,10 @@ const Settings = () => {
       setNewPasswordType("string");
     }
   };
-
-  const updateUserImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      // dev
-      console.log(e.target.files[0]);
-
-      // rename to unique name
-      const fileName =
-        nanoid() + "." + String(e.target.files[0].name).split(".").pop();
-      // dev
-      // console.log(fileName);
-
-      // send file to api to write
-      axios
-        .post(
-          "/api/upload-user-image",
-          {
-            image: e.target.files[0],
-            userId: user?.id_users,
-            name: fileName,
-          },
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        )
-        .then(async (response) => {
-          if (response.status === 200) {
-            // mutate user with new user data
-            setValue("avatar_url_users", fileName);
-            mutateUser(
-              await fetchJson(`/api/users?id=${user?.id_users}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ avatar_url_users: fileName }),
-              }),
-              false
-            );
-          }
-        });
-    }
+  const toggleProfilePicPop = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowProfilePicPop((prev) => !prev);
   };
 
   const onSubmit: SubmitHandler<IUserProfile> = async (data) => {
@@ -176,6 +142,7 @@ const Settings = () => {
         className="border-none pb-[10px]"
         title="My Settings | MazExpress"
       />
+      <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} />
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
@@ -200,15 +167,10 @@ const Settings = () => {
           >
             <div className="flex items-center gap-x-[20px] mb-[20px] ">
               <label htmlFor="user_profile">
-                <div className="w-[100px] h-[100px] relative rounded-full overflow-hidden">
-                  <input
-                    type="file"
-                    className="hidden"
-                    id="user_profile"
-                    {...register("avatar_url_users", {
-                      onChange: updateUserImage,
-                    })}
-                  />
+                <div
+                  className="w-[100px] h-[100px] relative rounded-full overflow-hidden"
+                  onClick={toggleProfilePicPop}
+                >
                   <Image
                     src={"/user-images/" + user?.avatar_url_users!}
                     alt="profile"

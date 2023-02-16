@@ -1,12 +1,34 @@
 import useSWR from "swr";
 import { IOrderResponse } from "@/models/order.interface";
-export default function useOrders(props: { userId?: number }) {
-    let queryString = "";
-    if (props?.userId) {
-        queryString += `?user=${props.userId}`;
-    }
 
-    const { data: orders, mutate: mutateOrders, isLoading: ordersIsLoading, error: ordersError } = useSWR<IOrderResponse[]>(`/api/orders`+queryString);
+interface IProps {
+  user_id?: number;
+  search?: string;
+  page?: number;
+  per_page?: number;
+  status?: string;
+  date_offset?: number
+  // future warehouse addition
+}
 
-    return { orders, mutateOrders, ordersIsLoading, ordersError };
+export default function useOrders(props: IProps) {
+  let queryString = "";
+  queryString += `?page=${props.page !== undefined ? props.page : 0}&per_page=${
+    props.per_page !== undefined ? props.per_page : 20
+  }`;   
+  if (props?.user_id) {
+    queryString += `&user=${props.user_id}`;
+  }
+  if (props?.search) {
+    queryString += `&search=${props.search}`;
+  }
+
+  const {
+    data: orders,
+    mutate: mutateOrders,
+    isLoading: ordersIsLoading,
+    error: ordersError,
+  } = useSWR<IOrderResponse[]>(`/api/orders` + queryString);
+
+  return { orders, mutateOrders, ordersIsLoading, ordersError };
 }

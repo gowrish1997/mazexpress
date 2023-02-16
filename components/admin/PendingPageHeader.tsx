@@ -13,7 +13,7 @@ interface IProp {
     selectedOrder?: string[];
     allLiveOrders: IOrderResponse[];
     filterByDate: (value: Date | string) => void;
-    // filterById: (value: string) => void;
+    //  filterById: (value: string) => void;
 }
 
 const adminOption = ["Move to Shipments"];
