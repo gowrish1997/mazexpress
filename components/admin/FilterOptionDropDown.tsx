@@ -9,18 +9,22 @@ interface Iprop {
     options: string[];
     onChange?: (value: string[]) => void;
     type: string;
+    statusFilterKey?: string[];
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
+    console.log("filter optindropdown");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
-    const [currentValue, setCurrentValue] = useState<Array<string>>(["all status"]);
-    const [filteredAdminOptions, setFilteredAdminOptions] = useState<Array<string>>([]);
+    const [currentValue, setCurrentValue] = useState<Array<string>>([]);
 
     useEffect(() => {
-        setCurrentValue([props.options[0]]);
-        setFilteredAdminOptions(props.options);
-    }, [props.options]);
+        console.log("use effecr in filer option drowdown");
+        setCurrentValue(props.statusFilterKey!);
+        if (props.type == "warehouse") {
+            setCurrentValue(props.options);
+        }
+    }, []);
 
     // useEffect(() => {
     //     if (!(props.type == "warehouse")) {
@@ -81,16 +85,15 @@ const FilterOptionDropDown = (props: Iprop) => {
         console.log("smart togglere");
         setShowAdminOptionCard(false);
     };
-    console.log(currentValue);
 
     return (
         <div className="relative z-40">
             <button
-                className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[180px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative"
+                className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[140px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative cursor-pointer"
                 style={showAdminOptionCard ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
                 onClick={toggleAdminOptionCard}
             >
-                <span className="capitalize">{currentValue[0]}</span>
+                <span className="capitalize">{`${currentValue?.length == 0 ? "all status" : currentValue?.[0]}`}</span>
                 {currentValue && currentValue?.length > 1 && (
                     <span className="text-[#3672DF] text-[14px]" style={showAdminOptionCard ? { color: "#FFFFFF" } : {}}>{`${currentValue.length - 1}+more`}</span>
                 )}
@@ -101,8 +104,8 @@ const FilterOptionDropDown = (props: Iprop) => {
             {showAdminOptionCard && (
                 <ClickOutside trigger={trigger} handler={smartToggleGateHandler}>
                     <div className="w-full  bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
-                        {filteredAdminOptions &&
-                            filteredAdminOptions.map((data, index) => {
+                        {props.options &&
+                            props.options.map((data, index) => {
                                 return (
                                     <div className="flex flex-row justify-start items-center">
                                         <button
@@ -124,4 +127,4 @@ const FilterOptionDropDown = (props: Iprop) => {
     );
 };
 
-export default FilterOptionDropDown;
+export default React.memo(FilterOptionDropDown);

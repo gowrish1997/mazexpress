@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useOrders from "@/lib/useOrders";
 import LiveOrderPageHeader from "@/components/admin/LiveOrderPageHeader";
 import { useRouter } from "next/router";
@@ -15,7 +15,7 @@ import LoadingPage from "@/components/common/LoadingPage";
 const tableHeaders = [
   "Customer",
   "MAZ Tracking ID",
-//   "Store Link",
+  "Store Link",
   "Reference ID",
   "Created Date",
 //   "Warehouse",
@@ -23,78 +23,83 @@ const tableHeaders = [
 ];
 
 const LiveOrders = () => {
-  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+    const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
 
-  const router = useRouter();
-  const [itemsPerPage, setItemPerPage] = useState(7);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [statusFilterKey, setStatusFilterKey] = useState<string[]>([]);
-  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-    Date | string
-  >("");
+    const router = useRouter();
+    const [itemsPerPage, setItemPerPage] = useState<number>(5);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [statusFilterKey, setStatusFilterKey] = useState<string[]>([]);
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<Date | string>("");
 
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    per_page: itemsPerPage,
-    page: currentPage,
-    status: ['pending', 'in-transit', 'at-warehouse', 'delivered'],
-  });
+    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+        per_page: itemsPerPage,
+        page: currentPage,
+        status: statusFilterKey.length == 0 ? ["pending", "in-transit", "at-warehouse", "delivered"] : statusFilterKey,
+    });
 
-  const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
+    const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
 
-  const currentPageHandler = (value: number) => {
-    setCurrentPage(value);
-  };
+    const currentPageHandler = useCallback((value: number) => {
+        setCurrentPage(value);
+    }, []);
+    const itemPerPageHandler = useCallback((value: string | number) => {
+        setItemPerPage(value as number);
+    }, []);
 
-  const filterByStatusHandler = (value: string[]) => {
-    setStatusFilterKey(value);
-  };
+    // const filterByStatusHandler = (value: string[]) => {
+    //     console.log('status changeing is calling')
+    //     setStatusFilterKey(value);
+    // };
 
-  const filterByCreatedDate = (value: Date | string) => {
-    setCreatedDateFilterKey(value);
-  };
+    const filterByStatusHandler = useCallback((value: string[]) => {
+        setStatusFilterKey(value);
+        setCurrentPage(0)
+    }, []);
 
-  if (ordersIsLoading) {
-    return <LoadingPage />;
-  }
-  if (ordersError) {
-    return <div>some error happened</div>;
-  }
+    const filterByCreatedDate = useCallback((value: Date | string) => {
+        setCreatedDateFilterKey(value);
+    }, []);
 
-//   useEffect(() => {
-//     console.log(orders?.data)
-//   }, [orders])
-  return (
-    <>
-      <div>
-        <LiveOrderPageHeader
-          content="Live Orders"
-          allLiveOrders={orders?.data!}
-          onChangeStatus={filterByStatusHandler}
-          filterByDate={filterByCreatedDate}
-          title="Live Orders | MazExpress Admin"
-        />
-        <div className="flex flex-col justify-between relative flex-1 h-full">
-          {/* {!filteredLiveOrders && <BlankPage />} */}
+    useEffect(() => {
+        console.log("live order useEffect");
+    }, []);
 
-          {orders?.data && (
-            <>
-              <Table
-                rows={orders.data!}
-                headings={tableHeaders}
-                type="live_order"
-              />
-              <ReactPaginateComponent
-                pageCount={pageCount}
-                currentPageHandler={currentPageHandler}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-              />
-            </>
-          )}
-        </div>
-      </div>
-    </>
-  );
+    if (ordersIsLoading) {
+        return <LoadingPage />;
+    }
+    if (ordersError) {
+        return <div>some error happened</div>;
+    }
+
+    console.log(statusFilterKey);
+    return (
+        <>
+            <div>
+                <LiveOrderPageHeader
+                    content="Live Orders"
+                    allLiveOrders={orders?.data!.length!}
+                    onChangeStatus={filterByStatusHandler}
+                    itemPerPageHandler={itemPerPageHandler!}
+                    filterByDate={filterByCreatedDate}
+                    title="Live Orders | MazExpress Admin"
+                    pageCount={pageCount}
+                    currentPageHandler={currentPageHandler}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
+                    statusFilterKey={statusFilterKey}
+                />
+                <div className="flex flex-col justify-between relative flex-1 h-full">
+                    {/* {!filteredLiveOrders && <BlankPage />} */}
+
+                    {orders?.data && (
+                        <>
+                            <Table rows={orders.data!} headings={tableHeaders} type="live_order" />
+                        </>
+                    )}
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default LiveOrders;

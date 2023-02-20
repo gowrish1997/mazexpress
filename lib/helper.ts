@@ -51,10 +51,21 @@ const mazID = (city: string) => {
   }
 };
 
+ const perPageOptinsList = () => {
+  return [
+      { value: "5", label: "default" },
+      { value: "10", label: "10" },
+      { value: "15", label: "15" },
+      { value: 20, label: 20 },
+      { value: 25, label: 25 },
+  ];
+};
+
 export {
   capitalizeFirstLetter,
   capitalizeAllFirstLetters,
   getDateInStringFormat,
   getTimeInHourAndMinuteFormat,
   mazID,
+  perPageOptinsList
 };

@@ -25,12 +25,12 @@ const ReactPaginateComponent = (props: IProp) => {
     };
 
     return (
-    <div className="fixed bottom-[10px] flex flex-row justify-center items-center right-[0%] w-full">
+    <div className=" bottom-[10px] flex flex-row justify-center items-center">
             <ReactPaginate
-                nextLabel="next >"
+                nextLabel=">"
                 onPageChange={handlePageClick}
                 pageCount={props.pageCount}
-                previousLabel="< previous"
+                previousLabel="<"
                 pageRangeDisplayed={2}
                 marginPagesDisplayed={1}
                 pageClassName="page-item"

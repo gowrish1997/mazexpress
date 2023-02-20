@@ -46,7 +46,7 @@ const PageheaderTitle = (props: IProp) => {
   };
 
   return (
-    <>
+    <div className="flex-type1">
       <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px]">
         {props.content}
       </p>
@@ -112,7 +112,7 @@ const PageheaderTitle = (props: IProp) => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

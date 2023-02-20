@@ -20,6 +20,7 @@ interface IProp {
 }
 
 const LineItem = (props: IProp) => {
+    console.log(props.row)
     const trigger = useRef<any>();
 
     const { user, mutateUser } = useUser();
@@ -27,6 +28,7 @@ const LineItem = (props: IProp) => {
     const { addresses, mutateAddresses } = useAddresses({
         userId: user?.id_users,
     });
+    console.log(addresses)
     const { tracking, trackingIsLoading, mutateTracking } = useTracking({
         order_id: props.row.id_orders,
     });
@@ -79,7 +81,7 @@ const LineItem = (props: IProp) => {
             <td className={`td3`}>{props.row.reference_id_orders}</td>
             <td className={`td4`}>{estDelivery}</td>
             <td className={`td5 `} style={{}}>
-                <div className="flex flex-row items-center gap-x-[10px] ">
+                <div className="flex flex-row items-center">
                     <span className="address_td capitalize "> {addresses?.find((el) => el.id_addresses === props.row.address_id)?.tag_addresses}</span>
 
                     {user?.default_address_users === props.row.address_id && (

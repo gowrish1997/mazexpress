@@ -14,7 +14,7 @@ const userSidebarContent = [
     id: nanoid(),
     title: "My Orders",
     icon: "/orders.png",
-    path: "/",
+    path: "/orders",
   },
   {
     id: nanoid(),
