@@ -40,16 +40,6 @@ const PendingOrders = () => {
     status: ["pending"],
   });
 
-  const [allPendingOrders, setAllPendingOrders] = useState<IOrderResponse[]>();
-
-  useEffect(() => {
-    // const liveOrders = orders?.data?.filter((el) => {
-    //     return el.status_orders == "pending";
-    // });
-    console.log(orders);
-    setAllPendingOrders(orders?.data);
-  }, [orders]);
-
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
   const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
@@ -63,13 +53,7 @@ const PendingOrders = () => {
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    selectOrder(
-      value,
-      type,
-      setSelectedOrder,
-      allPendingOrders!,
-      selectedOrder!
-    );
+    selectOrder(value, type, setSelectedOrder, orders?.data!, selectedOrder!);
   };
 
   if (ordersIsLoading) {
@@ -84,7 +68,7 @@ const PendingOrders = () => {
       <div>
         <PendingPageHeader
           content="pending"
-          allLiveOrders={allPendingOrders!}
+          allLiveOrders={orders?.data!}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Pending Orders | MazExpress Admin"
@@ -92,11 +76,11 @@ const PendingOrders = () => {
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!allPendingOrders && <BlankPage />}
-          {allPendingOrders && (
+          {!orders?.data && <BlankPage />}
+          {orders?.data && (
             <>
               <Table
-                rows={allPendingOrders!}
+                rows={orders?.data!}
                 headings={tableHeaders}
                 type="pending"
                 onSelect={selectOrderHandler}
