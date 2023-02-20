@@ -12,16 +12,27 @@ import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 
-const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
+const tableHeaders = [
+  "Customer",
+  "MAZ Tracking ID",
+  "Store Link",
+  "Reference ID",
+  "Created Date",
+  "Warehouse",
+  "Status",
+];
 
 const PendingOrders = () => {
-    const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
-    const router = useRouter();
+  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+  const router = useRouter();
 
-    const [itemsPerPage, setItemPerPage] = useState(7);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
-    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string | Date>("");
+  const [itemsPerPage, setItemPerPage] = useState(7);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
+    useState<string>("");
+  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+    string | Date
+  >("");
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
         per_page: itemsPerPage,
@@ -30,7 +41,7 @@ const PendingOrders = () => {
     });
     console.log(orders);
 
-    const [selectedOrder, setSelectedOrder] = useState<string[]>();
+  const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
     const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
 
@@ -38,20 +49,20 @@ const PendingOrders = () => {
         setCurrentPage(value);
     };
 
-    const filterByCreatedDate = (value: Date | string) => {
-        setCreatedDateFilterKey(value);
-    };
+  const filterByCreatedDate = (value: Date | string) => {
+    setCreatedDateFilterKey(value);
+  };
 
-    const selectOrderHandler = (value: string, type: string) => {
-        selectOrder(value, type, setSelectedOrder, orders?.data!, selectedOrder!);
-    };
+  const selectOrderHandler = (value: string, type: string) => {
+    selectOrder(value, type, setSelectedOrder, orders?.data!, selectedOrder!);
+  };
 
-    if (ordersIsLoading) {
-        return <LoadingPage />;
-    }
-    if (ordersError) {
-        return <div>some error happened</div>;
-    }
+  if (ordersIsLoading) {
+    return <LoadingPage />;
+  }
+  if (ordersError) {
+    return <div>some error happened</div>;
+  }
 
     return (
         <>

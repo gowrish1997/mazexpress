@@ -8,11 +8,11 @@ import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
 import StatLineItem from "./StatLineItem";
 interface TableProps {
-    headings: Array<string>;
-    rows: Array<IOrderResponse> | Array<IUser>;
-    type: string;
-    onSelect?: (e: any, type: string) => void;
-    selectedOrder?: string[] | number[];
+  headings: Array<string>;
+  rows: Array<IOrderResponse> | Array<IUser>;
+  type: string;
+  onSelect?: (e: any, type: string) => void;
+  selectedOrder?: string[] | number[];
 }
 
 const Table = (props: TableProps) => {

@@ -12,7 +12,15 @@ import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 
-const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
+const tableHeaders = [
+  "Customer",
+  "MAZ Tracking ID",
+//   "Store Link",
+  "Reference ID",
+  "Created Date",
+//   "Warehouse",
+  "Status",
+];
 
 const LiveOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
