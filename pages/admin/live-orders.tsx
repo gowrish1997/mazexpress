@@ -15,10 +15,10 @@ import LoadingPage from "@/components/common/LoadingPage";
 const tableHeaders = [
   "Customer",
   "MAZ Tracking ID",
-  "Store Link",
+//   "Store Link",
   "Reference ID",
   "Created Date",
-  "Warehouse",
+//   "Warehouse",
   "Status",
 ];
 

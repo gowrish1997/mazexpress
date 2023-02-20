@@ -145,7 +145,9 @@ const LiveOrderLineItem = (props: IProp) => {
           </div>
         )}
         <span className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis ">
-          {(allUser as IUser)?.first_name_users + "" + (allUser as IUser)?.last_name_users}
+          {(allUser as IUser)?.first_name_users +
+            " " +
+            (allUser as IUser)?.last_name_users}
         </span>
       </td>
       <td
@@ -158,21 +160,19 @@ const LiveOrderLineItem = (props: IProp) => {
       >
         {props.row.id_orders}
       </td>
-      <td className={`td3 text-[#3672DF]`}>{props.row.store_link_orders}</td>
+      {/* <td className={`td3 text-[#3672DF]`}>{props.row.store_link_orders}</td> */}
       <td className={`td4`}>{props.row.reference_id_orders}</td>
       <td className={`td5`}>
         {getDateInStringFormat(props.row.created_on_orders)}
       </td>
 
-      <td className={`td6 capitalize `}>{warehoueStatusHanlder()}</td>
+      {/* <td className={`td6 capitalize `}>{warehoueStatusHanlder()}</td> */}
       <td className={`td7`}>
         <div className="h-full flex flex-row justify-start items-center ">
           <span>{orderStatusColorHandler(props.row.status_orders)} </span>
-
-          <span className="ml-[5px] capitalize ">
-            {props.row.status_orders}
-          </span>
+          <span className="ml-3 capitalize text-[13px]">{props.row.status_orders}</span>
         </div>
+        <div className="ml-7 text-[11px]">{warehoueStatusHanlder()}</div>
       </td>
       <td
         className=""
