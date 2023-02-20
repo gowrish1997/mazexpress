@@ -28,7 +28,7 @@ const PendingOrders = () => {
         page: currentPage,
         status: ["pending"],
     });
-    console.log(orders)
+    console.log(orders);
 
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
@@ -62,6 +62,10 @@ const PendingOrders = () => {
                     selectedOrder={selectedOrder}
                     filterByDate={filterByCreatedDate}
                     title="Pending Orders | MazExpress Admin"
+                    pageCount={pageCount}
+                    currentPageHandler={currentPageHandler}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
                     //   filterById={filterByMazTrackingId}
                 />
 
@@ -70,7 +74,6 @@ const PendingOrders = () => {
                     {orders?.data && (
                         <>
                             <Table rows={orders?.data!} headings={tableHeaders} type="pending" onSelect={selectOrderHandler} selectedOrder={selectedOrder!} />
-                            <ReactPaginateComponent pageCount={pageCount} currentPageHandler={currentPageHandler} itemsPerPage={itemsPerPage} currentPage={currentPage} />
                         </>
                     )}
                 </div>

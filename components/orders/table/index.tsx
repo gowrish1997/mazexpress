@@ -6,6 +6,7 @@ import { IOrderResponse } from "@/models/order.interface";
 import { IUser } from "@/models/user.interface";
 import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
+import StatLineItem from "./StatLineItem";
 interface TableProps {
     headings: Array<string>;
     rows: Array<IOrderResponse> | Array<IUser>;
@@ -20,6 +21,8 @@ const Table = (props: TableProps) => {
             return "live_order_table";
         } else if (props.type == "user_base") {
             return "user_table";
+        } else if (props.type == "stat_table") {
+            return "stat_table";
         } else {
             return "order_table";
         }
@@ -29,7 +32,7 @@ const Table = (props: TableProps) => {
         <div className="flex-1 relative">
             {props.rows && (
                 <table className={tableClassNameHandler()}>
-                    <TableHeader type={props.type} headings={props.headings}  onSelect={props.onSelect!} />
+                    <TableHeader type={props.type} headings={props.headings} onSelect={props.onSelect!} />
                     <tbody className="">
                         {props.rows && props.rows.length > 0
                             ? props.rows.map((data, index) => {
@@ -49,6 +52,8 @@ const Table = (props: TableProps) => {
                                               selectedOrder={props.selectedOrder as string[]}
                                           />
                                       );
+                                  } else if (props.type == "stat_table") {
+                                      return <StatLineItem key={nanoid()} onSelect={props.onSelect!} row={data as IOrderResponse} type={props.type} />;
                                   } else if (props.type == "user_base") {
                                       return (
                                           <UserLineItem

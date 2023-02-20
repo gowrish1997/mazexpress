@@ -26,7 +26,7 @@ const tableHeaders = [
 const Intransit = () => {
   const router = useRouter();
 
-  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+
 
   const [itemsPerPage, setItemPerPage] = useState(7);
   const [currentPage, setCurrentPage] = useState(0);
@@ -83,6 +83,10 @@ const Intransit = () => {
           filterByDate={filterByCreatedDate}
           selectedOrder={selectedOrder}
           title="In-Transit | MazExpress Admin"
+          pageCount={pageCount}
+          currentPageHandler={currentPageHandler}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
@@ -96,12 +100,7 @@ const Intransit = () => {
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
               />
-              <ReactPaginateComponent
-                pageCount={pageCount}
-                currentPageHandler={currentPageHandler}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-              />
+            
             </>
           )}
         </div>

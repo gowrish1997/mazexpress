@@ -79,7 +79,7 @@ export default function handler(
                 parseInt(req.query.page as string)
             )
             .then((data: any) => {
-              console.log(data);
+              // console.log(data);
               return data;
             });
 
@@ -92,7 +92,7 @@ export default function handler(
             });
 
           Promise.all([queryOrders, allUsersCount]).then((result) => {
-            console.log(result);
+            // console.log(result);
             let responseObj: Data = {
               data: result[0],
               total_count: result[1].count,

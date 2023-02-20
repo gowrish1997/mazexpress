@@ -7,6 +7,7 @@ import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
+import ReactPaginateComponent from "./ReactPaginate";
 interface IProp {
     content: string;
     title?: string;
@@ -14,6 +15,10 @@ interface IProp {
     allLiveOrders: IOrderResponse[] | undefined;
     filterByDate: (value: Date | string) => void;
     //  filterById: (value: string) => void;
+    pageCount: number;
+    currentPageHandler: (value: number) => void;
+    itemsPerPage: number;
+    currentPage: number;
 }
 
 const adminOption = ["Move to Shipments"];
@@ -37,10 +42,16 @@ const PendingPageHeader = (props: IProp) => {
                     <title>{props.title}</title>
                 </Head>
                 <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} filterByDate={props.filterByDate} />
+                <ReactPaginateComponent
+                    pageCount={props.pageCount}
+                    currentPageHandler={props.currentPageHandler}
+                    itemsPerPage={props.itemsPerPage}
+                    currentPage={props.currentPage}
+                />
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-                        <FilterOptionDropDown options={warehousesDropDownOptoin} type='warehouse' />
+                        <FilterOptionDropDown options={warehousesDropDownOptoin} type="warehouse" />
 
                         <AdminOptionDropDown option={adminOption} toggle={toggleMoveToShipmentHandler} disabled={!props.selectedOrder?.length} orders={props.allLiveOrders} />
                     </div>

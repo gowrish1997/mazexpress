@@ -151,7 +151,7 @@ const EditUserAddressModal = (props: IProp) => {
                   }}
                   value={value}
                   country={country}
-                  onChange={onChange}
+                onChange={onChange}
                 />
               )}
             /> */}

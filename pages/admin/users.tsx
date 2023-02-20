@@ -9,154 +9,76 @@ import BlankPage from "@/components/admin/BlankPage";
 import useAllUser from "@/lib/useAllUsers";
 import { IUser } from "@/models/user.interface";
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
+import orders from "../api/orders";
+import user from "../api/auth/user";
+import { ISearchKeyContext } from "@/models/SearchContextInterface";    
+import { SearchKeyContext } from "@/components/common/Frame";
 
-const tableHeaders = [
-  "Customer",
-  "Email ID",
-  "Mobile Number",
-  "Created Date",
-  "Age",
-  "Gender",
-  "Total Orders",
-];
+const tableHeaders = ["Customer", "Email ID", "Mobile Number", "Created Date", "Age", "Gender", "Total Orders"];
 
 const UserBase = () => {
-  const router = useRouter();
+    const router = useRouter();
 
-  const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({per_page: 3, page: 0});
-//   console.log(allUser);
+    const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+    const [itemsPerPage, setItemPerPage] = useState(4);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<Date | string>("");
+    const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({
+        per_page: itemsPerPage,
+        page: currentPage,
+    });
+    console.log(allUser);
 
-  const [allUsers, setAllUsers] = useState<IUser[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+    const [allUsers, setAllUsers] = useState<IUser[]>([]);
 
-  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-    Date | string
-  >("");
-  const [userFilterKey, setUserFilterKey] = useState<string>("");
+    //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(allUser?.total_count / itemsPerPage);
 
-  const [itemsPerPage, setItemPerPage] = useState(4);
-  const [itemOffset, setItemOffset] = useState(0);
-  const endOffset = itemOffset + itemsPerPage;
-//   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(filteredUsers?.length / itemsPerPage);
+    const currentPageHandler = (value: number) => {
+        setCurrentPage(value);
+    };
 
-  useEffect(() => {
-    setAllUsers(allUser as IUser[]);
-    setFilteredUsers(allUser as IUser[]);
-  }, [allUser]);
+    const filterByCreatedDate = (value: Date | string) => {
+        setCreatedDateFilterKey(value);
+    };
 
-  const itemOffsetHandler = (value: number) => {
-    setItemOffset(value);
-  };
+    // const selectOrderHandler = (value: string, type: string) => {
+    //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
+    // };
 
-  const filterByCreatedDate = (value: Date | string) => {
-    setItemOffset(0);
-    setCreatedDateFilterKey(value);
-    const users = allUsers
-      ?.filter((el) => {
-        if (value) {
-          return (
-            moment(el.created_on_user).format("DD-MM-YYYY") ===
-            moment(value).format("DD-MM-YYYY")
-          );
-        } else {
-          return el;
-        }
-      })
-      ?.filter((el) => {
-        if (
-          el.first_name_users
-            .toLocaleLowerCase()
-            .includes(userFilterKey?.toLocaleLowerCase()) ||
-          el.last_name_users
-            .toLocaleLowerCase()
-            .includes(userFilterKey?.toLocaleLowerCase()) ||
-          el.email_users
-            .toLocaleLowerCase()
-            .includes(userFilterKey?.toLocaleLowerCase())
-        ) {
-          return el;
-        }
-      });
-    setFilteredUsers(users);
-  };
-
-  const filterByUser = (value: string) => {
-    setItemOffset(0);
-    setUserFilterKey(value);
-    const users = allUsers
-      ?.filter((el) => {
-        if (
-          el.first_name_users
-            .toLocaleLowerCase()
-            .includes(value?.toLocaleLowerCase()) ||
-          el.last_name_users
-            .toLocaleLowerCase()
-            .includes(value?.toLocaleLowerCase()) ||
-          el.email_users
-            .toLocaleLowerCase()
-            .includes(value?.toLocaleLowerCase())
-        ) {
-          return el;
-        }
-      })
-      .filter((el) => {
-        if (createdDateFilterKey) {
-          return (
-            moment(el.created_on_user).format("DD-MM-YYYY") ===
-            moment(value).format("DD-MM-YYYY")
-          );
-        } else {
-          return el;
-        }
-      });
-    setFilteredUsers(users);
-  };
-
-  // const selectOrderHandler = (value: string, type: string) => {
-  //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
-  // };
-
-  if (allUserIsLoading) {
-    return <div>this is loading</div>;
-  }
-  if (error) {
-    return <div>some error happened</div>;
-  }
-  return (
-    <>
-      <div>
-        {/* <UserbasePageHeader
-          content="User Base"
-          allUsers={allUsers!}
-          filterByUser={filterByUser}
-          filterByDate={filterByCreatedDate}
-          title="User Base | MazExpress Admin"
-        /> */}
-        <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!filteredUsers && <BlankPage />}
-          {filteredUsers && (
-            <>
-              {/* <Table
-                rows={currentUsers}
-                headings={tableHeaders}
-                type="user_base"
-              /> */}
-              {/* <ReactPaginateComponent
-                pageCount={pageCount}
-                offsetHandler={itemOffsetHandler}
-                itemsPerPage={itemsPerPage}
-                item={filteredUsers}
-              /> */}
-            </>
-          )}
-        </div>
-        {/* {selectedUser?.length! > 0 && (
+    if (allUserIsLoading) {
+        return <div>this is loading</div>;
+    }
+    if (error) {
+        return <div>some error happened</div>;
+    }
+    return (
+        <>
+            <div>
+                <UserbasePageHeader
+                    content="User Base"
+                    allUsers={allUser.data!}
+                    filterByDate={filterByCreatedDate}
+                    title="User Base | MazExpress Admin"
+                    pageCount={pageCount}
+                    currentPageHandler={currentPageHandler}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
+                />
+                <div className="flex flex-col justify-between relative flex-1 h-full">
+                    {!allUser.data && <BlankPage />}
+                    {allUser.data && (
+                        <>
+                            <Table rows={allUser.data} headings={tableHeaders} type="user_base" />
+                        </>
+                    )}
+                </div>
+                {/* {selectedUser?.length! > 0 && (
                     <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedUser?.length} orders are selected`}</div>
                 )} */}
-      </div>
-    </>
-  );
+            </div>
+        </>
+    );
 };
 
 export default UserBase;

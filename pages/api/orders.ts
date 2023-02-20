@@ -31,8 +31,9 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
         if (req.query.status !== undefined) {
           // send back status filtered res
-          let statusArray = (req.query.status as string).split(',')
-          console.log(typeof req.query.status)
+          // console.log(req.query)
+          let statusArray = (req.query.status as string).split(",");
+          console.log(statusArray);
           const queryOrders = db("orders")
             .havingIn("status_orders", statusArray)
             .limit(req.query.per_page)
@@ -41,11 +42,13 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
                 parseInt(req.query.page as string)
             )
             .then((data: any) => {
-              console.log(data);
+              // console.log(data);
               return data;
             });
 
           const allOrdersCount = db("orders")
+            // .havingIn("status_orders", statusArray)
+            .where("status_orders", "in", statusArray)
             .count("id_orders as count")
             .first()
             .then((count: any) => {
@@ -53,7 +56,7 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
             });
 
           Promise.all([queryOrders, allOrdersCount]).then((result) => {
-            console.log(result);
+            // console.log(result);
             let responseObj: Data = {
               data: result[0],
               total_count: result[1].count,
@@ -61,9 +64,8 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
             };
             res.status(200).json(responseObj);
             resolve(responseObj);
-            
           });
-          break
+          break;
         }
         if (!req.query.user) {
           // error invalid

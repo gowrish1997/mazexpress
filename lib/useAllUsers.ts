@@ -19,7 +19,7 @@ export default function useAllUser(props: IProps) {
   }`;
 
   if (props?.user_id) {
-    queryString += `&user=${props.user_id}`;
+    queryString += `&id=${props.user_id}`;
   }
 
   // if (props?.search) {

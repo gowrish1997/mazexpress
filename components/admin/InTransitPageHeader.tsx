@@ -8,12 +8,17 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
 import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
+import ReactPaginateComponent from "./ReactPaginate";
 interface IProp {
     content: string;
     title?: string;
     selectedOrder?: string[];
     allLiveOrders: IOrderResponse[];
     filterByDate: (value: Date | string) => void;
+    pageCount: number;
+    currentPageHandler: (value: number) => void;
+    itemsPerPage: number;
+    currentPage: number;
     // filterById:(value:string)=>void
 }
 
@@ -63,11 +68,17 @@ const InTransitPageHeader = (props: IProp) => {
                     <title>{props.title}</title>
                 </Head>
                 <PageheaderTitle content={props.content} allLiveOrders={props.allLiveOrders} filterByDate={props.filterByDate} />
+                <ReactPaginateComponent
+                    pageCount={props.pageCount}
+                    currentPageHandler={props.currentPageHandler}
+                    itemsPerPage={props.itemsPerPage}
+                    currentPage={props.currentPage}
+                />
                 {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
                         {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-                        <FilterOptionDropDown options={warehousesDropDownOptoin} type='warehouse' />
+                        <FilterOptionDropDown options={warehousesDropDownOptoin} type="warehouse" />
 
                         <AdminOptionDropDown
                             option={adminOption}

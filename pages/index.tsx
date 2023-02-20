@@ -1,79 +1,76 @@
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useState, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import PageHeaders from "@/components/common/PageHeader";
-import Table from "@/components/orders/table";
-import AddButton from "@/components/common/AddButton";
-import useUser from "@/lib/useUser";
-import useOrders from "@/lib/useOrders";
-import { FetchError } from "@/lib/fetchJson";
+import logo from "../public/logo.png";
+import ShipmentCalculator from "@/components/LandingPage/ShipmentCalculator";
+import Footer from "@/components/LandingPage/Footer";
+const index = () => {
+    const trackingSectionRef = useRef<HTMLDivElement>(null);
+    const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
+    const supportSectionRef = useRef<HTMLDivElement>(null);
 
-const tableHeaders = [
-  "MAZ Tracking ID",
-  "Store Link",
-  "Reference ID",
-  "Est. Delivery",
-  "Address",
-  "Status",
-];
+    const [trackingId, setTrackingId] = useState<string>("");
+    const [trackingIdError, setTrackingIdError] = useState<boolean>(false);
 
-const MyOrders = () => {
-  const router = useRouter();
-  const { user, mutateUser } = useUser();
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    userId: user?.id_users,
-  });
+    const trackingIdInputHandler = (e: SyntheticEvent) => {
+        setTrackingIdError(false);
+        setTrackingId((e.target as HTMLInputElement).value);
+    };
 
-  const addNewOrderHandler = () => {
-    router.push(`${router.pathname}add-new-order`);
-  };
+    const trackingHandler = () => {
+        if (trackingId) {
+            console.log();
+            setTrackingIdError(false);
+        } else {
+            setTrackingIdError(true);
+        }
+    };
 
-  if (ordersError) throw ordersError;
-  return (
-    <>
-      <PageHeaders
-        content="My Orders"
-        showCalender={true}
-        title="My Orders | MazExpress"
-      />
-
-      <div className="flex flex-col justify-between relative flex-1 h-full">
-        {ordersIsLoading ||
-          (orders && orders.length <= 0 && (
-            <div className="flex-1 flex flex-col justify-center items-center w-full ">
-              <div className="relative h-[221px] w-[322px] ">
-                <Image
-                  src="/noorder.png"
-                  fill
-                  style={{ objectFit: "contain" }}
-                  alt="happy"
-                  sizes="(max-width: 768px) 100vw,
-                (max-width: 1200px) 100vw,
-                100vw"
-                  priority={true}
-                />
-              </div>
-              <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
-                Oops, there are no orders on your list yet... Start adding now.
-                <br />
-                <Link href={`${router.pathname}add-new-order`}>
-                  <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
-                    Add Order Now
-                  </span>
-                </Link>
-              </div>
+    return (
+        <div className="">
+            <div className="w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[14px] text-[#FFFFFF] font-[500] leading-[24px] ">
+                Plan your eCommerce shipments in an instant. Estimate courier charges using our quick courier charges.
             </div>
-          ))}
-        {orders && orders.length > 0 && (
-          <>
-            <Table rows={orders} headings={tableHeaders} type='order' />
-            <AddButton onClick={addNewOrderHandler} />
-          </>
-        )}
-      </div>
-    </>
-  );
+            <div className="px-[150px]">
+                <div className="w-full flex-type3 h-[100px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
+                    <div className="flex-type3 space-x-[20px] ">
+                        <div className="relative h-[47px] w-[47px] ">
+                            <Image src={logo} fill alt="logo" />
+                        </div>
+                        <ul className="flex-type3 space-x-[20px]  ">
+                            <li className="cursor-pointer" onClick={() => trackingSectionRef?.current?.scrollIntoView({behavior:"smooth"})}>Track Order</li>
+                            <li className="cursor-pointer" onClick={() =>shipmentCalculatorSectionRef?.current?.scrollIntoView({behavior:"smooth"})}>Shipment Calculator</li>
+                            <li className="cursor-pointer" onClick={() =>supportSectionRef?.current?.scrollIntoView({behavior:"smooth"})}>Support</li>
+                        </ul>
+                    </div>
+
+                    <div className="space-x-[20px]">
+                        <button>Sign in</button>
+                        <button className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] ">Login</button>
+                    </div>
+                </div>
+                <div className="flex-type5 mt-[55px] w-[100%]" ref={trackingSectionRef}>
+                    <div className="w-[65%] flex flex-row justify-center space-x-[20px]">
+                        <input className="flex-1 border-[1px] border-[#8794AD] h-[56px] pl-[10px] rounded-[4px]" placeholder="Tracking Number" onChange={trackingIdInputHandler} />
+                        <button className="h-[56px] bg-[#2B2B2B] rounded-[4px] px-[40px] text-[16px] text-[#FFFFFF] font-[400] leading-[24px]" onClick={trackingHandler}>
+                            Track Now
+                        </button>
+                    </div>
+                    {trackingIdError && <p className="mt-[5px] text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">Please enter the tracking Id</p>}
+                    <div className="">
+                        <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
+                            Need help changing your delivery? <span className="text-[#3672DF] cursor-pointer ">Get Help</span>
+                        </p>
+                        <h1 className="text-center text-[32px] text-[#121212] font-[600] leading-[50px] mt-[40px] ">Get More Done With Our MAZ Services</h1>
+                        <p className="text-center text-[16px] text-[#525D72] font-[500] leading-[25.5px]">
+                            Drop off and pick up packages from a location that’s open when you need it.
+                        </p>
+                    </div>
+                </div>
+                <ShipmentCalculator ref={shipmentCalculatorSectionRef} />
+            </div>
+            <Footer ref={supportSectionRef} />
+        </div>
+    );
 };
 
-export default MyOrders;
+export default index;
