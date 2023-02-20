@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useMemo } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import ReactDropdown from "../common/ReactDropdown";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { IOrderResponse } from "@/models/order.interface";
@@ -10,6 +10,8 @@ import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 import ReactPaginateComponent from "./ReactPaginate";
+import { perPageOptinsList } from "@/lib/helper";
+
 interface IProp {
     content: string;
     title?: string;
@@ -20,10 +22,13 @@ interface IProp {
     currentPageHandler: (value: number) => void;
     itemsPerPage: number;
     currentPage: number;
+    itemPerPageHandler?: (value: string | number) => void;
     // filterById:(value:string)=>void
 }
 
 const DeliveredPageHeader = (props: IProp) => {
+
+    const perPageOptions = perPageOptinsList()
     const warehousesDropDownOptoin = ["istanbul"];
 
     return (
@@ -43,6 +48,7 @@ const DeliveredPageHeader = (props: IProp) => {
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <ReactDropdown   /> */}
                         {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+                        <MazStatsDropddown options={perPageOptions} type="per_page" onChange={props.itemPerPageHandler!} className="h-[38px] px-[10px]" itemsPerPage={props.itemsPerPage} />
                         <FilterOptionDropDown options={warehousesDropDownOptoin} type="warehouse" />
 
                         <AdminOptionDropDown orders={props.allLiveOrders} />

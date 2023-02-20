@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useMemo } from "react";
 import Head from "next/head";
-import ReactDropdown from "../common/ReactDropdown";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import { IOrderResponse } from "@/models/order.interface";
 import PageheaderTitle from "./PageheaderTitle";
@@ -8,7 +8,9 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
 import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
+import { perPageOptinsList } from "@/lib/helper";
 import ReactPaginateComponent from "./ReactPaginate";
+
 interface IProp {
     content: string;
     title?: string;
@@ -19,6 +21,7 @@ interface IProp {
     currentPageHandler: (value: number) => void;
     itemsPerPage: number;
     currentPage: number;
+    itemPerPageHandler?: (value: string | number) => void;
     // filterById:(value:string)=>void
 }
 
@@ -26,6 +29,7 @@ const adminOption = ["Received in Libya", "Out for delivery", "Mark as delivered
 
 const InTransitPageHeader = (props: IProp) => {
     const warehousesDropDownOptoin = ["istanbul"];
+    const perPageOptions = perPageOptinsList()
 
     const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] = useState(false);
     const [showAddCommentModal, setShowAddCommentModal] = useState(false);
@@ -78,6 +82,8 @@ const InTransitPageHeader = (props: IProp) => {
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
                         {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+                        
+                        <MazStatsDropddown options={perPageOptions} type="per_page" onChange={props.itemPerPageHandler!} className="h-[38px] px-[10px]" itemsPerPage={props.itemsPerPage} />
                         <FilterOptionDropDown options={warehousesDropDownOptoin} type="warehouse" />
 
                         <AdminOptionDropDown

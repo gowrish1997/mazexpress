@@ -176,7 +176,7 @@ input::-webkit-inner-spin-button {
 }
 .order_table th {
     font-size: 14px;
-    color: #2B2B2B;
+    color: #2b2b2b;
 
     font-weight: 500;
     line-height: 21px;
@@ -276,7 +276,7 @@ input::-webkit-inner-spin-button {
 }
 .user_table th {
     font-size: 14px;
-    color: #2B2B2B;
+    color: #2b2b2b;
 
     font-weight: 500;
     line-height: 21px;
@@ -379,6 +379,7 @@ input::-webkit-inner-spin-button {
 
 .live_order_table tr {
     width: 100%;
+    margin-bottom: 10px;
 }
 .live_order_table td,
 .live_order_table th {
@@ -397,7 +398,7 @@ input::-webkit-inner-spin-button {
 }
 .live_order_table th {
     font-size: 14px;
-    color: #2B2B2B;
+    color: #2b2b2b;
 
     font-weight: 500;
     line-height: 21px;
@@ -410,19 +411,22 @@ input::-webkit-inner-spin-button {
 
 .live_order_table .th8,
 .live_order_table .td8 {
-    width: 1.5%;
+    width: 1%;
 }
 
 .live_order_table .th1,
 .live_order_table .td1 {
-    width: 12%;
+    width: 19.5%;
 }
 
 .live_order_table .th2,
+.live_order_table .td2 {
+    width: 25.5%;
+}
+
 .live_order_table .th3,
-.live_order_table .td2,
 .live_order_table .td3 {
-    width: 16%;
+    width: 11%;
 }
 
 /* .order_table .th2 {
@@ -441,7 +445,7 @@ input::-webkit-inner-spin-button {
 }
 
 .live_order_table .td7 .live_order_table .th7 {
-    width: 10%;
+    width: 12%;
 }
 .live_order_table .address_table {
     width: 70px;
@@ -475,7 +479,7 @@ input::-webkit-inner-spin-button {
 }
 .stat_table th {
     font-size: 14px;
-    color: #2B2B2B;
+    color: #2b2b2b;
 
     font-weight: 500;
     line-height: 21px;

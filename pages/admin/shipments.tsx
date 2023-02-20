@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback } from "react";
 import Head from "next/head";
 import useOrders from "@/lib/useOrders";
 import ShipmentsPageHeader from "@/components/admin/ShipmentsPageHeader";
@@ -13,7 +13,15 @@ import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 
-const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
+const tableHeaders = [
+    "Customer",
+    "MAZ Tracking ID",
+    "Store Link",
+    "Reference ID",
+    "Created Date",
+    // "Warehouse",
+    "Status",
+  ];
 
 const Shipments = () => {
     const router = useRouter();
@@ -22,7 +30,7 @@ const Shipments = () => {
     const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<string | Date>("");
 
-    const [itemsPerPage, setItemPerPage] = useState(7);
+    const [itemsPerPage, setItemPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
@@ -38,6 +46,9 @@ const Shipments = () => {
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
     };
+    const itemPerPageHandler = useCallback((value: string | number) => {
+        setItemPerPage(value as number);
+    }, []);
 
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
@@ -66,6 +77,7 @@ const Shipments = () => {
                     itemsPerPage={itemsPerPage}
                     currentPageHandler={currentPageHandler}
                     currentPage={currentPage}
+                    itemPerPageHandler={itemPerPageHandler!}
                     // filterById={filterByMazTrackingId}
                 />
 

@@ -6,8 +6,9 @@ import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 import { IOrderResponse } from "@/models/order.interface";
 import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
-
 import AdminOptionDropDown from "./AdminOptionDropDown";
+import { perPageOptinsList } from "@/lib/helper";
+
 interface IProp {
     content: string;
     title?: string;
@@ -20,24 +21,19 @@ interface IProp {
     currentPageHandler: (value: number) => void;
     itemsPerPage: number;
     currentPage: number;
+    statusFilterKey: string[];
 }
 
 const warehouse = ["istanbul"];
 
 const LiveOrderPageHeader = (props: IProp) => {
-    const [warehousesDropDownOptoin, setWarehousesDropdownOption] = useState<string[]>(warehouse);
 
-    const perPageOptions = useMemo(() => {
-        return [
-            { value: "5", label: "default" },
-            { value: "10", label: "10" },
-            { value: "15", label: "15" },
-            { value: 20, label: 20 },
-            { value: 25, label: 25 },
-        ];
-    }, []);
+    const perPageOptions = perPageOptinsList()
     const packageStatusDropDownOptoin = useMemo(() => {
-       return  ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
+        return ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
+    }, []);
+    const warehouseDropDownOption = useMemo(() => {
+        return ["istanbul"];
     }, []);
 
     // useEffect(() => {
@@ -66,23 +62,19 @@ const LiveOrderPageHeader = (props: IProp) => {
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}
                 />
-                 <FilterOptionDropDown
-                  options={packageStatusDropDownOptoin}
-                   type="packageStatus" 
-                 onChange={props.onChangeStatus!} 
-                 />
-            
-                {/* {props.allLiveOrders> 0 && (
-                    <div className="flex-type1 space-x-[10px] "> */}
-                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-                        {/* 
-                        <MazStatsDropddown options={perPageOptions} type="per_page" onChange={props.itemPerPageHandler!} className="h-[38px] px-[10px]" /> */}
-                       
-                        {/* <FilterOptionDropDown options={warehousesDropDownOptoin} type="warehouse" /> */}
 
-                        {/* <AdminOptionDropDown disabled={!props.selectedOrder?.length} orders={props.allLiveOrders} /> */}
-                    {/* </div>
-                )} */}
+                {props.allLiveOrders > 0 && (
+                    <div className="flex-type1 space-x-[10px] ">
+                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+
+                        <MazStatsDropddown options={perPageOptions} type="per_page" onChange={props.itemPerPageHandler!} className="h-[38px] px-[10px]" itemsPerPage={props.itemsPerPage} />
+                        <FilterOptionDropDown options={packageStatusDropDownOptoin} type="packageStatus" onChange={props.onChangeStatus!} statusFilterKey={props.statusFilterKey} />
+
+                        <FilterOptionDropDown options={warehouseDropDownOption} type="warehouse" />
+
+                        <AdminOptionDropDown disabled={!props.selectedOrder?.length} orders={props.allLiveOrders} />
+                    </div>
+                )}
             </div>
         </>
     );

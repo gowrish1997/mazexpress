@@ -15,7 +15,7 @@ import LoadingPage from "@/components/common/LoadingPage";
 const tableHeaders = [
   "Customer",
   "MAZ Tracking ID",
-//   "Store Link",
+  "Store Link",
   "Reference ID",
   "Created Date",
 //   "Warehouse",
@@ -39,12 +39,12 @@ const LiveOrders = () => {
 
     const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
 
-    // const currentPageHandler = useCallback((value: number) => {
-    //     setCurrentPage(value);
-    // }, []);
-    // const itemPerPageHandler = useCallback((value: string | number) => {
-    //     setItemPerPage(value as number);
-    // }, []);
+    const currentPageHandler = useCallback((value: number) => {
+        setCurrentPage(value);
+    }, []);
+    const itemPerPageHandler = useCallback((value: string | number) => {
+        setItemPerPage(value as number);
+    }, []);
 
     // const filterByStatusHandler = (value: string[]) => {
     //     console.log('status changeing is calling')
@@ -56,9 +56,9 @@ const LiveOrders = () => {
         setCurrentPage(0)
     }, []);
 
-    // const filterByCreatedDate = useCallback((value: Date | string) => {
-    //     setCreatedDateFilterKey(value);
-    // }, []);
+    const filterByCreatedDate = useCallback((value: Date | string) => {
+        setCreatedDateFilterKey(value);
+    }, []);
 
     useEffect(() => {
         console.log("live order useEffect");
@@ -77,15 +77,16 @@ const LiveOrders = () => {
             <div>
                 <LiveOrderPageHeader
                     content="Live Orders"
-                    // allLiveOrders={orders?.data!.length!}
+                    allLiveOrders={orders?.data!.length!}
                     onChangeStatus={filterByStatusHandler}
-                    // itemPerPageHandler={itemPerPageHandler!}
-                    // filterByDate={filterByCreatedDate}
+                    itemPerPageHandler={itemPerPageHandler!}
+                    filterByDate={filterByCreatedDate}
                     title="Live Orders | MazExpress Admin"
                     pageCount={pageCount}
-                    // currentPageHandler={currentPageHandler}
+                    currentPageHandler={currentPageHandler}
                     itemsPerPage={itemsPerPage}
                     currentPage={currentPage}
+                    statusFilterKey={statusFilterKey}
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
                     {/* {!filteredLiveOrders && <BlankPage />} */}

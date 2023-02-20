@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useCallback} from "react";
 import Head from "next/head";
 import useOrders from "@/lib/useOrders";
 import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
@@ -19,7 +19,7 @@ const tableHeaders = [
   "Store Link",
   "Reference ID",
   "Created Date",
-  "Warehouse",
+  // "Warehouse",
   "Status",
 ];
 
@@ -28,7 +28,7 @@ const Intransit = () => {
 
 
 
-  const [itemsPerPage, setItemPerPage] = useState(7);
+  const [itemsPerPage, setItemPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
   const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
     useState<string>("");
@@ -52,6 +52,10 @@ const Intransit = () => {
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
   };
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setItemPerPage(value as number);
+}, []);
+
 
   const filterByCreatedDate = (value: Date | string) => {
     setCreatedDateFilterKey(value);
@@ -87,6 +91,7 @@ const Intransit = () => {
           currentPageHandler={currentPageHandler}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
+          itemPerPageHandler={itemPerPageHandler!}
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">

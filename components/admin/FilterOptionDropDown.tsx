@@ -9,19 +9,22 @@ interface Iprop {
     options: string[];
     onChange?: (value: string[]) => void;
     type: string;
+    statusFilterKey?: string[];
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
-    console.log('filter optindropdown')
+    console.log("filter optindropdown");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
     const [currentValue, setCurrentValue] = useState<Array<string>>([]);
 
-    // useEffect(() => {
-    //     console.log("use effecr in filer option drowdown");
-    //     // setCurrentValue([props.options[0]]);
-    //     // setFilteredAdminOptions(props.options);
-    // }, []);
+    useEffect(() => {
+        console.log("use effecr in filer option drowdown");
+        setCurrentValue(props.statusFilterKey!);
+        if (props.type == "warehouse") {
+            setCurrentValue(props.options);
+        }
+    }, []);
 
     // useEffect(() => {
     //     if (!(props.type == "warehouse")) {
@@ -90,7 +93,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                 style={showAdminOptionCard ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
                 onClick={toggleAdminOptionCard}
             >
-                <span className="capitalize">{`${currentValue.length==0?'all status':currentValue[0]}`}</span>
+                <span className="capitalize">{`${currentValue?.length == 0 ? "all status" : currentValue?.[0]}`}</span>
                 {currentValue && currentValue?.length > 1 && (
                     <span className="text-[#3672DF] text-[14px]" style={showAdminOptionCard ? { color: "#FFFFFF" } : {}}>{`${currentValue.length - 1}+more`}</span>
                 )}

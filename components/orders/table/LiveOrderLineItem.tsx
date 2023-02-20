@@ -109,7 +109,7 @@ const LiveOrderLineItem = (props: IProp) => {
   // };
 
   return (
-    <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
+    <tr className="h-min  text-[16px] text-[#000000] font-[400] leading-[22.4px] relative  " style={inputCheckedStateHandler()?{backgroundColor:'#EDF5F9',}:{}} >
       {(props.type == "pending" ||
         props.type == "shipments" ||
         props.type == "in-transit" ||
@@ -124,7 +124,7 @@ const LiveOrderLineItem = (props: IProp) => {
             onChange={(e) =>
               props.onSelect(e.target.value, "selectSingleOrder")
             }
-            className="h-[10px] w-[10px] cursor-pointer "
+            className="h-[10px] w-[10px] mb-[15px] cursor-pointer "
           />
         </td>
       )}
@@ -160,7 +160,7 @@ const LiveOrderLineItem = (props: IProp) => {
       >
         {props.row.id_orders}
       </td>
-      {/* <td className={`td3 text-[#3672DF]`}>{props.row.store_link_orders}</td> */}
+      <td className={`td3 text-[#3672DF]`}>{props.row.store_link_orders}</td>
       <td className={`td4`}>{props.row.reference_id_orders}</td>
       <td className={`td5`}>
         {getDateInStringFormat(props.row.created_on_orders)}
@@ -183,7 +183,7 @@ const LiveOrderLineItem = (props: IProp) => {
         }
         ref={trigger}
       >
-        <div className="w-full h-full  ">
+        <div className="w-full h-full   ">
           <div onClick={toggleGateHandler} className="cursor-pointer relative ">
             <Image
               src="/editicon.png"

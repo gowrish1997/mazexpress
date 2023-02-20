@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback } from "react";
 import useOrders from "@/lib/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -12,13 +12,21 @@ import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 
-const tableHeaders = ["Customer", "MAZ Tracking ID", "Store Link", "Reference ID", "Created Date", "Warehouse", "Status"];
+const tableHeaders = [
+    "Customer",
+    "MAZ Tracking ID",
+    "Store Link",
+    "Reference ID",
+    "Created Date",
+    // "Warehouse",
+    "Status",
+  ];
 
 const DeliveredOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
     const router = useRouter();
 
-    const [itemsPerPage, setItemPerPage] = useState(7);
+    const [itemsPerPage, setItemPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
 
     const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
@@ -38,6 +46,9 @@ const DeliveredOrders = () => {
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
     };
+    const itemPerPageHandler = useCallback((value: string | number) => {
+        setItemPerPage(value as number);
+    }, []);
 
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
@@ -65,6 +76,7 @@ const DeliveredOrders = () => {
                     itemsPerPage={itemsPerPage}
                     currentPageHandler={currentPageHandler}
                     currentPage={currentPage}
+                    itemPerPageHandler={itemPerPageHandler!}
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">

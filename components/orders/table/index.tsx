@@ -61,7 +61,7 @@ const Table = (props: TableProps) => {
                                               row={data as IUser}
                                               type={props.type}
                                               onSelect={props.onSelect!}
-                                              selectedOrder={props.selectedOrder as number[]}
+                                            selectedOrder={props.selectedOrder as number[]}
                                           />
                                       );
                                   } else {

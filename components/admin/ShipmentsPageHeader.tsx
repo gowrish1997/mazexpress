@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useMemo } from "react";
 import Head from "next/head";
-import ReactDropdown from "../common/ReactDropdown";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import { IOrderResponse } from "@/models/order.interface";
 import ScheduleShipmentModal from "./modal/ScheduleShipmentModal";
@@ -8,7 +8,9 @@ import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
+import { perPageOptinsList } from "@/lib/helper";
 import ReactPaginateComponent from "./ReactPaginate";
+
 interface IProp {
     content: string;
     title?: string;
@@ -19,13 +21,16 @@ interface IProp {
     currentPageHandler: (value: number) => void;
     itemsPerPage: number;
     currentPage: number;
+    itemPerPageHandler?: (value: string | number) => void;
     // filterById:(value:string)=>void
 }
 
 const adminOption = ["Moved out"];
 
 const ShipmentsPageHeader = (props: IProp) => {
+
     const warehousesDropDownOptoin = ["istanbul"];
+    const perPageOptions = perPageOptinsList()
 
     // const [showSheduleShipmentModal, setShowSheduleShipmentModal] = useState(false);
     const [showMovedOutConfirmModal, setMovedOutConfirmModal] = useState(false);
@@ -65,6 +70,7 @@ const ShipmentsPageHeader = (props: IProp) => {
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
+                        <MazStatsDropddown options={perPageOptions} type="per_page" onChange={props.itemPerPageHandler!} className="h-[38px] px-[10px]" itemsPerPage={props.itemsPerPage} />
                         <FilterOptionDropDown options={warehousesDropDownOptoin} type="warehouse" />
                         {/* <button
                             className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px] mt-[5px] text-[14px] font-[700] text-[#525D72] leading-[19px] tracking-wider hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50"
