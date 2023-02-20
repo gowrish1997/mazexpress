@@ -77,7 +77,7 @@ const LiveOrders = () => {
             <div>
                 <LiveOrderPageHeader
                     content="Live Orders"
-                    allLiveOrders={orders?.data!.length!}
+                    allLiveOrders={orders?.data!}
                     onChangeStatus={filterByStatusHandler}
                     itemPerPageHandler={itemPerPageHandler!}
                     filterByDate={filterByCreatedDate}

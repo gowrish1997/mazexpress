@@ -10,20 +10,8 @@ import CommentModal from "./modal/AddCommentModal";
 import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 import { perPageOptinsList } from "@/lib/helper";
 import ReactPaginateComponent from "./ReactPaginate";
+import { IProp } from "@/models/pageHeader.interface";
 
-interface IProp {
-    content: string;
-    title?: string;
-    selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[];
-    filterByDate: (value: Date | string) => void;
-    pageCount: number;
-    currentPageHandler: (value: number) => void;
-    itemsPerPage: number;
-    currentPage: number;
-    itemPerPageHandler?: (value: string | number) => void;
-    // filterById:(value:string)=>void
-}
 
 const adminOption = ["Received in Libya", "Out for delivery", "Mark as delivered"];
 

@@ -8,27 +8,12 @@ import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import { perPageOptinsList } from "@/lib/helper";
-
-interface IProp {
-    content: string;
-    title?: string;
-    onChangeStatus?: (value: string[]) => void;
-    itemPerPageHandler?: (value: string | number) => void;
-    selectedOrder?: string[];
-    allLiveOrders: number;
-    filterByDate: (value: Date | string) => void;
-    pageCount: number;
-    currentPageHandler: (value: number) => void;
-    itemsPerPage: number;
-    currentPage: number;
-    statusFilterKey: string[];
-}
+import { IProp } from "@/models/pageHeader.interface";
 
 const warehouse = ["istanbul"];
 
 const LiveOrderPageHeader = (props: IProp) => {
-
-    const perPageOptions = perPageOptinsList()
+    const perPageOptions = perPageOptinsList();
     const packageStatusDropDownOptoin = useMemo(() => {
         return ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
     }, []);
@@ -63,11 +48,17 @@ const LiveOrderPageHeader = (props: IProp) => {
                     currentPage={props.currentPage}
                 />
 
-                {props.allLiveOrders > 0 && (
+                {props.allLiveOrders && props.allLiveOrders.length > 0 && (
                     <div className="flex-type1 space-x-[10px] ">
                         {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
 
-                        <MazStatsDropddown options={perPageOptions} type="per_page" onChange={props.itemPerPageHandler!} className="h-[38px] px-[10px]" itemsPerPage={props.itemsPerPage} />
+                        <MazStatsDropddown
+                            options={perPageOptions}
+                            type="per_page"
+                            onChange={props.itemPerPageHandler!}
+                            className="h-[38px] px-[10px]"
+                            itemsPerPage={props.itemsPerPage}
+                        />
                         <FilterOptionDropDown options={packageStatusDropDownOptoin} type="packageStatus" onChange={props.onChangeStatus!} statusFilterKey={props.statusFilterKey} />
 
                         <FilterOptionDropDown options={warehouseDropDownOption} type="warehouse" />

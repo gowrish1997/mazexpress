@@ -1040,7 +1040,7 @@ input[type="checkbox"]:disabled {
     margin-right: 10px;
 }
 .prev-page-item1 {
-    display: none;
+    visibility: hidden;
 }
 .prev-page-item:hover {
     color: #3672df;
@@ -1051,8 +1051,9 @@ input[type="checkbox"]:disabled {
     margin-left: 5px;
 }
 .next-page-item1 {
-    display: none;
+    visibility: hidden;
 }
+
 .next-page-item:hover {
     color: #3672df;
 }

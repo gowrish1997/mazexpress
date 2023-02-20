@@ -9,20 +9,8 @@ import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
+import { IProp } from "@/models/pageHeader.interface";
 
-interface IProp {
-    content: string;
-    title?: string;
-    selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[] | undefined;
-    filterByDate: (value: Date | string) => void;
-    //  filterById: (value: string) => void;
-    pageCount: number;
-    currentPageHandler: (value: number) => void;
-    itemsPerPage: number;
-    currentPage: number;
-    itemPerPageHandler?: (value: string | number) => void;
-}
 
 const adminOption = ["Move to Shipments"];
 
