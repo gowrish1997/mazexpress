@@ -18,6 +18,7 @@ type Data = {
 
 
 export default function useOrders(props: IProps) {
+  console.log(props)
 //   console.log('calling use orders')
 //   console.log(props.page)
   let queryString = "";

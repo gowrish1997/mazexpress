@@ -16,7 +16,7 @@ const TrackOrder = (props: any) => {
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { user, mutateUser, userIsLoading } = useUser();
-  const { orders, ordersIsLoading } = useOrders({ userId: user?.id_users });
+  const { orders, ordersIsLoading } = useOrders({ user_id: user?.id_users });
 
   const [packageStatus, setPackageStatus] = useState(0);
 

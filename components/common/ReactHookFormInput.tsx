@@ -35,13 +35,13 @@ const ReactHookFormInput = (props: IProp) => {
                     type={props.type}
                     {...props.register}
                     value={props.value}
-                    className="w-full h-full pl-[5px] rounded-[5px] focus:outline-none"
+                    className="w-full h-full pl-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
                     name={props.name}
                     disabled={props.disabled}
                     autoComplete={props.autoComplete ? props.autoComplete : "on"}
                 />
                 {props.icon?.isEnabled ? (
-                    <Image src={props.icon?.src} alt="eyeIcon" height={18} width={18} className="cursor-pointer absolute right-[8px] " onClick={props.icon.onClick} />
+                    <Image src={props.icon?.src} alt="eyeIcon" height={18} width={18} className="cursor-pointer absolute right-[8px] " onClick={props.onClick} />
                 ) : (
                     ""
                 )}

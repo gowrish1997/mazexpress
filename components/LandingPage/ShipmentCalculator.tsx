@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldError } from "react-hook-form";
 import * as yup from "yup";
 import landpageImage from "../../public/landpageImage.png";
-import ShipmentCalculatorDropdown from "./ShipmentCalculatorDropdown";
+import CusotmDropdown from "./CustomDropdown";
 import ReactHookFormInput from "../common/ReactHookFormInput";
 import Multiply from "../../public/multiply.png";
 
@@ -64,7 +64,7 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
                 </p>
             </div>
             <form className="flex-1 h-full bg-[#FFFFFF] rounded-[16px] py-[50px] px-[30px] space-y-[20px] " onSubmit={handleSubmit(onSubmit)}>
-                <ShipmentCalculatorDropdown
+                <CusotmDropdown
                     label="Pick - Up Warehouse address"
                     name="warehouseAddress_address"
                     type="string"
@@ -76,10 +76,11 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
                         { value: "gowrish", label: "gowrish" },
                     ]}
                     placeHolder="Warehouse address"
+                    disabled={true}
                     value={getValues("warehouseAddress_address")}
                     setValue={setValue}
                 />
-                <ShipmentCalculatorDropdown
+                <CusotmDropdown
                     label="Delivery City"
                     name="city_name"
                     type="string"
@@ -91,6 +92,7 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
                         { value: "gowrish", label: "gowrish" },
                     ]}
                     placeHolder="city"
+                    disabled={true}
                     value={getValues("city_name")}
                     setValue={setValue}
                 />

@@ -8,6 +8,7 @@ import { ISignUp } from "@/models/user.interface";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
+import CusotmDropdown from "../LandingPage/CustomDropdown";
 
 const schema = yup
   .object({
@@ -51,9 +52,11 @@ const SignUpComponent = (props: any) => {
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm<ISignUp>({
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
     defaultValues: {
       //   age_users: "22",
       //   email_users: "mohamed@maz.com",
@@ -100,6 +103,7 @@ const SignUpComponent = (props: any) => {
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
 
   const togglePasswordTypeHandler = () => {
+    console.log('passwortype handler')
     if (passwordType == "string") {
       setPasswordType("password");
     } else {
@@ -148,13 +152,31 @@ const SignUpComponent = (props: any) => {
             register={register("age_users")}
             error={errors.age_users}
           />
-
+{/* 
           <ReactHookFormInput
             label="Gender"
             name="gender_users"
             type="string"
             register={register("gender_users")}
             error={errors.gender_users}
+          /> */}
+          <CusotmDropdown
+           label="Gender"
+           name="gender_users"
+           type="string"
+           IconEnabled={true}
+           register={register("gender_users")}
+           error={errors.gender_users}
+           value={getValues("gender_users")}
+           setValue={setValue}
+           options={[
+            { value: "m", label: "male" },
+            { value: "f", label: "female" },
+            { value: "u", label: "unknown" },
+            { value: "o", label: "other" }
+
+        ]}
+        disabled={true}
           />
         </div>
 
@@ -208,7 +230,7 @@ const SignUpComponent = (props: any) => {
 
         <button
           type="submit"
-          className="w-full h-[46px] bg-[#BBC2CF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
+          className="w-full h-[46px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
         >
           Sign Up
         </button>

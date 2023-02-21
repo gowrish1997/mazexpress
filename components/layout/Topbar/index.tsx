@@ -9,7 +9,10 @@ import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
+import { useRouter } from "next/router";
 const Topbar = () => {
+
+    const router=useRouter();
     const { user, mutateUser } = useUser();
 
     const { setSearchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
@@ -42,7 +45,7 @@ const Topbar = () => {
                         className="h-full mr-5 bg-transparent focus:outline-none searchbar"
                         id="searchbar"
                         type="text"
-                        placeholder="Search with MAZ ID"
+                        placeholder={router.pathname.includes('users')?"Search with user ID":"Search with MAZ ID"}
                         onChange={searchKeyOnchangeHandler}
                     />
                     <div className="absolute w-[16px] h-[16px] right-[10px] top-[15px] cursor-pointer">

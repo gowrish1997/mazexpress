@@ -25,9 +25,10 @@ const MyOrders = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     user_id: user?.id_users,
   });
+  console.log(orders)
 
   const addNewOrderHandler = () => {
-    router.push(`${router.pathname}add-new-order`);
+    router.push(`/add-new-order`);
   };
 
   if (ordersError) throw ordersError;
@@ -58,7 +59,7 @@ const MyOrders = () => {
               <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
                 Oops, there are no orders on your list yet... Start adding now.
                 <br />
-                <Link href={`${router.pathname}add-new-order`}>
+                <Link href={`/add-new-order`}>
                   <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
                     Add Order Now
                   </span>

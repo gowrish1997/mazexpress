@@ -4,7 +4,7 @@ import downwardImage from "../../../public/downwardArrow.png";
 
 interface IProp {
     options: { value: string | number; label: string | number }[];
-    onChange?: (value: string | number) => void;
+    onChange?: (value: string) => void;
     type: string;
     className?: string;
     itemsPerPage?: number;
@@ -18,7 +18,7 @@ const MazStatsDropddown = (props: IProp) => {
         setShowDropdown((prev) => !prev);
     };
 
-    const dropDownOnChangeHandler = (value: string | number) => {
+    const dropDownOnChangeHandler = (value: string) => {
         props.onChange?.(value);
     };
 
@@ -33,7 +33,8 @@ const MazStatsDropddown = (props: IProp) => {
                 style={showDropdown ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
                 onClick={toggleDropdownHandler}
             >
-                <span className="capitalize">{`${props.type}:  ${props.itemsPerPage}`}</span>
+                {props.type=='per_page'? <span className="capitalize">{`${props.type}:  ${props.itemsPerPage}`}</span>: <span className="capitalize">{`${props.type}:  ${props.options[0].label}`}</span>}
+               
 
                 <div className="relative h-[6px] w-[8px]  ">
                     <Image src={downwardImage} fill={true} alt="arrow" objectFit="cover" />
@@ -47,7 +48,7 @@ const MazStatsDropddown = (props: IProp) => {
                                 <div className="flex flex-row justify-start items-center">
                                     <button
                                         key={index}
-                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                        className=" w-full p-[5px] py-[3px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
                                         onClick={() => dropDownOnChangeHandler(data.value as string)}
                                         style={currentValue == data.label ? { backgroundColor: "#f2f9fc" } : {}}
                                     >

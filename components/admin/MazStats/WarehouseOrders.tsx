@@ -1,15 +1,8 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import StatCard from "./StatCard";
 import MazStatsDropddown from "./MazStatsDropddown";
-const options = [
-    { value: "", label: "all age" },
-    { value: "10-20", label: "10-20" },
-    { value: "10-20", label: "10-20" },
-    { value: "10-20", label: "10-20" },
-];
+const options = [{ value: "istanbul", label: "istanbul" }];
 const WarehouseOrders = () => {
-    const [selectedDate, setSelectedDate] = useState("");
-
     const wareHouseChangeHanlder = (value: string) => {
         console.log(value);
     };

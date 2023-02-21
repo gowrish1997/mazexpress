@@ -11,12 +11,26 @@ interface IProp {
     IconEnabled: boolean;
     error?: FieldError;
     disabled?: boolean;
-    options?: {value:string,label:string}[];
+    options?: { value: string; label: string }[];
     placeHolder?: string;
     setValue: any;
+    className?: string;
 }
 
-const ShipmentCalculatorDropdown = (props: IProp) => {
+const genderHandler = (type:string) => {
+    switch (type) {
+        case "m":
+            return "male";
+        case "f":
+            return "female";
+        case "u":
+            return "unknown";
+        case "o":
+            return "other";
+    }
+};
+
+const CusotmDropdown = (props: IProp) => {
     const [showAdminOptionCard, setShowAdminOptionCard] = useState<boolean>(false);
 
     const toggleAdminOptionCard = () => {
@@ -24,7 +38,7 @@ const ShipmentCalculatorDropdown = (props: IProp) => {
     };
 
     const dropDownOnChangeHandler = (value: string) => {
-        props.setValue(props.name, value,{ shouldValidate: true });
+        props.setValue(props.name, value, { shouldValidate: true });
         setShowAdminOptionCard(false);
     };
     return (
@@ -41,8 +55,9 @@ const ShipmentCalculatorDropdown = (props: IProp) => {
                     id={props.name}
                     type={props.type}
                     {...props.register}
-                    value={props.value}
-                    className="w-full h-full pl-[5px] rounded-[5px] focus:outline-none capitalize"
+                    value={props.label == "Gender" ? genderHandler(props.value as string) : props.value}
+                    placeholder={props.placeHolder ? props.placeHolder : ""}
+                    className={"w-full h-full pl-[5px] rounded-[5px] focus:outline-none capitalize" + " " + props.className}
                     name={props.name}
                     disabled={props.disabled}
                 />
@@ -62,7 +77,11 @@ const ShipmentCalculatorDropdown = (props: IProp) => {
                                 <div className="flex flex-row justify-start items-center">
                                     <button
                                         key={index}
-                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                        className={
+                                            " w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left " +
+                                            " " +
+                                            props.className
+                                        }
                                         onClick={() => dropDownOnChangeHandler(data.value)}
                                     >
                                         {data.label}
@@ -77,4 +96,4 @@ const ShipmentCalculatorDropdown = (props: IProp) => {
     );
 };
 
-export default ShipmentCalculatorDropdown;
+export default CusotmDropdown;
