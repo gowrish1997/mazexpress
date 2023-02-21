@@ -57,10 +57,10 @@ export const config = {
      */
     // deploy
     // match all except these links
-    "/((?!api|_next/static|_next/image|favicon.ico|auth/gate).*)",
+    // "/((?!api|_next/static|_next/image|favicon.ico|auth/gate).*)",
 
     // dev
     // match none
-    // "/((?!.*).*)",
+    "/((?!.*).*)",
   ],
 };

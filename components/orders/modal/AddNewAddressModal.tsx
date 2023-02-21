@@ -21,8 +21,16 @@ interface IProp {
 
 const schema = yup
     .object({
-        address_1_addresses: yup.string().required(),
-        address_2_addresses: yup.string().required(),
+        address_1_addresses: yup.string().required("Address line 01 is required field"),
+        address_2_addresses: yup.string().required("Address line 02 is required field"),
+        country_addresses: yup.string().required("Country is required field"),
+        city_addresses: yup.string().required("City/Town is required field"),
+
+        phone_addresses: yup
+            .number()
+            .test("len", "Must be exactly 10 digits", (val) => val?.toString().length === 10)
+            .required()
+            .typeError("Mobile number is required field"),
     })
     .required();
 
@@ -46,7 +54,7 @@ const AddNewAddressModal = (props: IProp) => {
             // phone_addresses: 214441792,
             // tag_addresses: "Al Mshket Hotel",
         },
-        // resolver: yupResolver(schema),
+        resolver: yupResolver(schema),
     });
 
     const [addressIsDefault, setAddressIsDefault] = useState(user?.default_address_users === 1);
@@ -152,7 +160,6 @@ const AddNewAddressModal = (props: IProp) => {
                                     { value: "Benghazi", label: "Benghazi" },
                                     { value: "Misrata", label: "Misrata" },
                                 ]}
-                                placeHolder="Warehouse address"
                                 value={getValues("city_addresses")}
                                 setValue={setValue}
                                 disabled={true}

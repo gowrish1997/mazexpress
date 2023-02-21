@@ -19,7 +19,7 @@ const AdminHome = () => {
                 <TotalCustomer />
                 <WarehouseOrders />
             </div>
-            <div className="flex-type3 gap-x-[10px] h-[300px]">
+            <div className="flex-type3 gap-x-[10px] h-[300px] relative z-10">
                 <StatGraph />
                 <OrdersTotalCountBar />
             </div>

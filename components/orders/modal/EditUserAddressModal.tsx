@@ -20,10 +20,18 @@ interface IProp {
 }
 
 const schema = yup
-    .object({
-        address_1_addresses: yup.string().required(),
-        address_2_addresses: yup.string().required(),
-    })
+.object({
+    address_1_addresses: yup.string().required("Address line 01 is required field"),
+    address_2_addresses: yup.string().required("Address line 02 is required field"),
+    country_addresses: yup.string().required("Country is required field"),
+    city_addresses: yup.string().required("City/Town is required field"),
+
+    phone_addresses: yup
+        .number()
+        .test("len", "Must be exactly 10 digits", (val) => val?.toString().length === 10)
+        .required()
+        .typeError("Mobile number is required field"),
+})
     .required();
 
 const EditUserAddressModal = (props: IProp) => {

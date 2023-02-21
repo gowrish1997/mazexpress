@@ -13,7 +13,7 @@ import orders from "../api/orders";
 import user from "../api/auth/user";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";    
 import { SearchKeyContext } from "@/components/common/Frame";
-
+import LoadingPage from "@/components/common/LoadingPage";
 const tableHeaders = ["Customer", "Email ID", "Mobile Number", "Created Date", "Age", "Gender", "Total Orders"];
 
 const UserBase = () => {
@@ -51,10 +51,10 @@ const UserBase = () => {
     // };
 
     if (allUserIsLoading) {
-        return <div>this is loading</div>;
+        return <LoadingPage/>
     }
     if (error) {
-        return <div>some error happened</div>;
+    return <div>some error happened</div>
     }
     return (
         <>
