@@ -53,6 +53,7 @@ const Intransit = () => {
     setCurrentPage(value);
   };
   const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0)
     setItemPerPage(value as number);
 }, []);
 
@@ -62,11 +63,12 @@ const Intransit = () => {
   };
 
   const selectOrderHandler = (value: string, type: string) => {
+    console.log(value)
     selectOrder(
       value,
       type,
       setSelectedOrder,
-      allInTransitOrders!,
+     orders?.data,
       selectedOrder!
     );
   };

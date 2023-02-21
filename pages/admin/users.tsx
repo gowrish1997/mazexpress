@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback } from "react";
 import useOrders from "@/lib/useOrders";
 import moment from "moment";
 import UserbasePageHeader from "@/components/admin/UserbasePageHeader";
@@ -20,7 +20,7 @@ const UserBase = () => {
     const router = useRouter();
 
     const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
-    const [itemsPerPage, setItemPerPage] = useState(4);
+    const [itemsPerPage, setItemPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<Date | string>("");
     const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({
@@ -37,6 +37,10 @@ const UserBase = () => {
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
     };
+    const itemPerPageHandler = useCallback((value: string | number) => {
+        setCurrentPage(0)
+        setItemPerPage(value as number);
+    }, []);
 
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
@@ -62,6 +66,7 @@ const UserBase = () => {
                     title="User Base | MazExpress Admin"
                     pageCount={pageCount}
                     currentPageHandler={currentPageHandler}
+                    itemPerPageHandler={itemPerPageHandler!}
                     itemsPerPage={itemsPerPage}
                     currentPage={currentPage}
                 />

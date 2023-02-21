@@ -43,6 +43,7 @@ const LiveOrders = () => {
         setCurrentPage(value);
     }, []);
     const itemPerPageHandler = useCallback((value: string | number) => {
+        setCurrentPage(0);
         setItemPerPage(value as number);
     }, []);
 

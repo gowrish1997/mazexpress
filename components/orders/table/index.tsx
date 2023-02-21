@@ -16,6 +16,7 @@ interface TableProps {
 }
 
 const Table = (props: TableProps) => {
+    console.log(props.selectedOrder)
     const tableClassNameHandler = () => {
         if (props.type == "live_order" || props.type == "pending" || props.type == "shipments" || props.type == "delivered" || props.type == "in-transit") {
             return "live_order_table";

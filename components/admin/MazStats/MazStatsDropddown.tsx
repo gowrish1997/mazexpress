@@ -33,7 +33,7 @@ const MazStatsDropddown = (props: IProp) => {
                 style={showDropdown ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
                 onClick={toggleDropdownHandler}
             >
-                {props.type=='per_page'? <span className="capitalize">{`${props.type}:  ${props.itemsPerPage}`}</span>: <span className="capitalize">{`${props.type}:  ${props.options[0].label}`}</span>}
+                {props.type=='per_page'? <span className="">{`per page:  ${props.itemsPerPage}`}</span>: <span className="capitalize">{`${props.type}:  ${props.options[0].label}`}</span>}
                
 
                 <div className="relative h-[6px] w-[8px]  ">
