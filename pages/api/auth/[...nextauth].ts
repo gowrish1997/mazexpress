@@ -1,45 +1,14 @@
+import { MazAdapter } from "@/lib/adapter";
+import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextApiRequest, NextApiResponse } from "next";
 import { MazDataSource } from "@/lib/adapter/data-source";
-import { UserEntity } from "@/models/entities/User";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   // Do whatever you want here, before the request is passed down to `NextAuth`
-  // check if req route is of auth login and do login check
-
-  // console.log(req.url);
-  // if (req.url === "/api/auth/login" && req.method === "POST") {
-  //   // do logic
-  //   return new Promise((resolve, reject) => {
-  //     const { email, password } = req.body;
-  //     try {
-  //       db("users")
-  //         .where("email_users", email)
-  //         .first()
-  //         .then((data: any) => {
-  //           // check if pass is same
-  //           const match = bcrypt.compareSync(password, data.password_users!);
-
-  //           if (match) {
-  //             // delete data.password_users;
-  //             res.json(data);
-  //             resolve(data);
-  //             return;
-  //           } else {
-  //             res.status(403).send("");
-  //             reject();
-  //             return;
-  //           }
-  //         });
-  //     } catch (error) {
-  //       res.status(500).json({ message: (error as Error).message });
-  //       reject();
-  //       return;
-  //     }
-  //   });
-  // }
 
   return await NextAuth(req, res, {
     // https://next-auth.js.org/configuration/providers
@@ -60,45 +29,26 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           username: { label: "Username", type: "text", placeholder: "jsmith" },
           password: { label: "Password", type: "password" },
         },
-        async authorize(credentials, req) {
-          // You need to provide your own logic here that takes the credentials
-          // submitted and returns either a object representing a user or value
-          // that is false/null if the credentials are invalid.
-          // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-          // You can also use the `req` object to obtain additional parameters
-          // (i.e., the request IP address)
-
+        authorize: async (credentials, req) => {
           console.log(credentials);
-          const reqbody = {
-            email: credentials?.username!,
-            password: credentials?.password!,
-          };
-
-          const user = await MazDataSource.manager.findOneBy(UserEntity, {
-            email: reqbody.email,
-          });
+          const user: UserEntity | null = await MazDataSource.manager.findOneBy(
+            UserEntity,
+            {
+              email: credentials?.username!,
+            }
+          );
+          // check if user exists
           if (user) {
-            return user;
+            // compare password
+            let match = bcrypt.compareSync(
+              credentials?.password!,
+              user.password!
+            );
+            if (match) {
+              return user;
+            }
           }
           return null;
-          // if (response.data) {
-          //   console.log(response.data);
-          //   return response.data;
-          // }
-          // return null;
-          // const res = await fetch("/api/auth/login", {
-          //   method: "POST",
-          //   body: JSON.stringify(reqbody),
-          //   headers: { "Content-Type": "application/json" },
-          // });
-          // const user = await res.json();
-
-          // // If no error and we have user data, return it
-          // if (res.ok && user) {
-          //   return user;
-          // }
-          // // Return null if user data could not be retrieved
-          // return null;
         },
       }),
     ],
@@ -143,20 +93,43 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     // pages is not specified for that route.
     // https://next-auth.js.org/configuration/pages
     pages: {
-      // signIn: '/auth/signin',  // Displays signin buttons
+      signIn: "/auth/gate", // Displays signin buttons
       // signOut: '/auth/signout', // Displays form with sign out button
       // error: '/auth/error', // Error code passed in query string as ?error=
       // verifyRequest: '/auth/verify-request', // Used for check email page
       // newUser: null // If set, new users will be directed here on first sign in
     },
-
     // Callbacks are asynchronous functions you can use to control what happens
     // when an action is performed.
     // https://next-auth.js.org/configuration/callbacks
     callbacks: {
       async signIn({ user, account, profile, email, credentials }) {
-        console.log(user, "if user is not in table add");
-        return true;
+        // console.log(user, account, profile, email, credentials);
+
+        if (user && user.email) {
+          const dbuser = await MazAdapter().getUserByEmail(user.email);
+
+          if (dbuser === null) {
+            // create and sign in
+            const newdbuser = new UserEntity();
+            if (account?.provider === "google") {
+              const saltRounds = 10;
+              const hash2 = bcrypt.hashSync("Test123$", saltRounds);
+
+              newdbuser.avatar_url = user.image
+                ? user.image
+                : "default_user.png";
+              newdbuser.first_name = user.name ? user.name.split(" ")[0] : "";
+              newdbuser.last_name = user.name ? user.name.split(" ")[1] : "";
+              newdbuser.email = user.email ? user.email : "";
+
+              newdbuser.password = hash2;
+              MazAdapter().createUser(newdbuser);
+            }
+          }
+          return true;
+        }
+        return false;
       },
       // async redirect({ url, baseUrl }) { return baseUrl },
       session({

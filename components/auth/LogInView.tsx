@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import useUser from "@/lib/hooks/useUser";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
-import { IUser } from "@/models/user.interface";
-import user from "@/pages/api/auth/user";
+import { signIn } from "next-auth/react";
+import { createToast } from "@/lib/toasts";
 
 type Inputs = {
   password: string;
@@ -38,31 +36,26 @@ const LogInComponent = (props: any) => {
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // console.log(data);
-    try {
-      const result: IUser = await fetchJson("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      // console.log(result);
-      await mutateUser(result, false);
 
-      // if (user?.is_admin_users === 1) {
-      //   // console.log('push to admin')
-      //   router.push("/admin");
-      // } else {
-      //   // console.log('push to home')
-      //   router.push("/");
-      // }
-    } catch (error) {
-      if (error instanceof FetchError) {
-        setErrorMsg(error.data.message);
-      } else {
-        console.error("An unexpected error happened:", error);
-      }
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const response = await signIn("credentials", {
+      redirect: false,
+      password: data.password,
+      email: data.email,
+    });
+
+    if (response?.ok === false) {
+      // no user found
+      createToast({
+        type: "error",
+        message: "No user found with this email id",
+        title: "No user found",
+        timeOut: 2000,
+      });
+    } else {
+      router.push("/");
     }
+    console.log(response);
   };
 
   const [passwordType, setPasswordType] = useState("password");
@@ -74,48 +67,6 @@ const LogInComponent = (props: any) => {
       setPasswordType("string");
     }
   };
-
-  function parseJwt(token: any) {
-    if (!token) {
-      return;
-    }
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace("-", "+").replace("_", "/");
-    return JSON.parse(window.atob(base64));
-  }
-
-  const handleCredentialResponse = (response: any) => {
-    console.log(response);
-    // decodeJwtResponse() is a custom function defined by you
-    // to decode the credential response.
-    const responsePayload = parseJwt(response.credential);
-
-    console.log("ID: " + responsePayload.sub);
-    console.log("Full Name: " + responsePayload.name);
-    console.log("Given Name: " + responsePayload.given_name);
-    console.log("Family Name: " + responsePayload.family_name);
-    console.log("Image URL: " + responsePayload.picture);
-    console.log("Email: " + responsePayload.email);
-  };
-
-  function googleSignInHandler() {
-    console.log("calling handler");
-  }
-
-  useEffect(() => {
-    console.log(window.google);
-    window.onload = function () {
-      console.log('onload called')
-      google.accounts.id.initialize({
-        client_id:
-          "842151845247-la626nqpcc84pgaamb74a4n11qah43fh.apps.googleusercontent.com",
-        callback: handleCredentialResponse,
-      });
-      // console.log("next");
-      google.accounts.id.prompt();
-      // console.log("next2");
-    };
-  }, []);
 
   return (
     <div className="w-[400px] space-y-[20px] ">
@@ -180,29 +131,10 @@ const LogInComponent = (props: any) => {
       {/* <LogInWithMail /> */}
       <button
         className="p-3 bg-amber-400 rounded"
-        onClick={googleSignInHandler}
+        // onClick={googleSignInHandler}
       >
         Sign in with google
       </button>
-      {/* <div
-        id="g_id_onload"
-        data-client_id="842151845247-la626nqpcc84pgaamb74a4n11qah43fh.apps.googleusercontent.com"
-        data-context="signin"
-        data-ux_mode="popup"
-        data-login_uri="http://localhost:3000/auth/gate"
-        data-auto_prompt="false"
-        data-callback="handleCredentialResponse"
-      ></div>
-
-      <div
-        className="g_id_signin"
-        data-type="standard"
-        data-shape="pill"
-        data-theme="filled_black"
-        data-text="signin_with"
-        data-size="large"
-        data-logo_alignment="left"
-      ></div> */}
     </div>
   );
 };

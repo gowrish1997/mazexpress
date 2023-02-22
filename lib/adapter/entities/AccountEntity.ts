@@ -4,18 +4,20 @@ import {
   Column,
   ManyToOne,
   PrimaryColumn,
+} from "typeorm";
+import type {
   Relation,
 } from "typeorm";
-import { transformer } from ".";
-import { UserEntity } from "./User";
+import { transformer } from "../transformer";
+import { UserEntity } from "./UserEntity";
 
 @Entity({ name: "accounts" })
 export class AccountEntity {
-  // @PrimaryGeneratedColumn("uuid")
-  // id!: string;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-  @PrimaryColumn({ type: "int" })
-  id!: number;
+  // @PrimaryColumn({ type: "int" })
+  // id!: number;
 
   @Column({ type: "uuid" })
   user_id!: string;

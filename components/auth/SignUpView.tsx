@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { ISignUp } from "@/models/user.interface";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
+import { MazAdapter } from "@/lib/adapter";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import axios from "axios";
 
 const schema = yup
   .object({
@@ -24,7 +25,7 @@ const schema = yup
       .test(
         "len",
         "Must be exactly 10 digits",
-        (val) => val?.toString().length === 10
+        (val) => val?.toString().length === 9
       )
       .required()
       .typeError("Mobile numbder is required field"),
@@ -55,45 +56,39 @@ const SignUpComponent = (props: any) => {
   } = useForm<ISignUp>({
     resolver: yupResolver(schema),
     defaultValues: {
-      //   age_users: "22",
-      //   email_users: "mohamed@maz.com",
-      //   first_name_users: "mohamed",
-      //   gender_users: "m",
-      //   last_name_users: "ali",
-      //   confirmPassword_users: "Test123$",
-      //   password_users: "Test123$",
-      //   phone_users: 1234567890,
+        age_users: "22",
+        email_users: "mohamed@maz.com",
+        first_name_users: "mohamed",
+        gender_users: "m",
+        last_name_users: "ali",
+        confirmPassword_users: "Test123$",
+        password_users: "Test123$",
+        phone_users: 123456789,
     },
   });
 
   const onSubmit: SubmitHandler<ISignUp> = async (data) => {
     console.log(data);
 
-    try {
-      const result = await fetchJson("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      //   console.log(result); // id created
+    const newuser = new UserEntity();
+    newuser.first_name = data.first_name_users;
+    newuser.last_name = data.last_name_users;
+    newuser.email = data.email_users;
+    newuser.age = data.age_users;
+    // newuser.gender = data.gender_users;
+    newuser.phone = data.phone_users;
+    newuser.password = data.password_users;
+    const response = await axios.post("/api/users", newuser, {
+      method: "POST",
+    });
+    console.log(response.data)
 
-      // toast
-      createToast({
-        type: "success",
-        title: "New user created.",
-        message: "Please log in with your new login credentials",
-        timeOut: 3000,
-      });
-
-      // send to login page with cred
-      props.switch(1);
-    } catch (error) {
-      if (error instanceof FetchError) {
-        setErrorMsg(error.data.message);
-      } else {
-        console.error("An unexpected error happened:", error);
-      }
-    }
+    createToast({
+      type: "success",
+      title: "Created user",
+      message: "Successfully created new user",
+      timeOut: 2000,
+    });
   };
 
   const [passwordType, setPasswordType] = useState("password");

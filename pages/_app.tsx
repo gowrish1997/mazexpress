@@ -11,6 +11,7 @@ import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import Script from "next/script";
 import { SessionProvider } from "next-auth/react";
+import "reflect-metadata";
 config.autoAddCss = false;
 
 export default function App({

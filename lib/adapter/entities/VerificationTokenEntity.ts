@@ -1,4 +1,4 @@
-import { transformer } from './index';
+import { transformer } from '../transformer';
 import {
     Entity,
     PrimaryGeneratedColumn,

@@ -1,12 +1,15 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { transformer } from ".";
-import { AccountEntity } from "./Account";
-import { SessionEntity } from "./Session";
+import type {
+  Relation,
+} from "typeorm";
+import { transformer } from "../transformer";
+import { AccountEntity } from "./AccountEntity";
+import { SessionEntity } from "./SessionEntity";
 
 export enum UserGender {
   MALE = "m",
@@ -14,8 +17,6 @@ export enum UserGender {
   OTHER = "o",
   UNKNOWN = "u",
 }
-
-
 
 @Entity({ name: "users" })
 export class UserEntity {
@@ -52,15 +53,15 @@ export class UserEntity {
   @Column({ type: "boolean", default: false })
   is_admin!: boolean;
 
-  @Column({ type: "boolean", default: false })
+  @Column({ type: "boolean", default: true })
   is_notifications_enabled!: boolean;
 
   @Column({ type: "varchar", nullable: true, default: null })
   default_address!: string | null;
 
   @OneToMany(() => SessionEntity, (session) => session.user_id)
-  sessions!: SessionEntity[];
+  sessions!: Relation<SessionEntity[]>;
 
   @OneToMany(() => AccountEntity, (account) => account.user_id)
-  accounts!: AccountEntity[];
+  accounts!: Relation<AccountEntity[]>;
 }

@@ -1,28 +1,33 @@
-import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { UserEntity } from "@/models/entities/User";
-import { AccountEntity } from "@/models/entities/Account";
-import { SessionEntity } from "@/models/entities/Session";
-import { VerificationTokenEntity } from "@/models/entities/VerificationToken";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { AccountEntity } from "@/lib/adapter/entities/AccountEntity";
+import { SessionEntity } from "@/lib/adapter/entities/SessionEntity";
+import { VerificationTokenEntity } from "@/lib/adapter/entities/VerificationTokenEntity";
 
-const MazDataSource = new DataSource({
-  type: "mysql",
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT!),
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_DB,
-  entities: [UserEntity, AccountEntity, SessionEntity, VerificationTokenEntity],
-  synchronize: true,
-  logging: false,
-});
-
-MazDataSource.initialize()
-  .then(() => {
-    console.log("Maz Data Source has been initialized!");
-  })
-  .catch((err) => {
-    console.error("Error during Maz Data Source initialization ", err);
+const connexion = async () => {
+  const MazDataSource = new DataSource({
+    type: "mysql",
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT!),
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DB,
+    entities: [
+      UserEntity,
+      AccountEntity,
+      SessionEntity,
+      VerificationTokenEntity,
+    ],
+    synchronize: true,
+    logging: false,
   });
+  try {
+    await MazDataSource.initialize();
+    console.log("Maz data source initialization complete!");
+    return MazDataSource;
+  } catch (err) {
+    console.error("Error during Data Source initialization", err);
+  }
+};
 
-export { MazDataSource };
+export const MazDataSource = connexion();

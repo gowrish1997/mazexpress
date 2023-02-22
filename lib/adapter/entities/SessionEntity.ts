@@ -1,6 +1,9 @@
-import { transformer } from "./index";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { UserEntity } from "./User";
+import { transformer } from "../transformer";
+import { UserEntity } from "./UserEntity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import type {
+  Relation,
+} from "typeorm";
 
 @Entity({ name: "sessions" })
 export class SessionEntity {
@@ -17,5 +20,5 @@ export class SessionEntity {
   expires!: string;
 
   @ManyToOne(() => UserEntity, (user) => user.sessions)
-  user!: UserEntity;
+  user!: Relation<UserEntity>;
 }
