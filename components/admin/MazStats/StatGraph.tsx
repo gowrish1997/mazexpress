@@ -1,9 +1,9 @@
 import React from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, Colors } from "chart.js";
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, Colors);
 import { Line } from "react-chartjs-2";
 import MazStatsDropddown from "./MazStatsDropddown";
 
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, Colors);
 export const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -142,7 +142,13 @@ const StatGraph = () => {
         <div className="w-2/3 flex-1 p-[10px] pt-[20px] mr-[1px] border-[1px] border-[#BBC2CF] rounded-[4px] h-full relative ">
             <Line options={options} data={data} />
             <div className="absolute top-[10px] right-[10px] ">
-                <MazStatsDropddown options={[{label:'one year',value:'1'},{label:"two year",value:'2'}]} type='year' />
+                <MazStatsDropddown
+                    options={[
+                        { label: "one year", value: "1" },
+                        { label: "two year", value: "2" },
+                    ]}
+                    type="year"
+                />
             </div>
         </div>
     );
