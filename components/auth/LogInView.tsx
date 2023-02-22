@@ -5,7 +5,7 @@ import * as yup from "yup";
 import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
 import { IUser } from "@/models/user.interface";
 import user from "@/pages/api/auth/user";
@@ -29,7 +29,7 @@ const LogInComponent = (props: any) => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
 
-  const { user, mutateUser } = useUser({redirectIfFound: true});
+  const { user, mutateUser } = useUser({ redirectIfFound: true });
   const {
     register,
     handleSubmit,
@@ -75,9 +75,47 @@ const LogInComponent = (props: any) => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log()
-  // })
+  function parseJwt(token: any) {
+    if (!token) {
+      return;
+    }
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+  }
+
+  const handleCredentialResponse = (response: any) => {
+    console.log(response);
+    // decodeJwtResponse() is a custom function defined by you
+    // to decode the credential response.
+    const responsePayload = parseJwt(response.credential);
+
+    console.log("ID: " + responsePayload.sub);
+    console.log("Full Name: " + responsePayload.name);
+    console.log("Given Name: " + responsePayload.given_name);
+    console.log("Family Name: " + responsePayload.family_name);
+    console.log("Image URL: " + responsePayload.picture);
+    console.log("Email: " + responsePayload.email);
+  };
+
+  function googleSignInHandler() {
+    console.log("calling handler");
+  }
+
+  useEffect(() => {
+    console.log(window.google);
+    window.onload = function () {
+      console.log('onload called')
+      google.accounts.id.initialize({
+        client_id:
+          "842151845247-la626nqpcc84pgaamb74a4n11qah43fh.apps.googleusercontent.com",
+        callback: handleCredentialResponse,
+      });
+      // console.log("next");
+      google.accounts.id.prompt();
+      // console.log("next2");
+    };
+  }, []);
 
   return (
     <div className="w-[400px] space-y-[20px] ">
@@ -139,7 +177,32 @@ const LogInComponent = (props: any) => {
           </span>
         </p>
       </div>
-      <LogInWithMail />
+      {/* <LogInWithMail /> */}
+      <button
+        className="p-3 bg-amber-400 rounded"
+        onClick={googleSignInHandler}
+      >
+        Sign in with google
+      </button>
+      {/* <div
+        id="g_id_onload"
+        data-client_id="842151845247-la626nqpcc84pgaamb74a4n11qah43fh.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-login_uri="http://localhost:3000/auth/gate"
+        data-auto_prompt="false"
+        data-callback="handleCredentialResponse"
+      ></div>
+
+      <div
+        className="g_id_signin"
+        data-type="standard"
+        data-shape="pill"
+        data-theme="filled_black"
+        data-text="signin_with"
+        data-size="large"
+        data-logo_alignment="left"
+      ></div> */}
     </div>
   );
 };

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { getDateInStringFormat } from "@/lib/helper";
 import { getTimeInHourAndMinuteFormat } from "@/lib/helper";
-import useNotification from "@/lib/useNotification";
+import useNotification from "@/lib/hooks/useNotification";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
 
 import { INotification } from "@/models/notification.interface";

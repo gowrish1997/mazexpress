@@ -9,64 +9,73 @@ import "react-notifications/lib/notifications.css";
 import { NotificationContainer } from "react-notifications";
 import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
-
-
-
-
+import Script from "next/script";
+import { SessionProvider } from "next-auth/react";
 config.autoAddCss = false;
 
 export default function App({
-    Component,
-    // pageProps: { session, ...pageProps },
-    pageProps,
+  Component,
+  pageProps: { session, ...pageProps },
+  // pageProps,
 }: AppProps) {
-   
+  const router = useRouter();
 
-    const router = useRouter();
-
-    if (router.pathname.startsWith("/auth/gate")) {
-        // no frame
-        return (
-            <SWRConfig
-                value={{
-                    fetcher: fetchJson,
-                    onError: (err: FetchError) => {
-                        createToast({
-                            type: "error",
-                            title: err.name,
-                            message: err.message,
-                            timeOut: 3000,
-                        });
-                        // console.error(err);
-                    },
-                }}
-            >
-               
-                    <Component {...pageProps} />
-             
-                <NotificationContainer />
-            </SWRConfig>
-        );
-    }
+  if (router.pathname.startsWith("/auth/gate")) {
+    // no frame
     return (
-        <SWRConfig
-            value={{
-                fetcher: fetchJson,
-                onError: (err) => {
-                    createToast({
-                        type: "error",
-                        title: err.name,
-                        message: err.message,
-                        timeOut: 3000,
-                    });
-                    // console.error(err);
-                },
-            }}
-        >
-            <Frame>
-                <Component {...pageProps} />
-                <NotificationContainer />
-            </Frame>
-        </SWRConfig>
+      <SWRConfig
+        value={{
+          fetcher: fetchJson,
+          onError: (err: FetchError) => {
+            createToast({
+              type: "error",
+              title: err.name,
+              message: err.message,
+              timeOut: 3000,
+            });
+            // console.error(err);
+          },
+        }}
+      >
+        <Script
+          src="https://accounts.google.com/gsi/client"
+          strategy="beforeInteractive"
+          // onLoad={() => console.log(window)}
+          // onError={(err) => console.log(err)}
+        />
+        <Component {...pageProps} />
+
+        <NotificationContainer />
+      </SWRConfig>
     );
+  }
+  return (
+    <SWRConfig
+      value={{
+        fetcher: fetchJson,
+        onError: (err) => {
+          createToast({
+            type: "error",
+            title: err.name,
+            message: err.message,
+            timeOut: 3000,
+          });
+          // console.error(err);
+        },
+      }}
+    >
+      <SessionProvider session={session}>
+        <Frame>
+          <Script
+            src="https://accounts.google.com/gsi/client"
+            strategy="beforeInteractive"
+            // onLoad={() => console.log('loaded')}
+            // onError={(err) => console.log(err)}
+          />
+          <Component {...pageProps} />
+          <NotificationContainer />
+        </Frame>
+      </SessionProvider>
+    </SWRConfig>
+  );
 }

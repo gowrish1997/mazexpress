@@ -8,8 +8,8 @@ import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
 import GreyRadioButton from "../../../public/grey_svg.svg";
-import useAllUser from "@/lib/useAllUsers";
-import useTracking from "@/lib/useTracking";
+import useAllUser from "@/lib/hooks/useAllUsers";
+import useTracking from "@/lib/hooks/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
 import { IUser } from "@/models/user.interface";
 interface IProp {

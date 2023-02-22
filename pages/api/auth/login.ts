@@ -14,8 +14,8 @@ async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
   return new Promise((resolve, reject) => {
     if (req.method === "POST") {
       const { email, password } = req.body;
-      // console.log(email, password);
-      console.log(req.session);
+      console.log(email, password);
+      // console.log(req.session);
       // get user from db from pass and username
       try {
         db("users")
@@ -27,13 +27,13 @@ async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
 
             if (match) {
               // login with user
-              req.session.user = data;
-              req.session.user.is_logged_in_users = 1;
-              await req.session.save();
-              console.log(req.session);
+              // req.session.user = data;
+              // req.session.user.is_logged_in_users = 1;
+              // await req.session.save();
+              // console.log(req.session);
               
-              await updateUser(data.id_users, { is_logged_in_users: 1 });
-              delete data.password_users;
+              // await updateUser(data.id_users, { is_logged_in_users: 1 });
+              // delete data.password_users;
               res.json(data);
               resolve(data);
               return;

@@ -228,7 +228,7 @@ const SignUpComponent = (props: any) => {
           </span>
         </p>
       </div>
-      <LogInWithMail />
+      {/* <LogInWithMail /> */}
     </div>
   );
 };

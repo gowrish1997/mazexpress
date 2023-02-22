@@ -11,7 +11,7 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import { IAddressProps } from "@/models/address.interface";
-import useAddresses from "@/lib/useAddresses";
+import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/useUser";
 import fetchJson from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";

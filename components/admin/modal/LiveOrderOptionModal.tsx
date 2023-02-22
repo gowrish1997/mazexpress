@@ -4,7 +4,7 @@ import ClickOutside from "@/components/common/ClickOutside";
 import { IOrderResponse } from "@/models/order.interface";
 import { IUser } from "@/models/user.interface";
 import fetchJson from "@/lib/fetchJson";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import axios from "axios";
 import { createToast } from "@/lib/toasts";
 

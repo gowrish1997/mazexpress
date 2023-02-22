@@ -1,30 +1,23 @@
 // /middleware.ts
+import { NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getIronSession } from "iron-session/edge";
-import { sessionOptions } from "./lib/session";
+import { withAuth } from "next-auth/middleware";
 
-export const middleware = async (req: NextRequest) => {
-  const res = NextResponse.next();
-  const session = await getIronSession(req, res, sessionOptions);
-  const { user } = session; 
-  // console.log(user, 'from middleware')
+export default withAuth(
+  // `withAuth` augments your `Request` with the user's token.
+  function middleware(req: NextRequestWithAuth) {
 
-  // check if user exists and logged in
-  if (user && user !== undefined && user.is_logged_in_users === 1) {
-    // yes user and logged in
+    // will run if authorized is true
+    const res = NextResponse.next();
+    // console.log(req.nextauth);
+    const user = req.nextauth.token
 
-    // check if user id is 0 null user
-    // console.log(user);
-    if (user.id_users === 0) {
-      // null user
-      // return to gate
-      return NextResponse.redirect(new URL("/auth/gate", req.url));
-    } else {
-      // true user
-      // check if admin
+    if (user && user !== null) {
+      // user is in
+      // check if user id is 0 null user
+      // console.log(user);
       if (
-        user.is_admin_users === 1 &&
+        user.is_admin_users === true &&
         !req.nextUrl.pathname.startsWith("/admin")
       ) {
         // admin user check for restricted paths
@@ -32,18 +25,29 @@ export const middleware = async (req: NextRequest) => {
         return NextResponse.redirect(new URL("/admin", req.url));
       }
       if (
-        user.is_admin_users === 0 &&
+        user.is_admin_users === false &&
         req.nextUrl.pathname.startsWith("/admin")
       ) {
         // console.log("illegal route2");
         return NextResponse.redirect(new URL("/", req.url));
       }
     }
-  } else {
-    return NextResponse.redirect(new URL("/auth/gate", req.url));
+
+    return res;
+  },
+  {
+    callbacks: {
+      authorized: ({ req, token }) => {
+        // If there is a token, the user is authenticated
+        if (token) {
+          // console.log(token);
+          return true;
+        }
+        return false;
+      },
+    },
   }
-  return res;
-};
+);
 
 // See "Matching Paths" below to learn more
 export const config = {
@@ -57,10 +61,10 @@ export const config = {
      */
     // deploy
     // match all except these links
-    // "/((?!api|_next/static|_next/image|favicon.ico|auth/gate).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|auth/gate).*)",
 
     // dev
     // match none
-    "/((?!.*).*)",
+    // "/((?!.*).*)",
   ],
 };

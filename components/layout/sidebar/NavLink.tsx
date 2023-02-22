@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import Order from "../../../public/order_svg.svg";
 import Location from "../../../public/location_svg.svg";
 import Warehosue from "../../../public/warehouse_svg.svg";

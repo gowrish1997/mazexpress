@@ -6,14 +6,14 @@ import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import OrderOptionModal from "../modal/OrderOptionModal";
 
 import { IOrderResponse } from "@/models/order.interface";
-import useAddresses from "@/lib/useAddresses";
-import useUser from "@/lib/useUser";
-import useTracking from "@/lib/useTracking";
+import useAddresses from "@/lib/hooks/useAddresses";
+import useUser from "@/lib/hooks/useUser";
+import useTracking from "@/lib/hooks/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
 import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
-import useAllUser from "@/lib/useAllUsers";
+import useAllUser from "@/lib/hooks/useAllUsers";
 interface IProp {
     row: IOrderResponse;
     type: string;

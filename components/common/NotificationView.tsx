@@ -1,8 +1,8 @@
 import React, { forwardRef, RefObject, useEffect, useState } from "react";
 import Image from "next/image";
 import EachNotification from "./EachNotification";
-import useUser from "@/lib/useUser";
-import useNotifications from "@/lib/useNotifications";
+import useUser from "@/lib/hooks/useUser";
+import useNotifications from "@/lib/hooks/useNotifications";
 import { INotification } from "@/models/notification.interface";
 import ClickOutside from "./ClickOutside";
 import Cancel from "../../public/cancel_svg.svg";

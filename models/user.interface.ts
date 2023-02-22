@@ -5,15 +5,16 @@ interface IUser {
   last_name_users: string;
   phone_users: string;
   password_users?: string;
-  id_users: number;
-  default_address_users?: number;
-  is_admin_users: 0 | 1;
-  is_logged_in_users: number | 0 | 1 ;
-  is_notifications_enabled_users: boolean | 0 | 1;
-  age_users:string,
-  gender_users:string,
-  created_on_user:string
+  id_users: string;
+  default_address_users?: string;
+  is_admin_users: boolean;
+  // is_logged_in_users: boolean;
+  is_notifications_enabled_users: boolean;
+  age_users: string,
+  gender_users: string,
+  created_on_users: string
 }
+
 interface ISignUp {
     first_name_users: string;
     last_name_users: string;

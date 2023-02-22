@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import useAllUser from "@/lib/useAllUsers";
+import useAllUser from "@/lib/hooks/useAllUsers";
 import Image from "next/image";
 import { IUser } from "@/models/user.interface";
 const RecentCustomers = () => {

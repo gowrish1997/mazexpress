@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
 import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
-import useAddresses from "@/lib/useAddresses";
+import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/useUser";
 import { IAddressProps } from "@/models/address.interface";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";

@@ -1,4 +1,4 @@
-import useClickOutside from "@/lib/useClickOutside";
+import useClickOutside from "@/lib/hooks/useClickOutside";
 import React, { ReactNode, Ref, RefObject, useEffect, useRef } from "react";
 
 interface IProp {
