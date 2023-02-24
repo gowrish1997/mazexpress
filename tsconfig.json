@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/adapter/entities/*.ts", "server.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/adapter/entities/*.ts", "server.ts"],
   "exclude": ["node_modules"]
 }

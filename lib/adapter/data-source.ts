@@ -1,3 +1,4 @@
+import { OrderEntity } from './entities/OrderEntity';
 import { DataSource } from "typeorm";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import { AccountEntity } from "@/lib/adapter/entities/AccountEntity";
@@ -17,6 +18,7 @@ const connexion = async () => {
       AccountEntity,
       SessionEntity,
       VerificationTokenEntity,
+      OrderEntity
     ],
     synchronize: true,
     logging: false,

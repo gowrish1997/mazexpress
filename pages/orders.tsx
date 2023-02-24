@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import PageHeaders from "@/components/common/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import Table from "@/components/orders/table";
 import AddButton from "@/components/common/AddButton";
-import useUser from "@/lib/useUser";
-import useOrders from "@/lib/useOrders";
-import { FetchError } from "@/lib/fetchJson";
+import useUser from "@/lib/hooks/useUser";
+import useOrders from "@/lib/hooks/useOrders";
 import { IOrderResponse } from "@/models/order.interface";
 
 const tableHeaders = [
@@ -33,7 +32,7 @@ const MyOrders = () => {
   if (ordersError) throw ordersError;
   return (
     <>
-      <PageHeaders
+      <PageHeader
         content="My Orders"
         showCalender={true}
         title="My Orders | MazExpress"
@@ -41,7 +40,7 @@ const MyOrders = () => {
 
       <div className="flex flex-col justify-between relative flex-1 h-full">
         {ordersIsLoading ||
-          (orders && (orders as IOrderResponse[]).length <= 0 && (
+          (orders?.data && orders.data.length <= 0 && (
             <div className="flex-1 flex flex-col justify-center items-center w-full ">
               <div className="relative h-[221px] w-[322px] ">
                 <Image
@@ -58,7 +57,7 @@ const MyOrders = () => {
               <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
                 Oops, there are no orders on your list yet... Start adding now.
                 <br />
-                <Link href={`${router.pathname}add-new-order`}>
+                <Link href={`/add-new-order`}>
                   <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
                     Add Order Now
                   </span>
@@ -68,12 +67,11 @@ const MyOrders = () => {
           ))}
         {orders && (orders as IOrderResponse[]).length > 0 && (
           <>
-            <Table rows={orders as any} headings={tableHeaders} type='order' />
+            <Table rows={orders as any} headings={tableHeaders} type="order" />
             <AddButton onClick={addNewOrderHandler} />
           </>
         )}
       </div>
-    
     </>
   );
 };

@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { IOrderResponse } from "@/models/order.interface";
 
 interface IProps {
-  user_id?: number;
+  user_id?: string;
   search?: string;
   page?: number;
   per_page?: number;

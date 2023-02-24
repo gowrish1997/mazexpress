@@ -16,8 +16,9 @@ const nextConfig = {
         protocol: "http",
         hostname: "mazexpress.portfolios.digital",
         port: "",
-        pathname: "/_next/image",
+        pathname: "/_next/**",
       },
+      
     ],
   },
 };

@@ -1,8 +1,11 @@
+import { OrderEntity } from "./../../lib/adapter/entities/OrderEntity";
+import { MazDataSource } from "@/lib/adapter/data-source";
 import { IOrderResponse } from "@/models/order.interface";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { withSessionRoute } from "@/lib/config/withSession";
 import { db } from "@/lib/db";
 import { mazID } from "@/lib/helper";
+import { Like } from "typeorm";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -11,22 +14,23 @@ type Data = {
   total_count?: number;
 };
 
-export default withSessionRoute(handler);
+// export default withSessionRoute(handler);
+export default handler;
 
 function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    let DS = await MazDataSource;
     switch (req.method) {
       case "GET":
         // search
         if (req.query.search !== undefined) {
           // send back search res
           // getting maz id from search
-          db("orders")
-            .whereLike("id_orders", req.query.search)
-            .then((data: IOrderResponse[]) => {
-              res.status(200).json({ data: data });
-              resolve(data);
-            });
+          const searchResults = await DS?.getRepository(OrderEntity).findBy({
+            id: Like(`%${req.query.search}%`),
+          });
+          res.status(200).json({ data: searchResults });
+          resolve(searchResults);
         }
 
         if (req.query.status !== undefined) {

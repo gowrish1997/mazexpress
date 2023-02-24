@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import useUser from "@/lib/hooks/useUser";
 import { signIn } from "next-auth/react";
 import { createToast } from "@/lib/toasts";
+import Image from "next/dist/client/image";
+import google_logo from "@/public/google.png";
 
 type Inputs = {
   password: string;
@@ -85,8 +87,35 @@ const LogInComponent = (props: any) => {
         timeOut: 2000,
       });
     }
+    return response;
     // console.log(response);
   };
+
+  function decodeJwtResponse(token: any) {
+    let base64Url = token.split(".")[1];
+    let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    let jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  }
+
+  function handleToken(token: any) {
+    console.log("called authenticated");
+    let responsePayload = decodeJwtResponse(token.credential);
+    console.log(responsePayload);
+
+    // decode jwt
+  }
+
+  useEffect(() => {
+    window.handleToken = handleToken;
+  }, []);
 
   return (
     <div className="w-[400px] space-y-[20px] ">
@@ -148,11 +177,11 @@ const LogInComponent = (props: any) => {
           </span>
         </p>
       </div>
-      {/* <LogInWithMail /> */}
       <button
-        className="p-3 bg-amber-400 rounded"
+        className="p-3 flex items-center justify-center border text-[14px] rounded text-center w-full transition duration-300 hover:shadow-lg hover:ring-2 manRope"
         onClick={googleSignInHandler}
       >
+        <Image src={google_logo} alt="google logo" width={20} height={20} className='mr-3' />
         Sign in with google
       </button>
     </div>

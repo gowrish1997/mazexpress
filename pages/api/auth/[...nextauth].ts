@@ -32,7 +32,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         },
         authorize: async (credentials, req) => {
           // console.log(credentials);
-          
+
           if (Connexion) {
             const user: UserEntity | null = await Connexion.manager.findOneBy(
               UserEntity,
@@ -110,18 +110,24 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       async signIn({ user, account, profile, email, credentials }) {
         // console.log(user, account, profile, email, credentials);
         let connexion = await MazDataSource;
-        if (connexion) {
-          if (user && user.email) {
-            const dbuser = await connexion.manager.find(UserEntity, {
-              where: {
-                email: user.email,
-              },
-            });
-
-            if (dbuser === null) {
-              // create and sign in
-              const newdbuser = new UserEntity();
-              if (account?.provider === "google") {
+        if (connexion && user.email) {
+          const dbuser = await connexion.manager.find(UserEntity, {
+            where: {
+              email: user.email,
+            },
+          });
+          
+          if (dbuser === null) {
+            // if dbuser doesnt exist then create member and return true
+            if (credentials) {
+              // from cred only check
+              return false;
+            } else {
+              // check for google
+              // from google check and create
+              if (account && account.provider === "google") {
+                // create and sign in
+                const newdbuser = new UserEntity();
                 const saltRounds = 10;
                 const hash2 = bcrypt.hashSync("Test123$", saltRounds);
 
@@ -134,10 +140,13 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 
                 newdbuser.password = hash2;
                 MazAdapter().createUser(newdbuser);
+                return true;
               }
+              return false;
             }
-            return true;
           }
+          // if dbuser exists then member exists login
+          return true;
         }
         return false;
       },

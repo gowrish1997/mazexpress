@@ -12,14 +12,13 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import Script from "next/script";
 import { SessionProvider } from "next-auth/react";
 import "reflect-metadata";
-import { MazDataSource } from "@/lib/adapter/data-source";
 config.autoAddCss = false;
 
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
-  // pageProps,
-}: AppProps) {
+}: // pageProps,
+AppProps) {
   const router = useRouter();
 
   if (router.pathname.startsWith("/auth/gate")) {
@@ -39,14 +38,7 @@ export default function App({
           },
         }}
       >
-        {/* <Script
-          src="https://accounts.google.com/gsi/client"
-          strategy="beforeInteractive"
-          // onLoad={() => console.log(window)}
-          // onError={(err) => console.log(err)}
-        /> */}
         <Component {...pageProps} />
-
         <NotificationContainer />
       </SWRConfig>
     );
@@ -70,7 +62,7 @@ export default function App({
         <Frame>
           <Script
             src="https://accounts.google.com/gsi/client"
-            strategy="beforeInteractive"
+            // strategy="beforeInteractive"
             // onLoad={() => console.log('loaded')}
             // onError={(err) => console.log(err)}
           />
@@ -81,5 +73,3 @@ export default function App({
     </SWRConfig>
   );
 }
-
-

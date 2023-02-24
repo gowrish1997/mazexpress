@@ -2,17 +2,17 @@ import useSWR from "swr";
 import { IAddressProps } from "@/models/address.interface";
 
 export default function useAddresses(props: {
-  userId?: number | undefined;
+  user_id?: string | undefined;
   id?: number | undefined;
 }) {
   let queryString = "";
-  if (props?.userId || props?.id) {
+  if (props?.user_id || props?.id) {
     queryString += "?";
   }
-  if (props?.userId) {
-    queryString += `user=${props?.userId}`;
+  if (props?.user_id) {
+    queryString += `user=${props?.user_id}`;
   }
-  if (props?.userId && props.id) {
+  if (props?.user_id && props.id) {
     queryString += `&`;
   }
   if (props?.id) {

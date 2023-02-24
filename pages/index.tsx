@@ -3,7 +3,7 @@ import Image from "next/image";
 import logo from "../public/logo.png";
 import ShipmentCalculator from "@/components/LandingPage/ShipmentCalculator";
 import Footer from "@/components/LandingPage/Footer";
-const index = () => {
+const Home = () => {
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
   const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -118,4 +118,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Home;

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { nanoid } from "nanoid";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -12,7 +11,7 @@ import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import { IAddressProps } from "@/models/address.interface";
 import useAddresses from "@/lib/hooks/useAddresses";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
 
@@ -30,7 +29,7 @@ const AddNewOrder = () => {
     useState<boolean>(false);
   const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses } = useAddresses({
-    userId: user?.id_users,
+    user_id: user?.id_users,
   });
 
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import { IAddress, IAddressProps } from "@/models/address.interface";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
 
 const UserSavedAddress = (props: {

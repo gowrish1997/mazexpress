@@ -9,7 +9,7 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 import CountrySelector from "@/components/common/CountrySelector";
 import RegionSelector from "@/components/common/RegionSelector";
 import CustomDropDown from "@/components/common/CustomDropDown";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
 interface IProp {
   show: boolean;
@@ -61,7 +61,7 @@ const EditUserAddressModal = (props: IProp) => {
 
     // console.log(address);
     // add address
-    if (user?.is_logged_in_users) {
+    if (user) {
       // update user default
       let newUserData = { ...user, default_address_user: data.id_addresses };
       mutateUser(newUserData, false);
