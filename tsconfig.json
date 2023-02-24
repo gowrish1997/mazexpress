@@ -19,6 +19,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/customHook"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/customHook", "next-i18next.config.js"],
   "exclude": ["node_modules"]
 }

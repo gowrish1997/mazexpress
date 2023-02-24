@@ -1,15 +1,18 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import { FieldError } from "react-hook-form";
 import ClickOutside from "../common/ClickOutside";
+
 interface IProp {
     label: string;
     name: string;
     type: string;
     register?: any;
-    value?: string | number;
+    value?: string;
     IconEnabled: boolean;
-    error?: FieldError;
+    error?: string;
     disabled?: boolean;
     options?: { value: string; label: string }[];
     placeHolder?: string;
@@ -17,20 +20,32 @@ interface IProp {
     className?: string;
 }
 
-const genderHandler = (type: string) => {
+const genderHandler = (type: string, locale: string) => {
     switch (type) {
         case "m":
-            return "male";
+            return locale == "en" ? "Male" : "ذكر";
         case "f":
-            return "female";
+            return locale == "en" ? "Female" : "أنثى";
         case "u":
-            return "unknown";
+            return locale == "en" ? "Unknown" : "مجهول";
         case "o":
-            return "other";
+            return locale == "en" ? "Other" : "آخر";
+    }
+};
+const languageHandler = (type: string, locale: string) => {
+    switch (type) {
+        case "ar":
+            return locale == "en" ? "Arabic" : "عربي";
+        case "en":
+            return locale == "en" ? "English" : "إنجليزي";
     }
 };
 
 const CusotmDropdown = (props: IProp) => {
+    const router = useRouter();
+    const { t } = useTranslation("");
+    const { locale } = router;
+    console.log(locale);
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState<boolean>(false);
 
@@ -45,6 +60,24 @@ const CusotmDropdown = (props: IProp) => {
         props.setValue(props.name, value, { shouldValidate: true });
         setShowAdminOptionCard(false);
     };
+
+    const dropdownValueHanlder = (label: string, value: string) => {
+        console.log(label);
+        switch (label) {
+            case "Gender":
+                return genderHandler(value, locale!);
+            case "جنس":
+                return genderHandler(value, locale!);
+
+            case "Language":
+                return languageHandler(value, locale!);
+            case "لغة":
+                return languageHandler(value, locale!);
+            default:
+                return value;
+        }
+    };
+
     return (
         <div className={"w-full flex-type6 relative"}>
             <label htmlFor={props.name} className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] ">
@@ -59,14 +92,14 @@ const CusotmDropdown = (props: IProp) => {
                     id={props.name}
                     type={props.type}
                     {...props.register}
-                    value={props.label == "Gender" ? genderHandler(props.value as string) : props.value}
+                    value={dropdownValueHanlder(props.label, props.value as string)}
                     placeholder={props.placeHolder ? props.placeHolder : ""}
-                    className={"w-full h-full pl-[5px] rounded-[5px] focus:outline-none capitalize" + " " + props.className}
+                    className={"w-full h-full px-[5px] rounded-[5px] focus:outline-none capitalize" + " " + props.className}
                     name={props.name}
                     disabled={props.disabled}
                 />
                 {props.IconEnabled ? (
-                    <div className="absolute h-[6px] w-[8px] cursor-pointer right-[8px]  ">
+                    <div className={`absolute h-[6px] w-[8px] cursor-pointer  ${locale == "en" ? "right-[8px]" : "left-[8px]"} `}>
                         <Image src="/downwardArrow.png" fill={true} alt="arrow" objectFit="cover" className="cursor-pointer absolute right-[8px] " />
                     </div>
                 ) : (
@@ -97,7 +130,7 @@ const CusotmDropdown = (props: IProp) => {
                     </div>
                 </ClickOutside>
             )}
-            {props.error && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{props.error.message}</p>}
+            {props.error && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{props.error}</p>}
         </div>
     );
 };

@@ -170,10 +170,10 @@ const SignUpComponent = (props: any) => {
            value={getValues("gender_users")}
            setValue={setValue}
            options={[
-            { value: "m", label: "male" },
-            { value: "f", label: "female" },
-            { value: "u", label: "unknown" },
-            { value: "o", label: "other" }
+            { value: "m", label: "Male" },
+            { value: "f", label: "Female" },
+            { value: "u", label: "Unknown" },
+            { value: "o", label: "Other" }
 
         ]}
         disabled={true}

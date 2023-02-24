@@ -566,7 +566,7 @@ input::-webkit-inner-spin-button {
     width: 2px !important ;
     /* line-height: 1; */
     position: relative;
-    transform: translatex(15px) !important;
+
     background-color: #bbc2cf;
     z-index: 0;
 }
@@ -1074,22 +1074,21 @@ input[type="checkbox"]:disabled {
 }
 
 input[type="string"]:disabled {
-    background:#FFFFFF;
-  }
-  .slimScrollBar::-webkit-scrollbar {
+    background: #ffffff;
+}
+.slimScrollBar::-webkit-scrollbar {
     width: 5px;
     position: absolute;
-  }
-  
-  .slimScrollBar::-webkit-scrollbar-track {
+}
+
+.slimScrollBar::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px #fcfcfc;
     position: absolute;
-  }
-  
-  .slimScrollBar::-webkit-scrollbar-thumb {
-    background-color: #3672DF;
+}
+
+.slimScrollBar::-webkit-scrollbar-thumb {
+    background-color: #3672df;
     /* outline: 1px solid slategrey; */
     border-radius: 10px;
     position: absolute;
-  }
-  
+}

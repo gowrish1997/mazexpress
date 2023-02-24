@@ -11,13 +11,17 @@ import { IUserProfile, IUser } from "@/models/user.interface";
 import { FieldError } from "react-hook-form";
 import useUser from "@/lib/useUser";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
-import { useRouter } from "next/router";
+
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const schema = yup
     .object({
@@ -32,12 +36,10 @@ const schema = yup
 
         // password_users: yup.string().required("Password is required field"),
         password_users: yup.string(),
-        newPassword_users: yup.string(),
-        //   .min(8, "Password must be 8 characters long")
-        //   .matches(/[0-9]/, "Password requires a number")
-        //   .matches(/[a-z]/, "Password requires a lowercase letter"),
-        //   .matches(/[A-Z]/, "Password requires an uppercase letter")
-        //   .matches(/[^\w]/, "Password requires a symbol"),
+        newPassword_users: yup.string().matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
+            excludeEmptyString: true,
+            message: "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+        }),
         avatar_url_users: yup.string(),
         is_notifications_enabled_users: yup.boolean().required(),
         //  default_language_users: yup.string().required(),
@@ -46,10 +48,26 @@ const schema = yup
 
 const Settings = () => {
     const { user, mutateUser, userIsLoading } = useUser();
+
+    const router = useRouter();
+    const { t } = useTranslation("common");
+    const { locale } = router;
+
+    const inputFieldLabels: string[] = t("settingsPage.profileForm.InputFieldLabel", { returnObjects: true });
+    const fieldErrors: string[] = t("settingsPage.profileForm.Errors", { returnObjects: true });
+
+    const languageOption: { value: string; label: string }[] = t("settingsPage.profileForm.LanguageOption", { returnObjects: true });
+
+    useEffect(() => {
+        let dir = router.locale == "ar" ? "rtl" : "ltr";
+        let lang = router.locale == "ar" ? "ar" : "en";
+        document.querySelector("html")?.setAttribute("dir", dir);
+        document.querySelector("html")?.setAttribute("lang", lang);
+    }, [router.locale]);
+
     const [errorMsg, setErrorMsg] = useState("");
     const [showProfilePicPop, setShowProfilePicPop] = useState<boolean>(false);
 
-    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -93,13 +111,13 @@ const Settings = () => {
 
     const onSubmit: SubmitHandler<IUserProfile> = async (data) => {
         console.log(data);
-        createToast({
-            title: "Success",
-            type: "success",
-            message: "Updated user info.",
-            timeOut: 2000,
-            onClick: () => alert("click"),
-        });
+        // createToast({
+        //     title: "Success",
+        //     type: "success",
+        //     message: "Updated user info.",
+        //     timeOut: 2000,
+        //     onClick: () => alert("click"),
+        // });
         // let updateObj = { ...data };
         // delete updateObj.newPassword_users;
         // delete updateObj.password_users;
@@ -128,23 +146,24 @@ const Settings = () => {
         // }
     };
 
-    if (userIsLoading) return <div>loading</div>;
+    // if (userIsLoading) return <div>loading</div>;
+    console.log(errors.last_name_users);
 
     return (
         <>
-            <PageHeader content="Settings" className="border-none pb-[10px]" title="My Settings | MazExpress" />
+            <PageHeader content={t("settingsPage.pageHeader.Title")} className="border-none pb-[10px]" title="My Settings | MazExpress" />
             <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} />
             <Layout>
                 <div className="w-full space-y-[30px] ">
-                    <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
+                    <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
                         <Image src={blueExclamatory} alt="icon" width={16} height={16} />
                         <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-                            Here is a link to some fake information that contains crucial information, <span className="text-[#3672DF]">Link here →</span>
+                            {t("settingsPage.LinkPPart1")} <span className="text-[#3672DF]">{t("settingsPage.LinkPPart2")} </span>
                         </p>
                     </div>
                     <div>
-                        <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">Account</p>
-                        <p className="text-[14px] text-[#525D72] leading-[21px] font-[500] ">Review and update your account details</p>
+                        <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">{t("settingsPage.Title")}</p>
+                        <p className="text-[14px] text-[#525D72] leading-[21px] font-[500] ">{t("settingsPage.Discription")} </p>
                     </div>
 
                     <form className="flex-type6 w-3/4 gap-y-[10px] " onSubmit={handleSubmit(onSubmit)}>
@@ -162,25 +181,31 @@ const Settings = () => {
                                 <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">{user?.email_users}</p>
                             </div>
                         </div>
-                        <div className="flex-type1 w-full space-x-[20px] ">
-                            <div className="flex-type2 space-x-[10px] w-full">
+                        <div className="flex-type2 w-full gap-x-[20px] ">
+                            <div className="flex-type2 gap-x-[10px] w-full">
                                 <ReactHookFormInput
-                                    label="First name"
+                                    label={inputFieldLabels[0]}
                                     name="first_name_users"
                                     type="string"
                                     register={register("first_name_users")}
-                                    error={errors.first_name_users}
+                                    error={errors.first_name_users?.message && fieldErrors[0]}
                                 />
 
-                                <ReactHookFormInput label="Last name" name=" last_name_users" type="string" register={register("last_name_users")} error={errors.last_name_users} />
+                                <ReactHookFormInput
+                                    label={inputFieldLabels[1]}
+                                    name="last_name_users"
+                                    type="string"
+                                    register={register("last_name_users")}
+                                    error={errors.last_name_users?.message && fieldErrors[1]}
+                                />
                             </div>
 
                             <ReactHookFormInput
-                                label="Password"
+                                label={inputFieldLabels[2]}
                                 name="password_users"
                                 type={passwordType}
                                 register={register("password_users")}
-                                error={errors.password_users}
+                                error={errors.password_users?.message}
                                 icon={{
                                     isEnabled: true,
                                     src: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
@@ -190,15 +215,21 @@ const Settings = () => {
                                 // autoComplete="off"
                             />
                         </div>
-                        <div className="flex-type1 w-full space-x-[20px]">
-                            <ReactHookFormInput label="Email" name="email_users" type="string" register={register("email_users")} error={errors.email_users} />
+                        <div className="flex-type2 w-full gap-x-[20px]">
+                            <ReactHookFormInput
+                                label={inputFieldLabels[3]}
+                                name="email_users"
+                                type="string"
+                                register={register("email_users")}
+                                error={errors.email_users?.message && fieldErrors[2]}
+                            />
 
                             <ReactHookFormInput
-                                label="New Password"
+                                label={inputFieldLabels[4]}
                                 name="newPassword_users"
                                 type={newPasswordType}
                                 register={register("newPassword_users")}
-                                error={errors.newPassword_users}
+                                error={errors.newPassword_users?.message && fieldErrors[3]}
                                 icon={{
                                     isEnabled: true,
                                     src: newPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
@@ -207,9 +238,15 @@ const Settings = () => {
                                 autoComplete="new-password"
                             />
                         </div>
-                        <div className="flex-type1 w-full space-x-[20px]">
-                            <ReactHookFormInput label="Mobile number" name="phone_users" type="number" register={register("phone_users")} error={errors.phone_users} />
-{/* 
+                        <div className="flex-type2 w-full gap-x-[20px]">
+                            <ReactHookFormInput
+                                label={inputFieldLabels[5]}
+                                name="phone_users"
+                                type="number"
+                                register={register("phone_users")}
+                                error={errors.phone_users?.message && fieldErrors[4]}
+                            />
+                            {/* 
                             <CustomDropDown
                                 label="Language"
                                 name="default_language_users"
@@ -222,16 +259,13 @@ const Settings = () => {
                                 }}
                             /> */}
                             <CusotmDropdown
-                                label="Language"
+                                label={inputFieldLabels[6]}
                                 name="default_language_users"
                                 type="string"
                                 IconEnabled={true}
                                 register={register("default_language_users")}
-                                error={errors.default_language_users as FieldError}
-                                options={[
-                                    { value: "Arabic", label: "Arabic" },
-                                    { value: "English", label: "English" },
-                                ]}
+                                error={errors.default_language_users?.message}
+                                options={languageOption}
                                 value={getValues("default_language_users")}
                                 setValue={setValue}
                                 disabled={true}
@@ -240,8 +274,8 @@ const Settings = () => {
                         </div>
                         <div className="flex-type3 w-full space-x-[20px] mt-[10px] ">
                             <div className="font-[500]">
-                                <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">Notifications</p>
-                                <p className="text-[12px] text-[#525D72] leading-[18px] ">Enable or disable notifications for your account</p>
+                                <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">{t("settingsPage.profileForm.notification.Title")}</p>
+                                <p className="text-[12px] text-[#525D72] leading-[18px] ">{t("settingsPage.profileForm.notification.Discription")}</p>
                             </div>
                             <Controller
                                 name="is_notifications_enabled_users"
@@ -263,7 +297,7 @@ const Settings = () => {
                         </div>
 
                         <button type="submit" className="w-1/2 h-[46px] border-[1px] bg-[#3672DF] rounded-[4px] text-[#FFFFFF] mt-[10px] ">
-                            Update settings
+                            {t("settingsPage.profileForm.SubmitButton")}
                         </button>
                     </form>
                 </div>
@@ -273,3 +307,13 @@ const Settings = () => {
 };
 
 export default Settings;
+export async function getStaticProps({ locale }: { locale: any }) {
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
+}

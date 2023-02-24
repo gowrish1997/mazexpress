@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { mazID } from "@/lib/helper";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+
 type Data = {
   msg?: string;
   data?: any;
@@ -184,3 +185,4 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     }
   });
 }
+

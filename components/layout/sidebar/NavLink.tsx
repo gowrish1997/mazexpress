@@ -16,6 +16,7 @@ import User from "../../../public/user_svg.svg";
 import Notification from "../../../public/bell_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "next-i18next";
 
 const userIcon = (id: number) => {
     switch (id) {
@@ -76,11 +77,15 @@ interface IProp {
         path: string;
     };
     id: number;
+    transalateContent:string
 }
 
 const NavLink = (props: IProp) => {
-    const router = useRouter();
     const { user, mutateUser } = useUser();
+    const router = useRouter();
+    const { t } = useTranslation("common");
+    const { locale } = router;
+   
 
     const isActivePath = (obj: any): boolean => {
         if (router.pathname === "/" && obj.path === "/") return true;
@@ -105,7 +110,7 @@ const NavLink = (props: IProp) => {
                     backgroundColor: isActivePath(props.content) ? "#EDF5F9" : "#fff",
                 }}
             >
-                <div className=" flex flex-row justify-start items-center w-full">
+                <div className=" flex flex-row justify-start items-center gap-x-3 w-full">
                     <div className={`${router.pathname.includes(props.content.path) ? "sidebar_icon_hover" : "sidebar_icon"} relative`}>
                         {user?.is_admin_users ? adminIcon(props.id) : userIcon(props.id)}
                         {props.content.title === "Delivered Order" ? (
@@ -136,7 +141,7 @@ const NavLink = (props: IProp) => {
             ) : null} */}
                     </div>
                     <div
-                        className="ml-3 text-[#525D72] font-[500] text-[14px] leading-[21px] hover:text-[#2B2B2B] hover:font-[600] py-2 transition duration-300 cursor-pointer"
+                        className=" text-[#525D72] font-[500] text-[14px] leading-[21px] hover:text-[#2B2B2B] hover:font-[600] py-2 transition duration-300 cursor-pointer"
                         style={
                             isActivePath(props.content)
                                 ? {
@@ -146,7 +151,7 @@ const NavLink = (props: IProp) => {
                                 : {}
                         }
                     >
-                        {props.content.title}
+                        {props.transalateContent}
                     </div>
                 </div>
             </div>

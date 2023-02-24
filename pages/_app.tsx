@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
 import Frame from "@/components/common/Frame";
 import { useRouter } from "next/router";
@@ -9,19 +9,15 @@ import "react-notifications/lib/notifications.css";
 import { NotificationContainer } from "react-notifications";
 import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
-
-
-
+import { appWithTranslation } from "next-i18next";
 
 config.autoAddCss = false;
 
-export default function App({
+function App({
     Component,
     // pageProps: { session, ...pageProps },
     pageProps,
 }: AppProps) {
-   
-
     const router = useRouter();
 
     if (router.pathname.startsWith("/auth/gate")) {
@@ -41,10 +37,9 @@ export default function App({
                     },
                 }}
             >
-               
-                    <Component {...pageProps} />
-             
-                <NotificationContainer />
+                <Component {...pageProps} />
+
+                {/* <NotificationContainer /> */}
             </SWRConfig>
         );
     }
@@ -65,8 +60,9 @@ export default function App({
         >
             <Frame>
                 <Component {...pageProps} />
-                <NotificationContainer />
+                {/* <NotificationContainer /> */}
             </Frame>
         </SWRConfig>
     );
 }
+export default appWithTranslation(App);

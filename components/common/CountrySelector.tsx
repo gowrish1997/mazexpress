@@ -1,6 +1,8 @@
 import React, { SyntheticEvent, useState } from "react";
 import Image from "next/image";
 import ReactFlagsSelect, { Im } from "react-flags-select";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import { FieldError } from "react-hook-form";
 interface IProp {
     label: string;
@@ -15,6 +17,10 @@ interface IProp {
 }
 
 const CountrySelector = (props: IProp) => {
+    const router = useRouter();
+    const { t } = useTranslation("");
+    const { locale } = router;
+
     const selectHandler = (e: string) => {
         props.setCountry(e);
         props.onChange(e);
@@ -35,15 +41,15 @@ const CountrySelector = (props: IProp) => {
             onSelect={selectHandler}
             className="menu-flags"
           /> */}
-                    <div className="flex-type3 pl-[10px] space-x-[5px] ">
+                    <div className="flex-type3 px-[10px] gap-x-[5px] ">
                         <div className="relative h-[12px] w-[20px] ">
                             <Image src="/libiya.png" fill={true} objectFit="cover" alt="lbiya" />
                         </div>
-                        <span className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px]">Libya</span>
+                        <span className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px]">{locale == "en" ? "Libya" : "ليبيا"}</span>
                     </div>
 
                     {props.dropDownIcon?.iconIsEnabled ? (
-                        <Image src={props.dropDownIcon?.iconSrc} alt="eyeIcon" height={13} width={13} className="cursor-pointer absolute right-[8px] " />
+                        <Image src={props.dropDownIcon?.iconSrc} alt="eyeIcon" height={13} width={13} className={`cursor-pointer absolute  ${locale == "en" ? "right-[8px]" : "left-[8px]"} `} />
                     ) : (
                         ""
                     )}

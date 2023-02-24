@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import WhiteLogo from '../../public/whiteLogo.png'
 import Instagram from "../../public/instagram.png";
 import Facebook from "../../public/facebook.png";
@@ -18,51 +20,59 @@ const media_type2 = [
 ];
 
 const Footer = React.forwardRef<HTMLDivElement>((props,ref) => {
+
+    const router = useRouter();
+    const { t } = useTranslation("");
+    const { locale } = router;
+
+    var footerLeftSide:string[] = t("landingPage.footer.leftSide.Content", { returnObjects: true });
+    var footerRightSide: string[] = t("landingPage.footer.rightSide.Content", { returnObjects: true });
+
     return (
         <div className="h-[396px] bg-[#2B2B2B] mt-[100px] px-[120px] py-[70px] space-y-[50px]" ref={ref}>
             <div className="flex-type2">
-                <div className="flex-1 flex-type6 space-y-[20px] ">
-                    <div className="flex-type1 space-x-[20px]">
+                <div className="flex-1 flex-type6 gap-y-[20px] ">
+                    <div className="flex-type1 gap-x-[20px]">
                         <div className="relative h-[47px] w-[47px] ">
                             <Image src={WhiteLogo} fill alt="logo" />
                         </div>
-                        <h1 className="text-[20px] text-[#FFFFFF] font-[700] leading-[30px] ">MAZ Express</h1>
+                        <h1 className="text-[20px] text-[#FFFFFF] font-[700] leading-[30px] ">{t("landingPage.footer.leftSide.Title")}</h1>
                     </div>
                     <div className="w-[70%] flex-type4 text-[14px] text-[#BFB8AF] font-[400] leading-[21px] ">
                         <ul className="space-y-[15px]">
-                            <li className="cursor-pointer">Tracking</li>
-                            <li className="cursor-pointer">Shipping</li>
-                            <li className="cursor-pointer">Help & Support</li>
+                            <li className="cursor-pointer">{footerLeftSide[0]}</li>
+                            <li className="cursor-pointer">{footerLeftSide[1]}</li>
+                            <li className="cursor-pointer">{footerLeftSide[2]}</li>
                         </ul>
                         <ul className="space-y-[15px]">
-                            <li className="cursor-pointer">About Us</li>
-                            <li className="cursor-pointer">Contact Us</li>
+                            <li className="cursor-pointer">{footerLeftSide[3]}</li>
+                            <li className="cursor-pointer">{footerLeftSide[4]}</li>
                         </ul>
                     </div>
                 </div>
-                <div className="flex-1 flex-type6 space-y-[20px]">
-                    <h1 className="text-[20px] text-[#FFFFFF] font-[700] leading-[30px] ">Connect with Us</h1>
+                <div className="flex-1 flex-type6 gap-y-[20px]">
+                    <h1 className="text-[20px] text-[#FFFFFF] font-[700] leading-[30px] ">{t("landingPage.footer.rightSide.Title")}</h1>
                     <div className="w-[70%] flex-type4 text-[14px] text-[#BFB8AF] font-[400] leading-[21px] ">
                         <ul className="space-y-[15px]">
-                            {media_type1.map((data) => {
+                            {media_type1.map((data,index) => {
                                 return (
-                                    <div className="flex-type1 cursor-pointer">
+                                    <div key={index} className="flex-type1 gap-x-[5px] cursor-pointer">
                                         <div className="relative h-[20px] w-[20px] ">
                                             <Image src={data.url} fill alt="logo" />
                                         </div>
-                                        <div className="ml-[5px]">{data.label}</div>
+                                        <div className="">{footerRightSide[index]}</div>
                                     </div>
                                 );
                             })}
                         </ul>
                         <ul className="space-y-[15px]">
-                            {media_type2.map((data) => {
+                            {media_type2.map((data,index) => {
                                 return (
-                                    <div className="flex-type1 cursor-pointer">
+                                    <div key={index} className="flex-type1 gap-x-[5px] cursor-pointer">
                                         <div className="relative h-[20px] w-[20px] ">
                                             <Image src={data.url} fill alt="logo" />
                                         </div>
-                                        <div className="ml-[5px]">{data.label}</div>
+                                        <div className="">{footerRightSide[index+3]}</div>
                                     </div>
                                 );
                             })}
@@ -71,7 +81,7 @@ const Footer = React.forwardRef<HTMLDivElement>((props,ref) => {
                 </div>
             </div>
 
-            <div>Copyright ©1994- 2023 United Parcel Service of America, Inc. All rights reserved.</div>
+            <div>{t("landingPage.footer.Copyright")}</div>
         </div>
     );
 });

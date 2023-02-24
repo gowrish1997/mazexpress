@@ -1,10 +1,14 @@
 import React from "react";
 import Image from "next/image";
+import { useTranslation } from "next-i18next";
 import copy from "copy-to-clipboard";
 import { IWarehouse, IWarehouseProps } from "@/models/warehouse.interface";
 import { capitalizeFirstLetter } from "@/lib/helper";
 
 const WarehouseCard = (props: { address: IWarehouseProps }) => {
+
+  const { t } = useTranslation("common");
+
   const getBg = (status: string) => {
     switch (status) {
       case "active":
@@ -116,7 +120,7 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
         <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
           {capitalizeFirstLetter(props.address.tag_warehouses)}
         </p>
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-[5px] ">
           <div
             className="border box-border p-[2px] rounded-full flex flex-col items-center justify-center"
             style={getBorder(props.address.status_warehouses)}
@@ -126,32 +130,32 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
               style={getBg(props.address.status_warehouses)}
             ></span>
           </div>
-          <span className="ml-[5px] text-[12px] text-[#2B2B2B] font-[500] leading-[18px] ">
+          <span className="text-[12px] text-[#2B2B2B] font-[500] leading-[18px] ">
             {capitalizeFirstLetter(props.address.status_warehouses)}
           </span>
         </div>
       </div>
-      <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">
-        Turkey
+      <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] capitalize ">
+      {props.address.country_warehouses}
       </p>
       <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">{`${props.address.address_1_warehouses}, ${props.address.address_2_warehouses}`}</p>
       <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
         {props.address.city_warehouses}
       </p>
 
-      <div className="flex-type1 mt-[15px]">
+      <div className="flex-type1 mt-[15px] gap-x-[10px]">
         <Image src="/mobile.png" height={12} width={12} alt="mobile" />
-        <div className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] ml-[10px]">
+        <div className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] ">
           {props.address.phone_warehouses}
         </div>
       </div>
 
       <div
-        className="flex justify-end text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[5px] mt-[15px] cursor-pointer "
+        className="flex justify-end text-[12px] text-[#3672DF] font-[500] leading-[17px] gap-x-[5px] mt-[15px] cursor-pointer "
         onClick={copyToClipboard}
       >
         <Image src="/copy.png" alt="copy" height={12} width={12} />
-        <span>Copy</span>
+        <span>{t("warehousePage.warehouseCard.Content")}</span>
       </div>
     </div>
   );

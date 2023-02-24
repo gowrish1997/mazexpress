@@ -15,10 +15,14 @@ import useAddresses from "@/lib/useAddresses";
 import useUser from "@/lib/useUser";
 import fetchJson from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
+import { useRouter } from "next/router";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const schema = yup
     .object({
-        reference_id_orders: yup.string().required('Reference ID is required field'),
+        reference_id_orders: yup.string().required("Reference ID is required field"),
         store_link_orders: yup.string().required("Store Link is required field"),
     })
     .required();
@@ -31,6 +35,19 @@ const AddNewOrder = () => {
     const { addresses, mutateAddresses } = useAddresses({
         userId: user?.id_users,
     });
+
+    const router = useRouter();
+    const { t } = useTranslation("common");
+    const { locale } = router;
+    const inputFieldLabels: string[] = t("addNewOrderPage.ordersForm.Labels", { returnObjects: true });
+    const fieldErrors: string[] = t("addNewOrderPage.ordersForm.Errors", { returnObjects: true });
+
+    useEffect(() => {
+        let dir = router.locale == "ar" ? "rtl" : "ltr";
+        let lang = router.locale == "ar" ? "ar" : "en";
+        document.querySelector("html")?.setAttribute("dir", dir);
+        document.querySelector("html")?.setAttribute("lang", lang);
+    }, [router.locale]);
 
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
@@ -133,29 +150,24 @@ const AddNewOrder = () => {
 
     return (
         <>
-            <PageHeader content="Add New Order" showCalender={false} title="Add New Order | MazExpress" />
+            <PageHeader content={t("addNewOrderPage.pageHeader.Title")} showCalender={false} title="Add New Order | MazExpress" />
             <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
+                <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
                     <Image src="/blueexclamatory.png" alt="icon" width={16} height={16} />
                     <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-                        Here is a link to some fake information that contains crucial information, <span className="text-[#3672DF]">Link here →</span>
+                        {t("addNewOrderPage.LinkPPart1")}
+                        <span className="text-[#3672DF]">{t("addNewOrderPage.LinkPPart2")}</span>
                     </p>
                 </div>
-                <div className="flex-type1 space-x-[10px] mt-[25px]">
-                    <ReactHookFormInput
-                        label="Reference ID"
-                        name="reference_id_orders"
-                        type="string"
-                        register={register("reference_id_orders")}
-                        error={errors.reference_id_orders}
-                    />
-                    <ReactHookFormInput label="Store Link" name="store_link_orders" type="string" register={register("store_link_orders")} error={errors.store_link_orders} />
+                <div className="flex-type1 gap-x-[10px] mt-[25px]">
+                    <ReactHookFormInput label={inputFieldLabels[0]} name="reference_id_orders" type="string" register={register("reference_id_orders")} error={errors.reference_id_orders? fieldErrors[0]:""} />
+                    <ReactHookFormInput label={inputFieldLabels[1]} name="store_link_orders" type="string" register={register("store_link_orders")} error={errors.store_link_orders? fieldErrors[1]:""} />
                 </div>
                 <div className="mt-[20px]">
                     <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px]">
-                        Address Book
-                        <span className="text-[#3672DF] ml-[10px] cursor-pointer hover:bg-[#EDF5F9] p-[5px] rounded-[4px]  " onClick={toggleAddNewAddressModal}>
-                            + Add New{" "}
+                        {t("addNewOrderPage.addressBook.Title")}
+                        <span className="text-[#3672DF] mx-[10px] cursor-pointer hover:bg-[#EDF5F9] p-[5px] rounded-[4px]  " onClick={toggleAddNewAddressModal}>
+                            {t("addNewOrderPage.addressBook.AddButton")}
                         </span>
                     </p>
                 </div>
@@ -177,7 +189,7 @@ const AddNewOrder = () => {
                             })}
                 </div>
                 <button className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]" type="submit">
-                    Place order
+                    {t("addNewOrderPage.SubmitButton")}
                 </button>
             </form>
 
@@ -190,3 +202,13 @@ const AddNewOrder = () => {
 };
 
 export default AddNewOrder;
+export async function getStaticProps({ locale }: { locale: any }) {
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
+}

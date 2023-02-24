@@ -30,7 +30,7 @@ const MazStatsDropddown = (props: IProp) => {
     };
 
     return (
-        <div className="relative z-40">
+        <div className="relative z-30">
             <div
                 className={
                     "border-[1px] border-[#BBC2CF] rounded-[4px] text-[12px] text-[#2B2B2B] font-[600] leading-[18px] box-border px-[10px] py-[5px]  hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative cursor-pointer" +
