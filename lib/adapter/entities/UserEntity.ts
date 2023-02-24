@@ -44,7 +44,7 @@ export class UserEntity {
   @Column({ type: "int", nullable: true, default: null, width: 3 })
   age!: string | null;
 
-  @Column({ type: "int", width: 9 })
+  @Column({ type: "int", width: 9, nullable: true, default: null })
   phone!: number;
 
   @Column({ type: "enum", enum: UserGender, default: UserGender.UNKNOWN })

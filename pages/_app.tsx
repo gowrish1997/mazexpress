@@ -12,6 +12,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import Script from "next/script";
 import { SessionProvider } from "next-auth/react";
 import "reflect-metadata";
+import { MazDataSource } from "@/lib/adapter/data-source";
 config.autoAddCss = false;
 
 export default function App({
@@ -38,12 +39,12 @@ export default function App({
           },
         }}
       >
-        <Script
+        {/* <Script
           src="https://accounts.google.com/gsi/client"
           strategy="beforeInteractive"
           // onLoad={() => console.log(window)}
           // onError={(err) => console.log(err)}
-        />
+        /> */}
         <Component {...pageProps} />
 
         <NotificationContainer />
@@ -80,3 +81,5 @@ export default function App({
     </SWRConfig>
   );
 }
+
+

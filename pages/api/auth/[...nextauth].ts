@@ -9,7 +9,8 @@ import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   // Do whatever you want here, before the request is passed down to `NextAuth`
-
+  // init maz data source???
+  const Connexion = await MazDataSource;
   return await NextAuth(req, res, {
     // https://next-auth.js.org/configuration/providers
     providers: [
@@ -30,22 +31,25 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           password: { label: "Password", type: "password" },
         },
         authorize: async (credentials, req) => {
-          console.log(credentials);
-          const user: UserEntity | null = await MazDataSource.manager.findOneBy(
-            UserEntity,
-            {
-              email: credentials?.username!,
-            }
-          );
-          // check if user exists
-          if (user) {
-            // compare password
-            let match = bcrypt.compareSync(
-              credentials?.password!,
-              user.password!
+          // console.log(credentials);
+          
+          if (Connexion) {
+            const user: UserEntity | null = await Connexion.manager.findOneBy(
+              UserEntity,
+              {
+                email: credentials?.username!,
+              }
             );
-            if (match) {
-              return user;
+            // check if user exists
+            if (user) {
+              // compare password
+              let match = bcrypt.compareSync(
+                credentials?.password!,
+                user.password!
+              );
+              if (match) {
+                return user;
+              }
             }
           }
           return null;
@@ -105,29 +109,35 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     callbacks: {
       async signIn({ user, account, profile, email, credentials }) {
         // console.log(user, account, profile, email, credentials);
+        let connexion = await MazDataSource;
+        if (connexion) {
+          if (user && user.email) {
+            const dbuser = await connexion.manager.find(UserEntity, {
+              where: {
+                email: user.email,
+              },
+            });
 
-        if (user && user.email) {
-          const dbuser = await MazAdapter().getUserByEmail(user.email);
+            if (dbuser === null) {
+              // create and sign in
+              const newdbuser = new UserEntity();
+              if (account?.provider === "google") {
+                const saltRounds = 10;
+                const hash2 = bcrypt.hashSync("Test123$", saltRounds);
 
-          if (dbuser === null) {
-            // create and sign in
-            const newdbuser = new UserEntity();
-            if (account?.provider === "google") {
-              const saltRounds = 10;
-              const hash2 = bcrypt.hashSync("Test123$", saltRounds);
+                newdbuser.avatar_url = user.image
+                  ? user.image
+                  : "default_user.png";
+                newdbuser.first_name = user.name ? user.name.split(" ")[0] : "";
+                newdbuser.last_name = user.name ? user.name.split(" ")[1] : "";
+                newdbuser.email = user.email ? user.email : "";
 
-              newdbuser.avatar_url = user.image
-                ? user.image
-                : "default_user.png";
-              newdbuser.first_name = user.name ? user.name.split(" ")[0] : "";
-              newdbuser.last_name = user.name ? user.name.split(" ")[1] : "";
-              newdbuser.email = user.email ? user.email : "";
-
-              newdbuser.password = hash2;
-              MazAdapter().createUser(newdbuser);
+                newdbuser.password = hash2;
+                MazAdapter().createUser(newdbuser);
+              }
             }
+            return true;
           }
-          return true;
         }
         return false;
       },

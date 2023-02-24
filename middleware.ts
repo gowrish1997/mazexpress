@@ -6,7 +6,7 @@ import { withAuth } from "next-auth/middleware";
 export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
   function middleware(req: NextRequestWithAuth) {
-
+    console.log('running middleware')
     // will run if authorized is true
     const res = NextResponse.next();
     // console.log(req.nextauth);
@@ -35,18 +35,19 @@ export default withAuth(
 
     return res;
   },
-  {
-    callbacks: {
-      authorized: ({ req, token }) => {
-        // If there is a token, the user is authenticated
-        if (token) {
-          // console.log(token);
-          return true;
-        }
-        return false;
-      },
-    },
-  }
+  // {
+  //   callbacks: {
+  //     authorized: ({ req, token }) => {
+  //       console.log('running authorized callback')
+  //       // If there is a token, the user is authenticated
+  //       if (token) {
+  //         // console.log(token);
+  //         return true;
+  //       }
+  //       return false;
+  //     },
+  //   },
+  // }
 );
 
 // See "Matching Paths" below to learn more

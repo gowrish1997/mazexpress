@@ -39,9 +39,10 @@ const LogInComponent = (props: any) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const response = await signIn("credentials", {
-      redirect: false,
+      // redirect: false,
       password: data.password,
       email: data.email,
+      callbackUrl: "http://localhost:3000/admin",
     });
 
     if (response?.ok === false) {
@@ -66,6 +67,25 @@ const LogInComponent = (props: any) => {
     } else {
       setPasswordType("string");
     }
+  };
+
+  const googleSignInHandler = async () => {
+    // sign in with google
+    const response = await signIn("google", {
+      callbackUrl: "http://localhost:3000/admin",
+      redirect: false,
+    });
+
+    if (response?.ok === false) {
+      // no user found
+      createToast({
+        type: "error",
+        message: "No user found with this email id",
+        title: "No user found",
+        timeOut: 2000,
+      });
+    }
+    // console.log(response);
   };
 
   return (
@@ -131,7 +151,7 @@ const LogInComponent = (props: any) => {
       {/* <LogInWithMail /> */}
       <button
         className="p-3 bg-amber-400 rounded"
-        // onClick={googleSignInHandler}
+        onClick={googleSignInHandler}
       >
         Sign in with google
       </button>

@@ -5,7 +5,7 @@ import { SessionEntity } from "@/lib/adapter/entities/SessionEntity";
 import { VerificationTokenEntity } from "@/lib/adapter/entities/VerificationTokenEntity";
 
 const connexion = async () => {
-  const MazDataSource = new DataSource({
+  const ConnectionDS = new DataSource({
     type: "mysql",
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT!),
@@ -22,11 +22,12 @@ const connexion = async () => {
     logging: false,
   });
   try {
-    await MazDataSource.initialize();
+    const MazDataSource = await ConnectionDS.initialize();
     console.log("Maz data source initialization complete!");
     return MazDataSource;
   } catch (err) {
     console.error("Error during Data Source initialization", err);
+    return null;
   }
 };
 
