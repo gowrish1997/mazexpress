@@ -4,7 +4,7 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { IAddressProps } from "@/models/address.interface";
 import CountrySelector from "@/components/common/CountrySelector";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import fetchJson from "@/lib/fetchJson";
 import { IWarehouseProps } from "@/models/warehouse.interface";

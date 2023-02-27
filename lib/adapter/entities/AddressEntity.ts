@@ -1,10 +1,13 @@
-import { OrderEntity } from "./OrderEntity";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 import type { Relation } from "typeorm";
-import { transformer } from "../transformer";
-import { UserEntity } from "./UserEntity";
-import { OneToOne } from "typeorm/decorator/relations/OneToOne";
-import { OneToMany } from "typeorm/decorator/relations/OneToMany";
+import { UserEntity } from './UserEntity';
+
+export enum City {
+  B = "benghazi",
+  T = "tripoli",
+  M = "misrata",
+}
 
 @Entity({ name: "addresses" })
 export class AddressEntity {
@@ -20,7 +23,7 @@ export class AddressEntity {
   @Column({ type: "varchar" })
   address_2!: string;
 
-  @Column({ type: "enum" })
+  @Column({ type: "enum", enum: City, default: City.T })
   city!: string;
 
   @Column({ type: "varchar", default: "Libya" })
@@ -37,8 +40,6 @@ export class AddressEntity {
   })
   user!: Relation<UserEntity>;
 
-  @OneToMany(() => OrderEntity, (order) => order.address_id, {
-    createForeignKeyConstraints: true,
-  })
-  orders!: Relation<OrderEntity>;
+  @OneToMany(() => OrderEntity, (order) => order.address)
+  orders!: OrderEntity[];
 }

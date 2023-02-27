@@ -8,13 +8,15 @@ declare module "next-auth" {
     user: {
       /** The user's postal address. */
       address: string
-    } & DefaultSession["user"]
+    } & DefaultSession["user"];
+
+    is_admin: boolean
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     /** This is an example. You can find me in types/next-auth.d.ts */
-    bar: number;
+    is_admin: boolean;
   }
 }

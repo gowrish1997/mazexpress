@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useRef } from "react";
 import Image from "next/image";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";

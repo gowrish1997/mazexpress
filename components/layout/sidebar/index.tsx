@@ -4,11 +4,9 @@ import Header from "./Header";
 import NavLink from "./NavLink";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
-import useUser from "@/lib/hooks/useUser";
-import fetchJson from "@/lib/fetchJson";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import logoutImage from "@/public/logout.png";
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react";
 
 const userSidebarContent = [
   {
@@ -126,7 +124,8 @@ const sidebarContentHandler = (user: number) => {
 };
 const Sidebar = () => {
   const router = useRouter();
-  const { user, mutateUser } = useUser();
+  const { data: session, status } = useSession()
+  // const { user, mutateUser } = useUser();
 
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
@@ -135,16 +134,8 @@ const Sidebar = () => {
   };
 
   const logoutHandler = async () => {
-
-    // new code 
-    signOut()
-
-    // Legacy code
-    // const nullUser = await fetchJson("/api/auth/logout", { method: "GET" });
-    // await mutateUser();
-    // router.push("/auth/gate");
-    
-    // router.reload()
+    // new code
+    signOut();
   };
 
   return (
@@ -153,7 +144,7 @@ const Sidebar = () => {
         <Header />
         <div className="flex flex-col px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
           <ul className="flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
-            {sidebarContentHandler(user?.is_admin_users! ? 1 : 0).map(
+            {sidebarContentHandler(session?.is_admin! ? 1 : 0).map(
               (content, index) => {
                 return (
                   <NavLink key={content.id} id={index} content={content} />

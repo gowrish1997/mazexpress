@@ -1,9 +1,10 @@
 import { transformer } from "../transformer";
-import { UserEntity } from "./UserEntity";
+// import type { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import type {
   Relation,
 } from "typeorm";
+import { UserEntity } from "./UserEntity";
 
 @Entity({ name: "sessions" })
 export class SessionEntity {

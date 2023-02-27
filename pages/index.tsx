@@ -1,9 +1,12 @@
-import React, { SyntheticEvent, useState, useRef } from "react";
+import React, { SyntheticEvent, useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import logo from "../public/logo.png";
 import ShipmentCalculator from "@/components/LandingPage/ShipmentCalculator";
 import Footer from "@/components/LandingPage/Footer";
+import { useSession } from "next-auth/react";
 const Home = () => {
+  const { data: session, status: sessionStatus } = useSession()
+  
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
   const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -24,6 +27,10 @@ const Home = () => {
       setTrackingIdError(true);
     }
   };
+
+  useEffect(() => {
+    console.log(session)
+  }, [sessionStatus])
 
   return (
     <div className="">

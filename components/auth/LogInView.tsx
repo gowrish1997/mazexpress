@@ -29,7 +29,7 @@ const LogInComponent = (props: any) => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
 
-  const { user, mutateUser } = useUser({ redirectIfFound: true });
+  // const { user, mutateUser } = useUser({ redirectIfFound: true });
   const {
     register,
     handleSubmit,
@@ -41,12 +41,12 @@ const LogInComponent = (props: any) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const response = await signIn("credentials", {
-      // redirect: false,
+      redirect: false,
       password: data.password,
-      email: data.email,
-      callbackUrl: "http://localhost:3000/admin",
+      username: data.email,
+      callbackUrl: "http://localhost:3000/",
     });
-
+    console.log(response)
     if (response?.ok === false) {
       // no user found
       createToast({
@@ -56,9 +56,8 @@ const LogInComponent = (props: any) => {
         timeOut: 2000,
       });
     } else {
-      router.push("/");
+      router.push('/')
     }
-    console.log(response);
   };
 
   const [passwordType, setPasswordType] = useState("password");
@@ -74,7 +73,7 @@ const LogInComponent = (props: any) => {
   const googleSignInHandler = async () => {
     // sign in with google
     const response = await signIn("google", {
-      callbackUrl: "http://localhost:3000/admin",
+      callbackUrl: "http://localhost:3000",
       redirect: false,
     });
 

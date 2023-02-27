@@ -1,17 +1,10 @@
-import { OrderEntity } from './OrderEntity';
-import { AddressEntity } from './AddressEntity';
-import {
-  Entity,
-  Column,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import type {
-  Relation,
-} from "typeorm";
-import { transformer } from "../transformer";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { SessionEntity } from "@/lib/adapter/entities/SessionEntity";
 import { AccountEntity } from "./AccountEntity";
-import { SessionEntity } from "./SessionEntity";
+import { AddressEntity } from "./AddressEntity";
+import type { Relation } from "typeorm";
+import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { transformer } from "../transformer";
 
 export enum UserGender {
   MALE = "m",
@@ -61,15 +54,27 @@ export class UserEntity {
   @Column({ type: "varchar", nullable: true, default: null })
   default_address!: string | null;
 
-  @OneToMany(() => SessionEntity, (session) => session.user_id)
-  sessions!: Relation<SessionEntity[]>;
+  @OneToMany(
+    () => SessionEntity,
+    (session) => session.user
+  )
+  sessions!: SessionEntity[];
 
-  @OneToMany(() => AccountEntity, (account) => account.user_id)
-  accounts!: Relation<AccountEntity[]>;
+  @OneToMany(
+    () => AccountEntity,
+    (account) => account.user
+  )
+  accounts!: AccountEntity[];
 
-  @OneToMany(() => AddressEntity, (address) => address.user_id)
-  addresses!: Relation<AddressEntity[]>;
+  @OneToMany(
+    () => AddressEntity,
+    (address) => address.user
+  )
+  addresses!: AddressEntity[];
 
-  @OneToMany(() => OrderEntity, (order) => order.user_id)
-  orders!: Relation<OrderEntity[]>;
+  @OneToMany(
+    () => OrderEntity,
+    (order) => order.user
+  )
+  orders!: OrderEntity[];
 }

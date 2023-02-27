@@ -5,8 +5,8 @@ import Layout from "@/components/layout";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import PackageTrackingView from "@/components/ordertracking/PackageTrackingView";
 import WarehouseTracking from "@/components/ordertracking/WarehouseTracking";
-import useOrders from "@/lib/useOrders";
-import useUser from "@/lib/useUser";
+import useOrders from "@/lib/hooks/useOrders";
+import useUser from "@/lib/hooks/useUser";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { createToast } from "@/lib/toasts";
@@ -16,7 +16,7 @@ const TrackOrder = (props: any) => {
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { user, mutateUser, userIsLoading } = useUser();
-  const { orders, ordersIsLoading } = useOrders({ userId: user?.id_users });
+  const { orders, ordersIsLoading } = useOrders({ user_id: user?.id });
 
   const [packageStatus, setPackageStatus] = useState(0);
 

@@ -3,13 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  PrimaryColumn,
+  // PrimaryColumn,
 } from "typeorm";
-import type {
-  Relation,
-} from "typeorm";
+import type { Relation } from "typeorm";
 import { transformer } from "../transformer";
-import { UserEntity } from "./UserEntity";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 
 @Entity({ name: "accounts" })
 export class AccountEntity {
@@ -19,8 +17,8 @@ export class AccountEntity {
   // @PrimaryColumn({ type: "int" })
   // id!: number;
 
-  @Column({ type: "uuid" })
-  user_id!: string;
+  // @Column({ type: "uuid" })
+  // user_id!: string;
 
   @Column({ type: "varchar" })
   type!: string;

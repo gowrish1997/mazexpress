@@ -6,7 +6,6 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { ISignUp } from "@/models/user.interface";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
-import { MazAdapter } from "@/lib/adapter";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import axios from "axios";
 
@@ -56,14 +55,14 @@ const SignUpComponent = (props: any) => {
   } = useForm<ISignUp>({
     resolver: yupResolver(schema),
     defaultValues: {
-        age_users: "22",
-        email_users: "mohamed@maz.com",
-        first_name_users: "mohamed",
-        gender_users: "m",
-        last_name_users: "ali",
-        confirmPassword_users: "Test123$",
-        password_users: "Test123$",
-        phone_users: 123456789,
+      age_users: "22",
+      email_users: "mohamed@maz.com",
+      first_name_users: "mohamed",
+      gender_users: "m",
+      last_name_users: "ali",
+      confirmPassword_users: "Test123$",
+      password_users: "Test123$",
+      phone_users: 123456789,
     },
   });
 
@@ -81,7 +80,7 @@ const SignUpComponent = (props: any) => {
     const response = await axios.post("/api/users", newuser, {
       method: "POST",
     });
-    console.log(response.data)
+    console.log(response.data);
 
     createToast({
       type: "success",

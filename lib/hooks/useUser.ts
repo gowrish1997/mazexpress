@@ -1,42 +1,48 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { IUser } from "@/models/user.interface";
+import { useSession } from "next-auth/react";
 
 export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
 } = {}) {
   const router = useRouter();
+  const { data: session, status } = useSession();
 
+  let queryString = "/api/users";
+  if (session?.user.email) {
+    queryString += `?email=${session.user.email}`;
+  }
   const {
     data: user,
     mutate: mutateUser,
     isLoading: userIsLoading,
-  } = useSWR<IUser>("/api/auth/user", {
-    // revalidateIfStale: true,
-    // revalidateOnFocus: true,
-    // revalidateOnReconnect: true,
+  } = useSWR<any>(queryString, {
+    revalidateIfStale: true,
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
   });
 
   useEffect(() => {
-    // console.log(user)
-    
-    if (user?.is_logged_in_users === 1 && user.is_admin_users === 1) {
-      if (redirectIfFound && !router.pathname.startsWith("/admin")) {
-        router.push("/admin");
+    // console.log(session);
+    if (user && session) {
+      if (user.is_admin === 1) {
+        if (redirectIfFound && !router.pathname.startsWith("/admin")) {
+          router.push("/admin");
+        }
+      }
+      if (user.is_admin === 0) {
+        if (
+          redirectIfFound &&
+          (router.pathname.startsWith("/admin") ||
+            router.pathname.startsWith("/auth"))
+        ) {
+          router.push("/");
+        }
       }
     }
-    if (user?.is_logged_in_users === 1 && user.is_admin_users === 0) {
-      if (
-        redirectIfFound &&
-        (router.pathname.startsWith("/admin") ||
-          router.pathname.startsWith("/auth"))
-      ) {
-        router.push("/");
-      }
-    }
-  }, [user, mutateUser, userIsLoading, redirectIfFound, router]);
+  }, [redirectIfFound, router, user]);
 
   return { user, mutateUser, userIsLoading };
 }

@@ -1,5 +1,4 @@
 import useSWR from "swr";
-import { IUser } from "@/models/user.interface";
 
 interface IProps {
   user_id?: number;
@@ -32,10 +31,10 @@ export default function useAllUser(props: IProps) {
     isLoading: allUserIsLoading,
     error: error,
   } = useSWR(`/api/users` + queryString, {
-    refreshInterval: 3000,
-    revalidateIfStale: true,
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
+    // refreshInterval: 3000,
+    // revalidateIfStale: true,
+    // revalidateOnFocus: true,
+    // revalidateOnReconnect: true,
   });
 
   return { allUser, mutateAllUser, allUserIsLoading, error };

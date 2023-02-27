@@ -1,6 +1,6 @@
 import React from "react";
 import PageHeader from "@/components/common/PageHeader";
-import useWarehouses from "@/lib/useWarehouses";
+import useWarehouses from "@/lib/hooks/useWarehouses";
 import WarehouseCard from "@/components/warehouse/WarehouseCard";
 
 const Warehouse = () => {

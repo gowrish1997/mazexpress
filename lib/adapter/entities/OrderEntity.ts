@@ -1,8 +1,16 @@
-import { AddressEntity } from './AddressEntity';
+import { AddressEntity } from '@/lib/adapter/entities/AddressEntity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import type { Relation } from "typeorm";
-import { transformer } from "../transformer";
-import { UserEntity } from "./UserEntity";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+
+
+export enum OrderStatus {
+  I = "in-transit",
+  D = "delivered",
+  A = "at-warehouse",
+  P = "pending",
+}
+
 
 @Entity({ name: "orders" })
 export class OrderEntity {
@@ -33,7 +41,7 @@ export class OrderEntity {
   @Column({ type: "varchar", nullable: true, default: null })
   received_on!: string | null;
 
-  @Column({ type: "enum", default: "pending" })
+  @Column({ type: "enum", enum: OrderStatus, default: OrderStatus.P })
   status!: string | null;
 
   @Column({ type: "varchar" })

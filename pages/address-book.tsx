@@ -3,7 +3,7 @@ import PageHeader from "@/components/common/PageHeader";
 import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import useAddresses from "@/lib/hooks/useAddresses";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import { IAddressProps } from "@/models/address.interface";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 
@@ -15,7 +15,7 @@ const AddressBook = () => {
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
   const { user, mutateUser, userIsLoading } = useUser();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
-    userId: user?.id_users,
+    user_id: user?.id,
   });
 
   const toggleAddNewAddressModal = () => {

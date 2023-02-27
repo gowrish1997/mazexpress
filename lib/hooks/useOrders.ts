@@ -11,15 +11,14 @@ interface IProps {
   // future warehouse addition
 }
 type Data = {
-    msg?: string;
-    data?: IOrderResponse[];
-    total_count?: number;
-  };
-
+  msg?: string;
+  data?: IOrderResponse[];
+  total_count?: number;
+};
 
 export default function useOrders(props: IProps) {
-//   console.log('calling use orders')
-//   console.log(props.page)
+  //   console.log('calling use orders')
+  //   console.log(props.page)
   let queryString = "";
 
   queryString += `?page=${props.page !== undefined ? props.page : 0}&per_page=${

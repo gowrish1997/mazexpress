@@ -20,10 +20,10 @@ export default function useNotificationSettings() {
       // Retry after 5 seconds.
       setTimeout(() => revalidate({ retryCount }), 5000);
     },
-    refreshInterval: 1000,
-    revalidateIfStale: true,
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
+    // refreshInterval: 1000,
+    // revalidateIfStale: true,
+    // revalidateOnFocus: true,
+    // revalidateOnReconnect: true,
   });
 
   return {

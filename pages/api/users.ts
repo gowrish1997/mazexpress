@@ -4,8 +4,8 @@ import { INotificationConfig } from "@/models/notification.interface";
 import { hashPassword } from "@/lib/bcrypt";
 import { db } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
-import fetchJson from "@/lib/fetchJson";
-import axios from "axios";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { MazDataSource } from "@/lib/adapter/data-source";
 
 type Data = {
   msg?: string;
@@ -21,6 +21,7 @@ export default function handler(
     switch (req.method) {
       case "GET":
         // search
+        // console.log(req.query);
         if (req.query.search !== undefined) {
           // send back search res
           // getting maz id from search
@@ -32,76 +33,71 @@ export default function handler(
           //   });
         }
 
+        let DS = await MazDataSource;
         if (req.query.id) {
           // single response
           const id = req.query.id;
-          db.select(
-            "id_users",
-            "first_name_users",
-            "last_name_users",
-            "email_users",
-            "phone_users",
-            "default_address_users",
-            "avatar_url_users",
-            "is_notifications_enabled_users",
-            "is_admin_users",
-            "is_logged_in_users"
-          )
-            .from("users")
-            .where("id_users", id)
-            .first()
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          const idUser = await DS?.manager.findOne(UserEntity, {
+            select: {
+              id: true,
+              first_name: true,
+              last_name: true,
+              email: true,
+              phone: true,
+              default_address: true,
+              avatar_url: true,
+              is_admin: true,
+              is_notifications_enabled: true,
+              age: true,
+              gender: true,
+            },
+            where: {
+              id: id as string,
+            },
+          });
+          res.status(200).json({ data: idUser });
+          resolve({ data: idUser });
+        } else if (req.query.email) {
+          MazAdapter().getUserByEmail(req.query.email as string);
         } else {
           // paginate
           // get results and count of results
-          const queryOrders = db
-            .select(
-              "id_users",
-              "first_name_users",
-              "last_name_users",
-              "email_users",
-              "phone_users",
-              "default_address_users",
-              "avatar_url_users",
-              "is_notifications_enabled_users",
-              "is_admin_users",
-              "is_logged_in_users",
-              "age_users",
-              "gender_users",
-              "created_on_user"
-            )
-            .from("users")
-            .limit(req.query.per_page)
-            .offset(
-              parseInt(req.query.per_page as string) *
-                parseInt(req.query.page as string)
-            )
-            .then((data: any) => {
-              // console.log(data);
-              return data;
-            });
+          // console.log(req.query);
+          let per_page = req.query.per_page
+            ? (req.query.per_page as string)
+            : "6";
+          let page = req.query.page ? (req.query.page as string) : "0";
 
-          const allUsersCount = db("users")
-            .count("id_users as count")
-            // You actually can use string|function with this = knex builder|another knex builder
-            .first()
-            .then((count: any) => {
-              return count;
-            });
-
-          Promise.all([queryOrders, allUsersCount]).then((result) => {
-            // console.log(result);
-            let responseObj: Data = {
-              data: result[0],
-              total_count: result[1].count,
-              msg: "successful",
-            };
-            res.status(200).json(responseObj);
-            resolve(responseObj);
+          const paginatedUsers = await DS?.manager.find(UserEntity, {
+            select: {
+              id: true,
+              first_name: true,
+              last_name: true,
+              email: true,
+              phone: true,
+              default_address: true,
+              avatar_url: true,
+              is_admin: true,
+              is_notifications_enabled: true,
+              age: true,
+              gender: true,
+            },
+            skip: parseInt(per_page) * parseInt(page),
+            take: parseInt(per_page),
           });
+
+          const allUsersCount = await DS?.getRepository(
+            UserEntity
+          ).findAndCount();
+
+          let responseObj: Data = {
+            data: paginatedUsers,
+            total_count: allUsersCount ? allUsersCount[1] : 0,
+            msg: "successful",
+          };
+          // console.log(responseObj);
+          res.status(200).json(responseObj);
+          resolve(responseObj);
         }
 
         break;
@@ -113,10 +109,13 @@ export default function handler(
         // hash pass
         try {
           const hash = hashPassword(req.body.password);
-          const createduser = await MazAdapter().createUser({...req.body, password: hash});
-          console.log(createduser)
-          res.json(createduser)
-          resolve(createduser)
+          const createduser = await MazAdapter().createUser({
+            ...req.body,
+            password: hash,
+          });
+          console.log(createduser);
+          res.json(createduser);
+          resolve(createduser);
           // db("notification_config")
           //   .where("id_notification_config", 3)
           //   .first()

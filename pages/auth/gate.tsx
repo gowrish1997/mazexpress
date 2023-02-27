@@ -4,17 +4,14 @@ import AuthLayout from "@/components/auth/AuthLayout";
 import LogInView from "@/components/auth/LogInView";
 import ResetPasswordView from "@/components/auth/ResetPasswordView";
 import SignUpView from "@/components/auth/SignUpView";
-import useUser from "@/lib/hooks/useUser";
 
 const Gate = () => {
   const [mode, setMode] = useState<number>(1);
 
-  const { user, mutateUser, userIsLoading } = useUser();
   function toggleMode(i: number) {
     setMode(i);
   }
 
-  
   return (
     <div>
       <Head>
