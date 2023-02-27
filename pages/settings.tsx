@@ -11,7 +11,6 @@ import { IUserProfile, IUser } from "@/models/user.interface";
 import { FieldError } from "react-hook-form";
 import useUser from "@/lib/useUser";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
-
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { createToast } from "@/lib/toasts";
@@ -146,8 +145,8 @@ const Settings = () => {
         // }
     };
 
-    // if (userIsLoading) return <div>loading</div>;
-    console.log(errors.last_name_users);
+    if (userIsLoading) return <div>loading</div>;
+
 
     return (
         <>
