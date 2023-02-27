@@ -1,5 +1,6 @@
 import PageHeader from "@/components/common/PageHeader";
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 import TotalOrders from "@/components/admin/MazStats/TotalOrders";
 import TotalCustomer from "@/components/admin/MazStats/TotalCustomer";
 import WarehouseOrders from "@/components/admin/MazStats/WarehouseOrders";
@@ -8,7 +9,17 @@ import StatGraph from "@/components/admin/MazStats/StatGraph";
 import OrdersTotalCountBar from "@/components/admin/MazStats/OrdersTotalCountBar";
 import StatLiveOrdres from "@/components/admin/MazStats/StatLiveOrdres";
 import RecentCustomers from "@/components/admin/MazStats/RecentCustomers";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const AdminHome = () => {
+    const router = useRouter();
+    const { locales, locale: activeLocale } = router;
+
+    useEffect(() => {
+        console.log('use efft')
+        router.push(router.asPath, router.asPath, { locale:'en' });
+    }, []);
+
     return (
         <div className="space-y-[15px]">
             <p className="text-[16px] text-[#18181B] font-[700] leading-[24px]">
@@ -32,3 +43,14 @@ const AdminHome = () => {
 };
 
 export default AdminHome;
+export async function getStaticProps({ locale }: { locale: any }) {
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
+}
+

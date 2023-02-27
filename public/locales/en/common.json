@@ -7,7 +7,7 @@
         },
         "trackOrder": {
             "Placeholder": "Tracking Number",
-            "Error":"Please enter the tracking Id",
+            "Error": "Please enter the tracking Id",
             "SubmitButton": "Track Now",
             "CaptionPart1": "Need help changing your delivery?",
             "CaptionPart2": " Get Help"
@@ -24,7 +24,7 @@
                     { "placeholder": "", "label": "Dimensions ( Optional )" },
                     { "placeholder": "", "label": "Weight*" }
                 ],
-                "Errors":["Warehouse Address is a required field","Delivery City is a required field"," Weight is a required field"],
+                "Errors": ["Warehouse Address is a required field", "Delivery City is a required field", " Weight is a required field"],
                 "Dimensions": ["Length", "Width", "Height"],
                 "SubmitButton": "Calculate Cost",
                 "ResetButton": "Reset"
@@ -51,7 +51,10 @@
             "Settings",
             "Help center"
         ],
-        "Logout": "Logout"
+        "Logout": "Logout",
+        "logoutConfirmModal": {
+            "Content": ["Log out from Maz Express", "Yes, log out", "Cancel"]
+        }
     },
     "topbar": {
         "inputField": {

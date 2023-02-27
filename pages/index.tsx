@@ -15,6 +15,7 @@ const index = () => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
+    console.log(locale);
     var section: string[] = t("landingPage.navBar.Section", { returnObjects: true });
     var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
 

@@ -7,6 +7,7 @@
       },
       "trackOrder": {
           "Placeholder": "Tracking Number",
+          "Error": "Please enter the tracking Id",
           "SubmitButton": "Track Now",
           "CaptionPart1": "Need help changing your delivery?",
           "CaptionPart2": " Get Help"
@@ -15,7 +16,7 @@
       "Caption": "Drop off and pick up packages from a location that’s open when you need it",
       "shipmentCostCalculator": {
           "Title": "Shipment Cost Calculator",
-          "Paragraph": "Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it",
+          "Discription": "Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it",
           "form": {
               "InputField": [
                   { "placeholder": "Warehouse Address", "label": "Pick - Up Warehouse address" },
@@ -23,6 +24,7 @@
                   { "placeholder": "", "label": "Dimensions ( Optional )" },
                   { "placeholder": "", "label": "Weight*" }
               ],
+              "Errors": ["Warehouse Address is a required field", "Delivery City is a required field", " Weight is a required field"],
               "Dimensions": ["Length", "Width", "Height"],
               "SubmitButton": "Calculate Cost",
               "ResetButton": "Reset"
@@ -49,11 +51,17 @@
           "Settings",
           "Help center"
       ],
-      "Logout": "Logout"
+      "Logout": "Logout",
+      "logoutConfirmModal": {
+          "Content": ["Log out from Maz Express", "Yes, log out", "Cancel"]
+      }
   },
   "topbar": {
       "inputField": {
           "Placeholder": ["Search with user ID", "Search with MAZ ID"]
+      },
+      "notificationView": {
+          "Content": "Notifications"
       }
   },
   "indexPage": {
@@ -92,7 +100,7 @@
               "Address line 02 is required field",
               "Country is required field",
               "City/Town is required field",
-              "Mobile number is required field(Must be exactly 10 digits)"
+              "Mobile number is required field (Must be exactly 10 digits)"
           ],
           "CityOptions": [
               { "value": "Tripoli", "label": "Tripoli" },
@@ -120,8 +128,8 @@
       "pageHeader": {
           "Title": "Order Tracking"
       },
-      "listOfTrackingId":{
-          "Title":"MAZ Tracking ID"
+      "listOfTrackingId": {
+          "Title": "MAZ Tracking ID"
       },
       "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
       "LinkPPart2": "Link here →",
@@ -146,6 +154,53 @@
                   "Status": ["Enjoy", "Pending"]
               }
           }
+      }
+  },
+  "warehousePage": {
+      "pageHeader": {
+          "Title": "Our Warehouse"
+      },
+      "warehouseCard": {
+          "Content": "Copy"
+      }
+  },
+  "addressBookPage": {
+      "pageHeader": {
+          "Title": "My Address Book"
+      },
+      "AddNewButton": " + Add new",
+      "userSavedAddressCard": {
+          "Content": [" Default", "Edit", "Remove"]
+      }
+  },
+  "settingsPage": {
+      "pageHeader": {
+          "Title": "Settings"
+      },
+      "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
+      "LinkPPart2": "Link here →",
+      "Title": "Account",
+      "Discription": "Review and update your account details",
+      "profileForm": {
+          "InputFieldLabel": ["First name", "Last name", "Password", "Email", "New Password", "Mobile number", "Language"],
+          "Errors": [
+              "First name is required",
+              "Last name is required",
+              "Email is required (Please provide valid email)",
+              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+              "Mobile number is required field (Must be exactly 10 digits)"
+          ],
+
+          "notification": {
+              "Title": "Notifications",
+              "Discription": "Enable or disable notifications for your account"
+          },
+          "LanguageOption": [
+              { "value": "ar", "label": "Arabic" },
+              { "value": "en", "label": "English" }
+          ],
+          "ProfilePicPopContent": ["ProfilePhoto", "Edit", "Remove"],
+          "SubmitButton": "Update setttings"
       }
   }
 }
