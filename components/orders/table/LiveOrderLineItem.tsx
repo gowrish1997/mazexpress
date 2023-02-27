@@ -53,7 +53,7 @@ const LiveOrderLineItem = (props: IProp) => {
       case 4:
         return "Out for delivery";
       case 5:
-        return "Delivered";
+        return "Complete";
       default:
         return "Pending";
     }
@@ -170,7 +170,9 @@ const LiveOrderLineItem = (props: IProp) => {
       <td className={`td7`}>
         <div className="h-full flex flex-row justify-start items-center ">
           <span>{orderStatusColorHandler(props.row.status_orders)} </span>
-          <span className="ml-3 capitalize text-[13px]">{props.row.status_orders}</span>
+          <span className="ml-3 capitalize text-[13px]">
+            {props.row.status_orders}
+          </span>
         </div>
         <div className="ml-7 text-[11px]">{warehoueStatusHanlder()}</div>
       </td>
