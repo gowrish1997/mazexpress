@@ -173,7 +173,7 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
           // change maz id code
           const fields: Omit<
             OrderEntity,
-            "created_on" | "received_on" | "delivered_on" | "shipped_on" | "id"
+            "created_on" | "received_on" | "delivered_on" | "shipped_on" | "id" | "tracking"
           > = {
             reference_id: req.body.reference_id,
             store_link: req.body.store_link,

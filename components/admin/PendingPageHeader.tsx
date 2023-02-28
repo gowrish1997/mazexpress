@@ -9,12 +9,13 @@ import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
 interface IProp {
     content: string;
     title?: string;
     selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[] | undefined;
+    allLiveOrders: OrderEntity[] | undefined;
     filterByDate: (value: Date | string) => void;
     //  filterById: (value: string) => void;
     pageCount: number;

@@ -24,7 +24,7 @@ const schema = yup
   .required();
 
 const AddNewOrder = () => {
-  const [editableAddress, setEditableAddress] = useState<IAddressProps>();
+  const [editableAddress, setEditableAddress] = useState<AddressEntity>();
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
   const { user, status: userIsLoading } = useUser();
@@ -212,7 +212,7 @@ const AddNewOrder = () => {
           update={mutateAddresses}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
-          // address={editableAddress!}
+          address={editableAddress!}
         />
       )}
     </>

@@ -10,7 +10,7 @@ const options = [
 const WarehouseOrders = () => {
     const [selectedDate, setSelectedDate] = useState("");
 
-    const wareHouseChangeHanlder = (value: string) => {
+    const wareHouseChangeHanlder = (value: string | number) => {
         console.log(value);
     };
 

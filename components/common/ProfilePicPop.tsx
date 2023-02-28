@@ -7,13 +7,14 @@ import { nanoid } from "nanoid";
 import axios from "axios";
 import { IUser } from "@/models/user.interface";
 import fetchJson from "@/lib/fetchJson";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 interface IProp {
   show: boolean;
   close: (e: any) => void;
 }
 
 const ProfilePicPop = (props: IProp) => {
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, status: userIsLoading } = useUser();
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const uploadImage = () => {
@@ -22,13 +23,12 @@ const ProfilePicPop = (props: IProp) => {
 
   const deleteImage = async () => {
     // set back to default image
-    let updatedUser: IUser = { ...user! };
-    updatedUser.avatar_url_users = "default_user.png";
-    mutateUser(updatedUser, false);
-    await fetchJson(`/api/users?id=${user?.id_users}`, {
+    let updatedUser: UserEntity = { ...user! };
+    updatedUser.avatar_url = "default_user.png";
+    await fetchJson(`/api/users?id=${user?.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ avatar_url_users: "default_user.png" }),
+      body: JSON.stringify({ avatar_url: "default_user.png" }),
     });
   };
 
@@ -49,7 +49,7 @@ const ProfilePicPop = (props: IProp) => {
           "/api/upload-user-image",
           {
             image: e.target.files[0],
-            userId: user?.id_users,
+            userId: user?.id,
             name: fileName,
           },
           {
@@ -60,13 +60,12 @@ const ProfilePicPop = (props: IProp) => {
           if (response.status === 200) {
             // mutate user with new user data
             // setValue("avatar_url_users", fileName);
-            let updatedUser: IUser = { ...user! };
-            updatedUser.avatar_url_users = fileName;
-            mutateUser(updatedUser, false);
-            await fetchJson(`/api/users?id=${user?.id_users}`, {
+            let updatedUser: UserEntity = { ...user! };
+            updatedUser.avatar_url = fileName;
+            await fetchJson(`/api/users?id=${user?.id}`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ avatar_url_users: fileName }),
+              body: JSON.stringify({ avatar_url: fileName }),
             });
           }
         });
@@ -96,7 +95,7 @@ const ProfilePicPop = (props: IProp) => {
             </div>
             <div className="w-[300px] h-[300px] relative rounded-full overflow-hidden self-center">
               <Image
-                src={"/user-images/" + user?.avatar_url_users}
+                src={"/user-images/" + user?.avatar_url}
                 alt="profile"
                 fill
                 style={{ objectFit: "cover" }}

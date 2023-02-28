@@ -1,6 +1,6 @@
 import PageHeader from "@/components/common/PageHeader";
 import WarehouseCard from "@/components/admin/warehouse/WarehouseCard";
-import useWarehouses from "@/lib/useWarehouses";
+import useWarehouses from "@/lib/hooks/useWarehouses";
 import React, { useState } from "react";
 import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
 

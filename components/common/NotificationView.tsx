@@ -15,10 +15,10 @@ interface IProp {
 
 const NotificationView = forwardRef<HTMLDivElement, IProp>(
   (props: IProp, ref) => {
-    const { user, mutateUser } = useUser();
+    const { user, status: userIsLoading } = useUser();
     const { notifications, notificationsIsLoading, mutateNotifications } =
       useNotifications({
-        userId: user?.id_users!,
+        user_id: user?.id!,
       });
 
     const [userNotifications, setUserNotifications] =

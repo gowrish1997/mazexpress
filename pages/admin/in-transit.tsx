@@ -1,16 +1,11 @@
 import React, { useEffect, useState ,useCallback} from "react";
-import Head from "next/head";
-import useOrders from "@/lib/useOrders";
+import useOrders from "@/lib/hooks/useOrders";
 import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import { IOrderResponse } from "@/models/order.interface";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import { filter } from "@/lib/filter";
-import ReactPaginateComponent from "@/components/admin/ReactPaginate";
-import { ISearchKeyContext } from "@/models/SearchContextInterface";
-import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 
 const tableHeaders = [
@@ -47,7 +42,7 @@ const Intransit = () => {
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
+  const pageCount = Math.ceil(orders?.count! / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);

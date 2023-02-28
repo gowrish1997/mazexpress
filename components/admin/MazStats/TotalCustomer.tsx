@@ -8,11 +8,11 @@ const options = [
   { value: "10-20", label: "10-20" },
 ];
 const TotalCustomer = () => {
-  const ageChangeHanlder = (value: string) => {
+  const ageChangeHanlder = (value: number | string) => {
     console.log(value);
   };
 
-  const genderChangeHanlder = (value: string) => {
+  const genderChangeHanlder = (value: string | number) => {
     console.log(value);
   };
 

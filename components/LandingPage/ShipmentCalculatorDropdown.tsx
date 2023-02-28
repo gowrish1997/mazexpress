@@ -71,9 +71,11 @@ const ShipmentCalculatorDropdown = (props: IProp) => {
           {props.options &&
             props.options.map((data, index) => {
               return (
-                <div className="flex flex-row justify-start items-center">
+                <div
+                  className="flex flex-row justify-start items-center"
+                  key={index}
+                >
                   <button
-                    key={index}
                     className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
                     onClick={() => dropDownOnChangeHandler(data.value)}
                   >

@@ -2,9 +2,10 @@ import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 import { SessionEntity } from "@/lib/adapter/entities/SessionEntity";
 import { AccountEntity } from "./AccountEntity";
 import { AddressEntity } from "./AddressEntity";
-import type { Relation } from "typeorm";
+import { CreateDateColumn, Relation } from "typeorm";
 import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { transformer } from "../transformer";
+import { TrackingEntity } from "./TrackingEntity";
 
 export enum UserGender {
   MALE = "m",
@@ -20,6 +21,9 @@ export class UserEntity {
 
   @Column({ type: "varchar" })
   first_name!: string;
+
+  @CreateDateColumn()
+  created_on!: Date;
 
   @Column({ type: "varchar" })
   last_name!: string;
@@ -77,4 +81,10 @@ export class UserEntity {
     (order) => order.user
   )
   orders!: OrderEntity[];
+
+  @OneToMany(
+    () => TrackingEntity,
+    (tracking) => tracking.user
+  )
+  tracking!: TrackingEntity[];
 }

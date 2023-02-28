@@ -5,17 +5,17 @@ import Layout from "@/components/layout";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import PackageTrackingView from "@/components/ordertracking/PackageTrackingView";
 import WarehouseTracking from "@/components/ordertracking/WarehouseTracking";
-import useOrders from "@/lib/useOrders";
-import useUser from "@/lib/useUser";
+import useOrders from "@/lib/hooks/useOrders";
+import useUser from "@/lib/hooks/useUser";
 import { useRouter } from "next/router";
-import useOrder from "@/lib/useOrder";
-import useTracking from "@/lib/useTracking";
+import useOrder from "@/lib/hooks/useOrder";
+import useTracking from "@/lib/hooks/useTracking";
 import Link from "next/link";
 
 const TrackOrder = (props: any) => {
   const router = useRouter();
-  const { user, mutateUser, userIsLoading } = useUser();
-  const { orders, ordersIsLoading } = useOrders({ userId: user?.id_users });
+  const { user, status: userIsLoading } = useUser();
+  const { orders, ordersIsLoading } = useOrders({ user_id: user?.id });
   const { order, mutateOrder, orderIsLoading } = useOrder({
     id: router.query.id_orders as string,
   });
@@ -161,11 +161,11 @@ const TrackOrder = (props: any) => {
               MAZ Tracking ID
             </div>
             <div className="space-y-[10px]">
-              {orders?.map((data) => {
+              {orders?.data?.map((data) => {
                 return (
-                  <Link href={`/track/${data.id_orders}`} key={data.id_orders} >
+                  <Link href={`/track/${data.id}`} key={data.id}>
                     <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
-                      {data.id_orders}
+                      {data.id}
                     </p>
                   </Link>
                 );

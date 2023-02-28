@@ -12,7 +12,7 @@ const options = [
 const TotalOrders = () => {
   const [selectedDate, setSelectedDate] = useState("");
 
-  const dateChangeHandler = (value: string) => {
+  const dateChangeHandler = (value: string | number) => {
     console.log(value);
   };
 

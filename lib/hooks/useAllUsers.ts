@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 interface IProps {
-  user_id?: number;
+  user_id?: string;
   search?: string;
   page?: number;
   per_page?: number;

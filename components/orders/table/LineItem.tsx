@@ -22,7 +22,7 @@ interface IProp {
 }
 
 const LineItem = (props: IProp) => {
-  console.log(props.row);
+//   console.log(props.row);
   const trigger = useRef<any>();
 
   const { user, status: userIsLoading } = useUser();
@@ -31,7 +31,7 @@ const LineItem = (props: IProp) => {
     user_id: user?.id,
   });
 
-  console.log(addresses);
+//   console.log(addresses);
   const { tracking, trackingIsLoading, mutateTracking } = useTracking({
     order_id: props.row.id,
   });
@@ -67,12 +67,12 @@ const LineItem = (props: IProp) => {
 
   useEffect(() => {
     // console.log("tracking rerender");
-    if (tracking !== undefined) {
+    if (tracking !== undefined && tracking.data.length > 0) {
       // sort and set delivery
-      let latestUpdate = [...tracking].sort(
-        (a, b) => b.stage_tracking - a.stage_tracking
+      let latestUpdate = [...tracking.data].sort(
+        (a, b) => b.stage - a.stage
       )[0];
-      let newDate = new Date(latestUpdate?.created_on_tracking);
+      let newDate = new Date(latestUpdate?.created_on);
       newDate.setDate(newDate.getDate() + 7);
       const newDateString = getDateInStringFormat(newDate);
       setEstDelivery(newDateString!);
@@ -92,15 +92,15 @@ const LineItem = (props: IProp) => {
             {
               addresses?.data?.find(
                 (el: AddressEntity) => el.id === props.row.address.id
-              )?.tag_addresses
+              )?.tag
             }
           </span>
 
-          {/* {user?.default_address === props.row.address.id && (
+          {user?.default_address === props.row.address.id && (
             <div className="bg-[#FF645A] rounded-[4px] text-[10px] text-[#FFFFFF] font-[500] leading-[15px] py-[5px] px-[10px] ">
               Default
             </div>
-          )} */}
+          )}
         </div>
       </td>
       <td className={`td6 `}>

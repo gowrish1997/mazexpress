@@ -7,10 +7,11 @@ import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
 import StatLineItem from "./StatLineItem";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 
 interface TableProps {
   headings: Array<string>;
-  rows: Array<OrderEntity> | Array<IUser>;
+  rows: Array<OrderEntity> | Array<UserEntity>;
   type: string;
   onSelect?: (e: any, type: string) => void;
   selectedOrder?: string[] | number[];
@@ -76,10 +77,10 @@ const Table = (props: TableProps) => {
                     return (
                       <UserLineItem
                         key={nanoid()}
-                        row={data as IUser}
+                        row={data as UserEntity}
                         type={props.type}
                         onSelect={props.onSelect!}
-                        selectedOrder={props.selectedOrder as number[]}
+                        selectedOrder={props.selectedOrder as string[]}
                       />
                     );
                   } else {

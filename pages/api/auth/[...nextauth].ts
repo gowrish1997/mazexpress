@@ -27,12 +27,12 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials, req) => {
-        console.log("authorize cred", credentials?.username, credentials?.password);
+        // console.log("authorize cred", credentials?.username, credentials?.password);
         let adapter = await MazAdapter();
 
         const user = await adapter.getUserByEmail(credentials?.username!);
-        console.log(user);
-        
+        // console.log(user);
+
         if (user) {
           // compare password
           let match = compareSync(credentials?.password!, user.password!);

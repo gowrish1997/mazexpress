@@ -2,7 +2,7 @@ import ConfigCard from "@/components/admin/notification-panel/ConfigCard";
 import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import PageHeader from "@/components/common/PageHeader";
 import fetchJson from "@/lib/fetchJson";
-import useNotificationSettings from "@/lib/useNotificationSettings";
+import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
 import { INotificationConfig } from "@/models/notification.interface";
 import React, { useEffect, useState } from "react";
 

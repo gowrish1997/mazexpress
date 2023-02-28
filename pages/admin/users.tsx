@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
-import useOrders from "@/lib/useOrders";
-import moment from "moment";
+import React, { useState } from "react";
 import UserbasePageHeader from "@/components/admin/UserbasePageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import useAllUser from "@/lib/useAllUsers";
+import useAllUser from "@/lib/hooks/useAllUsers";
 import { IUser } from "@/models/user.interface";
-import ReactPaginateComponent from "@/components/admin/ReactPaginate";
-import orders from "../api/orders";
-import user from "../api/auth/user";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";    
 import { SearchKeyContext } from "@/components/common/Frame";
 

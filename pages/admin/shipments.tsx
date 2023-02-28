@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useCallback } from "react";
 import Head from "next/head";
-import useOrders from "@/lib/useOrders";
+import useOrders from "@/lib/hooks/useOrders";
 import ShipmentsPageHeader from "@/components/admin/ShipmentsPageHeader";
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 import { useRouter } from "next/router";
@@ -41,7 +41,7 @@ const Shipments = () => {
 
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-    const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
+    const pageCount = Math.ceil(orders?.count! / itemsPerPage);
 
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);

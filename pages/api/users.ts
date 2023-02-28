@@ -58,7 +58,10 @@ export default function handler(
           res.status(200).json({ data: idUser });
           resolve({ data: idUser });
         } else if (req.query.email) {
-          MazAdapter().getUserByEmail(req.query.email as string);
+          let adapter = await MazAdapter();
+          const user = adapter.getUserByEmail(req.query.email as string);
+          res.status(200).json({ data: user });
+          resolve({ data: user });
         } else {
           // paginate
           // get results and count of results
@@ -109,7 +112,8 @@ export default function handler(
         // hash pass
         try {
           const hash = hashPassword(req.body.password);
-          const createduser = await MazAdapter().createUser({
+          let adapter = await MazAdapter()
+          const createduser = await adapter.createUser({
             ...req.body,
             password: hash,
           });
@@ -162,7 +166,7 @@ export default function handler(
             fields
           );
           console.log(updateUserResult);
-          res.status(200).json({data: updateUserResult});
+          res.status(200).json({ data: updateUserResult });
           resolve(updateUserResult);
           // db("users")
           //   .where("id_users", id)

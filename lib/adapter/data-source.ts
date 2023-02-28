@@ -5,6 +5,7 @@ import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import { AccountEntity } from "@/lib/adapter/entities/AccountEntity";
 import { SessionEntity } from "@/lib/adapter/entities/SessionEntity";
 import { VerificationTokenEntity } from "@/lib/adapter/entities/VerificationTokenEntity";
+import { TrackingEntity } from "./entities/TrackingEntity";
 
 const connexion = async () => {
   const ConnectionDS = new DataSource({
@@ -21,6 +22,7 @@ const connexion = async () => {
       VerificationTokenEntity,
       AddressEntity,
       OrderEntity,
+      TrackingEntity
     ],
     synchronize: true,
     logging: false,

@@ -5,9 +5,11 @@ import {
   Column,
   ManyToOne,
   CreateDateColumn,
+  OneToMany,
 } from "typeorm";
 import type { Relation } from "typeorm";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { TrackingEntity } from "./TrackingEntity";
 
 export enum OrderStatus {
   I = "in-transit",
@@ -50,11 +52,16 @@ export class OrderEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.orders, {
     createForeignKeyConstraints: true,
+    eager: true
   })
   user!: Relation<UserEntity>;
 
   @ManyToOne(() => AddressEntity, (address) => address.orders, {
     createForeignKeyConstraints: true,
+    eager: true
   })
   address!: Relation<AddressEntity>;
+
+  @OneToMany(() => TrackingEntity, (tracking) => tracking.order)
+  tracking!: TrackingEntity[];
 }

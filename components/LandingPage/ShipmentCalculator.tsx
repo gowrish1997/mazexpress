@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldError } from "react-hook-form";
@@ -32,13 +32,13 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
   } = useForm<any>({
     defaultValues: {
       package_weight: 0.5,
-      // address_1_addresses: "V5RH+HVQ",
-      // address_2_addresses: "Amr Bin al A'ss St",
-      // city_addresses: "Tripoli",
-      // country_addresses: "Libya",
-      // default_addresses: "on",
-      // phone_addresses: 214441792,
-      // tag_addresses: "Al Mshket Hotel",
+      // address_1: "V5RH+HVQ",
+      // address_2: "Amr Bin al A'ss St",
+      // city: "Tripoli",
+      // country: "Libya",
+      // default: "on",
+      // phone: 214441792,
+      // tag: "Al Mshket Hotel",
     },
     resolver: yupResolver(schema),
   });
@@ -173,4 +173,5 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
+ShipmentCalculator.displayName = "ShipmentCalculator"
 export default ShipmentCalculator;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useCallback } from "react";
-import useOrders from "@/lib/useOrders";
+import useOrders from "@/lib/hooks/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import { IOrderResponse } from "@/models/order.interface";
@@ -43,7 +43,7 @@ const PendingOrders = () => {
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-    const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
+    const pageCount = Math.ceil(orders?.count! / itemsPerPage);
 
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);

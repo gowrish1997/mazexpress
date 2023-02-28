@@ -1,21 +1,20 @@
-import React, { useState,useMemo } from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import FilterOptionDropDown from "./FilterOptionDropDown";
-import { IOrderResponse } from "@/models/order.interface";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
-import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 import { perPageOptinsList } from "@/lib/helper";
 import ReactPaginateComponent from "./ReactPaginate";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
 interface IProp {
     content: string;
     title?: string;
     selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[];
+    allLiveOrders: OrderEntity[];
     filterByDate: (value: Date | string) => void;
     pageCount: number;
     currentPageHandler: (value: number) => void;

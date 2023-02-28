@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import { INotificationForm } from "@/models/notification.interface";
 import attachLogo from "@/public/pin_icon.png";
 import uploadIcon from "@/public/upload_icon.png";
@@ -27,7 +27,7 @@ interface IProp {
 //   .required();
 
 const CreateNotificationModal = (props: IProp) => {
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, status: userIsLoading } = useUser();
   const [showFileInputModal, setShowFileInputModal] = useState<boolean>(false);
   const [files, setFiles] = useState<any>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);

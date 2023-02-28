@@ -11,12 +11,13 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
 interface IProp {
     content: string;
     title?: string;
     selectedOrder?: string[];
-    allLiveOrders: IOrderResponse[];
+    allLiveOrders: OrderEntity[];
     filterByDate: (value: Date | string) => void;
     pageCount: number;
     currentPageHandler: (value: number) => void;

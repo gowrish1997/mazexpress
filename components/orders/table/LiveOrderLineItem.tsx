@@ -3,7 +3,6 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import LiveOrderOptionModal from "@/components/admin/modal/LiveOrderOptionModal";
-import { IOrderResponse } from "@/models/order.interface";
 import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
@@ -24,10 +23,10 @@ const LiveOrderLineItem = (props: IProp) => {
   const trigger = useRef<any>();
 
   const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
-    user_id: props.row.user_id,
+    user_id: props.row.user.id as string,
   });
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
-    order_id: props.row.id_orders,
+    order_id: props.row.id,
   });
 
   const [packageStatus, setPackageStatus] = useState(0);
@@ -88,7 +87,7 @@ const LiveOrderLineItem = (props: IProp) => {
 
   const inputCheckedStateHandler = () => {
     const data = props?.selectedOrder?.find((el) => {
-      return el == props.row.id_orders;
+      return el == props.row.id;
     });
     if (data) {
       return true;
@@ -101,7 +100,7 @@ const LiveOrderLineItem = (props: IProp) => {
   //     if (props.type == "shipments") {
   //         return false;
   //     } else {
-  //         if (props.row.status_orders == "at-warehouse" || props.row.status_orders == "in-transit") {
+  //         if (props.row.status == "at-warehouse" || props.row.status == "in-transit") {
   //             return true;
   //         } else {
   //             return false;
@@ -122,8 +121,8 @@ const LiveOrderLineItem = (props: IProp) => {
           <input
             type="checkbox"
             // disabled={inputDisabledStateHandler()}
-            value={props.row.id_orders}
-            name={props.row.id_orders}
+            value={props.row.id}
+            name={props.row.id}
             checked={inputCheckedStateHandler()}
             onChange={(e) =>
               props.onSelect(e.target.value, "selectSingleOrder")
@@ -162,20 +161,20 @@ const LiveOrderLineItem = (props: IProp) => {
           width: "100%",
         }}
       >
-        {props.row.id_orders}
+        {props.row.id}
       </td>
-      <td className={`td3 text-[#3672DF]`}>{props.row.store_link_orders}</td>
-      <td className={`td4`}>{props.row.reference_id_orders}</td>
+      <td className={`td3 text-[#3672DF]`}>{props.row.store_link}</td>
+      <td className={`td4`}>{props.row.reference_id}</td>
       <td className={`td5`}>
-        {getDateInStringFormat(props.row.created_on_orders)}
+        {getDateInStringFormat(props.row.created_on)}
       </td>
 
       {/* <td className={`td6 capitalize `}>{warehoueStatusHanlder()}</td> */}
       <td className={`td7`}>
         <div className="h-full flex flex-row justify-start items-center ">
-          <span>{orderStatusColorHandler(props.row.status_orders)} </span>
+          <span>{orderStatusColorHandler(props.row.status)} </span>
           <span className="ml-3 capitalize text-[13px]">
-            {props.row.status_orders}
+            {props.row.status}
           </span>
         </div>
         <div className="ml-7 text-[11px]">{warehoueStatusHanlder()}</div>

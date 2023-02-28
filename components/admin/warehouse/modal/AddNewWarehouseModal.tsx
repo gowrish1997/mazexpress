@@ -4,7 +4,7 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { IAddressProps } from "@/models/address.interface";
 import CountrySelector from "@/components/common/CountrySelector";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import fetchJson from "@/lib/fetchJson";
 import { IWarehouseProps } from "@/models/warehouse.interface";
@@ -17,14 +17,14 @@ interface IProp {
 
 const schema = yup
   .object({
-    address_1_addresses: yup.string().required(),
-    address_2_addresses: yup.string().required(),
+    address_1: yup.string().required(),
+    address_2: yup.string().required(),
   })
   .required();
 
 const AddNewWarehouseModal = (props: IProp) => {
   const [country, setCountry] = useState("LY");
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, status: userIsLoading } = useUser();
   const {
     register,
     handleSubmit,
@@ -33,20 +33,18 @@ const AddNewWarehouseModal = (props: IProp) => {
     formState: { errors },
   } = useForm<IAddressProps>({
     defaultValues: {
-      // address_1_addresses: "V5RH+HVQ",
-      // address_2_addresses: "Amr Bin al A'ss St",
-      // city_addresses: "Tripoli",
-      // country_addresses: "Libya",
-      // default_addresses: "on",
-      // phone_addresses: 214441792,
-      // tag_addresses: "Al Mshket Hotel",
+      // address_1: "V5RH+HVQ",
+      // address_2: "Amr Bin al A'ss St",
+      // city: "Tripoli",
+      // country: "Libya",
+      // default: "on",
+      // phone: 214441792,
+      // tag: "Al Mshket Hotel",
     },
     // resolver: yupResolver(schema),
   });
 
-  const [addressIsDefault, setAddressIsDefault] = useState(
-    user?.default_address_users === 1
-  );
+  const [addressIsDefault, setAddressIsDefault] = useState(false);
 
   const toggleDefaultAddressHandler = () => {
     setAddressIsDefault((prev) => !prev);
@@ -54,10 +52,10 @@ const AddNewWarehouseModal = (props: IProp) => {
 
   const onSubmit: SubmitHandler<IAddressProps> = async (data) => {
     // let address: any = { ...data };
-    // delete address.default_addresses;
+    // delete address.default;
     // address.user_id = user?.id_users;
 
-      console.log(data);
+    console.log(data);
 
     // add address
     // const addressResult = await fetchJson(`/api/addresses`, {
@@ -67,7 +65,7 @@ const AddNewWarehouseModal = (props: IProp) => {
     // });
 
     // console.log(addressResult)
-    // if (data.default_addresses === "on") {
+    // if (data.default === "on") {
     //   const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
     //     method: "PUT",
     //     headers: { "Content-Type": "application/json" },
@@ -97,27 +95,27 @@ const AddNewWarehouseModal = (props: IProp) => {
               Add New Warehouse
             </p>
             <input
-              id="tag_addresses"
+              id="tag"
               type="string"
-              {...register("tag_addresses")}
+              {...register("tag")}
               className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give first title @Home"
             />
             <ReactHookFormInput
               label="Address line 01"
-              name="address_1_addresses"
+              name="address_1"
               type="string"
-              register={register("address_1_addresses")}
+              register={register("address_1")}
             />
             <ReactHookFormInput
               label="Address line 02"
-              name="address_2_addresses"
+              name="address_2"
               type="string"
-              register={register("address_2_addresses")}
+              register={register("address_2")}
             />
             <div className="flex-type2 space-x-[10px] w-full">
               <Controller
-                name="country_addresses"
+                name="country"
                 control={control}
                 defaultValue="Libya"
                 render={({ field: { onChange, value, ref } }) => (
@@ -126,7 +124,7 @@ const AddNewWarehouseModal = (props: IProp) => {
                     value={value}
                     onChange={onChange}
                     setCountry={setCountry}
-                    error={errors.country_addresses}
+                    error={errors.country}
                     dropDownIcon={{
                       iconIsEnabled: true,
                       iconSrc: "/lock.png",
@@ -136,10 +134,10 @@ const AddNewWarehouseModal = (props: IProp) => {
               />
               <CustomDropDown
                 label="City/Town"
-                name="city_addresses"
+                name="city"
                 value={["Tripoli", "Benghazi", "Misrata"]}
-                register={register("city_addresses")}
-                error={errors.city_addresses}
+                register={register("city")}
+                error={errors.city}
                 dropDownIcon={{
                   iconIsEnabled: true,
                   iconSrc: "/downwardArrow.png",
@@ -148,15 +146,15 @@ const AddNewWarehouseModal = (props: IProp) => {
             </div>
             <ReactHookFormInput
               label="Mobile Number"
-              name="phone_addresses"
+              name="phone"
               type="number"
-              register={register("phone_addresses")}
+              register={register("phone")}
             />
             {/* <ReactHookFormInput
               label="Email ID"
-              name="address_1_addresses"
+              name="address_1"
               type="string"
-              register={register("address_1_addresses")}
+              register={register("address_1")}
             /> */}
             <div className=".flex-type1 space-x-[5px]">
               <input
@@ -164,8 +162,8 @@ const AddNewWarehouseModal = (props: IProp) => {
                 // defaultChecked={user?.default_address_users === }
                 checked={addressIsDefault}
                 onClick={toggleDefaultAddressHandler}
-                {...register("default_addresses")}
-                name="default_addresses"
+                {...register("default")}
+                name="default"
               />
 
               <span>Set as Default</span>
