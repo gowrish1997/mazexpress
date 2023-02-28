@@ -27,17 +27,17 @@ interface ISignUp {
 }
 
 interface IUserProfile {
-    id_users?: number;
+    id?: string;
 
-    avatar_url_users: string;
-    email_users: string;
-    first_name_users: string;
-    last_name_users: string;
-    phone_users: string;
-    password_users?: string;
-    newPassword_users?: string;
-    is_notifications_enabled_users: boolean | 0 | 1;
-    default_language_users?: string;
+    avatar_url: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    phone: number;
+    password?: string;
+    newPassword?: string;
+    is_notifications_enabled: boolean | 0 | 1;
+    default_language: string;
 }
 
 export type { IUser, ISignUp, IUserProfile };

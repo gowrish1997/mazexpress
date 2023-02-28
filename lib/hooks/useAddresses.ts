@@ -3,7 +3,7 @@ import { IAddressProps } from "@/models/address.interface";
 
 export default function useAddresses(props: {
   user_id?: string | undefined;
-  id?: number | undefined;
+  id?: string | undefined;
 }) {
   let queryString = "";
   if (props?.user_id || props?.id) {
@@ -23,7 +23,7 @@ export default function useAddresses(props: {
     data: addresses,
     mutate: mutateAddresses,
     isLoading: addressesIsLoading,
-  } = useSWR<IAddressProps[]>(`/api/addresses` + queryString);
+  } = useSWR<any>(`/api/addresses` + queryString);
 
   return { addresses, mutateAddresses, addressesIsLoading };
 }

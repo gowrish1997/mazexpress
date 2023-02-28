@@ -3,10 +3,12 @@ import Image from "next/image";
 import logo from "../public/logo.png";
 import ShipmentCalculator from "@/components/LandingPage/ShipmentCalculator";
 import Footer from "@/components/LandingPage/Footer";
-import { useSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import Link from "next/link";
+import Head from "next/head";
 const Home = () => {
-  const { data: session, status: sessionStatus } = useSession()
-  
+  const { data: session, status: sessionStatus } = useSession();
+
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
   const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -29,11 +31,14 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log(session)
-  }, [sessionStatus])
+    console.log(session);
+  }, [sessionStatus]);
 
   return (
     <div className="">
+      <Head>
+        <title>MazExpress | Order to Libya from Turkey</title>
+      </Head>
       <div className="w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[14px] text-[#FFFFFF] font-[500] leading-[24px] ">
         Plan your eCommerce shipments in an instant. Estimate courier charges
         using our quick courier charges.
@@ -77,13 +82,33 @@ const Home = () => {
               </li>
             </ul>
           </div>
-
-          <div className="space-x-[20px]">
-            <button>Sign in</button>
-            <button className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] ">
-              Login
-            </button>
-          </div>
+          {session?.user ? (
+            <div className="flex items-center space-x-[20px]">
+              {/* insert user data here */}
+              <div className="flex items-center space-x-[20px]">
+                <p>{session.user.email}</p>
+                <Link href={'/orders'} >My orders</Link>
+              </div>
+              <div>
+                <button
+                  onClick={() => signOut()}
+                  className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="space-x-[20px]">
+              <Link href={"/auth/gate?signup"}>Sign up</Link>
+              <button
+                onClick={() => signIn()}
+                className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
+              >
+                Login
+              </button>
+            </div>
+          )}
         </div>
         <div className="flex-type5 mt-[55px] w-[100%]" ref={trackingSectionRef}>
           <div className="w-[65%] flex flex-row justify-center space-x-[20px]">

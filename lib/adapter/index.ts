@@ -2,11 +2,12 @@ import { MazDataSource } from "@/lib/adapter/data-source";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import type { Adapter } from "maz-adapter";
 
-export function MazAdapter(): Adapter {
+export async function MazAdapter(): Promise<Adapter> {
+  let clientDS = await MazDataSource;
+
   return {
     async createUser(user) {
-      let clientDS = await MazDataSource;
-      if (clientDS) {
+      if (clientDS !== null) {
         console.log(user);
         //   const createduser = await MazDataSource.manager.create(UserEntity, user);
         //   console.log(createduser);
@@ -24,8 +25,7 @@ export function MazAdapter(): Adapter {
     },
 
     async getUser(id) {
-      let clientDS = await MazDataSource;
-      if (clientDS) {
+      if (clientDS !== null) {
         const user = clientDS.manager.findOneBy(UserEntity, {
           id: id,
         });
@@ -36,7 +36,7 @@ export function MazAdapter(): Adapter {
 
     async getUserByEmail(email) {
       let clientDS = await MazDataSource;
-      if (clientDS) {
+      if (clientDS !== null) {
         const user = await clientDS.manager.findOneBy(UserEntity, {
           email: email,
         });

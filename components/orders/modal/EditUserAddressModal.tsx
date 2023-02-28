@@ -14,7 +14,7 @@ import fetchJson from "@/lib/fetchJson";
 interface IProp {
   show: boolean;
   close: () => void;
-  address: IAddressProps;
+  // address: IAddressProps;
   update: () => Promise<IAddressProps[] | undefined>;
 }
 
@@ -27,7 +27,7 @@ const schema = yup
 
 const EditUserAddressModal = (props: IProp) => {
   const [country, setCountry] = useState(props.address.country_addresses);
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, status: userIsLoading } = useUser();
   const {
     register,
     handleSubmit,

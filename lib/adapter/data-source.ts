@@ -1,5 +1,5 @@
-import { AddressEntity } from './entities/AddressEntity';
-import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
+import { AddressEntity } from "./entities/AddressEntity";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 import { DataSource } from "typeorm";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import { AccountEntity } from "@/lib/adapter/entities/AccountEntity";
@@ -20,19 +20,20 @@ const connexion = async () => {
       SessionEntity,
       VerificationTokenEntity,
       AddressEntity,
-      OrderEntity
+      OrderEntity,
     ],
     synchronize: true,
     logging: false,
   });
   try {
     const MazDataSource = await ConnectionDS.initialize();
+    
     console.log("Maz data source initialization complete!");
     return MazDataSource;
   } catch (err) {
     console.error("Error during Data Source initialization", err);
     return null;
-  }
+  } 
 };
 
 export const MazDataSource = connexion();

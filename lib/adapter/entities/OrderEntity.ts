@@ -1,8 +1,13 @@
-import { AddressEntity } from '@/lib/adapter/entities/AddressEntity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+} from "typeorm";
 import type { Relation } from "typeorm";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
-
 
 export enum OrderStatus {
   I = "in-transit",
@@ -11,17 +16,13 @@ export enum OrderStatus {
   P = "pending",
 }
 
-
 @Entity({ name: "orders" })
 export class OrderEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Column({ type: "uuid" })
-  user_id!: string;
-
-  @Column({ type: "uuid" })
-  address_id!: string;
+  maz_id!: string;
 
   @Column({ type: "uuid" })
   reference_id!: string;
@@ -29,20 +30,20 @@ export class OrderEntity {
   @Column({ type: "int", nullable: true, default: null })
   shipping_amt!: number;
 
-  @Column({ type: "varchar", nullable: true, default: null })
-  created_on!: string;
+  @CreateDateColumn()
+  created_on!: Date;
 
-  @Column({ type: "varchar", nullable: true, default: null })
-  shipped_on!: string;
+  @Column({ type: "timestamp", nullable: true, default: null })
+  shipped_on!: Date;
 
-  @Column({ type: "varchar", nullable: true, default: null })
-  delivered_on!: string;
+  @Column({ type: "timestamp", nullable: true, default: null })
+  delivered_on!: Date;
 
-  @Column({ type: "varchar", nullable: true, default: null })
-  received_on!: string | null;
+  @Column({ type: "timestamp", nullable: true, default: null })
+  received_on!: Date;
 
   @Column({ type: "enum", enum: OrderStatus, default: OrderStatus.P })
-  status!: string | null;
+  status!: string;
 
   @Column({ type: "varchar" })
   store_link!: string;

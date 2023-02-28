@@ -18,6 +18,7 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   return new Promise(async (resolve, reject) => {
+    let DS = await MazDataSource;
     switch (req.method) {
       case "GET":
         // search
@@ -33,7 +34,6 @@ export default function handler(
           //   });
         }
 
-        let DS = await MazDataSource;
         if (req.query.id) {
           // single response
           const id = req.query.id;
@@ -147,39 +147,47 @@ export default function handler(
         break;
 
       case "PUT":
-        console.log("request received");
+        // console.log("request received");
         if (req.query.id) {
           const id = req.query.id;
           const fields = { ...req.body };
-          if (req.body.password_users) {
+
+          if (req.body.password) {
             // change pass
-            const hash = hashPassword(req.body.password_users);
-            fields.password_users = hash;
+            const hash = hashPassword(req.body.password);
+            fields.password = hash;
           }
-          db("users")
-            .where("id_users", id)
-            .update(fields)
-            .then((data: any) => {
-              console.log("updated user!");
-              db.select(
-                "id_users",
-                "first_name_users",
-                "last_name_users",
-                "email_users",
-                "phone_users",
-                "default_address_users",
-                "avatar_url_users",
-                "is_notifications_enabled_users",
-                "is_admin_users",
-                "is_logged_in_users"
-              )
-                .from("users")
-                .where("id_users", id)
-                .then((data: any) => {
-                  res.status(200).json(data);
-                  resolve(data);
-                });
-            });
+          let updateUserResult = await DS?.getRepository(UserEntity).update(
+            id,
+            fields
+          );
+          console.log(updateUserResult);
+          res.status(200).json({data: updateUserResult});
+          resolve(updateUserResult);
+          // db("users")
+          //   .where("id_users", id)
+          //   .update(fields)
+          //   .then((data: any) => {
+          //     console.log("updated user!");
+          //     db.select(
+          //       "id_users",
+          //       "first_name_users",
+          //       "last_name_users",
+          //       "email_users",
+          //       "phone_users",
+          //       "default_address_users",
+          //       "avatar_url_users",
+          //       "is_notifications_enabled_users",
+          //       "is_admin_users",
+          //       "is_logged_in_users"
+          //     )
+          //       .from("users")
+          //       .where("id_users", id)
+          //       .then((data: any) => {
+          //         res.status(200).json(data);
+          //         resolve(data);
+          //       });
+          //   });
         } else {
           // error response
           res.status(200).json({ msg: "invalid url params" });

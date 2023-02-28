@@ -2,15 +2,15 @@ import React from "react";
 import LineItem from "./LineItem";
 import { nanoid } from "nanoid";
 import LiveOrderLineItem from "./LiveOrderLineItem";
-import { IOrderResponse } from "@/models/order.interface";
 import { IUser } from "@/models/user.interface";
 import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
 import StatLineItem from "./StatLineItem";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
 interface TableProps {
   headings: Array<string>;
-  rows: Array<IOrderResponse> | Array<IUser>;
+  rows: Array<OrderEntity> | Array<IUser>;
   type: string;
   onSelect?: (e: any, type: string) => void;
   selectedOrder?: string[] | number[];
@@ -58,7 +58,7 @@ const Table = (props: TableProps) => {
                       <LiveOrderLineItem
                         key={nanoid()}
                         onSelect={props.onSelect!}
-                        row={data as IOrderResponse}
+                        row={data as OrderEntity}
                         type={props.type}
                         selectedOrder={props.selectedOrder as string[]}
                       />
@@ -68,7 +68,7 @@ const Table = (props: TableProps) => {
                       <StatLineItem
                         key={nanoid()}
                         onSelect={props.onSelect!}
-                        row={data as IOrderResponse}
+                        row={data as OrderEntity}
                         type={props.type}
                       />
                     );
@@ -86,7 +86,7 @@ const Table = (props: TableProps) => {
                     return (
                       <LineItem
                         key={nanoid()}
-                        row={data as IOrderResponse}
+                        row={data as OrderEntity}
                         type={props.type}
                       />
                     );

@@ -12,8 +12,9 @@ import useAllUser from "@/lib/hooks/useAllUsers";
 import useTracking from "@/lib/hooks/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
 import { IUser } from "@/models/user.interface";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 interface IProp {
-  row: IOrderResponse;
+  row: OrderEntity;
   type: string;
   onSelect: (e: string, type: string) => void;
   selectedOrder: string[];
@@ -109,7 +110,10 @@ const LiveOrderLineItem = (props: IProp) => {
   // };
 
   return (
-    <tr className="h-min  text-[16px] text-[#000000] font-[400] leading-[22.4px] relative  " style={inputCheckedStateHandler()?{backgroundColor:'#EDF5F9',}:{}} >
+    <tr
+      className="h-min  text-[16px] text-[#000000] font-[400] leading-[22.4px] relative  "
+      style={inputCheckedStateHandler() ? { backgroundColor: "#EDF5F9" } : {}}
+    >
       {(props.type == "pending" ||
         props.type == "shipments" ||
         props.type == "in-transit" ||

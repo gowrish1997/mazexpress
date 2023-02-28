@@ -14,25 +14,26 @@ export default function useUser({
   if (session?.user.email) {
     queryString += `?email=${session.user.email}`;
   }
-  const {
-    data: user,
-    mutate: mutateUser,
-    isLoading: userIsLoading,
-  } = useSWR<any>(queryString, {
-    revalidateIfStale: true,
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
-  });
+  const user = session?.user;
+  // const {
+  //   data: user,
+  //   mutate: mutateUser,
+  //   isLoading: userIsLoading,
+  // } = useSWR<any>(queryString, {
+  //   revalidateIfStale: true,
+  //   revalidateOnFocus: true,
+  //   revalidateOnReconnect: true,
+  // });
 
   useEffect(() => {
     // console.log(session);
     if (user && session) {
-      if (user.is_admin === 1) {
+      if (session.is_admin) {
         if (redirectIfFound && !router.pathname.startsWith("/admin")) {
           router.push("/admin");
         }
       }
-      if (user.is_admin === 0) {
+      if (session.is_admin) {
         if (
           redirectIfFound &&
           (router.pathname.startsWith("/admin") ||
@@ -44,5 +45,5 @@ export default function useUser({
     }
   }, [redirectIfFound, router, user]);
 
-  return { user, mutateUser, userIsLoading };
+  return { user, status };
 }

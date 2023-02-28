@@ -6,14 +6,15 @@ import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import { IAddressProps } from "@/models/address.interface";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
+import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
-  const [editableAddress, setEditableAddress] = useState<IAddressProps>();
+  // const [editableAddress, setEditableAddress] = useState<IAddressProps>();
 
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, status: userIsLoading } = useUser();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
     user_id: user?.id,
   });
@@ -22,32 +23,39 @@ const AddressBook = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
 
-  const toggleEditUserAddressModal = (addressId?: number) => {
+  const toggleEditUserAddressModal = (addressId?: string) => {
     if (showEditUserAddressModal) {
       setShowEditUserAddressModal(false);
     } else {
       setShowEditUserAddressModal(true);
-      const address = addresses?.find((data) => {
-        return data.id_addresses == addressId;
-      });
-      setEditableAddress(address);
+      // const address = addresses?.find((data) => {
+      //   return data.id == addressId;
+      // });
+      // setEditableAddress(address);
     }
   };
+
+  useEffect(() => {
+    console.log(addresses)
+  }, [addressesIsLoading])
 
   return (
     <>
       <PageHeader content="My Address Book" title="Address Book | MazExpress" />
       <div className="grid grid-cols-3 gap-3 py-5">
+        {
+          addressesIsLoading && <div>loading</div>
+        }
         {addresses &&
-          addresses
-            ?.filter((el) => el.status_addresses === 1)
-            .map((data) => {
+          addresses.data
+            // ?.filter((el) => el.status === 1)
+            .map((data: AddressEntity) => {
               return (
                 <UserSavedAddress
-                  key={data.id_addresses}
+                  key={data.id}
                   address={data}
                   edit={toggleEditUserAddressModal}
-                  update={mutateAddresses}
+                  // update={() => {}}
                 />
               );
             })}
@@ -66,14 +74,14 @@ const AddressBook = () => {
         close={toggleAddNewAddressModal}
         update={mutateAddresses}
       />
-      {showEditUserAddressModal && (
+      {/* {showEditUserAddressModal && (
         <EditUserAddressModal
           update={mutateAddresses}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
-          address={editableAddress!}
+          // address={editableAddress!}
         />
-      )}
+      )} */}
     </>
   );
 };

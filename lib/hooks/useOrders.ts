@@ -1,5 +1,5 @@
+import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
 import useSWR from "swr";
-import { IOrderResponse } from "@/models/order.interface";
 
 interface IProps {
   user_id?: string;
@@ -12,8 +12,8 @@ interface IProps {
 }
 type Data = {
   msg?: string;
-  data?: IOrderResponse[];
-  total_count?: number;
+  data?: OrderEntity[];
+  count?: number;
 };
 
 export default function useOrders(props: IProps) {

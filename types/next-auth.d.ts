@@ -1,3 +1,4 @@
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import NextAuth, { DefaultSession } from "next-auth"
 
 declare module "next-auth" {
@@ -5,10 +6,7 @@ declare module "next-auth" {
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
-    user: {
-      /** The user's postal address. */
-      address: string
-    } & DefaultSession["user"];
+    user: UserEntity & DefaultSession["user"];
 
     is_admin: boolean
   }

@@ -14,30 +14,30 @@ import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
+import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 
 const schema = yup
   .object({
-    reference_id_orders: yup.string().required(),
-    store_link_orders: yup.string().required(),
+    reference_id: yup.string().required(),
+    store_link: yup.string().required(),
   })
   .required();
 
 const AddNewOrder = () => {
-  //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
   const [editableAddress, setEditableAddress] = useState<IAddressProps>();
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
-  const { user, mutateUser } = useUser();
+  const { user, status: userIsLoading } = useUser();
   const { addresses, mutateAddresses } = useAddresses({
-    user_id: user?.id_users,
+    user_id: user?.id,
   });
 
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
   const defaultAddressHandler = () => {
-    mutateAddresses();
-    const address = addresses?.find(
-      (el) => el.id_addresses === user?.default_address_users
+    // mutateAddresses();
+    const address = addresses?.data.find(
+      (el: AddressEntity) => el.id === user?.default_address
     );
 
     return address;
@@ -49,12 +49,14 @@ const AddNewOrder = () => {
 
     formState: { errors },
   } = useForm<{
-    reference_id_orders: string;
-    store_link_orders: string;
-    address_id: number;
+    reference_id: string;
+    store_link: string;
+    address_id: string;
   }>({
     defaultValues: {
-      address_id: defaultAddressHandler()?.id_addresses,
+      address_id: defaultAddressHandler()?.id,
+      reference_id: "euirfismeodicokew",
+      store_link: "flipkart.com",
     },
     resolver: yupResolver(schema),
   });
@@ -63,33 +65,33 @@ const AddNewOrder = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
 
-  const toggleEditUserAddressModal = (addressId?: number) => {
+  const toggleEditUserAddressModal = (addressId?: string) => {
     // console.log(addressId);
     if (showEditUserAddressModal) {
       setShowEditUserAddressModal(false);
     } else {
       setShowEditUserAddressModal(true);
-      const address = addresses?.find((data) => {
-        return data.id_addresses == addressId;
+      const address = addresses?.find((data: AddressEntity) => {
+        return data.id == addressId;
       });
       setEditableAddress(address);
     }
   };
 
   const onSubmit: SubmitHandler<{
-    reference_id_orders: string;
-    store_link_orders: string;
-    address_id: number;
+    reference_id: string;
+    store_link: string;
+    address_id: string;
   }> = async (data) => {
-    // console.log(data);
+    console.log(data);
     try {
       let orderObj = {
-        user_id: user?.id_users,
+        user_id: user?.id,
         address_id: data.address_id,
-        reference_id_orders: data.reference_id_orders,
-        store_link_orders: data.store_link_orders,
-        status_orders: "pending",
-        shipping_amt_orders: 499,
+        reference_id: data.reference_id,
+        store_link: data.store_link,
+        status: "pending",
+        shipping_amt: 499,
       };
       const result1 = await fetchJson(`/api/orders`, {
         method: "POST",
@@ -100,9 +102,7 @@ const AddNewOrder = () => {
 
       let trackingObj = {
         order_id: result1.data,
-        // stage_tracking: req.body.stage_tracking,
-        // poc_tracking: req.body.poc_tracking,
-        user_id: user?.id_users,
+        user_id: user?.id,
       };
       const result2 = await fetchJson(`/api/tracking`, {
         method: "POST",
@@ -125,6 +125,7 @@ const AddNewOrder = () => {
         timeOut: 3000,
       });
     }
+
     // if (user) {
     //   let newUserData = { ...user };
     //   newUserData.default_address_users = data.address_id;
@@ -133,6 +134,9 @@ const AddNewOrder = () => {
     // console.log(data);
   };
 
+  useEffect(() => {
+    console.log(addresses);
+  }, [addresses]);
   return (
     <>
       <PageHeader
@@ -151,17 +155,17 @@ const AddNewOrder = () => {
         <div className="flex-type1 space-x-[10px] mt-[25px]">
           <ReactHookFormInput
             label="Reference ID"
-            name="reference_id_orders"
+            name="reference_id"
             type="string"
-            register={register("reference_id_orders")}
-            error={errors.reference_id_orders}
+            register={register("reference_id")}
+            error={errors.reference_id}
           />
           <ReactHookFormInput
             label="Store Link"
-            name="store_link_orders"
+            name="store_link"
             type="string"
-            register={register("store_link_orders")}
-            error={errors.store_link_orders}
+            register={register("store_link")}
+            error={errors.store_link}
           />
         </div>
         <div className="mt-[20px]">
@@ -177,20 +181,18 @@ const AddNewOrder = () => {
         </div>
         <div className="grid grid-cols-3 gap-3 py-5">
           {addresses !== undefined &&
-            addresses.length > 0 &&
-            addresses
-              .filter((el) => el.status_addresses === 1)
-              .map((data) => {
-                return (
-                  <UserSavedAddress
-                    key={data.id_addresses}
-                    address={data}
-                    register={register("address_id")}
-                    edit={toggleEditUserAddressModal}
-                    update={mutateAddresses}
-                  />
-                );
-              })}
+            addresses.data.length > 0 &&
+            addresses.data.map((data: AddressEntity) => {
+              return (
+                <UserSavedAddress
+                  key={data.id}
+                  address={data}
+                  register={register("address_id")}
+                  edit={toggleEditUserAddressModal}
+                  // update={mutateAddresses}
+                />
+              );
+            })}
         </div>
         <button
           className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"
@@ -210,7 +212,7 @@ const AddNewOrder = () => {
           update={mutateAddresses}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
-          address={editableAddress!}
+          // address={editableAddress!}
         />
       )}
     </>
