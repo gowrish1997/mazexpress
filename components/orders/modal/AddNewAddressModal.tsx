@@ -37,7 +37,7 @@ const AddNewAddressModal = (props: IProp) => {
   } = useForm<IAddressProps>({
     defaultValues: {
       address_1: "V5RH+HVQ",
-      address_2: "Amr Bin al A'ss St",
+      address_2: "Amr Bin al A's St",
       city: "Tripoli",
       country: "Libya",
       default: "on",
