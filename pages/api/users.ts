@@ -1,24 +1,20 @@
 import { MazAdapter } from "@/lib/adapter";
-import { INotificationConfig } from "@/models/notification.interface";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { hashPassword } from "@/lib/bcrypt";
 import { db } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import { MazDataSource } from "@/lib/adapter/data-source";
-
-type Data = {
-  msg?: string;
-  data?: any;
-  total_count?: number;
-};
+import { APIResponse } from "@/models/api.model";
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<APIResponse<UserEntity>>
 ) {
   return new Promise(async (resolve, reject) => {
     let DS = await MazDataSource;
+    let responseObj = new APIResponse<UserEntity>();
+
     switch (req.method) {
       case "GET":
         // search
@@ -55,13 +51,28 @@ export default function handler(
               id: id as string,
             },
           });
-          res.status(200).json({ data: idUser });
-          resolve({ data: idUser });
+          if (idUser) {
+            responseObj.count = 1;
+            responseObj.data = [idUser];
+            responseObj.ok = true;
+            res.status(200).json(responseObj);
+            resolve(responseObj);
+          } else {
+            responseObj.count = 0;
+            responseObj.data = null;
+            responseObj.ok = true;
+            responseObj.msg = "No user found with this id";
+            res.status(200).json(responseObj);
+            resolve(responseObj);
+          }
         } else if (req.query.email) {
           let adapter = await MazAdapter();
           const user = adapter.getUserByEmail(req.query.email as string);
-          res.status(200).json({ data: user });
-          resolve({ data: user });
+          responseObj.count = 1;
+          responseObj.data = [user];
+          responseObj.ok = true;
+          res.status(200).json(responseObj);
+          resolve(responseObj);
         } else {
           // paginate
           // get results and count of results
@@ -93,11 +104,6 @@ export default function handler(
             UserEntity
           ).findAndCount();
 
-          let responseObj: Data = {
-            data: paginatedUsers,
-            total_count: allUsersCount ? allUsersCount[1] : 0,
-            msg: "successful",
-          };
           // console.log(responseObj);
           res.status(200).json(responseObj);
           resolve(responseObj);
@@ -112,7 +118,7 @@ export default function handler(
         // hash pass
         try {
           const hash = hashPassword(req.body.password);
-          let adapter = await MazAdapter()
+          let adapter = await MazAdapter();
           const createduser = await adapter.createUser({
             ...req.body,
             password: hash,
@@ -166,35 +172,17 @@ export default function handler(
             fields
           );
           console.log(updateUserResult);
-          res.status(200).json({ data: updateUserResult });
-          resolve(updateUserResult);
-          // db("users")
-          //   .where("id_users", id)
-          //   .update(fields)
-          //   .then((data: any) => {
-          //     console.log("updated user!");
-          //     db.select(
-          //       "id_users",
-          //       "first_name_users",
-          //       "last_name_users",
-          //       "email_users",
-          //       "phone_users",
-          //       "default_address_users",
-          //       "avatar_url_users",
-          //       "is_notifications_enabled_users",
-          //       "is_admin_users",
-          //       "is_logged_in_users"
-          //     )
-          //       .from("users")
-          //       .where("id_users", id)
-          //       .then((data: any) => {
-          //         res.status(200).json(data);
-          //         resolve(data);
-          //       });
-          //   });
+          responseObj.data = [];
+          responseObj.count = 0;
+          responseObj.msg = "updated user";
+          res.status(200).json(responseObj);
+          resolve(responseObj);
         } else {
           // error response
-          res.status(200).json({ msg: "invalid url params" });
+          responseObj.data = null;
+          responseObj.count = 0;
+          responseObj.msg = "invalid url params";
+          res.status(500).json(responseObj);
           reject();
         }
         break;

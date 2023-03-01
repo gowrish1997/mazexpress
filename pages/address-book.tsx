@@ -4,9 +4,8 @@ import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
-import { IAddressProps } from "@/models/address.interface";
-import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
+import { createToast } from "@/lib/toasts";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -35,34 +34,44 @@ const AddressBook = () => {
     }
   };
 
+  const updateAddresses = () => {
+    createToast({
+      type: "success",
+      message: "Created new address.",
+      timeOut: 2000,
+      title: "Success",
+    });
+    mutateAddresses();
+  };
+
   useEffect(() => {
-    console.log(addresses)
-  }, [addressesIsLoading])
+    console.log(addresses);
+  }, [addressesIsLoading]);
 
   return (
     <>
       <PageHeader content="My Address Book" title="Address Book | MazExpress" />
-      <div className="grid grid-cols-3 gap-3 py-5">
-        {
-          addressesIsLoading && <div>loading</div>
-        }
-        {addresses &&
-          addresses.data
-            // ?.filter((el) => el.status === 1)
-            .map((data: AddressEntity) => {
+      {addresses?.count === 0 ? (
+        <div className="py-5">No addresses yet. Add new address now!</div>
+      ) : (
+        <div className="grid grid-cols-3 gap-3 py-5">
+          {addressesIsLoading && <div>loading</div>}
+          {addresses?.data &&
+            addresses.data.map((data) => {
               return (
                 <UserSavedAddress
-                  key={data.id}
-                  address={data}
+                  key={(data as AddressEntity).id}
+                  address={data as AddressEntity}
                   edit={toggleEditUserAddressModal}
                   // update={() => {}}
                 />
               );
             })}
-      </div>
+        </div>
+      )}
       <div>
         <button
-          className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"
+          className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"
           onClick={toggleAddNewAddressModal}
         >
           + Add New
@@ -72,7 +81,7 @@ const AddressBook = () => {
       <AddNewAddressModal
         show={showAddNewAddressModal}
         close={toggleAddNewAddressModal}
-        update={mutateAddresses}
+        update={updateAddresses}
       />
       {/* {showEditUserAddressModal && (
         <EditUserAddressModal

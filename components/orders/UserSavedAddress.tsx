@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { IAddress, IAddressProps } from "@/models/address.interface";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";

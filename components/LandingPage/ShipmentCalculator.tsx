@@ -113,7 +113,7 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
             Dimensions ( Optional )
           </label>
           <div className="flex-type1 space-x-[5px]">
-            {dimensions.map((data, index) => {
+            {/* {dimensions.map((data, index) => {
               return (
                 <>
                   <div
@@ -137,7 +137,7 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
                   )}
                 </>
               );
-            })}
+            })} */}
           </div>
         </div>
         <div className="flex-type1">
@@ -173,5 +173,5 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
-ShipmentCalculator.displayName = "ShipmentCalculator"
+ShipmentCalculator.displayName = "ShipmentCalculator";
 export default ShipmentCalculator;

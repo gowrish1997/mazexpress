@@ -40,27 +40,27 @@ const ShipmentCalculatorDropdown = (props: IProp) => {
         className={
           "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative "
         }
-        style={{ borderColor: props.error ? "#f02849" : "" }}
+        // style={{ borderColor: props.error ? "#f02849" : "" }}
         onClick={toggleAdminOptionCard}
       >
         <input
           id={props.name}
           type={props.type}
           {...props.register}
-          value={props.value}
+          // value={props.value}
           className="w-full h-full pl-[5px] rounded-[5px] focus:outline-none capitalize"
           name={props.name}
           disabled={props.disabled}
         />
         {props.IconEnabled ? (
           <div className="absolute h-[6px] w-[8px] cursor-pointer right-[8px]  ">
-            <Image
+            {/* <Image
               src="/downwardArrow.png"
               fill={true}
               alt="arrow"
               objectFit="cover"
               className="cursor-pointer absolute right-[8px] "
-            />
+            /> */}
           </div>
         ) : (
           <></>

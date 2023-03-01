@@ -1,4 +1,4 @@
-import { IToast } from "@/models/toast.interface";
+import { IToast } from "@/models/toast.model";
 import {
   NotificationContainer,
   NotificationManager,

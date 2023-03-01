@@ -14,9 +14,6 @@ export class AddressEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  // @Column({ type: "uuid" })
-  // user_id!: string;
-
   @Column({ type: "varchar" })
   address_1!: string;
 

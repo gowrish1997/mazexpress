@@ -32,6 +32,7 @@ const connexion = async () => {
     ],
     synchronize: true,
     logging: false,
+    
   });
   try {
     const MazDataSource = await ConnectionDS.initialize();

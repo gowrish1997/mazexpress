@@ -1,5 +1,6 @@
+import { APIResponse } from "@/models/api.model";
 import useSWR from "swr";
-import { IAddressProps } from "@/models/address.interface";
+import { AddressEntity } from "../adapter/entities/AddressEntity";
 
 export default function useAddresses(props: {
   user_id?: string | undefined;
@@ -23,7 +24,7 @@ export default function useAddresses(props: {
     data: addresses,
     mutate: mutateAddresses,
     isLoading: addressesIsLoading,
-  } = useSWR<any>(`/api/addresses` + queryString);
+  } = useSWR<APIResponse<AddressEntity>>(`/api/addresses` + queryString);
 
   return { addresses, mutateAddresses, addressesIsLoading };
 }
