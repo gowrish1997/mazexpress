@@ -87,7 +87,7 @@ const Home = () => {
               {/* insert user data here */}
               <div className="flex items-center space-x-[20px]">
                 <p>{session.user.email}</p>
-                <Link href={'/orders'} >My orders</Link>
+                <Link href={"/orders"}>My orders</Link>
               </div>
               <div>
                 <button

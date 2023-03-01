@@ -2,7 +2,6 @@ import React from "react";
 import LineItem from "./LineItem";
 import { nanoid } from "nanoid";
 import LiveOrderLineItem from "./LiveOrderLineItem";
-import { IUser } from "@/models/user.interface";
 import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
 import StatLineItem from "./StatLineItem";

@@ -63,15 +63,16 @@ const AddNewAddressModal = (props: IProp) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(address),
       });
-      // console.log(addressResult);
+      console.log(addressResult);
 
       // set default if checked
       if (data.default === "on") {
-        const userResult = fetchJson(`/api/users?id=${user?.id}`, {
+        const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ default_address: addressResult.data }),
+          body: JSON.stringify({ default_address: addressResult.data[0] }),
         });
+
       }
 
       props.close();

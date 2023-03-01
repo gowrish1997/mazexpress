@@ -1,3 +1,4 @@
+import { APIResponse } from "@/models/api.model";
 import { MazDataSource } from "@/lib/adapter/data-source";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
@@ -17,6 +18,8 @@ export default function handler(
   //   console.log("");
   return new Promise(async (resolve, reject) => {
     let DS = await MazDataSource;
+    let responseObj = new APIResponse<AddressEntity>();
+
     switch (req.method) {
       case "GET":
         // console.log("from addresses, user=", req.query.user);
@@ -30,8 +33,12 @@ export default function handler(
             }
           );
           if (addresses) {
-            res.status(200).json({ data: addresses[0], count: addresses[1] });
-            resolve(addresses);
+            responseObj.count = addresses[1];
+            responseObj.data = addresses[0];
+            responseObj.ok = true;
+
+            res.status(200).json(responseObj);
+            resolve(responseObj);
           }
         } else if (req.query.id) {
           // single response
@@ -40,24 +47,35 @@ export default function handler(
             id: id as string,
           });
           if (addresses) {
-            res.status(200).json({ data: addresses, count: 1 });
-            resolve(addresses);
+            responseObj.count = 1;
+            responseObj.data = [addresses];
+            responseObj.ok = true;
+            res.status(200).json(responseObj);
+            resolve(responseObj);
           }
         } else {
           let addresses = await DS?.getRepository(AddressEntity).findAndCount();
           if (addresses) {
-            res.status(200).json({ data: addresses[0], count: addresses[1] });
-            resolve(addresses);
+            responseObj.count = addresses[1];
+            responseObj.data = addresses[0];
+            responseObj.ok = true;
+            res.status(200).json(responseObj);
+            resolve(responseObj);
           }
         }
         break;
 
       case "POST":
         const fields = { ...req.body };
-        let insertResult = await DS?.getRepository(AddressEntity).insert(fields);
+        let insertResult = await DS?.getRepository(AddressEntity).insert(
+          fields
+        );
         if (insertResult) {
-          res.status(200).json({ data: insertResult.identifiers[0].id, count: 1 });
-          resolve(insertResult);
+          responseObj.count = 1;
+          responseObj.data = [insertResult.identifiers[0].id];
+          responseObj.ok = true;
+          res.status(200).json(responseObj);
+          resolve(responseObj);
         }
         break;
 

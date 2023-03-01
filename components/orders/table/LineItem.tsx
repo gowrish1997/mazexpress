@@ -1,11 +1,7 @@
-import React, { createRef, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import OrderOptionModal from "../modal/OrderOptionModal";
-
-import { IOrderResponse } from "@/models/order.interface";
 import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import useTracking from "@/lib/hooks/useTracking";
@@ -13,16 +9,16 @@ import { getDateInStringFormat } from "@/lib/helper";
 import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
-import useAllUser from "@/lib/hooks/useAllUsers";
-import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
+
 interface IProp {
   row: OrderEntity;
   type: string;
 }
 
 const LineItem = (props: IProp) => {
-//   console.log(props.row);
+  //   console.log(props.row);
   const trigger = useRef<any>();
 
   const { user, status: userIsLoading } = useUser();
@@ -31,7 +27,7 @@ const LineItem = (props: IProp) => {
     user_id: user?.id,
   });
 
-//   console.log(addresses);
+  //   console.log(addresses);
   const { tracking, trackingIsLoading, mutateTracking } = useTracking({
     order_id: props.row.id,
   });
@@ -67,9 +63,13 @@ const LineItem = (props: IProp) => {
 
   useEffect(() => {
     // console.log("tracking rerender");
-    if (tracking !== undefined && tracking.data.length > 0) {
+    if (
+      tracking?.data !== undefined &&
+      tracking?.data !== null &&
+      tracking?.data.length > 0
+    ) {
       // sort and set delivery
-      let latestUpdate = [...tracking.data].sort(
+      let latestUpdate = [...(tracking.data as TrackingEntity[])].sort(
         (a, b) => b.stage - a.stage
       )[0];
       let newDate = new Date(latestUpdate?.created_on);
@@ -88,12 +88,7 @@ const LineItem = (props: IProp) => {
       <td className={`td5 `} style={{}}>
         <div className="flex flex-row items-center">
           <span className="address_td capitalize ">
-            {" "}
-            {
-              addresses?.data?.find(
-                (el: AddressEntity) => el.id === props.row.address.id
-              )?.tag
-            }
+            {props.row.address.city}
           </span>
 
           {user?.default_address === props.row.address.id && (

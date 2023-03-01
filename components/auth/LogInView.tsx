@@ -9,6 +9,7 @@ import { signIn } from "next-auth/react";
 import { createToast } from "@/lib/toasts";
 import Image from "next/dist/client/image";
 import google_logo from "@/public/google.png";
+import { APIResponse } from "@/models/api.model";
 
 type Inputs = {
   password: string;
@@ -44,19 +45,19 @@ const LogInComponent = (props: any) => {
       redirect: false,
       password: data.password,
       username: data.email,
-      callbackUrl: "http://localhost:3000/",
+      // callbackUrl: process.env.NEXTAUTH_URL,
     });
-    console.log(response)
+    // console.log(response);
     if (response?.ok === false) {
       // no user found
       createToast({
         type: "error",
-        message: "No user found with this email id",
-        title: "No user found",
+        message: "Incorrect login credentials",
+        title: "Login failed",
         timeOut: 2000,
       });
     } else {
-      router.push('/')
+      router.push("/");
     }
   };
 
@@ -180,7 +181,13 @@ const LogInComponent = (props: any) => {
         className="p-3 flex items-center justify-center border text-[14px] rounded text-center w-full transition duration-300 hover:shadow-lg hover:ring-2 manRope"
         onClick={googleSignInHandler}
       >
-        <Image src={google_logo} alt="google logo" width={20} height={20} className='mr-3' />
+        <Image
+          src={google_logo}
+          alt="google logo"
+          width={20}
+          height={20}
+          className="mr-3"
+        />
         Sign in with google
       </button>
     </div>

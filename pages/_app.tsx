@@ -19,7 +19,6 @@ export default function App({
 }: // pageProps,
 AppProps) {
   const router = useRouter();
-
   if (router.pathname.startsWith("/auth/gate")) {
     // no frame
     return (

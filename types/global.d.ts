@@ -1,9 +1,11 @@
+import type { DataSource } from "typeorm";
 // global.d.ts
 
-export {};
-
 declare global {
-  interface Window {
-    handleToken: (token: any) => void;
-  }
+  /*~ Here, declare things that go in the global namespace, or augment
+   *~ existing declarations in the global namespace
+   */
+  var db: DataSource | undefined
 }
+
+export {};

@@ -10,8 +10,8 @@ import GreyRadioButton from "../../../public/grey_svg.svg";
 import useAllUser from "@/lib/hooks/useAllUsers";
 import useTracking from "@/lib/hooks/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
-import { IUser } from "@/models/user.interface";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 interface IProp {
   row: OrderEntity;
   type: string;
@@ -133,10 +133,10 @@ const LiveOrderLineItem = (props: IProp) => {
       )}
 
       <td className={`flex flex-row justify-start items-center capitalize`}>
-        {allUser && (allUser as IUser)?.avatar_url_users !== undefined ? (
+        {allUser && (allUser as UserEntity)?.avatar_url !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
             <Image
-              src={"/user-images/" + (allUser as IUser)?.avatar_url_users}
+              src={"/user-images/" + (allUser as UserEntity)?.avatar_url}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"
@@ -148,9 +148,9 @@ const LiveOrderLineItem = (props: IProp) => {
           </div>
         )}
         <span className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis ">
-          {(allUser as IUser)?.first_name_users +
+          {(allUser as UserEntity)?.first_name +
             " " +
-            (allUser as IUser)?.last_name_users}
+            (allUser as UserEntity)?.last_name}
         </span>
       </td>
       <td

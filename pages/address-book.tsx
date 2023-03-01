@@ -46,6 +46,7 @@ const AddressBook = () => {
 
   useEffect(() => {
     console.log(addresses);
+    console.log(user)
   }, [addressesIsLoading]);
 
   return (

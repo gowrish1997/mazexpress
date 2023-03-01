@@ -1,6 +1,7 @@
 import { MazDataSource } from "@/lib/adapter/data-source";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+
 import type { Adapter } from "maz-adapter";
+import { UserEntity } from "./entities/UserEntity";
 
 export async function MazAdapter(): Promise<Adapter> {
   let clientDS = await MazDataSource;
@@ -8,16 +9,10 @@ export async function MazAdapter(): Promise<Adapter> {
   return {
     async createUser(user) {
       if (clientDS !== null) {
-        console.log(user);
-        //   const createduser = await MazDataSource.manager.create(UserEntity, user);
-        //   console.log(createduser);
-        const createduser = clientDS
-          .createQueryBuilder()
-          .insert()
-          .into(UserEntity)
-          .values(user)
-          .execute();
+        // console.log(user);
+        const createduser = await clientDS.manager.create(UserEntity, user);
         console.log(createduser);
+
         // return true;
         return createduser;
       }

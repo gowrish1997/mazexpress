@@ -11,26 +11,28 @@ import { useRouter } from "next/router";
 import useOrder from "@/lib/hooks/useOrder";
 import useTracking from "@/lib/hooks/useTracking";
 import Link from "next/link";
+import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
 
 const TrackOrder = (props: any) => {
   const router = useRouter();
   const { user, status: userIsLoading } = useUser();
   const { orders, ordersIsLoading } = useOrders({ user_id: user?.id });
   const { order, mutateOrder, orderIsLoading } = useOrder({
-    id: router.query.id_orders as string,
+    id: router.query.id as string,
   });
   const { tracking, trackingIsLoading } = useTracking({
-    order_id: router.query.id_orders as string,
+    order_id: router.query.id as string,
   });
 
   const [packageStatus, setPackageStatus] = useState(0);
 
   useEffect(() => {
-    // console.log(tracking);
-    if (tracking !== undefined) {
-      let sorted = [...tracking];
-      sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
-      setPackageStatus(sorted.pop()?.stage_tracking);
+    console.log(tracking);
+    if (tracking !== undefined && tracking.data) {
+      let sorted = [...(tracking.data as TrackingEntity[])];
+      sorted.sort((a, b) => a?.stage - b?.stage);
+      let latestStage = sorted.pop()?.stage!;
+      setPackageStatus(latestStage);
     }
   }, [tracking]);
 

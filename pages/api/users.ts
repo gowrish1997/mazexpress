@@ -1,9 +1,8 @@
-import { MazAdapter } from "@/lib/adapter";
+import { UserEntity } from './../../lib/adapter/entities/UserEntity';
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { hashPassword } from "@/lib/bcrypt";
-import { db } from "@/lib/db";
+// import { db } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import { MazDataSource } from "@/lib/adapter/data-source";
 import { APIResponse } from "@/models/api.model";
 
@@ -66,10 +65,10 @@ export default function handler(
             resolve(responseObj);
           }
         } else if (req.query.email) {
-          let adapter = await MazAdapter();
-          const user = adapter.getUserByEmail(req.query.email as string);
+          // let adapter = await MazAdapter();
+          // const user = adapter.getUserByEmail(req.query.email as string);
           responseObj.count = 1;
-          responseObj.data = [user];
+          responseObj.data = [];
           responseObj.ok = true;
           res.status(200).json(responseObj);
           resolve(responseObj);
@@ -114,18 +113,25 @@ export default function handler(
       case "POST":
         // create new user
         // default icon avatar url
-        console.log(req.body);
+        // console.log(req.body);
+
         // hash pass
         try {
-          const hash = hashPassword(req.body.password);
-          let adapter = await MazAdapter();
-          const createduser = await adapter.createUser({
-            ...req.body,
-            password: hash,
-          });
-          console.log(createduser);
-          res.json(createduser);
-          resolve(createduser);
+          if (DS) {
+            console.log(DS.getMetadata(UserEntity))
+            const hash = hashPassword(req.body.password);
+
+            // const createduser = DS.getRepository(UserEntity).insert({
+            //   ...req.body,
+            //   password: hash,
+            // });
+            // responseObj.count = 1;
+            // responseObj.data = createduser?.identifiers[0].id;
+
+            // console.log(createduser);
+            // res.json(responseObj);
+            // resolve(responseObj);
+          }
           // db("notification_config")
           //   .where("id_notification_config", 3)
           //   .first()
@@ -191,13 +197,13 @@ export default function handler(
         if (req.query.id) {
           const id = req.query.id;
 
-          db("users")
-            .where("id_users", id)
-            .del()
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("users")
+          //   .where("id_users", id)
+          //   .del()
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           // error response
           res.status(200).json({ msg: "invalid url params" });

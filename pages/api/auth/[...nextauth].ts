@@ -155,8 +155,16 @@ export const authOptions: NextAuthOptions = {
       let dbuser: UserEntity = await adapter.getUserByEmail(
         token.email as string
       );
-      token.is_admin = dbuser.is_admin as boolean;
-      return token;
+      if(isNewUser) {
+        console.log('new user')
+        return token
+      }
+      if (dbuser) {
+        token.is_admin = dbuser.is_admin as boolean;
+        return token;
+      } else {
+        return token;
+      }
     },
   },
 
