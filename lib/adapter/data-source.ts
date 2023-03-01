@@ -1,3 +1,6 @@
+import { WarehouseEntity } from './entities/WarehouseEntity';
+import { NotificationConfigEntity } from './entities/NotificationConfigEntity';
+import { NotificationEntity } from './entities/NotificationEntity';
 import { AddressEntity } from "./entities/AddressEntity";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 import { DataSource } from "typeorm";
@@ -22,7 +25,10 @@ const connexion = async () => {
       VerificationTokenEntity,
       AddressEntity,
       OrderEntity,
-      TrackingEntity
+      TrackingEntity,
+      NotificationEntity,
+      NotificationConfigEntity,
+      WarehouseEntity
     ],
     synchronize: true,
     logging: false,

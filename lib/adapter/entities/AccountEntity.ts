@@ -3,7 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  // PrimaryColumn,
+  CreateDateColumn,
 } from "typeorm";
 import type { Relation } from "typeorm";
 import { transformer } from "../transformer";
@@ -14,11 +14,8 @@ export class AccountEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  // @PrimaryColumn({ type: "int" })
-  // id!: number;
-
-  // @Column({ type: "uuid" })
-  // user_id!: string;
+  @CreateDateColumn()
+  created_on!: Date;
 
   @Column({ type: "varchar" })
   type!: string;

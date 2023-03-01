@@ -1,8 +1,9 @@
+import { NotificationEntity } from "./NotificationEntity";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 import { SessionEntity } from "@/lib/adapter/entities/SessionEntity";
 import { AccountEntity } from "./AccountEntity";
 import { AddressEntity } from "./AddressEntity";
-import { CreateDateColumn, Relation } from "typeorm";
+import { CreateDateColumn, ManyToMany, Relation } from "typeorm";
 import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { transformer } from "../transformer";
 import { TrackingEntity } from "./TrackingEntity";
@@ -58,33 +59,21 @@ export class UserEntity {
   @Column({ type: "varchar", nullable: true, default: null })
   default_address!: string | null;
 
-  @OneToMany(
-    () => SessionEntity,
-    (session) => session.user
-  )
+  @OneToMany(() => SessionEntity, (session) => session.user)
   sessions!: SessionEntity[];
 
-  @OneToMany(
-    () => AccountEntity,
-    (account) => account.user
-  )
+  @OneToMany(() => AccountEntity, (account) => account.user)
   accounts!: AccountEntity[];
 
-  @OneToMany(
-    () => AddressEntity,
-    (address) => address.user
-  )
+  @OneToMany(() => AddressEntity, (address) => address.user)
   addresses!: AddressEntity[];
 
-  @OneToMany(
-    () => OrderEntity,
-    (order) => order.user
-  )
+  @OneToMany(() => OrderEntity, (order) => order.user)
   orders!: OrderEntity[];
 
-  @OneToMany(
-    () => TrackingEntity,
-    (tracking) => tracking.user
-  )
+  @OneToMany(() => TrackingEntity, (tracking) => tracking.user)
   tracking!: TrackingEntity[];
+
+  @ManyToMany(() => NotificationEntity, (notification) => notification.users)
+  notifications!: NotificationEntity[];
 }
