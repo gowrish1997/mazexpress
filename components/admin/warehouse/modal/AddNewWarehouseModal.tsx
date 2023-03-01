@@ -2,17 +2,14 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { IAddressProps } from "@/models/address.interface";
 import CountrySelector from "@/components/common/CountrySelector";
 import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
-import fetchJson from "@/lib/fetchJson";
-import { IWarehouseProps } from "@/models/warehouse.interface";
 
 interface IProp {
   show: boolean;
   close: () => void;
-  update: () => Promise<IWarehouseProps[] | undefined>;
+  update: () => Promise<any | undefined>;
 }
 
 const schema = yup
@@ -31,7 +28,7 @@ const AddNewWarehouseModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<IAddressProps>({
+  } = useForm<any>({
     defaultValues: {
       // address_1: "V5RH+HVQ",
       // address_2: "Amr Bin al A'ss St",
@@ -50,7 +47,7 @@ const AddNewWarehouseModal = (props: IProp) => {
     setAddressIsDefault((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<IAddressProps> = async (data) => {
+  const onSubmit: SubmitHandler<any> = async (data) => {
     // let address: any = { ...data };
     // delete address.default;
     // address.user_id = user?.id_users;
@@ -124,7 +121,7 @@ const AddNewWarehouseModal = (props: IProp) => {
                     value={value}
                     onChange={onChange}
                     setCountry={setCountry}
-                    error={errors.country}
+                    // error={errors.country}
                     dropDownIcon={{
                       iconIsEnabled: true,
                       iconSrc: "/lock.png",
@@ -137,7 +134,7 @@ const AddNewWarehouseModal = (props: IProp) => {
                 name="city"
                 value={["Tripoli", "Benghazi", "Misrata"]}
                 register={register("city")}
-                error={errors.city}
+                // error={errors.city}
                 dropDownIcon={{
                   iconIsEnabled: true,
                   iconSrc: "/downwardArrow.png",

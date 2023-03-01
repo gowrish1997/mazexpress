@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import MazStatsDropddown from "./MazStatsDropddown";
+import React from "react";
 
 const StatCard = (props: any) => {
   return (

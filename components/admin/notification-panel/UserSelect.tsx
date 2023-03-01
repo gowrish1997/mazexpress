@@ -2,7 +2,6 @@ import ClickOutside from "@/components/common/ClickOutside";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import fetchJson from "@/lib/fetchJson";
 import { capitalizeFirstLetter } from "@/lib/helper";
-import { IUser } from "@/models/user.interface";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";

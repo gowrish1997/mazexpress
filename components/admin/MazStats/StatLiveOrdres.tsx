@@ -1,6 +1,4 @@
 import React from "react";
-import useOrders from "@/lib/hooks/useOrders";
-import Table from "@/components/orders/table";
 import Link from "next/link";
 
 const StatLiveOrdres = () => {

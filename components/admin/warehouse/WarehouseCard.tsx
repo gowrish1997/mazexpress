@@ -1,10 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import copy from "copy-to-clipboard";
-import { IWarehouse, IWarehouseProps } from "@/models/warehouse.interface";
 import { capitalizeFirstLetter } from "@/lib/helper";
 
-const WarehouseCard = (props: { address: IWarehouseProps }) => {
+const WarehouseCard = (props: { address: any }) => {
   const getBg = (status: string) => {
     switch (status) {
       case "active":

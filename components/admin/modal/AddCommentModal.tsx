@@ -1,5 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { SyntheticEvent, useState } from "react";
 
 interface IProp {
     show: boolean;

@@ -1,9 +1,8 @@
 import React from "react";
-import { INotificationConfig } from "@/models/notification.interface";
 import ReactSwitch from "react-switch";
 
 interface IProp {
-  data: INotificationConfig;
+  data: any;
   toggle: (id: number) => void;
 }
 

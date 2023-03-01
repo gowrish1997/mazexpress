@@ -1,10 +1,11 @@
-import { UserEntity } from './../../lib/adapter/entities/UserEntity';
+import { UserEntity } from "./../../lib/adapter/entities/UserEntity";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { hashPassword } from "@/lib/bcrypt";
 // import { db } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { MazDataSource } from "@/lib/adapter/data-source";
+// import { MazDataSource } from "@/lib/adapter/data-source";
 import { APIResponse } from "@/models/api.model";
+import { MazDataSource } from "@/lib/adapter/data-source.zwei";
 
 export default function handler(
   req: NextApiRequest,
@@ -118,19 +119,19 @@ export default function handler(
         // hash pass
         try {
           if (DS) {
-            console.log(DS.getMetadata(UserEntity))
+            console.log(DS.getMetadata(UserEntity));
             const hash = hashPassword(req.body.password);
 
-            // const createduser = DS.getRepository(UserEntity).insert({
-            //   ...req.body,
-            //   password: hash,
-            // });
-            // responseObj.count = 1;
-            // responseObj.data = createduser?.identifiers[0].id;
+            const createduser = await DS.getRepository(UserEntity).insert({
+              ...req.body,
+              password: hash,
+            });
+            responseObj.count = 1;
+            responseObj.data = createduser?.identifiers[0].id;
 
-            // console.log(createduser);
-            // res.json(responseObj);
-            // resolve(responseObj);
+            console.log(createduser);
+            res.json(responseObj);
+            resolve(responseObj);
           }
           // db("notification_config")
           //   .where("id_notification_config", 3)

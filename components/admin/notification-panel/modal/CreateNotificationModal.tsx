@@ -1,8 +1,6 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import * as yup from "yup";
 import useUser from "@/lib/hooks/useUser";
-import { INotificationForm } from "@/models/notification.interface";
 import attachLogo from "@/public/pin_icon.png";
 import uploadIcon from "@/public/upload_icon.png";
 import Image from "next/image";
@@ -41,7 +39,7 @@ const CreateNotificationModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<INotificationForm>({
+  } = useForm<any>({
     defaultValues: {},
     // resolver: yupResolver(schema),
   });
@@ -52,7 +50,7 @@ const CreateNotificationModal = (props: IProp) => {
     setReusable((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<INotificationForm> = async (data) => {
+  const onSubmit: SubmitHandler<any> = async (data) => {
     console.log(data);
     // console.log(files);
 
@@ -158,7 +156,7 @@ const CreateNotificationModal = (props: IProp) => {
               </div>
               {errors.content_notifications && (
                 <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                  {errors.content_notifications.message}
+                  
                 </p>
               )}
             </div>
