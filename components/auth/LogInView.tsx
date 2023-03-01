@@ -93,7 +93,7 @@ const LogInComponent = (props: any) => {
           name="email"
           type="string"
           register={register("email")}
-          error={errors.email}
+          error={errors.email?.message}
         />
 
         <ReactHookFormInput
@@ -102,13 +102,12 @@ const LogInComponent = (props: any) => {
           type={passwordType}
           icon={{
             isEnabled: true,
-            src:
+          src:
               passwordType === "string"
                 ? "/eyeIconOpen.png"
                 : "/eyeIconClose.png",
           }}
           register={register("password")}
-          error={errors.password}
           onClick={togglePasswordTypeHandler}
         />
         <button

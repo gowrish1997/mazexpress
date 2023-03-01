@@ -60,8 +60,8 @@ const UserLineItem = (props: IProp) => {
                 {/* {props.row.age_users} */}5
             </td>
             <td className={`td6 `}>{genderHanlder(props.row.gender_users)}</td>
-            <td className={`td7 `}>{orders && orders?.length}</td>
-        </tr>
+            <td className={`td7 `}>{orders && orders?.data?.length}</td>
+    </tr>
     );
 };
 export default UserLineItem;

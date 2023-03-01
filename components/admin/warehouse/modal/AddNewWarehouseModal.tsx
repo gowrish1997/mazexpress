@@ -119,13 +119,13 @@ const AddNewWarehouseModal = (props: IProp) => {
                                     />
                                 )}
                             />
-                             <CusotmDropdown
+                            <CusotmDropdown
                                 label="City/Town"
                                 name="city_addresses"
                                 type="string"
                                 IconEnabled={true}
                                 register={register("city_addresses")}
-                                error={errors.city_addresses as FieldError}
+                                error={errors.city_addresses?.message}
                                 options={[
                                     { value: "Tripoli", label: "Tripoli" },
                                     { value: "Benghazi", label: "Benghazi" },

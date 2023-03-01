@@ -160,5 +160,5 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>((props, ref) => 
         </div>
     );
 });
-
+ShipmentCostCalculator.displayName = "ShipmentCostCalculator";
 export default ShipmentCostCalculator;

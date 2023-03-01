@@ -112,7 +112,7 @@ const CusotmDropdown = (props: IProp) => {
                         {props.options &&
                             props.options.map((data, index) => {
                                 return (
-                                    <div className="flex flex-row justify-start items-center">
+                                    <div key={index} className="flex flex-row justify-start items-center">
                                         <button
                                             key={index}
                                             className={

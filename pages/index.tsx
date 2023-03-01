@@ -11,7 +11,7 @@ import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-const index = () => {
+const Index = () => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
@@ -117,7 +117,7 @@ const index = () => {
     );
 };
 
-export default index;
+export default Index;
 
 export async function getStaticProps({ locale }: { locale: any }) {
     if (process.env.NODE_ENV === "development") {

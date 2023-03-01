@@ -107,7 +107,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                         {props.options &&
                             props.options.map((data, index) => {
                                 return (
-                                    <div className="flex flex-row justify-start items-center">
+                                    <div key={index} className="flex flex-row justify-start items-center">
                                         <button
                                             key={index}
                                             className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "

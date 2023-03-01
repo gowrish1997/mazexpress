@@ -21,9 +21,9 @@ const RecentCustomers = () => {
             <div className="space-y-[15px]">
                 {allUser &&
                     allUser.data.length > 0 &&
-                    allUser.data.map((data: IUser) => {
+                    allUser.data.map((data: IUser,index:number) => {
                         return (
-                            <td className={`flex flex-row justify-start items-center capitalize`}>
+                            <td key={index} className={`flex flex-row justify-start items-center capitalize`}>
                                 {allUser && (data as IUser)?.avatar_url_users !== undefined ? (
                                     <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
                                         <Image src={"/user-images/" + (data as IUser)?.avatar_url_users} fill style={{ objectFit: "cover" }} alt="profileImage" />

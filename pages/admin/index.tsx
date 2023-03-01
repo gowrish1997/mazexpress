@@ -13,12 +13,12 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const AdminHome = () => {
     const router = useRouter();
-    const { locales, locale: activeLocale } = router;
+const { locales, locale: activeLocale } = router;
 
     useEffect(() => {
         console.log('use efft')
         router.push(router.asPath, router.asPath, { locale:'en' });
-    }, []);
+    }, [router]);
 
     return (
         <div className="space-y-[15px]">

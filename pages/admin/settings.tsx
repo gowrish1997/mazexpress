@@ -168,10 +168,10 @@ const Settings = () => {
                                     name="first_name_users"
                                     type="string"
                                     register={register("first_name_users")}
-                                    error={errors.first_name_users}
+                                    error={errors.first_name_users?.message}
                                 />
 
-                                <ReactHookFormInput label="Last name" name=" last_name_users" type="string" register={register("last_name_users")} error={errors.last_name_users} />
+                                <ReactHookFormInput label="Last name" name=" last_name_users" type="string" register={register("last_name_users")} error={errors.last_name_users?.message} />
                             </div>
 
                             <ReactHookFormInput
@@ -179,7 +179,7 @@ const Settings = () => {
                                 name="password_users"
                                 type={passwordType}
                                 register={register("password_users")}
-                                error={errors.password_users}
+                                error={errors.password_users?.message}
                                 icon={{
                                     isEnabled: true,
                                     src: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
@@ -190,14 +190,14 @@ const Settings = () => {
                             />
                         </div>
                         <div className="flex-type1 w-full space-x-[20px]">
-                            <ReactHookFormInput label="Email" name="email_users" type="string" register={register("email_users")} error={errors.email_users} />
+                            <ReactHookFormInput label="Email" name="email_users" type="string" register={register("email_users")} error={errors.email_users?.message} />
 
                             <ReactHookFormInput
                                 label="New Password"
                                 name="newPassword_users"
                                 type={newPasswordType}
                                 register={register("newPassword_users")}
-                                error={errors.newPassword_users}
+                                error={errors.newPassword_users?.message}
                                 icon={{
                                     isEnabled: true,
                                     src: newPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
@@ -207,7 +207,7 @@ const Settings = () => {
                             />
                         </div>
                         <div className="flex-type1 w-full space-x-[20px]">
-                            <ReactHookFormInput label="Mobile number" name="phone_users" type="number" register={register("phone_users")} error={errors.phone_users} />
+                            <ReactHookFormInput label="Mobile number" name="phone_users" type="number" register={register("phone_users")} error={errors.phone_users?.message} />
 
                             <CusotmDropdown
                                 label="Language"
@@ -215,7 +215,7 @@ const Settings = () => {
                                 type="string"
                                 IconEnabled={true}
                                 register={register("default_language_users")}
-                                error={errors.default_language_users as FieldError}
+                                error={errors.default_language_users?.message}
                                 options={[
                                     { value: "Arabic", label: "Arabic" },
                                     { value: "English", label: "English" },

@@ -34,7 +34,7 @@ export const options = {
         legend: {
             display: true,
             fullSize: true,
-            align: "left" as string,
+            align: "start" as const,
 
             labels: {
                 boxWidth: 10,
@@ -51,8 +51,8 @@ export const options = {
         tooltip: {
             //  xAlign:"left",
             displayColors: false,
-            yAlign: "bottom" as string,
-            titleAlign: "center" as string,
+            yAlign: "bottom" as const,
+            titleAlign: "center" as const,
             backgroundColor: "#FFFFFF",
             borderColor: "#E4E4E7",
             borderWidth: 1,

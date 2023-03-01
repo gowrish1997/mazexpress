@@ -57,7 +57,7 @@ const ResetPasswordView = (props: any) => {
                     name="password"
                     type={passwordType}
                     register={register("password")}
-                    error={errors.password}
+                    error={errors.password?.message}
                     icon={{
                         isEnabled: true,
                         src: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
@@ -70,7 +70,7 @@ const ResetPasswordView = (props: any) => {
                     name="confirmPassword"
                     type={confirmPasswordType}
                     register={register("confirmPassword")}
-                    error={errors.confirmPassword}
+                    error={errors.confirmPassword?.message}
                     icon={{
                         isEnabled: true,
                         src: confirmPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
