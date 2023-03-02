@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Calendar from "react-calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";

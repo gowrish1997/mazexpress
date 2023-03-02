@@ -3,10 +3,10 @@ import useOrders from "@/lib/hooks/useOrders";
 import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { IOrderResponse } from "@/models/order.interface";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
 const tableHeaders = [
   "Customer",
@@ -37,7 +37,7 @@ const Intransit = () => {
   });
 
   const [allInTransitOrders, setallInTransitOrders] =
-    useState<IOrderResponse[]>();
+    useState<OrderEntity[]>();
 
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();

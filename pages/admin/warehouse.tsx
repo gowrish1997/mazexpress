@@ -18,7 +18,7 @@ const Warehouse = () => {
       <PageHeader content="Warehouses" title="Warehouses | MazExpress Admin" />
       <div className="grid grid-cols-3 gap-3 py-5">
         {warehouses?.map((data) => {
-          return <WarehouseCard key={data.id_warehouses} address={data} />;
+          return <WarehouseCard key={data.id} address={data} />;
         })}
       </div>
       <div>

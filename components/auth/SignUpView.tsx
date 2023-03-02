@@ -45,7 +45,7 @@ const schema = yup
   })
   .required();
 
-const SignUpComponent = (props: {switch: (i: number) => void}) => {
+const SignUpComponent = (props: { switch: (i: number) => void }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const {
@@ -61,8 +61,8 @@ const SignUpComponent = (props: {switch: (i: number) => void}) => {
       confirmPassword: "Test123$",
       password: "Test123$",
       phone: 123456789,
-      age: '22',
-      gender: UserGender.MALE
+      age: "22",
+      gender: UserGender.MALE,
     },
   });
 
@@ -86,8 +86,8 @@ const SignUpComponent = (props: {switch: (i: number) => void}) => {
         method: "POST",
       }
     );
-    console.log(response)
-    if (response.statusText === 'OK') {
+    console.log(response);
+    if (response.statusText === "OK") {
       createToast({
         type: "success",
         title: "Created user",
@@ -95,7 +95,7 @@ const SignUpComponent = (props: {switch: (i: number) => void}) => {
         timeOut: 2000,
       });
       // sign in user with new credentials
-      props.switch(1)
+      props.switch(1);
     }
   };
 

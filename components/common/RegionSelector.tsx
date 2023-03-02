@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import {
-  CountryDropdown,
-  RegionDropdown,
-  CountryRegionData,
-} from "react-country-region-selector";
+import { RegionDropdown } from "react-country-region-selector";
 import { FieldError } from "react-hook-form";
 interface IProp {
   label: string;
@@ -31,7 +27,6 @@ const RegionSelector = (props: IProp) => {
         style={{ borderColor: props.error ? "#f02849" : "" }}
       >
         <RegionDropdown
-       
           country={props.country}
           value={props.value}
           countryValueType="short"

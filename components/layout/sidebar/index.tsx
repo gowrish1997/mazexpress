@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Header from "./Header";
 import NavLink from "./NavLink";
@@ -124,7 +124,7 @@ const sidebarContentHandler = (user: number) => {
 };
 const Sidebar = () => {
   const router = useRouter();
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
   // const { user, mutateUser } = useUser();
 
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);

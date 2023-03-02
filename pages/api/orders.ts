@@ -1,9 +1,5 @@
 import { OrderEntity } from "./../../lib/adapter/entities/OrderEntity";
 import { MazDataSource } from "@/lib/adapter/data-source";
-import { IOrderResponse } from "@/models/order.interface";
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { withSessionRoute } from "@/lib/config/withSession";
-import { db } from "@/lib/db";
 import { mazID } from "@/lib/helper";
 import { Like } from "typeorm";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -40,37 +36,37 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
           // console.log(req.query)
           let statusArray = (req.query.status as string).split(",");
           console.log(statusArray);
-          const queryOrders = db("orders")
-            .havingIn("status_orders", statusArray)
-            .limit(req.query.per_page)
-            .offset(
-              parseInt(req.query.per_page as string) *
-                parseInt(req.query.page as string)
-            )
-            .then((data: any) => {
-              // console.log(data);
-              return data;
-            });
+          // const queryOrders = db("orders")
+          //   .havingIn("status_orders", statusArray)
+          //   .limit(req.query.per_page)
+          //   .offset(
+          //     parseInt(req.query.per_page as string) *
+          //       parseInt(req.query.page as string)
+          //   )
+          //   .then((data: any) => {
+          //     // console.log(data);
+          //     return data;
+          //   });
 
-          const allOrdersCount = db("orders")
-            // .havingIn("status_orders", statusArray)
-            .where("status_orders", "in", statusArray)
-            .count("id_orders as count")
-            .first()
-            .then((count: any) => {
-              return count;
-            });
+          // const allOrdersCount = db("orders")
+          //   // .havingIn("status_orders", statusArray)
+          //   .where("status_orders", "in", statusArray)
+          //   .count("id_orders as count")
+          //   .first()
+          //   .then((count: any) => {
+          //     return count;
+          //   });
 
-          Promise.all([queryOrders, allOrdersCount]).then((result) => {
-            // console.log(result);
-            let responseObj: Data = {
-              data: result[0],
-              count: result[1].count,
-              msg: "successful",
-            };
-            res.status(200).json(responseObj);
-            resolve(responseObj);
-          });
+          // Promise.all([queryOrders, allOrdersCount]).then((result) => {
+          //   // console.log(result);
+          //   let responseObj: Data = {
+          //     data: result[0],
+          //     count: result[1].count,
+          //     msg: "successful",
+          //   };
+          //   res.status(200).json(responseObj);
+          //   resolve(responseObj);
+          // });
           break;
         }
         if (!req.query.user) {
@@ -79,13 +75,13 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
             // single response
             const id = req.query.id;
 
-            db("orders")
-              .where("id_orders", id)
-              .first()
-              .then((data: any) => {
-                res.status(200).json(data);
-                resolve(data);
-              });
+            // db("orders")
+            //   .where("id_orders", id)
+            //   .first()
+            //   .then((data: any) => {
+            //     res.status(200).json(data);
+            //     resolve(data);
+            //   });
           } else {
             // get results and count of results
 
@@ -201,13 +197,13 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
           const id = req.query.id;
           const fields = { ...req.body };
 
-          db("orders")
-            .where("id_orders", id)
-            .update(fields)
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("orders")
+          //   .where("id_orders", id)
+          //   .update(fields)
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();
@@ -217,13 +213,13 @@ function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          db("orders")
-            .where("id_orders", id)
-            .del()
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("orders")
+          //   .where("id_orders", id)
+          //   .del()
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();

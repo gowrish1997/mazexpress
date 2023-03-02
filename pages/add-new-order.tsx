@@ -9,7 +9,6 @@ import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
-import { IAddressProps } from "@/models/address.interface";
 import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
@@ -34,14 +33,16 @@ const AddNewOrder = () => {
 
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
-  const defaultAddressHandler = () => {
-    // mutateAddresses();
-    const address = addresses?.data.find(
-      (el: AddressEntity) => el.id === user?.default_address
-    );
-
-    return address;
-  };
+  // const defaultAddressHandler = () => {
+  //   // mutateAddresses();
+  //   if (addresses?.data !== null) {
+  //     const address = (addresses?.data as AddressEntity[]).find(
+  //       (el: AddressEntity) => el.id === user?.default_address
+  //     );
+  //     return address;
+  //   }
+  //   return null;
+  // };
 
   const {
     register,
@@ -54,7 +55,7 @@ const AddNewOrder = () => {
     address_id: string;
   }>({
     defaultValues: {
-      address_id: defaultAddressHandler()?.id,
+      // address_id: defaultAddressHandler()?.id,
       reference_id: "euirfismeodicokew",
       store_link: "flipkart.com",
     },
@@ -67,14 +68,17 @@ const AddNewOrder = () => {
 
   const toggleEditUserAddressModal = (addressId?: string) => {
     // console.log(addressId);
+
     if (showEditUserAddressModal) {
       setShowEditUserAddressModal(false);
     } else {
       setShowEditUserAddressModal(true);
-      const address = addresses?.find((data: AddressEntity) => {
-        return data.id == addressId;
-      });
-      setEditableAddress(address);
+      // if (addresses?.data !== null) {
+      //   const address = (addresses?.data as AddressEntity[]).find(
+      //     (el: AddressEntity) => el.id === user?.default_address
+      //   );
+      //   setEditableAddress(address);
+      // }
     }
   };
 
@@ -134,9 +138,9 @@ const AddNewOrder = () => {
     // console.log(data);
   };
 
-  useEffect(() => {
-    console.log(addresses);
-  }, [addresses]);
+  // useEffect(() => {
+  //   console.log(addresses);
+  // }, [addresses]);
   return (
     <>
       <PageHeader
@@ -180,9 +184,8 @@ const AddNewOrder = () => {
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3 py-5">
-          {addresses !== undefined &&
-            addresses.data.length > 0 &&
-            addresses.data.map((data: AddressEntity) => {
+          {/* {addresses?.data !== null &&
+            (addresses?.data as AddressEntity[]).map((data: AddressEntity) => {
               return (
                 <UserSavedAddress
                   key={data.id}
@@ -192,7 +195,7 @@ const AddNewOrder = () => {
                   // update={mutateAddresses}
                 />
               );
-            })}
+            })} */}
         </div>
         <button
           className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"
@@ -209,7 +212,7 @@ const AddNewOrder = () => {
       />
       {showEditUserAddressModal && (
         <EditUserAddressModal
-          update={mutateAddresses}
+          update={() => new Promise(() => {})}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
           address={editableAddress!}

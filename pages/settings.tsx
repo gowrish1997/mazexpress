@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
 import ReactSwitch from "react-switch";
 import Image from "next/image";
@@ -7,13 +7,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
-import { IUserProfile, IUser } from "@/models/user.interface";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/hooks/useUser";
 import { useRouter } from "next/router";
 import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 
 const schema = yup
   .object({
@@ -48,7 +48,6 @@ const schema = yup
   .required();
 
 const Settings = () => {
-
   const { user, status: userIsLoading } = useUser();
 
   const [errorMsg, setErrorMsg] = useState("");
@@ -62,7 +61,7 @@ const Settings = () => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<IUserProfile>({
+  } = useForm<UserEntity & { default_language: string; newPassword: string }>({
     resolver: yupResolver(schema),
     defaultValues: { ...user, password: "" },
   });
@@ -95,7 +94,9 @@ const Settings = () => {
     setShowProfilePicPop((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<IUserProfile> = async (data) => {
+  const onSubmit: SubmitHandler<
+    UserEntity & { default_language: string; newPassword: string }
+  > = async (data) => {
     console.log(data);
     createToast({
       title: "Success",
@@ -132,7 +133,7 @@ const Settings = () => {
     // }
   };
 
-  if (userIsLoading === 'loading') return <div>loading</div>;
+  if (userIsLoading === "loading") return <div>loading</div>;
 
   return (
     <>
@@ -171,7 +172,11 @@ const Settings = () => {
                   onClick={toggleProfilePicPop}
                 >
                   <Image
-                    src={user?.avatar_url.startsWith("http") ? user?.avatar_url! :  "/user-images/" + user?.avatar_url!}
+                    src={
+                      user?.avatar_url.startsWith("http")
+                        ? user?.avatar_url!
+                        : "/user-images/" + user?.avatar_url!
+                    }
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}

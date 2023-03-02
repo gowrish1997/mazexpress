@@ -3,8 +3,6 @@ import useOrders from "@/lib/hooks/useOrders";
 import LiveOrderPageHeader from "@/components/admin/LiveOrderPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { ISearchKeyContext } from "@/models/SearchContextInterface";
-import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 
 const tableHeaders = [
@@ -18,8 +16,6 @@ const tableHeaders = [
 ];
 
 const LiveOrders = () => {
-  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
-
   const router = useRouter();
   const [itemsPerPage, setItemPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState(0);

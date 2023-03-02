@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { IOrderResponse } from "@/models/order.interface";
-import download from "../../public/download.png";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
 interface Iprop {
   options: string[];

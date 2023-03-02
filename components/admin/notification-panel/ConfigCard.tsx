@@ -3,7 +3,7 @@ import ReactSwitch from "react-switch";
 
 interface IProp {
   data: any;
-  toggle: (id: number) => void;
+  toggle: (id: string) => void;
 }
 
 const ConfigCard = (props: IProp) => {

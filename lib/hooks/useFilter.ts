@@ -1,7 +1,7 @@
+import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
 import moment from "moment";
-import { IOrderResponse } from "@/models/order.interface";
 export default function useFilter(
-  allLiveOrders: IOrderResponse[],
+  allLiveOrders: OrderEntity[],
   createdDateFilterKey: Date | string,
   mazTrackingIdFilterKey: string
 ) {
@@ -9,7 +9,7 @@ export default function useFilter(
     ?.filter((el) => {
       if (createdDateFilterKey) {
         return (
-          moment(el.created_on_orders).format("DD-MM-YYYY") ===
+          moment(el.created_on).format("DD-MM-YYYY") ===
           moment(createdDateFilterKey).format("DD-MM-YYYY")
         );
       } else {
@@ -17,7 +17,7 @@ export default function useFilter(
       }
     })
     .filter((el) => {
-      return el.id_orders
+      return el.id
         .toLocaleLowerCase()
         .includes(mazTrackingIdFilterKey?.toLocaleLowerCase());
     });

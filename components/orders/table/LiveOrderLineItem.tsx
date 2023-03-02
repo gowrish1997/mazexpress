@@ -12,6 +12,7 @@ import useTracking from "@/lib/hooks/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
 interface IProp {
   row: OrderEntity;
   type: string;
@@ -33,14 +34,14 @@ const LiveOrderLineItem = (props: IProp) => {
 
   useEffect(() => {
     // console.log(tracking);
-    if (tracking !== undefined) {
-      let sorted = [...tracking];
+    if (tracking?.data !== undefined && tracking.data !== null) {
+      let sorted = [...tracking.data];
       sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
-      setPackageStatus(sorted.pop()?.stage_tracking);
+      setPackageStatus((sorted.pop() as TrackingEntity)?.stage);
     }
   }, [tracking]);
 
-  const warehoueStatusHanlder = () => {
+  const warehouseStatusHandler = () => {
     switch (packageStatus) {
       case 0:
         return "Pending";
@@ -95,19 +96,6 @@ const LiveOrderLineItem = (props: IProp) => {
       false;
     }
   };
-
-  // const inputDisabledStateHandler = () => {
-  //     if (props.type == "shipments") {
-  //         return false;
-  //     } else {
-  //         if (props.row.status == "at-warehouse" || props.row.status == "in-transit") {
-  //             return true;
-  //         } else {
-  //             return false;
-  //         }
-  //     }
-  // };
-
   return (
     <tr
       className="h-min  text-[16px] text-[#000000] font-[400] leading-[22.4px] relative  "
@@ -120,7 +108,6 @@ const LiveOrderLineItem = (props: IProp) => {
         <td className={`td0`}>
           <input
             type="checkbox"
-            // disabled={inputDisabledStateHandler()}
             value={props.row.id}
             name={props.row.id}
             checked={inputCheckedStateHandler()}
@@ -165,9 +152,7 @@ const LiveOrderLineItem = (props: IProp) => {
       </td>
       <td className={`td3 text-[#3672DF]`}>{props.row.store_link}</td>
       <td className={`td4`}>{props.row.reference_id}</td>
-      <td className={`td5`}>
-        {getDateInStringFormat(props.row.created_on)}
-      </td>
+      <td className={`td5`}>{getDateInStringFormat(props.row.created_on)}</td>
 
       {/* <td className={`td6 capitalize `}>{warehoueStatusHanlder()}</td> */}
       <td className={`td7`}>
@@ -177,7 +162,7 @@ const LiveOrderLineItem = (props: IProp) => {
             {props.row.status}
           </span>
         </div>
-        <div className="ml-7 text-[11px]">{warehoueStatusHanlder()}</div>
+        <div className="ml-7 text-[11px]">{warehouseStatusHandler()}</div>
       </td>
       <td
         className=""

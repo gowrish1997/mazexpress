@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,7 +10,6 @@ const AddButton = (props: { onClick: () => void }) => {
     >
       <div className="flex items-center justify-center ">
         <FontAwesomeIcon icon={faPlus} color="white" />
-        {/* <Image src='/add.png' layout='fill' objectFit='cover' alt='add' /> */}
       </div>
     </div>
   );

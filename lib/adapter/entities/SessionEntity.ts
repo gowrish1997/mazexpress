@@ -1,5 +1,4 @@
 import { transformer } from "../transformer";
-// import type { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import type {
   Relation,

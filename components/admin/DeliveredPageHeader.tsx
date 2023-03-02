@@ -1,14 +1,9 @@
-import React, { useState,useMemo } from "react";
+import React from "react";
 import Head from "next/head";
-import Image from "next/image";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { IOrderResponse } from "@/models/order.interface";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
-import SearchMazTrackingIdInputField from "./SearchMazTrackingIdInputField";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";

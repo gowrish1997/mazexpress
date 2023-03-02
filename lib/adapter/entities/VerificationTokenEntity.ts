@@ -3,9 +3,6 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    ManyToOne,
-    OneToMany,
-    ValueTransformer,
   } from "typeorm";
 
 @Entity({ name: "verification_tokens" })

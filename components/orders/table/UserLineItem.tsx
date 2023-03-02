@@ -1,9 +1,7 @@
-import React, { createRef, useRef, useState } from "react";
-import { useEffect } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { IUser } from "@/models/user.interface";
 import { getDateInStringFormat } from "@/lib/helper";
 import useOrders from "@/lib/hooks/useOrders";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
@@ -63,9 +61,7 @@ const UserLineItem = (props: IProp) => {
       </td>
       <td className={`td2 text-[#3672DF]`}>{props.row.email}</td>
       <td className={`td3`}>{props.row.phone}</td>
-      <td className={`td4`}>
-        {getDateInStringFormat(props.row.created_on)}
-      </td>
+      <td className={`td4`}>{getDateInStringFormat(props.row.created_on)}</td>
       <td className={`td5 `} style={{}}>
         {/* {props.row.age_users} */}5
       </td>

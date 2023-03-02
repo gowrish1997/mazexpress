@@ -1,10 +1,10 @@
-import { IOrderResponse } from "@/models/order.interface";
-import { IUser } from "@/models/user.interface";
+import { UserEntity } from '@/lib/adapter/entities/UserEntity';
+import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
 interface IProp {
   value: any;
   type: string;
   setSelectedOrder: React.Dispatch<React.SetStateAction<string[] | undefined>>;
-  filteredLiveOrders: IOrderResponse[] & IUser[];
+  filteredLiveOrders: OrderEntity[] & UserEntity[];
 }
 export default function useSelectOrder(
   value: any,

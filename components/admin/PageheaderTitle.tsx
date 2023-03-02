@@ -2,13 +2,8 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import calendarIcon from "@/public/calendar_icon.png";
-import {
-  faAngleDown,
-  faAngleLeft,
-  faAngleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
-import { IOrderResponse } from "@/models/order.interface";
 import { getDateInStringFormat } from "@/lib/helper";
 import Calendar from "react-calendar";
 import cancel from "../../public/cancel.png";

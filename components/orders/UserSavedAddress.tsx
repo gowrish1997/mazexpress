@@ -52,9 +52,7 @@ const UserSavedAddress = (props: {
       <input
         type="radio"
         name="address"
-        defaultChecked={
-          user?.default_address === props.address.id
-        }
+        defaultChecked={user?.default_address === props.address.id}
         // checked={user?.default_address === props.address.id}
         value={props.address.id}
         {...props.register}

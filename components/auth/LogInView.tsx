@@ -30,11 +30,9 @@ const LogInComponent = (props: any) => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
 
-  // const { user, mutateUser } = useUser({ redirectIfFound: true });
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
@@ -90,32 +88,6 @@ const LogInComponent = (props: any) => {
     return response;
     // console.log(response);
   };
-
-  function decodeJwtResponse(token: any) {
-    let base64Url = token.split(".")[1];
-    let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    let jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-    return JSON.parse(jsonPayload);
-  }
-
-  function handleToken(token: any) {
-    console.log("called authenticated");
-    let responsePayload = decodeJwtResponse(token.credential);
-    console.log(responsePayload);
-
-    // decode jwt
-  }
-
-  useEffect(() => {
-    window.handleToken = handleToken;
-  }, []);
 
   return (
     <div className="w-[400px] space-y-[20px] ">

@@ -1,7 +1,4 @@
-import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
-import type { Relation } from "typeorm";
-import { UserEntity } from './UserEntity';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 export enum City {
   B = "benghazi",
@@ -31,4 +28,7 @@ export class WarehouseEntity {
 
   @Column({ type: "varchar" })
   tag!: string;
+
+  @Column({ type: "varchar" })
+  status!: string;
 }

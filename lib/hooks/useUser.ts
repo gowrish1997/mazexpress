@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import useSWR from "swr";
 import { useSession } from "next-auth/react";
 
 export default function useUser({
@@ -15,15 +14,6 @@ export default function useUser({
     queryString += `?email=${session.user.email}`;
   }
   const user = session?.user;
-  // const {
-  //   data: user,
-  //   mutate: mutateUser,
-  //   isLoading: userIsLoading,
-  // } = useSWR<any>(queryString, {
-  //   revalidateIfStale: true,
-  //   revalidateOnFocus: true,
-  //   revalidateOnReconnect: true,
-  // });
 
   useEffect(() => {
     // console.log(session);

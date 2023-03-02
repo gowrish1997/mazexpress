@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import { IUser } from "@/models/user.interface";
 import SendNotificatonConfirmModal from "./modal/SendNotificatonConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { FieldError } from "react-hook-form";
 
 interface IProp {

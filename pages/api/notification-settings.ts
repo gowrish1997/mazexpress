@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { db } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -36,10 +35,10 @@ export default async function handler(
       case "GET":
         // console.log("from addresses, user=", req.query.user);
         try {
-          db("notification_config").then((data: any) => {
-            res.status(200).json(data);
-            resolve(data);
-          });
+          // db("notification_config").then((data: any) => {
+          //   res.status(200).json(data);
+          //   resolve(data);
+          // });
         } catch (err) {
           if (err) throw err;
           console.log(err);
@@ -69,13 +68,13 @@ export default async function handler(
           console.log(req.body);
           const id = req.body.id;
           const setTo = req.body.setTo;
-          db("notification_config")
-            .where("id_notification_config", id)
-            .update({ is_enabled_notification_config: setTo })
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("notification_config")
+          //   .where("id_notification_config", id)
+          //   .update({ is_enabled_notification_config: setTo })
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           res.status(200).json({ msg: "invalid req body" });
           reject();
@@ -85,13 +84,13 @@ export default async function handler(
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          db("notifications")
-            .where("id_notifications", id)
-            .del()
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("notifications")
+          //   .where("id_notifications", id)
+          //   .del()
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();

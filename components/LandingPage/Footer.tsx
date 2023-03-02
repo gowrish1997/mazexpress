@@ -86,5 +86,5 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
-Footer.displayName = "Footer"
+Footer.displayName = "Footer";
 export default Footer;

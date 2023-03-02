@@ -3,7 +3,7 @@ import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 import { SessionEntity } from "@/lib/adapter/entities/SessionEntity";
 import { AccountEntity } from "./AccountEntity";
 import { AddressEntity } from "./AddressEntity";
-import { CreateDateColumn, ManyToMany, Relation } from "typeorm";
+import { CreateDateColumn, ManyToMany } from "typeorm";
 import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { transformer } from "../transformer";
 import { TrackingEntity } from "./TrackingEntity";

@@ -1,4 +1,4 @@
-import { INotificationConfig } from '@/models/notification.interface';
+import { NotificationConfigEntity } from './../adapter/entities/NotificationConfigEntity';
 import useSWR from "swr";
 
 export default function useNotificationSettings() {
@@ -6,7 +6,7 @@ export default function useNotificationSettings() {
     data: notificationSettings,
     mutate: mutateNotificationSettings,
     isLoading: notificationSettingsIsLoading,
-  } = useSWR<INotificationConfig[]>(`/api/notification-settings`, {
+  } = useSWR<NotificationConfigEntity[]>(`/api/notification-settings`, {
     onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
       // Never retry on 404.
       // if (error.status === 404) return;

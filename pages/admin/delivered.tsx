@@ -2,13 +2,12 @@ import React, { useEffect, useState,useCallback } from "react";
 import useOrders from "@/lib/hooks/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { IOrderResponse } from "@/models/order.interface";
 import DeliveredPageHeader from "@/components/admin/DeliveredPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
+import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
 const tableHeaders = [
     "Customer",
@@ -21,13 +20,11 @@ const tableHeaders = [
   ];
 
 const DeliveredOrders = () => {
-    const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
     const router = useRouter();
 
     const [itemsPerPage, setItemPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
 
-    const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] = useState<string>("");
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<Date | string>("");
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
         per_page: itemsPerPage,
@@ -35,7 +32,7 @@ const DeliveredOrders = () => {
         status: ["delivered"],
     });
 
-    const [allDeliveredOrders, setAllDeliveredOrders] = useState<IOrderResponse[]>();
+    const [allDeliveredOrders, setAllDeliveredOrders] = useState<OrderEntity[]>();
 
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 

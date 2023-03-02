@@ -1,11 +1,3 @@
-import { IOrderResponse } from "@/models/order.interface";
-import { IUser } from "@/models/user.interface";
-interface IProp {
-  value: any;
-  type: string;
-  setSelectedOrder: React.Dispatch<React.SetStateAction<string[] | undefined>>;
-  filteredLiveOrders: IOrderResponse[] & IUser[];
-}
 export const selectOrder = (
   value: any,
   type: any,

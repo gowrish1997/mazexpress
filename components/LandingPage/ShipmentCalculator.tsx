@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldError } from "react-hook-form";
 import * as yup from "yup";
 import landpageImage from "../../public/landpageImage.png";
 import ShipmentCalculatorDropdown from "./ShipmentCalculatorDropdown";
 import ReactHookFormInput from "../common/ReactHookFormInput";
-import Multiply from "../../public/multiply.png";
 
 const dimensions = ["Length", "Width", "Height"];
 

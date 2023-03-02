@@ -10,6 +10,7 @@ import useAllUser from "@/lib/hooks/useAllUsers";
 import useTracking from "@/lib/hooks/useTracking";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
 interface IProp {
   row: OrderEntity;
   type: string;
@@ -30,10 +31,10 @@ const StatLineItem = (props: IProp) => {
 
   useEffect(() => {
     // console.log(tracking);
-    if (tracking !== undefined && tracking.data.length > 0) {
+    if (tracking?.data !== undefined && tracking.data !== null) {
       let sorted = [...tracking.data];
       sorted.sort((a: any, b: any) => a?.stage - b?.stage);
-      setPackageStatus(sorted.pop()?.stage);
+      setPackageStatus((sorted.pop() as TrackingEntity)?.stage);
     }
   }, [tracking]);
 
@@ -120,9 +121,7 @@ const StatLineItem = (props: IProp) => {
         <div className="h-full flex flex-row justify-start items-center ">
           <span>{orderStatusColorHandler(props.row.status)} </span>
 
-          <span className="ml-[5px] capitalize ">
-            {props.row.status}
-          </span>
+          <span className="ml-[5px] capitalize ">{props.row.status}</span>
         </div>
       </td>
     </tr>

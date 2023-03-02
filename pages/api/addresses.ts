@@ -2,7 +2,6 @@ import { APIResponse } from "@/models/api.model";
 import { MazDataSource } from "@/lib/adapter/data-source";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { db } from "@/lib/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -87,13 +86,13 @@ export default function handler(
             ...req.body,
           };
 
-          db("addresses")
-            .where("id_addresses", id)
-            .update(fields)
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("addresses")
+          //   .where("id_addresses", id)
+          //   .update(fields)
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();
@@ -103,13 +102,13 @@ export default function handler(
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          db("addresses")
-            .where("id_addresses", id)
-            .update({ status_addresses: 0 })
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("addresses")
+          //   .where("id_addresses", id)
+          //   .update({ status_addresses: 0 })
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();

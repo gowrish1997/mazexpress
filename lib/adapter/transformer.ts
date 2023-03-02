@@ -1,6 +1,4 @@
-import {
-  ValueTransformer,
-} from "typeorm";
+import { ValueTransformer } from "typeorm";
 
 const transformer: Record<"date" | "bigint", ValueTransformer> = {
   date: {
@@ -13,5 +11,4 @@ const transformer: Record<"date" | "bigint", ValueTransformer> = {
   },
 };
 
-
-export {transformer}
+export { transformer };

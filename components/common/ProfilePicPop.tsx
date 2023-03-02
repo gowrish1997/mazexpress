@@ -2,10 +2,9 @@ import React, { ChangeEvent, useRef } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
 import axios from "axios";
-import { IUser } from "@/models/user.interface";
 import fetchJson from "@/lib/fetchJson";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 interface IProp {

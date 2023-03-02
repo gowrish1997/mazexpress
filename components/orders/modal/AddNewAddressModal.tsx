@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import CountrySelector from "@/components/common/CountrySelector";
-import RegionSelector from "@/components/common/RegionSelector";
 import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import fetchJson from "@/lib/fetchJson";
@@ -72,7 +69,6 @@ const AddNewAddressModal = (props: IProp) => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ default_address: addressResult.data[0] }),
         });
-
       }
 
       props.close();

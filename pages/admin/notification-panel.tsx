@@ -1,40 +1,10 @@
 import ConfigCard from "@/components/admin/notification-panel/ConfigCard";
 import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import PageHeader from "@/components/common/PageHeader";
+import { NotificationConfigEntity } from "@/lib/adapter/entities/NotificationConfigEntity";
 import fetchJson from "@/lib/fetchJson";
 import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
-import { INotificationConfig } from "@/models/notification.interface";
-import React, { useEffect, useState } from "react";
-
-// let hard_data: INotificationConfig[] = [
-//   {
-//     title_notification_config: "Shipments Arrival Notification",
-//     is_enabled_notification_config: true,
-//     desc_notification_config: "Turn this on to notify the subscribed users in list when shipment has reached the Istanbul warehouse.",
-//     id_notification_config: 1,
-//     is_custom_notification_config: false,
-//     is_reusable_notification_config: false
-
-//   },
-//   {
-//     title_notification_config: "Delivered Notification",
-//     is_enabled_notification_config: false,
-//     desc_notification_config: "Turn this on to notify the subscribed users in list when shipment has been delivered.",
-//     id_notification_config: 2,
-//     is_custom_notification_config: false,
-//     is_reusable_notification_config: false
-
-//   },
-//   {
-//     title_notification_config: "Welcome Notifications",
-//     is_enabled_notification_config: false,
-//     desc_notification_config: "Turn this on to send a welcome message to all users upon account successful creation.",
-//     id_notification_config: 3,
-//     is_custom_notification_config: false,
-//     is_reusable_notification_config: false,
-
-//   },
-// ];
+import React, { useState } from "react";
 
 const NotificationPanel = () => {
   const [showCreateNotificationModal, setShowCreateNotificationModal] =
@@ -46,19 +16,19 @@ const NotificationPanel = () => {
     notificationSettingsIsLoading,
   } = useNotificationSettings();
 
-  const toggle = async (id: number) => {
+  const toggle = async (id: string) => {
     // send put to notification settings
     if (notificationSettings !== undefined) {
       let setTo = notificationSettings?.find(
-        (el) => el.id_notification_config === id
-      )?.is_enabled_notification_config;
-      if (setTo === 1) {
-        setTo = 0;
+        (el) => el.id === id
+      )?.is_enabled;
+      if (setTo) {
+        setTo = false;
       } else {
-        setTo = 1;
+        setTo = true;
       }
       let facelift = [...notificationSettings];
-      let match = facelift.find((el) => el.id_notification_config === id);
+      let match = facelift.find((el) => el.id === id);
       console.log("match", match);
       if (match !== undefined) {
         // facelift.find(
@@ -94,12 +64,12 @@ const NotificationPanel = () => {
       />
       <div className="grid grid-cols-3 gap-3 py-5">
         {notificationSettings &&
-          notificationSettings.map((el: INotificationConfig) => {
+          notificationSettings.map((el: NotificationConfigEntity) => {
             return (
               <ConfigCard
                 data={el}
                 toggle={toggle}
-                key={el.id_notification_config}
+                key={el.id}
               />
             );
           })}

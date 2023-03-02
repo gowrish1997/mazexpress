@@ -1,9 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { db } from "@/lib/db";
-import {
-  INotification,
-  INotificationConfig,
-} from "@/models/notification.interface";
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import multiparty from "multiparty";
 var bodyParser = require("body-parser");
@@ -45,28 +41,28 @@ export default async function handler(
           const user_id = req.query.user;
           // list response
 
-          db("notifications")
-            .where({
-              user_id: user_id,
-            })
-            .whereNot({
-              status_notifications: "deleted",
-            })
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("notifications")
+          //   .where({
+          //     user_id: user_id,
+          //   })
+          //   .whereNot({
+          //     status_notifications: "deleted",
+          //   })
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else if (req.query.id) {
           // single response
           const id = req.query.id;
-          db("notifications")
-            .where({
-              id_notifications: id,
-            })
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("notifications")
+          //   .where({
+          //     id_notifications: id,
+          //   })
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
 
           // error invalid
         } else {
@@ -91,52 +87,52 @@ export default async function handler(
           ) {
             // its from an automated notification
             // check if notification config is on for this id
-            db("notification_config")
-              .where(
-                "id_notification_config",
-                data.fields["notification_config"]
-              )
-              .first()
-              .then((conf: INotificationConfig) => {
-                if (conf.is_enabled_notification_config === 1) {
-                  // send notification
-                  Promise.all(
-                    data.fields["users[]"].map((user: string) => {
-                      return db("notifications")
-                        .insert({
-                          user_id: parseInt(user),
-                          title_notifications:
-                            data.fields["data[title_notifications]"][0],
-                          content_notifications:
-                            data.fields["data[content_notifications]"][0],
-                        })
-                        .then((data: any) => {
-                          return true;
-                        });
-                    })
-                  ).then((result) => {
-                    // console.log(result);
-                    res.json({ msg: "done" });
-                    resolve({ msg: "done" });
-                    return;
-                  });
-                }
-              });
+            // db("notification_config")
+            //   .where(
+            //     "id_notification_config",
+            //     data.fields["notification_config"]
+            //   )
+            //   .first()
+            //   .then((conf: INotificationConfig) => {
+            //     if (conf.is_enabled_notification_config === 1) {
+            //       // send notification
+            //       Promise.all(
+            //         data.fields["users[]"].map((user: string) => {
+            //           return db("notifications")
+            //             .insert({
+            //               user_id: parseInt(user),
+            //               title_notifications:
+            //                 data.fields["data[title_notifications]"][0],
+            //               content_notifications:
+            //                 data.fields["data[content_notifications]"][0],
+            //             })
+            //             .then((data: any) => {
+            //               return true;
+            //             });
+            //         })
+            //       ).then((result) => {
+            //         // console.log(result);
+            //         res.json({ msg: "done" });
+            //         resolve({ msg: "done" });
+            //         return;
+            //       });
+            //     }
+            //   });
           }
           // console.log("req data", data.fields["users[]"]);
           Promise.all(
             data.fields["users[]"].map((user: string) => {
-              return db("notifications")
-                .insert({
-                  user_id: parseInt(user),
-                  title_notifications:
-                    data.fields["data[title_notifications]"][0],
-                  content_notifications:
-                    data.fields["data[content_notifications]"][0],
-                })
-                .then((data: any) => {
-                  return true;
-                });
+              // return db("notifications")
+              //   .insert({
+              //     user_id: parseInt(user),
+              //     title_notifications:
+              //       data.fields["data[title_notifications]"][0],
+              //     content_notifications:
+              //       data.fields["data[content_notifications]"][0],
+              //   })
+              //   .then((data: any) => {
+              //     return true;
+              //   });
             })
           ).then((result) => {
             // console.log(result);
@@ -157,13 +153,13 @@ export default async function handler(
           const id = req.query.id;
           const fields = { ...req.body };
           console.log(fields);
-          db("notifications")
-            .where("id_notifications", id)
-            .update(fields)
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("notifications")
+          //   .where("id_notifications", id)
+          //   .update(fields)
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();
@@ -173,13 +169,13 @@ export default async function handler(
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          db("notifications")
-            .where("id_notifications", id)
-            .del()
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("notifications")
+          //   .where("id_notifications", id)
+          //   .del()
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();

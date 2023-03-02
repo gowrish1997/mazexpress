@@ -1,8 +1,5 @@
 import { IToast } from "@/models/toast.model";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+import { NotificationManager } from "react-notifications";
 
 const createToast = (toast: IToast) => {
   //   console.log();

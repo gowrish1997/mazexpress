@@ -10,7 +10,7 @@ const Warehouse = () => {
       <PageHeader content="Our Warehouse" title="Our Warehouses | MazExpress" />
       <div className="grid grid-cols-3 gap-3 py-5">
         {warehouses?.map((data) => {
-          return <WarehouseCard key={data.id_warehouses} address={data} />;
+          return <WarehouseCard key={data.id} address={data} />;
         })}
       </div>
     </>

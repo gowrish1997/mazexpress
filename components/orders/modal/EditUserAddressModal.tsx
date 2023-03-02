@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/hooks/useUser";
-import fetchJson from "@/lib/fetchJson";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 interface IProp {
   show: boolean;

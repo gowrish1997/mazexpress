@@ -2,8 +2,6 @@ import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { MazDataSource } from "@/lib/adapter/data-source";
 import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
-import { db } from "@/lib/db";
-import fetchJson from "@/lib/fetchJson";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -126,13 +124,13 @@ export default function handler(
         if (req.query.id) {
           const id = req.query.id;
           const fields = { ...req.body };
-          db("tracking")
-            .where("id_tracking", id)
-            .update(fields)
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("tracking")
+          //   .where("id_tracking", id)
+          //   .update(fields)
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           // error response
           res.json({ msg: "invalid url params" });
@@ -143,13 +141,13 @@ export default function handler(
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          db("tracking")
-            .where("id_tracking", id)
-            .del()
-            .then((data: any) => {
-              res.status(200).json(data);
-              resolve(data);
-            });
+          // db("tracking")
+          //   .where("id_tracking", id)
+          //   .del()
+          //   .then((data: any) => {
+          //     res.status(200).json(data);
+          //     resolve(data);
+          //   });
         } else {
           // error response
           res.status(500).json({ msg: "invalid url params" });

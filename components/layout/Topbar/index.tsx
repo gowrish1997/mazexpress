@@ -2,19 +2,18 @@ import React, { SyntheticEvent, useRef, useState } from "react";
 import Image from "next/image";
 import Bell from "@/public/bell_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import useUser from "@/lib/hooks/useUser";
 import useNotifications from "@/lib/hooks/useNotifications";
 import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
-import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 const Topbar = () => {
   const { user, status: userIsLoading } = useUser();
 
   const { setSearchKey } = React.useContext(
     SearchKeyContext
-  ) as ISearchKeyContext;
+  ) as any;
 
   const { notifications, notificationsIsLoading } = useNotifications({
     user_id: user?.id!,
@@ -76,11 +75,6 @@ const Topbar = () => {
 
         <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
           <Image
-            // src={
-            //   user?.avatar_url_users
-            //     ? "/user-images/" + user?.avatar_url_users
-            //     : "/user-images/default_user.png"
-            // }
             src={
               user?.avatar_url.startsWith("https")
                 ? user?.avatar_url!

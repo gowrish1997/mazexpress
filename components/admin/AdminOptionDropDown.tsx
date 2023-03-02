@@ -4,9 +4,6 @@ import download from "../../public/download.png";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import useTracking from "@/lib/hooks/useTracking";
 import axios from "axios";
 interface Iprop {
     option?: string[];
