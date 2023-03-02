@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
-import useUser from "@/lib/hooks/useUser";
 import { signIn } from "next-auth/react";
 import { createToast } from "@/lib/toasts";
 import Image from "next/dist/client/image";
 import google_logo from "@/public/google.png";
-import { APIResponse } from "@/models/api.model";
 
 type Inputs = {
   password: string;
@@ -45,7 +43,7 @@ const LogInComponent = (props: any) => {
       username: data.email,
       // callbackUrl: process.env.NEXTAUTH_URL,
     });
-    // console.log(response);
+    console.log(response);
     if (response?.ok === false) {
       // no user found
       createToast({
@@ -112,14 +110,11 @@ const LogInComponent = (props: any) => {
           type={passwordType}
           icon={{
             isEnabled: true,
-            src:
-              passwordType === "string"
-                ? "/eyeIconOpen.png"
-                : "/eyeIconClose.png",
+            type: passwordType === "string" ? "insecure" : "secure",
+            onClick: togglePasswordTypeHandler,
           }}
           register={register("password")}
           error={errors.password}
-          onClick={togglePasswordTypeHandler}
         />
         <button
           className="text-[14px] text-[#3672DF] font-[500] leading-[13px] cursor-pointer"
@@ -159,6 +154,9 @@ const LogInComponent = (props: any) => {
           width={20}
           height={20}
           className="mr-3"
+          sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
         />
         Sign in with google
       </button>

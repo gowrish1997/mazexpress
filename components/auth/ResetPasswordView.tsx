@@ -65,12 +65,9 @@ const ResetPasswordView = (props: any) => {
           error={errors.password}
           icon={{
             isEnabled: true,
-            src:
-              passwordType == "string"
-                ? "/eyeIconOpen.png"
-                : "/eyeIconClose.png",
+            type: passwordType == "string" ? "insecure" : "secure",
+            onClick: togglePasswordTypeHandler,
           }}
-          onClick={togglePasswordTypeHandler}
         />
 
         <ReactHookFormInput
@@ -81,12 +78,9 @@ const ResetPasswordView = (props: any) => {
           error={errors.confirmPassword}
           icon={{
             isEnabled: true,
-            src:
-              confirmPasswordType == "string"
-                ? "/eyeIconOpen.png"
-                : "/eyeIconClose.png",
+            type: confirmPasswordType == "string" ? "insecure" : "secure",
+            onClick: toggleConfirmPasswordTypeHandler,
           }}
-          onClick={toggleConfirmPasswordTypeHandler}
         />
 
         <button

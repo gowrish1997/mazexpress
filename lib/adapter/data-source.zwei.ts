@@ -43,5 +43,5 @@ const connexion = async () => {
     return null;
   }
 };
-
-export const MazDataSource = connexion();
+const MazDataSource = connexion()
+export {MazDataSource}

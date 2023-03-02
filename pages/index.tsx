@@ -30,10 +30,6 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(session);
-  }, [sessionStatus]);
-
   return (
     <div className="">
       <Head>
@@ -47,7 +43,14 @@ const Home = () => {
         <div className="w-full flex-type3 h-[100px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
           <div className="flex-type3 space-x-[20px] ">
             <div className="relative h-[47px] w-[47px] ">
-              <Image src={logo} fill alt="logo" />
+              <Image
+                src={logo}
+                fill
+                alt="logo"
+                sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+              />
             </div>
             <ul className="flex-type3 space-x-[20px]  ">
               <li

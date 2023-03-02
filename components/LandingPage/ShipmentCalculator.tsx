@@ -59,7 +59,14 @@ const ShipmentCalculator = React.forwardRef<HTMLDivElement>((props, ref) => {
           Shipment Cost Calculator
         </h1>
         <div className="relative h-[290px] w-[334px] ">
-          <Image src={landpageImage} fill alt="logo" />
+          <Image
+            src={landpageImage}
+            fill
+            alt="logo"
+            sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+          />
         </div>
         <p className=" w-[85%] text-[16px] text-[#525D72] font-[500] leading-[25.5px] ">
           Drop off and pick up packages from a location that’s open when you

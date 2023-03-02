@@ -27,7 +27,14 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
         <div className="flex-1 flex-type6 space-y-[20px] ">
           <div className="flex-type1 space-x-[20px]">
             <div className="relative h-[47px] w-[47px] ">
-              <Image src={WhiteLogo} fill alt="logo" />
+              <Image
+                src={WhiteLogo}
+                fill
+                alt="logo"
+                sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+              />
             </div>
             <h1 className="text-[20px] text-[#FFFFFF] font-[700] leading-[30px] ">
               MAZ Express
@@ -55,7 +62,14 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
                 return (
                   <div className="flex-type1 cursor-pointer" key={index}>
                     <div className="relative h-[20px] w-[20px] ">
-                      <Image src={data.url} fill alt="logo" />
+                      <Image
+                        src={data.url}
+                        fill
+                        alt="logo"
+                        sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+                      />
                     </div>
                     <div className="ml-[5px]">{data.label}</div>
                   </div>
@@ -67,7 +81,14 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
                 return (
                   <div className="flex-type1 cursor-pointer" key={index}>
                     <div className="relative h-[20px] w-[20px] ">
-                      <Image src={data.url} fill alt="logo" />
+                      <Image
+                        src={data.url}
+                        fill
+                        alt="logo"
+                        sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+                      />
                     </div>
                     <div className="ml-[5px]">{data.label}</div>
                   </div>

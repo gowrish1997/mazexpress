@@ -55,7 +55,7 @@ const ShipmentCalculatorDropdown = (props: IProp) => {
           <div className="absolute h-[6px] w-[8px] cursor-pointer right-[8px]  ">
             {/* <Image
               src="/downwardArrow.png"
-              fill={true}
+              fill
               alt="arrow"
               objectFit="cover"
               className="cursor-pointer absolute right-[8px] "
