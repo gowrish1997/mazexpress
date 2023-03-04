@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import PageHeader from "@/components/common/PageHeader";
 import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
@@ -12,7 +11,7 @@ import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal
 import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
-import { createToast } from "@/lib/toasts";
+// import { createToast } from "@/lib/toasts";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 
 const schema = yup
@@ -115,19 +114,19 @@ const AddNewOrder = () => {
       });
       console.log(result2);
 
-      createToast({
-        type: "success",
-        title: "Success",
-        message: "Created order successfully",
-      });
+      // createToast({
+      //   type: "success",
+      //   title: "Success",
+      //   message: "Created order successfully",
+      // });
     } catch (err) {
       console.log(err);
-      createToast({
-        type: "error",
-        title: "An error occurred",
-        message: "Check console for more info.",
-        timeOut: 3000,
-      });
+      // createToast({
+      //   type: "error",
+      //   title: "An error occurred",
+      //   message: "Check console for more info.",
+      //   timeOut: 3000,
+      // });
     }
 
     // if (user) {

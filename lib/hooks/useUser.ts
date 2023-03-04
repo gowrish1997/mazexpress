@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import DSContext from '@/lib/adapter/DSContext';
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
@@ -9,10 +10,9 @@ export default function useUser({
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  let queryString = "/api/users";
-  if (session?.user.email) {
-    queryString += `?email=${session.user.email}`;
-  }
+  const db = useContext(DSContext)['db']
+
+  
   const user = session?.user;
 
   useEffect(() => {

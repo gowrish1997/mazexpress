@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Frame from "@/components/common/Frame";
 import { useRouter } from "next/router";
@@ -11,6 +11,9 @@ import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { SessionProvider } from "next-auth/react";
 import "reflect-metadata";
+import { DataSource } from "typeorm";
+import DSContext from "@/lib/adapter/DSContext";
+import { MazDataSource } from "@/lib/adapter/data-source";
 config.autoAddCss = false;
 
 export default function App({
@@ -19,6 +22,25 @@ export default function App({
 }: // pageProps,
 AppProps) {
   const router = useRouter();
+
+  const [db, setDb] = useState<DataSource | null>(null);
+
+  useEffect(() => {
+    // init the db and set to context
+    if (db === null) {
+      MazDataSource.then((dataSource) => {
+        console.log("set the db");
+        setDb(dataSource);
+      });
+    }
+    return () => {
+      db?.destroy().then((res) => {
+        console.log(res);
+        return;
+      });
+    };
+  }, []);
+
   if (router.pathname.startsWith("/auth/gate")) {
     // no frame
     return (
@@ -32,12 +54,19 @@ AppProps) {
               message: err.message,
               timeOut: 3000,
             });
-            // console.error(err);
+            console.error(err);
           },
         }}
       >
-        <Component {...pageProps} />
-        <NotificationContainer />
+        <DSContext.Provider
+          value={{
+            db,
+            setDb,
+          }}
+        >
+          <Component {...pageProps} />
+          <NotificationContainer />
+        </DSContext.Provider>
       </SWRConfig>
     );
   }
@@ -52,22 +81,29 @@ AppProps) {
             message: err.message,
             timeOut: 3000,
           });
-          // console.error(err);
+          console.error(err);
         },
       }}
     >
-      <SessionProvider session={session}>
-        <Frame>
-          {/* <Script
+      <DSContext.Provider
+        value={{
+          db,
+          setDb,
+        }}
+      >
+        <SessionProvider session={session}>
+          <Frame>
+            {/* <Script
             src="https://accounts.google.com/gsi/client"
             // strategy="beforeInteractive"
             // onLoad={() => console.log('loaded')}
             // onError={(err) => console.log(err)}
           /> */}
-          <Component {...pageProps} />
-          <NotificationContainer />
-        </Frame>
-      </SessionProvider>
+            <Component {...pageProps} />
+            <NotificationContainer />
+          </Frame>
+        </SessionProvider>
+      </DSContext.Provider>
     </SWRConfig>
   );
 }

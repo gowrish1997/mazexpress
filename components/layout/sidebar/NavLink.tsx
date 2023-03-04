@@ -1,19 +1,18 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useUser from "@/lib/hooks/useUser";
-import Order from "../../../public/order_svg.svg";
-import Location from "../../../public/location_svg.svg";
-import Warehosue from "../../../public/warehouse_svg.svg";
-import Address from "../../../public/address_svg.svg";
-import Settings from "../../../public/settings_svg.svg";
-import Helpcenter from "../../../public/help_svg.svg";
-import Dashboard from "../../../public/dashboard_svg.svg";
-import LiveOrder from "../../../public/liveorder_svg.svg";
-import TodayShip from "../../../public/todayship_svg.svg";
-import User from "../../../public/user_svg.svg";
-import Notification from "../../../public/bell_svg.svg";
+import Order from "@/public/order_svg.svg";
+import Location from "@/public/location_svg.svg";
+import Warehosue from "@/public/warehouse_svg.svg";
+import Address from "@/public/address_svg.svg";
+import Settings from "@/public/settings_svg.svg";
+import Helpcenter from "@/public/help_svg.svg";
+import Dashboard from "@/public/dashboard_svg.svg";
+import LiveOrder from "@/public/liveorder_svg.svg";
+import TodayShip from "@/public/todayship_svg.svg";
+import User from "@/public/user_svg.svg";
+import Notification from "@/public/bell_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -51,14 +50,12 @@ const adminIcon = (id: number) => {
       return <TodayShip />;
     case 5:
       return <TodayShip />;
-
     case 6:
       return <Warehosue />;
     case 7:
       return <User />;
     case 8:
       return <Notification />;
-
     case 9:
       return <Settings />;
     case 10:

@@ -1,11 +1,13 @@
-import { MazAdapter } from "@/lib/adapter";
+import DSContext from '@/lib/adapter/DSContext';
+// import { MazAdapter } from "@/lib/adapter";
 import { compareSync, hashSync } from "bcrypt";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextApiRequest, NextApiResponse } from "next";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+// import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import type { NextAuthOptions } from "next-auth";
+import { useContext } from "react";
 
 export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers
@@ -28,19 +30,20 @@ export const authOptions: NextAuthOptions = {
       },
       authorize: async (credentials, req) => {
         // console.log("authorize cred", credentials?.username, credentials?.password);
-        let adapter = await MazAdapter();
+        // let adapter = await MazAdapter();
+        // if (adapter) {
+        //   const user = await adapter.getUserByEmail(credentials?.username!);
+        //   // console.log(user);
 
-        const user = await adapter.getUserByEmail(credentials?.username!);
-        // console.log(user);
-
-        if (user) {
-          // compare password
-          let match = compareSync(credentials?.password!, user.password!);
-          console.log(match);
-          if (match) {
-            return user;
-          }
-        }
+        //   if (user) {
+        //     // compare password
+        //     let match = compareSync(credentials?.password!, user.password!);
+        //     console.log(match);
+        //     if (match) {
+        //       return user;
+        //     }
+        //   }
+        // }
         return null;
       },
     }),
@@ -99,35 +102,37 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile, email, credentials }) {
       // console.log(user, account, profile, email, credentials);
       // check if credentials
-      let adapter = await MazAdapter();
-      const dbuser: UserEntity = await adapter.getUserByEmail(user?.email!);
-      if (credentials && user) {
-        // only sign in check
-        // check the pass
-        // console.log("return 1");
-        return true;
-      } else if (account && account.provider === "google") {
-        if (dbuser) {
-          // already stored info in db sign in
-          // console.log("return 2");
-          return true;
-        }
+      // let adapter = await MazAdapter();
+      // if (adapter) {
+      //   const dbuser: UserEntity = await adapter.getUserByEmail(user?.email!);
+      //   if (credentials && user) {
+      //     // only sign in check
+      //     // check the pass
+      //     // console.log("return 1");
+      //     return true;
+      //   } else if (account && account.provider === "google") {
+      //     if (dbuser) {
+      //       // already stored info in db sign in
+      //       // console.log("return 2");
+      //       return true;
+      //     }
 
-        // save new user
-        const newdbuser = new UserEntity();
-        const saltRounds = 10;
-        const hash2 = hashSync("Test123$", saltRounds);
+      //     // save new user
+      //     const newdbuser = new UserEntity();
+      //     const saltRounds = 10;
+      //     const hash2 = hashSync("Test123$", saltRounds);
 
-        newdbuser.avatar_url = user.image ? user.image : "default_user.png";
-        newdbuser.first_name = user.name ? user.name.split(" ")[0] : "";
-        newdbuser.last_name = user.name ? user.name.split(" ")[1] : "";
-        newdbuser.email = user.email!;
+      //     newdbuser.avatar_url = user.image ? user.image : "default_user.png";
+      //     newdbuser.first_name = user.name ? user.name.split(" ")[0] : "";
+      //     newdbuser.last_name = user.name ? user.name.split(" ")[1] : "";
+      //     newdbuser.email = user.email!;
 
-        newdbuser.password = hash2;
-        await adapter.createUser(newdbuser);
-        // console.log("return 3");
-        return true;
-      }
+      //     newdbuser.password = hash2;
+      //     await adapter.createUser(newdbuser);
+      //     // console.log("return 3");
+      //     return true;
+      //   }
+      // }
       // console.log("return 4");
       return false;
     },
@@ -144,27 +149,33 @@ export const authOptions: NextAuthOptions = {
       user: any;
     }) {
       // console.log('session', session)
-      let adapter = await MazAdapter();
-      let dbuser = await adapter.getUserByEmail(token.email);
-      session.user = dbuser;
-      return session; // The return type will match the one returned in `useSession()`
+      // let adapter = await MazAdapter();
+      // if (adapter) {
+      //   let dbuser = await adapter.getUserByEmail(token.email);
+      //   session.user = dbuser;
+      //   return session; // The return type will match the one returned in `useSession()`
+      // }
+      return session;
     },
 
     async jwt({ token, user, account, profile, isNewUser }) {
-      let adapter = await MazAdapter();
-      let dbuser: UserEntity = await adapter.getUserByEmail(
-        token.email as string
-      );
-      if(isNewUser) {
-        console.log('new user')
-        return token
-      }
-      if (dbuser) {
-        token.is_admin = dbuser.is_admin as boolean;
-        return token;
-      } else {
-        return token;
-      }
+      // let adapter = await MazAdapter();
+      // if (adapter) {
+      //   let dbuser: UserEntity = await adapter.getUserByEmail(
+      //     token.email as string
+      //   );
+      //   if (isNewUser) {
+      //     console.log("new user");
+      //     return token;
+      //   }
+      //   if (dbuser) {
+      //     token.is_admin = dbuser.is_admin as boolean;
+      //     return token;
+      //   } else {
+      //     return token;
+      //   }
+      // }
+      return token;
     },
   },
 
@@ -178,5 +189,9 @@ export const authOptions: NextAuthOptions = {
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   // Do whatever you want here, before the request is passed down to `NextAuth`
+  const db = useContext(DSContext)['db']
+  if (db !== null){
+    req.db = db
+  }
   return await NextAuth(req, res, authOptions);
 }

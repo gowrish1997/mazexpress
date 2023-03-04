@@ -15,20 +15,11 @@ const FilterOptionDropDown = (props: Iprop) => {
   const [currentValue, setCurrentValue] = useState<Array<string>>([]);
 
   useEffect(() => {
-    // console.log("use effecr in filer option drowdown");
     setCurrentValue(props.statusFilterKey!);
     if (props.type == "warehouse") {
       setCurrentValue(props.options);
     }
   }, []);
-
-  // useEffect(() => {
-  //     if (!(props.type == "warehouse")) {
-  //         setFilteredAdminOptions((prev) => {
-  //             return [...props.options.filter((value) => !currentValue.includes(value))];
-  //         });
-  //     }
-  // }, [currentValue]);
 
   const dropDownOnChangeHandler = (value: string) => {
     if (props.onChange) {
@@ -86,11 +77,11 @@ const FilterOptionDropDown = (props: Iprop) => {
     <div className="relative z-40">
       <button
         className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[140px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative cursor-pointer"
-        style={
-          showAdminOptionCard
-            ? { backgroundColor: "#3672DF", color: "#FFFFFF" }
-            : {}
-        }
+        // style={
+        //   showAdminOptionCard
+        //     ? { backgroundColor: "#3672DF", color: "#FFFFFF" }
+        //     : {}
+        // }
         onClick={toggleAdminOptionCard}
       >
         <span className="capitalize">{`${
@@ -99,7 +90,7 @@ const FilterOptionDropDown = (props: Iprop) => {
         {currentValue && currentValue?.length > 1 && (
           <span
             className="text-[#3672DF] text-[14px]"
-            style={showAdminOptionCard ? { color: "#FFFFFF" } : {}}
+            // style={showAdminOptionCard ? { color: "#FFFFFF" } : {}}
           >{`${currentValue.length - 1}+more`}</span>
         )}
         <div className="relative h-[6px] w-[8px]  ">
@@ -124,11 +115,11 @@ const FilterOptionDropDown = (props: Iprop) => {
                     <button
                       className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
                       onClick={() => dropDownOnChangeHandler(data)}
-                      style={
-                        currentValue.includes(data)
-                          ? { backgroundColor: "#f2f9fc" }
-                          : {}
-                      }
+                      // style={
+                      //   currentValue.includes(data)
+                      //     ? { backgroundColor: "#f2f9fc" }
+                      //     : {}
+                      // }
                     >
                       {data}
                     </button>

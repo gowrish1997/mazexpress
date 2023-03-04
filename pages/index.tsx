@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState, useRef, useEffect } from "react";
+import React, { SyntheticEvent, useState, useRef } from "react";
 import Image from "next/image";
 import logo from "../public/logo.png";
 import ShipmentCalculator from "@/components/LandingPage/ShipmentCalculator";

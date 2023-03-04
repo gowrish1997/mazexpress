@@ -1,12 +1,18 @@
+import { DataSource } from "typeorm";
+import { NextApiRequest } from "next";
 declare module "react-step-progress-bar";
 declare module "react-notifications";
 declare module "react-languages-select";
 declare module "file-saver";
 
+declare module "next" {
+  interface NextApiRequest {
+    db: DataSource | null;
+  }
+}
 
 // written by raunak
 declare module "maz-adapter" {
-
   interface Adapter {
     createUser: (user: any) => Awaitable<AdapterUser>;
 

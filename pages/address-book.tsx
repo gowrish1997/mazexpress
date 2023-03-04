@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
-import UserSavedAddress from "@/components/orders/UserSavedAddress";
+// import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
-import { createToast } from "@/lib/toasts";
+// import { createToast } from "@/lib/toasts";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -35,19 +35,14 @@ const AddressBook = () => {
   };
 
   const updateAddresses = () => {
-    createToast({
-      type: "success",
-      message: "Created new address.",
-      timeOut: 2000,
-      title: "Success",
-    });
+    // createToast({
+    //   type: "success",
+    //   message: "Created new address.",
+    //   timeOut: 2000,
+    //   title: "Success",
+    // });
     mutateAddresses();
   };
-
-  useEffect(() => {
-    console.log(addresses);
-    console.log(user)
-  }, [addressesIsLoading]);
 
   return (
     <>
@@ -56,7 +51,7 @@ const AddressBook = () => {
         <div className="py-5">No addresses yet. Add new address now!</div>
       ) : (
         <div className="grid grid-cols-3 gap-3 py-5">
-          {addressesIsLoading && <div>loading</div>}
+          {/* {addressesIsLoading && <div>loading</div>}
           {addresses?.data &&
             addresses.data.map((data) => {
               return (
@@ -67,7 +62,7 @@ const AddressBook = () => {
                   // update={() => {}}
                 />
               );
-            })}
+            })} */}
         </div>
       )}
       <div>

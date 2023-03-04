@@ -9,13 +9,12 @@ export default withAuth(
     // console.log('running middleware')
     // will run if authorized is true
     const res = NextResponse.next();
-    // console.log(req.nextauth);
+    console.log(req.nextauth);
 
     const token = req.nextauth.token;
 
     if (token && token !== null) {
       // user is in
-      // check if user id is 0 null user
       // console.log(user);
       if (token.is_admin && !req.nextUrl.pathname.startsWith("/admin")) {
         // admin user check for restricted paths
@@ -36,7 +35,7 @@ export default withAuth(
         // console.log(token)
         // If there is a token, the user is authenticated
         if (token) {
-          // console.log(token);
+          console.log(token);
           return true;
         }
         return false;
@@ -55,12 +54,13 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
+
     // deploy
     // match all except these links
-    "/((?!api|_next/static|_next/image|favicon.ico|auth/gate|image|$).*)",
-    
+    // "/((?!api|_next/static|_next/image|favicon.ico|auth/gate|image|$).*)",
+
     // dev
     // match none
-    // "/((?!.*).*)",
+    "/((?!.*).*)",
   ],
 };

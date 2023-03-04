@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 import { createToast } from "@/lib/toasts";
 import Image from "next/dist/client/image";
 import google_logo from "@/public/google.png";
+import axios from "axios";
 
 type Inputs = {
   password: string;
@@ -37,13 +38,18 @@ const LogInComponent = (props: any) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const response = await signIn("credentials", {
-      redirect: false,
+    // const response = await signIn("credentials", {
+    //   redirect: false,
+    //   password: data.password,
+    //   username: data.email,
+    // });
+
+    const response: any = await axios.post("/api/auth/signin/credentials", {
       password: data.password,
       username: data.email,
-      // callbackUrl: process.env.NEXTAUTH_URL,
     });
-    console.log(response);
+
+    // console.log(response);
     if (response?.ok === false) {
       // no user found
       createToast({
