@@ -1,8 +1,9 @@
+"use strict";
 // server.js
-import express from "express";
-import next from "next";
-import { parse } from "url";
-// const express = require('express')
+// import express, { Request, Response } from "express";
+// import next from "next";
+// import { parse } from "url";
+const express = require("express");
 const dev = process.env.NODE_ENV !== "production";
 const port = parseInt(process.env.PORT) || 3000;
 const hostname = process.env.HOST || "localhost";
@@ -17,18 +18,7 @@ const handle = app.getRequestHandler();
             // This tells it to parse the query portion of the URL.
             const parsedUrl = parse(req.url, true);
             const { pathname, query } = parsedUrl;
-            // console.log(req);
-            let reqHandler;
-            if (pathname === "/a") {
-                reqHandler = await app.render(req, res, "/a", query);
-            }
-            else if (pathname === "/b") {
-                reqHandler = await app.render(req, res, "/b", query);
-            }
-            else {
-                reqHandler = await handle(req, res, parsedUrl);
-            }
-            // console.log(reqHandler);
+            let reqHandler = await handle(req, res, parsedUrl);
             return reqHandler;
         });
         server.listen(port, (err) => {

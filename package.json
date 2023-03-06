@@ -58,6 +58,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.17",
+    "@types/file-saver": "^2.0.5",
     "@types/multiparty": "^0.0.33",
     "autoprefixer": "^10.4.13",
     "css-loader": "^6.7.3",

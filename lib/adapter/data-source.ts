@@ -36,16 +36,16 @@ const connexion = async () => {
       synchronize: true,
       logging: false,
     });
-    if (process.env.NODE_ENV === "development") {
-      console.log("Maz data source init:", globalThis.db?.isInitialized);
-      if (!globalThis.db) {
-        globalThis.db = await ConnectionDS.initialize();
-        console.log("MDS init complete!");
-        return globalThis.db;
-      }
+    // if (process.env.NODE_ENV === "development") {
+    //   console.log("Maz data source init:", globalThis.db?.isInitialized);
+    //   if (!globalThis.db) {
+    //     globalThis.db = await ConnectionDS.initialize();
+    //     console.log("MDS init complete!");
+    //     return globalThis.db;
+    //   }
 
-      return globalThis.db;
-    }
+    //   return globalThis.db;
+    // }
 
     console.log("MDS init complete!");
     const MazDataSource = await ConnectionDS.initialize();

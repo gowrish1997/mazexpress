@@ -1,13 +1,9 @@
-import DSContext from '@/lib/adapter/DSContext';
-// import { MazAdapter } from "@/lib/adapter";
 import { compareSync, hashSync } from "bcrypt";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextApiRequest, NextApiResponse } from "next";
-// import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import type { NextAuthOptions } from "next-auth";
-import { useContext } from "react";
 
 export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers
@@ -189,9 +185,5 @@ export const authOptions: NextAuthOptions = {
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   // Do whatever you want here, before the request is passed down to `NextAuth`
-  const db = useContext(DSContext)['db']
-  if (db !== null){
-    req.db = db
-  }
   return await NextAuth(req, res, authOptions);
 }

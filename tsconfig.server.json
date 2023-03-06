@@ -4,10 +4,10 @@
     "compilerOptions": {
       "module": "es6",
       "outDir": "dist",
-      "lib": ["es2019"],
+      "lib": ["es2019", "DOM", "DOM.Iterable"],
       "target": "es2019",
       "isolatedModules": false,
       "noEmit": false
     },
-    "include": ["server.ts"]
+    "include": ["server.js"]
   }
