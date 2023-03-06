@@ -4,7 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import AuthLayout from "./AuthLayout";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 type Inputs = {
     password: string;
@@ -20,6 +21,10 @@ const schema = yup
     .required();
 
 const ResetPasswordView = (props: any) => {
+    const router = useRouter();
+    const { t } = useTranslation("");
+    const { locale } = router;
+
     const {
         register,
         handleSubmit,
@@ -49,7 +54,7 @@ const ResetPasswordView = (props: any) => {
     };
 
     return (
-        <div className="w-[400px] space-y-[20px] ">
+        <div className={`w-[400px] space-y-[20px] ${locale == "en" ? "-ml-[100px]" : "-mr-[100px]"}`}>
             <h1 className="text-[26px] text-[#000000] font-[600] leading-[36px] text-left ">Reset Password</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="flex-type6 gap-y-[12px] ">
                 <ReactHookFormInput

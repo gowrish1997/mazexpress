@@ -1,4 +1,40 @@
 {
+    "signUpView": {
+        "Title": " Sign up to get started",
+        "form": {
+            "InputField": ["First name", "Last name", "Age", "Gender", "Email", "Mobile Number", "Password", "Confirm Password"],
+            "GenderOptions": [
+                { "value": "m", "label": "Male" },
+                { "value": "f", "label": "Female" },
+                { "value": "u", "label": "Unknown" },
+                { "value": "o", "label": "Other" }
+            ],
+            "Errors": [
+                "First name is required field",
+                "Last name is required field",
+                "Age is required field",
+                "Gender is required field",
+                "Email is required (Please provide valid email)",
+                "Mobile number is required field (Must be exactly 10 digits)",
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+                "Confirm password is required field(Passwords must match) "
+            ],
+            "Discription": ["By signing up, you agree to our", "Terms of Service.", "Already have an account?", " Log in."],
+
+            "SubmitButton": ["Sign up", "Sign up using Email", "Sign up using Google"]
+        }
+    },
+    "loginView": {
+        "Title": "Log In",
+        "form": {
+            "InputField": ["Email", "Password", "Forgot password"],
+
+            "Errors": ["Email is required (Please provide valid email)", "Password is required field"],
+            "Discription": ["By signing up, you agree to our", "Terms of Service.", "Already have an account?", "Sign in."],
+
+            "SubmitButton": ["Log In", "Sign up using Email", "Sign up using Google"]
+        }
+    },
     "landingPage": {
         "Header": " Plan your eCommerce shipments in an instant. Estimate courier charges using our quick courier charges.",
         "navBar": {
@@ -13,7 +49,7 @@
             "CaptionPart2": " Get Help"
         },
         "Title": "Get More Done With Our MAZ Services",
-        "Caption": "Drop off and pick up packages from a location that’s open when you need it",
+        "Discription": "Drop off and pick up packages from a location that’s open when you need it",
         "shipmentCostCalculator": {
             "Title": "Shipment Cost Calculator",
             "Discription": "Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it",

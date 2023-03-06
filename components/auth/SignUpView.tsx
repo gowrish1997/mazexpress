@@ -9,28 +9,24 @@ import fetchJson, { FetchError } from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
 import CusotmDropdown from "../LandingPage/CustomDropdown";
+import { useTranslation } from "next-i18next";
 
 const schema = yup
     .object({
-        first_name_users: yup.string().required("First name is required"),
-        last_name_users: yup.string().required("Last name is required"),
-        age_users: yup.string().required("Age is required"),
-        gender_users: yup.string().required("Gender is required"),
-        email_users: yup.string().required("Email is required").email("please include @ in the email"),
+        first_name_users: yup.string().required("First name is required field"),
+        last_name_users: yup.string().required("Last name is required field"),
+        age_users: yup.string().required("Age is required field"),
+        gender_users: yup.string().required("Gender is required field"),
+        email_users: yup.string().required("Email is required field").email("Please provide valid email"),
         phone_users: yup
             .number()
             .test("len", "Must be exactly 10 digits", (val) => val?.toString().length === 10)
             .required()
             .typeError("Mobile numbder is required field"),
-        password_users: yup
-            .string()
-            .min(8, "Password must be 8 characters long")
-            .matches(/[0-9]/, "Password requires a number")
-            .matches(/[a-z]/, "Password requires a lowercase letter")
-            .matches(/[A-Z]/, "Password requires an uppercase letter")
-            .matches(/[^\w]/, "Password requires a symbol")
-            .required()
-            .typeError("Password is required field"),
+        password_users: yup.string().matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
+            excludeEmptyString: true,
+            message: "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+        }),
         confirmPassword_users: yup
             .string()
             .oneOf([yup.ref("password_users")], "Passwords must match")
@@ -42,6 +38,16 @@ const schema = yup
 const SignUpComponent = (props: any) => {
     const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
+    const { t } = useTranslation("");
+    const { locale } = router;
+
+    const inputFieldLabel: string[] = t("signUpView.form.InputField", { returnObjects: true });
+    const inputFieldErrors: string[] = t("signUpView.form.Errors", { returnObjects: true });
+    const submitButtons: string[] = t("signUpView.form.SubmitButton", { returnObjects: true });
+    const discription: string[] = t("signUpView.form.Discription", { returnObjects: true });
+    const genderOption: {value:string,label:string}[] = t("signUpView.form.GenderOptions", { returnObjects: true });
+    console.log(genderOption)
+
     const {
         register,
         handleSubmit,
@@ -49,7 +55,7 @@ const SignUpComponent = (props: any) => {
         getValues,
         formState: { errors },
     } = useForm<ISignUp>({
-        // resolver: yupResolver(schema),
+        resolver: yupResolver(schema),
         defaultValues: {
             //   age_users: "22",
             //   email_users: "mohamed@maz.com",
@@ -112,16 +118,34 @@ const SignUpComponent = (props: any) => {
     };
 
     return (
-        <div className="w-[400px] space-y-[20px]">
-            <h1 className="text-[26px] text-[#000000] font-[600] leading-[36px] text-left ">Sign up to get started</h1>
+        <div className={`w-[400px] space-y-[20px] ${locale == "en" ? "-ml-[100px]" : "-mr-[100px]"} `}>
+            <h1 className={`text-[26px] text-[#000000] font-[600] leading-[36px] ${locale == "en" ? "text-left" : "text-right"} `}>{t("signUpView.Title")}</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="flex-type6 gap-y-[10px] ">
-                <div className="flex-type2 space-x-[10px] w-full">
-                    <ReactHookFormInput label="First name" name="first_name_users" type="string" register={register("first_name_users")} error={errors.first_name_users?.message} />
+                <div className="flex-type2 gap-x-[10px] w-full">
+                    <ReactHookFormInput
+                        label={inputFieldLabel[0]}
+                        name="first_name_users"
+                        type="string"
+                        register={register("first_name_users")}
+                        error={errors.first_name_users?.message && inputFieldErrors[0]}
+                    />
 
-                    <ReactHookFormInput label="Last name" name="last_name_users" type="string" register={register("last_name_users")} error={errors.last_name_users?.message} />
+                    <ReactHookFormInput
+                        label={inputFieldLabel[1]}
+                        name="last_name_users"
+                        type="string"
+                        register={register("last_name_users")}
+                        error={errors.last_name_users?.message && inputFieldErrors[1]}
+                    />
                 </div>
-                <div className="flex-type2 space-x-[10px] w-full">
-                    <ReactHookFormInput label="Age" name="age_users" type="string" register={register("age_users")} error={errors.age_users?.message} />
+                <div className="flex-type2 gap-x-[10px] w-full">
+                    <ReactHookFormInput
+                        label={inputFieldLabel[2]}
+                        name="age_users"
+                        type="string"
+                        register={register("age_users")}
+                        error={errors.age_users?.message && inputFieldErrors[2]}
+                    />
                     {/* 
           <ReactHookFormInput
             label="Gender"
@@ -131,34 +155,41 @@ const SignUpComponent = (props: any) => {
             error={errors.gender_users}
           /> */}
                     <CusotmDropdown
-                        label="Gender"
+                        label={inputFieldLabel[3]}
                         name="gender_users"
                         type="string"
                         IconEnabled={true}
                         register={register("gender_users")}
-                        error={errors.gender_users?.message}
+                        error={errors.gender_users?.message && inputFieldErrors[3]}
                         value={getValues("gender_users")}
                         setValue={setValue}
-                        options={[
-                            { value: "m", label: "Male" },
-                            { value: "f", label: "Female" },
-                            { value: "u", label: "Unknown" },
-                            { value: "o", label: "Other" },
-                        ]}
+                        options={genderOption}
                         disabled={true}
                     />
                 </div>
 
-                <ReactHookFormInput label="Email" name="email_users" type="string" register={register("email_users")} error={errors.email_users?.message} />
-
-                <ReactHookFormInput label="Mobile number" name="phone_users" type="number" register={register("phone_users")} error={errors.phone_users?.message} />
+                <ReactHookFormInput
+                    label={inputFieldLabel[4]}
+                    name="email_users"
+                    type="string"
+                    register={register("email_users")}
+                    error={errors.email_users?.message && inputFieldErrors[4]}
+                />
 
                 <ReactHookFormInput
-                    label="Password"
+                    label={inputFieldLabel[5]}
+                    name="phone_users"
+                    type="number"
+                    register={register("phone_users")}
+                    error={errors.phone_users?.message && inputFieldErrors[5]}
+                />
+
+                <ReactHookFormInput
+                    label={inputFieldLabel[6]}
                     name="password_users"
                     type={passwordType}
                     register={register("password_users")}
-                    error={errors.password_users?.message}
+                    error={errors.password_users?.message && inputFieldErrors[6]}
                     icon={{
                         isEnabled: true,
                         src: passwordType === "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
@@ -167,11 +198,11 @@ const SignUpComponent = (props: any) => {
                 />
 
                 <ReactHookFormInput
-                    label="Confirm Password"
+                    label={inputFieldLabel[7]}
                     name="confirmPassword_users"
                     type={confirmPasswordType}
                     register={register("confirmPassword_users")}
-                    error={errors.confirmPassword_users?.message}
+                    error={errors.confirmPassword_users?.message && inputFieldErrors[7]}
                     icon={{
                         isEnabled: true,
                         src: confirmPasswordType === "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
@@ -180,17 +211,17 @@ const SignUpComponent = (props: any) => {
                 />
 
                 <button type="submit" className="w-full h-[46px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]">
-                    Sign Up
+                    {submitButtons[0]}
                 </button>
             </form>
             <div className="text-center text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[10px] ">
                 <p>
-                    By signing up, you agree to our <span className="text-[#0057FF]">Terms of Service.</span>
+                    {discription[0]} <span className="text-[#0057FF]">{discription[1]}</span>
                 </p>
                 <p>
-                    Already have an account?{" "}
+                    {discription[2]}
                     <span className="text-[#0057FF] cursor-pointer" onClick={() => props.switch(1)}>
-                        Log in.
+                        {discription[3]}
                     </span>
                 </p>
             </div>

@@ -14,7 +14,7 @@ interface IProp {
     IconEnabled: boolean;
     error?: string;
     disabled?: boolean;
-    options?: { value: string; label: string }[];
+    options?: { value: string; label: string}[];
     placeHolder?: string;
     setValue: any;
     className?: string;
@@ -45,7 +45,7 @@ const CusotmDropdown = (props: IProp) => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
-    console.log(locale);
+
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState<boolean>(false);
 

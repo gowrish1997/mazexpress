@@ -105,12 +105,12 @@ const Index = () => {
                                 {t("landingPage.trackOrder.CaptionPart1")} <span className="text-[#3672DF] cursor-pointer "> {t("landingPage.trackOrder.CaptionPart2")}</span>
                             </p>
                             <h1 className="text-center text-[32px] text-[#121212] font-[600] leading-[50px] mt-[40px] ">{t("landingPage.Title")}</h1>
-                            <p className="text-center text-[16px] text-[#525D72] font-[500] leading-[25.5px]">{t("landingPage.Caption")}</p>
+                            <p className="text-center text-[16px] text-[#525D72] font-[500] leading-[25.5px]">{t("landingPage.Discription")}</p>
                         </div>
                     </div>
                     <ShipmentCostCalculator ref={shipmentCalculatorSectionRef} />
                 </div>
-                <MazCommunityForm/>
+                <MazCommunityForm />
                 <Footer ref={supportSectionRef} />
             </div>
             {showPackageTrackingModal && <PackageTrackingModal close={closePackageTrackingModal} />}
