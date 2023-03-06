@@ -162,7 +162,7 @@ const Settings = () => {
                             </div>
                         </div>
                         <div className="flex-type1 w-full space-x-[20px] ">
-                            <div className="flex-type2 space-x-[10px] w-full">
+                        <div className="flex-type2 space-x-[10px] w-full">
                                 <ReactHookFormInput
                                     label="First name"
                                     name="first_name_users"

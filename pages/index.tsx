@@ -6,7 +6,7 @@ import Footer from "@/components/LandingPage/Footer";
 import PackageTrackingModal from "@/components/LandingPage/PackageTrackingModal";
 import { useRouter } from "next/router";
 import LanguageSwitcher from "@/components/LandingPage/LanguageSwitcher";
-
+import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
 import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -110,6 +110,7 @@ const Index = () => {
                     </div>
                     <ShipmentCostCalculator ref={shipmentCalculatorSectionRef} />
                 </div>
+                <MazCommunityForm/>
                 <Footer ref={supportSectionRef} />
             </div>
             {showPackageTrackingModal && <PackageTrackingModal close={closePackageTrackingModal} />}

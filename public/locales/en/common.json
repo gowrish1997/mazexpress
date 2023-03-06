@@ -30,6 +30,16 @@
                 "ResetButton": "Reset"
             }
         },
+        "communityForm": {
+            "Title": "Join ⚡️ MAZ community",
+            "Discription": "Drop off and pick up packages from a location that’s open when you need it.",
+            "form": {
+                "InputField": ["Email", "Mobile number", "Message"],
+                "Errors": ["Email is a required field", "Mobile number is a required field", "Message is a required field"],
+
+                "SubmitButton": "Get started now"
+            }
+        },
         "footer": {
             "leftSide": { "Title": "MAZ Express", "Content": ["Tracking", "Shipping", "Help & Support", "About Us", "Contact Us"] },
             "rightSide": { "Title": "Connect with Us", "Content": ["Instagram", "Facebook", "YouTube", "LinkedIn", "Twitter"] },

@@ -1,9 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/sidebar";
 import Topbar from "@/components/layout/Topbar";
 import { useRouter } from "next/router";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
-import { useTranslation } from "next-i18next";
+
 interface IFrameProps {
     children: React.ReactNode;
 }
@@ -11,18 +11,16 @@ export const SearchKeyContext = React.createContext<ISearchKeyContext | null>(nu
 
 const Frame = (props: IFrameProps) => {
     const router = useRouter();
-    const { t } = useTranslation("");
+    // const { t } = useTranslation("");
     const { locale } = router;
     const [searchKey, setSearchKey] = useState<string>("");
 
-   
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";
         let lang = router.locale == "ar" ? "ar" : "en";
         document.querySelector("html")?.setAttribute("dir", dir);
         document.querySelector("html")?.setAttribute("lang", lang);
     }, [router.locale]);
-
 
     return (
         <SearchKeyContext.Provider value={{ searchKey, setSearchKey }}>
@@ -42,6 +40,3 @@ const Frame = (props: IFrameProps) => {
 };
 
 export default Frame;
-
-
-

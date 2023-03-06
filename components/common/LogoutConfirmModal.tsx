@@ -12,7 +12,7 @@ const LogoutConfirmModal = (props: IProp) => {
     const { t } = useTranslation("");
     const { locale } = router;
 
-    var content: string[] = t("sidebar.ogoutConfirmModal.Content", { returnObjects: true });
+    var content: string[] = t("sidebar.logoutConfirmModal.Content", { returnObjects: true });
 
     return (
         <>

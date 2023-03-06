@@ -160,8 +160,20 @@ const AddNewOrder = () => {
                     </p>
                 </div>
                 <div className="flex-type1 gap-x-[10px] mt-[25px]">
-                    <ReactHookFormInput label={inputFieldLabels[0]} name="reference_id_orders" type="string" register={register("reference_id_orders")} error={errors.reference_id_orders? fieldErrors[0]:""} />
-                    <ReactHookFormInput label={inputFieldLabels[1]} name="store_link_orders" type="string" register={register("store_link_orders")} error={errors.store_link_orders? fieldErrors[1]:""} />
+                    <ReactHookFormInput
+                        label={inputFieldLabels[0]}
+                        name="reference_id_orders"
+                        type="string"
+                        register={register("reference_id_orders")}
+                        error={errors.reference_id_orders ? fieldErrors[0] : ""}
+                    />
+                    <ReactHookFormInput
+                        label={inputFieldLabels[1]}
+                        name="store_link_orders"
+                        type="string"
+                        register={register("store_link_orders")}
+                        error={errors.store_link_orders ? fieldErrors[1] : ""}
+                    />
                 </div>
                 <div className="mt-[20px]">
                     <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px]">
