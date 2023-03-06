@@ -173,7 +173,7 @@ const Settings = () => {
                 >
                   <Image
                     src={
-                      user?.avatar_url.startsWith("http")
+                      user?.avatar_url?.startsWith("http")
                         ? user?.avatar_url!
                         : "/user-images/" + user?.avatar_url!
                     }

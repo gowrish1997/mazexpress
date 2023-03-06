@@ -4,6 +4,8 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { NextAuthOptions } from "next-auth";
+import { MazAdapter } from "@/lib/adapter";
+import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 
 export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers
@@ -26,20 +28,20 @@ export const authOptions: NextAuthOptions = {
       },
       authorize: async (credentials, req) => {
         // console.log("authorize cred", credentials?.username, credentials?.password);
-        // let adapter = await MazAdapter();
-        // if (adapter) {
-        //   const user = await adapter.getUserByEmail(credentials?.username!);
-        //   // console.log(user);
+        let adapter = await MazAdapter();
+        if (adapter) {
+          const user = await adapter.getUserByEmail(credentials?.username!);
+          // console.log(user);
 
-        //   if (user) {
-        //     // compare password
-        //     let match = compareSync(credentials?.password!, user.password!);
-        //     console.log(match);
-        //     if (match) {
-        //       return user;
-        //     }
-        //   }
-        // }
+          if (user) {
+            // compare password
+            let match = compareSync(credentials?.password!, user.password!);
+            console.log(match);
+            if (match) {
+              return user;
+            }
+          }
+        }
         return null;
       },
     }),
@@ -98,37 +100,37 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile, email, credentials }) {
       // console.log(user, account, profile, email, credentials);
       // check if credentials
-      // let adapter = await MazAdapter();
-      // if (adapter) {
-      //   const dbuser: UserEntity = await adapter.getUserByEmail(user?.email!);
-      //   if (credentials && user) {
-      //     // only sign in check
-      //     // check the pass
-      //     // console.log("return 1");
-      //     return true;
-      //   } else if (account && account.provider === "google") {
-      //     if (dbuser) {
-      //       // already stored info in db sign in
-      //       // console.log("return 2");
-      //       return true;
-      //     }
+      let adapter = await MazAdapter();
+      if (adapter) {
+        const dbuser: UserEntity = await adapter.getUserByEmail(user?.email!);
+        if (credentials && user) {
+          // only sign in check
+          // check the pass
+          // console.log("return 1");
+          return true;
+        } else if (account && account.provider === "google") {
+          if (dbuser) {
+            // already stored info in db sign in
+            // console.log("return 2");
+            return true;
+          }
 
-      //     // save new user
-      //     const newdbuser = new UserEntity();
-      //     const saltRounds = 10;
-      //     const hash2 = hashSync("Test123$", saltRounds);
+          // save new user
+          const newdbuser = new UserEntity();
+          const saltRounds = 10;
+          const hash2 = hashSync("Test123$", saltRounds);
 
-      //     newdbuser.avatar_url = user.image ? user.image : "default_user.png";
-      //     newdbuser.first_name = user.name ? user.name.split(" ")[0] : "";
-      //     newdbuser.last_name = user.name ? user.name.split(" ")[1] : "";
-      //     newdbuser.email = user.email!;
+          newdbuser.avatar_url = user.image ? user.image : "default_user.png";
+          newdbuser.first_name = user.name ? user.name.split(" ")[0] : "";
+          newdbuser.last_name = user.name ? user.name.split(" ")[1] : "";
+          newdbuser.email = user.email!;
 
-      //     newdbuser.password = hash2;
-      //     await adapter.createUser(newdbuser);
-      //     // console.log("return 3");
-      //     return true;
-      //   }
-      // }
+          newdbuser.password = hash2;
+          await adapter.createUser(newdbuser);
+          // console.log("return 3");
+          return true;
+        }
+      }
       // console.log("return 4");
       return false;
     },

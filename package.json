@@ -5,10 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "lint": "next lint",
-    "build:server": "tsc --project tsconfig.server.json",
-    "build:next": "next build",
-    "build": "npm run build:next && npm run build:server",
-    "start": "NODE_ENV=production node dist/server.js"
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.1",

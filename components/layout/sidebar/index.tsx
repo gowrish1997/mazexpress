@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Header from "./Header";
-// import NavLink from "./NavLink";
+import NavLink from "./NavLink";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
@@ -144,13 +144,13 @@ const Sidebar = () => {
         <Header />
         <div className="flex flex-col px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
           <ul className="flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
-            {/* {sidebarContentHandler(session?.is_admin! ? 1 : 0).map(
+            {sidebarContentHandler(session?.is_admin! ? 1 : 0).map(
               (content, index) => {
                 return (
                   <NavLink key={content.id} id={index} content={content} />
                 );
               }
-            )} */}
+            )}
           </ul>
 
           <div

@@ -76,7 +76,7 @@ const Topbar = () => {
         <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
           <Image
             src={
-              user?.avatar_url.startsWith("https")
+              user?.avatar_url?.startsWith("https")
                 ? user?.avatar_url!
                 : "/user-images/" + user?.avatar_url!
             }

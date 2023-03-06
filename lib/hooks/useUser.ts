@@ -1,4 +1,3 @@
-import DSContext from '@/lib/adapter/DSContext';
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -10,9 +9,8 @@ export default function useUser({
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const db = useContext(DSContext)['db']
 
-  
+
   const user = session?.user;
 
   useEffect(() => {

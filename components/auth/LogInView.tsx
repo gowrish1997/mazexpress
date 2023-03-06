@@ -38,16 +38,16 @@ const LogInComponent = (props: any) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // const response = await signIn("credentials", {
-    //   redirect: false,
-    //   password: data.password,
-    //   username: data.email,
-    // });
-
-    const response: any = await axios.post("/api/auth/signin/credentials", {
+    const response = await signIn("credentials", {
+      redirect: false,
       password: data.password,
       username: data.email,
     });
+
+    // const response: any = await axios.post("/api/auth/signin/credentials", {
+    //   password: data.password,
+    //   username: data.email,
+    // });
 
     // console.log(response);
     if (response?.ok === false) {

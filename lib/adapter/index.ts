@@ -1,7 +1,8 @@
 // import { DataSource } from "typeorm";
 import type { Adapter } from "maz-adapter";
 import { UserEntity } from "./entities/UserEntity";
-import { MazDataSource } from "./data-source.drei.cjs";
+// import { MazDataSource } from "./data-source.drei.cjs";
+import { MazDataSource } from "./data-source.zwei";
 
 export async function MazAdapter(): Promise<Adapter | null> {
   let clientDS = await MazDataSource;
