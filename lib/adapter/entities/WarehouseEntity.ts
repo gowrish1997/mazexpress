@@ -17,7 +17,7 @@ export class WarehouseEntity {
   @Column({ type: "varchar" })
   address_2!: string;
 
-  @Column({ type: "enum", enum: City, default: City.T })
+  @Column({ type: "varchar", nullable: false, default: 'istanbul' })
   city!: string;
 
   @Column({ type: "varchar", default: "Libya" })

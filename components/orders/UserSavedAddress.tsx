@@ -4,12 +4,13 @@ import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 import { capitalizeFirstLetter } from "@/lib/helper";
+import { APIResponse } from "@/models/api.model";
 
 const UserSavedAddress = (props: {
   address: AddressEntity;
   register?: any;
   edit: (id: string) => void;
-  // update: () => Promise<IAddressProps[] | undefined>;
+  update: () => Promise<APIResponse<AddressEntity> | undefined>;
 }) => {
   const { user, status: userIsLoading } = useUser();
 
@@ -24,7 +25,7 @@ const UserSavedAddress = (props: {
         method: "DELETE",
       });
       // console.log(result)
-      // props.update();
+      props.update();
     }
   };
 

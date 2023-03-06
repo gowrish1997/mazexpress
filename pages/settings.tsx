@@ -67,7 +67,7 @@ const Settings = () => {
   });
 
   useEffect(() => {
-    // console.log(user);
+    console.log(user);
     reset({ ...user, password: "" });
   }, [user, reset]);
 
@@ -97,7 +97,7 @@ const Settings = () => {
   const onSubmit: SubmitHandler<
     UserEntity & { default_language: string; newPassword: string }
   > = async (data) => {
-    console.log(data);
+    // console.log(data);
     createToast({
       title: "Success",
       type: "success",

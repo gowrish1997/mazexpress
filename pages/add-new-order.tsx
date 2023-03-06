@@ -13,6 +13,7 @@ import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
 // import { createToast } from "@/lib/toasts";
 import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
+import { createToast } from "@/lib/toasts";
 
 const schema = yup
   .object({
@@ -26,7 +27,7 @@ const AddNewOrder = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
   const { user, status: userIsLoading } = useUser();
-  const { addresses, mutateAddresses } = useAddresses({
+  const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
     user_id: user?.id,
   });
 
@@ -34,7 +35,7 @@ const AddNewOrder = () => {
 
   // const defaultAddressHandler = () => {
   //   // mutateAddresses();
-  //   if (addresses?.data !== null) {
+  //   if (addresses?.data !== undefined && addresses?.data !== null && addresses.data.length > 0) {
   //     const address = (addresses?.data as AddressEntity[]).find(
   //       (el: AddressEntity) => el.id === user?.default_address
   //     );
@@ -51,10 +52,10 @@ const AddNewOrder = () => {
   } = useForm<{
     reference_id: string;
     store_link: string;
-    address_id: string;
+    address_id: string | null | undefined;
   }>({
     defaultValues: {
-      // address_id: defaultAddressHandler()?.id,
+      address_id: user?.default_address,
       reference_id: "euirfismeodicokew",
       store_link: "flipkart.com",
     },
@@ -82,11 +83,11 @@ const AddNewOrder = () => {
   };
 
   const onSubmit: SubmitHandler<{
-    reference_id: string;
-    store_link: string;
-    address_id: string;
+    reference_id: string | null | undefined;
+    store_link: string | null | undefined;
+    address_id: string | null | undefined;
   }> = async (data) => {
-    console.log(data);
+    // console.log(data);
     try {
       let orderObj = {
         user_id: user?.id,
@@ -114,19 +115,19 @@ const AddNewOrder = () => {
       });
       console.log(result2);
 
-      // createToast({
-      //   type: "success",
-      //   title: "Success",
-      //   message: "Created order successfully",
-      // });
+      createToast({
+        type: "success",
+        title: "Success",
+        message: "Created order successfully",
+      });
     } catch (err) {
       console.log(err);
-      // createToast({
-      //   type: "error",
-      //   title: "An error occurred",
-      //   message: "Check console for more info.",
-      //   timeOut: 3000,
-      // });
+      createToast({
+        type: "error",
+        title: "An error occurred",
+        message: "Check console for more info.",
+        timeOut: 3000,
+      });
     }
 
     // if (user) {
@@ -137,9 +138,9 @@ const AddNewOrder = () => {
     // console.log(data);
   };
 
-  // useEffect(() => {
-  //   console.log(addresses);
-  // }, [addresses]);
+  useEffect(() => {
+    console.log(addresses);
+  }, [addresses]);
   return (
     <>
       <PageHeader
@@ -183,7 +184,10 @@ const AddNewOrder = () => {
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3 py-5">
-          {/* {addresses?.data !== null &&
+          {
+            addressesIsLoading && <div>loading addresses...</div>
+          }
+          {addresses?.data && addresses?.data !== null &&
             (addresses?.data as AddressEntity[]).map((data: AddressEntity) => {
               return (
                 <UserSavedAddress
@@ -191,10 +195,10 @@ const AddNewOrder = () => {
                   address={data}
                   register={register("address_id")}
                   edit={toggleEditUserAddressModal}
-                  // update={mutateAddresses}
+                  update={mutateAddresses}
                 />
               );
-            })} */}
+            })}
         </div>
         <button
           className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"

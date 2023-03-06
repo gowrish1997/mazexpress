@@ -1,3 +1,5 @@
+import { DefaultSession } from "next-auth";
+import { UserEntity } from "./lib/adapter/entities/UserEntity";
 
 declare module "react-step-progress-bar";
 declare module "react-notifications";
@@ -5,6 +7,30 @@ declare module "react-languages-select";
 declare module "file-saver";
 
 // written by raunak
+
+// for next-auth
+declare module "next-auth" {
+  interface Session {
+    user: UserEntity & DefaultSession['user']
+  }
+}
+
+// for next-auth sign in
+namespace NodeJS {
+  interface ProcessEnv extends NodeJS.ProcessEnv {
+
+    FACEBOOK_ID: string
+    FACEBOOK_SECRET: string
+
+    GOOGLE_ID: string
+    GOOGLE_SECRET: string
+
+    DATABASE_URL: string
+    NEXTAUTH_SECRET: string
+  }
+}
+
+
 declare module "maz-adapter" {
   interface Adapter {
     createUser: (user: any) => Awaitable<AdapterUser>;

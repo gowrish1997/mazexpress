@@ -3,9 +3,9 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextApiRequest, NextApiResponse } from "next";
-import type { NextAuthOptions } from "next-auth";
 import { MazAdapter } from "@/lib/adapter";
 import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import type { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers
@@ -147,32 +147,32 @@ export const authOptions: NextAuthOptions = {
       user: any;
     }) {
       // console.log('session', session)
-      // let adapter = await MazAdapter();
-      // if (adapter) {
-      //   let dbuser = await adapter.getUserByEmail(token.email);
-      //   session.user = dbuser;
-      //   return session; // The return type will match the one returned in `useSession()`
-      // }
+      let adapter = await MazAdapter();
+      if (adapter) {
+        let dbuser = await adapter.getUserByEmail(token.email);
+        session.user = dbuser;
+        return session; // The return type will match the one returned in `useSession()`
+      }
       return session;
     },
 
     async jwt({ token, user, account, profile, isNewUser }) {
-      // let adapter = await MazAdapter();
-      // if (adapter) {
-      //   let dbuser: UserEntity = await adapter.getUserByEmail(
-      //     token.email as string
-      //   );
-      //   if (isNewUser) {
-      //     console.log("new user");
-      //     return token;
-      //   }
-      //   if (dbuser) {
-      //     token.is_admin = dbuser.is_admin as boolean;
-      //     return token;
-      //   } else {
-      //     return token;
-      //   }
-      // }
+      let adapter = await MazAdapter();
+      if (adapter) {
+        let dbuser: UserEntity = await adapter.getUserByEmail(
+          token.email as string
+        );
+        if (isNewUser) {
+          console.log("new user");
+          return token;
+        }
+        if (dbuser) {
+          token.is_admin = dbuser.is_admin as boolean;
+          return token;
+        } else {
+          return token;
+        }
+      }
       return token;
     },
   },

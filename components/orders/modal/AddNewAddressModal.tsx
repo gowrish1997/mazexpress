@@ -51,7 +51,9 @@ const AddNewAddressModal = (props: IProp) => {
       let address = { ...data };
       delete address.default;
 
-      // console.log(address);
+      console.log(address);
+      console.log(data);
+
       address.user = user;
 
       // add address
@@ -63,7 +65,7 @@ const AddNewAddressModal = (props: IProp) => {
       console.log(addressResult);
 
       // set default if checked
-      if (data.default === "on") {
+      if (data.default) {
         const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

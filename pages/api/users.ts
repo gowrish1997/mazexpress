@@ -6,6 +6,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 // import { MazDataSource } from "@/lib/adapter/data-source";
 import { APIResponse } from "@/models/api.model";
 import { MazDataSource } from "@/lib/adapter/data-source.zwei";
+import { MazAdapter } from "@/lib/adapter";
 
 export default function handler(
   req: NextApiRequest,
@@ -28,6 +29,11 @@ export default function handler(
           //     res.status(200).json({ data: data });
           //     resolve(data);
           //   });
+        }
+
+        if (req.query.email !== undefined) {
+          // send back search res
+
         }
 
         if (req.query.id) {
@@ -62,17 +68,26 @@ export default function handler(
             responseObj.data = null;
             responseObj.ok = true;
             responseObj.msg = "No user found with this id";
-            res.status(200).json(responseObj);
+            res.status(500).json(responseObj);
             resolve(responseObj);
           }
         } else if (req.query.email) {
-          // let adapter = await MazAdapter();
-          // const user = adapter.getUserByEmail(req.query.email as string);
-          responseObj.count = 1;
-          responseObj.data = [];
-          responseObj.ok = true;
-          res.status(200).json(responseObj);
-          resolve(responseObj);
+          let adapter = await MazAdapter();
+          const user = adapter?.getUserByEmail(req.query.email as string);
+          if (user) {
+
+            responseObj.count = 1;
+            responseObj.data = [];
+            responseObj.ok = true;
+            res.status(200).json(responseObj);
+            resolve(responseObj);
+          } else {
+            responseObj.count = 0;
+            responseObj.data = [];
+            responseObj.ok = true;
+            res.status(200).json(responseObj);
+            resolve(responseObj);
+          }
         } else {
           // paginate
           // get results and count of results

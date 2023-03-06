@@ -86,13 +86,10 @@ export default function handler(
             ...req.body,
           };
 
-          // db("addresses")
-          //   .where("id_addresses", id)
-          //   .update(fields)
-          //   .then((data: any) => {
-          //     res.status(200).json(data);
-          //     resolve(data);
-          //   });
+          let updatedAddress = await DS?.getRepository(AddressEntity).update(id, fields)
+          res.status(200).json({data: updatedAddress, msg: 'success'});
+          resolve(updatedAddress);
+
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();
@@ -102,13 +99,11 @@ export default function handler(
       case "DELETE":
         if (req.query.id) {
           const id = req.query.id;
-          // db("addresses")
-          //   .where("id_addresses", id)
-          //   .update({ status_addresses: 0 })
-          //   .then((data: any) => {
-          //     res.status(200).json(data);
-          //     resolve(data);
-          //   });
+
+          let deletedAddress = await DS?.getRepository(AddressEntity).delete(id)
+          res.status(200).json({data: deletedAddress, msg: 'success'});
+          resolve(deletedAddress);
+          
         } else {
           res.status(200).json({ msg: "invalid url params" });
           reject();

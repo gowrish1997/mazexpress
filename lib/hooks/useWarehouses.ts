@@ -1,4 +1,5 @@
 import { WarehouseEntity } from '@/lib/adapter/entities/WarehouseEntity';
+import { APIResponse } from '@/models/api.model';
 import useSWR from "swr";
 export default function useWarehouses({
   //   redirectTo = "",
@@ -6,7 +7,7 @@ export default function useWarehouses({
   //   id = null,
 } = {}) {
   const { data: warehouses, mutate: mutateWarehouses } =
-    useSWR<WarehouseEntity[]>(`/api/warehouses`);
+    useSWR<APIResponse<WarehouseEntity>>(`/api/warehouses`);
   //   console.log(warehouses);
 
   return { warehouses, mutateWarehouses };
