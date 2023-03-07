@@ -135,7 +135,7 @@ const Sidebar = () => {
 
     const transalateSidebarContentHandler = () => {
         if (user?.is_admin_users!) {
-            return  adminSidebarContent;
+            return adminSidebarContent;
         } else {
             return userSidebarContent;
         }
@@ -156,17 +156,17 @@ const Sidebar = () => {
 
     return (
         <>
-            <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[250px]">
+            <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[18%]">
                 <Header />
-                <div className="flex flex-col px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
-                    <ul className="flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
+                <div className="flex flex-col justify-between items-start px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
+                    <ul className="w-full box-border flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
                         {sidebarContentHandler(user?.is_admin_users!).map((content, index) => {
                             return <NavLink key={content.id} id={index} content={content} transalateContent={transalateSidebarContentHandler()[index]} />;
                         })}
                     </ul>
 
                     <div
-                        className="rounded self-center  flex flex-row items-center justify-start  w-[188px] bg-[#3672DF] py-[10px] px-[15px] -ml-[15px] cursor-pointer gap-x-[10px]"
+                        className="w-[100%] box-border rounded self-center  flex flex-row items-center justify-start bg-[#3672DF] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
                         onClick={toggleLogoutConfirmModal}
                     >
                         <div className="relative w-[14px] h-[14px] ">

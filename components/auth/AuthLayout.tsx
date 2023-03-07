@@ -12,7 +12,7 @@ const AuthLayout = (props: any) => {
     const { locale } = router;
     return (
         <div className="flex h-screen w-screen overflow-y-auto ">
-            <div className="w-[30%] h-[100vh] fixed ">
+            <div className="hidden md:block w-[30%] h-[100vh] fixed ">
                 <Image src={img} alt={"maz gate banner"} fill />
                 {/* <Image
           src={"/homePic.png"}
@@ -25,7 +25,7 @@ const AuthLayout = (props: any) => {
           }}
         /> */}
             </div>
-            <div className={`flex flex-1 justify-center items-start ${locale == "en" ? "ml-[40%]" : "mr-[40%]"}  pt-10 `}>{props.children}</div>
+            <div className={`flex flex-1 justify-center items-start ${locale == "en" ? "md:ml-[40%]" : "md:mr-[40%]"}  pt-10 `}>{props.children}</div>
         </div>
     );
 };

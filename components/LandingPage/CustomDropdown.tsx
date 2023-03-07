@@ -50,6 +50,7 @@ const CusotmDropdown = (props: IProp) => {
     const [showAdminOptionCard, setShowAdminOptionCard] = useState<boolean>(false);
 
     const toggleAdminOptionCard = () => {
+        console.log('dropdown')
         setShowAdminOptionCard((prev) => !prev);
     };
     function smartToggleGateHandler() {
@@ -84,7 +85,7 @@ const CusotmDropdown = (props: IProp) => {
                 {props.label}
             </label>
             <div
-                className={"flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative "}
+                className={"flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] lg:h-[55px] xlg:h-[70px] "}
                 style={{ borderColor: props.error ? "#f02849" : "" }}
                 onClick={toggleAdminOptionCard}
             >

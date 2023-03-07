@@ -46,8 +46,8 @@ const MazCommunityForm = () => {
 
     return (
         <div className="flex flex-col justify-start items-center mt-[100px] ">
-            <div className="w-[32%] flex flex-col justify-start items-center gap-y-[15px] ">
-                <h1 className="text-[40px] text-[#18181B] font-[700] leading-[45px] ">{t("landingPage.communityForm.Title")}</h1>
+            <div className="w-[50%] xmd:w-[32%] flex flex-col justify-start items-center gap-y-[15px] ">
+                <h1 className="text-[40px] text-center text-[#18181B] font-[700] leading-[45px] ">{t("landingPage.communityForm.Title")}</h1>
                 <p className="w-[85%] text-[16px] text-[#525D72] font-[500] leading-[25px] text-center ">{t("landingPage.communityForm.Discription")}</p>
                 <form className=" w-full bg-[#FFFFFF] rounded-[16px]  space-y-[20px]" onSubmit={handleSubmit(onSubmit)}>
                     <ReactHookFormInput
@@ -83,7 +83,7 @@ const MazCommunityForm = () => {
                         {errors.user_message?.message && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{fieldErrors[2]}</p>}
                     </div>
 
-                    <button type="submit" className="w-full h-[46px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]">
+                    <button type="submit" className="w-full h-[46px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]">
                         {t("landingPage.communityForm.form.SubmitButton")}
                     </button>
                 </form>

@@ -1,6 +1,7 @@
 {
     "signUpView": {
         "Title": " Sign up to get started",
+        "MobileViewTitle":"Get More Done With Our MAZ Services",
         "form": {
             "InputField": ["First name", "Last name", "Age", "Gender", "Email", "Mobile Number", "Password", "Confirm Password"],
             "GenderOptions": [
@@ -19,20 +20,35 @@
                 "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
                 "Confirm password is required field(Passwords must match) "
             ],
-            "Discription": ["By signing up, you agree to our", "Terms of Service.", "Already have an account?", " Log in."],
+            "Discription": ["By signing up, you agree to our", "Terms of Service.", "Already have an account?", "Log in."],
 
             "SubmitButton": ["Sign up", "Sign up using Email", "Sign up using Google"]
         }
     },
     "loginView": {
-        "Title": "Log In",
+        "Title": "Log in",
+        "MobileViewTitle":"Get More Done With Our MAZ Services",
         "form": {
             "InputField": ["Email", "Password", "Forgot password"],
 
             "Errors": ["Email is required (Please provide valid email)", "Password is required field"],
-            "Discription": ["By signing up, you agree to our", "Terms of Service.", "Already have an account?", "Sign in."],
+            "Discription": ["By signing up, you agree to our", "Terms of Service.","New to MAZ Express?", "Sign up."],
 
-            "SubmitButton": ["Log In", "Sign up using Email", "Sign up using Google"]
+            "SubmitButton": ["Log in", "Log in using Email", "Login using Google"]
+        }
+    },
+    "resetPasswordView": {
+        "Title": "Reset Password",
+        "MobileViewTitle":"Get More Done With Our MAZ Services",
+        "form": {
+            "InputField": ["Password", "Confirm password"],
+
+            "Errors": [
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+                "Confirm password is required field(Passwords must match) "
+            ],
+            "SubmitButton": ["Reset Password"],
+            "Discription": ["By signing up, you agree to our", "Terms of Service.", "Already have an account?", "Log in."]
         }
     },
     "landingPage": {

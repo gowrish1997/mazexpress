@@ -27,7 +27,7 @@ const ReactHookFormInput = (props: IProp) => {
             <label htmlFor={props.name} className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] ">
                 {props.label}
             </label>
-            <div className={"flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative"+" "+props.className} style={{ borderColor: props.error ? "#f02849" : "" }}>
+            <div className={"flex-type1 w-full h-[46px] lg:h-[55px] xlg:h-[70px] border-[1px] border-[#BBC2CF] rounded-[4px] box-border  relative"+" "+props.className} style={{ borderColor: props.error ? "#f02849" : "" }}>
                 {props.name == "phone_addresses" && <span className="mx-[10px]">+281</span>}
 
                 <input

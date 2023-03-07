@@ -59,7 +59,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>((props, ref) => 
     };
 
     return (
-        <div className="lg:flex-type3 lg:p-[70px] p-[30px] space-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[120px] " ref={ref}>
+        <div className="flex-type5 min-[950px]:flex-type3 p-[70px] flex-wrap space-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[120px] " ref={ref}>
             <div className="flex-1 space-y-[15px] ">
                 <h1 className="text-[24px] text-[#121212] font-[700] leading-[50px] "> {t("landingPage.shipmentCostCalculator.Title")}</h1>
                 <div className="relative h-[290px] w-[334px] ">
@@ -145,7 +145,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>((props, ref) => 
                     </div>
                 </div>
 
-                <button type="submit" className="w-full h-[46px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]">
+                <button type="submit" className="w-full h-[46px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]">
                     {t("landingPage.shipmentCostCalculator.form.SubmitButton")}
                 </button>
                 <div

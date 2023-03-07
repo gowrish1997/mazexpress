@@ -38,9 +38,9 @@ const MyOrders = () => {
     const addNewOrderHandler = () => {
         router.push(`/add-new-order`);
     };
-    if (ordersIsLoading) {
-        return <LoadingPage />;
-    }
+    // if (ordersIsLoading) {
+    //     return <LoadingPage />;
+    // }
 
     if (ordersError) throw ordersError;
     return (
@@ -48,7 +48,7 @@ const MyOrders = () => {
             <PageHeaders content={t("indexPage.pageHeader.Title")} showCalender={true} title="My Orders | MazExpress" />
 
             <div className="flex flex-col justify-between relative flex-1 h-full">
-                {(orders as IOrderResponse[]).length <= 0 && (
+                {(!orders || (orders && (orders as IOrderResponse[]).length <= 0)) && (
                     <div className="flex-1 flex flex-col justify-center items-center w-full ">
                         <div className="relative h-[221px] w-[322px] ">
                             <Image

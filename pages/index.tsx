@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import logo from "../public/logo.png";
+import newlogoBlue from "../public/new_logo_blue.png";
 import ShipmentCostCalculator from "@/components/LandingPage/ShipmentCostCalculator";
 import Footer from "@/components/LandingPage/Footer";
 import PackageTrackingModal from "@/components/LandingPage/PackageTrackingModal";
@@ -61,10 +61,10 @@ const Index = () => {
             <div className="">
                 <div className="w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[14px] text-[#FFFFFF] font-[500] leading-[24px] ">{t("landingPage.Header")}</div>
                 <div className="lg:px-[150px] px-[50px] ">
-                    <div className="w-full flex-type3 h-[100px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
-                        <div className="flex-type3 gap-x-[20px] ">
+                    <div className="w-full flex flex-row justify-between items-end h-[80px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
+                        <div className="flex flex-row justify-between items-baseline gap-x-[20px] ">
                             <div className="relative h-[47px] w-[47px] ">
-                                <Image src={logo} fill alt="logo" />
+                                <Image src={newlogoBlue} fill alt="logo" />
                             </div>
                             <ul className="flex-type3 gap-x-[20px] ">
                                 <li className="cursor-pointer" onClick={() => trackingSectionRef?.current?.scrollIntoView({ behavior: "smooth" })}>
@@ -81,7 +81,7 @@ const Index = () => {
 
                         <div className="flex-type1 gap-x-[20px]">
                             <button>{auth[1]}</button>
-                            <button className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] ">{auth[0]}</button>
+                            <button className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] ">{auth[0]}</button>
                             <LanguageSwitcher />
                         </div>
                     </div>
@@ -93,7 +93,7 @@ const Index = () => {
                                 onChange={trackingIdInputHandler}
                             />
                             <button
-                                className="h-[56px] bg-[#2B2B2B] rounded-[4px] px-[40px] text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
+                                className="h-[56px] bg-[#35C6F4] rounded-[4px] px-[40px] text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
                                 onClick={openPackageTrackingModal}
                             >
                                 {t("landingPage.trackOrder.SubmitButton")}

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import WhiteLogo from '../../public/whiteLogo.png'
+import WhiteLogo from '../../public/new_logo_white.png'
 import Instagram from "../../public/instagram.png";
 import Facebook from "../../public/facebook.png";
 import Youtube from "../../public/youtube.png";
@@ -30,9 +30,9 @@ const Footer = React.forwardRef<HTMLDivElement>((props,ref) => {
 
     return (
         <div className="h-[396px] bg-[#2B2B2B] mt-[100px] px-[120px] py-[70px] space-y-[50px]" ref={ref}>
-            <div className="flex-type2">
+            <div className="flex flex-row justify-start items-end ">
                 <div className="flex-1 flex-type6 gap-y-[20px] ">
-                    <div className="flex-type1 gap-x-[20px]">
+                    <div className="flex flex-row justify-start items-baseline gap-x-[20px]">
                         <div className="relative h-[47px] w-[47px] ">
                             <Image src={WhiteLogo} fill alt="logo" />
                         </div>

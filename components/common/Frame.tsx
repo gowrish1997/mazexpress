@@ -27,7 +27,7 @@ const Frame = (props: IFrameProps) => {
             <div className="flex bg-[#FFFFFF] relative min-h-screen">
                 {!(router.pathname == "/") && <Sidebar />}
                 {!(router.pathname == "/") ? (
-                    <div className={`flex-1 px-7 pb-5 flex flex-col ${locale == "en" ? " ml-[250px]" : " mr-[250px]"}  relative`}>
+                    <div className={`box-border flex-1 px-7 pb-5 flex flex-col ${locale == "en" ? " ml-[18%]" : " mr-[18%]"}  relative`}>
                         <Topbar />
                         {props.children}
                     </div>
