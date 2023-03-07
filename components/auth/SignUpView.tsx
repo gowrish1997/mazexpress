@@ -5,9 +5,8 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
-import { UserEntity, UserGender } from "@/lib/adapter/entities/UserEntity";
-import axios, { AxiosResponse } from "axios";
-import { APIResponse } from "@/models/api.model";
+import { User, UserGender } from "@/models/entity/User";
+import { MazAdapter } from "@/lib/adapter";
 
 const schema = yup
   .object({
@@ -52,7 +51,7 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserEntity & { confirmPassword: string }>({
+  } = useForm<User & { confirmPassword: string }>({
     resolver: yupResolver(schema),
     defaultValues: {
       email: "mohamed@maz.com",
@@ -67,27 +66,13 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
   });
 
   const onSubmit: SubmitHandler<
-    UserEntity & { confirmPassword: string }
+    User & { confirmPassword: string }
   > = async (data) => {
     // console.log(data);
 
-    const newuser = new UserEntity();
-    newuser.first_name = data.first_name;
-    newuser.last_name = data.last_name;
-    newuser.email = data.email;
-    newuser.age = data.age;
-    // newuser.gender = data.gender;
-    newuser.phone = data.phone;
-    newuser.password = data.password;
-    const response: AxiosResponse<APIResponse<UserEntity>> = await axios.post(
-      "/api/users",
-      newuser,
-      {
-        method: "POST",
-      }
-    );
-    console.log(response);
-    if (response.statusText === "OK") {
+    const newUser = await (await MazAdapter()).createUser(data)
+    console.log(newUser);
+    if (newUser) {
       createToast({
         type: "success",
         title: "Created user",

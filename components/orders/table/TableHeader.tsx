@@ -1,7 +1,4 @@
-import React, { useState, useRef } from "react";
-import Image from "next/image";
-import ClickOutside from "@/components/common/ClickOutside";
-import downwardArrow from "../../../public/downwardArrow.png";
+import React from "react";
 interface IProp {
   type: string;
   headings: Array<string>;

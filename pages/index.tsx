@@ -6,9 +6,11 @@ import Footer from "@/components/LandingPage/Footer";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import Head from "next/head";
+import { useRouter } from "next/router";
 const Home = () => {
+  const router = useRouter()
   const { data: session, status: sessionStatus } = useSession();
-
+  
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
   const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -103,9 +105,9 @@ const Home = () => {
             </div>
           ) : (
             <div className="space-x-[20px]">
-              <Link href={"/auth/gate?signup"}>Sign up</Link>
+              <Link href={"/auth/gate?mode=0"}>Sign up</Link>
               <button
-                onClick={() => signIn()}
+                onClick={() => router.push('/auth/gate')}
                 className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
               >
                 Login

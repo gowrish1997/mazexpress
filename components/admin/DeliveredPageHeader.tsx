@@ -5,7 +5,6 @@ import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
-import { perPageOptinsList } from "@/lib/helper";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
 interface IProp {
@@ -23,7 +22,6 @@ interface IProp {
 }
 
 const DeliveredPageHeader = (props: IProp) => {
-  const perPageOptions = perPageOptinsList();
   const warehousesDropDownOptoin = ["istanbul"];
 
   return (
@@ -51,13 +49,13 @@ const DeliveredPageHeader = (props: IProp) => {
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown   /> */}
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-            <MazStatsDropddown
+            {/* <MazStatsDropddown
               options={perPageOptions}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            />
+            /> */}
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
               type="warehouse"

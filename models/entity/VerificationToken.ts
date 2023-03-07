@@ -1,12 +1,12 @@
-import { transformer } from '../transformer';
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-  } from "typeorm";
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+} from "typeorm";
+import { transformer } from "../lib/entity-helper";
 
 @Entity({ name: "verification_tokens" })
-export class VerificationTokenEntity {
+export class VerificationToken {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 

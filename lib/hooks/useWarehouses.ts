@@ -6,9 +6,9 @@ export default function useWarehouses({
   //   redirectIfFound = false,
   //   id = null,
 } = {}) {
-  const { data: warehouses, mutate: mutateWarehouses } =
+  const { data: warehouses, mutate: mutateWarehouses, isLoading: warehousesIsLoading } =
     useSWR<APIResponse<WarehouseEntity>>(`/api/warehouses`);
   //   console.log(warehouses);
 
-  return { warehouses, mutateWarehouses };
+  return { warehouses, mutateWarehouses, warehousesIsLoading };
 }

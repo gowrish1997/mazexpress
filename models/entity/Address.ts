@@ -1,7 +1,7 @@
-import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 import type { Relation } from "typeorm";
-import { UserEntity } from './UserEntity';
+import { User } from "./User";
+import { Order } from "./Order";
 
 export enum City {
   B = "benghazi",
@@ -10,7 +10,7 @@ export enum City {
 }
 
 @Entity({ name: "addresses" })
-export class AddressEntity {
+export class Address {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -32,11 +32,11 @@ export class AddressEntity {
   @Column({ type: "varchar" })
   tag!: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.addresses, {
+  @ManyToOne(() => User, (user) => user.addresses, {
     createForeignKeyConstraints: true,
   })
-  user!: Relation<UserEntity>;
+  user!: Relation<User>;
 
-  @OneToMany(() => OrderEntity, (order) => order.address)
-  orders!: OrderEntity[];
+  @OneToMany(() => Order, (order) => order.address)
+  orders!: Order[];
 }

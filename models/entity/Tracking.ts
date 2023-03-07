@@ -1,5 +1,3 @@
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,9 +6,11 @@ import {
   CreateDateColumn,
 } from "typeorm";
 import type { Relation } from "typeorm";
+import { User } from "./User";
+import { Order } from "./Order";
 
 @Entity({ name: "tracking" })
-export class TrackingEntity {
+export class Tracking {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -20,15 +20,15 @@ export class TrackingEntity {
   @CreateDateColumn()
   created_on!: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.tracking, {
+  @ManyToOne(() => User, (user) => user.tracking, {
     createForeignKeyConstraints: true,
     eager: true
   })
-  user!: Relation<UserEntity>;
+  user!: Relation<User>;
 
-  @ManyToOne(() => OrderEntity, (order) => order.tracking, {
+  @ManyToOne(() => Order, (order) => order.tracking, {
     createForeignKeyConstraints: true,
     eager: true
   })
-  order!: Relation<OrderEntity>;
+  order!: Relation<Order>;
 }

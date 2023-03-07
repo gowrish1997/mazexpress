@@ -7,6 +7,7 @@ import Table from "@/components/orders/table";
 import AddButton from "@/components/common/AddButton";
 import useUser from "@/lib/hooks/useUser";
 import useOrders from "@/lib/hooks/useOrders";
+import { User } from "@/models/entity/User";
 
 const tableHeaders = [
   "MAZ Tracking ID",
@@ -21,16 +22,16 @@ const MyOrders = () => {
   const router = useRouter();
   const { user, status: userIsLoading } = useUser();
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    user_id: user?.id,
+    user_id: "123",
   });
 
   const addNewOrderHandler = () => {
-    router.push(`${router.pathname}add-new-order`);
+    router.push(`/add-new-order`);
   };
 
   useEffect(() => {
-    console.log(orders);
-  }, [orders]);
+    console.log(user);
+  }, [user]);
 
   if (ordersError) throw ordersError;
   return (

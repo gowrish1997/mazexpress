@@ -5,7 +5,6 @@ import PageheaderTitle from "./PageheaderTitle";
 import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import AdminOptionDropDown from "./AdminOptionDropDown";
-import { perPageOptinsList } from "@/lib/helper";
 
 interface IProp {
   content: string;
@@ -25,7 +24,6 @@ interface IProp {
 const warehouse = ["istanbul"];
 
 const LiveOrderPageHeader = (props: IProp) => {
-  const perPageOptions = perPageOptinsList();
   const packageStatusDropDownOptoin = useMemo(() => {
     return ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
   }, []);
@@ -72,13 +70,13 @@ const LiveOrderPageHeader = (props: IProp) => {
           <div className="flex-type1 space-x-[10px] ">
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
 
-            <MazStatsDropddown
+            {/* <MazStatsDropddown
               options={perPageOptions}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            />
+            /> */}
             <FilterOptionDropDown
               options={packageStatusDropDownOptoin}
               type="packageStatus"

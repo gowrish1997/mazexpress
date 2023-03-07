@@ -6,7 +6,6 @@ import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
-import { perPageOptinsList } from "@/lib/helper";
 import ReactPaginateComponent from "./ReactPaginate";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
@@ -32,7 +31,6 @@ const adminOption = [
 
 const InTransitPageHeader = (props: IProp) => {
   const warehousesDropDownOptoin = ["istanbul"];
-  const perPageOptions = perPageOptinsList();
 
   const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] =
     useState(false);
@@ -94,14 +92,14 @@ const InTransitPageHeader = (props: IProp) => {
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-
+            {/* 
             <MazStatsDropddown
               options={perPageOptions}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            />
+            /> */}
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
               type="warehouse"

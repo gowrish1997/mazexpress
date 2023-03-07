@@ -5,7 +5,6 @@ import FilterOptionDropDown from "./FilterOptionDropDown";
 import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
-import { perPageOptinsList } from "@/lib/helper";
 import ReactPaginateComponent from "./ReactPaginate";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
@@ -27,24 +26,12 @@ const adminOption = ["Moved out"];
 
 const ShipmentsPageHeader = (props: IProp) => {
   const warehousesDropDownOptoin = ["istanbul"];
-  const perPageOptions = perPageOptinsList();
-
-  // const [showSheduleShipmentModal, setShowSheduleShipmentModal] = useState(false);
   const [showMovedOutConfirmModal, setMovedOutConfirmModal] = useState(false);
 
-  // const [shipmentSelectedDate, setShipmentSelectedDate] = useState<Date | null>(null);
-
-  // const toggleScheduleShipmentModal = () => {
-  //     setShowSheduleShipmentModal((prev) => !prev);
-  // };
 
   const toggleMovedOutConfirmModal = () => {
     setMovedOutConfirmModal((prev) => !prev);
   };
-
-  // const scheduleSelectedShipmentsHandler = () => {
-  //     console.log(props.selectedOrder, shipmentSelectedDate);
-  // };
 
   const MovedOutHanlder = () => {
     console.log(props.selectedOrder);
@@ -75,13 +62,13 @@ const ShipmentsPageHeader = (props: IProp) => {
           <div className="flex-type1 space-x-[10px]  ">
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
             {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
-            <MazStatsDropddown
+            {/* <MazStatsDropddown
               options={perPageOptions}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            />
+            /> */}
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
               type="warehouse"

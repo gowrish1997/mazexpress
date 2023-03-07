@@ -6,11 +6,12 @@ import {
   CreateDateColumn,
 } from "typeorm";
 import type { Relation } from "typeorm";
-import { transformer } from "../transformer";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { transformer } from "../../lib/entity-helper";
+import { User } from "./User";
+
 
 @Entity({ name: "accounts" })
-export class AccountEntity {
+export class Account {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -57,8 +58,8 @@ export class AccountEntity {
   @Column({ type: "varchar", nullable: true })
   oauth_token!: string | null;
 
-  @ManyToOne(() => UserEntity, (user) => user.accounts, {
+  @ManyToOne(() => User, (user) => user.accounts, {
     createForeignKeyConstraints: true,
   })
-  user!: Relation<UserEntity>;
+  user!: Relation<User>;
 }

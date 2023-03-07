@@ -5,10 +5,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 const AddButton = (props: { onClick: () => void }) => {
   return (
     <div
-      className="fixed w-[58px] h-[58px] bottom-10 right-10 rounded-full flex justify-center items-center cursor-pointer bg-[#000000] "
+      className="fixed w-[58px] h-[58px] bottom-10 right-10 rounded-full flex justify-center items-center cursor-pointer bg-[#000000]"
       onClick={props.onClick}
     >
-      <div className="flex items-center justify-center ">
+      <div className="w-4 h-4">
         <FontAwesomeIcon icon={faPlus} color="white" />
       </div>
     </div>

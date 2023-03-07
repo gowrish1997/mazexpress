@@ -1,4 +1,3 @@
-import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,8 +7,9 @@ import {
   OneToMany,
 } from "typeorm";
 import type { Relation } from "typeorm";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
-import { TrackingEntity } from "./TrackingEntity";
+import { User } from "./User";
+import { Address } from "./Address";
+import { Tracking } from "./Tracking";
 
 export enum OrderStatus {
   I = "in-transit",
@@ -19,7 +19,7 @@ export enum OrderStatus {
 }
 
 @Entity({ name: "orders" })
-export class OrderEntity {
+export class Order {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -50,18 +50,18 @@ export class OrderEntity {
   @Column({ type: "varchar" })
   store_link!: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.orders, {
+  @ManyToOne(() => User, (user) => user.orders, {
     createForeignKeyConstraints: true,
     eager: true
   })
-  user!: Relation<UserEntity>;
+  user!: Relation<User>;
 
-  @ManyToOne(() => AddressEntity, (address) => address.orders, {
+  @ManyToOne(() => Address, (address) => address.orders, {
     createForeignKeyConstraints: true,
     eager: true
   })
-  address!: Relation<AddressEntity>;
+  address!: Relation<Address>;
 
-  @OneToMany(() => TrackingEntity, (tracking) => tracking.order)
-  tracking!: TrackingEntity[];
+  @OneToMany(() => Tracking, (tracking) => tracking.order)
+  tracking!: Tracking[];
 }

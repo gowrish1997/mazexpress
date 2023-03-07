@@ -7,7 +7,7 @@ import {
   ManyToMany,
 } from "typeorm";
 import type { Relation } from "typeorm";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { User } from "./User";
 
 export enum NotificationStatus {
   DL = "deleted",
@@ -16,7 +16,7 @@ export enum NotificationStatus {
 }
 
 @Entity({ name: "notifications" })
-export class NotificationEntity {
+export class Notification {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -39,6 +39,6 @@ export class NotificationEntity {
   @Column({ type: "varchar" })
   title!: string;
 
-  @ManyToMany(() => UserEntity, (user) => user.notifications)
-  users!: Relation<UserEntity>;
+  @ManyToMany(() => User, (user) => user.notifications)
+  users!: Relation<User>;
 }

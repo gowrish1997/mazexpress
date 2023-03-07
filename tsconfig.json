@@ -24,10 +24,11 @@
   },
   "include": [
     "next-env.d.ts",
-    "next-auth.d.ts",
+    "next-auth-maz.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "types/**/*"
+    "types/**/*.ts",
+    "types/**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }

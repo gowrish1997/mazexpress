@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { APIResponse } from "@/models/api.model";
-import { UserEntity } from "../adapter/entities/UserEntity";
+import { User } from "@/models/entity/User";
 
 export default function useUser({
   redirectTo = "",
@@ -12,20 +12,19 @@ export default function useUser({
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const user = session?.user;
 
-  const { data: warehouses, mutate: mutateWarehouses } =
-    useSWR<APIResponse<UserEntity>>(`/api/users?email=${user?.email}`);
+  const { data: user, mutate: mutateUser } =
+    useSWR<APIResponse<User>>(`http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/users?email=${session?.user?.email}`);
 
   useEffect(() => {
     // console.log(session);
-    if (user && session) {
-      if (session.is_admin) {
+    if ( session && session.user ) {
+      if (session.user.is_admin) {
         if (redirectIfFound && !router.pathname.startsWith("/admin")) {
           router.push("/admin");
         }
       }
-      if (session.is_admin) {
+      if (session.user.is_admin) {
         if (
           redirectIfFound &&
           (router.pathname.startsWith("/admin") ||

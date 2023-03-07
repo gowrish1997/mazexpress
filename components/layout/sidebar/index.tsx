@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import logoutImage from "@/public/logout.png";
 import { signOut, useSession } from "next-auth/react";
+import useUser from "@/lib/hooks/useUser";
 
 const userSidebarContent = [
   {
@@ -125,7 +126,7 @@ const sidebarContentHandler = (user: number) => {
 const Sidebar = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  // const { user, mutateUser } = useUser();
+  const { user, status: userIsLoading } = useUser();
 
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
@@ -144,7 +145,7 @@ const Sidebar = () => {
         <Header />
         <div className="flex flex-col px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
           <ul className="flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
-            {sidebarContentHandler(session?.is_admin! ? 1 : 0).map(
+            {sidebarContentHandler(user?.is_admin! ? 1 : 0).map(
               (content, index) => {
                 return (
                   <NavLink key={content.id} id={index} content={content} />

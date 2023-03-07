@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
 
 @Entity({ name: "notification_config" })
-export class NotificationConfigEntity {
+export class NotificationConfig {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
   

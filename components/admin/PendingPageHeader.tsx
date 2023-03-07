@@ -5,7 +5,6 @@ import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
 import ReactPaginateComponent from "./ReactPaginate";
-import { perPageOptinsList } from "@/lib/helper";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
 
@@ -26,7 +25,6 @@ interface IProp {
 const adminOption = ["Move to Shipments"];
 
 const PendingPageHeader = (props: IProp) => {
-  const perPageOptions = perPageOptinsList();
   const warehousesDropDownOptoin = ["istanbul"];
   const [showMoveToShipmentConfirmModal, setShowMoveToShipmentConfirmModal] =
     useState(false);
@@ -63,13 +61,13 @@ const PendingPageHeader = (props: IProp) => {
         {props.allLiveOrders && props.allLiveOrders.length > 0 && (
           <div className="flex-type1 space-x-[10px]  ">
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-            <MazStatsDropddown
+            {/* <MazStatsDropddown
               options={perPageOptions}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            />
+            /> */}
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
               type="warehouse"

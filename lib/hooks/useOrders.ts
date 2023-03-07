@@ -1,4 +1,5 @@
-import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
+import { APIResponse } from "@/models/api.model";
+import { Order } from "@/models/entity/Order";
 import useSWR from "swr";
 
 interface IProps {
@@ -12,7 +13,7 @@ interface IProps {
 }
 type Data = {
   msg?: string;
-  data?: OrderEntity[];
+  data?: Order[];
   count?: number;
 };
 
@@ -42,7 +43,7 @@ export default function useOrders(props: IProps) {
     mutate: mutateOrders,
     isLoading: ordersIsLoading,
     error: ordersError,
-  } = useSWR<Data>(`/api/orders` + queryString);
+  } = useSWR<APIResponse<Order>>(`http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/orders` + queryString);
 
   return { orders, mutateOrders, ordersIsLoading, ordersError };
 }

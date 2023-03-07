@@ -1,12 +1,12 @@
-import { transformer } from "../transformer";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import type {
   Relation,
 } from "typeorm";
-import { UserEntity } from "./UserEntity";
+import { transformer } from "../../lib/entity-helper";
+import { User } from "./User";
 
 @Entity({ name: "sessions" })
-export class SessionEntity {
+export class Session {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -19,6 +19,6 @@ export class SessionEntity {
   @Column({ type: "varchar", transformer: transformer.date })
   expires!: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.sessions)
-  user!: Relation<UserEntity>;
+  @ManyToOne(() => User, (user) => user.sessions)
+  user!: Relation<User>;
 }

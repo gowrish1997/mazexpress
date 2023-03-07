@@ -7,7 +7,7 @@ export enum City {
 }
 
 @Entity({ name: "warehouses" })
-export class WarehouseEntity {
+export class Warehouse {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
