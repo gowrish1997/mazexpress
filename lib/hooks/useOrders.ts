@@ -37,7 +37,7 @@ export default function useOrders(props: IProps) {
     mutate: mutateOrders,
     isLoading: ordersIsLoading,
     error: ordersError,
-  } = useSWR<APIResponse<Order>>(`http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/orders` + queryString);
+  } = useSWR<APIResponse<Order>>(`/api/orders` + queryString);
 
   return { orders: orders?.data as Order[], mutateOrders, ordersIsLoading, ordersError };
 }

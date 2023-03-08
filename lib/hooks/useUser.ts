@@ -17,7 +17,7 @@ export default function useUser({
   );
 
   useEffect(() => {
-    console.log('from useUser', user);
+    // console.log('from useUser', user);
     if (session && session.user) {
       if (session.user.is_admin) {
         if (redirectIfFound && !router.pathname.startsWith("/admin")) {
@@ -36,7 +36,6 @@ export default function useUser({
     }
   }, [redirectIfFound, router, user]);
 
-  // const userObj = (user?.data as User[]);
-
-  return { user: user?.data ? (user?.data as User[]).pop() : null, status };
+  const userObj = user?.data?.length && user?.data?.length > 0 ? (user?.data as User[])[0] : null
+  return { user: userObj, status };
 }
