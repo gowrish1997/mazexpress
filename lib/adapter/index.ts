@@ -4,7 +4,7 @@ import axios from "axios";
 
 export async function MazAdapter() {
 
-  const server_path = `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`
+  const server_path = `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}`
 
   return {
     async createUser(user: any) {

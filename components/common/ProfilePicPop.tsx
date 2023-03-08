@@ -22,7 +22,8 @@ const ProfilePicPop = (props: IProp) => {
 
   const deleteImage = async () => {
     // set back to default image
-    let updatedUser: User = user
+    let updatedUser = user!
+
     updatedUser.avatar_url = "default_user.png";
     await fetchJson(`/api/users?id=${user?.id}`, {
       method: "PUT",

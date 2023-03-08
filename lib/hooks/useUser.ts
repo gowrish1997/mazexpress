@@ -13,11 +13,11 @@ export default function useUser({
   const { data: session, status } = useSession();
 
   const { data: user, mutate: mutateUser } = useSWR<APIResponse<User>>(
-    `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/users?email=${session?.user?.email}`
+    `/api/users?email=${session?.user?.email}`
   );
 
   useEffect(() => {
-    // console.log(session);
+    console.log('from useUser', user);
     if (session && session.user) {
       if (session.user.is_admin) {
         if (redirectIfFound && !router.pathname.startsWith("/admin")) {
@@ -36,7 +36,7 @@ export default function useUser({
     }
   }, [redirectIfFound, router, user]);
 
-  const userObj = (user?.data as User[])[0];
+  // const userObj = (user?.data as User[]);
 
-  return { user: userObj, status };
+  return { user: user?.data ? (user?.data as User[]).pop() : null, status };
 }
