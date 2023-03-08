@@ -1,4 +1,5 @@
-import { NotificationConfigEntity } from './../adapter/entities/NotificationConfigEntity';
+import { APIResponse } from "@/models/api.model";
+import { NotificationConfig } from "@/models/entity/NotificationConfig";
 import useSWR from "swr";
 
 export default function useNotificationSettings() {
@@ -6,7 +7,7 @@ export default function useNotificationSettings() {
     data: notificationSettings,
     mutate: mutateNotificationSettings,
     isLoading: notificationSettingsIsLoading,
-  } = useSWR<NotificationConfigEntity[]>(`/api/notification-settings`, {
+  } = useSWR<APIResponse<NotificationConfig>>(`/api/notification-settings`, {
     onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
       // Never retry on 404.
       // if (error.status === 404) return;
@@ -27,7 +28,7 @@ export default function useNotificationSettings() {
   });
 
   return {
-    notificationSettings,
+    notificationSettings: notificationSettings?.data as NotificationConfig[],
     mutateNotificationSettings,
     notificationSettingsIsLoading,
   };

@@ -1,13 +1,13 @@
 import { APIResponse } from "@/models/api.model";
+import { Tracking } from "@/models/entity/Tracking";
 import useSWR from "swr";
-import { TrackingEntity } from "../adapter/entities/TrackingEntity";
 
 export default function useTracking({ order_id }: { order_id?: string }) {
   const {
     data: tracking,
     mutate: mutateTracking,
     isLoading: trackingIsLoading,
-  } = useSWR<APIResponse<TrackingEntity>>(`/api/tracking?order=${order_id}`, {
+  } = useSWR<APIResponse<Tracking>>(`/api/tracking?order=${order_id}`, {
     // refreshInterval: 3000,
     // revalidateIfStale: true,
     // revalidateOnFocus: true,

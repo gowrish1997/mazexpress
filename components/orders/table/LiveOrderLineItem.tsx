@@ -10,11 +10,11 @@ import GreyRadioButton from "../../../public/grey_svg.svg";
 import useAllUser from "@/lib/hooks/useAllUsers";
 import useTracking from "@/lib/hooks/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
-import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
+import { Order } from "@/models/entity/Order";
+import { Tracking } from "@/models/entity/Tracking";
+import { User } from "@/models/entity/User";
 interface IProp {
-  row: OrderEntity;
+  row: Order;
   type: string;
   onSelect: (e: string, type: string) => void;
   selectedOrder: string[];
@@ -37,7 +37,7 @@ const LiveOrderLineItem = (props: IProp) => {
     if (tracking?.data !== undefined && tracking.data !== null) {
       let sorted = [...tracking.data];
       sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
-      setPackageStatus((sorted.pop() as TrackingEntity)?.stage);
+      setPackageStatus((sorted.pop() as Tracking)?.stage);
     }
   }, [tracking]);
 
@@ -120,10 +120,10 @@ const LiveOrderLineItem = (props: IProp) => {
       )}
 
       <td className={`flex flex-row justify-start items-center capitalize`}>
-        {allUser && (allUser as UserEntity)?.avatar_url !== undefined ? (
+        {allUser && (allUser as User)?.avatar_url !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
             <Image
-              src={"/user-images/" + (allUser as UserEntity)?.avatar_url}
+              src={"/user-images/" + (allUser as User)?.avatar_url}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"
@@ -135,9 +135,9 @@ const LiveOrderLineItem = (props: IProp) => {
           </div>
         )}
         <span className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis ">
-          {(allUser as UserEntity)?.first_name +
+          {(allUser as User)?.first_name +
             " " +
-            (allUser as UserEntity)?.last_name}
+            (allUser as User)?.last_name}
         </span>
       </td>
       <td

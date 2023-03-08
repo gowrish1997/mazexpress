@@ -11,12 +11,6 @@ interface IProps {
   date_offset?: string;
   // future warehouse addition
 }
-type Data = {
-  msg?: string;
-  data?: Order[];
-  count?: number;
-};
-
 export default function useOrders(props: IProps) {
   //   console.log('calling use orders')
   //   console.log(props.page)
@@ -45,5 +39,5 @@ export default function useOrders(props: IProps) {
     error: ordersError,
   } = useSWR<APIResponse<Order>>(`http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/orders` + queryString);
 
-  return { orders, mutateOrders, ordersIsLoading, ordersError };
+  return { orders: orders?.data as Order[], mutateOrders, ordersIsLoading, ordersError };
 }

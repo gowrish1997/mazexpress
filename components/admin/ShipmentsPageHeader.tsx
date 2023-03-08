@@ -6,13 +6,13 @@ import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { Order } from "@/models/entity/Order";
 
 interface IProp {
   content: string;
   title?: string;
   selectedOrder?: string[];
-  allLiveOrders: OrderEntity[];
+  allLiveOrders: Order[];
   filterByDate: (value: Date | string) => void;
   pageCount: number;
   currentPageHandler: (value: number) => void;

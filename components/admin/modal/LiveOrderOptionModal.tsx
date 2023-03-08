@@ -4,14 +4,14 @@ import fetchJson from "@/lib/fetchJson";
 import useUser from "@/lib/hooks/useUser";
 import axios from "axios";
 import { createToast } from "@/lib/toasts";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { Order } from "@/models/entity/Order";
+import { User } from "@/models/entity/User";
 
 interface IProps {
   ref: React.RefObject<HTMLDivElement>;
   handler: () => void;
   trigger: RefObject<HTMLDivElement>;
-  row: OrderEntity | UserEntity;
+  row: Order | User;
   type: string;
   stage?: number;
 }
@@ -38,7 +38,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
     const actionHandler = async () => {
       switch (props.type) {
         case "pending":
-          let rowFixed: OrderEntity = props.row as OrderEntity;
+          let rowFixed: Order = props.row as Order;
           // console.log("outer user", user);
           const result0 = await fetchJson(`/api/orders?id=${rowFixed.id}`, {
             method: "PUT",
@@ -91,7 +91,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
           //   console.log(result0_2);
           break;
         case "shipments":
-          let rowFixed2: OrderEntity = props.row as OrderEntity;
+          let rowFixed2: Order = props.row as Order;
 
           // put to order
           const result1 = await fetchJson(`/api/orders?id=${rowFixed2.id}`, {
@@ -115,7 +115,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
           break;
         case "in-transit":
           // increment stage for
-          let rowFixed3: OrderEntity = props.row as OrderEntity;
+          let rowFixed3: Order = props.row as Order;
           //   console.log(rowFixed3.id_orders, stage);
 
           if (props.stage === 2) {

@@ -1,7 +1,7 @@
+import { Order } from "@/models/entity/Order";
 import moment from "moment";
-import { OrderEntity } from "./adapter/entities/OrderEntity";
 export const filter = (
-  allLiveOrders: OrderEntity[],
+  allLiveOrders: Order[],
   createdDateFilterKey: Date | string,
   mazTrackingIdFilterKey: string
 ) => {

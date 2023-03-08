@@ -6,7 +6,7 @@ import Table from "@/components/orders/table";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { Order } from "@/models/entity/Order";
 
 const tableHeaders = [
   "Customer",
@@ -37,12 +37,12 @@ const Intransit = () => {
   });
 
   const [allInTransitOrders, setallInTransitOrders] =
-    useState<OrderEntity[]>();
+    useState<Order[]>();
 
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.count! / itemsPerPage);
+  const pageCount = Math.ceil(orders?.length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -78,7 +78,7 @@ const Intransit = () => {
       <div>
         <InTransitPageHeader
           content="in-transit"
-          allLiveOrders={orders?.data!}
+          allLiveOrders={orders}
           filterByDate={filterByCreatedDate}
           selectedOrder={selectedOrder}
           title="In-Transit | MazExpress Admin"
@@ -90,11 +90,11 @@ const Intransit = () => {
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders?.data && <BlankPage />}
-          {orders?.data && (
+          {!orders && <BlankPage />}
+          {orders && (
             <>
               <Table
-                rows={orders?.data!}
+                rows={orders}
                 headings={tableHeaders}
                 type="in-transit"
                 onSelect={selectOrderHandler}

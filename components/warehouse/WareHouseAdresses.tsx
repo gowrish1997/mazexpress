@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import copy from "copy-to-clipboard";
-import { WarehouseEntity } from "@/lib/adapter/entities/WarehouseEntity";
+import { Warehouse } from "@/models/entity/Warehouse";
 
-const WareHouseAddresses = (props: { address: WarehouseEntity }) => {
+const WareHouseAddresses = (props: { address: Warehouse }) => {
   const wareHouseAddressStatusColorHandler = (status: string) => {
     switch (status) {
       case "Active":

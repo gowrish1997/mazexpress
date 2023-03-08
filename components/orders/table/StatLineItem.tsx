@@ -8,11 +8,12 @@ import YellowRadioButton from "../../../public/yellow_svg.svg";
 import GreyRadioButton from "../../../public/grey_svg.svg";
 import useAllUser from "@/lib/hooks/useAllUsers";
 import useTracking from "@/lib/hooks/useTracking";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
-import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
+import { Order } from "@/models/entity/Order";
+import { Tracking } from "@/models/entity/Tracking";
+import { User } from "@/models/entity/User";
+
 interface IProp {
-  row: OrderEntity;
+  row: Order;
   type: string;
   onSelect: (e: string, type: string) => void;
 }
@@ -34,7 +35,7 @@ const StatLineItem = (props: IProp) => {
     if (tracking?.data !== undefined && tracking.data !== null) {
       let sorted = [...tracking.data];
       sorted.sort((a: any, b: any) => a?.stage - b?.stage);
-      setPackageStatus((sorted.pop() as TrackingEntity)?.stage);
+      setPackageStatus((sorted.pop() as Tracking)?.stage);
     }
   }, [tracking]);
 
@@ -79,10 +80,10 @@ const StatLineItem = (props: IProp) => {
   return (
     <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
       <td className={`flex flex-row justify-start items-center capitalize`}>
-        {allUser && (allUser as UserEntity)?.avatar_url !== undefined ? (
+        {allUser && (allUser as User)?.avatar_url !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
             <Image
-              src={"/user-images/" + (allUser as UserEntity)?.avatar_url}
+              src={"/user-images/" + (allUser as User)?.avatar_url}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"
@@ -95,13 +96,13 @@ const StatLineItem = (props: IProp) => {
         )}
         <div className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
           <p className=" text-[12px] text-[#18181B] font-[800] leading-[22px] ">
-            {(allUser as UserEntity)?.first_name +
+            {(allUser as User)?.first_name +
               "" +
-              (allUser as UserEntity)?.last_name}
+              (allUser as User)?.last_name}
           </p>
           <p className="text-[12px] text-[#71717A] font-[400] leading-[22px] ">
             {" "}
-            {(allUser as UserEntity)?.email}
+            {(allUser as User)?.email}
           </p>
         </div>
       </td>

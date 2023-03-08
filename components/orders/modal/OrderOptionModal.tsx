@@ -1,13 +1,13 @@
 import React, { forwardRef, RefObject } from "react";
 import Link from "next/link";
 import ClickOutside from "@/components/common/ClickOutside";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { Order } from "@/models/entity/Order";
 
 interface IProps {
   ref: React.RefObject<HTMLDivElement>;
   handler: () => void;
   trigger: RefObject<HTMLDivElement>;
-  row: OrderEntity;
+  row: Order;
 }
 export type Ref = HTMLDivElement;
 

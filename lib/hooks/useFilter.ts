@@ -1,7 +1,7 @@
-import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
+import { Order } from "@/models/entity/Order";
 import moment from "moment";
 export default function useFilter(
-  allLiveOrders: OrderEntity[],
+  allLiveOrders: Order[],
   createdDateFilterKey: Date | string,
   mazTrackingIdFilterKey: string
 ) {

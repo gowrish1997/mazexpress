@@ -9,11 +9,11 @@ import { getDateInStringFormat } from "@/lib/helper";
 import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
-import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
+import { Order } from "@/models/entity/Order";
+import { Tracking } from "@/models/entity/Tracking";
 
 interface IProp {
-  row: OrderEntity;
+  row: Order;
   type: string;
 }
 
@@ -69,7 +69,7 @@ const LineItem = (props: IProp) => {
       tracking?.data.length > 0
     ) {
       // sort and set delivery
-      let latestUpdate = [...(tracking.data as TrackingEntity[])].sort(
+      let latestUpdate = [...(tracking.data as Tracking[])].sort(
         (a, b) => b.stage - a.stage
       )[0];
       let newDate = new Date(latestUpdate?.created_on);

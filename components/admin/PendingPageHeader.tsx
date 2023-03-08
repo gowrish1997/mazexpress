@@ -6,13 +6,13 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
 import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { Order } from "@/models/entity/Order";
 
 interface IProp {
   content: string;
   title?: string;
   selectedOrder?: string[];
-  allLiveOrders: OrderEntity[] | undefined;
+  allLiveOrders: Order[] | undefined;
   filterByDate: (value: Date | string) => void;
   //  filterById: (value: string) => void;
   pageCount: number;

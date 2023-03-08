@@ -5,12 +5,12 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/hooks/useUser";
-import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
+import { Address } from "@/models/entity/Address";
 interface IProp {
   show: boolean;
   close: () => void;
-  address: AddressEntity;
-  update: () => Promise<AddressEntity[] | undefined>;
+  address: Address;
+  update: () => Promise<Address[] | undefined>;
 }
 
 const schema = yup
@@ -28,7 +28,7 @@ const EditUserAddressModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<AddressEntity & { default: boolean }>({
+  } = useForm<Address & { default: boolean }>({
     defaultValues: props.address,
     resolver: yupResolver(schema),
   });
@@ -47,7 +47,7 @@ const EditUserAddressModal = (props: IProp) => {
     }
   };
 
-  const onSubmit: SubmitHandler<AddressEntity> = async (data) => {
+  const onSubmit: SubmitHandler<Address> = async (data) => {
     console.log(data);
     // let address: any = { ...data };
     // delete address.default;

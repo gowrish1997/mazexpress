@@ -36,7 +36,10 @@ const capitalizeFirstLetter = (s: string): string => {
 const capitalizeAllFirstLetters = () => {};
 
 const mazID = (city: string) => {
-  // format BNG-MAZ-
+  //==========================
+ //     written by: raunak
+//==========================
+
   let append = nanoid();
 
   switch (city) {

@@ -4,7 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { NextApiRequest, NextApiResponse } from "next";
 import { MazAdapter } from "@/lib/adapter";
 import type { NextAuthOptions } from "next-auth";
-import { User } from "@/models/entity/User";
 
 export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers

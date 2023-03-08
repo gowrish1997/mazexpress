@@ -5,12 +5,12 @@ import LiveOrderLineItem from "./LiveOrderLineItem";
 import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
 import StatLineItem from "./StatLineItem";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { Order } from "@/models/entity/Order";
+import { User } from "@/models/entity/User";
 
 interface TableProps {
   headings: Array<string>;
-  rows: Array<OrderEntity> | Array<UserEntity>;
+  rows: Array<Order> | Array<User>;
   type: string;
   onSelect?: (e: any, type: string) => void;
   selectedOrder?: string[] | number[];
@@ -58,7 +58,7 @@ const Table = (props: TableProps) => {
                       <LiveOrderLineItem
                         key={nanoid()}
                         onSelect={props.onSelect!}
-                        row={data as OrderEntity}
+                        row={data as Order}
                         type={props.type}
                         selectedOrder={props.selectedOrder as string[]}
                       />
@@ -68,7 +68,7 @@ const Table = (props: TableProps) => {
                       <StatLineItem
                         key={nanoid()}
                         onSelect={props.onSelect!}
-                        row={data as OrderEntity}
+                        row={data as Order}
                         type={props.type}
                       />
                     );
@@ -76,7 +76,7 @@ const Table = (props: TableProps) => {
                     return (
                       <UserLineItem
                         key={nanoid()}
-                        row={data as UserEntity}
+                        row={data as User}
                         type={props.type}
                         onSelect={props.onSelect!}
                         selectedOrder={props.selectedOrder as string[]}
@@ -86,7 +86,7 @@ const Table = (props: TableProps) => {
                     return (
                       <LineItem
                         key={nanoid()}
-                        row={data as OrderEntity}
+                        row={data as Order}
                         type={props.type}
                       />
                     );

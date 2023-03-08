@@ -1,5 +1,5 @@
-import { WarehouseEntity } from '@/lib/adapter/entities/WarehouseEntity';
 import { APIResponse } from '@/models/api.model';
+import { Warehouse } from '@/models/entity/Warehouse';
 import useSWR from "swr";
 export default function useWarehouses({
   //   redirectTo = "",
@@ -7,8 +7,8 @@ export default function useWarehouses({
   //   id = null,
 } = {}) {
   const { data: warehouses, mutate: mutateWarehouses, isLoading: warehousesIsLoading } =
-    useSWR<APIResponse<WarehouseEntity>>(`/api/warehouses`);
+    useSWR<APIResponse<Warehouse>>(`/api/warehouses`);
   //   console.log(warehouses);
 
-  return { warehouses, mutateWarehouses, warehousesIsLoading };
+  return { warehouses: warehouses?.data as Warehouse[], mutateWarehouses, warehousesIsLoading };
 }

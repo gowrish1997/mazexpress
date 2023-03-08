@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
-// import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
-import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 import { createToast } from "@/lib/toasts";
 import UserSavedAddress from "@/components/orders/UserSavedAddress";
-// import { createToast } from "@/lib/toasts";
+import { Address } from "@/models/entity/Address";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -62,8 +60,8 @@ const AddressBook = () => {
             addresses.data.map((data) => {
               return (
                 <UserSavedAddress
-                  key={(data as AddressEntity).id}
-                  address={data as AddressEntity}
+                  key={(data as Address).id}
+                  address={data as Address}
                   edit={toggleEditUserAddressModal}
                   update={mutateAddresses}
                 />

@@ -5,7 +5,6 @@ import Table from "@/components/orders/table";
 import PendingPageHeader from "@/components/admin/PendingPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 
 const tableHeaders = [
@@ -36,7 +35,7 @@ const PendingOrders = () => {
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.count! / itemsPerPage);
+  const pageCount = Math.ceil(orders?.length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -50,7 +49,7 @@ const PendingOrders = () => {
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    selectOrder(value, type, setSelectedOrder, orders?.data!, selectedOrder!);
+    selectOrder(value, type, setSelectedOrder, orders, selectedOrder);
   };
 
   if (ordersIsLoading) {
@@ -65,7 +64,7 @@ const PendingOrders = () => {
       <div>
         <PendingPageHeader
           content="pending"
-          allLiveOrders={orders?.data!}
+          allLiveOrders={orders}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Pending Orders | MazExpress Admin"
@@ -78,11 +77,11 @@ const PendingOrders = () => {
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders?.data && <BlankPage />}
-          {orders?.data && (
+          {!orders && <BlankPage />}
+          {orders && (
             <>
               <Table
-                rows={orders?.data!}
+                rows={orders}
                 headings={tableHeaders}
                 type="pending"
                 onSelect={selectOrderHandler}

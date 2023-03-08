@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image";
 import copy from "copy-to-clipboard";
 import { capitalizeFirstLetter } from "@/lib/helper";
-import { WarehouseEntity } from "@/lib/adapter/entities/WarehouseEntity";
+import { Warehouse } from "@/models/entity/Warehouse";
 
-const WarehouseCard = (props: { address: WarehouseEntity }) => {
+const WarehouseCard = (props: { address: Warehouse }) => {
   const getBg = (status: string) => {
     switch (status) {
       case "active":

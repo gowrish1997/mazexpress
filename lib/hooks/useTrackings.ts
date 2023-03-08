@@ -1,4 +1,5 @@
-import { TrackingEntity } from './../adapter/entities/TrackingEntity';
+import { APIResponse } from "@/models/api.model";
+import { Tracking } from "@/models/entity/Tracking";
 import useSWR from "swr";
 export default function useTrackings({
   user_id,
@@ -9,7 +10,7 @@ export default function useTrackings({
     data: tracking,
     mutate: mutateTracking,
     isLoading: trackingIsLoading,
-  } = useSWR<TrackingEntity[]>(`/api/tracking?user=${user_id}`);
+  } = useSWR<APIResponse<Tracking>>(`/api/tracking?user=${user_id}`);
 
   return { tracking, mutateTracking, trackingIsLoading };
 }

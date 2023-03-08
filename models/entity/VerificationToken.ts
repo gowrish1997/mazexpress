@@ -3,7 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
 } from "typeorm";
-import { transformer } from "../lib/entity-helper";
+import { transformer } from "./entity-helper";
 
 @Entity({ name: "verification_tokens" })
 export class VerificationToken {

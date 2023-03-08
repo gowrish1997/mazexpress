@@ -6,7 +6,7 @@ import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import fetchJson from "@/lib/fetchJson";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { User } from "@/models/entity/User";
 interface IProp {
   show: boolean;
   close: (e: any) => void;
@@ -22,7 +22,7 @@ const ProfilePicPop = (props: IProp) => {
 
   const deleteImage = async () => {
     // set back to default image
-    let updatedUser: UserEntity = { ...user! };
+    let updatedUser: User = user
     updatedUser.avatar_url = "default_user.png";
     await fetchJson(`/api/users?id=${user?.id}`, {
       method: "PUT",
@@ -59,7 +59,7 @@ const ProfilePicPop = (props: IProp) => {
           if (response.status === 200) {
             // mutate user with new user data
             // setValue("avatar_url_users", fileName);
-            let updatedUser: UserEntity = { ...user! };
+            let updatedUser = { ...user };
             updatedUser.avatar_url = fileName;
             await fetchJson(`/api/users?id=${user?.id}`, {
               method: "PUT",

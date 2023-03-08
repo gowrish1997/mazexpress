@@ -1,7 +1,7 @@
 import ClickOutside from "@/components/common/ClickOutside";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
 import fetchJson from "@/lib/fetchJson";
 import { capitalizeFirstLetter } from "@/lib/helper";
+import { User } from "@/models/entity/User";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -13,7 +13,7 @@ interface IProp {
 
 const UserSelect = (props: any) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [users, setUsers] = useState<UserEntity[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [markAll, setMarkAll] = useState<boolean>(false);
 
@@ -88,7 +88,7 @@ const UserSelect = (props: any) => {
     // console.log("get users");
     fetchJson("/api/users").then((result) => {
       //   console.log(result);
-      setUsers(result as UserEntity[]);
+      setUsers(result as User[]);
     });
   }, []);
 

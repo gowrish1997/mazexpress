@@ -1,9 +1,9 @@
 import ConfigCard from "@/components/admin/notification-panel/ConfigCard";
 import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import PageHeader from "@/components/common/PageHeader";
-import { NotificationConfigEntity } from "@/lib/adapter/entities/NotificationConfigEntity";
 import fetchJson from "@/lib/fetchJson";
 import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
+import { NotificationConfig } from "@/models/entity/NotificationConfig";
 import React, { useState } from "react";
 
 const NotificationPanel = () => {
@@ -64,7 +64,7 @@ const NotificationPanel = () => {
       />
       <div className="grid grid-cols-3 gap-3 py-5">
         {notificationSettings &&
-          notificationSettings.map((el: NotificationConfigEntity) => {
+          notificationSettings.map((el: NotificationConfig) => {
             return (
               <ConfigCard
                 data={el}

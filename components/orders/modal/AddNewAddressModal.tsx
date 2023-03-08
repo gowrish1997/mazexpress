@@ -7,7 +7,7 @@ import CountrySelector from "@/components/common/CountrySelector";
 import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import fetchJson from "@/lib/fetchJson";
-import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
+import { Address } from "@/models/entity/Address";
 
 interface IProp {
   show: boolean;
@@ -31,7 +31,7 @@ const AddNewAddressModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<AddressEntity & { default: "on" | "off" }>({
+  } = useForm<Address & { default: "on" | "off" }>({
     defaultValues: {
       address_1: "Gold fields",
       address_2: "Sheik street St",
@@ -45,7 +45,7 @@ const AddNewAddressModal = (props: IProp) => {
   });
 
   const onSubmit: SubmitHandler<
-    AddressEntity & { default?: "on" | "off" }
+    Address & { default?: "on" | "off" }
   > = async (data) => {
     if (user) {
       let address = { ...data };

@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import useOrder from "@/lib/hooks/useOrder";
 import useTracking from "@/lib/hooks/useTracking";
 import Link from "next/link";
-import { TrackingEntity } from "@/lib/adapter/entities/TrackingEntity";
+import { Tracking } from "@/models/entity/Tracking";
 
 const TrackOrder = (props: any) => {
   const router = useRouter();
@@ -28,7 +28,7 @@ const TrackOrder = (props: any) => {
   useEffect(() => {
     console.log(tracking);
     if (tracking !== undefined && tracking.data) {
-      let sorted = [...(tracking.data as TrackingEntity[])];
+      let sorted = [...(tracking.data as Tracking[])];
       sorted.sort((a, b) => a?.stage - b?.stage);
       let latestStage = sorted.pop()?.stage!;
       setPackageStatus(latestStage);
@@ -162,7 +162,7 @@ const TrackOrder = (props: any) => {
               MAZ Tracking ID
             </div>
             <div className="space-y-[10px]">
-              {orders?.data?.map((data) => {
+              {orders?.map((data) => {
                 return (
                   <Link href={`/track/${data.id}`} key={data.id}>
                     <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">

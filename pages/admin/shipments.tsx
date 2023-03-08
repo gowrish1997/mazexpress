@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 
 const tableHeaders = [
@@ -36,7 +35,7 @@ const Shipments = () => {
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.count! / itemsPerPage);
+  const pageCount = Math.ceil(orders?.length! / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -50,7 +49,7 @@ const Shipments = () => {
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    selectOrder(value, type, setSelectedOrder, orders?.data!, selectedOrder!);
+    selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
   };
 
   if (ordersIsLoading) {
@@ -63,8 +62,8 @@ const Shipments = () => {
     <>
       <div>
         <ShipmentsPageHeader
-          content="Today Shipments"
-          allLiveOrders={orders?.data!}
+          content="Today's Shipments"
+          allLiveOrders={orders}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Shipments for today | MazExpress Admin"
@@ -77,11 +76,11 @@ const Shipments = () => {
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders?.data && <BlankPage />}
-          {orders?.data && (
+          {!orders && <BlankPage />}
+          {orders && (
             <>
               <Table
-                rows={orders?.data!}
+                rows={orders}
                 headings={tableHeaders}
                 type="shipments"
                 onSelect={selectOrderHandler}

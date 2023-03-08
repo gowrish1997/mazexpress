@@ -12,13 +12,13 @@ export default function useUser({
   const router = useRouter();
   const { data: session, status } = useSession();
 
-
-  const { data: user, mutate: mutateUser } =
-    useSWR<APIResponse<User>>(`http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/users?email=${session?.user?.email}`);
+  const { data: user, mutate: mutateUser } = useSWR<APIResponse<User>>(
+    `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/users?email=${session?.user?.email}`
+  );
 
   useEffect(() => {
     // console.log(session);
-    if ( session && session.user ) {
+    if (session && session.user) {
       if (session.user.is_admin) {
         if (redirectIfFound && !router.pathname.startsWith("/admin")) {
           router.push("/admin");
@@ -36,5 +36,7 @@ export default function useUser({
     }
   }, [redirectIfFound, router, user]);
 
-  return { user, status };
+  const userObj = (user?.data as User[])[0];
+
+  return { user: userObj, status };
 }

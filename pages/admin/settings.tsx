@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { User } from "@/models/entity/User";
 
 const schema = yup
   .object({
@@ -62,7 +62,7 @@ const Settings = () => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<UserEntity & {default_language: string, newPassword: string}>({
+  } = useForm<User & {default_language: string, newPassword: string}>({
     resolver: yupResolver(schema),
     defaultValues: { ...user, password: "" },
   });
@@ -91,7 +91,7 @@ const Settings = () => {
 
   
 
-  const onSubmit: SubmitHandler<UserEntity & {default_language: string, newPassword: string}> = async (data) => {
+  const onSubmit: SubmitHandler<User & {default_language: string, newPassword: string}> = async (data) => {
     console.log(data);
     createToast({
       title: "Success",

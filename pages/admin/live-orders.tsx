@@ -33,7 +33,7 @@ const LiveOrders = () => {
         : statusFilterKey,
   });
 
-  const pageCount = Math.ceil(orders?.count! / itemsPerPage);
+  const pageCount = Math.ceil(orders?.length / itemsPerPage);
 
   const currentPageHandler = useCallback((value: number) => {
     setCurrentPage(value);
@@ -73,7 +73,7 @@ const LiveOrders = () => {
       <div>
         <LiveOrderPageHeader
           content="Live Orders"
-          allLiveOrders={orders?.data!.length!}
+          allLiveOrders={orders.length}
           onChangeStatus={filterByStatusHandler}
           itemPerPageHandler={itemPerPageHandler!}
           filterByDate={filterByCreatedDate}
@@ -87,10 +87,10 @@ const LiveOrders = () => {
         <div className="flex flex-col justify-between relative flex-1 h-full">
           {/* {!filteredLiveOrders && <BlankPage />} */}
 
-          {orders?.data && (
+          {orders && (
             <>
               <Table
-                rows={orders.data!}
+                rows={orders}
                 headings={tableHeaders}
                 type="live_order"
               />

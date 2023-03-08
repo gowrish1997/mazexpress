@@ -6,7 +6,7 @@ import DeliveredPageHeader from "@/components/admin/DeliveredPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
-import { OrderEntity } from "@/lib/adapter/entities/OrderEntity";
+import { Order } from "@/models/entity/Order";
 
 const tableHeaders = [
   "Customer",
@@ -33,11 +33,11 @@ const DeliveredOrders = () => {
     status: ["delivered"],
   });
 
-  const [allDeliveredOrders, setAllDeliveredOrders] = useState<OrderEntity[]>();
+  const [allDeliveredOrders, setAllDeliveredOrders] = useState<Order[]>();
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.count! / itemsPerPage);
+  const pageCount = Math.ceil(orders?.length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -70,7 +70,7 @@ const DeliveredOrders = () => {
       <div>
         <DeliveredPageHeader
           content="Delivered"
-          allLiveOrders={orders?.data!}
+          allLiveOrders={orders}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Delivered orders | MazExpress Admin"
@@ -82,11 +82,11 @@ const DeliveredOrders = () => {
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders?.data && <BlankPage />}
-          {orders?.data && (
+          {!orders && <BlankPage />}
+          {orders && (
             <>
               <Table
-                rows={orders?.data!}
+                rows={orders!}
                 headings={tableHeaders}
                 type="delivered"
                 onSelect={selectOrderHandler}

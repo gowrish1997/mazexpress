@@ -12,8 +12,8 @@ import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
 // import { createToast } from "@/lib/toasts";
-import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 import { createToast } from "@/lib/toasts";
+import { Address } from "@/models/entity/Address";
 
 const schema = yup
   .object({
@@ -23,7 +23,7 @@ const schema = yup
   .required();
 
 const AddNewOrder = () => {
-  const [editableAddress, setEditableAddress] = useState<AddressEntity>();
+  const [editableAddress, setEditableAddress] = useState<Address>();
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
   const { user, status: userIsLoading } = useUser();
@@ -188,7 +188,7 @@ const AddNewOrder = () => {
             addressesIsLoading && <div>loading addresses...</div>
           }
           {addresses?.data && addresses?.data !== null &&
-            (addresses?.data as AddressEntity[]).map((data: AddressEntity) => {
+            (addresses?.data as Address[]).map((data: Address) => {
               return (
                 <UserSavedAddress
                   key={data.id}

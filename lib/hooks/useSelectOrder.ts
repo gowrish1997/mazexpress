@@ -1,44 +1,47 @@
-import { UserEntity } from '@/lib/adapter/entities/UserEntity';
-import { OrderEntity } from '@/lib/adapter/entities/OrderEntity';
+//==========================
+//     written by: raunak
+//==========================
+
+
+
+import { Order } from "@/models/entity/Order";
+import { User } from "@/models/entity/User";
+
 interface IProp {
   value: any;
   type: string;
+  selectedOrder: any;
   setSelectedOrder: React.Dispatch<React.SetStateAction<string[] | undefined>>;
-  filteredLiveOrders: OrderEntity[] & UserEntity[];
+  filteredLiveOrders: Order[] & User[];
 }
-export default function useSelectOrder(
-  value: any,
-  type: any,
-  setSelectedOrder: any,
-  filteredLiveOrders: any,
-  selectedOrder: any
-) {
-  if (type == "selectAllOrder") {
-    if (value) {
-      const order = filteredLiveOrders?.map((el: any) => {
+
+export default function useSelectOrder(props: IProp) {
+  if (props.type == "selectAllOrder") {
+    if (props.value) {
+      const order = props.filteredLiveOrders?.map((el: any) => {
         if (el.id_orders) {
           return el.id_orders;
         } else {
           return el.id_users;
         }
       });
-      setSelectedOrder(order);
+      props.setSelectedOrder(order);
     } else {
-      setSelectedOrder([]);
+      props.setSelectedOrder([]);
     }
   } else {
-    const order = selectedOrder?.find((el: any) => el == value);
+    const order = props.selectedOrder?.find((el: any) => el == props.value);
 
     if (!order) {
-      setSelectedOrder((prev: any) => {
-        return [...(prev ? prev : []), value];
+      props.setSelectedOrder((prev: any) => {
+        return [...(prev ? prev : []), props.value];
       });
     } else {
-      const filteredOrder = selectedOrder?.filter((el: any) => {
-        return el !== value;
+      const filteredOrder = props.selectedOrder?.filter((el: any) => {
+        return el !== props.value;
       });
-      setSelectedOrder(filteredOrder);
+      props.setSelectedOrder(filteredOrder);
     }
   }
-  return "gowrish";
+  return "a7";
 }

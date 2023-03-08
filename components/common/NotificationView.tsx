@@ -4,7 +4,8 @@ import useUser from "@/lib/hooks/useUser";
 import useNotifications from "@/lib/hooks/useNotifications";
 import ClickOutside from "./ClickOutside";
 import Cancel from "../../public/cancel_svg.svg";
-import { NotificationEntity } from "@/lib/adapter/entities/NotificationEntity";
+import { Notification } from "@/models/entity/Notification";
+import { User } from "@/models/entity/User";
 interface IProp {
   close: () => void;
   show: boolean;
@@ -21,13 +22,13 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
       });
 
     const [userNotifications, setUserNotifications] =
-      useState<NotificationEntity[]>();
+      useState<Notification[]>();
 
     const deleteNotification = (id: string) => {
       // console.log("delete");
       setUserNotifications((prev) => {
         if (prev !== undefined) {
-          let newObjs: NotificationEntity[] = prev.filter(
+          let newObjs: Notification[] = prev.filter(
             (el) => el.id !== id
           );
 

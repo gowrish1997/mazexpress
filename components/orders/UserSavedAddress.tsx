@@ -2,15 +2,15 @@ import React from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchJson";
-import { AddressEntity } from "@/lib/adapter/entities/AddressEntity";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { APIResponse } from "@/models/api.model";
+import { Address } from "@/models/entity/Address";
 
 const UserSavedAddress = (props: {
-  address: AddressEntity;
+  address: Address;
   register?: any;
   edit: (id: string) => void;
-  update: () => Promise<APIResponse<AddressEntity> | undefined>;
+  update: () => Promise<APIResponse<Address> | undefined>;
 }) => {
   const { user, status: userIsLoading } = useUser();
 

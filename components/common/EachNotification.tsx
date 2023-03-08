@@ -3,7 +3,7 @@ import { getDateInStringFormat } from "@/lib/helper";
 import { getTimeInHourAndMinuteFormat } from "@/lib/helper";
 import useNotification from "@/lib/hooks/useNotification";
 import fetchJson, { FetchError } from "@/lib/fetchJson";
-import { NotificationEntity } from "@/lib/adapter/entities/NotificationEntity";
+import { Notification } from "@/models/entity/Notification";
 
 interface IProp {
   data: any;
@@ -19,7 +19,7 @@ const EachNotification = (props: IProp) => {
     notificationError,
   } = useNotification({ id: props.id });
 
-  const [data, setData] = useState<NotificationEntity>(props.data);
+  const [data, setData] = useState<Notification>(props.data);
   // console.log(props.data);
 
   const markAsDeleted = async () => {

@@ -4,12 +4,12 @@ import SendNotificatonConfirmModal from "./modal/SendNotificatonConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
-import { UserEntity } from "@/lib/adapter/entities/UserEntity";
+import { User } from "@/models/entity/User";
 interface IProp {
   content: string;
   title?: string;
   selectedUser?: number[];
-  allUsers: UserEntity[];
+  allUsers: User[];
   filterByDate: (value: Date | string) => void;
   pageCount: number;
   currentPageHandler: (value: number) => void;

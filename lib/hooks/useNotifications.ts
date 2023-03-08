@@ -1,4 +1,5 @@
-import { NotificationEntity } from '@/lib/adapter/entities/NotificationEntity';
+import { APIResponse } from "@/models/api.model";
+import { Notification } from "@/models/entity/Notification";
 import useSWR from "swr";
 
 export default function useNotifications({
@@ -13,7 +14,7 @@ export default function useNotifications({
     data: notifications,
     mutate: mutateNotifications,
     isLoading: notificationsIsLoading,
-  } = useSWR<NotificationEntity[]>(`/api/notifications?user=${user_id}`, {
+  } = useSWR<APIResponse<Notification>>(`/api/notifications?user=${user_id}`, {
     onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
       // Never retry on 404.
       // if (error.status === 404) return;
@@ -33,5 +34,5 @@ export default function useNotifications({
     revalidateOnReconnect: true,
   });
 
-  return { notifications, mutateNotifications, notificationsIsLoading };
+  return { notifications: notifications?.data as Notification[], mutateNotifications, notificationsIsLoading };
 }

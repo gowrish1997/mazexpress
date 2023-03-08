@@ -1,4 +1,5 @@
-import { NotificationEntity } from "./../adapter/entities/NotificationEntity";
+import { APIResponse } from "@/models/api.model";
+import { Notification } from "@/models/entity/Notification";
 import useSWR from "swr";
 
 export default function useNotification({ id }: { id: string }) {
@@ -7,7 +8,7 @@ export default function useNotification({ id }: { id: string }) {
     mutate: mutateNotification,
     isLoading: notificationIsLoading,
     error: notificationError,
-  } = useSWR<NotificationEntity>(`/api/notifications?id=${id}`, {
+  } = useSWR<APIResponse<Notification>>(`/api/notifications?id=${id}`, {
     // refreshInterval: 1000,
     // revalidateIfStale: true,
     // revalidateOnFocus: true,
