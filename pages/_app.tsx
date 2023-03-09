@@ -9,6 +9,8 @@ import "react-notifications/lib/notifications.css";
 import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { SessionProvider } from "next-auth/react";
+import { NotificationContainer } from "react-notifications";
+
 import "reflect-metadata";
 config.autoAddCss = false;
 
@@ -36,6 +38,7 @@ AppProps) {
         }}
       >
         <Component {...pageProps} />
+        <NotificationContainer />
       </SWRConfig>
     );
   }
@@ -63,6 +66,7 @@ AppProps) {
             // onError={(err) => console.log(err)}
           /> */}
           <Component {...pageProps} />
+          <NotificationContainer />
         </Frame>
       </SessionProvider>
     </SWRConfig>

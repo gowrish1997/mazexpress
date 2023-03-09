@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
 export enum City {
   B = "benghazi",
@@ -7,7 +7,13 @@ export enum City {
 }
 
 @Entity({ name: "warehouses" })
-export class Warehouse {
+export class Warehouse extends BaseEntity {
+
+  constructor(warehouse: Partial<Warehouse>) {
+    super()
+    Object.assign(this, warehouse)
+  }
+
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 

@@ -28,10 +28,10 @@ export default function useNotifications({
       // Retry after 5 seconds.
       setTimeout(() => revalidate({ retryCount }), 5000);
     },
-    refreshInterval: 1000,
-    revalidateIfStale: true,
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
+    // refreshInterval: 4000,
+    // revalidateIfStale: true,
+    // revalidateOnFocus: true,
+    // revalidateOnReconnect: true,
   });
 
   return { notifications: notifications?.data as Notification[], mutateNotifications, notificationsIsLoading };

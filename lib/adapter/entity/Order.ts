@@ -5,6 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   OneToMany,
+  BaseEntity,
 } from "typeorm";
 import type { Relation } from "typeorm";
 import { User } from "./User";
@@ -19,7 +20,13 @@ export enum OrderStatus {
 }
 
 @Entity({ name: "orders" })
-export class Order {
+export class Order extends BaseEntity {
+
+  constructor(user: Partial<User>) {
+    super()
+    Object.assign(this, user)
+  }
+
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 

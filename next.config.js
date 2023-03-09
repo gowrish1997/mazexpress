@@ -6,7 +6,7 @@ const nextConfig = {
   webpack(config, options) {
     // console.log(config.plugins)
     // console.log(path.join(cwd(), "styles"));
-
+    // Fixes npm packages that depend on `fs` module
     // config.module.rules.push({
     //   test: /\.css$/i,
     //   include: [path.join(cwd(), "styles/")],
@@ -33,7 +33,7 @@ const nextConfig = {
     //     },
     //   ],
     // });
-    
+
     // config.module.rules.push({
     //   test: /\.notifications.css$/,
     //   use: [options.defaultLoaders.babel],
@@ -77,5 +77,5 @@ const nextConfig = {
     ];
   },
 };
-module.exports = nextConfig
+module.exports = nextConfig;
 // export default nextConfig;

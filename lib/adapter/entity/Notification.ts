@@ -7,7 +7,7 @@ import {
   ManyToMany,
 } from "typeorm";
 import type { Relation } from "typeorm";
-import { User } from "./User";
+import { UserEntity } from "./User";
 
 export enum NotificationStatus {
   DL = "deleted",

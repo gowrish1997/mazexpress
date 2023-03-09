@@ -7,10 +7,18 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
-const Home = () => {
-  const router = useRouter()
+import { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
+
+interface HomeProps {
+  is_admin: boolean;
+}
+
+const Home = (props: HomeProps) => {
+  const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
-  
+
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
   const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -31,6 +39,10 @@ const Home = () => {
       setTrackingIdError(true);
     }
   };
+
+  if (props.is_admin) {
+    router.push("/admin");
+  }
 
   return (
     <div className="">
@@ -107,7 +119,7 @@ const Home = () => {
             <div className="space-x-[20px]">
               <Link href={"/auth/gate?mode=0"}>Sign up</Link>
               <button
-                onClick={() => router.push('/auth/gate')}
+                onClick={() => router.push("/auth/gate")}
                 className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
               >
                 Login
@@ -154,5 +166,24 @@ const Home = () => {
     </div>
   );
 };
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+
+  console.log(session);
+
+  // let is_admin = session?.user.is_admin;
+  // if (is_admin) {
+  //   return {
+  //     redirect: {
+  //       permanent: false,
+  //       destination: "/admin",
+  //     },
+  //     props: {},
+  //   };
+  // }
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
 
 export default Home;

@@ -2,8 +2,6 @@
 //     written by: raunak
 //==========================
 
-
-
 // /middleware.ts
 import { NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
@@ -15,22 +13,20 @@ export default withAuth(
     // console.log('running middleware')
     // will run if authorized is true
     const res = NextResponse.next();
-    console.log(req.nextauth);
 
     const token = req.nextauth.token;
+    console.log(token);
 
-    if (token && token !== null) {
-      // user is in
-      // console.log(user);
-      if (token.is_admin && !req.nextUrl.pathname.startsWith("/admin")) {
-        // admin user check for restricted paths
-        // console.log("illegal route");
-        return NextResponse.redirect(new URL("/admin", req.url));
-      }
-      if (!token.is_admin && req.nextUrl.pathname.startsWith("/admin")) {
-        // console.log("illegal route2");
-        return NextResponse.redirect(new URL("/", req.url));
-      }
+    // user is in
+    // console.log(user);
+    if (token?.is_admin && !req.nextUrl.pathname.startsWith("/admin")) {
+      // admin user check for restricted paths
+      // console.log("illegal route");
+      return NextResponse.redirect(new URL("/admin", req.url));
+    }
+    if (!token?.is_admin && req.nextUrl.pathname.startsWith("/admin")) {
+      // console.log("illegal route2");
+      return NextResponse.redirect(new URL("/", req.url));
     }
 
     return res;

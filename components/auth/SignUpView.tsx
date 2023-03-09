@@ -5,8 +5,7 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
-import { User, UserGender } from "@/models/entity/User";
-import { MazAdapter } from "@/lib/adapter";
+import { UserEntity, UserGender } from "@/lib/adapter/entity/User";
 
 const schema = yup
   .object({
@@ -51,7 +50,7 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<User & { confirmPassword: string }>({
+  } = useForm<UserEntity & { confirmPassword: string }>({
     resolver: yupResolver(schema),
     defaultValues: {
       email: "mohamed@maz.com",
@@ -65,23 +64,43 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<
-    User & { confirmPassword: string }
-  > = async (data) => {
+  const onSubmit: SubmitHandler<UserEntity & { confirmPassword: string }> = async (
+    data
+  ) => {
     // console.log(data);
 
-    const newUser = await (await MazAdapter()).createUser(data)
-    console.log(newUser);
-    if (newUser) {
-      createToast({
-        type: "success",
-        title: "Created user",
-        message: "Successfully created new user",
-        timeOut: 2000,
+    fetch(
+      `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/users`,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response.ok)
+        if (response.ok) {
+          createToast({
+            type: "success",
+            title: "Created user",
+            message: "Successfully created new user",
+            timeOut: 2000,
+          });
+          return response.json();
+        }
+      })
+      .then((parsedData) => {
+        console.log(parsedData);
+
+        props.switch(1);
+      })
+      .catch((err) => {
+        if (err) throw err;
+        console.log(err);
       });
-      // sign in user with new credentials
-      props.switch(1);
-    }
   };
 
   const [passwordType, setPasswordType] = useState("password");

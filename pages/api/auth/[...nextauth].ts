@@ -1,12 +1,22 @@
-import NextAuth from "next-auth";
+//==========================
+//     written by: raunak
+//==========================
+
+import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextApiRequest, NextApiResponse } from "next";
-import { MazAdapter } from "@/lib/adapter";
 import type { NextAuthOptions } from "next-auth";
+import { TypeORMLegacyAdapter } from "@next-auth/typeorm-legacy-adapter";
+import { createToast } from "@/lib/toasts";
+import { dataSourceOptions } from "@/lib/adapter/data-source-options";
+import * as entities from "../../../lib/adapter/entities";
+import { Adapter } from "next-auth/adapters";
 
 export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers
+  adapter: TypeORMLegacyAdapter(dataSourceOptions, { models:  }),
+
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
@@ -25,16 +35,45 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials, req) => {
-        // console.log("authorize cred", credentials?.username, credentials?.password);
-        if (credentials?.username && credentials.password) {
-          const validUser = await (await MazAdapter()).login(credentials.username, credentials.password)
-          console.log("valid user", validUser)
-          if (validUser !== null) {
-            return validUser
+        // custom login logic
+        // verify credentials
+
+        // return user obj for authorized
+        // return null/false for unauthorized
+        const validation = fetch(
+          `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/auth/login`,
+          {
+            method: "POST",
+            body: JSON.stringify(credentials),
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-          return null
-        }
-        return null
+        )
+          .then((response) => {
+            console.log(response.ok);
+            if (response.ok) {
+              createToast({
+                type: "success",
+                title: "Success",
+                message: "You are now logged in.",
+                timeOut: 2000,
+              });
+              return response.json();
+            }
+          })
+          .then((parsedData) => {
+            if (parsedData) {
+              return parsedData;
+            }
+            return null;
+          })
+          .catch((err) => {
+            if (err) throw err;
+            console.log(err);
+            return null;
+          });
+        return validation;
       },
     }),
   ],
@@ -48,7 +87,7 @@ export const authOptions: NextAuthOptions = {
     // Use JSON Web Tokens for session instead of database sessions.
     // This option can be used with or without a database for users/accounts.
     // Note: `strategy` should be set to 'jwt' if no database is used.
-    strategy: "jwt",
+    strategy: "database",
 
     // Seconds - How long until an idle session expires and is no longer valid.
     // maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -62,16 +101,19 @@ export const authOptions: NextAuthOptions = {
   // JSON Web tokens are only used for sessions if the `strategy: 'jwt'` session
   // option is set - or by default if no database is specified.
   // https://next-auth.js.org/configuration/options#jwt
-  jwt: {
-    // A secret to use for key generation (you should set this explicitly)
-    secret: process.env.NEXTAUTH_SECRET,
-    // Set to true to use encryption (default: false)
-    // encryption: true,
-    // You can define your own encode/decode functions for signing and encryption
-    // if you want to override the default behaviour.
-    // encode: async ({ secret, token, maxAge }) => {},
-    // decode: async ({ secret, token, maxAge }) => {},
-  },
+
+  // uncomment below for jwt auth
+
+  // jwt: {
+  //   // A secret to use for key generation (you should set this explicitly)
+  //   secret: process.env.NEXTAUTH_SECRET,
+  //   // Set to true to use encryption (default: false)
+  //   // encryption: true,
+  //   // You can define your own encode/decode functions for signing and encryption
+  //   // if you want to override the default behaviour.
+  //   // encode: async ({ secret, token, maxAge }) => {},
+  //   // decode: async ({ secret, token, maxAge }) => {},
+  // },
 
   // You can define custom pages to override the built-in ones. These will be regular Next.js pages
   // so ensure that they are placed outside of the '/api' folder, e.g. signIn: '/auth/mycustom-signin'
@@ -89,7 +131,16 @@ export const authOptions: NextAuthOptions = {
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    // async signIn({ user, account, profile, email, credentials }) {return false},
+    async signIn({ user, account, profile, email, credentials }) {
+      // restrictions and blacklists
+      console.log(user);
+      const isAllowed = user ? true : false;
+      if (isAllowed) {
+        return true;
+      }
+      return false;
+    },
+
     // async redirect({ url, baseUrl }) { return baseUrl },
 
     async session({
@@ -97,15 +148,28 @@ export const authOptions: NextAuthOptions = {
       token,
       user,
     }: {
-      session: any;
+      session: Session;
       token: any;
       user: any;
     }) {
+      // forward to client
 
+      if (token) {
+        // session.id = token.id;
+      }
       return session;
     },
 
     async jwt({ token, user, account, profile, isNewUser }) {
+      // forward to session here
+      // console.log(token, user, account, profile, isNewUser);
+      if (user) {
+        // store info in token
+        token.id = user?.id;
+        token.is_admin = user.is_admin;
+        // token.is_admin = user;
+        return token;
+      }
 
       return token;
     },
