@@ -10,7 +10,7 @@ import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
 // import { createToast } from "@/lib/toasts";
 import { createToast } from "@/lib/toasts";
 import { Address } from "@/models/entity/Address";

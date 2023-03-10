@@ -2,17 +2,23 @@
 //     written by: raunak
 //==========================
 
-// import adapter from "@next-auth/typeorm-legacy-adapter";
-
-import { Notification } from "./Notification";
-import { BeforeInsert, CreateDateColumn, ManyToMany } from "typeorm";
-import { Entity, Column, OneToMany } from "typeorm";
-import { Address } from "./Address";
-import { Order } from "./Order";
-import { Tracking } from "./Tracking";
-import { entities, TypeORMLegacyAdapter } from "@next-auth/typeorm-legacy-adapter";
-import * as bcrypt from "bcrypt";
-import { instanceToPlain } from "class-transformer";
+import {
+  BaseEntity,
+  BeforeInsert,
+  CreateDateColumn,
+  Index,
+  ManyToMany,
+} from "typeorm";
+import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { transformer } from "../lib/entity-helper";
+import { Address } from "./address.model";
+import { Notification } from "./notification.model";
+import { hashSync } from "bcrypt";
+import { Exclude, instanceToPlain } from "class-transformer";
+import { Account } from "./account.model";
+import { Order } from "./order.model";
+import { Session } from "./session.model";
+import { Tracking } from "./tracking.model";
 
 export enum UserGender {
   MALE = "m",
@@ -22,15 +28,15 @@ export enum UserGender {
 }
 
 @Entity({ name: "users" })
-export class UserEntity extends TypeORMLegacyAdapter.{
-  constructor(user: Partial<UserEntity>) {
+export class User extends BaseEntity {
+  constructor(user: Partial<User>) {
     super();
     Object.assign(this, user);
   }
 
   // @Exclude()
-  //   @PrimaryGeneratedColumn("uuid")
-  //   id!: string;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
   @CreateDateColumn()
   created_on!: Date;
@@ -41,12 +47,12 @@ export class UserEntity extends TypeORMLegacyAdapter.{
   @Column({ type: "varchar" })
   last_name!: string;
 
-  //   @Index()
-  //   @Column({ type: "varchar", unique: true })
-  //   email!: string;
+  // @Index()
+  @Column({ type: "varchar", unique: true })
+  email!: string;
 
-  //   @Column({ type: "varchar", nullable: true, transformer: transformer.date })
-  //   email_verified!: string | null;
+  @Column({ type: "varchar", nullable: true, transformer: transformer.date })
+  email_verified!: string | null;
 
   // @Exclude()
   @Column({ type: "varchar" })
@@ -73,11 +79,11 @@ export class UserEntity extends TypeORMLegacyAdapter.{
   @Column({ type: "varchar", nullable: true, default: null })
   default_address!: string | null;
 
-  //   @OneToMany(() => Session, (session) => session.user)
-  //   sessions!: Session[];
+  @OneToMany(() => Session, (session) => session.user)
+  sessions!: Session[];
 
-  //   @OneToMany(() => Account, (account) => account.user)
-  //   accounts!: Account[];
+  @OneToMany(() => Account, (account) => account.user)
+  accounts!: Account[];
 
   @OneToMany(() => Address, (address) => address.user)
   addresses!: Address[];
@@ -93,19 +99,10 @@ export class UserEntity extends TypeORMLegacyAdapter.{
 
   // @BeforeInsert()
   // hashPassword() {
-  //   this.password = bcrypt.hashSync(this.password, 10);
+  //     this.password = hashSync(this.password, 10)
   // }
-  
-  @BeforeInsert()
-  separateNames() {
-    if (this.name && this.name !== null) {
-      let names = this.name?.split(" ");
-      this.first_name = names[0];
-      this.last_name = names[1];
-    }
-  }
 
-    // toJSON() {
-    //   return instanceToPlain(this);
-    // }
+  // toJSON() {
+  //     return instanceToPlain(this)
+  // }
 }

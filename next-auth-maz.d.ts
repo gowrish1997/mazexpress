@@ -2,29 +2,18 @@
 //     written by: raunak
 //==========================
 
-import { DefaultSession, DefaultUser } from "next-auth";
-import type { UserEntity as UserType } from "./lib/adapter/entity/User";
-import type { SessionEntity as SessionType } from "./lib/adapter/entity/User";
-// for next-auth
-declare module "next-auth" {
-  interface Session extends SessionType {
-    id: string;
-    // user: User;
-  }
+export {}
 
-  interface User extends UserType {
-    id: string; // Or string
+
+// This is where we specify the typings of req.session.*
+declare module "iron-session" {
+  interface IronSessionData {
+    user?: User | null;
   }
 }
 
-declare module "next-auth/jwt" {
-  interface JWT {
-    id: string;
-    is_admin: boolean;
-  }
-}
 
-// for next-auth sign in
+// for server sign in
 namespace NodeJS {
   interface ProcessEnv {
     FACEBOOK_ID: string;

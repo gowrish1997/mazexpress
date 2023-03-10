@@ -1,5 +1,5 @@
 import ClickOutside from "@/components/common/ClickOutside";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { User } from "@/models/entity/User";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";

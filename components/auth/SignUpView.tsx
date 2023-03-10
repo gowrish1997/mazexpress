@@ -5,7 +5,7 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
-import { UserEntity, UserGender } from "@/lib/adapter/entity/User";
+import { User, UserGender } from "@/pages/api/user";
 
 const schema = yup
   .object({
@@ -50,7 +50,7 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserEntity & { confirmPassword: string }>({
+  } = useForm<User & { confirmPassword: string }>({
     resolver: yupResolver(schema),
     defaultValues: {
       email: "mohamed@maz.com",
@@ -64,7 +64,7 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<UserEntity & { confirmPassword: string }> = async (
+  const onSubmit: SubmitHandler<User & { confirmPassword: string }> = async (
     data
   ) => {
     // console.log(data);

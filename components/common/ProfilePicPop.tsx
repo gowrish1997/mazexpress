@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
 import axios from "axios";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
 import { User } from "@/models/entity/User";
 interface IProp {
   show: boolean;

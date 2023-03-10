@@ -1,6 +1,6 @@
 import React, { forwardRef, RefObject } from "react";
 import ClickOutside from "@/components/common/ClickOutside";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
 import useUser from "@/lib/hooks/useUser";
 import axios from "axios";
 import { createToast } from "@/lib/toasts";

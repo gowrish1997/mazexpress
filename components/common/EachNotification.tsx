@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { getDateInStringFormat } from "@/lib/helper";
 import { getTimeInHourAndMinuteFormat } from "@/lib/helper";
 import useNotification from "@/lib/hooks/useNotification";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
+import fetchJson, { FetchError } from "@/lib/fetchServer";
 import { Notification } from "@/models/entity/Notification";
 
 interface IProp {

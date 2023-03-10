@@ -19,9 +19,9 @@ const tableHeaders = [
 
 const MyOrders = () => {
   const router = useRouter();
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    user_id: "123",
+    user_id: user?.id,
   });
 
   const addNewOrderHandler = () => {

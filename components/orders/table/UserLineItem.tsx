@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getDateInStringFormat } from "@/lib/helper";
 import useOrders from "@/lib/hooks/useOrders";
-import { User } from "@/models/entity/User";
+import { UserEntity } from "@/lib/adapter/entity/User";
 
 interface IProp {
-  row: User;
+  row: UserEntity;
   type: string;
   onSelect: (e: any, type: string) => void;
   selectedOrder: string[];
@@ -39,10 +39,10 @@ const UserLineItem = (props: IProp) => {
     <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
       <td className={`flex flex-row justify-start items-center capitalize `}>
         {" "}
-        {props.row && (props.row as User)?.avatar_url !== undefined ? (
+        {props.row && (props.row as UserEntity)?.avatar_url !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
             <Image
-              src={"/user-images/" + (props.row as User)?.avatar_url}
+              src={"/user-images/" + (props.row as UserEntity)?.avatar_url}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"
@@ -54,9 +54,9 @@ const UserLineItem = (props: IProp) => {
           </div>
         )}
         <span className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis ">
-          {(props.row as User)?.first_name +
-            "" +
-            (props.row as User)?.last_name}
+          {(props.row as UserEntity)?.first_name +
+            " " +
+            (props.row as UserEntity)?.last_name}
         </span>
       </td>
       <td className={`td2 text-[#3672DF]`}>{props.row.email}</td>

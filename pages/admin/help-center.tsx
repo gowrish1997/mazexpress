@@ -2,7 +2,7 @@ import PageHeader from "@/components/common/PageHeader";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import EditHelpModal from "@/components/admin/help-center/modal/EditHelpModal";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
 
 const HelpCenter = () => {
   const [showEditHelpModal, setShowEditHelpModal] = useState(false);

@@ -1,5 +1,5 @@
 import { APIResponse } from "@/models/api.model";
-import { Order } from "@/models/entity/Order";
+import { Order } from "@/models/order.model";
 import useSWR from "swr";
 
 interface IProps {

@@ -1,10 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from "typeorm";
 
 @Entity({ name: "notification_config" })
 export class NotificationConfig {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
-  
+
   @CreateDateColumn()
   created_on!: Date;
 
@@ -22,5 +27,4 @@ export class NotificationConfig {
 
   @Column({ type: "boolean", default: false })
   is_reusable!: boolean;
-
 }

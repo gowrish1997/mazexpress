@@ -4,19 +4,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
 import { createToast } from "@/lib/toasts";
 import Image from "next/dist/client/image";
 import google_logo from "@/public/google.png";
+import useUser from "@/lib/hooks/useUser";
+import { FetchError } from "@/lib/fetchServer";
+import fetchJson from "@/lib/fetchSelf";
 
 type Inputs = {
   password: string;
-  email: string;
+  username: string;
 };
 
 const schema = yup
   .object({
-    email: yup
+    username: yup
       .string()
       .required("Email is required")
       .email("please include @ in the email"),
@@ -27,6 +29,7 @@ const schema = yup
 const LogInComponent = (props: any) => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
+  const { user, mutateUser } = useUser();
 
   const {
     register,
@@ -37,23 +40,38 @@ const LogInComponent = (props: any) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const response = await signIn("credentials", {
-      redirect: false,
-      password: data.password,
-      username: data.email,
-    });
-
-    console.log(response);
-    if (response?.ok === false) {
-      // no user found
-      createToast({
-        type: "error",
-        message: "Incorrect login credentials",
-        title: "Login failed",
-        timeOut: 2000,
+    try {
+      const response = await fetchJson("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
-    } else {
-      router.push("/");
+      // console.log(response)
+      if (response) {
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
+        createToast({
+          type: "success",
+          message: `You are now logged in ${response.first_name} ${response.last_name}`,
+          title: "Success",
+          timeOut: 2000,
+        });
+
+        await mutateUser(response, false);
+      }
+    } catch (error) {
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+        createToast({
+          type: "error",
+          message: "Incorrect login credentials",
+          title: "Login failed",
+          timeOut: 2000,
+        });
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
     }
   };
 
@@ -69,21 +87,20 @@ const LogInComponent = (props: any) => {
 
   const googleSignInHandler = async () => {
     // sign in with google
-    const response = await signIn("google", {
-      callbackUrl: "http://localhost:3000",
-      redirect: false,
-    });
-
-    if (response?.ok === false) {
-      // no user found
-      createToast({
-        type: "error",
-        message: "No user found with this email id",
-        title: "No user found",
-        timeOut: 2000,
-      });
-    }
-    return response;
+    // const response = await signIn("google", {
+    //   callbackUrl: "http://localhost:3000",
+    //   redirect: false,
+    // });
+    // if (response?.ok === false) {
+    //   // no user found
+    //   createToast({
+    //     type: "error",
+    //     message: "No user found with this email id",
+    //     title: "No user found",
+    //     timeOut: 2000,
+    //   });
+    // }
+    // return response;
     // console.log(response);
   };
 
@@ -97,11 +114,11 @@ const LogInComponent = (props: any) => {
         className="flex-type6 gap-y-[12px] "
       >
         <ReactHookFormInput
-          label="Email"
-          name="email"
+          label="Username"
+          name="username"
           type="string"
-          register={register("email")}
-          error={errors.email}
+          register={register("username")}
+          error={errors.username}
         />
 
         <ReactHookFormInput

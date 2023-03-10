@@ -1,5 +1,5 @@
+import { Address } from "@/models/address.model";
 import { APIResponse } from "@/models/api.model";
-import { Address } from "@/models/entity/Address";
 import useSWR from "swr";
 
 export default function useAddresses(props: {

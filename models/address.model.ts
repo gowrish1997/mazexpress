@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  BaseEntity,
+} from "typeorm";
 import type { Relation } from "typeorm";
-import { User } from "./User";
-import { Order } from "./Order";
+import { User } from "./user.model";
+import { Order } from "./order.model";
 
 export enum City {
   B = "benghazi",
@@ -11,12 +18,11 @@ export enum City {
 
 @Entity({ name: "addresses" })
 export class Address extends BaseEntity {
-
   constructor(address: Partial<Address>) {
-    super()
-    Object.assign(this, address)
+    super();
+    Object.assign(this, address);
   }
-  
+
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 

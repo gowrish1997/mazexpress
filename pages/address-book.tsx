@@ -5,7 +5,7 @@ import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import { createToast } from "@/lib/toasts";
 import UserSavedAddress from "@/components/orders/UserSavedAddress";
-import { Address } from "@/models/entity/Address";
+import { Address } from "@/models/address.model";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -13,7 +13,7 @@ const AddressBook = () => {
   // const [editableAddress, setEditableAddress] = useState<IAddressProps>();
 
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
     user_id: user?.id,
   });
@@ -44,9 +44,6 @@ const AddressBook = () => {
     mutateAddresses();
   };
 
-  useEffect(() => {
-    console.log(addresses)
-  }, [addresses])
 
   return (
     <>

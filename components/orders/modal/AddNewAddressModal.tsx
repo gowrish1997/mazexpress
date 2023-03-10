@@ -6,8 +6,8 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import CountrySelector from "@/components/common/CountrySelector";
 import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
-import fetchJson from "@/lib/fetchJson";
-import { Address } from "@/models/entity/Address";
+import fetchJson from "@/lib/fetchServer";
+import { Address } from "@/models/address.model";
 
 interface IProp {
   show: boolean;
@@ -24,7 +24,7 @@ const schema = yup
 
 const AddNewAddressModal = (props: IProp) => {
   const [country, setCountry] = useState("LY");
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const {
     register,
     handleSubmit,
@@ -57,7 +57,7 @@ const AddNewAddressModal = (props: IProp) => {
       address.user = user;
 
       // add address
-      const addressResult = await fetchJson(`/api/addresses`, {
+      const addressResult = await fetchJson<Address>(`/api/addresses`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(address),
@@ -69,7 +69,7 @@ const AddNewAddressModal = (props: IProp) => {
         const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ default_address: addressResult.data[0] }),
+          body: JSON.stringify({ default_address: addressResult.id }),
         });
       }
 

@@ -5,12 +5,12 @@ import LiveOrderLineItem from "./LiveOrderLineItem";
 import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
 import StatLineItem from "./StatLineItem";
-import { Order } from "@/models/entity/Order";
-import { User } from "@/models/entity/User";
+import { Order } from "@/lib/adapter/entity/Order";
+import { UserEntity } from "@/lib/adapter/entity/User";
 
 interface TableProps {
   headings: Array<string>;
-  rows: Array<Order> | Array<User>;
+  rows: Array<Order> | Array<UserEntity>;
   type: string;
   onSelect?: (e: any, type: string) => void;
   selectedOrder?: string[] | number[];
@@ -76,7 +76,7 @@ const Table = (props: TableProps) => {
                     return (
                       <UserLineItem
                         key={nanoid()}
-                        row={data as User}
+                        row={data as UserEntity}
                         type={props.type}
                         onSelect={props.onSelect!}
                         selectedOrder={props.selectedOrder as string[]}

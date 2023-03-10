@@ -3,13 +3,11 @@ import Image from "next/image";
 import logo from "../public/logo.png";
 import ShipmentCalculator from "@/components/LandingPage/ShipmentCalculator";
 import Footer from "@/components/LandingPage/Footer";
-import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]";
+import useUser from "@/lib/hooks/useUser";
 
 interface HomeProps {
   is_admin: boolean;
@@ -17,7 +15,8 @@ interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
+  // const { data: session, status: sessionStatus } = useSession();
+  const { user, mutateUser } = useUser();
 
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
@@ -44,6 +43,7 @@ const Home = (props: HomeProps) => {
     router.push("/admin");
   }
 
+  console.log(user)
   return (
     <div className="">
       <Head>
@@ -99,16 +99,15 @@ const Home = (props: HomeProps) => {
               </li>
             </ul>
           </div>
-          {session?.user ? (
+          {user !== null && user !== undefined ? (
             <div className="flex items-center space-x-[20px]">
-              {/* insert user data here */}
               <div className="flex items-center space-x-[20px]">
-                <p>{session.user.email}</p>
+                <p>{user.email}</p>
                 <Link href={"/orders"}>My orders</Link>
               </div>
               <div>
                 <button
-                  onClick={() => signOut()}
+                  // onClick={() => signOut()}
                   className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
                 >
                   Logout
@@ -167,9 +166,9 @@ const Home = (props: HomeProps) => {
   );
 };
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+  // const session = await getServerSession(ctx.req, ctx.res, authOptions);
 
-  console.log(session);
+  // console.log(session);
 
   // let is_admin = session?.user.is_admin;
   // if (is_admin) {

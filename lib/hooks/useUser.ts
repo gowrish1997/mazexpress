@@ -1,41 +1,32 @@
-import { useContext, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import Router from "next/router";
 import useSWR from "swr";
-import { APIResponse } from "@/models/api.model";
-import { User } from "../adapter/entity/User";
+import fetchJson from "../fetchSelf";
+import { User } from "@/models/user.model";
 
 export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
 } = {}) {
-  const router = useRouter();
-  const { data: session, status } = useSession();
-
-  const { data: user, mutate: mutateUser } = useSWR<APIResponse<User>>(
-    `/api/users?email=${session?.user?.email}`
+  const { data: user, mutate: mutateUser } = useSWR<User | null>(
+    "/api/user",
+    fetchJson
   );
 
   useEffect(() => {
-    console.log('from useUser', user);
-    // if (session && session.user) {
-    //   if (session.user.is_admin) {
-    //     if (redirectIfFound && !router.pathname.startsWith("/admin")) {
-    //       router.push("/admin");
-    //     }
-    //   }
-    //   if (session.user.is_admin) {
-    //     if (
-    //       redirectIfFound &&
-    //       (router.pathname.startsWith("/admin") ||
-    //         router.pathname.startsWith("/auth"))
-    //     ) {
-    //       router.push("/");
-    //     }
-    //   }
-    // }
-  }, [redirectIfFound, router, user]);
+    // if no redirect needed, just return (example: already on /dashboard)
+    // if user data not yet there (fetch in progress, logged in or not) then don't do anything yet
+    if (!redirectTo || !user) return;
 
-  const userObj = user?.data?.length && user?.data?.length > 0 ? (user?.data as User[])[0] : null
-  return { user: userObj, status };
+    if (
+      // If redirectTo is set, redirect if the user was not found.
+      (redirectTo && !redirectIfFound && !user) ||
+      // If redirectIfFound is also set, redirect if the user was found
+      (redirectIfFound && user)
+    ) {
+      Router.push(redirectTo);
+    }
+  }, [user, redirectIfFound, redirectTo]);
+
+  return { user, mutateUser };
 }

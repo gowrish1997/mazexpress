@@ -8,9 +8,9 @@ import {
   BaseEntity,
 } from "typeorm";
 import type { Relation } from "typeorm";
-import { User } from "./User";
-import { Address } from "./Address";
-import { Tracking } from "./Tracking";
+import { User } from "./user.model";
+import { Address } from "./address.model";
+import { Tracking } from "./tracking.model";
 
 export enum OrderStatus {
   I = "in-transit",
@@ -21,10 +21,9 @@ export enum OrderStatus {
 
 @Entity({ name: "orders" })
 export class Order extends BaseEntity {
-
   constructor(user: Partial<User>) {
-    super()
-    Object.assign(this, user)
+    super();
+    Object.assign(this, user);
   }
 
   @PrimaryGeneratedColumn("uuid")
@@ -59,13 +58,13 @@ export class Order extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.orders, {
     createForeignKeyConstraints: true,
-    eager: true
+    eager: true,
   })
   user!: Relation<User>;
 
   @ManyToOne(() => Address, (address) => address.orders, {
     createForeignKeyConstraints: true,
-    eager: true
+    eager: true,
   })
   address!: Relation<Address>;
 

@@ -4,11 +4,10 @@ import type { AppProps } from "next/app";
 import Frame from "@/components/common/Frame";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
+import fetchJson, { FetchError } from "@/lib/fetchServer";
 import "react-notifications/lib/notifications.css";
 import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { SessionProvider } from "next-auth/react";
 import { NotificationContainer } from "react-notifications";
 
 import "reflect-metadata";
@@ -26,7 +25,7 @@ AppProps) {
       <SWRConfig
         value={{
           fetcher: fetchJson,
-          onError: (err: FetchError) => {
+          onError: (err) => {
             createToast({
               type: "error",
               title: err.name,
@@ -57,18 +56,16 @@ AppProps) {
         },
       }}
     >
-      <SessionProvider session={session}>
-        <Frame>
-          {/* <Script
+      <Frame>
+        {/* <Script
             src="https://accounts.google.com/gsi/client"
             // strategy="beforeInteractive"
             // onLoad={() => console.log('loaded')}
             // onError={(err) => console.log(err)}
           /> */}
-          <Component {...pageProps} />
-          <NotificationContainer />
-        </Frame>
-      </SessionProvider>
+        <Component {...pageProps} />
+        <NotificationContainer />
+      </Frame>
     </SWRConfig>
   );
 }

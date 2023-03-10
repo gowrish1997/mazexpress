@@ -9,7 +9,7 @@ import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
 import { SearchKeyContext } from "@/components/common/Frame";
 const Topbar = () => {
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
 
   const { setSearchKey } = React.useContext(
     SearchKeyContext

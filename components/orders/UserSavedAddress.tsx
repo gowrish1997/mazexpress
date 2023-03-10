@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { APIResponse } from "@/models/api.model";
-import { Address } from "@/models/entity/Address";
+import { Address } from "@/models/address.model";
 
 const UserSavedAddress = (props: {
   address: Address;
@@ -12,7 +12,7 @@ const UserSavedAddress = (props: {
   edit: (id: string) => void;
   update: () => Promise<APIResponse<Address> | undefined>;
 }) => {
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
 
   const deleteAddressHandler = async () => {
     // console.log('delete')
@@ -30,19 +30,21 @@ const UserSavedAddress = (props: {
   };
 
   const updateUser = async (id: string) => {
-    // console.log("update user call");
-    // console.log(id);
-    // console.log(user);
+    console.log("update user call");
+    console.log(id);
+    console.log(user);
 
     if (user) {
-      let newUserData = { ...user, default_address: id };
-
-      // update user backend
-      fetchJson(`/api/users?id=${user.id}`, {
+      let newUserData = user;
+      newUserData.default_address = id
+      const updateResponse = await fetchJson(`/api/users?id=${user.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUserData),
       });
+      console.log(updateResponse);
+      // update user backend
+      await mutateUser(newUserData, false);
 
       // console.log(data)
     }

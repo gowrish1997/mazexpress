@@ -3,48 +3,42 @@
 //==========================
 
 // /middleware.ts
-import { NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import { withAuth } from "next-auth/middleware";
+import type { NextRequest } from "next/server";
+import { getIronSession } from "iron-session/edge";
+import { sessionOptions } from "lib/session";
 
-export default withAuth(
-  // `withAuth` augments your `Request` with the user's token.
-  function middleware(req: NextRequestWithAuth) {
-    // console.log('running middleware')
-    // will run if authorized is true
-    const res = NextResponse.next();
+export const middleware = async (req: NextRequest) => {
+  const res = NextResponse.next();
+  const session = await getIronSession(req, res, sessionOptions);
 
-    const token = req.nextauth.token;
-    console.log(token);
+  // do anything with session here:
+  const { user } = session;
 
-    // user is in
-    // console.log(user);
-    if (token?.is_admin && !req.nextUrl.pathname.startsWith("/admin")) {
-      // admin user check for restricted paths
-      // console.log("illegal route");
-      return NextResponse.redirect(new URL("/admin", req.url));
-    }
-    if (!token?.is_admin && req.nextUrl.pathname.startsWith("/admin")) {
-      // console.log("illegal route2");
-      return NextResponse.redirect(new URL("/", req.url));
-    }
+  // like mutate user:
+  // user.something = someOtherThing;
+  // or:
+  // session.user = someoneElse;
 
-    return res;
-  },
-  {
-    callbacks: {
-      authorized: ({ req, token }) => {
-        // console.log(token)
-        // If there is a token, the user is authenticated
-        if (token) {
-          console.log(token);
-          return true;
-        }
-        return false;
-      },
-    },
+  // uncomment next line to commit changes:
+  // await session.save();
+  // or maybe you want to destroy session:
+  // await session.destroy();
+
+  console.log("from middleware", user);
+
+  // demo:
+  if (!user) {
+    return NextResponse.redirect(new URL("/auth/gate", req.url), {
+      statusText: "Unauthorized.",
+    });
+
+    // unauthorized to see pages inside admin/
+    // return new NextResponse(null, { status: 403 });
   }
-);
+
+  return res;
+};
 
 // See "Matching Paths" below to learn more
 export const config = {

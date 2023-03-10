@@ -1,3 +1,7 @@
+//==========================
+//     written by: raunak
+//==========================
+
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,8 +10,8 @@ import {
   CreateDateColumn,
 } from "typeorm";
 import type { Relation } from "typeorm";
-import { User } from "./User";
-import { Order } from "./Order";
+import { User } from "./user.model";
+import { Order } from "./order.model";
 
 @Entity({ name: "tracking" })
 export class Tracking {
@@ -22,13 +26,13 @@ export class Tracking {
 
   @ManyToOne(() => User, (user) => user.tracking, {
     createForeignKeyConstraints: true,
-    eager: true
+    eager: true,
   })
   user!: Relation<User>;
 
   @ManyToOne(() => Order, (order) => order.tracking, {
     createForeignKeyConstraints: true,
-    eager: true
+    eager: true,
   })
   order!: Relation<Order>;
 }

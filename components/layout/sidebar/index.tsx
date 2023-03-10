@@ -6,8 +6,8 @@ import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import logoutImage from "@/public/logout.png";
-import { signOut, useSession } from "next-auth/react";
 import useUser from "@/lib/hooks/useUser";
+import fetchJson from "@/lib/fetchSelf";
 
 const userSidebarContent = [
   {
@@ -125,8 +125,8 @@ const sidebarContentHandler = (user: number) => {
 };
 const Sidebar = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
-  const { user, status: userIsLoading } = useUser();
+  // const { data: session, status } = useSession();
+  const { user, mutateUser } = useUser();
 
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
@@ -136,7 +136,10 @@ const Sidebar = () => {
 
   const logoutHandler = async () => {
     // new code
-    signOut();
+    // signOut();
+    await mutateUser(await fetchJson("/api/auth/logout"), false);
+    router.push('/auth/gate')
+    
   };
 
   return (
