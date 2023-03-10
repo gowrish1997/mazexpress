@@ -24,7 +24,7 @@
   },
   "include": [
     "next-env.d.ts",
-    "next-auth-maz.d.ts",
+    "maz.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "types/**/*.ts",

@@ -11,9 +11,7 @@ import { SearchKeyContext } from "@/components/common/Frame";
 const Topbar = () => {
   const { user, mutateUser } = useUser();
 
-  const { setSearchKey } = React.useContext(
-    SearchKeyContext
-  ) as any;
+  const { setSearchKey } = React.useContext(SearchKeyContext) as any;
 
   const { notifications, notificationsIsLoading } = useNotifications({
     user_id: user?.id!,

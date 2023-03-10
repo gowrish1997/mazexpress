@@ -1,8 +1,16 @@
+//==========================
+//     written by: raunak
+//==========================
+
+
 import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
-import fetchJson from "../fetchSelf";
+import fetchSelf from "../fetchSelf";
 import { User } from "@/models/user.model";
+
+
+// get user from session object 
 
 export default function useUser({
   redirectTo = "",
@@ -10,7 +18,11 @@ export default function useUser({
 } = {}) {
   const { data: user, mutate: mutateUser } = useSWR<User | null>(
     "/api/user",
-    fetchJson
+    fetchSelf,
+    {
+      refreshInterval: 3000,
+      revalidateOnFocus: true
+    }
   );
 
   useEffect(() => {
@@ -28,5 +40,5 @@ export default function useUser({
     }
   }, [user, redirectIfFound, redirectTo]);
 
-  return { user, mutateUser };
+  return { user: user, mutateUser };
 }

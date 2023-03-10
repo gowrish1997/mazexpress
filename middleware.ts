@@ -13,7 +13,7 @@ export const middleware = async (req: NextRequest) => {
   const session = await getIronSession(req, res, sessionOptions);
 
   // do anything with session here:
-  const { user } = session;
+  // const { user } = session;
 
   // like mutate user:
   // user.something = someOtherThing;
@@ -25,17 +25,19 @@ export const middleware = async (req: NextRequest) => {
   // or maybe you want to destroy session:
   // await session.destroy();
 
-  console.log("from middleware", user);
+  console.log("from middleware", session);
 
   // demo:
-  if (!user) {
-    return NextResponse.redirect(new URL("/auth/gate", req.url), {
-      statusText: "Unauthorized.",
-    });
-
-    // unauthorized to see pages inside admin/
-    // return new NextResponse(null, { status: 403 });
-  }
+  // if (!user) {
+  //   return NextResponse.redirect(new URL("/auth/gate", req.url), {
+  //     statusText: "Unauthorized.",
+  //   });
+  // }
+  // if (!user) {
+  //   return NextResponse.redirect(new URL("/auth/gate", req.url), {
+  //     statusText: "Unauthorized.",
+  //   });
+  // }
 
   return res;
 };

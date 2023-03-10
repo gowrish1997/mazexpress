@@ -44,6 +44,16 @@ const AddressBook = () => {
     mutateAddresses();
   };
 
+  const updateUserAndAddresses = async () => {
+    console.log("updating user and addresses");
+    await mutateAddresses();
+    await mutateUser();
+  };
+
+  useEffect(() => {
+    console.log('running side effect')
+    console.log(user)
+  }, [user, addresses])
 
   return (
     <>
@@ -60,7 +70,7 @@ const AddressBook = () => {
                   key={(data as Address).id}
                   address={data as Address}
                   edit={toggleEditUserAddressModal}
-                  update={mutateAddresses}
+                  update={updateUserAndAddresses}
                 />
               );
             })}
@@ -78,7 +88,7 @@ const AddressBook = () => {
       <AddNewAddressModal
         show={showAddNewAddressModal}
         close={toggleAddNewAddressModal}
-        update={updateAddresses}
+        update={updateUserAndAddresses}
       />
       {/* {showEditUserAddressModal && (
         <EditUserAddressModal

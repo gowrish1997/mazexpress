@@ -8,6 +8,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import useUser from "@/lib/hooks/useUser";
+import fetchJson from "@/lib/fetchSelf";
 
 interface HomeProps {
   is_admin: boolean;
@@ -39,11 +40,13 @@ const Home = (props: HomeProps) => {
     }
   };
 
-  if (props.is_admin) {
-    router.push("/admin");
-  }
+  const logoutHandler = async () => {
+    // console.log("handle logout");
+    await fetchJson("/api/auth/logout", { method: "GET" });
+    await mutateUser();
+    router.push("/");
+  };
 
-  console.log(user)
   return (
     <div className="">
       <Head>
@@ -107,7 +110,7 @@ const Home = (props: HomeProps) => {
               </div>
               <div>
                 <button
-                  // onClick={() => signOut()}
+                  onClick={logoutHandler}
                   className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
                 >
                   Logout

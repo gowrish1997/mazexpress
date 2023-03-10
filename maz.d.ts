@@ -2,16 +2,21 @@
 //     written by: raunak
 //==========================
 
-export {}
-
+export {};
 
 // This is where we specify the typings of req.session.*
 declare module "iron-session" {
   interface IronSessionData {
     user?: User | null;
+    // token: string;
+    // id: string;
+    // is_admin: boolean;
+    // email: string;
+    // first_name: string;
+    // last_name: string;
+    // default_address: string;
   }
 }
-
 
 // for server sign in
 namespace NodeJS {

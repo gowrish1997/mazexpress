@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
-import fetchJson from "@/lib/fetchServer";
+import fetchServer from "@/lib/fetchServer";
+import fetchSelf from '@/lib/fetchSelf'
+
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { APIResponse } from "@/models/api.model";
 import { Address } from "@/models/address.model";
@@ -10,7 +12,7 @@ const UserSavedAddress = (props: {
   address: Address;
   register?: any;
   edit: (id: string) => void;
-  update: () => Promise<APIResponse<Address> | undefined>;
+  update: () => void;
 }) => {
   const { user, mutateUser } = useUser();
 
@@ -21,7 +23,7 @@ const UserSavedAddress = (props: {
       if (props.address.id === user?.default_address) {
         newUser.default_address = "";
       }
-      const result = await fetchJson(`/api/addresses?id=${props.address.id}`, {
+      const result = await fetchServer(`/api/addresses?id=${props.address.id}`, {
         method: "DELETE",
       });
       // console.log(result)
@@ -30,25 +32,34 @@ const UserSavedAddress = (props: {
   };
 
   const updateUser = async (id: string) => {
-    console.log("update user call");
+    // console.log("update user call");
     console.log(id);
-    console.log(user);
+    // console.log(user);
 
     if (user) {
       let newUserData = user;
-      newUserData.default_address = id
-      const updateResponse = await fetchJson(`/api/users?id=${user.id}`, {
+      newUserData.default_address = id;
+
+      // console.log(newUserData)
+
+      // await mutateUser(newUserData, false);
+      console.log(user)
+      const updateResponse = await fetchSelf(`/api/user?id=${user.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUserData),
+        body: JSON.stringify({ default_address: id, user_id: user.id }),
       });
-      console.log(updateResponse);
+      // console.log(updateResponse);
       // update user backend
-      await mutateUser(newUserData, false);
 
+      props.update();
       // console.log(data)
     }
   };
+
+  useEffect(() => {
+    console.log("refresh");
+  }, []);
 
   return (
     <div className="transition duration-300 flex items-start border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] h-full">
