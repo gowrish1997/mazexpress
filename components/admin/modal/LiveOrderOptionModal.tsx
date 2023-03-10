@@ -4,8 +4,8 @@ import fetchJson from "@/lib/fetchServer";
 import useUser from "@/lib/hooks/useUser";
 import axios from "axios";
 import { createToast } from "@/lib/toasts";
-import { Order } from "@/models/entity/Order";
-import { User } from "@/models/entity/User";
+import { Order } from "@/models/order.model";
+import { User } from "@/models/user.model";
 
 interface IProps {
   ref: React.RefObject<HTMLDivElement>;
@@ -19,7 +19,7 @@ export type Ref = HTMLDivElement;
 
 const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
   (props, ref) => {
-    const { user, status: userIsLoading } = useUser();
+    const { user, mutateUser } = useUser();
 
     const optionHandler = () => {
       switch (props.type) {

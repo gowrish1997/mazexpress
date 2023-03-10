@@ -6,7 +6,7 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
 import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
-import { Order } from "@/models/entity/Order";
+import { Order } from "@/models/order.model";
 
 interface IProp {
   content: string;

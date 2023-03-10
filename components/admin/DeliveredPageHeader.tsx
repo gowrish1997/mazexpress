@@ -4,7 +4,7 @@ import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
-import { Order } from "@/models/entity/Order";
+import { Order } from "@/models/order.model";
 
 interface IProp {
   content: string;

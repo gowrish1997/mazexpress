@@ -29,7 +29,7 @@ interface IHelpForm {
 }
 
 const EditHelpModal = (props: IProp) => {
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   // const [data, setData] = useState(props.data);
 
   const {

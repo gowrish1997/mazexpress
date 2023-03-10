@@ -5,7 +5,7 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/hooks/useUser";
-import { Address } from "@/models/entity/Address";
+import { Address } from "@/models/address.model";
 interface IProp {
   show: boolean;
   close: () => void;
@@ -21,7 +21,7 @@ const schema = yup
   .required();
 
 const EditUserAddressModal = (props: IProp) => {
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const {
     register,
     handleSubmit,

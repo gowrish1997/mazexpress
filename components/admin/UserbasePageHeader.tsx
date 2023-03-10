@@ -4,7 +4,8 @@ import SendNotificatonConfirmModal from "./modal/SendNotificatonConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
-import { User } from "@/models/entity/User";
+import { User } from "@/models/user.model";
+
 interface IProp {
   content: string;
   title?: string;

@@ -77,7 +77,7 @@ interface IProp {
 
 const NavLink = (props: IProp) => {
   const router = useRouter();
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
 
   const isActivePath = (obj: any): boolean => {
     if (router.pathname === "/" && obj.path === "/") return true;

@@ -6,7 +6,7 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
 import ReactPaginateComponent from "./ReactPaginate";
-import { Order } from "@/models/entity/Order";
+import { Order } from "@/models/order.model";
 
 interface IProp {
   content: string;

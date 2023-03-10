@@ -6,14 +6,14 @@ import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import fetchJson from "@/lib/fetchServer";
-import { User } from "@/models/entity/User";
+
 interface IProp {
   show: boolean;
   close: (e: any) => void;
 }
 
 const ProfilePicPop = (props: IProp) => {
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const uploadImage = () => {

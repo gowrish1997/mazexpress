@@ -21,7 +21,7 @@ const schema = yup
 
 const AddNewWarehouseModal = (props: IProp) => {
   const [country, setCountry] = useState("LY");
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const {
     register,
     handleSubmit,

@@ -1,7 +1,7 @@
 import React, { forwardRef, RefObject } from "react";
 import Link from "next/link";
 import ClickOutside from "@/components/common/ClickOutside";
-import { Order } from "@/models/entity/Order";
+import { Order } from "@/models/order.model";
 
 interface IProps {
   ref: React.RefObject<HTMLDivElement>;

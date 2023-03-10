@@ -25,7 +25,7 @@ interface IProp {
 //   .required();
 
 const CreateNotificationModal = (props: IProp) => {
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const [showFileInputModal, setShowFileInputModal] = useState<boolean>(false);
   const [files, setFiles] = useState<any>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);

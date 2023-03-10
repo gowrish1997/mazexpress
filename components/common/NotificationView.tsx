@@ -4,8 +4,9 @@ import useUser from "@/lib/hooks/useUser";
 import useNotifications from "@/lib/hooks/useNotifications";
 import ClickOutside from "./ClickOutside";
 import Cancel from "../../public/cancel_svg.svg";
-import { Notification } from "@/models/entity/Notification";
-import { User } from "@/models/entity/User";
+import { Notification } from "@/models/notification.model";
+import { User } from "@/models/user.model";
+
 interface IProp {
   close: () => void;
   show: boolean;
@@ -15,7 +16,7 @@ interface IProp {
 
 const NotificationView = forwardRef<HTMLDivElement, IProp>(
   (props: IProp, ref) => {
-    const { user, status: userIsLoading } = useUser();
+    const { user, mutateUser } = useUser();
     const { notifications, notificationsIsLoading, mutateNotifications } =
       useNotifications({
         user_id: user?.id!,

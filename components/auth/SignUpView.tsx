@@ -5,7 +5,7 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
-import { User, UserGender } from "@/pages/api/user";
+import { User, UserGender } from "@/models/user.model";
 
 const schema = yup
   .object({

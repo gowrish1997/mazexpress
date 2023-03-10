@@ -5,12 +5,12 @@ import LiveOrderLineItem from "./LiveOrderLineItem";
 import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
 import StatLineItem from "./StatLineItem";
-import { Order } from "@/lib/adapter/entity/Order";
-import { UserEntity } from "@/lib/adapter/entity/User";
+import { Order } from "@/models/order.model";
+import { User } from "@/models/user.model";
 
 interface TableProps {
   headings: Array<string>;
-  rows: Array<Order> | Array<UserEntity>;
+  rows: Array<Order> | Array<User>;
   type: string;
   onSelect?: (e: any, type: string) => void;
   selectedOrder?: string[] | number[];
