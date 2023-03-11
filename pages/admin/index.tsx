@@ -13,7 +13,7 @@ const AdminHome = () => {
   return (
     <div className="space-y-[15px]">
       <p className="text-[16px] text-[#18181B] font-[700] leading-[24px]">
-        Hey Muhammad Ali -
+        Hey {user?.first_name} {user?.last_name} -
         <span className="text-[16px] text-[#71717A] font-[400] leading-[26px] ">
           here’s what’s happening at your warehouse
         </span>

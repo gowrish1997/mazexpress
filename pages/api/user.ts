@@ -41,10 +41,7 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse) {
       body: JSON.stringify({ default_address: req.body.default_address }),
     });
 
-    const user = await fetchServer(`/api/users?id=${req.body.user_id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
+    const user = await fetchServer(`/api/users?id=${req.body.user_id}`);
 
     console.log(updateServer);
     console.log(user);

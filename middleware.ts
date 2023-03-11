@@ -28,16 +28,11 @@ export const middleware = async (req: NextRequest) => {
   console.log("from middleware", session);
 
   // demo:
-  // if (!user) {
-  //   return NextResponse.redirect(new URL("/auth/gate", req.url), {
-  //     statusText: "Unauthorized.",
-  //   });
-  // }
-  // if (!user) {
-  //   return NextResponse.redirect(new URL("/auth/gate", req.url), {
-  //     statusText: "Unauthorized.",
-  //   });
-  // }
+  if (!session.user) {
+    return NextResponse.redirect(new URL("/auth/gate", req.url), {
+      statusText: "Unauthorized.",
+    });
+  }
 
   return res;
 };

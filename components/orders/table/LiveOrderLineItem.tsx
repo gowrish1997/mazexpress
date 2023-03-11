@@ -10,9 +10,11 @@ import GreyRadioButton from "../../../public/grey_svg.svg";
 import useAllUser from "@/lib/hooks/useAllUsers";
 import useTracking from "@/lib/hooks/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
-import { Order } from "@/models/entity/Order";
-import { Tracking } from "@/models/entity/Tracking";
-import { User } from "@/models/entity/User";
+import { Tracking } from "@/models/tracking.model";
+import { Order } from "@/models/order.model";
+import { User } from "@/models/user.model";
+import useUsers from "@/lib/hooks/useUsers";
+import { getUserImageString } from "@/lib/utils";
 interface IProp {
   row: Order;
   type: string;
@@ -23,9 +25,10 @@ interface IProp {
 const LiveOrderLineItem = (props: IProp) => {
   const trigger = useRef<any>();
 
-  const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
-    user_id: props.row.user.id as string,
-  });
+  // const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
+  //   user_id: props.row.user.id as string,
+  // });
+
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
     order_id: props.row.id,
   });
@@ -120,24 +123,17 @@ const LiveOrderLineItem = (props: IProp) => {
       )}
 
       <td className={`flex flex-row justify-start items-center capitalize`}>
-        {allUser && (allUser as User)?.avatar_url !== undefined ? (
-          <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
-            <Image
-              src={"/user-images/" + (allUser as User)?.avatar_url}
-              fill
-              style={{ objectFit: "cover" }}
-              alt="profileImage"
-            />
-          </div>
-        ) : (
-          <div className="relative h-[30px] w-[30px] rounded-full   bg-slate-500">
-            <FontAwesomeIcon icon={faUser} />
-          </div>
-        )}
+        <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
+          <Image
+            src={getUserImageString(props.row.user.avatar_url)}
+            fill
+            style={{ objectFit: "cover" }}
+            alt="profileImage"
+          />
+        </div>
+
         <span className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis ">
-          {(allUser as User)?.first_name +
-            " " +
-            (allUser as User)?.last_name}
+          {props.row.user.first_name + " " + props.row.user.last_name}
         </span>
       </td>
       <td

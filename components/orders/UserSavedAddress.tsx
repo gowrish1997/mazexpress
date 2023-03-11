@@ -71,7 +71,7 @@ const UserSavedAddress = (props: {
         value={props.address.id}
         {...props.register}
         className="cursor-pointer mt-[4px]"
-        onClick={(e) => updateUser(props.address.id!)}
+        // onClick={(e) => updateUser(props.address.id!)}
       />
 
       <div className="flex-1 ml-[7px] flex flex-col justify-center h-full">

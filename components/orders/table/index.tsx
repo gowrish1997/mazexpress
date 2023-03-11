@@ -76,7 +76,7 @@ const Table = (props: TableProps) => {
                     return (
                       <UserLineItem
                         key={nanoid()}
-                        row={data as UserEntity}
+                        row={data as User}
                         type={props.type}
                         onSelect={props.onSelect!}
                         selectedOrder={props.selectedOrder as string[]}

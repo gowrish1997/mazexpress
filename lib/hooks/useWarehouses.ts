@@ -1,7 +1,7 @@
 import { APIResponse } from '@/models/api.model';
+import { Warehouse } from '@/models/warehouse.model';
 
 import useSWR from "swr";
-import { Warehouse } from '../adapter/entity/Warehouse';
 export default function useWarehouses({
   //   redirectTo = "",
   //   redirectIfFound = false,

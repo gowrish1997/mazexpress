@@ -1,5 +1,5 @@
 import { APIResponse } from "@/models/api.model";
-import { Order } from "@/models/order.model";
+import { User } from "@/models/user.model";
 import useSWR from "swr";
 
 interface IProps {
@@ -7,13 +7,12 @@ interface IProps {
   search?: string;
   page?: number;
   per_page?: number;
-  status?: string[];
-  date_offset?: string;
+  is_admin?: boolean;
   count_all?: boolean;
   count?: boolean;
   // future warehouse addition
 }
-export default function useOrders(props: IProps) {
+export default function useUsers(props: IProps) {
   //   console.log('calling use orders')
   //   console.log(props.page)
   let queryString = "";
@@ -30,25 +29,30 @@ export default function useOrders(props: IProps) {
       queryString += `&search=${props.search}`;
     }
 
-    if (props?.status) {
-      queryString += `&status=${props.status}`;
-    }
+    // if (props?.status) {
+    //   queryString += `&status=${props.status}`;
+    // }
   } else {
     // return all order count
-    queryString += '?count=all'
+    queryString += "?count=all";
+    if (props.is_admin) {
+      queryString += "&admin=true";
+    } else {
+      queryString += "&admin=false";
+    }
   }
 
   const {
-    data: orders,
-    mutate: mutateOrders,
-    isLoading: ordersIsLoading,
-    error: ordersError,
-  } = useSWR<APIResponse<Order>>(`/api/orders` + queryString);
+    data: users,
+    mutate: mutateUsers,
+    isLoading: usersIsLoading,
+    error: usersError,
+  } = useSWR<APIResponse<User>>(`/api/users` + queryString);
 
   return {
-    orders: props.count ? orders?.count : orders?.data as Order[],
-    mutateOrders,
-    ordersIsLoading,
-    ordersError,
+    users: props.count ? users?.count : (users?.data as User[]),
+    mutateUsers,
+    usersIsLoading,
+    usersError,
   };
 }

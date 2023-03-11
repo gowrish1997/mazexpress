@@ -1,4 +1,4 @@
-import { Order } from "@/models/entity/Order";
+import { Order } from "@/models/order.model";
 import moment from "moment";
 export const filter = (
   allLiveOrders: Order[],

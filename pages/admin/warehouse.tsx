@@ -3,7 +3,8 @@ import WarehouseCard from "@/components/admin/warehouse/WarehouseCard";
 import useWarehouses from "@/lib/hooks/useWarehouses";
 import React, { useState } from "react";
 import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
-import { Warehouse } from "@/models/entity/Warehouse";
+import { Warehouse } from "@/models/warehouse.model";
+
 
 const WarehousePage = () => {
   const { warehouses, mutateWarehouses } = useWarehouses();
@@ -19,7 +20,7 @@ const WarehousePage = () => {
       <PageHeader content="Warehouses" title="Warehouses | MazExpress Admin" />
       <div className="grid grid-cols-3 gap-3 py-5">
         {(warehouses as Warehouse[])?.map((data) => {
-          return <WarehouseCard key={data.id} address={data} />;
+          return <WarehouseCard key={data.id} address={data} update={mutateWarehouses} />;
         })}
       </div>
       <div>

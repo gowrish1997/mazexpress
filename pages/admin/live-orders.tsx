@@ -4,6 +4,7 @@ import LiveOrderPageHeader from "@/components/admin/LiveOrderPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import LoadingPage from "@/components/common/LoadingPage";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = [
   "Customer",
@@ -33,7 +34,7 @@ const LiveOrders = () => {
         : statusFilterKey,
   });
 
-  const pageCount = Math.ceil(orders?.length / itemsPerPage);
+  const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
   const currentPageHandler = useCallback((value: number) => {
     setCurrentPage(value);
@@ -73,7 +74,7 @@ const LiveOrders = () => {
       <div>
         <LiveOrderPageHeader
           content="Live Orders"
-          allLiveOrders={orders.length}
+          allLiveOrders={(orders as Order[]).length}
           onChangeStatus={filterByStatusHandler}
           itemPerPageHandler={itemPerPageHandler!}
           filterByDate={filterByCreatedDate}
@@ -90,7 +91,7 @@ const LiveOrders = () => {
           {orders && (
             <>
               <Table
-                rows={orders}
+                rows={orders as Order[]}
                 headings={tableHeaders}
                 type="live_order"
               />

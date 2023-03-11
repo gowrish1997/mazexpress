@@ -5,6 +5,8 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import CountrySelector from "@/components/common/CountrySelector";
 import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
+import { Warehouse, WarehouseStatus } from "@/models/warehouse.model";
+import fetchJson from "@/lib/fetchServer";
 
 interface IProp {
   show: boolean;
@@ -28,56 +30,47 @@ const AddNewWarehouseModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<Warehouse & { active: "on" | "off" }>({
     defaultValues: {
-      // address_1: "V5RH+HVQ",
-      // address_2: "Amr Bin al A'ss St",
-      // city: "Tripoli",
-      // country: "Libya",
-      // default: "on",
-      // phone: 214441792,
-      // tag: "Al Mshket Hotel",
+      address_1: "plaza st.",
+      address_2: "jacobscreek",
+      city: "istanbul",
+      country: "turkey",
+      active: "on",
+      phone: 214441792,
+      tag: "Main",
     },
     // resolver: yupResolver(schema),
   });
 
-  const [addressIsDefault, setAddressIsDefault] = useState(false);
+  const [warehouseIsActive, setWarehouseIsActive] = useState(true);
 
-  const toggleDefaultAddressHandler = () => {
-    setAddressIsDefault((prev) => !prev);
+  const toggleActiveHandler = () => {
+    setWarehouseIsActive((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<any> = async (data) => {
+  const onSubmit: SubmitHandler<Warehouse & {active?: "on" | "off"}> = async (data) => {
     // let address: any = { ...data };
     // delete address.default;
     // address.user_id = user?.id_users;
 
-    console.log(data);
+    // console.log(data);
+    
+    let warehouse = {...data}
+    warehouse.status = data.active === 'on' ? WarehouseStatus.A : WarehouseStatus.I 
+    delete warehouse.active
+    // await warehouse.save()
+    // console.log(warehouse)
 
-    // add address
-    // const addressResult = await fetchJson(`/api/addresses`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(address),
-    // });
+    const response = await fetchJson("/api/warehouses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(warehouse),
+    });
 
-    // console.log(addressResult)
-    // if (data.default === "on") {
-    //   const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ default_address_users: addressResult }),
-    //   });
-    //   if (user?.is_logged_in_users) {
-    //     // update user default
-    //     let newUserData = { ...user, default_address_user: addressResult };
-    //     mutateUser(newUserData, false);
-    //   }
-    // }
-
-    // console.log(result);
-    // props.close();
-    // props.update();
+    console.log(response);
+    props.close();
+    props.update();
   };
 
   return (
@@ -114,7 +107,7 @@ const AddNewWarehouseModal = (props: IProp) => {
               <Controller
                 name="country"
                 control={control}
-                defaultValue="Libya"
+                defaultValue="Turkey"
                 render={({ field: { onChange, value, ref } }) => (
                   <CountrySelector
                     label="Country"
@@ -132,7 +125,7 @@ const AddNewWarehouseModal = (props: IProp) => {
               <CustomDropDown
                 label="City/Town"
                 name="city"
-                value={["Tripoli", "Benghazi", "Misrata"]}
+                value={["Istanbul"]}
                 register={register("city")}
                 // error={errors.city}
                 dropDownIcon={{
@@ -156,14 +149,14 @@ const AddNewWarehouseModal = (props: IProp) => {
             <div className=".flex-type1 space-x-[5px]">
               <input
                 type="radio"
-                // defaultChecked={user?.default_address_users === }
-                checked={addressIsDefault}
-                onClick={toggleDefaultAddressHandler}
-                {...register("default")}
-                name="default"
+                // defaultChecked={warehouseIsActive}
+                checked={warehouseIsActive}
+                onClick={toggleActiveHandler}
+                {...register("active")}
+                name="active"
               />
 
-              <span>Set as Default</span>
+              <span>Set as Active</span>
             </div>
             <div className="flex-type1 space-x-[10px] mt-[5px] ">
               <button

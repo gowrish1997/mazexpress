@@ -7,6 +7,7 @@ import Table from "@/components/orders/table";
 import AddButton from "@/components/common/AddButton";
 import useUser from "@/lib/hooks/useUser";
 import useOrders from "@/lib/hooks/useOrders";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = [
   "MAZ Tracking ID",
@@ -29,8 +30,8 @@ const MyOrders = () => {
   };
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
+    console.log(orders);
+  }, [orders]);
 
   if (ordersError) throw ordersError;
   return (
@@ -43,7 +44,7 @@ const MyOrders = () => {
 
       <div className="flex flex-col justify-between relative flex-1 h-full">
         {ordersIsLoading && <div>loading orders</div>}
-        {orders && orders.length === 0 && (
+        {orders && (orders as Order[]).length === 0 && (
           <div className="flex-1 flex flex-col justify-center items-center w-full ">
             <div className="relative h-[221px] w-[322px] ">
               <Image
@@ -68,9 +69,9 @@ const MyOrders = () => {
             </div>
           </div>
         )}
-        {orders && orders.length > 0 && (
+        {orders && (orders as Order[]).length > 0 && (
           <>
-            <Table rows={orders} headings={tableHeaders} type="order" />
+            <Table rows={orders as Order[]} headings={tableHeaders} type="order" />
             <AddButton onClick={addNewOrderHandler} />
           </>
         )}

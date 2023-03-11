@@ -33,31 +33,8 @@ const capitalizeFirstLetter = (s: string): string => {
   return newString;
 };
 
-const capitalizeAllFirstLetters = () => {};
-
-const mazID = (city: string) => {
-  //==========================
- //     written by: raunak
-//==========================
-
-  let append = nanoid();
-
-  switch (city) {
-    case "Tripoli":
-      return "TRI" + "-MAZ-" + append;
-    case "Benghazi":
-      return "BNG" + "-MAZ-" + append;
-    case "Misrata":
-      return "MIS" + "-MAZ-" + append;
-    default:
-      return "TRI" + "-MAZ-" + append;
-  }
-};
-
 export {
   capitalizeFirstLetter,
-  capitalizeAllFirstLetters,
   getDateInStringFormat,
   getTimeInHourAndMinuteFormat,
-  mazID,
 };

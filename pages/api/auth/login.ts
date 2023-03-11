@@ -24,8 +24,8 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       body: JSON.stringify(req.body),
     });
 
-    console.log(validUser)
-    req.session.user = validUser;
+    // console.log(validUser)
+    req.session.user = validUser.data;
     await req.session.save();
     res.json(validUser);
   } catch (error) {

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StatCard from "./StatCard";
 import MazStatsDropddown from "./MazStatsDropddown";
+import useOrders from "@/lib/hooks/useOrders";
 
 const options = [
   { value: "", label: "all age" },
@@ -11,6 +12,10 @@ const options = [
 
 const TotalOrders = () => {
   const [selectedDate, setSelectedDate] = useState("");
+  const { orders: totalOrders, mutateOrders: mutateTotalOrders } = useOrders({
+    count_all: true,
+    count: true
+  });
 
   const dateChangeHandler = (value: string | number) => {
     console.log(value);
@@ -29,7 +34,7 @@ const TotalOrders = () => {
         />
       </div>
       <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">
-        1000
+        {totalOrders as number}
       </p>
     </StatCard>
   );

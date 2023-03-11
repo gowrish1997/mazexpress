@@ -8,6 +8,7 @@ import useNotifications from "@/lib/hooks/useNotifications";
 import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
 import { SearchKeyContext } from "@/components/common/Frame";
+import { getUserImageString } from "@/lib/utils";
 const Topbar = () => {
   const { user, mutateUser } = useUser();
 
@@ -73,11 +74,7 @@ const Topbar = () => {
 
         <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
           <Image
-            src={
-              user?.avatar_url?.startsWith("https")
-                ? user?.avatar_url!
-                : "/user-images/" + user?.avatar_url!
-            }
+            src={getUserImageString(user?.avatar_url)}
             fill
             style={{ objectFit: "cover" }}
             alt="profileImage"

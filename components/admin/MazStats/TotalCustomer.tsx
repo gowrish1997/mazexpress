@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import StatCard from "./StatCard";
 import MazStatsDropddown from "./MazStatsDropddown";
+import useUsers from "@/lib/hooks/useUsers";
 const options = [
   { value: "", label: "all age" },
   { value: "10-20", label: "10-20" },
@@ -8,6 +9,11 @@ const options = [
   { value: "10-20", label: "10-20" },
 ];
 const TotalCustomer = () => {
+  const { users, mutateUsers } = useUsers({
+    is_admin: false,
+    count: true,
+    count_all: true,
+  });
   const ageChangeHanlder = (value: number | string) => {
     console.log(value);
   };
@@ -16,6 +22,9 @@ const TotalCustomer = () => {
     console.log(value);
   };
 
+  useEffect(() => {
+    console.log(users);
+  }, [users]);
   return (
     <StatCard>
       <div className="w-full flex-type3">
@@ -34,7 +43,7 @@ const TotalCustomer = () => {
         />
       </div>
       <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">
-        1000
+        {users as number}
       </p>
     </StatCard>
   );

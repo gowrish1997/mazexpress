@@ -41,7 +41,7 @@ const CountrySelector = (props: IProp) => {
               />
             </div>
             <span className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px]">
-              Libya
+              Turkey
             </span>
           </div>
 

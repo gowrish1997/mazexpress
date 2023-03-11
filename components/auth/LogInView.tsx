@@ -41,24 +41,32 @@ const LogInComponent = (props: any) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
+      console.log(data);
       const response = await fetchJson("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      // console.log(response)
-      if (response) {
+      console.log(response);
+      if (response.ok) {
         setTimeout(() => {
           router.push("/");
         }, 2000);
         createToast({
           type: "success",
-          message: `You are now logged in ${response.first_name} ${response.last_name}`,
+          message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
           title: "Success",
           timeOut: 2000,
         });
 
         await mutateUser(response, false);
+      } else {
+        createToast({
+          type: "error",
+          message: response.msg,
+          title: "Error",
+          timeOut: 2000,
+        });
       }
     } catch (error) {
       if (error instanceof FetchError) {
