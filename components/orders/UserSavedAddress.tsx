@@ -3,9 +3,7 @@ import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import fetchServer from "@/lib/fetchServer";
 import fetchSelf from '@/lib/fetchSelf'
-
 import { capitalizeFirstLetter } from "@/lib/helper";
-import { APIResponse } from "@/models/api.model";
 import { Address } from "@/models/address.model";
 
 const UserSavedAddress = (props: {

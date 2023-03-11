@@ -6,6 +6,7 @@ import PendingPageHeader from "@/components/admin/PendingPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = [
   "Customer",
@@ -35,7 +36,7 @@ const PendingOrders = () => {
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.length / itemsPerPage);
+  const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -64,7 +65,7 @@ const PendingOrders = () => {
       <div>
         <PendingPageHeader
           content="pending"
-          allLiveOrders={orders}
+          allLiveOrders={orders as Order[]}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Pending Orders | MazExpress Admin"
@@ -81,7 +82,7 @@ const PendingOrders = () => {
           {orders && (
             <>
               <Table
-                rows={orders}
+                rows={orders as Order[]}
                 headings={tableHeaders}
                 type="pending"
                 onSelect={selectOrderHandler}

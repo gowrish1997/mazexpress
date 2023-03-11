@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
-import { User } from "@/models/entity/User";
+import { User } from "@/models/user.model";
 
 const schema = yup
   .object({
@@ -48,7 +48,7 @@ const schema = yup
   .required();
 
 const Settings = () => {
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const [errorMsg, setErrorMsg] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const [newPasswordType, setNewPasswordType] = useState("password");
@@ -132,7 +132,7 @@ const Settings = () => {
     // console.log(user);
     reset({ ...user, password: "" });
   }, [user, reset]);
-  if (userIsLoading) return <div>loading</div>;
+  // if (userIsLoading) return <div>loading</div>;
 
   return (
     <>

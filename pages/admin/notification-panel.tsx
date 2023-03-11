@@ -3,7 +3,7 @@ import CreateNotificationModal from "@/components/admin/notification-panel/modal
 import PageHeader from "@/components/common/PageHeader";
 import fetchJson from "@/lib/fetchServer";
 import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
-import { NotificationConfig } from "@/models/entity/NotificationConfig";
+import { NotificationConfig } from "@/models/notification-config.model";
 import React, { useState } from "react";
 
 const NotificationPanel = () => {

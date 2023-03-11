@@ -1,5 +1,5 @@
 import { APIResponse } from "@/models/api.model";
-import { NotificationConfig } from "@/models/entity/NotificationConfig";
+import { NotificationConfig } from "@/models/notification-config.model";
 import useSWR from "swr";
 
 export default function useNotificationSettings() {

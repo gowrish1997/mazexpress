@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getDateInStringFormat } from "@/lib/helper";
 import useOrders from "@/lib/hooks/useOrders";
-import { UserEntity } from "@/lib/adapter/entity/User";
+import { User } from "@/models/user.model";
+import { Order } from "@/models/order.model";
 
 interface IProp {
-  row: UserEntity;
+  row: User;
   type: string;
   onSelect: (e: any, type: string) => void;
   selectedOrder: string[];
@@ -39,10 +40,10 @@ const UserLineItem = (props: IProp) => {
     <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
       <td className={`flex flex-row justify-start items-center capitalize `}>
         {" "}
-        {props.row && (props.row as UserEntity)?.avatar_url !== undefined ? (
+        {props.row && (props.row as User)?.avatar_url !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
             <Image
-              src={"/user-images/" + (props.row as UserEntity)?.avatar_url}
+              src={"/user-images/" + (props.row as User)?.avatar_url}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"
@@ -54,9 +55,9 @@ const UserLineItem = (props: IProp) => {
           </div>
         )}
         <span className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis ">
-          {(props.row as UserEntity)?.first_name +
+          {(props.row as User)?.first_name +
             " " +
-            (props.row as UserEntity)?.last_name}
+            (props.row as User)?.last_name}
         </span>
       </td>
       <td className={`td2 text-[#3672DF]`}>{props.row.email}</td>
@@ -66,7 +67,7 @@ const UserLineItem = (props: IProp) => {
         {/* {props.row.age_users} */}5
       </td>
       <td className={`td6 `}>{genderHanlder(props.row.gender)}</td>
-      <td className={`td7 `}>{orders && orders?.length}</td>
+      <td className={`td7 `}>{orders && (orders as Order[])?.length}</td>
     </tr>
   );
 };

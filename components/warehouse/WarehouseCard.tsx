@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import copy from "copy-to-clipboard";
 import { capitalizeFirstLetter } from "@/lib/helper";
-import { Warehouse } from "@/models/entity/Warehouse";
+import { Warehouse } from "@/models/warehouse.model";
 
 const WarehouseCard = (props: { address: Warehouse }) => {
   const getBg = (status: string) => {

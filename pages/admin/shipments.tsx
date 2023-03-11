@@ -6,6 +6,7 @@ import Table from "@/components/orders/table";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = [
   "Customer",
@@ -35,7 +36,7 @@ const Shipments = () => {
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.length! / itemsPerPage);
+  const pageCount = Math.ceil((orders as Order[])?.length! / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -63,7 +64,7 @@ const Shipments = () => {
       <div>
         <ShipmentsPageHeader
           content="Today's Shipments"
-          allLiveOrders={orders}
+          allLiveOrders={orders as Order[]}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Shipments for today | MazExpress Admin"
@@ -80,7 +81,7 @@ const Shipments = () => {
           {orders && (
             <>
               <Table
-                rows={orders}
+                rows={orders as Order[]}
                 headings={tableHeaders}
                 type="shipments"
                 onSelect={selectOrderHandler}

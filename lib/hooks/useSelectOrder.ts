@@ -1,11 +1,5 @@
-//==========================
-//     written by: raunak
-//==========================
-
-
-
-import { Order } from "@/models/entity/Order";
-import { User } from "@/models/entity/User";
+import { Order } from "@/models/order.model";
+import { User } from "@/models/user.model";
 
 interface IProp {
   value: any;

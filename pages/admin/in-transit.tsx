@@ -6,7 +6,7 @@ import Table from "@/components/orders/table";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
-import { Order } from "@/models/entity/Order";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = [
   "Customer",
@@ -42,7 +42,7 @@ const Intransit = () => {
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.length / itemsPerPage);
+  const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -78,7 +78,7 @@ const Intransit = () => {
       <div>
         <InTransitPageHeader
           content="in-transit"
-          allLiveOrders={orders}
+          allLiveOrders={orders as Order[]}
           filterByDate={filterByCreatedDate}
           selectedOrder={selectedOrder}
           title="In-Transit | MazExpress Admin"
@@ -94,7 +94,7 @@ const Intransit = () => {
           {orders && (
             <>
               <Table
-                rows={orders}
+                rows={orders as Order[]}
                 headings={tableHeaders}
                 type="in-transit"
                 onSelect={selectOrderHandler}

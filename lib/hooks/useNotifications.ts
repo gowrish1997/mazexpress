@@ -1,5 +1,5 @@
 import { APIResponse } from "@/models/api.model";
-import { Notification } from "@/models/entity/Notification";
+import { Notification } from "@/models/notification.model";
 import useSWR from "swr";
 
 export default function useNotifications({

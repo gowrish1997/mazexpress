@@ -1,5 +1,5 @@
 import { APIResponse } from "@/models/api.model";
-import { Tracking } from "@/models/entity/Tracking";
+import { Tracking } from "@/models/tracking.model";
 import useSWR from "swr";
 export default function useTrackings({
   user_id,

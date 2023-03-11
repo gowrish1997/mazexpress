@@ -9,8 +9,8 @@ import { getDateInStringFormat } from "@/lib/helper";
 import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
-import { Order } from "@/models/entity/Order";
-import { Tracking } from "@/models/entity/Tracking";
+import { Order } from "@/models/order.model";
+import { Tracking } from "@/models/tracking.model";
 
 interface IProp {
   row: Order;
@@ -21,7 +21,7 @@ const LineItem = (props: IProp) => {
   //   console.log(props.row);
   const trigger = useRef<any>();
 
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
 
   const { addresses, mutateAddresses } = useAddresses({
     user_id: user?.id,

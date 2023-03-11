@@ -13,7 +13,7 @@ import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchServer";
 // import { createToast } from "@/lib/toasts";
 import { createToast } from "@/lib/toasts";
-import { Address } from "@/models/entity/Address";
+import { Address } from "@/models/address.model";
 
 const schema = yup
   .object({
@@ -26,7 +26,7 @@ const AddNewOrder = () => {
   const [editableAddress, setEditableAddress] = useState<Address>();
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
     user_id: user?.id,
   });

@@ -2,7 +2,7 @@ import React from "react";
 import PageHeader from "@/components/common/PageHeader";
 import useWarehouses from "@/lib/hooks/useWarehouses";
 import WarehouseCard from "@/components/warehouse/WarehouseCard";
-import { Warehouse } from "@/models/entity/Warehouse";
+import { Warehouse } from "@/models/warehouse.model";
 
 const WarehousePage = () => {
   const { warehouses, mutateWarehouses, warehousesIsLoading } = useWarehouses();

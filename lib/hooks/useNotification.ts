@@ -1,6 +1,6 @@
 import { APIResponse } from "@/models/api.model";
-import { Notification } from "@/models/entity/Notification";
 import useSWR from "swr";
+import { Notification } from "@/models/notification.model";
 
 export default function useNotification({ id }: { id: string }) {
   const {

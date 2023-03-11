@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import Frame from "@/components/common/Frame";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
-import fetchJson, { FetchError } from "@/lib/fetchServer";
+import fetchJson from "@/lib/fetchServer";
 import "react-notifications/lib/notifications.css";
 import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";

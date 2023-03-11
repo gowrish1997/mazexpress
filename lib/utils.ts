@@ -2,7 +2,7 @@
 //     written by: raunak
 //==========================
 
-const getUserImageString = (avatar_url: string) => {
+const getUserImageString = (avatar_url?: string) => {
   if (avatar_url === null || avatar_url === undefined) {
     return "/user-images/default_user.png";
   } else {

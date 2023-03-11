@@ -8,9 +8,9 @@ import YellowRadioButton from "../../../public/yellow_svg.svg";
 import GreyRadioButton from "../../../public/grey_svg.svg";
 import useAllUser from "@/lib/hooks/useAllUsers";
 import useTracking from "@/lib/hooks/useTracking";
-import { Order } from "@/models/entity/Order";
-import { Tracking } from "@/models/entity/Tracking";
-import { User } from "@/models/entity/User";
+import { Order } from "@/models/order.model";
+import { Tracking } from "@/models/tracking.model";
+import { User } from "@/models/user.model";
 
 interface IProp {
   row: Order;

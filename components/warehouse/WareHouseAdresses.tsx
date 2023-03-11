@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import copy from "copy-to-clipboard";
-import { Warehouse } from "@/models/entity/Warehouse";
+import { Warehouse } from "@/models/warehouse.model";
 
 const WareHouseAddresses = (props: { address: Warehouse }) => {
   const wareHouseAddressStatusColorHandler = (status: string) => {

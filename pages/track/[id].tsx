@@ -10,11 +10,12 @@ import { useRouter } from "next/router";
 import useOrder from "@/lib/hooks/useOrder";
 import useTracking from "@/lib/hooks/useTracking";
 import Link from "next/link";
-import { Tracking } from "@/models/entity/Tracking";
+import { Tracking } from "@/models/tracking.model";
+import { Order } from "@/models/order.model";
 
 const TrackOrder = (props: any) => {
   const router = useRouter();
-  const { user, status: userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const { orders, ordersIsLoading } = useOrders({ user_id: user?.id });
   const { order, mutateOrder, orderIsLoading } = useOrder({
     id: router.query.id as string,
@@ -162,7 +163,7 @@ const TrackOrder = (props: any) => {
               MAZ Tracking ID
             </div>
             <div className="space-y-[10px]">
-              {orders?.map((data) => {
+              {(orders as Order[])?.map((data) => {
                 return (
                   <Link href={`/track/${data.id}`} key={data.id}>
                     <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">

@@ -6,7 +6,7 @@ import DeliveredPageHeader from "@/components/admin/DeliveredPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
-import { Order } from "@/models/entity/Order";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = [
   "Customer",
@@ -37,7 +37,7 @@ const DeliveredOrders = () => {
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.length / itemsPerPage);
+  const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -70,7 +70,7 @@ const DeliveredOrders = () => {
       <div>
         <DeliveredPageHeader
           content="Delivered"
-          allLiveOrders={orders}
+          allLiveOrders={orders as Order[]}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
           title="Delivered orders | MazExpress Admin"
@@ -86,7 +86,7 @@ const DeliveredOrders = () => {
           {orders && (
             <>
               <Table
-                rows={orders!}
+                rows={orders as Order[]}
                 headings={tableHeaders}
                 type="delivered"
                 onSelect={selectOrderHandler}
