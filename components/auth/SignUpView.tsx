@@ -6,6 +6,7 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
 import { User, UserGender } from "@/models/user.model";
+import fetchJson from "@/lib/fetchServer";
 
 const schema = yup
   .object({
@@ -68,39 +69,26 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
     data
   ) => {
     // console.log(data);
-
-    fetch(
-      `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/users`,
-      {
+    try {
+      const newUser = await fetchJson("/api/users", {
         method: "POST",
         body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      }
-    )
-      .then((response) => {
-        console.log(response.ok)
-        if (response.ok) {
-          createToast({
-            type: "success",
-            title: "Created user",
-            message: "Successfully created new user",
-            timeOut: 2000,
-          });
-          return response.json();
-        }
-      })
-      .then((parsedData) => {
-        console.log(parsedData);
-
-        props.switch(1);
-      })
-      .catch((err) => {
-        if (err) throw err;
-        console.log(err);
+        headers: { "Content-Type": "application/json" },
       });
+      console.log(newUser);
+      if (newUser) {
+        createToast({
+          type: "success",
+          title: "Created user",
+          message: "Successfully created new user",
+          timeOut: 2000,
+        });
+        // return response.json();
+      }
+    } catch (err) {
+      if (err) throw err;
+      console.error(err);
+    }
   };
 
   const [passwordType, setPasswordType] = useState("password");
