@@ -18,7 +18,7 @@ const UserLineItem = (props: IProp) => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     user_id: props.row.id,
   });
-  console.log(orders);
+  // console.log(props.row.created_on);
   const trigger = useRef<any>();
 
   const [gate, setGate] = useState(false);
@@ -42,6 +42,9 @@ const UserLineItem = (props: IProp) => {
         {" "}
         {props.row && (props.row as User)?.avatar_url !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
+            {props.row.is_admin && (
+              <div className="absolute bg-yellow-600 w-4 h-8 z-10 opacity-60"></div>
+            )}
             <Image
               src={"/user-images/" + (props.row as User)?.avatar_url}
               fill
@@ -64,7 +67,7 @@ const UserLineItem = (props: IProp) => {
       <td className={`td3`}>{props.row.phone}</td>
       <td className={`td4`}>{getDateInStringFormat(props.row.created_on)}</td>
       <td className={`td5 `} style={{}}>
-        {/* {props.row.age_users} */}5
+        {props.row.age}
       </td>
       <td className={`td6 `}>{genderHanlder(props.row.gender)}</td>
       <td className={`td7 `}>{orders && (orders as Order[])?.length}</td>

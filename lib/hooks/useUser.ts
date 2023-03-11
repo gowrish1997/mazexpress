@@ -40,5 +40,5 @@ export default function useUser({
     }
   }, [user, redirectIfFound, redirectTo]);
 
-  return { user: user, mutateUser };
+  return { user, mutateUser };
 }

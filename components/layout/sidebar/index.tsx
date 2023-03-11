@@ -139,6 +139,7 @@ const Sidebar = () => {
     // signOut();
     await mutateUser(await fetchJson("/api/auth/logout"), false);
     router.push('/auth/gate')
+    router.reload()
     
   };
 

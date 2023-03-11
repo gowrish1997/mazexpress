@@ -25,6 +25,11 @@ export default function useUsers(props: IProps) {
       queryString += `&user=${props.user_id}`;
     }
 
+    if (props?.is_admin === true) {
+      queryString += `&admin=true`;
+    } else {
+      queryString += `&admin=false`;
+    }
     if (props?.search) {
       queryString += `&search=${props.search}`;
     }
@@ -35,7 +40,7 @@ export default function useUsers(props: IProps) {
   } else {
     // return all order count
     queryString += "?count=all";
-    if (props.is_admin) {
+    if (props.is_admin === true) {
       queryString += "&admin=true";
     } else {
       queryString += "&admin=false";

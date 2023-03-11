@@ -40,26 +40,31 @@ const LogInComponent = (props: any) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+
     try {
-      console.log(data);
+      // console.log(data);
       const response = await fetchSelf("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      console.log(response);
-      if (response.ok) {
-        setTimeout(() => {
-          router.push("/");
-        }, 2000);
-        createToast({
-          type: "success",
-          message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
-          title: "Success",
-          timeOut: 2000,
-        });
+      // console.log(response);
 
-        await mutateUser(response, false);
+      if (response.data) {
+        // console.log(response.data);
+        // createToast({
+        //   type: "success",
+        //   message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
+        //   title: "Success",
+        //   timeOut: 1000,
+        // });
+        if (response.data.is_admin) {
+          router.push("/admin");
+        } else {
+          router.push("/");
+        }
+
+        await mutateUser(response.data, false);
       } else {
         createToast({
           type: "error",

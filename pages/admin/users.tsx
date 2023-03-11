@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import BlankPage from "@/components/admin/BlankPage";
 import useAllUser from "@/lib/hooks/useAllUsers";
+import useUsers from "@/lib/hooks/useUsers";
+import { User } from "@/models/user.model";
 
 const tableHeaders = [
   "Customer",
@@ -23,14 +25,15 @@ const UserBase = () => {
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
     Date | string
   >("");
-  const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({
+  const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
     per_page: itemsPerPage,
     page: currentPage,
+    is_admin: false,
   });
-  console.log(allUser);
+  // console.log(allUser);
 
   //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(allUser?.total_count / itemsPerPage);
+  const pageCount = Math.ceil((users as User[] || []).length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -44,10 +47,10 @@ const UserBase = () => {
   //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
   // };
 
-  if (allUserIsLoading) {
+  if (usersIsLoading) {
     return <div>this is loading</div>;
   }
-  if (error) {
+  if (usersError) {
     return <div>some error happened</div>;
   }
   return (
@@ -55,7 +58,7 @@ const UserBase = () => {
       <div>
         <UserbasePageHeader
           content="User Base"
-          allUsers={allUser.data!}
+          allUsers={users as User[]}
           filterByDate={filterByCreatedDate}
           title="User Base | MazExpress Admin"
           pageCount={pageCount}
@@ -64,11 +67,11 @@ const UserBase = () => {
           currentPage={currentPage}
         />
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!allUser.data && <BlankPage />}
-          {allUser.data && (
+          {!users && <BlankPage />}
+          {users && (
             <>
               <Table
-                rows={allUser.data}
+                rows={users as User[]}
                 headings={tableHeaders}
                 type="user_base"
               />

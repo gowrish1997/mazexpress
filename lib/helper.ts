@@ -17,12 +17,15 @@ const dataOptions = {
   day: "numeric",
 };
 
-const getDateInStringFormat = (date: any) => {
+const getDateInStringFormat = (date: Date) => {
+  console.log(date)
+  
   if (date) {
     const stringDate = new Date(date).toLocaleDateString(
       "en-US",
       dataOptions as any
     );
+    console.log('date',stringDate)
     const data = stringDate.replace(",", "");
     return data;
   }

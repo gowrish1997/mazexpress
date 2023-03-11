@@ -40,11 +40,10 @@ const Home = (props: HomeProps) => {
     }
   };
 
-  const logoutHandler = async () => {
+  const logoutHandler = () => {
     // console.log("handle logout");
-    await fetchJson("/api/auth/logout", { method: "GET" });
-    await mutateUser();
-    router.push("/");
+    fetchJson("/api/auth/logout", { method: "GET" });
+    // await mutateUser();
   };
 
   return (
