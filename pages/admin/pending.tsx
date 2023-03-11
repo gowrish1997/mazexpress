@@ -11,6 +11,8 @@ import { filter } from "@/lib/filter";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const tableHeaders = [
   "Customer",
@@ -25,6 +27,13 @@ const tableHeaders = [
 const PendingOrders = () => {
   const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
   const router = useRouter();
+
+  const { locales, locale: activeLocale } = router;
+
+    useEffect(() => {
+        console.log("use efft");
+        router.push(router.asPath, router.asPath, { locale: "en" });
+    }, []);
 
   const [itemsPerPage, setItemPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
@@ -62,7 +71,7 @@ const PendingOrders = () => {
   };
 
   if (ordersIsLoading) {
-    return <LoadingPage />;
+    // return <LoadingPage />;
   }
   if (ordersError) {
     return <div>some error happened</div>;
@@ -102,3 +111,13 @@ const PendingOrders = () => {
 };
 
 export default PendingOrders;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+      await i18n?.reloadResources();
+  }
+  return {
+      props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+      },
+  };
+}

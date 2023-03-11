@@ -12,6 +12,8 @@ import BlankPage from "@/components/admin/BlankPage";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const tableHeaders = [
     "Customer",
@@ -35,9 +37,17 @@ const Shipments = () => {
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
         per_page: itemsPerPage,
+
         page: currentPage,
         status: ["at-warehouse"],
     });
+
+    const { locales, locale: activeLocale } = router;
+
+    useEffect(() => {
+        console.log("use efft");
+        router.push(router.asPath, router.asPath, { locale: "en" });
+    }, []);
 
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
@@ -60,7 +70,7 @@ const Shipments = () => {
     };
 
     if (ordersIsLoading) {
-        return <LoadingPage />;
+        // return <LoadingPage />;
     }
     if (ordersError) {
         return <div>some error happened</div>;
@@ -99,3 +109,13 @@ const Shipments = () => {
 };
 
 export default Shipments;
+export async function getStaticProps({ locale }: { locale: any }) {
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
+  }

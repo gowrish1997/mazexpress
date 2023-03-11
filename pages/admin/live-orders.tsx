@@ -11,6 +11,8 @@ import { selectOrder } from "@/lib/selectOrder";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const tableHeaders = [
   "Customer",
@@ -26,6 +28,14 @@ const LiveOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
 
     const router = useRouter();
+
+    const { locales, locale: activeLocale } = router;
+
+    useEffect(() => {
+        console.log("use efft");
+        router.push(router.asPath, router.asPath, { locale: "en" });
+    }, []);
+
     const [itemsPerPage, setItemPerPage] = useState<number>(5);
     const [currentPage, setCurrentPage] = useState(0);
     const [statusFilterKey, setStatusFilterKey] = useState<string[]>([]);
@@ -65,9 +75,9 @@ const LiveOrders = () => {
         console.log("live order useEffect");
     }, []);
 
-    if (ordersIsLoading) {
-        return <LoadingPage />;
-    }
+    // if (ordersIsLoading) {
+    //     return <LoadingPage />;
+    // }
     if (ordersError) {
         return <div>some error happened</div>;
     }
@@ -104,3 +114,13 @@ const LiveOrders = () => {
 };
 
 export default LiveOrders;
+export async function getStaticProps({ locale }: { locale: any }) {
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
+}

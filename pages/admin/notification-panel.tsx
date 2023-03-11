@@ -4,7 +4,10 @@ import PageHeader from "@/components/common/PageHeader";
 import fetchJson from "@/lib/fetchJson";
 import useNotificationSettings from "@/lib/useNotificationSettings";
 import { INotificationConfig } from "@/models/notification.interface";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 // let hard_data: INotificationConfig[] = [
 //   {
@@ -37,6 +40,8 @@ import React, { useEffect, useState } from "react";
 // ];
 
 const NotificationPanel = () => {
+
+  const router=useRouter();
   const [showCreateNotificationModal, setShowCreateNotificationModal] =
     useState<boolean>(false);
 
@@ -45,6 +50,13 @@ const NotificationPanel = () => {
     mutateNotificationSettings,
     notificationSettingsIsLoading,
   } = useNotificationSettings();
+
+  const { locales, locale: activeLocale } = router;
+
+  useEffect(() => {
+      console.log("use efft");
+      router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
 
   const toggle = async (id: number) => {
     // send put to notification settings
@@ -122,3 +134,14 @@ const NotificationPanel = () => {
 };
 
 export default NotificationPanel;
+
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+      await i18n?.reloadResources();
+  }
+  return {
+      props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+      },
+  };
+}

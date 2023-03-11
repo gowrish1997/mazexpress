@@ -13,6 +13,7 @@ import Dashboard from "../../../public/dashboard_svg.svg";
 import LiveOrder from "../../../public/liveorder_svg.svg";
 import TodayShip from "../../../public/todayship_svg.svg";
 import User from "../../../public/user_svg.svg";
+import Admin from "../../../public/admin_svg.svg";
 import Notification from "../../../public/bell_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -58,11 +59,13 @@ const adminIcon = (id: number) => {
         case 7:
             return <User />;
         case 8:
+            return <Admin />;
+        case 9:
             return <Notification />;
 
-        case 9:
-            return <Settings />;
         case 10:
+            return <Settings />;
+        case 11:
             return <Helpcenter />;
         default:
             return "";
@@ -77,7 +80,7 @@ interface IProp {
         path: string;
     };
     id: number;
-    transalateContent:string
+    transalateContent: string;
 }
 
 const NavLink = (props: IProp) => {
@@ -85,7 +88,6 @@ const NavLink = (props: IProp) => {
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
-   
 
     const isActivePath = (obj: any): boolean => {
         if (router.pathname === "/" && obj.path === "/") return true;
@@ -112,7 +114,7 @@ const NavLink = (props: IProp) => {
             >
                 <div className=" flex flex-row justify-start items-center gap-x-3 w-full">
                     <div className={`${router.pathname.includes(props.content.path) ? "sidebar_icon_hover" : "sidebar_icon"} relative`}>
-                        {user?.is_admin_users ? adminIcon(props.id) : userIcon(props.id)}
+                        {!user?.is_admin_users ? adminIcon(props.id) : userIcon(props.id)}
                         {props.content.title === "Delivered Order" ? (
                             <span className="absolute top-0 bg-green-600 rounded-full h-[12px] w-[12px] flex items-center justify-center">
                                 <FontAwesomeIcon

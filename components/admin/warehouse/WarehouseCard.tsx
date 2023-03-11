@@ -113,8 +113,8 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
   return (
     <div className="min-w-[32%] min-h-[180px] bg-[#EDF5F9] rounded-[4px] p-[25px] ">
       <div className="flex-type3 space-x-[10px]">
-        <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
-          {capitalizeFirstLetter(props.address.tag_warehouses)}
+        <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] capitalize ">
+          {props.address.tag_warehouses}
         </p>
         <div className="flex items-center">
           <div
@@ -126,8 +126,8 @@ const WarehouseCard = (props: { address: IWarehouseProps }) => {
               style={getBg(props.address.status_warehouses)}
             ></span>
           </div>
-          <span className="ml-[5px] text-[12px] text-[#2B2B2B] font-[500] leading-[18px] ">
-            {capitalizeFirstLetter(props.address.status_warehouses)}
+          <span className="ml-[5px] text-[12px] text-[#2B2B2B] font-[500] leading-[18px] capitalize ">
+            {props.address.status_warehouses}
           </span>
         </div>
       </div>

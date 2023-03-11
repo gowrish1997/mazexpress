@@ -93,7 +93,7 @@
             }
         },
         "footer": {
-            "leftSide": { "Title": "MAZ Express", "Content": ["Tracking", "Shipping", "Help & Support", "About Us", "Contact Us"] },
+            "leftSide": { "Title": "Express", "Content": ["Tracking", "Shipping", "Help & Support", "About Us", "Contact Us"] },
             "rightSide": { "Title": "Connect with Us", "Content": ["Instagram", "Facebook", "YouTube", "LinkedIn", "Twitter"] },
             "Copyright": "Copyright ©1994- 2023 United Parcel Service of America, Inc. All rights reserved. "
         }
@@ -109,6 +109,7 @@
             "Delivered Order",
             "Warehouse",
             "User Base",
+            "Admin Base",
             "Notification Panel",
             "Settings",
             "Help center"

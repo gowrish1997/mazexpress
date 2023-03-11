@@ -11,6 +11,7 @@ import StatLiveOrdres from "@/components/admin/MazStats/StatLiveOrdres";
 import RecentCustomers from "@/components/admin/MazStats/RecentCustomers";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import axios from "axios";
 const AdminHome = () => {
     const router = useRouter();
     const { locales, locale: activeLocale } = router;
@@ -19,6 +20,7 @@ const AdminHome = () => {
         console.log("use efft");
         router.push(router.asPath, router.asPath, { locale: "en" });
     }, []);
+
 
     return (
         <div className="space-y-[15px]">
@@ -38,6 +40,7 @@ const AdminHome = () => {
                 <StatLiveOrdres />
                 <RecentCustomers />
             </div>
+            
         </div>
     );
 };

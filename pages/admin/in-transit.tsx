@@ -12,6 +12,8 @@ import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const tableHeaders = [
   "Customer",
@@ -40,6 +42,13 @@ const Intransit = () => {
     page: currentPage,
     status: ['in-transit']
   });
+
+  const { locales, locale: activeLocale } = router;
+
+  useEffect(() => {
+      console.log("use efft");
+      router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
 
   const [allInTransitOrders, setallInTransitOrders] =
     useState<IOrderResponse[]>();
@@ -74,7 +83,7 @@ const Intransit = () => {
   };
 
   if (ordersIsLoading) {
-    return <LoadingPage />;
+    // return <LoadingPage />;
   }
 
   if (ordersError) {
@@ -120,3 +129,13 @@ const Intransit = () => {
 };
 
 export default Intransit;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+      await i18n?.reloadResources();
+  }
+  return {
+      props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+      },
+  };
+}

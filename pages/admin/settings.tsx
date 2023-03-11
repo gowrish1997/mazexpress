@@ -217,7 +217,7 @@ const Settings = () => {
                                 register={register("default_language_users")}
                                 error={errors.default_language_users?.message}
                                 options={[
-                                    { value: "Arabic", label: "Arabic" },
+                                    // { value: "Arabic", label: "Arabic" },
                                     { value: "English", label: "English" },
                                 ]}
                                 value={getValues("default_language_users")}

@@ -45,8 +45,8 @@ const MazCommunityForm = () => {
     };
 
     return (
-        <div className="flex flex-col justify-start items-center mt-[100px] ">
-            <div className="w-[50%] xmd:w-[32%] flex flex-col justify-start items-center gap-y-[15px] ">
+        <div className="flex flex-col justify-start items-center mt-[40px] md:mt-[100px] ">
+            <div className="w-[80%] md:w-[50%] xmd:w-[32%] flex flex-col justify-start items-center gap-y-[15px] ">
                 <h1 className="text-[40px] text-center text-[#18181B] font-[700] leading-[45px] ">{t("landingPage.communityForm.Title")}</h1>
                 <p className="w-[85%] text-[16px] text-[#525D72] font-[500] leading-[25px] text-center ">{t("landingPage.communityForm.Discription")}</p>
                 <form className=" w-full bg-[#FFFFFF] rounded-[16px]  space-y-[20px]" onSubmit={handleSubmit(onSubmit)}>

@@ -100,6 +100,12 @@ const adminSidebarPanel = [
     },
     {
         id: nanoid(),
+        title: "Admin Base",
+        icon: "/help.png",
+        path: "/admin/admins",
+    },
+    {
+        id: nanoid(),
         title: "Notification Panel",
         icon: "/address.png",
         path: "/admin/notification-panel",
@@ -119,7 +125,7 @@ const adminSidebarPanel = [
 ];
 
 const sidebarContentHandler = (user: number) => {
-    if (user) {
+    if (!user) {
         return adminSidebarPanel;
     } else {
         return userSidebarPanel;
@@ -134,7 +140,7 @@ const Sidebar = () => {
     const adminSidebarContent: string[] = t("sidebar.AdminSidebarContent", { returnObjects: true });
 
     const transalateSidebarContentHandler = () => {
-        if (user?.is_admin_users!) {
+        if (!user?.is_admin_users) {
             return adminSidebarContent;
         } else {
             return userSidebarContent;

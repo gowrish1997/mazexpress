@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import useOrders from "@/lib/useOrders";
 import moment from "moment";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import UserbasePageHeader from "@/components/admin/UserbasePageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -14,12 +16,12 @@ import user from "../api/auth/user";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
-import { i18n } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import AddButton from "@/components/common/AddButton";
+import AddNewAdminModal from "@/components/admin/modal/AddNewAdminModal";
 
 const tableHeaders = ["Customer", "Email ID", "Mobile Number", "Created Date", "Age", "Gender", "Total Orders"];
 
-const UserBase = () => {
+const AdminBase = () => {
     const router = useRouter();
     const { locales, locale: activeLocale } = router;
 
@@ -39,6 +41,7 @@ const UserBase = () => {
     console.log(allUser);
 
     const [allUsers, setAllUsers] = useState<IUser[]>([]);
+    const [showAddNewAdminModal, setShowAddNewAdminModal] = useState(false);
 
     //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(allUser?.total_count / itemsPerPage);
@@ -55,6 +58,10 @@ const UserBase = () => {
         setCreatedDateFilterKey(value);
     };
 
+    const ToggleAddNewAdminModalHandler = () => {
+        setShowAddNewAdminModal((prev) => !prev);
+    };
+
     // const selectOrderHandler = (value: string, type: string) => {
     //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
     // };
@@ -69,10 +76,10 @@ const UserBase = () => {
         <>
             <div>
                 <UserbasePageHeader
-                    content="User Base"
+                    content="Admin Base"
                     allUsers={allUser?.data!}
                     filterByDate={filterByCreatedDate}
-                    title="User Base | MazExpress Admin"
+                    title="Admin Base | MazExpress Admin"
                     pageCount={pageCount}
                     currentPageHandler={currentPageHandler}
                     itemPerPageHandler={itemPerPageHandler!}
@@ -84,6 +91,7 @@ const UserBase = () => {
                     {allUser?.data && (
                         <>
                             <Table rows={allUser.data} headings={tableHeaders} type="user_base" />
+                            <AddButton onClick={ToggleAddNewAdminModalHandler} />
                         </>
                     )}
                 </div>
@@ -91,11 +99,12 @@ const UserBase = () => {
                     <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedUser?.length} orders are selected`}</div>
                 )} */}
             </div>
+            {/* <AddNewAdminModal/> */}
         </>
     );
 };
 
-export default UserBase;
+export default AdminBase;
 export async function getStaticProps({ locale }: { locale: any }) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();

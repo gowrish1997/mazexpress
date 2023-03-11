@@ -1,11 +1,22 @@
 import PageHeader from "@/components/common/PageHeader";
 import WarehouseCard from "@/components/admin/warehouse/WarehouseCard";
 import useWarehouses from "@/lib/useWarehouses";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
 
 const Warehouse = () => {
+  const router=useRouter();
   const { warehouses, mutateWarehouses } = useWarehouses();
+
+  const { locales, locale: activeLocale } = router;
+
+  useEffect(() => {
+      console.log("use efft");
+      router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
   const [showAddNewWarehouseModal, setShowAddNewWarehouseModal] =
     useState(false);
 
@@ -39,3 +50,13 @@ const Warehouse = () => {
 };
 
 export default Warehouse;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+      await i18n?.reloadResources();
+  }
+  return {
+      props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+      },
+  };
+}

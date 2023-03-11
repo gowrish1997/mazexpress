@@ -59,7 +59,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>((props, ref) => 
     };
 
     return (
-        <div className="flex-type5 min-[950px]:flex-type3 p-[70px] flex-wrap space-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[120px] " ref={ref}>
+        <div className="flex-type5 min-[950px]:flex-type3 p-[20px] md:p-[70px] flex-wrap space-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[40px] md:mt-[120px] " ref={ref}>
             <div className="flex-1 space-y-[15px] ">
                 <h1 className="text-[24px] text-[#121212] font-[700] leading-[50px] "> {t("landingPage.shipmentCostCalculator.Title")}</h1>
                 <div className="relative h-[290px] w-[334px] ">

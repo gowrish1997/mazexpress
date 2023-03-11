@@ -11,6 +11,8 @@ import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const tableHeaders = [
     "Customer",
@@ -37,6 +39,13 @@ const DeliveredOrders = () => {
         status: ["delivered"],
     });
 
+    const { locales, locale: activeLocale } = router;
+
+  useEffect(() => {
+      console.log("use efft");
+      router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
+
     const [allDeliveredOrders, setAllDeliveredOrders] = useState<IOrderResponse[]>();
 
     const [selectedOrder, setSelectedOrder] = useState<string[]>();
@@ -59,7 +68,7 @@ const DeliveredOrders = () => {
         selectOrder(value, type, setSelectedOrder, allDeliveredOrders!, selectedOrder!);
     };
     if (ordersIsLoading) {
-        return <LoadingPage />;
+        // return <LoadingPage />;
     }
     if (ordersError) {
         return <div>some error happened</div>;
@@ -97,3 +106,13 @@ const DeliveredOrders = () => {
 };
 
 export default DeliveredOrders;
+export async function getStaticProps({ locale }: { locale: any }) {
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
+  }
