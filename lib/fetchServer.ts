@@ -2,12 +2,33 @@
 //     written by: raunak
 //==========================
 
-
 export default async function fetchJson<JSON = any>(
   input: RequestInfo,
   init?: RequestInit
 ): Promise<JSON> {
-  const response = await fetch(`http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}`+input, init);
+  const environment = process.env.NODE_ENV;
+  if (environment === "production") {
+    const response = await fetch(
+      `https://${process.env.NEXT_PUBLIC_SERVER_HOST}` + input,
+      init
+    );
+    // if the server replies, there's always some data in json
+    // if there's a network error, it will throw at the previous line
+    const data = await response.json();
+
+    // response.ok is true when res.status is 2xx
+    // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
+    if (response.ok) {
+      // console.log(data);
+      return data;
+    }
+  }
+
+  const response = await fetch(
+    `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}` +
+      input,
+    init
+  );
   // if the server replies, there's always some data in json
   // if there's a network error, it will throw at the previous line
   const data = await response.json();
@@ -18,7 +39,6 @@ export default async function fetchJson<JSON = any>(
     // console.log(data);
     return data;
   }
-
   throw new FetchError({
     message: response.statusText,
     response,
