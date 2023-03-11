@@ -34,7 +34,7 @@ const LiveOrderLineItem = (props: IProp) => {
     // console.log(tracking);
     if (tracking?.data !== undefined && tracking.data !== null) {
       let sorted = [...tracking.data];
-      sorted.sort((a: any, b: any) => a?.stage_tracking - b?.stage_tracking);
+      sorted.sort((a: any, b: any) => a?.stage - b?.stage);
       setPackageStatus((sorted.pop() as Tracking)?.stage);
     }
   }, [tracking]);

@@ -32,7 +32,7 @@ const PendingOrders = () => {
     page: currentPage,
     status: ["pending"],
   });
-  console.log(orders);
+  // console.log(orders);
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 

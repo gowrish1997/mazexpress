@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import LoadingPage from "@/components/common/LoadingPage";
 import { Order } from "@/models/order.model";
+import BlankPage from "@/components/admin/BlankPage";
 
 const tableHeaders = [
   "Customer",
@@ -74,7 +75,7 @@ const LiveOrders = () => {
       <div>
         <LiveOrderPageHeader
           content="Live Orders"
-          allLiveOrders={(orders as Order[]).length}
+          allLiveOrders={orders ? (orders as Order[]).length : 0}
           onChangeStatus={filterByStatusHandler}
           itemPerPageHandler={itemPerPageHandler!}
           filterByDate={filterByCreatedDate}
@@ -86,7 +87,7 @@ const LiveOrders = () => {
           statusFilterKey={statusFilterKey}
         />
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {/* {!filteredLiveOrders && <BlankPage />} */}
+          {!orders && <BlankPage />}
 
           {orders && (
             <>

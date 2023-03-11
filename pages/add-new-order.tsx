@@ -14,6 +14,8 @@ import fetchJson from "@/lib/fetchServer";
 // import { createToast } from "@/lib/toasts";
 import { createToast } from "@/lib/toasts";
 import { Address } from "@/models/address.model";
+import { APIResponse } from "@/models/api.model";
+import { Order } from "@/models/order.model";
 
 const schema = yup
   .object({
@@ -94,26 +96,13 @@ const AddNewOrder = () => {
         address_id: data.address_id,
         reference_id: data.reference_id,
         store_link: data.store_link,
-        status: "pending",
-        shipping_amt: 499,
       };
-      const result1 = await fetchJson(`/api/orders`, {
+      const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderObj),
       });
-      console.log(result1);
-
-      let trackingObj = {
-        order_id: result1.data,
-        user_id: user?.id,
-      };
-      const result2 = await fetchJson(`/api/tracking`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(trackingObj),
-      });
-      console.log(result2);
+      // console.log(result);
 
       createToast({
         type: "success",
@@ -184,10 +173,9 @@ const AddNewOrder = () => {
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3 py-5">
-          {
-            addressesIsLoading && <div>loading addresses...</div>
-          }
-          {addresses?.data && addresses?.data !== null &&
+          {addressesIsLoading && <div>loading addresses...</div>}
+          {addresses?.data &&
+            addresses?.data !== null &&
             (addresses?.data as Address[]).map((data: Address) => {
               return (
                 <UserSavedAddress

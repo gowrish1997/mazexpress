@@ -1,11 +1,12 @@
 import React, { forwardRef, RefObject } from "react";
 import ClickOutside from "@/components/common/ClickOutside";
-import fetchJson from "@/lib/fetchServer";
+import fetchServer from "@/lib/fetchServer";
 import useUser from "@/lib/hooks/useUser";
 import axios from "axios";
 import { createToast } from "@/lib/toasts";
 import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
+import { APIResponse } from "@/models/api.model";
 
 interface IProps {
   ref: React.RefObject<HTMLDivElement>;
@@ -40,76 +41,83 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
         case "pending":
           let rowFixed: Order = props.row as Order;
           // console.log("outer user", user);
-          const result0 = await fetchJson(`/api/orders?id=${rowFixed.id}`, {
+          const result0 = await fetchServer(`/api/orders?id=${rowFixed.id}`, {
             method: "PUT",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({ status: "at-warehouse" }),
           });
           //   console.log(result0);
-          const result0_2 = await fetchJson(`/api/tracking`, {
+          const result0_2 = await fetchServer(`/api/tracking`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
               order_id: props.row.id,
+              user_id: user?.id,
               stage: 1,
             }),
           });
 
           // check notifications for user and send notification
           // get notification for user
-          // if (user.is_notifications_enabled) {
-          //   // get admin notification on backend
-          //   // send notification post
-          //   const deliveredMessage = {
-          //     title_notifications: "Order arrived at Istanbul warehouse!",
-          //     content_notifications: `Your order number ${rowFixed.id} has been received at our Istanbul warehouse and will be shipped soon.`,
-          //   };
-          //   axios
-          //     .post(
-          //       "/api/notifications",
-          //       {
-          //         data: deliveredMessage,
-          //         files: null,
-          //         users: [user.id],
-          //         notification_config: 1,
-          //       },
-          //       {
-          //         headers: { "Content-Type": "multipart/form-data" },
-          //       }
-          //     )
-          //     .then((response) => {
-          //       createToast({
-          //         type: "success",
-          //         title: "Notified User",
-          //         message: `Sent order received notification to userID ${user.id}`,
-          //         timeOut: 2000,
-          //       });
+          if (user?.is_notifications_enabled) {
+            // get admin notification on backend
+            // send notification post
+            const deliveredMessage = {
+              title: "Order arrived at Istanbul warehouse!",
+              content: `Your order number ${rowFixed.id} has been received at our Istanbul warehouse and will be shipped soon.`,
+            };
 
-          //       //   console.log(response.data);
-          //     });
-          // }
-          //   console.log(result0_2);
+            const result0_3: APIResponse<Notification> = await fetchServer(
+              "/api/notifications",
+              {
+                method: "POST",
+                headers: { "Content-Type": "multipart/form-data" },
+                body: JSON.stringify({
+                  data: deliveredMessage,
+                  files: null,
+                  users: [user.id],
+                  notification_config: 1,
+                }),
+              }
+            );
+            if (result0_3?.count && result0_3?.count > 0) {
+              createToast({
+                type: "success",
+                title: "Notified User",
+                message: `Sent order received notification to userID ${user.id}`,
+                timeOut: 2000,
+              });
+            } else {
+              createToast({
+                type: "error",
+                title: "Failed creating notification",
+                message: `check console for more info`,
+                timeOut: 2000,
+              });
+            }
+          }
+          console.log(result0_2);
           break;
         case "shipments":
           let rowFixed2: Order = props.row as Order;
 
           // put to order
-          const result1 = await fetchJson(`/api/orders?id=${rowFixed2.id}`, {
+          const result1 = await fetchServer(`/api/orders?id=${rowFixed2.id}`, {
             method: "PUT",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({ status: "in-transit" }),
           });
-          //   console.log(result1);
-          // const result1_2 = await fetchJson("/api/tracking", {
-          //   method: "POST",
-          //   headers: { "Content-type": "application/json" },
-          //   body: JSON.stringify({
-          //     user_id: user.id,
-          //     order_id: rowFixed2.id_orders,
-          //     stage_tracking: 2,
-          //   }),
-          // });
-          //   console.log(result1_2);
+          // console.log(result1);
+          const result1_2 = await fetchServer("/api/tracking", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+              user_id: user?.id,
+              order_id: rowFixed2.id,
+              stage: 2,
+            }),
+          });
+          // console.log(result1_2);
           // post to tracking
 
           break;
@@ -120,23 +128,25 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
 
           if (props.stage === 2) {
             // received in libya action
-            const result2_2 = await fetchJson("/api/tracking", {
+            const result2_2 = await fetchServer("/api/tracking", {
               method: "POST",
               headers: { "Content-type": "application/json" },
               body: JSON.stringify({
                 order_id: rowFixed3.id,
-                stage_tracking: 3,
+                user_id: user?.id,
+                stage: 3,
               }),
             });
           }
           if (props.stage === 3) {
             // out for delivery action
-            const result2_2 = await fetchJson("/api/tracking", {
+            const result2_2 = await fetchServer("/api/tracking", {
               method: "POST",
               headers: { "Content-type": "application/json" },
               body: JSON.stringify({
                 order_id: rowFixed3.id,
-                stage_tracking: 4,
+                user_id: user?.id,
+                stage: 4,
               }),
             });
           }
@@ -144,27 +154,31 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             // delivered action
 
             // set order status
-            const result2 = await fetchJson(`/api/orders?id=${rowFixed3.id}`, {
-              method: "PUT",
-              headers: { "Content-type": "application/json" },
-              body: JSON.stringify({ status: "delivered" }),
-            });
+            const result2 = await fetchServer(
+              `/api/orders?id=${rowFixed3.id}`,
+              {
+                method: "PUT",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({ status: "delivered" }),
+              }
+            );
 
             // enter tracking data
-            const result2_2 = await fetchJson("/api/tracking", {
+            const result2_2 = await fetchServer("/api/tracking", {
               method: "POST",
               headers: { "Content-type": "application/json" },
               body: JSON.stringify({
                 order_id: rowFixed3.id,
-                stage_tracking: 5,
+                stage: 5,
+                user_id: user?.id,
               }),
             });
 
             // send notification
 
             const deliveredMessage = {
-              title_notifications: "Order Delivered!",
-              content_notifications: `Your order number ${rowFixed3.id} has been delivered successfully, please leave a review if you liked our service.`,
+              title: "Order Delivered!",
+              content: `Your order number ${rowFixed3.id} has been delivered successfully, please leave a review if you liked our service.`,
             };
             axios
               .post(

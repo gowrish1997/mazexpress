@@ -51,8 +51,8 @@ const AddNewAddressModal = (props: IProp) => {
       let address = { ...data };
       delete address.default;
 
-      console.log(address);
-      console.log(data);
+      // console.log(address);
+      // console.log(data);
 
       address.user = user;
 
@@ -62,7 +62,7 @@ const AddNewAddressModal = (props: IProp) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(address),
       });
-      console.log(addressResult);
+      // console.log(addressResult);
 
       // set default if checked
       if (data.default) {
