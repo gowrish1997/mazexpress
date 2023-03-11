@@ -75,7 +75,7 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       });
-      console.log(newUser);
+      // console.log(newUser);
       if (newUser && newUser.msg === "User exists already.") {
         createToast({
           type: "error",

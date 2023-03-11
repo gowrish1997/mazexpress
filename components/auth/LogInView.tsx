@@ -9,7 +9,7 @@ import Image from "next/dist/client/image";
 import google_logo from "@/public/google.png";
 import useUser from "@/lib/hooks/useUser";
 import { FetchError } from "@/lib/fetchServer";
-import fetchJson from "@/lib/fetchSelf";
+import fetchSelf from "@/lib/fetchSelf";
 
 type Inputs = {
   password: string;
@@ -42,7 +42,7 @@ const LogInComponent = (props: any) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       console.log(data);
-      const response = await fetchJson("/api/auth/login", {
+      const response = await fetchSelf("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
