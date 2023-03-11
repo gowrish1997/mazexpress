@@ -76,14 +76,21 @@ const SignUpComponent = (props: { switch: (i: number) => void }) => {
         headers: { "Content-Type": "application/json" },
       });
       console.log(newUser);
-      if (newUser) {
+      if (newUser && newUser.msg === "User exists already.") {
+        createToast({
+          type: "error",
+          title: "User exists",
+          message: "This email id is already taken.",
+          timeOut: 2000,
+        });
+      } else {
         createToast({
           type: "success",
           title: "Created user",
           message: "Successfully created new user",
           timeOut: 2000,
         });
-        // return response.json();
+        router.push("/auth/gate");
       }
     } catch (err) {
       if (err) throw err;
