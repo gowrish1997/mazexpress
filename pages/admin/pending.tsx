@@ -6,7 +6,12 @@ import PendingPageHeader from "@/components/admin/PendingPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
+<<<<<<< HEAD
 import { Order } from "@/models/order.model";
+=======
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+>>>>>>> translate
 
 const tableHeaders = [
   "Customer",
@@ -20,6 +25,13 @@ const tableHeaders = [
 
 const PendingOrders = () => {
   const router = useRouter();
+
+  const { locales, locale: activeLocale } = router;
+
+    useEffect(() => {
+        console.log("use efft");
+        router.push(router.asPath, router.asPath, { locale: "en" });
+    }, []);
 
   const [itemsPerPage, setItemPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
@@ -38,11 +50,20 @@ const PendingOrders = () => {
 
   const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
+<<<<<<< HEAD
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
   };
   const itemPerPageHandler = useCallback((value: string | number) => {
     setItemPerPage(value as number);
+=======
+    const currentPageHandler = (value: number) => {
+        setCurrentPage(value);
+    };
+    const itemPerPageHandler = useCallback((value: string | number) => {
+      setCurrentPage(0)
+      setItemPerPage(value as number);
+>>>>>>> translate
   }, []);
 
   const filterByCreatedDate = (value: Date | string) => {
@@ -54,7 +75,7 @@ const PendingOrders = () => {
   };
 
   if (ordersIsLoading) {
-    return <LoadingPage />;
+    // return <LoadingPage />;
   }
   if (ordersError) {
     return <div>some error happened</div>;
@@ -100,3 +121,13 @@ const PendingOrders = () => {
 };
 
 export default PendingOrders;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+      await i18n?.reloadResources();
+  }
+  return {
+      props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+      },
+  };
+}

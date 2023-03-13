@@ -49,7 +49,7 @@ const PackageTrackingView = (props: { packageStatus: number }) => {
   };
 
   return (
-    <div className={`${progressBarStatusHandler()}`}>
+    <div className={`${progressBarStatusHandler()}  `}>
       <ProgressBar percent={percentHandler(props.packageStatus)}>
         <Step>
           {({ accomplished }: { accomplished: boolean }) => (

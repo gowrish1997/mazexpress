@@ -6,7 +6,12 @@ import Table from "@/components/orders/table";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
+<<<<<<< HEAD
 import { Order } from "@/models/order.model";
+=======
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+>>>>>>> translate
 
 const tableHeaders = [
   "Customer",
@@ -36,6 +41,13 @@ const Intransit = () => {
     status: ['in-transit']
   });
 
+  const { locales, locale: activeLocale } = router;
+
+  useEffect(() => {
+      console.log("use efft");
+      router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
+
   const [allInTransitOrders, setallInTransitOrders] =
     useState<Order[]>();
 
@@ -48,6 +60,7 @@ const Intransit = () => {
     setCurrentPage(value);
   };
   const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0)
     setItemPerPage(value as number);
 }, []);
 
@@ -57,17 +70,18 @@ const Intransit = () => {
   };
 
   const selectOrderHandler = (value: string, type: string) => {
+    console.log(value)
     selectOrder(
       value,
       type,
       setSelectedOrder,
-      allInTransitOrders!,
+     orders?.data,
       selectedOrder!
     );
   };
 
   if (ordersIsLoading) {
-    return <LoadingPage />;
+    // return <LoadingPage />;
   }
 
   if (ordersError) {
@@ -113,3 +127,13 @@ const Intransit = () => {
 };
 
 export default Intransit;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+      await i18n?.reloadResources();
+  }
+  return {
+      props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+      },
+  };
+}

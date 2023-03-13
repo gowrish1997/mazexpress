@@ -5,6 +5,7 @@ import fetchServer from "@/lib/fetchServer";
 import fetchSelf from '@/lib/fetchSelf'
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { Address } from "@/models/address.model";
+import { useTranslation } from "next-i18next";
 
 const UserSavedAddress = (props: {
   address: Address;
@@ -13,6 +14,9 @@ const UserSavedAddress = (props: {
   update: () => void;
 }) => {
   const { user, mutateUser } = useUser();
+
+  const { t } = useTranslation("common");
+    const content: string[] = t("addressBookPage.userSavedAddressCard.Content", { returnObjects: true });
 
   const deleteAddressHandler = async () => {
     // console.log('delete')
@@ -55,9 +59,6 @@ const UserSavedAddress = (props: {
     }
   };
 
-  useEffect(() => {
-    console.log("refresh");
-  }, []);
 
   return (
     <div className="transition duration-300 flex items-start border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] h-full">
@@ -79,18 +80,18 @@ const UserSavedAddress = (props: {
           </p>
           {user?.default_address === props.address.id && (
             <div className="bg-[#FF645A] rounded-[4px] text-[10px] text-[#FFFFFF] font-[500] leading-[15px] py-[5px] px-[10px]">
-              Default
+              {content[0]}
             </div>
           )}
+          <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">
+            {props.address.country}
+          </p>
+          <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">{`${props.address.address_1}, ${props.address.address_2}`}</p>
+          <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
+            {" "}
+            {capitalizeFirstLetter(props.address.city)}
+          </p>
         </div>
-        <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">
-          {props.address.country}
-        </p>
-        <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">{`${props.address.address_1}, ${props.address.address_2}`}</p>
-        <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
-          {" "}
-          {capitalizeFirstLetter(props.address.city)}
-        </p>
 
         <div className="flex-type1 mt-[15px]">
           <Image src="/mobile.png" height={12} width={12} alt="mobile" />
@@ -101,15 +102,12 @@ const UserSavedAddress = (props: {
 
         <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] flex justify-end flex-1 grow">
           <div className="space-x-[20px] flex items-end">
-            <button
-              onClick={() => props.edit(props.address.id!)}
-              className="hover:font-[600]"
-            >
-              Edit
-            </button>
-            <button onClick={deleteAddressHandler} className="hover:font-[600]">
-              Remove
-            </button>
+          <button onClick={() => props.edit(props.address.id)} className="hover:font-[600]">
+                        {content[1]}
+                        </button>
+                        <button onClick={deleteAddressHandler} className="hover:font-[600]">
+                        {content[2]}
+                        </button>
           </div>
         </div>
       </div>

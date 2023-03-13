@@ -1,12 +1,54 @@
 import ConfigCard from "@/components/admin/notification-panel/ConfigCard";
 import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import PageHeader from "@/components/common/PageHeader";
+<<<<<<< HEAD
 import fetchJson from "@/lib/fetchServer";
 import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
 import { NotificationConfig } from "@/models/notification-config.model";
 import React, { useState } from "react";
+=======
+import fetchJson from "@/lib/fetchJson";
+import useNotificationSettings from "@/lib/useNotificationSettings";
+import { INotificationConfig } from "@/models/notification.interface";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+// let hard_data: INotificationConfig[] = [
+//   {
+//     title_notification_config: "Shipments Arrival Notification",
+//     is_enabled_notification_config: true,
+//     desc_notification_config: "Turn this on to notify the subscribed users in list when shipment has reached the Istanbul warehouse.",
+//     id_notification_config: 1,
+//     is_custom_notification_config: false,
+//     is_reusable_notification_config: false
+
+//   },
+//   {
+//     title_notification_config: "Delivered Notification",
+//     is_enabled_notification_config: false,
+//     desc_notification_config: "Turn this on to notify the subscribed users in list when shipment has been delivered.",
+//     id_notification_config: 2,
+//     is_custom_notification_config: false,
+//     is_reusable_notification_config: false
+
+//   },
+//   {
+//     title_notification_config: "Welcome Notifications",
+//     is_enabled_notification_config: false,
+//     desc_notification_config: "Turn this on to send a welcome message to all users upon account successful creation.",
+//     id_notification_config: 3,
+//     is_custom_notification_config: false,
+//     is_reusable_notification_config: false,
+
+//   },
+// ];
+>>>>>>> translate
 
 const NotificationPanel = () => {
+
+  const router=useRouter();
   const [showCreateNotificationModal, setShowCreateNotificationModal] =
     useState<boolean>(false);
 
@@ -16,7 +58,18 @@ const NotificationPanel = () => {
     notificationSettingsIsLoading,
   } = useNotificationSettings();
 
+<<<<<<< HEAD
   const toggle = async (id: string) => {
+=======
+  const { locales, locale: activeLocale } = router;
+
+  useEffect(() => {
+      console.log("use efft");
+      router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
+
+  const toggle = async (id: number) => {
+>>>>>>> translate
     // send put to notification settings
     if (notificationSettings !== undefined) {
       let setTo = notificationSettings?.find(
@@ -92,3 +145,14 @@ const NotificationPanel = () => {
 };
 
 export default NotificationPanel;
+
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+      await i18n?.reloadResources();
+  }
+  return {
+      props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+      },
+  };
+}

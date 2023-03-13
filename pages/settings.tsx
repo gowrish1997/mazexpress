@@ -7,14 +7,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
-import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/hooks/useUser";
-import { useRouter } from "next/router";
+import { User } from "@/models/user.model";
+import { getUserImageString } from "@/lib/utils";
+import { FieldError } from "react-hook-form";
+import axios from "axios";
+import { nanoid } from "nanoid";
 import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
-import { User } from "@/models/user.model";
-import { getUserImageString } from "@/lib/utils";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 
 const schema = yup
   .object({
@@ -34,27 +40,37 @@ const schema = yup
       .required()
       .typeError("Mobile number is required field"),
 
-    // password_users: yup.string().required("Password is required field"),
+    // password: yup.string().required("Password is required field"),
     password: yup.string(),
-    newPassword: yup.string(),
-    //   .min(8, "Password must be 8 characters long")
-    //   .matches(/[0-9]/, "Password requires a number")
-    //   .matches(/[a-z]/, "Password requires a lowercase letter"),
-    //   .matches(/[A-Z]/, "Password requires an uppercase letter")
-    //   .matches(/[^\w]/, "Password requires a symbol"),
+    newPassword: yup
+      .string()
+      .matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
+        excludeEmptyString: true,
+        message:
+          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+      }),
     avatar_url: yup.string(),
     is_notifications_enabled: yup.boolean().required(),
-    //  default_language_users: yup.string().required(),
+    //  default_language: yup.string().required(),
   })
   .required();
 
 const Settings = () => {
   const { user, mutateUser } = useUser();
+  const router = useRouter();
+  const { t } = useTranslation("common");
+  const { locale } = router;
 
+  const inputFieldLabels: string[] = t(
+    "settingsPage.profileForm.InputFieldLabel",
+    { returnObjects: true }
+  );
+  const fieldErrors: string[] = t("settingsPage.profileForm.Errors", {
+    returnObjects: true,
+  });
   const [errorMsg, setErrorMsg] = useState("");
   const [showProfilePicPop, setShowProfilePicPop] = useState<boolean>(false);
 
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -71,6 +87,18 @@ const Settings = () => {
     // console.log(user);
     reset({ ...user, password: "" });
   }, [user, reset]);
+
+  const languageOption: { value: string; label: string }[] = t(
+    "settingsPage.profileForm.LanguageOption",
+    { returnObjects: true }
+  );
+
+  useEffect(() => {
+    let dir = router.locale == "ar" ? "rtl" : "ltr";
+    let lang = router.locale == "ar" ? "ar" : "en";
+    document.querySelector("html")?.setAttribute("dir", dir);
+    document.querySelector("html")?.setAttribute("lang", lang);
+  }, [router.locale]);
 
   const [passwordType, setPasswordType] = useState("password");
   const [newPasswordType, setNewPasswordType] = useState("password");
@@ -89,6 +117,7 @@ const Settings = () => {
       setNewPasswordType("string");
     }
   };
+
   const toggleProfilePicPop = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
@@ -99,66 +128,50 @@ const Settings = () => {
     User & { default_language: string; newPassword: string }
   > = async (data) => {
     // console.log(data);
-    createToast({
-      title: "Success",
-      type: "success",
-      message: "Updated user info.",
-      timeOut: 2000,
-      onClick: () => alert("click"),
-    });
-    // let updateObj = { ...data };
-    // delete updateObj.newPassword_users;
-    // delete updateObj.password_users;
-    // delete updateObj.default_language_users;
-    // updateObj.id_users = user?.id_users;
+    try {
+      // console.log(result);
 
-    // if (user && user.id_users) {
-    //   // update user
-    //   try {
-    //     mutateUser(
-    //       await fetchJson(`/api/users?id=${user.id_users}`, {
-    //         method: "PUT",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify(updateObj),
-    //       }),
-    //       false
-    //     );
-    //     // router.push("/");
-    //   } catch (error) {
-    //     if (error instanceof FetchError) {
-    //       setErrorMsg(error.data.message);
-    //     } else {
-    //       console.error("An unexpected error happened:", error);
-    //     }
-    //   }
-    // }
+      createToast({
+        type: "success",
+        title: "Success",
+        message: "Created order successfully",
+      });
+    } catch (err) {
+      console.log(err);
+      createToast({
+        type: "error",
+        title: "An error occurred",
+        message: "Check console for more info.",
+        timeOut: 3000,
+      });
+    }
   };
-
-  // if (userIsLoading === "loading") return <div>loading</div>;
 
   return (
     <>
       <PageHeader
-        content="Settings"
+        content={t("settingsPage.pageHeader.Title")}
         className="border-none pb-[10px]"
         title="My Settings | MazExpress"
       />
       <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} />
       <Layout>
         <div className="w-full space-y-[30px] ">
-          <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
+          <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
             <Image src={blueExclamatory} alt="icon" width={16} height={16} />
             <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-              Here is a link to some fake information that contains crucial
-              information, <span className="text-[#3672DF]">Link here →</span>
+              {t("settingsPage.LinkPPart1")}{" "}
+              <span className="text-[#3672DF]">
+                {t("settingsPage.LinkPPart2")}{" "}
+              </span>
             </p>
           </div>
           <div>
             <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">
-              Account
+              {t("settingsPage.Title")}
             </p>
             <p className="text-[14px] text-[#525D72] leading-[21px] font-[500] ">
-              Review and update your account details
+              {t("settingsPage.Discription")}{" "}
             </p>
           </div>
 
@@ -190,10 +203,10 @@ const Settings = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-type1 w-full space-x-[20px] ">
-              <div className="flex-type2 space-x-[10px] w-full">
+            <div className="flex-type2 w-full gap-x-[20px] ">
+              <div className="flex-type2 gap-x-[10px] w-full">
                 <ReactHookFormInput
-                  label="First name"
+                  label={inputFieldLabels[0]}
                   name="first_name"
                   type="string"
                   register={register("first_name")}
@@ -201,8 +214,8 @@ const Settings = () => {
                 />
 
                 <ReactHookFormInput
-                  label="Last name"
-                  name=" last_name"
+                  label={inputFieldLabels[1]}
+                  name="last_name"
                   type="string"
                   register={register("last_name")}
                   error={errors.last_name}
@@ -210,23 +223,26 @@ const Settings = () => {
               </div>
 
               <ReactHookFormInput
-                label="Password"
+                label={inputFieldLabels[2]}
                 name="password"
                 type={passwordType}
                 register={register("password")}
                 error={errors.password}
                 icon={{
                   isEnabled: true,
-                  type: passwordType == "string" ? "insecure" : "secure",
+                  src:
+                    passwordType == "string"
+                      ? "/eyeIconOpen.png"
+                      : "/eyeIconClose.png",
                   onClick: togglePasswordTypeHandler,
                 }}
                 // disabled={true}
                 // autoComplete="off"
               />
             </div>
-            <div className="flex-type1 w-full space-x-[20px]">
+            <div className="flex-type2 w-full gap-x-[20px]">
               <ReactHookFormInput
-                label="Email"
+                label={inputFieldLabels[3]}
                 name="email"
                 type="string"
                 register={register("email")}
@@ -234,47 +250,63 @@ const Settings = () => {
               />
 
               <ReactHookFormInput
-                label="New Password"
+                label={inputFieldLabels[4]}
                 name="newPassword"
                 type={newPasswordType}
                 register={register("newPassword")}
                 error={errors.newPassword}
                 icon={{
                   isEnabled: true,
-                  type: newPasswordType == "string" ? "insecure" : "secure",
+                  src:
+                    newPasswordType == "string"
+                      ? "/eyeIconOpen.png"
+                      : "/eyeIconClose.png",
                   onClick: toggleNewPasswordTypeHandler,
                 }}
                 autoComplete="new-password"
               />
             </div>
-            <div className="flex-type1 w-full space-x-[20px]">
+            <div className="flex-type2 w-full gap-x-[20px]">
               <ReactHookFormInput
-                label="Mobile number"
+                label={inputFieldLabels[5]}
                 name="phone"
                 type="number"
                 register={register("phone")}
                 error={errors.phone}
               />
-
-              <CustomDropDown
-                label="Language"
+              {/* 
+                          <CustomDropDown
+                              label="Language"
+                              name="default_language"
+                              value={["Arabic", "English"]}
+                              register={register("default_language")}
+                              error={errors.default_language}
+                              dropDownIcon={{
+                                  iconIsEnabled: true,
+                                  iconSrc: "/downwardArrow.png",
+                              }}
+                          /> */}
+              <CusotmDropdown
+                label={inputFieldLabels[6]}
                 name="default_language"
-                value={["Arabic", "English"]}
+                type="string"
+                IconEnabled={true}
                 register={register("default_language")}
                 error={errors.default_language}
-                dropDownIcon={{
-                  iconIsEnabled: true,
-                  iconSrc: "/downwardArrow.png",
-                }}
+                options={languageOption}
+                // value={getValues("default_language")}
+                setValue={setValue}
+                disabled={true}
+                className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
               />
             </div>
             <div className="flex-type3 w-full space-x-[20px] mt-[10px] ">
               <div className="font-[500]">
                 <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">
-                  Notifications
+                  {t("settingsPage.profileForm.notification.Title")}
                 </p>
                 <p className="text-[12px] text-[#525D72] leading-[18px] ">
-                  Enable or disable notifications for your account
+                  {t("settingsPage.profileForm.notification.Discription")}
                 </p>
               </div>
               <Controller
@@ -300,7 +332,7 @@ const Settings = () => {
               type="submit"
               className="w-1/2 h-[46px] border-[1px] bg-[#3672DF] rounded-[4px] text-[#FFFFFF] mt-[10px] "
             >
-              Update settings
+              {t("settingsPage.profileForm.SubmitButton")}
             </button>
           </form>
         </div>
@@ -310,3 +342,13 @@ const Settings = () => {
 };
 
 export default Settings;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}

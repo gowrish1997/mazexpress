@@ -13,8 +13,10 @@ import LiveOrder from "@/public/liveorder_svg.svg";
 import TodayShip from "@/public/todayship_svg.svg";
 import User from "@/public/user_svg.svg";
 import Notification from "@/public/bell_svg.svg";
+import Admin from "../../../public/admin_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "next-i18next";
 
 const userIcon = (id: number) => {
   switch (id) {
@@ -50,15 +52,19 @@ const adminIcon = (id: number) => {
       return <TodayShip />;
     case 5:
       return <TodayShip />;
+
     case 6:
       return <Warehosue />;
     case 7:
       return <User />;
     case 8:
-      return <Notification />;
+      return <Admin />;
     case 9:
-      return <Settings />;
+      return <Notification />;
+
     case 10:
+      return <Settings />;
+    case 11:
       return <Helpcenter />;
     default:
       return "";
@@ -73,11 +79,14 @@ interface IProp {
     path: string;
   };
   id: number;
+  transalateContent: string;
 }
 
 const NavLink = (props: IProp) => {
-  const router = useRouter();
   const { user, mutateUser } = useUser();
+  const router = useRouter();
+  const { t } = useTranslation("common");
+  const { locale } = router;
 
   const isActivePath = (obj: any): boolean => {
     if (router.pathname === "/" && obj.path === "/") return true;
@@ -140,14 +149,9 @@ const NavLink = (props: IProp) => {
                 }}
               ></span>
             ) : null}
-            {/* {props.content.title === "Live Orders" && router.pathname !== '/admin/live-orders' ? (
-              <span className="absolute left-0 bg-[#8794AD] rounded-full h-[12px] w-[12px] flex items-center justify-center" style={{top: 'calc(50% - 5.5px)', left: 'calc(50% - 5.5px)', }}>
-                
-              </span>
-            ) : null} */}
           </div>
           <div
-            className="ml-3 text-[#525D72] font-[500] text-[14px] leading-[21px] hover:text-[#2B2B2B] hover:font-[600] py-2 transition duration-300 cursor-pointer"
+            className=" text-[#525D72] font-[500] text-[14px] leading-[21px] hover:text-[#2B2B2B] hover:font-[600] py-2 transition duration-300 cursor-pointer"
             style={
               isActivePath(props.content)
                 ? {
@@ -157,7 +161,7 @@ const NavLink = (props: IProp) => {
                 : {}
             }
           >
-            {props.content.title}
+            {props.transalateContent}
           </div>
         </div>
       </div>

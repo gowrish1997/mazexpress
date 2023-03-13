@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import downwardImage from "../../../public/downwardArrow.png";
+import ClickOutside from "@/components/common/ClickOutside";
 
 interface IProp {
   options: { value: string | number; label: string | number }[];

@@ -11,40 +11,59 @@ import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal
 import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchServer";
-// import { createToast } from "@/lib/toasts";
-import { createToast } from "@/lib/toasts";
 import { Address } from "@/models/address.model";
 import { APIResponse } from "@/models/api.model";
 import { Order } from "@/models/order.model";
+import { createToast } from "@/lib/toasts";
+import { useRouter } from "next/router";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const schema = yup
   .object({
-    reference_id: yup.string().required(),
-    store_link: yup.string().required(),
+    reference_id: yup.string().required("Reference ID is required field"),
+    store_link: yup.string().required("Store Link is required field"),
   })
   .required();
 
 const AddNewOrder = () => {
+  //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
   const [editableAddress, setEditableAddress] = useState<Address>();
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
   const { user, mutateUser } = useUser();
-  const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
+  const { addresses, mutateAddresses } = useAddresses({
     user_id: user?.id,
   });
 
+  const router = useRouter();
+  const { t } = useTranslation("common");
+  const { locale } = router;
+  const inputFieldLabels: string[] = t("addNewOrderPage.ordersForm.Labels", {
+    returnObjects: true,
+  });
+  const fieldErrors: string[] = t("addNewOrderPage.ordersForm.Errors", {
+    returnObjects: true,
+  });
+
+  useEffect(() => {
+    let dir = router.locale == "ar" ? "rtl" : "ltr";
+    let lang = router.locale == "ar" ? "ar" : "en";
+    document.querySelector("html")?.setAttribute("dir", dir);
+    document.querySelector("html")?.setAttribute("lang", lang);
+  }, [router.locale]);
+
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
-  // const defaultAddressHandler = () => {
-  //   // mutateAddresses();
-  //   if (addresses?.data !== undefined && addresses?.data !== null && addresses.data.length > 0) {
-  //     const address = (addresses?.data as AddressEntity[]).find(
-  //       (el: AddressEntity) => el.id === user?.default_address
-  //     );
-  //     return address;
-  //   }
-  //   return null;
-  // };
+  const defaultAddressHandler = () => {
+    mutateAddresses();
+    const address = (addresses as Address[])?.find(
+      (el) => el.id === user?.default_address
+    );
+
+    return address;
+  };
 
   const {
     register,
@@ -54,12 +73,10 @@ const AddNewOrder = () => {
   } = useForm<{
     reference_id: string;
     store_link: string;
-    address_id: string | null | undefined;
+    address_id: string;
   }>({
     defaultValues: {
-      address_id: user?.default_address,
-      reference_id: "euirfismeodicokew",
-      store_link: "flipkart.com",
+      address_id: defaultAddressHandler()?.id,
     },
     resolver: yupResolver(schema),
   });
@@ -70,17 +87,14 @@ const AddNewOrder = () => {
 
   const toggleEditUserAddressModal = (addressId?: string) => {
     // console.log(addressId);
-
     if (showEditUserAddressModal) {
       setShowEditUserAddressModal(false);
     } else {
       setShowEditUserAddressModal(true);
-      // if (addresses?.data !== null) {
-      //   const address = (addresses?.data as AddressEntity[]).find(
-      //     (el: AddressEntity) => el.id === user?.default_address
-      //   );
-      //   setEditableAddress(address);
-      // }
+      const address = (addresses as Address[])?.find((data) => {
+        return data.id == addressId;
+      });
+      setEditableAddress(address);
     }
   };
 
@@ -118,43 +132,35 @@ const AddNewOrder = () => {
         timeOut: 3000,
       });
     }
-
-    // if (user) {
-    //   let newUserData = { ...user };
-    //   newUserData.default_address_users = data.address_id;
-    //   mutateUser(newUserData);
-    // }
-    // console.log(data);
   };
 
-  useEffect(() => {
-    console.log(addresses);
-  }, [addresses]);
   return (
     <>
       <PageHeader
-        content="Add New Order"
+        content={t("addNewOrderPage.pageHeader.Title")}
         showCalender={false}
         title="Add New Order | MazExpress"
       />
       <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
+        <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
           <Image src="/blueexclamatory.png" alt="icon" width={16} height={16} />
           <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-            Here is a link to some fake information that contains crucial
-            information, <span className="text-[#3672DF]">Link here →</span>
+            {t("addNewOrderPage.LinkPPart1")}
+            <span className="text-[#3672DF]">
+              {t("addNewOrderPage.LinkPPart2")}
+            </span>
           </p>
         </div>
-        <div className="flex-type1 space-x-[10px] mt-[25px]">
+        <div className="flex-type1 gap-x-[10px] mt-[25px]">
           <ReactHookFormInput
-            label="Reference ID"
+            label={inputFieldLabels[0]}
             name="reference_id"
             type="string"
             register={register("reference_id")}
             error={errors.reference_id}
           />
           <ReactHookFormInput
-            label="Store Link"
+            label={inputFieldLabels[1]}
             name="store_link"
             type="string"
             register={register("store_link")}
@@ -163,17 +169,16 @@ const AddNewOrder = () => {
         </div>
         <div className="mt-[20px]">
           <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px]">
-            Address Book
+            {t("addNewOrderPage.addressBook.Title")}
             <span
-              className="text-[#3672DF] ml-[10px] cursor-pointer hover:bg-[#EDF5F9] p-[5px] rounded-[4px]  "
+              className="text-[#3672DF] mx-[10px] cursor-pointer hover:bg-[#EDF5F9] p-[5px] rounded-[4px]  "
               onClick={toggleAddNewAddressModal}
             >
-              + Add New{" "}
+              {t("addNewOrderPage.addressBook.AddButton")}
             </span>
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3 py-5">
-          {addressesIsLoading && <div>loading addresses...</div>}
           {addresses &&
             addresses !== null &&
             (addresses as Address[]).map((data: Address) => {
@@ -192,7 +197,7 @@ const AddNewOrder = () => {
           className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"
           type="submit"
         >
-          Place order
+          {t("addNewOrderPage.SubmitButton")}
         </button>
       </form>
 
@@ -203,7 +208,7 @@ const AddNewOrder = () => {
       />
       {showEditUserAddressModal && (
         <EditUserAddressModal
-          update={() => new Promise(() => {})}
+          update={mutateAddresses}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
           address={editableAddress!}
@@ -214,3 +219,13 @@ const AddNewOrder = () => {
 };
 
 export default AddNewOrder;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}

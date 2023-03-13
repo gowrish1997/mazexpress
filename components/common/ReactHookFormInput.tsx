@@ -14,6 +14,7 @@ interface IProp {
     isEnabled: boolean;
     type?: "secure" | "insecure";
     onClick?: () => void;
+    src: string;
   };
   error?: FieldError;
   onClick?: () => void;
@@ -44,14 +45,14 @@ const ReactHookFormInput = (props: IProp) => {
       </label>
       <div
         className={
-          "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative" +
+          "flex-type1 w-full h-[46px] lg:h-[55px] xlg:h-[70px] border-[1px] border-[#BBC2CF] rounded-[4px] box-border  relative" +
           " " +
           props.className
         }
-        // style={{ borderColor: props.error ? "#f02849" : "" }}
+        style={{ borderColor: props.error ? "#f02849" : "" }}
       >
         {props.name == "phone_addresses" && (
-          <span className="ml-[10px]">+281</span>
+          <span className="mx-[10px]">+281</span>
         )}
 
         <input
@@ -59,20 +60,20 @@ const ReactHookFormInput = (props: IProp) => {
           type={props.type}
           {...props.register}
           value={props.value}
-          className="w-full h-full pl-[5px] rounded-[5px] focus:outline-none"
+          className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
           name={props.name}
+          step="0.1"
           disabled={props.disabled}
           autoComplete={props.autoComplete ? props.autoComplete : "on"}
         />
         {props.icon?.isEnabled ? (
           <Image
-            src={getIconPath(props.icon.type)}
+            src={props.icon?.src}
             alt="eyeIcon"
             height={18}
             width={18}
             className="cursor-pointer absolute right-[8px] "
-            onClick={props.icon.onClick}
-            sizes="100vw"
+            onClick={props.onClick}
           />
         ) : (
           ""

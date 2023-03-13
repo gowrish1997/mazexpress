@@ -2,9 +2,17 @@ import Head from "next/head";
 import React, { useState, useRef } from "react";
 import Calendar from "react-calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faAngleLeft,
+  faAngleRight,
+} from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import ClickOutside from "@/components/common/ClickOutside";
+import useUser from "@/lib/hooks/useUser";
+import useTracking from "@/lib/hooks/useTracking";
 interface IProp {
   content: string;
   className?: string;
@@ -12,7 +20,14 @@ interface IProp {
   title?: string;
 }
 const PageHeader = (props: IProp) => {
+  const { user, mutateUser } = useUser();
+  const { tracking, trackingIsLoading } = useTracking({
+    user_id: user?.id,
+  });
   let trigger = useRef(null);
+  const router = useRouter();
+  const { t } = useTranslation("common");
+  const { locale } = router;
 
   const [showCalender, setShowCalender] = useState<boolean>(false);
   const [allOrderDeliveryDate, setAllOrderDeliveryDate] = useState<
@@ -20,18 +35,8 @@ const PageHeader = (props: IProp) => {
   >(null);
   const [calendarValue, setCalendarValue] = useState<Date>(new Date());
 
-  const [showArrivalCalender, setShowArrivalCalender] =
-    useState<boolean>(false);
-
-  const toggleArrivalCalender = () => {
-    setShowArrivalCalender((prev) => !prev);
-  };
-  const smarttoggleArrivalCalenderHandler = () => {
-    setShowArrivalCalender(false);
-  };
-
-  const smarttoggleCalenderHandler = () => {
-    setShowCalender(false);
+  const toggleCalender = () => {
+    setShowCalender((prev) => !prev);
   };
 
   const calendarChange = (value: Date, event: any) => {
@@ -60,21 +65,29 @@ const PageHeader = (props: IProp) => {
         {props.showCalender && (
           <button
             className="border-[1px] border-[#BBC2CF] text-[14px] text-[#2b2b2b] font-[19px] leading-[19px] p-[10px] rounded-[4px] hover:bg-[#EDF5F9] hover:text-[#2b2b2b] "
-            onClick={toggleArrivalCalender}
+            onClick={toggleCalender}
           >
-            Order Calendar
+            {t("indexPage.pageHeader.CalenderTitle")}
           </button>
         )}
         {showCalender ? (
-          <ClickOutside trigger={trigger} handler={smarttoggleCalenderHandler}>
-            <div className="absolute top-[50px] right-0 bg-white rounded shadow z-40 p-5">
+          <ClickOutside trigger={trigger} handler={toggleCalender}>
+            <div
+              className={`absolute top-[50px] ${
+                locale == "en" ? "right-0" : " mr-[250px]"
+              }  bg-white rounded shadow z-40 p-5`}
+            >
               <Calendar
                 onChange={calendarChange}
                 value={calendarValue}
                 next2Label={null}
                 prev2Label={null}
-                nextLabel={<FontAwesomeIcon icon={faAngleRight} size="xs" />}
-                prevLabel={<FontAwesomeIcon icon={faAngleLeft} size="xs" />}
+                nextLabel={
+                  <FontAwesomeIcon icon={faAngleRight} className="w-2" />
+                }
+                prevLabel={
+                  <FontAwesomeIcon icon={faAngleLeft} className="w-2" />
+                }
                 view={"month"}
                 tileClassName={({ date, view }) => {
                   if (

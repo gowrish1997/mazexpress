@@ -1,16 +1,20 @@
 /** @type {import('next').NextConfig} */
-
+const { i18n } = require("./next-i18next.config");
 const nextConfig = {
   reactStrictMode: true,
-
-  webpack(config, options) {
-
+  swcMinify: true,
+  i18n,
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
     return config;
   },
+
   images: {
     remotePatterns: [
       {
@@ -33,7 +37,6 @@ const nextConfig = {
         source: "/track",
         destination: "/orders?error=no_direct_access_allowed",
         permanent: true,
-        
       },
     ];
   },

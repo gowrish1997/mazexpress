@@ -9,43 +9,45 @@ import logoutImage from "@/public/logout.png";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchSelf";
 
-const userSidebarContent = [
-  {
-    id: nanoid(),
-    title: "My Orders",
-    icon: "/orders.png",
-    path: "/orders",
-  },
-  {
-    id: nanoid(),
-    title: "Order Tracking",
-    icon: "/location.png",
-    path: "/track",
-  },
-  {
-    id: nanoid(),
-    title: "Warehouse",
-    icon: "/warehouse.png",
-    path: "/warehouse",
-  },
-  {
-    id: nanoid(),
-    title: "Address Book",
-    icon: "/address.png",
-    path: "/address-book",
-  },
-  {
-    id: nanoid(),
-    title: "Settings",
-    icon: "/settings.png",
-    path: "/settings",
-  },
-  {
-    id: nanoid(),
-    title: "Help center",
-    icon: "/help.png",
-    path: "/help-center",
-  },
+import { useTranslation } from "next-i18next";
+
+const userSidebarPanel = [
+    {
+        id: nanoid(),
+        title: "My Orders",
+        icon: "/orders.png",
+        path: "/orders",
+    },
+    {
+        id: nanoid(),
+        title: "Order Tracking",
+        icon: "/location.png",
+        path: "/track",
+    },
+    {
+        id: nanoid(),
+        title: "Warehouse",
+        icon: "/warehouse.png",
+        path: "/warehouse",
+    },
+    {
+        id: nanoid(),
+        title: "Address Book",
+        icon: "/address.png",
+        path: "/address-book",
+    },
+    {
+        id: nanoid(),
+        title: "Settings",
+        icon: "/settings.png",
+        path: "/settings",
+    },
+    {
+        id: nanoid(),
+        title: "Help center",
+        icon: "/help.png",
+        path: "/help-center",
+    },
 ];
 const adminSidebarPanel = [
   {
@@ -116,76 +118,75 @@ const adminSidebarPanel = [
   },
 ];
 
-const sidebarContentHandler = (user: number) => {
-  if (user) {
-    return adminSidebarPanel;
-  } else {
-    return userSidebarContent;
-  }
+const sidebarContentHandler = (user: boolean) => {
+    if (!user) {
+        return adminSidebarPanel;
+    } else {
+        return userSidebarPanel;
+    }
 };
 const Sidebar = () => {
-  const router = useRouter();
-  // const { data: session, status } = useSession();
-  const { user, mutateUser } = useUser();
+    const { user, mutateUser } = useUser();
+    const router = useRouter();
+    const { t } = useTranslation("common");
+    const { locale } = router;
+    const userSidebarContent: string[] = t("sidebar.UserSidebarContent", { returnObjects: true });
+    const adminSidebarContent: string[] = t("sidebar.AdminSidebarContent", { returnObjects: true });
 
-  const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
+    const transalateSidebarContentHandler = () => {
+        if (!user?.is_admin) {
+            return adminSidebarContent;
+        } else {
+            return userSidebarContent;
+        }
+    };
 
-  const toggleLogoutConfirmModal = () => {
-    setShowLogoutConfirmModal((prev) => !prev);
-  };
+    const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
-  const logoutHandler = async () => {
-    // new code
-    // signOut();
-    await mutateUser(await fetchJson("/api/auth/logout"), false);
-    router.push('/auth/gate')
-    router.reload()
-    
-  };
+    const toggleLogoutConfirmModal = () => {
+        setShowLogoutConfirmModal((prev) => !prev);
+    };
 
-  return (
-    <>
-      <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[250px]">
-        <Header />
-        <div className="flex flex-col px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
-          <ul className="flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
-            {sidebarContentHandler(user?.is_admin! ? 1 : 0).map(
-              (content, index) => {
-                return (
-                  <NavLink key={content.id} id={index} content={content} />
-                );
-              }
-            )}
-          </ul>
+    const logoutHandler = async () => {
+        const nullUser = await fetchJson("/api/auth/logout", { method: "GET" });
+        await mutateUser();
+        router.push("/auth/gate");
+        // router.reload()
+    };
 
-          <div
-            className="rounded self-center  flex flex-row items-center justify-start  w-[188px] bg-[#3672DF] py-[10px] px-[15px] -ml-[15px] cursor-pointer"
-            onClick={toggleLogoutConfirmModal}
-          >
-            <div className="relative w-[14px] h-[14px] ">
-              <Image
-                src={logoutImage}
-                fill
-                style={{ objectFit: "contain" }}
-                alt="logout"
-                sizes="(max-width: 768px) 100vw,
+    return (
+        <>
+            <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] fixed w-[18%]">
+                <Header />
+                <div className="flex flex-col justify-between items-start px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
+                    <ul className="w-full box-border flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
+                        {sidebarContentHandler(user?.is_admin!).map((content, index) => {
+                            return <NavLink key={content.id} id={index} content={content} transalateContent={transalateSidebarContentHandler()[index]} />;
+                        })}
+                    </ul>
+
+                    <div
+                        className="w-[100%] box-border rounded self-center  flex flex-row items-center justify-start bg-[#3672DF] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
+                        onClick={toggleLogoutConfirmModal}
+                    >
+                        <div className="relative w-[14px] h-[14px] ">
+                            <Image
+                                src={logoutImage}
+                                fill
+                                style={{ objectFit: "contain" }}
+                                alt="logout"
+                                sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 50vw,
                 33vw"
-              />
+                            />
+                        </div>
+                        <p className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500]">{t("sidebar.Logout")}</p>
+                    </div>
+                </div>
             </div>
-            <p className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] ml-[10px]">
-              Logout
-            </p>
-          </div>
-        </div>
-      </div>
-      <LogoutConfirmModal
-        show={showLogoutConfirmModal}
-        close={toggleLogoutConfirmModal}
-        confirm={logoutHandler}
-      />
-    </>
-  );
+            <LogoutConfirmModal show={showLogoutConfirmModal} close={toggleLogoutConfirmModal} confirm={logoutHandler} />
+        </>
+    );
 };
 
 export default Sidebar;

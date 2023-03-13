@@ -9,8 +9,14 @@ import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
 import { SearchKeyContext } from "@/components/common/Frame";
 import { getUserImageString } from "@/lib/utils";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 const Topbar = () => {
-  const { user, mutateUser } = useUser();
+    const { user, mutateUser } = useUser();
+    const router = useRouter();
+    const { t } = useTranslation("common");
+    const { locale } = router;
+    const placeholder: string[] = t("topbar.inputField.Placeholder", { returnObjects: true });
 
   const { setSearchKey } = React.useContext(SearchKeyContext) as any;
 
@@ -35,24 +41,24 @@ const Topbar = () => {
     setSearchKey((e.target as HTMLInputElement).value);
   };
 
-  return (
-    <>
-      <div className="flex w-full min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-10">
-        <div className="flex-1 h-[46px] border-[0.5px] boder-[#8794AD] rounded-[6px] p-[5px] pl-[15px] relative">
-          <input
-            className="h-full mr-5 bg-transparent focus:outline-none searchbar"
-            id="searchbar"
-            type="text"
-            placeholder="Search with MAZ ID"
-            onChange={searchKeyOnchangeHandler}
-          />
-          <div className="absolute w-[16px] h-[16px] right-[10px] top-[15px] cursor-pointer">
-            <Image
-              src={searchIcon}
-              fill
-              style={{ objectFit: "contain" }}
-              alt="search"
-              sizes="(max-width: 768px) 100vw,
+    return (
+        <>
+            <div className="flex w-full min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-40">
+                <div className="flex-1 h-[46px] border-[0.5px] boder-[#8794AD] rounded-[6px] p-[5px] pl-[15px] relative">
+                    <input
+                        className="h-full mr-5 bg-transparent focus:outline-none searchbar"
+                        id="searchbar"
+                        type="text"
+                        placeholder={router.pathname.includes("users") ? placeholder[0] : placeholder[1]}
+                        onChange={searchKeyOnchangeHandler}
+                    />
+                    <div className={`absolute w-[16px] h-[16px] ${locale == "en" ? "right-[10px]" : "left-[10px]"} top-[15px] cursor-pointer`}>
+                        <Image
+                            src={searchIcon}
+                            fill
+                            style={{ objectFit: "contain" }}
+                            alt="search"
+                            sizes="(max-width: 768px) 100vw,
                   (max-width: 1200px) 100vw,
                   100vw"
             />

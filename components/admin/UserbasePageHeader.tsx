@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import Head from "next/head";
+import Image from "next/image";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
+import FilterOptionDropDown from "./FilterOptionDropDown";
+import SearchUserInputField from "./SearchUserInputField";
 import SendNotificatonConfirmModal from "./modal/SendNotificatonConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
