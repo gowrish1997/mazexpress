@@ -6,16 +6,18 @@ import useUser from "@/lib/hooks/useUser";
 import { createToast } from "@/lib/toasts";
 import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import { Address } from "@/models/address.model";
+import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
-  // const [editableAddress, setEditableAddress] = useState<IAddressProps>();
+  const [editableAddress, setEditableAddress] = useState<Address>();
 
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
   const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
     user_id: user?.id,
+    status: "active",
   });
 
   const toggleAddNewAddressModal = () => {
@@ -27,10 +29,10 @@ const AddressBook = () => {
       setShowEditUserAddressModal(false);
     } else {
       setShowEditUserAddressModal(true);
-      // const address = addresses?.find((data) => {
-      //   return data.id == addressId;
-      // });
-      // setEditableAddress(address);
+      const address = (addresses as Address[])?.find((data) => {
+        return data.id == addressId;
+      });
+      setEditableAddress(address);
     }
   };
 
@@ -51,20 +53,20 @@ const AddressBook = () => {
   };
 
   useEffect(() => {
-    console.log('running side effect')
-    console.log(user)
-  }, [user, addresses])
+    console.log("running side effect");
+    console.log(user);
+  }, [user, addresses]);
 
   return (
     <>
       <PageHeader content="My Address Book" title="Address Book | MazExpress" />
-      {addresses?.count === 0 ? (
+      {addresses && addresses?.length === 0 ? (
         <div className="py-5">No addresses yet. Add new address now!</div>
       ) : (
         <div className="grid grid-cols-3 gap-3 py-5">
           {addressesIsLoading && <div>loading</div>}
-          {addresses?.data &&
-            addresses.data.map((data) => {
+          {addresses &&
+            addresses.map((data) => {
               return (
                 <UserSavedAddress
                   key={(data as Address).id}
@@ -90,14 +92,14 @@ const AddressBook = () => {
         close={toggleAddNewAddressModal}
         update={updateUserAndAddresses}
       />
-      {/* {showEditUserAddressModal && (
+      {showEditUserAddressModal && (
         <EditUserAddressModal
           update={mutateAddresses}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
-          // address={editableAddress!}
+          address={editableAddress!}
         />
-      )} */}
+      )}
     </>
   );
 };

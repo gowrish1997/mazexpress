@@ -28,8 +28,9 @@ const WarehouseOrders = () => {
         </p>
         <MazStatsDropddown
           options={options}
-          type="warehouse"
+          header="city"
           onChange={wareHouseChangeHanlder}
+          selection={[]}
         />
       </div>
       <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">

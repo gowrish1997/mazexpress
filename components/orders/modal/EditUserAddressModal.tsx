@@ -5,12 +5,13 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/hooks/useUser";
-import { Address } from "@/models/address.model";
+import { Address, City } from "@/models/address.model";
+import fetchServer from "@/lib/fetchServer";
 interface IProp {
   show: boolean;
   close: () => void;
   address: Address;
-  update: () => Promise<Address[] | undefined>;
+  update: () => void;
 }
 
 const schema = yup
@@ -28,7 +29,7 @@ const EditUserAddressModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<Address & { default: boolean }>({
+  } = useForm<Address & { default: "on" | "off" }>({
     defaultValues: props.address,
     resolver: yupResolver(schema),
   });
@@ -47,32 +48,35 @@ const EditUserAddressModal = (props: IProp) => {
     }
   };
 
-  const onSubmit: SubmitHandler<Address> = async (data) => {
+  const onSubmit: SubmitHandler<Address & { default?: "on" | "off" }> = async (
+    data
+  ) => {
     console.log(data);
-    // let address: any = { ...data };
-    // delete address.default;
-    // address.user_id = user?.id;
+    let address = { ...data };
+    delete address.default;
 
-    // console.log(address);
-    // add address
-    // if (user) {
-    //   // update user default
-    //   let newUserData = { ...user, default_address_user: data.id };
-    // }
-    // const addressResult = await fetchJson(`/api/addresses?id=${data.id}`, {
-    //   method: "PUT",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(address),
-    // });
+    console.log(address);
+    if (data.default === "on") {
+      // set default for user
+      const userUpdate = await fetchServer(`/api/users?id=${user?.id}`, {
+        method: "PUT",
+        body: JSON.stringify({ default_address: address.id }),
+      });
+      if (userUpdate) {
+        console.log("updated user default address");
+      } else {
+        console.log("updated user default address: failed");
+      }
+    }
 
-    // console.log(addressResult)
-    // if (data.default === "on") {
-    //   const userResult = fetchJson(`/api/users?id=${user?.id}`, {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ default_address: data.id }),
-    //   });
-    // }
+    const addressResult = await fetchServer(`/api/addresses?id=${data.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(address),
+    });
+
+    console.log(addressResult);
+
     props.close();
     props.update();
   };
@@ -107,48 +111,10 @@ const EditUserAddressModal = (props: IProp) => {
             register={register("address_2")}
           />
           <div className="flex-type2 space-x-[10px] w-full">
-            {/* <ReactHookFormInput label="Country" name="country" type="string" register={register("country")} value={props.address.country} />
-
-                        <ReactHookFormInput label="City/Town" name="city" type="string" register={register("city")} value={props.address.city} /> */}
-            {/* <Controller
-              name="country"
-              control={control}
-              // defaultValue="AF"
-              render={({ field: { onChange, value, ref } }) => (
-                <CountrySelector
-                  label="Country"
-                  value={value}
-                  onChange={onChange}
-                  // setCountry={setCountry}
-                  error={errors.country}
-                  dropDownIcon={{
-                    iconIsEnabled: true,
-                    iconSrc: "/lock.png",
-                  }}
-                />
-              )}
-            /> */}
-            {/* <Controller
-              name="city"
-              control={control}
-              // defaultValue="Badakhshan"
-              render={({ field: { onChange, value, ref } }) => (
-                <RegionSelector
-                  label="City/Town"
-                  dropDownIcon={{
-                    iconIsEnabled: true,
-                    iconSrc: "/downwardArrow.png",
-                  }}
-                  value={value}
-                  country={country}
-                onChange={onChange}
-                />
-              )}
-            /> */}
             <CustomDropDown
               label="City/Town"
               name="city"
-              value={["Al Buţnān", "Banghāzī", "Mişrātah"]}
+              value={City}
               register={register("city")}
               error={errors.city}
               dropDownIcon={{
@@ -157,23 +123,6 @@ const EditUserAddressModal = (props: IProp) => {
               }}
             />
           </div>
-          {/* <div className="flex-type2 space-x-[10px] w-full">
-                        <ReactHookFormInput
-                            label="State/Province/Region"
-                            name="state"
-                            type="string"
-                            register={register("state")}
-                            value={props.address.state}
-                        />
-
-                        <ReactHookFormInput
-                            label="Zip/Postal Code"
-                            name="postalCode"
-                            type="string"
-                            register={register("pincode")}
-                            value={props.address.pincode}
-                        /> */}
-          {/* </div> */}
           <ReactHookFormInput
             label="Mobile Numbers"
             name="phone"

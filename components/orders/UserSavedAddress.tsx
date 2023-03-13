@@ -17,11 +17,11 @@ const UserSavedAddress = (props: {
   const deleteAddressHandler = async () => {
     // console.log('delete')
     if (user) {
-      let newUser = { ...user };
       if (props.address.id === user?.default_address) {
-        newUser.default_address = "";
+        // update default address for user
+
       }
-      const result = await fetchServer(`/api/addresses?id=${props.address.id}`, {
+      const result = await fetchServer(`/api/addresses?id=${props.address.id}&user=${user.id}`, {
         method: "DELETE",
       });
       // console.log(result)

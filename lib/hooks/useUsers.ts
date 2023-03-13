@@ -10,6 +10,8 @@ interface IProps {
   is_admin?: boolean;
   count_all?: boolean;
   count?: boolean;
+  age?: string[]
+  gender?: string[]
   // future warehouse addition
 }
 export default function useUsers(props: IProps) {
@@ -34,9 +36,17 @@ export default function useUsers(props: IProps) {
       queryString += `&search=${props.search}`;
     }
 
-    // if (props?.status) {
-    //   queryString += `&status=${props.status}`;
-    // }
+    if (props?.age) {
+      queryString += `&age=${props.age}`;
+    }
+    
+    if(props.count){
+      queryString += `&count=${true}`;
+    }
+
+    if (props?.gender && props.gender.length !== 0) {
+      queryString += `&gender=${props.gender}`;
+    }
   } else {
     // return all order count
     queryString += "?count=all";

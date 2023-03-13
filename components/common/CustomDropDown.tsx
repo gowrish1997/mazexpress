@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import { FieldError } from "react-hook-form";
+import { City } from "@/models/address.model";
 interface IProp {
   label: string;
   name: string;
-  value: string[];
+  value: any;
   register: any;
   dropDownIcon?: {
     iconIsEnabled: boolean;
@@ -28,13 +29,21 @@ const CustomDropDown = (props: IProp) => {
         style={{ borderColor: props.error ? "#f02849" : "" }}
       >
         <select name={props.name} {...props.register} id={props.name}>
-          {props.value.map((data) => {
+          {props.value &&
+            Object.keys(props.value).map((el, index) => {
+              return (
+                <option key={index} value={props.value[el]} label={props.value[el]}>
+                  {props.value[el]}
+                </option>
+              );
+            })}
+          {/* {props.value.map((data) => {
             return (
-              <option key={data} value={data}>
+              <option key={data} value={data} label={}>
                 {data}
               </option>
             );
-          })}
+          })} */}
         </select>
         {props.dropDownIcon?.iconIsEnabled ? (
           <Image

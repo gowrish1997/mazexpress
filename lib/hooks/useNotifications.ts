@@ -15,11 +15,13 @@ interface IProps {
 
 export default function useNotifications(props: IProps) {
   let queryString = "";
-  if (!props.count_all) {
-    queryString += `?page=${
-      props.page !== undefined ? props.page : 0
-    }&per_page=${props.per_page !== undefined ? props.per_page : 20}`;
 
+  let page, per_page;
+  page = props.page ? props.page : 0;
+  per_page = props.per_page ? props.per_page : 6;
+  queryString += `?per_page=${per_page}&page=${page}`;
+
+  if (!props.count_all) {
     if (props?.user_id) {
       queryString += `&user=${props.user_id}`;
     }

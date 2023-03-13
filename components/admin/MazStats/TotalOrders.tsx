@@ -4,22 +4,35 @@ import MazStatsDropddown from "./MazStatsDropddown";
 import useOrders from "@/lib/hooks/useOrders";
 
 const options = [
-  { value: "", label: "all age" },
-  { value: "10-20", label: "10-20" },
-  { value: "10-20", label: "10-20" },
-  { value: "10-20", label: "10-20" },
+  // { value: "", label: "all" },
+  { value: "at-warehouse", label: "At warehouse" },
+  { value: "in-transit", label: "In transit" },
+  { value: "out-for-delivery", label: "Out for delivery" },
+  { value: "delivered", label: "Delivered" },
 ];
 
 const TotalOrders = () => {
-  const [selectedDate, setSelectedDate] = useState("");
+  const [statusSelection, setStatusSelection] = useState<(string | number)[]>([]);
   const { orders: totalOrders, mutateOrders: mutateTotalOrders } = useOrders({
-    count_all: true,
-    count: true
+    // count_all: true,
+    count: true,
+    status: (statusSelection as string[])
   });
 
-  const dateChangeHandler = (value: string | number) => {
-    console.log(value);
+  const statusChangeHandler = (value: string | number) => {
+    // console.log(value);
+    setStatusSelection((prev) => {
+      if (prev.includes(value)) {
+        return prev.filter((el) => el !== value);
+      } else {
+        return [...prev, value];
+      }
+    });
   };
+
+  useEffect(() => {
+    console.log(totalOrders)
+  }, [statusSelection])
 
   return (
     <StatCard>
@@ -29,8 +42,9 @@ const TotalOrders = () => {
         </p>
         <MazStatsDropddown
           options={options}
-          type="orders"
-          onChange={dateChangeHandler}
+          header="status"
+          onChange={statusChangeHandler}
+          selection={statusSelection}
         />
       </div>
       <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">
