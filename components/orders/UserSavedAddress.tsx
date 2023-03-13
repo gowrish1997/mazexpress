@@ -3,16 +3,23 @@ import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import fetchServer from "@/lib/fetchServer";
 import fetchSelf from '@/lib/fetchSelf'
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { Address } from "@/models/address.model";
 
-const UserSavedAddress = (props: {
+const   UserSavedAddress = (props: {
   address: Address;
   register?: any;
   edit: (id: string) => void;
   update: () => void;
 }) => {
   const { user, mutateUser } = useUser();
+
+  const router = useRouter();
+  const { t } = useTranslation("common");
+  const { locale } = router;
+  const content: string[] = t("addressBookPage.userSavedAddressCard.Content", { returnObjects: true });
 
   const deleteAddressHandler = async () => {
     // console.log('delete')
@@ -79,7 +86,7 @@ const UserSavedAddress = (props: {
           </p>
           {user?.default_address === props.address.id && (
             <div className="bg-[#FF645A] rounded-[4px] text-[10px] text-[#FFFFFF] font-[500] leading-[15px] py-[5px] px-[10px]">
-              Default
+              {content[0]}
             </div>)}
         </div>
         <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">
@@ -104,10 +111,10 @@ const UserSavedAddress = (props: {
               onClick={() => props.edit(props.address.id!)}
               className="hover:font-[600]"
             >
-              Edit
+              {content[1]}
             </button>
             <button onClick={deleteAddressHandler} className="hover:font-[600]">
-              Remove
+            {content[2]}
             </button>
           </div>
         </div>

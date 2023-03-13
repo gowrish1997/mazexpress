@@ -14,7 +14,6 @@ import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import { Address } from "@/models/address.model";
 
 const AddressBook = () => {
-
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
@@ -26,90 +25,80 @@ const AddressBook = () => {
         document.querySelector("html")?.setAttribute("lang", lang);
     }, [router.locale]);
 
+    const [showEditUserAddressModal, setShowEditUserAddressModal] = useState<boolean>(false);
+    const [editableAddress, setEditableAddress] = useState<Address>();
 
-const [showEditUserAddressModal, setShowEditUserAddressModal] = useState<boolean>(false);
-const [editableAddress, setEditableAddress] = useState<Address>();
-
-const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
-const { user, mutateUser } = useUser();
-const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
-  user_id: user?.id,
-});
-
-const toggleAddNewAddressModal = () => {
-    setShowAddNewAddressModal((prev) => !prev);
-};
-
-
-  const toggleEditUserAddressModal = (addressId?: string) => {
-    if (showEditUserAddressModal) {
-      setShowEditUserAddressModal(false);
-    } else {
-      setShowEditUserAddressModal(true);
-      // const address = addresses?.find((data) => {
-      //   return data.id == addressId;
-      // });
-      // setEditableAddress(address);
-    }
-  };
-
-  const updateAddresses = () => {
-    createToast({
-      type: "success",
-      message: "Created new address.",
-      timeOut: 2000,
-      title: "Success",
+    const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
+    const { user, mutateUser } = useUser();
+    const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
+        user_id: user?.id,
     });
-    mutateAddresses();
-  };
 
-  const updateUserAndAddresses = async () => {
-    console.log("updating user and addresses");
-    await mutateAddresses();
-    await mutateUser();
-  };
+    const toggleAddNewAddressModal = () => {
+        setShowAddNewAddressModal((prev) => !prev);
+    };
 
-  useEffect(() => {
-    console.log('running side effect')
-    console.log(user)
-  }, [user, addresses])
+    const toggleEditUserAddressModal = (addressId?: string) => {
+        if (showEditUserAddressModal) {
+            setShowEditUserAddressModal(false);
+        } else {
+            setShowEditUserAddressModal(true);
+            // const address = addresses?.find((data) => {
+            //   return data.id == addressId;
+            // });
+            // setEditableAddress(address);
+        }
+    };
 
-  return (
-    <>
-      <PageHeader content={t("addressBookPage.pageHeader.Title")} title="Address Book | MazExpress" />
-      {addresses?.count === 0 ? (
-        <div className="py-5">No addresses yet. Add new address now!</div>
-      ) : (
-        <div className="grid grid-cols-3 gap-3 py-5">
-          {addressesIsLoading && <div>loading</div>}
-          {addresses?.data &&
-            addresses.data.map((data) => {
-              return (
-                <UserSavedAddress
-                  key={(data as Address).id}
-                  address={data as Address}
-                  edit={toggleEditUserAddressModal}
-                  update={updateUserAndAddresses}
-                />
-              );
-            })}
-        </div>
-      )}
-      <div>
-        <button
-          className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"
-          onClick={toggleAddNewAddressModal}
-        >
-         {t("addressBookPage.AddNewButton")} 
-        </button>
-      </div>
+    const updateAddresses = () => {
+        createToast({
+            type: "success",
+            message: "Created new address.",
+            timeOut: 2000,
+            title: "Success",
+        });
+        mutateAddresses();
+    };
 
-      <AddNewAddressModal
-        show={showAddNewAddressModal}
-        close={toggleAddNewAddressModal}
-        update={updateUserAndAddresses}
-      />
-      {/* {showEditUserAddressModal && (
+    const updateUserAndAddresses = async () => {
+        console.log("updating user and addresses");
+        await mutateAddresses();
+        await mutateUser();
+    };
+
+    useEffect(() => {
+        console.log("running side effect");
+        console.log(user);
+    }, [user, addresses]);
+
+    return (
+        <>
+            <PageHeader content={t("addressBookPage.pageHeader.Title")} title="Address Book | MazExpress" />
+            {addresses?.count === 0 ? (
+                <div className="py-5">
+                  {locale=='en'?" No addresses yet.":"لا توجد عناوين حتى الآن."}
+                   
+                    <button className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]" onClick={toggleAddNewAddressModal}>
+                        {t("addressBookPage.AddNewButton")}
+                    </button>
+                </div>
+            ) : (
+                <div className="grid grid-cols-3 gap-3 py-5">
+                    {addressesIsLoading && <div>loading</div>}
+                    {addresses?.data &&
+                        addresses.data.map((data) => {
+                            return <UserSavedAddress key={(data as Address).id} address={data as Address} edit={toggleEditUserAddressModal} update={updateUserAndAddresses} />;
+                        })}
+                </div>
+            )}
+            <div>
+                <button className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]" onClick={toggleAddNewAddressModal}>
+                    {t("addressBookPage.AddNewButton")}
+                </button>
+            </div>
+
+            <AddNewAddressModal show={showAddNewAddressModal} close={toggleAddNewAddressModal} update={updateUserAndAddresses} />
+            {/* {showEditUserAddressModal && (
         <EditUserAddressModal
           update={mutateAddresses}
           show={showEditUserAddressModal}
@@ -117,8 +106,8 @@ const toggleAddNewAddressModal = () => {
           // address={editableAddress!}
         />
       )} */}
-    </>
-  );
+        </>
+    );
 };
 
 export default AddressBook;
