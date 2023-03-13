@@ -22,7 +22,7 @@ const StatLiveOrdres = () => {
         </Link>
       </div>
       {orders && (
-        <div className="overflow-hidden">
+        <div className="">
           <Table
             rows={orders as Order[]}
             headings={tableHeaders}

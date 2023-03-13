@@ -16,27 +16,28 @@ import { Order } from "@/models/order.model";
 const TrackOrder = (props: any) => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
-  const { orders, ordersIsLoading } = useOrders({ user_id: user?.id });
-  const { order, mutateOrder, orderIsLoading } = useOrder({
-    id: router.query.id as string,
+  const { orders, ordersIsLoading } = useOrders({
+    user_id: user?.id as string,
   });
-  const { tracking, trackingIsLoading } = useTracking({
-    order_id: router.query.id as string,
+
+  const { tracking, mutateTracking, trackingIsLoading } = useTracking({
+    maz_id: router.query.id as string,
   });
 
   const [packageStatus, setPackageStatus] = useState(0);
 
   useEffect(() => {
-    console.log(tracking);
-    if (tracking !== undefined && tracking.data) {
-      let sorted = [...(tracking.data as Tracking[])];
+    // console.log(tracking);
+    if (tracking !== null && tracking) {
+      let sorted = [...(tracking as Tracking[])];
+      console.log(sorted);
       sorted.sort((a, b) => a?.stage - b?.stage);
       let latestStage = sorted.pop()?.stage!;
       setPackageStatus(latestStage);
     }
   }, [tracking]);
 
-  if (trackingIsLoading) return <div>loading tracking</div>;
+  // if (trackingIsLoading) return <div>loading tracking</div>;
   return (
     <>
       <PageHeader
@@ -165,9 +166,9 @@ const TrackOrder = (props: any) => {
             <div className="space-y-[10px]">
               {(orders as Order[])?.map((data) => {
                 return (
-                  <Link href={`/track/${data.id}`} key={data.id}>
+                  <Link href={`/track/${data.maz_id}`} key={data.id}>
                     <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
-                      {data.id}
+                      {data.maz_id}
                     </p>
                   </Link>
                 );

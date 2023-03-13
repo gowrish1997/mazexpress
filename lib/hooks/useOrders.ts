@@ -11,6 +11,7 @@ interface IProps {
   date_offset?: string;
   count_all?: boolean;
   count?: boolean;
+  maz_id?: string;
   // future warehouse addition
 }
 export default function useOrders(props: IProps) {
@@ -32,6 +33,9 @@ export default function useOrders(props: IProps) {
 
     if (props?.status) {
       queryString += `&status=${props.status}`;
+    }
+    if (props?.maz_id) {
+      queryString += `&maz_id=${props.maz_id}`;
     }
   } else {
     // return all order count

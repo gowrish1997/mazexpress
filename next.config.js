@@ -33,6 +33,7 @@ const nextConfig = {
         source: "/track",
         destination: "/orders?error=no_direct_access_allowed",
         permanent: true,
+        
       },
     ];
   },

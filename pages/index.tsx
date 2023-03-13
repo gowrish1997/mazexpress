@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchSelf";
+import fetchServer from "@/lib/fetchServer";
 
 interface HomeProps {
   is_admin: boolean;
@@ -16,7 +17,6 @@ interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const router = useRouter();
-  // const { data: session, status: sessionStatus } = useSession();
   const { user, mutateUser } = useUser();
 
   const trackingSectionRef = useRef<HTMLDivElement>(null);
@@ -31,12 +31,22 @@ const Home = (props: HomeProps) => {
     setTrackingId((e.target as HTMLInputElement).value);
   };
 
-  const trackingHandler = () => {
+  const trackingHandler = async () => {
     if (trackingId) {
-      console.log();
-      setTrackingIdError(false);
+      // console.log(trackingId);
+      // check if id exists
+      const isValidId = await fetchServer(`/api/orders?maz_id=${trackingId}`);
+
+      if (isValidId.data !== null) {
+        router.push(`/track/${trackingId}`);
+        setTrackingIdError(false);
+        return;
+      }
+      setTrackingIdError(true);
+      return;
     } else {
       setTrackingIdError(true);
+      return;
     }
   };
 
@@ -144,12 +154,12 @@ const Home = (props: HomeProps) => {
           </div>
           {trackingIdError && (
             <p className="mt-[5px] text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-              Please enter the tracking Id
+              Please enter valid MAZ tracking ID.
             </p>
           )}
           <div className="">
             <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
-              Need help changing your delivery?{" "}
+              Need help delivering your packages?{" "}
               <span className="text-[#3672DF] cursor-pointer ">Get Help</span>
             </p>
             <h1 className="text-center text-[32px] text-[#121212] font-[600] leading-[50px] mt-[40px] ">

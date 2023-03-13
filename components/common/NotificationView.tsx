@@ -6,6 +6,8 @@ import ClickOutside from "./ClickOutside";
 import Cancel from "../../public/cancel_svg.svg";
 import { Notification } from "@/models/notification.model";
 import { User } from "@/models/user.model";
+import fetchServer from "@/lib/fetchServer";
+import Image from "next/image";
 
 interface IProp {
   close: () => void;
@@ -19,39 +21,31 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
     const { user, mutateUser } = useUser();
     const { notifications, notificationsIsLoading, mutateNotifications } =
       useNotifications({
-        user_id: user?.id!,
+        user_id: user?.id,
+        status: ["unread", "read"],
       });
 
-    const [userNotifications, setUserNotifications] =
-      useState<Notification[]>();
+    // const [userNotifications, setUserNotifications] =
+    //   useState<Notification[]>();
 
-    const deleteNotification = (id: string) => {
-      // console.log("delete");
-      setUserNotifications((prev) => {
-        if (prev !== undefined) {
-          let newObjs: Notification[] = prev.filter(
-            (el) => el.id !== id
-          );
-
-          // console.log(newObjs);
-          return newObjs;
+    const deleteNotification = async (id: string) => {
+      const deletedNotification = await fetchServer(
+        `/api/notifications?id=${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            status: "deleted",
+          }),
         }
-      });
-      // update db
-      // axios.put(`/api/notifications?id=${id}`, {
-      //   status: "deleted",
-      // });
-    };
-
-    useEffect(() => {
-      if (notifications !== undefined) {
-        setUserNotifications(notifications);
+      );
+      if (deletedNotification) {
+        console.log("done delete");
+        mutateNotifications();
+      } else {
+        console.log("delete failed");
       }
-    }, [notificationsIsLoading, notifications]);
-
-    useEffect(() => {
-      console.log(userNotifications);
-    }, [userNotifications]);
+    };
 
     return (
       <ClickOutside trigger={props.trigger} handler={props.handler}>
@@ -69,14 +63,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             <p className="text-[#2B2B2B] text-[18px] font-[700] leading-[25px] ">
               Notifications
             </p>
-            {/* <Image
-              src="/cancel.png"
-              height={22}
-              width={22}
-              alt="cancel"
-              className="cursor-pointer"
-              onClick={() => props.close()}
-            /> */}
+
             <div className="h-[35px] w-[35px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
               <Cancel
                 className="cursor-pointer"
@@ -85,26 +72,28 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             </div>
           </div>
           <div className="space-y-[20px]">
-            {userNotifications
-            
-              // ?.sort((a,b) => b.created_on - a)
-              // sort in backend
-
-              ?.map((data) => {
+            {
+              notifications ? 
+              notifications?.map((data) => {
                 return (
                   <EachNotification
                     id={data.id!}
                     data={data}
                     key={data.id}
                     delete={deleteNotification}
+                    update={mutateNotifications}
                   />
                 );
-              })}
+              })
+              :
+              <div className="text-[11px]">No notifications yet...</div>
+            }
+
           </div>
         </div>
       </ClickOutside>
     );
   }
 );
-NotificationView.displayName = 'NotificationView';
+NotificationView.displayName = "NotificationView";
 export default NotificationView;

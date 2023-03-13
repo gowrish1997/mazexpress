@@ -32,8 +32,8 @@ const LiveOrderLineItem = (props: IProp) => {
 
   useEffect(() => {
     // console.log(tracking);
-    if (tracking?.data !== undefined && tracking.data !== null) {
-      let sorted = [...tracking.data];
+    if (tracking !== undefined && tracking !== null) {
+      let sorted = [...tracking];
       sorted.sort((a: any, b: any) => a?.stage - b?.stage);
       setPackageStatus((sorted.pop() as Tracking)?.stage);
     }

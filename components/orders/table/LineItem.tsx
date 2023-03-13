@@ -64,12 +64,12 @@ const LineItem = (props: IProp) => {
   useEffect(() => {
     // console.log("tracking rerender");
     if (
-      tracking?.data !== undefined &&
-      tracking?.data !== null &&
-      tracking?.data.length > 0
+      tracking !== undefined &&
+      tracking !== null &&
+      tracking.length > 0
     ) {
       // sort and set delivery
-      let latestUpdate = [...(tracking.data as Tracking[])].sort(
+      let latestUpdate = [...(tracking as Tracking[])].sort(
         (a, b) => b.stage - a.stage
       )[0];
       let newDate = new Date(latestUpdate?.created_on);
@@ -81,7 +81,7 @@ const LineItem = (props: IProp) => {
 
   return (
     <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
-      <td className={`td1`}>{props.row.id}</td>
+      <td className={`td1`}>{props.row.maz_id}</td>
       <td className={`td2 text-[#3672DF]`}>{props.row.store_link}</td>
       <td className={`td3`}>{props.row.reference_id}</td>
       <td className={`td4`}>{estDelivery}</td>

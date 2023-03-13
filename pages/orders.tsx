@@ -71,7 +71,11 @@ const MyOrders = () => {
         )}
         {orders && (orders as Order[]).length > 0 && (
           <>
-            <Table rows={orders as Order[]} headings={tableHeaders} type="order" />
+            <Table
+              rows={orders as Order[]}
+              headings={tableHeaders}
+              type="order"
+            />
             <AddButton onClick={addNewOrderHandler} />
           </>
         )}
