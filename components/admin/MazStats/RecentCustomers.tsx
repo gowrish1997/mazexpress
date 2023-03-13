@@ -1,9 +1,14 @@
 import React from "react";
 import Link from "next/link";
+import useUsers from "@/lib/hooks/useUsers";
+import { User } from "@/models/user.model";
+import { getUserImageString } from "@/lib/utils";
+import Image from "next/image";
+import { capitalizeFirstLetter } from "@/lib/helper";
 const RecentCustomers = () => {
-//   const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({
-//     per_page: 6,
-//   });
+  const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
+    per_page: 6,
+  });
 
   return (
     <div
@@ -19,41 +24,33 @@ const RecentCustomers = () => {
         </Link>
       </div>
       <div className="space-y-[15px]">
-        {/* {allUser &&
-          allUser.data.length > 0 &&
-          allUser.data.map((data: IUser) => {
+        {users &&
+          (users as User[]).length > 0 &&
+          (users as User[])?.map((data: User) => {
             return (
-              <td
-                className={`flex flex-row justify-start items-center capitalize`}
-              >
-                {allUser && (data as IUser)?.avatar_url_users !== undefined ? (
-                  <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
-                    <Image
-                      src={"/user-images/" + (data as IUser)?.avatar_url_users}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      alt="profileImage"
-                    />
-                  </div>
-                ) : (
-                  <div className="relative h-[30px] w-[30px] rounded-full   bg-slate-500">
-                    <FontAwesomeIcon icon={faUser} />
-                  </div>
-                )}
+              <td className={`flex flex-row justify-start items-center`}>
+                <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
+                  <Image
+                    src={getUserImageString(data.avatar_url)}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    alt="profileImage"
+                  />
+                </div>
                 <div className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
                   <p className=" text-[12px] text-[#18181B] font-[800] leading-[22px] ">
-                    {(data as IUser)?.first_name_users +
-                      "" +
-                      (data as IUser)?.last_name_users}
+                    {capitalizeFirstLetter(data?.first_name) +
+                      " " +
+                      capitalizeFirstLetter(data?.last_name)}
                   </p>
                   <p className="text-[12px] text-[#71717A] font-[400] leading-[22px] ">
                     {" "}
-                    {(data as IUser)?.email_users}
+                    {data?.email}
                   </p>
                 </div>
               </td>
             );
-          })} */}
+          })}
       </div>
     </div>
   );

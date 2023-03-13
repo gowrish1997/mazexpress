@@ -60,7 +60,7 @@ const OrdersTotalCountBar = () => {
         <ProgressBar1
           title="At Warehouse"
           orderCount={atWarehouseOrders as number}
-          orderCountPer={80}
+          orderCountPer={(atWarehouseOrders as number) / (totalOrders as number)}
         />
       </div>
     </div>
