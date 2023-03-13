@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import useOrders from "@/lib/hooks/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -6,12 +6,9 @@ import DeliveredPageHeader from "@/components/admin/DeliveredPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
-<<<<<<< HEAD
 import { Order } from "@/models/order.model";
-=======
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
->>>>>>> translate
 
 const tableHeaders = [
   "Customer",
@@ -38,93 +35,31 @@ const DeliveredOrders = () => {
     status: ["delivered"],
   });
 
-<<<<<<< HEAD
-  const [allDeliveredOrders, setAllDeliveredOrders] = useState<Order[]>();
-=======
-    const { locales, locale: activeLocale } = router;
+  const { locales, locale: activeLocale } = router;
 
-  useEffect(() => {
-      console.log("use efft");
-      router.push(router.asPath, router.asPath, { locale: "en" });
-  }, []);
-
-    const [allDeliveredOrders, setAllDeliveredOrders] = useState<IOrderResponse[]>();
->>>>>>> translate
+  // useEffect(() => {
+  //   console.log("use efft");
+  //   router.push(router.asPath, router.asPath, { locale: "en" });
+  // }, []);
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
   const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
-<<<<<<< HEAD
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
   };
   const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
     setItemPerPage(value as number);
   }, []);
-=======
-    const currentPageHandler = (value: number) => {
-        setCurrentPage(value);
-    };
-    const itemPerPageHandler = useCallback((value: string | number) => {
-        setCurrentPage(0)
-        setItemPerPage(value as number);
-    }, []);
->>>>>>> translate
 
   const filterByCreatedDate = (value: Date | string) => {
     setCreatedDateFilterKey(value);
   };
 
-<<<<<<< HEAD
   const selectOrderHandler = (value: string, type: string) => {
-    selectOrder(
-      value,
-      type,
-      setSelectedOrder,
-      allDeliveredOrders!,
-      selectedOrder!
-=======
-    const selectOrderHandler = (value: string, type: string) => {
-        selectOrder(value, type, setSelectedOrder, allDeliveredOrders!, selectedOrder!);
-    };
-    if (ordersIsLoading) {
-        // return <LoadingPage />;
-    }
-    if (ordersError) {
-        return <div>some error happened</div>;
-    }
-    return (
-        <>
-            <div>
-                <DeliveredPageHeader
-                    content="Delivered"
-                    allLiveOrders={orders?.data!}
-                    selectedOrder={selectedOrder}
-                    filterByDate={filterByCreatedDate}
-                    title="Delivered orders | MazExpress Admin"
-                    pageCount={pageCount}
-                    itemsPerPage={itemsPerPage}
-                    currentPageHandler={currentPageHandler}
-                    currentPage={currentPage}
-                    itemPerPageHandler={itemPerPageHandler!}
-                />
-
-                <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!orders?.data && <BlankPage />}
-                    {orders?.data && (
-                        <>
-                            <Table rows={orders?.data!} headings={tableHeaders} type="delivered" onSelect={selectOrderHandler} selectedOrder={selectedOrder!} />
-                        </>
-                    )}
-                </div>
-                {selectedOrder?.length! > 0 && (
-                    <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedOrder?.length} orders are selected`}</div>
-                )}
-            </div>
-        </>
->>>>>>> translate
-    );
+    selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
   };
   if (ordersIsLoading) {
     return <LoadingPage />;
@@ -172,12 +107,12 @@ const DeliveredOrders = () => {
 
 export default DeliveredOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
   }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}

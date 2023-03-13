@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useCallback} from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import useOrders from "@/lib/hooks/useOrders";
 import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
 import { useRouter } from "next/router";
@@ -6,12 +6,9 @@ import Table from "@/components/orders/table";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
-<<<<<<< HEAD
 import { Order } from "@/models/order.model";
-=======
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
->>>>>>> translate
 
 const tableHeaders = [
   "Customer",
@@ -26,8 +23,6 @@ const tableHeaders = [
 const Intransit = () => {
   const router = useRouter();
 
-
-
   const [itemsPerPage, setItemPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
   const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
@@ -38,19 +33,17 @@ const Intransit = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     per_page: itemsPerPage,
     page: currentPage,
-    status: ['in-transit']
+    status: ["in-transit"],
   });
 
   const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
-      console.log("use efft");
-      router.push(router.asPath, router.asPath, { locale: "en" });
+    console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
 
-  const [allInTransitOrders, setallInTransitOrders] =
-    useState<Order[]>();
-
+  const [allInTransitOrders, setallInTransitOrders] = useState<Order[]>();
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
@@ -60,24 +53,17 @@ const Intransit = () => {
     setCurrentPage(value);
   };
   const itemPerPageHandler = useCallback((value: string | number) => {
-    setCurrentPage(0)
+    setCurrentPage(0);
     setItemPerPage(value as number);
-}, []);
-
+  }, []);
 
   const filterByCreatedDate = (value: Date | string) => {
     setCreatedDateFilterKey(value);
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    console.log(value)
-    selectOrder(
-      value,
-      type,
-      setSelectedOrder,
-     orders?.data,
-      selectedOrder!
-    );
+    console.log(value);
+    selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
   };
 
   if (ordersIsLoading) {
@@ -114,7 +100,6 @@ const Intransit = () => {
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
               />
-            
             </>
           )}
         </div>
@@ -129,11 +114,11 @@ const Intransit = () => {
 export default Intransit;
 export async function getStaticProps({ locale }: { locale: any }) {
   if (process.env.NODE_ENV === "development") {
-      await i18n?.reloadResources();
+    await i18n?.reloadResources();
   }
   return {
-      props: {
-          ...(await serverSideTranslations(locale, ["common"])),
-      },
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
   };
 }
