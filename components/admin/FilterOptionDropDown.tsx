@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { IOrderResponse } from "@/models/order.interface";
-import download from "../../public/download.png";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
 interface Iprop {
     options: string[];
@@ -13,26 +9,17 @@ interface Iprop {
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
-    console.log("filter optindropdown");
+    //   console.log("filter optindropdown");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
     const [currentValue, setCurrentValue] = useState<Array<string>>([]);
 
     useEffect(() => {
-        console.log("use effecr in filer option drowdown");
         setCurrentValue(props.statusFilterKey!);
         if (props.type == "warehouse") {
             setCurrentValue(props.options);
         }
     }, []);
-
-    // useEffect(() => {
-    //     if (!(props.type == "warehouse")) {
-    //         setFilteredAdminOptions((prev) => {
-    //             return [...props.options.filter((value) => !currentValue.includes(value))];
-    //         });
-    //     }
-    // }, [currentValue]);
 
     const dropDownOnChangeHandler = (value: string) => {
         if (props.onChange) {
@@ -80,7 +67,6 @@ const FilterOptionDropDown = (props: Iprop) => {
     const toggleAdminOptionCard = () => {
         setShowAdminOptionCard((prev) => !prev);
     };
-
     const smartToggleGateHandler = () => {
         console.log("smart togglere");
         setShowAdminOptionCard(false);

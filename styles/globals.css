@@ -1,15 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 @font-face {
     font-family: "manRope";
-    src: url("../public/fonts/manrope/manrope-regular.otf");
+    src: url('../public/fonts/manrope/manrope-regular.otf');
 }
 
 @font-face {
     font-family: "Inter";
-    src: url("/fonts/Inter/static/Inter-Regular.ttf");
+    src: url('../public/fonts/Inter/static/Inter-Regular.ttf');
 }
 
 html,

@@ -17,12 +17,15 @@ const dataOptions = {
   day: "numeric",
 };
 
-const getDateInStringFormat = (date: any) => {
+const getDateInStringFormat = (date: Date) => {
+  // console.log(date)
+
   if (date) {
     const stringDate = new Date(date).toLocaleDateString(
       "en-US",
       dataOptions as any
     );
+    // console.log('date',stringDate)
     const data = stringDate.replace(",", "");
     return data;
   }
@@ -32,26 +35,7 @@ const capitalizeFirstLetter = (s: string): string => {
   let newString = s[0].toUpperCase() + s.slice(1, s.length);
   return newString;
 };
-
-const capitalizeAllFirstLetters = () => {};
-
-const mazID = (city: string) => {
-  // format BNG-MAZ-
-  let append = nanoid();
-
-  switch (city) {
-    case "Tripoli":
-      return "TRI" + "-MAZ-" + append;
-    case "Benghazi":
-      return "BNG" + "-MAZ-" + append;
-    case "Misrata":
-      return "MIS" + "-MAZ-" + append;
-    default:
-      return "TRI" + "-MAZ-" + append;
-  }
-};
-
- const perPageOptinsList = () => {
+const perPageOptinsList = () => {
   return [
       { value: "5", label: "default" },
       { value: "10", label: "10" },
@@ -63,9 +47,7 @@ const mazID = (city: string) => {
 
 export {
   capitalizeFirstLetter,
-  capitalizeAllFirstLetters,
   getDateInStringFormat,
   getTimeInHourAndMinuteFormat,
-  mazID,
   perPageOptinsList
 };

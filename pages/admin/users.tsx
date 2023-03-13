@@ -1,23 +1,32 @@
 import React, { useEffect, useState, useCallback } from "react";
 import useOrders from "@/lib/useOrders";
 import moment from "moment";
+
 import UserbasePageHeader from "@/components/admin/UserbasePageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import useAllUser from "@/lib/useAllUsers";
-import { IUser } from "@/models/user.interface";
+
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 import orders from "../api/orders";
-import user from "../api/auth/user";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import useAllUser from "@/lib/hooks/useAllUsers";
+import useUsers from "@/lib/hooks/useUsers";
+import { User } from "@/models/user.model";
 
-const tableHeaders = ["Customer", "Email ID", "Mobile Number", "Created Date", "Age", "Gender", "Total Orders"];
+const tableHeaders = [
+  "Customer",
+  "Email ID",
+  "Mobile Number",
+  "Created Date",
+  "Age",
+  "Gender",
+  "Total Orders",
+];
 
 const UserBase = () => {
     const router = useRouter();
@@ -32,16 +41,16 @@ const UserBase = () => {
     const [itemsPerPage, setItemPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<Date | string>("");
-    const { allUser, mutateAllUser, allUserIsLoading, error } = useAllUser({
-        per_page: itemsPerPage,
-        page: currentPage,
+    const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
+      per_page: itemsPerPage,
+      page: currentPage,
+      is_admin: false,
     });
-    console.log(allUser);
 
-    const [allUsers, setAllUsers] = useState<IUser[]>([]);
+  //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil((users as User[] || []).length / itemsPerPage);
 
-    //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(allUser?.total_count / itemsPerPage);
+
 
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
@@ -50,10 +59,13 @@ const UserBase = () => {
         setCurrentPage(0);
         setItemPerPage(value as number);
     }, []);
+  const filterByCreatedDate = (value: Date | string) => {
+    setCreatedDateFilterKey(value);
+  };
 
-    const filterByCreatedDate = (value: Date | string) => {
-        setCreatedDateFilterKey(value);
-    };
+  // const selectOrderHandler = (value: string, type: string) => {
+  //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
+  // };
 
     // const selectOrderHandler = (value: string, type: string) => {
     //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
@@ -62,7 +74,7 @@ const UserBase = () => {
     // if (allUserIsLoading) {
     //     return <LoadingPage />;
     // }
-    if (error) {
+    if (usersError) {
         return <div>some error happened</div>;
     }
     return (
@@ -70,7 +82,7 @@ const UserBase = () => {
             <div>
                 <UserbasePageHeader
                     content="User Base"
-                    allUsers={allUser?.data!}
+                    allUsers={users as User[]}
                     filterByDate={filterByCreatedDate}
                     title="User Base | MazExpress Admin"
                     pageCount={pageCount}
@@ -80,19 +92,51 @@ const UserBase = () => {
                     currentPage={currentPage}
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!allUser?.data && <BlankPage />}
-                    {allUser?.data && (
+                    {!users && <BlankPage />}
+                    {users && (
                         <>
-                            <Table rows={allUser.data} headings={tableHeaders} type="user_base" />
+                            <Table rows={users} headings={tableHeaders} type="user_base" />
                         </>
                     )}
                 </div>
                 {/* {selectedUser?.length! > 0 && (
+  if (usersIsLoading) {
+    return <div>this is loading</div>;
+  }
+  if (usersError) {
+    return <div>some error happened</div>;
+  }
+  return (
+    <>
+      <div>
+        <UserbasePageHeader
+          content="User Base"
+          allUsers={users as User[]}
+          filterByDate={filterByCreatedDate}
+          title="User Base | MazExpress Admin"
+          pageCount={pageCount}
+          currentPageHandler={currentPageHandler}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+        />
+        <div className="flex flex-col justify-between relative flex-1 h-full">
+          {!users && <BlankPage />}
+          {users && (
+            <>
+              <Table
+                rows={users as User[]}
+                headings={tableHeaders}
+                type="user_base"
+              />
+            </>
+          )}
+        </div>
+        {/* {selectedUser?.length! > 0 && (
                     <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedUser?.length} orders are selected`}</div>
                 )} */}
-            </div>
-        </>
-    );
+      </div>
+    </>
+  );
 };
 
 export default UserBase;

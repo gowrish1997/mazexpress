@@ -29,7 +29,7 @@
         "Title": "Log in",
         "MobileViewTitle":"Get More Done With Our MAZ Services",
         "form": {
-            "InputField": ["Email", "Password", "Forgot password"],
+            "InputField": ["User name", "Password", "Forgot password"],
 
             "Errors": ["Email is required (Please provide valid email)", "Password is required field"],
             "Discription": ["By signing up, you agree to our", "Terms of Service.","New to MAZ Express?", "Sign up."],

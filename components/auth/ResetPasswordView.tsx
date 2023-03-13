@@ -3,15 +3,14 @@ import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
 
 type Inputs = {
-    password: string;
-    confirmPassword: string;
+  password: string;
+  confirmPassword: string;
 };
 
 const schema = yup
@@ -50,23 +49,23 @@ const ResetPasswordView = (props: any) => {
 
     const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
-    const [passwordType, setPasswordType] = useState("password");
-    const [confirmPasswordType, setConfirmPasswordType] = useState("password");
+  const [passwordType, setPasswordType] = useState("password");
+  const [confirmPasswordType, setConfirmPasswordType] = useState("password");
 
-    const togglePasswordTypeHandler = () => {
-        if (passwordType == "string") {
-            setPasswordType("password");
-        } else {
-            setPasswordType("string");
-        }
-    };
-    const toggleConfirmPasswordTypeHandler = () => {
-        if (confirmPasswordType == "string") {
-            setConfirmPasswordType("password");
-        } else {
-            setConfirmPasswordType("string");
-        }
-    };
+  const togglePasswordTypeHandler = () => {
+    if (passwordType == "string") {
+      setPasswordType("password");
+    } else {
+      setPasswordType("string");
+    }
+  };
+  const toggleConfirmPasswordTypeHandler = () => {
+    if (confirmPasswordType == "string") {
+      setConfirmPasswordType("password");
+    } else {
+      setConfirmPasswordType("string");
+    }
+  };
 
     return (
         <div

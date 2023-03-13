@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { getDateInStringFormat } from "@/lib/helper";
 import { getTimeInHourAndMinuteFormat } from "@/lib/helper";
-import useNotification from "@/lib/useNotification";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
+import useNotification from "@/lib/hooks/useNotification";
+import fetchJson, { FetchError } from "@/lib/fetchServer";
+import { Notification } from "@/models/notification.model";
 
-import { INotification } from "@/models/notification.interface";
-import axios from "axios";
 interface IProp {
   data: any;
-  id: number;
-  delete: (id: number) => void;
+  id: string;
+  delete: (id: string) => void;
 }
 
 const EachNotification = (props: IProp) => {
@@ -21,7 +19,7 @@ const EachNotification = (props: IProp) => {
     notificationError,
   } = useNotification({ id: props.id });
 
-  const [data, setData] = useState<INotification>(props.data);
+  const [data, setData] = useState<Notification>(props.data);
   // console.log(props.data);
 
   const markAsDeleted = async () => {
@@ -34,7 +32,7 @@ const EachNotification = (props: IProp) => {
           await fetchJson(`/api/notifications?id=${props.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status_notifications: "deleted" }),
+            body: JSON.stringify({ status: "deleted" }),
           }),
           false
         );
@@ -55,18 +53,11 @@ const EachNotification = (props: IProp) => {
       await fetchJson(`/api/notifications?id=${props.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status_notifications: "read" }),
+        body: JSON.stringify({ status: "read" }),
       }),
       false
     );
   };
-
-  // useEffect(() => {
-  //   // console.log(notification);
-  //   if(notification !== undefined){
-  //     setData(notification)
-  //   }
-  // }, [notification]);
 
   if (notificationIsLoading) {
     return <div>loading notification</div>;
@@ -75,18 +66,18 @@ const EachNotification = (props: IProp) => {
     <div className=" border-[0.5px] border-[#BBC2CF] p-[15px] bg-[#ffffff] rounded-[4px] space-y-[25px]">
       <div className="space-y-[10px]">
         <p className="text-[#2B2B2B] text-[14px] font-[600] leading-[19px] ">
-          {data.title_notifications}
+          {data.title}
         </p>
         <p className="text-[#2B2B2B] text-[13px] font-[400] leading-[18px]">
-          {data.content_notifications}
+          {data.content}
         </p>
-        {/* <Image src={`/${props.content.content_notifications}`} width={333} height={221} alt="bill" /> */}
+        {/* <Image src={`/${props.content.content}`} width={333} height={221} alt="bill" /> */}
       </div>
       <div className="flex-type3">
         <span className="text-[#8794AD] text-[12px] font-[500] leading-[18px] ">
           {`${getDateInStringFormat(
-            data.created_on_notifications
-          )},  ${getTimeInHourAndMinuteFormat(data.created_on_notifications)}`}
+            data.created_on
+          )},  ${getTimeInHourAndMinuteFormat(data.created_on)}`}
         </span>
         <button
           className="text-[#3672DF] text-[12px] font-[500] leading-[18px]"

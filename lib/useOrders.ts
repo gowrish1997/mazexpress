@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { IOrderResponse } from "@/models/order.interface";
+import { Order } from "@/models/order.model";
 
 interface IProps {
   user_id?: number;
@@ -12,7 +12,7 @@ interface IProps {
 }
 type Data = {
     msg?: string;
-    data?: IOrderResponse[];
+    data?:Order[];
     total_count?: number;
   };
 

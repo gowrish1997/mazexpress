@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/sidebar";
 import Topbar from "@/components/layout/Topbar";
 import { useRouter } from "next/router";
-import { ISearchKeyContext } from "@/models/SearchContextInterface";
+ interface  ISearchKeyContext {
+  searchKey:string,
+  setSearchKey:React.Dispatch<React.SetStateAction<string>>
+}
 
 interface IFrameProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 export const SearchKeyContext = React.createContext<ISearchKeyContext | null>(null);
 

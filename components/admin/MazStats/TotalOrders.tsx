@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import downwardImage from "../../../public/downwardArrow.png";
 import { faAngleDown, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
+import useOrders from "@/lib/hooks/useOrders";
 
 import { getDateInStringFormat } from "@/lib/helper";
 import Calendar from "react-calendar";
@@ -13,6 +14,10 @@ import ClickOutside from "@/components/common/ClickOutside";
 
 const TotalOrders = () => {
     const trigger = useRef<any>(null);
+    const { orders: totalOrders, mutateOrders: mutateTotalOrders } = useOrders({
+      count_all: true,
+      count: true
+    });
 
     const [selectedDate, setSelectedDate] = useState<Date | string>(new Date());
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
@@ -78,7 +83,7 @@ const TotalOrders = () => {
                     ) : null}
                 </div>
             </div>
-            <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">1000</p>
+            <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] "> {totalOrders as number}</p>
         </StatCard>
     );
 };

@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import PageHeaders from "@/components/common/PageHeader";
+import PageHeader from "@/components/common/PageHeader";
 import Table from "@/components/orders/table";
 import AddButton from "@/components/common/AddButton";
-import useUser from "@/lib/useUser";
-import useOrders from "@/lib/useOrders";
-import { FetchError } from "@/lib/fetchJson";
+
+
+
 import { useTranslation } from "next-i18next";
-import { IOrderResponse } from "@/models/order.interface";
+
+
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import LoadingPage from "@/components/common/LoadingPage";
+import useUser from "@/lib/hooks/useUser";
+import useOrders from "@/lib/hooks/useOrders";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = ["MAZ Tracking ID", "Store Link", "Reference ID", "Est. Delivery", "Address", "Status"];
 
 const MyOrders = () => {
-    const { user, mutateUser } = useUser();
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        user_id: 1,
-    });
-
+const { user, mutateUser } = useUser();
+const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+  user_id: user?.id,
+})
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
@@ -45,10 +48,11 @@ const MyOrders = () => {
     if (ordersError) throw ordersError;
     return (
         <>
-            <PageHeaders content={t("indexPage.pageHeader.Title")} showCalender={true} title="My Orders | MazExpress" />
+            <PageHeader content={t("indexPage.pageHeader.Title")} showCalender={true} title="My Orders | MazExpress" />
 
             <div className="flex flex-col justify-between relative flex-1 h-full">
-                {(!orders || (orders && (orders as IOrderResponse[]).length <= 0)) && (
+            {ordersIsLoading && <div>loading orders</div>}
+        {orders && (orders as Order[]).length === 0 && (
                     <div className="flex-1 flex flex-col justify-center items-center w-full ">
                         <div className="relative h-[221px] w-[322px] ">
                             <Image
@@ -71,7 +75,7 @@ const MyOrders = () => {
                         </div>
                     </div>
                 )}
-                {orders && (orders as IOrderResponse[]).length > 0 && (
+                     {orders && (orders as Order[]).length > 0 && (
                     <>
                         <Table rows={orders as any} headings={tableHeaders} type="order" />
                         <AddButton onClick={addNewOrderHandler} />

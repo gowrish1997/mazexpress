@@ -1,21 +1,20 @@
 import ClickOutside from "@/components/common/ClickOutside";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
 import { capitalizeFirstLetter } from "@/lib/helper";
-import { IUser } from "@/models/user.interface";
+import { User } from "@/models/user.model";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
-
 interface IProp {
-  update: (list: number[]) => void
+  update: (list: string[]) => void;
 }
 
 const UserSelect = (props: any) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [users, setUsers] = useState<IUser[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [markAll, setMarkAll] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,7 +36,7 @@ const UserSelect = (props: any) => {
     setShowDropdown((prev) => !prev);
   };
 
-  const updateSelectedUsers = (e: any, id: number) => {
+  const updateSelectedUsers = (e: any, id: string) => {
     // console.log(e.target.value, id);
     // e.stopPropagation();
     // e.preventDefault();
@@ -68,7 +67,7 @@ const UserSelect = (props: any) => {
     // console.log(e.target.checked);
     if (e.target.checked) {
       let newList = users.map((item) => {
-        return item.id_users;
+        return item.id;
       });
       setSelectedUsers(newList);
       setMarkAll(true);
@@ -89,7 +88,7 @@ const UserSelect = (props: any) => {
     // console.log("get users");
     fetchJson("/api/users").then((result) => {
       //   console.log(result);
-      setUsers(result as IUser[]);
+      setUsers(result as User[]);
     });
   }, []);
 
@@ -98,7 +97,7 @@ const UserSelect = (props: any) => {
   }, [showDropdown]);
 
   useEffect(() => {
-    props.update(selectedUsers)
+    props.update(selectedUsers);
   }, [selectedUsers]);
 
   return (
@@ -122,32 +121,41 @@ const UserSelect = (props: any) => {
         {!showDropdown && selectedUsers.length > 0 && !markAll && (
           <div className="flex items-center w-full h-[45px] p-3">
             <div className="w-7 h-7 rounded-full relative overflow-hidden">
-              <Image
-                src={
-                  users.find((item) => item.id_users === selectedUsers[0])
-                    ?.avatar_url_users !== null &&
-                  users.find((item) => item.id_users === selectedUsers[0])
-                    ?.avatar_url_users !== undefined
-                    ? `/user-images/${
-                        users.find((item) => item.id_users === selectedUsers[0])
-                          ?.avatar_url_users
-                      }`
-                    : "/user-images/default_user.png"
-                }
-                fill
-                style={{ objectFit: "cover" }}
-                alt={"user image"}
-              />
+              {users.find((item) => item.id === selectedUsers[0])
+                ?.avatar_url !== undefined &&
+                users
+                  .find((item) => item.id === selectedUsers[0])
+                  ?.avatar_url.startsWith("https:") && (
+                  <Image
+                    src={
+                      users.find((item) => item.id === selectedUsers[0])
+                        ?.avatar_url!
+                    }
+                    fill
+                    style={{ objectFit: "cover" }}
+                    alt={"user image"}
+                  />
+                )}
+              {users.find((item) => item.id === selectedUsers[0])
+                ?.avatar_url !== undefined &&
+                !users
+                  .find((item) => item.id === selectedUsers[0])
+                  ?.avatar_url.startsWith("https:") && (
+                  <Image
+                    src={
+                      "/user-images/" +
+                      users.find((item) => item.id === selectedUsers[0])
+                        ?.avatar_url!
+                    }
+                    fill
+                    style={{ objectFit: "cover" }}
+                    alt={"user image"}
+                  />
+                )}
             </div>
             <p className="text-[#2B2B2B] text-[14px] mx-2">
-              {
-                users.find((item) => item.id_users === selectedUsers[0])
-                  ?.first_name_users
-              }{" "}
-              {
-                users.find((item) => item.id_users === selectedUsers[0])
-                  ?.last_name_users
-              }
+              {users.find((item) => item.id === selectedUsers[0])?.first_name}{" "}
+              {users.find((item) => item.id === selectedUsers[0])?.last_name}
             </p>
             {selectedUsers.length > 1 ? (
               <p className="text-[#3672DF] text-[14px]">
@@ -211,13 +219,12 @@ const UserSelect = (props: any) => {
             <div className="space-y-[14px]">
               {users.map((el) => {
                 return (
-                  <div className="flex items-center w-full" key={el.id_users}>
+                  <div className="flex items-center w-full" key={el.id}>
                     <div className="w-10 h-10 rounded-full relative overflow-hidden">
                       <Image
                         src={
-                          el.avatar_url_users !== null &&
-                          el.avatar_url_users !== undefined
-                            ? `/user-images/${el.avatar_url_users}`
+                          el.avatar_url !== null && el.avatar_url !== undefined
+                            ? `/user-images/${el.avatar_url}`
                             : "/user-images/default_user.png"
                         }
                         fill
@@ -226,19 +233,19 @@ const UserSelect = (props: any) => {
                       />
                     </div>
                     <p className="ml-2 text-[14px] font-[600] text-[#525D72] flex-1">
-                      {capitalizeFirstLetter(el.first_name_users)}{" "}
-                      {capitalizeFirstLetter(el.last_name_users)}
+                      {capitalizeFirstLetter(el.first_name)}{" "}
+                      {capitalizeFirstLetter(el.last_name)}
                     </p>
                     <div className="">
                       <input
                         type={"checkbox"}
                         className="w-3 h-3"
                         checked={
-                          selectedUsers.find((seel) => seel === el.id_users)
+                          selectedUsers.find((seel) => seel === el.id)
                             ? true
                             : false
                         }
-                        onChange={(e) => updateSelectedUsers(e, el.id_users)}
+                        onChange={(e) => updateSelectedUsers(e, el.id)}
                       />
                     </div>
                   </div>

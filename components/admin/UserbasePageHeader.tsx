@@ -4,7 +4,7 @@ import Image from "next/image";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import SearchUserInputField from "./SearchUserInputField";
-import { IUser } from "@/models/user.interface";
+import { User } from "@/models/user.model";
 import SendNotificatonConfirmModal from "./modal/SendNotificatonConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
@@ -14,7 +14,7 @@ interface IProp {
     content: string;
     title?: string;
     selectedUser?: number[];
-    allUsers: IUser[];
+    allUsers: User[];
     filterByDate: (value: Date | string) => void;
     pageCount: number;
     currentPageHandler: (value: number) => void;
@@ -25,8 +25,7 @@ interface IProp {
 }
 
 const UserbasePageHeader = (props: IProp) => {
-
-    const perPageOptions = perPageOptinsList()
+    const perPageOptions = perPageOptinsList();
     const [showSendNotificatoinConfirmModal, setShowSendNotificatoinConfirmModal] = useState(false);
 
     const toggleSendNotificatoinConfirmModal = () => {
@@ -52,7 +51,13 @@ const UserbasePageHeader = (props: IProp) => {
                 />
                 {props.allUsers && props.allUsers.length > 0 && (
                     <div className="flex-type1 space-x-[10px]  ">
-                         <MazStatsDropddown options={perPageOptions} type="per_page" onChange={props.itemPerPageHandler!} className="h-[38px] px-[10px]" itemsPerPage={props.itemsPerPage} />
+                        <MazStatsDropddown
+                            options={perPageOptions}
+                            type="per_page"
+                            onChange={props.itemPerPageHandler!}
+                            className="h-[38px] px-[10px]"
+                            itemsPerPage={props.itemsPerPage}
+                        />
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
                         {/* <FilterOptionDropDown options={warehousesDropDownOptoin} /> */}
                         {/* <SearchUserInputField filterByUser={props.filterByUser}/> */}

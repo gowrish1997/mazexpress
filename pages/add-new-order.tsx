@@ -1,39 +1,41 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { nanoid } from "nanoid";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import PageHeader from "@/components/common/PageHeader";
 import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
-import { IAddressProps } from "@/models/address.interface";
-import useAddresses from "@/lib/useAddresses";
-import useUser from "@/lib/useUser";
-import fetchJson from "@/lib/fetchJson";
+import useAddresses from "@/lib/hooks/useAddresses";
+import useUser from "@/lib/hooks/useUser";
+import fetchJson from "@/lib/fetchServer";
+// import { createToast } from "@/lib/toasts";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { Address } from "@/models/address.model";
+import { APIResponse } from "@/models/api.model";
+import { Order } from "@/models/order.model";
 
 const schema = yup
     .object({
-        reference_id_orders: yup.string().required("Reference ID is required field"),
-        store_link_orders: yup.string().required("Store Link is required field"),
+      reference_id: yup.string().required("Reference ID is required field"),
+      store_link: yup.string().required("Store Link is required field"),
     })
     .required();
 
 const AddNewOrder = () => {
     //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
-    const [editableAddress, setEditableAddress] = useState<IAddressProps>();
-    const [showEditUserAddressModal, setShowEditUserAddressModal] = useState<boolean>(false);
+    const [editableAddress, setEditableAddress] = useState<Address>();
+    const [showEditUserAddressModal, setShowEditUserAddressModal] =
+      useState<boolean>(false);
     const { user, mutateUser } = useUser();
-    const { addresses, mutateAddresses } = useAddresses({
-        userId: user?.id_users,
+    const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
+      user_id: user?.id,
     });
 
     const router = useRouter();
@@ -51,102 +53,107 @@ const AddNewOrder = () => {
 
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
-    const defaultAddressHandler = () => {
-        mutateAddresses();
-        const address = addresses?.find((el) => el.id_addresses === user?.default_address_users);
+    // const defaultAddressHandler = () => {
+    //     mutateAddresses();
+    //     const address = addresses?.find((el) => el.id_addresses === user?.default_address_users);
 
-        return address;
-    };
+    //     return address;
+    // };
+    // const defaultAddressHandler = () => {
+  //   // mutateAddresses();
+  //   if (addresses?.data !== undefined && addresses?.data !== null && addresses.data.length > 0) {
+  //     const address = (addresses?.data as AddressEntity[]).find(
+  //       (el: AddressEntity) => el.id === user?.default_address
+  //     );
+  //     return address;
+  //   }
+  //   return null;
+  // };
 
     const {
-        register,
-        handleSubmit,
-
-        formState: { errors },
+      register,
+      handleSubmit,
+  
+      formState: { errors },
     } = useForm<{
-        reference_id_orders: string;
-        store_link_orders: string;
-        address_id: number;
+      reference_id: string;
+      store_link: string;
+      address_id: string | null | undefined;
     }>({
-        defaultValues: {
-            address_id: defaultAddressHandler()?.id_addresses,
-        },
-        resolver: yupResolver(schema),
+      defaultValues: {
+        address_id: user?.default_address,
+        reference_id: "euirfismeodicokew",
+        store_link: "flipkart.com",
+      },
+      resolver: yupResolver(schema),
     });
-
+  
     const toggleAddNewAddressModal = () => {
-        setShowAddNewAddressModal((prev) => !prev);
+      setShowAddNewAddressModal((prev) => !prev);
     };
-
-    const toggleEditUserAddressModal = (addressId?: number) => {
-        // console.log(addressId);
-        if (showEditUserAddressModal) {
-            setShowEditUserAddressModal(false);
-        } else {
-            setShowEditUserAddressModal(true);
-            const address = addresses?.find((data) => {
-                return data.id_addresses == addressId;
-            });
-            setEditableAddress(address);
-        }
-    };
-
-    const onSubmit: SubmitHandler<{
-        reference_id_orders: string;
-        store_link_orders: string;
-        address_id: number;
-    }> = async (data) => {
-        // console.log(data);
-        try {
-            let orderObj = {
-                user_id: user?.id_users,
-                address_id: data.address_id,
-                reference_id_orders: data.reference_id_orders,
-                store_link_orders: data.store_link_orders,
-                status_orders: "pending",
-                shipping_amt_orders: 499,
-            };
-            const result1 = await fetchJson(`/api/orders`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(orderObj),
-            });
-            console.log(result1);
-
-            let trackingObj = {
-                order_id: result1.data,
-                // stage_tracking: req.body.stage_tracking,
-                // poc_tracking: req.body.poc_tracking,
-                user_id: user?.id_users,
-            };
-            const result2 = await fetchJson(`/api/tracking`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(trackingObj),
-            });
-            console.log(result2);
-
-            createToast({
-                type: "success",
-                title: "Success",
-                message: "Created order successfully",
-            });
-        } catch (err) {
-            console.log(err);
-            createToast({
-                type: "error",
-                title: "An error occurred",
-                message: "Check console for more info.",
-                timeOut: 3000,
-            });
-        }
-        // if (user) {
-        //   let newUserData = { ...user };
-        //   newUserData.default_address_users = data.address_id;
-        //   mutateUser(newUserData);
+  
+    const toggleEditUserAddressModal = (addressId?: string) => {
+      // console.log(addressId);
+  
+      if (showEditUserAddressModal) {
+        setShowEditUserAddressModal(false);
+      } else {
+        setShowEditUserAddressModal(true);
+        // if (addresses?.data !== null) {
+        //   const address = (addresses?.data as AddressEntity[]).find(
+        //     (el: AddressEntity) => el.id === user?.default_address
+        //   );
+        //   setEditableAddress(address);
         // }
-        // console.log(data);
+      }
     };
+  
+    const onSubmit: SubmitHandler<{
+      reference_id: string | null | undefined;
+      store_link: string | null | undefined;
+      address_id: string | null | undefined;
+    }> = async (data) => {
+      // console.log(data);
+      try {
+        let orderObj = {
+          user_id: user?.id,
+          address_id: data.address_id,
+          reference_id: data.reference_id,
+          store_link: data.store_link,
+        };
+        const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderObj),
+        });
+        // console.log(result);
+  
+        createToast({
+          type: "success",
+          title: "Success",
+          message: "Created order successfully",
+        });
+      } catch (err) {
+        console.log(err);
+        createToast({
+          type: "error",
+          title: "An error occurred",
+          message: "Check console for more info.",
+          timeOut: 3000,
+        });
+      }
+  
+      // if (user) {
+      //   let newUserData = { ...user };
+      //   newUserData.default_address_users = data.address_id;
+      //   mutateUser(newUserData);
+      // }
+      // console.log(data);
+    };
+  
+    useEffect(() => {
+      console.log(addresses);
+    }, [addresses]);
 
     return (
         <>
@@ -164,15 +171,15 @@ const AddNewOrder = () => {
                         label={inputFieldLabels[0]}
                         name="reference_id_orders"
                         type="string"
-                        register={register("reference_id_orders")}
-                        error={errors.reference_id_orders ? fieldErrors[0] : ""}
+                        register={register("reference_id")}
+                        error={errors.reference_id ? fieldErrors[0] : ""}
                     />
                     <ReactHookFormInput
                         label={inputFieldLabels[1]}
                         name="store_link_orders"
                         type="string"
-                        register={register("store_link_orders")}
-                        error={errors.store_link_orders ? fieldErrors[1] : ""}
+                        register={register("store_link")}
+                        error={errors.store_link ? fieldErrors[1] : ""}
                     />
                 </div>
                 <div className="mt-[20px]">
@@ -184,19 +191,18 @@ const AddNewOrder = () => {
                     </p>
                 </div>
                 <div className="grid grid-cols-3 gap-3 py-5">
-                    {addresses !== undefined &&
-                        addresses.length > 0 &&
-                        addresses
-                            .filter((el) => el.status_addresses === 1)
-                            .map((data) => {
-                                return (
-                                    <UserSavedAddress
-                                        key={data.id_addresses}
-                                        address={data}
-                                        register={register("address_id")}
-                                        edit={toggleEditUserAddressModal}
-                                        update={mutateAddresses}
-                                    />
+                {addressesIsLoading && <div>loading addresses...</div>}
+                {addresses?.data &&
+            addresses?.data !== null &&
+            (addresses?.data as Address[]).map((data: Address) => {
+              return (
+                <UserSavedAddress
+                key={data.id}
+                address={data}
+                register={register("address_id")}
+                edit={toggleEditUserAddressModal}
+                update={mutateAddresses}
+              />
                                 );
                             })}
                 </div>
@@ -207,7 +213,7 @@ const AddNewOrder = () => {
 
             <AddNewAddressModal show={showAddNewAddressModal} close={toggleAddNewAddressModal} update={mutateAddresses} />
             {showEditUserAddressModal && (
-                <EditUserAddressModal update={mutateAddresses} show={showEditUserAddressModal} close={toggleEditUserAddressModal} address={editableAddress!} />
+                <EditUserAddressModal  update={() => new Promise(() => {})} show={showEditUserAddressModal} close={toggleEditUserAddressModal} address={editableAddress!} />
             )}
         </>
     );

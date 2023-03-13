@@ -2,13 +2,8 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import calendarIcon from "@/public/calendar_icon.png";
-import {
-  faAngleDown,
-  faAngleLeft,
-  faAngleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
-import { IOrderResponse } from "@/models/order.interface";
 import { getDateInStringFormat } from "@/lib/helper";
 import Calendar from "react-calendar";
 import cancel from "../../public/cancel.png";
@@ -66,7 +61,7 @@ const PageheaderTitle = (props: IProp) => {
           </div>
           <span className="box-border font-[500] text-[16px] leading-[22.4px] text-[#3672DF] text-center">
             {filterDate
-              ? getDateInStringFormat(filterDate)
+              ? getDateInStringFormat(filterDate as Date)
               : "No date selected"}
           </span>
         </div>

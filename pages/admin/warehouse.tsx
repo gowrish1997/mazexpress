@@ -1,14 +1,18 @@
 import PageHeader from "@/components/common/PageHeader";
 import WarehouseCard from "@/components/admin/warehouse/WarehouseCard";
-import useWarehouses from "@/lib/useWarehouses";
-import React, { useState,useEffect } from "react";
-import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
-import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
+import useWarehouses from "@/lib/hooks/useWarehouses";
+import React, { useState,useEffect } from "react";
+import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
+import { Warehouse } from "@/models/warehouse.model";
+import { i18n } from "next-i18next";
 
-const Warehouse = () => {
+
+const WarehousePage = () => {
+
   const router=useRouter();
+
   const { warehouses, mutateWarehouses } = useWarehouses();
 
   const { locales, locale: activeLocale } = router;
@@ -28,8 +32,8 @@ const Warehouse = () => {
     <>
       <PageHeader content="Warehouses" title="Warehouses | MazExpress Admin" />
       <div className="grid grid-cols-3 gap-3 py-5">
-        {warehouses?.map((data) => {
-          return <WarehouseCard key={data.id_warehouses} address={data} />;
+        {(warehouses as Warehouse[])?.map((data) => {
+          return <WarehouseCard key={data.id} address={data} update={mutateWarehouses} />;
         })}
       </div>
       <div>
@@ -49,7 +53,7 @@ const Warehouse = () => {
   );
 };
 
-export default Warehouse;
+export default WarehousePage;
 export async function getStaticProps({ locale }: { locale: any }) {
   if (process.env.NODE_ENV === "development") {
       await i18n?.reloadResources();

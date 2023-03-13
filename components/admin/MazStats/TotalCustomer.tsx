@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import StatCard from "./StatCard";
 import MazStatsDropddown from "./MazStatsDropddown";
+import useUsers from "@/lib/hooks/useUsers";
 const genderOptions = [
     { value: "u", label: "male" },
     { value: "f", label: "female" },
@@ -14,13 +15,18 @@ const ageOptions = [
     { value: "10-20", label: "10-20" },
 ];
 const TotalCustomer = () => {
-    const ageChangeHanlder = (value: string) => {
-        console.log(value);
-    };
+  const { users, mutateUsers } = useUsers({
+    is_admin: false,
+    count: true,
+    count_all: true,
+  });
+  const ageChangeHanlder = (value: number | string) => {
+    console.log(value);
+  };
 
-    const genderChangeHanlder = (value: string) => {
-        console.log(value);
-    };
+  const genderChangeHanlder = (value: string | number) => {
+    console.log(value);
+  };
 
     return (
         <StatCard>

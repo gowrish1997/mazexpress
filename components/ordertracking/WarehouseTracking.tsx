@@ -4,13 +4,13 @@ import { useTranslation } from "next-i18next";
 
 const WarehouseTracking = (props: { packageStatus: number }) => {
 
-  const router = useRouter();
-  const { locale } = router;
-  const { t } = useTranslation("common");
-  const warehouseStatus: string[] = t("trackingView.view.packageStatus.stageSecond.WarehouseStatus", { returnObjects: true });
  
-   
-    const [packageStatus, setPackageStatus] = useState(props.packageStatus);
+ 
+const router = useRouter();
+const { locale } = router;
+const { t } = useTranslation("common");
+const warehouseStatus: string[] = t("trackingView.view.packageStatus.stageSecond.WarehouseStatus", { returnObjects: true });
+const [packageStatus, setPackageStatus] = useState(props.packageStatus);
 
     return (
         <div className="flex-type6 wareHouseProgressbar ">

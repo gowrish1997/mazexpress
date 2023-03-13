@@ -1,47 +1,39 @@
+//==========================
+//     written by: raunak
+//==========================
+
 // /middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getIronSession } from "iron-session/edge";
-import { sessionOptions } from "./lib/session";
+import { sessionOptions } from "lib/session";
 
 export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
   const session = await getIronSession(req, res, sessionOptions);
-  const { user } = session; 
-  // console.log(user, 'from middleware')
 
-  // check if user exists and logged in
-  if (user && user !== undefined && user.is_logged_in_users === 1) {
-    // yes user and logged in
+  // do anything with session here:
+  // const { user } = session;
 
-    // check if user id is 0 null user
-    // console.log(user);
-    if (user.id_users === 0) {
-      // null user
-      // return to gate
-      return NextResponse.redirect(new URL("/auth/gate", req.url));
-    } else {
-      // true user
-      // check if admin
-      if (
-        user.is_admin_users === 1 &&
-        !req.nextUrl.pathname.startsWith("/admin")
-      ) {
-        // admin user check for restricted paths
-        // console.log("illegal route");
-        return NextResponse.redirect(new URL("/admin", req.url));
-      }
-      if (
-        user.is_admin_users === 0 &&
-        req.nextUrl.pathname.startsWith("/admin")
-      ) {
-        // console.log("illegal route2");
-        return NextResponse.redirect(new URL("/", req.url));
-      }
-    }
-  } else {
-    return NextResponse.redirect(new URL("/auth/gate", req.url));
+  // like mutate user:
+  // user.something = someOtherThing;
+  // or:
+  // session.user = someoneElse;
+
+  // uncomment next line to commit changes:
+  // await session.save();
+  // or maybe you want to destroy session:
+  // await session.destroy();
+
+  // console.log("from middleware", session);
+
+  // demo:
+  if (!session.user) {
+    return NextResponse.redirect(new URL("/auth/gate", req.url), {
+      statusText: "Unauthorized.",
+    });
   }
+
   return res;
 };
 
@@ -55,12 +47,13 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
+
     // deploy
     // match all except these links
-    // "/((?!api|_next/static|_next/image|favicon.ico|auth/gate).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|auth/gate|image|$).*)",
 
     // dev
     // match none
-    "/((?!.*).*)",
+    // "/((?!.*).*)",
   ],
 };

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import Order from "../../../public/order_svg.svg";
 import Location from "../../../public/location_svg.svg";
 import Warehosue from "../../../public/warehouse_svg.svg";
@@ -114,7 +114,7 @@ const NavLink = (props: IProp) => {
             >
                 <div className=" flex flex-row justify-start items-center gap-x-3 w-full">
                     <div className={`${router.pathname.includes(props.content.path) ? "sidebar_icon_hover" : "sidebar_icon"} relative`}>
-                        {!user?.is_admin_users ? adminIcon(props.id) : userIcon(props.id)}
+                        {!user?.is_admin ? adminIcon(props.id) : userIcon(props.id)}
                         {props.content.title === "Delivered Order" ? (
                             <span className="absolute top-0 bg-green-600 rounded-full h-[12px] w-[12px] flex items-center justify-center">
                                 <FontAwesomeIcon

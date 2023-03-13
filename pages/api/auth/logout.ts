@@ -1,18 +1,15 @@
-import { withSessionRoute } from "@/lib/config/withSession";
-import { updateUser } from "@/lib/setters";
+//==========================
+//     written by: raunak
+//==========================
+
+import { User } from "@/models/user.model";
+import { withIronSessionApiRoute } from "iron-session/next";
+import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default withSessionRoute(logout);
+export default withIronSessionApiRoute(logoutRoute, sessionOptions);
 
-async function logout(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  // set logged in false
-  await updateUser(req.session.user.id_users, { is_logged_in_users: 0 });
+function logoutRoute(req: NextApiRequest, res: NextApiResponse<User | null>) {
   req.session.destroy();
-  const nullUser = {
-    
-  }
-  res.send({ ok: true });
+  res.json(null);
 }

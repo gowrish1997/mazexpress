@@ -1,7 +1,8 @@
-import React from "react";
-
+import React, { useState } from "react";
 import Image from "next/image";
 import { FieldError } from "react-hook-form";
+import eyeOpen from "@/public/eyeIconOpen.png";
+import eyeClose from "@/public/eyeIconClose.png";
 
 interface IProp {
     label: string;
@@ -15,10 +16,11 @@ interface IProp {
         onClick?: () => void;
     };
     error?:string;
-    onClick?: () => void;
-    disabled?: boolean;
-    autoComplete?: string;
-    className?:string
+   
+  onClick?: () => void;
+  disabled?: boolean;
+  autoComplete?: string;
+  className?: string;
 }
 
 const ReactHookFormInput = (props: IProp) => {

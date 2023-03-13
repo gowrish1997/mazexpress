@@ -2,15 +2,15 @@ import React, { SyntheticEvent, useRef, useState } from "react";
 import Image from "next/image";
 import Bell from "@/public/bell_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
-import useUser from "@/lib/useUser";
-import useNotifications from "@/lib/useNotifications";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import useUser from "@/lib/hooks/useUser";
+import useNotifications from "@/lib/hooks/useNotifications";
 import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
-import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import { getUserImageString } from "@/lib/utils";
 const Topbar = () => {
     const { user, mutateUser } = useUser();
     const router = useRouter();
@@ -18,27 +18,27 @@ const Topbar = () => {
     const { locale } = router;
     const placeholder: string[] = t("topbar.inputField.Placeholder", { returnObjects: true });
 
-    const { setSearchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+  const { setSearchKey } = React.useContext(SearchKeyContext) as any;
 
-    const { notifications, notificationsIsLoading } = useNotifications({
-        userId: user?.id_users!,
-    });
+  const { notifications, notificationsIsLoading } = useNotifications({
+    user_id: user?.id!,
+  });
 
-    const [showNotifications, setShowNotifications] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
-    const toggleNotificationsHandler = () => {
-        setShowNotifications((prev) => !prev);
-    };
+  const toggleNotificationsHandler = () => {
+    setShowNotifications((prev) => !prev);
+  };
 
-    const smartToggleNotificationsHandler = () => {
-        setShowNotifications(false);
-    };
+  const smartToggleNotificationsHandler = () => {
+    setShowNotifications(false);
+  };
 
-    let trigger = useRef(null);
+  let trigger = useRef(null);
 
-    const searchKeyOnchangeHandler = (e: SyntheticEvent) => {
-        setSearchKey((e.target as HTMLInputElement).value);
-    };
+  const searchKeyOnchangeHandler = (e: SyntheticEvent) => {
+    setSearchKey((e.target as HTMLInputElement).value);
+  };
 
     return (
         <>
@@ -60,47 +60,54 @@ const Topbar = () => {
                             sizes="(max-width: 768px) 100vw,
                   (max-width: 1200px) 100vw,
                   100vw"
-                        />
-                    </div>
-                </div>
-                <div className="flex min-h-[65px] items-center justify-end">
-                    <span className="relative top-0.5 px-7 cursor-pointer" onClick={toggleNotificationsHandler} ref={trigger}>
-                        {notifications && notifications.length > 0 && <span className="rounded-full block top-[3px] h-[7px] w-[7px] right-[34.5px] bg-[#FF2323] absolute"></span>}
-                        <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
-                            {/* <Image src={"/bell.png"} height={16} width={17} alt="notification" className="" /> */}
-                            <Bell className="bell_svg" />
-                        </div>
-                    </span>
-                </div>
+            />
+          </div>
+        </div>
+        <div className="flex min-h-[65px] items-center justify-end">
+          <span
+            className="relative top-0.5 px-7 cursor-pointer"
+            onClick={toggleNotificationsHandler}
+            ref={trigger}
+          >
+            {notifications && notifications.length > 0 && (
+              <span className="rounded-full block top-[3px] h-[7px] w-[7px] right-[34.5px] bg-[#FF2323] absolute"></span>
+            )}
+            <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
+              <Bell className="bell_svg" />
+            </div>
+          </span>
+        </div>
 
-                <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
-                    <Image
-                        // src={
-                        //   user?.avatar_url_users
-                        //     ? "/user-images/" + user?.avatar_url_users
-                        //     : "/user-images/default_user.png"
-                        // }
-                        src={"/user-images/" + user?.avatar_url_users}
-                        fill
-                        style={{ objectFit: "cover" }}
-                        alt="profileImage"
-                        sizes="(max-width: 768px) 100vw,
+        <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
+          <Image
+            src={getUserImageString(user?.avatar_url)}
+            fill
+            style={{ objectFit: "cover" }}
+            alt="profileImage"
+            sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 100vw,
                 100vw"
-                        onError={(e: SyntheticEvent) => console.log("error at user image", e)}
-                    />
-                </div>
-                <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
-                    {user?.first_name_users} {user?.last_name_users}
-                </p>
-                <div className="w-3 h-3 flex items-center">
-                    <FontAwesomeIcon icon={faAngleDown} size="xs" color="#525D72" />
-                </div>
-            </div>
+            onError={(e: SyntheticEvent) =>
+              console.log("error at user image", e)
+            }
+          />
+        </div>
+        <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
+          {user?.first_name} {user?.last_name}
+        </p>
+        <div className="w-3 h-3 flex items-center">
+          <FontAwesomeIcon icon={faAngleDown} size="xs" color="#525D72" />
+        </div>
+      </div>
 
-            <NotificationView close={toggleNotificationsHandler} show={showNotifications} trigger={trigger} handler={smartToggleNotificationsHandler} />
-        </>
-    );
+      <NotificationView
+        close={toggleNotificationsHandler}
+        show={showNotifications}
+        trigger={trigger}
+        handler={smartToggleNotificationsHandler}
+      />
+    </>
+  );
 };
 
 export default Topbar;

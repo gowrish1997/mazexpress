@@ -6,7 +6,7 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import PackageTrackingView from "@/components/ordertracking/PackageTrackingView";
 import WarehouseTracking from "@/components/ordertracking/WarehouseTracking";
 import useOrders from "@/lib/useOrders";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { createToast } from "@/lib/toasts";
@@ -16,8 +16,8 @@ import { useTranslation } from "next-i18next";
 
 const TrackOrder = (props: any) => {
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const { user, mutateUser, userIsLoading } = useUser();
-    const { orders, ordersIsLoading } = useOrders({ user_id: user?.id_users });
+    const { user, mutateUser,} = useUser();
+    const { orders, ordersIsLoading } = useOrders({ user_id: user?.id });
 
     const router = useRouter();
     const { t } = useTranslation("common");

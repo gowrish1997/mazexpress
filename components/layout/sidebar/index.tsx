@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Header from "./Header";
 import NavLink from "./NavLink";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
-import useUser from "@/lib/useUser";
-import fetchJson from "@/lib/fetchJson";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import logoutImage from "@/public/logout.png";
+import useUser from "@/lib/hooks/useUser";
+import fetchJson from "@/lib/fetchSelf";
 
 import { useTranslation } from "next-i18next";
 
@@ -124,7 +124,7 @@ const adminSidebarPanel = [
     },
 ];
 
-const sidebarContentHandler = (user: number) => {
+const sidebarContentHandler = (user:boolean) => {
     if (!user) {
         return adminSidebarPanel;
     } else {
@@ -140,7 +140,7 @@ const Sidebar = () => {
     const adminSidebarContent: string[] = t("sidebar.AdminSidebarContent", { returnObjects: true });
 
     const transalateSidebarContentHandler = () => {
-        if (!user?.is_admin_users) {
+        if (!user?.is_admin) {
             return adminSidebarContent;
         } else {
             return userSidebarContent;
@@ -166,7 +166,7 @@ const Sidebar = () => {
                 <Header />
                 <div className="flex flex-col justify-between items-start px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
                     <ul className="w-full box-border flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
-                        {sidebarContentHandler(user?.is_admin_users!).map((content, index) => {
+                        {sidebarContentHandler(user?.is_admin!).map((content, index) => {
                             return <NavLink key={content.id} id={index} content={content} transalateContent={transalateSidebarContentHandler()[index]} />;
                         })}
                     </ul>

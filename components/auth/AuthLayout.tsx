@@ -3,10 +3,6 @@ import React from "react";
 import img from "../../public/homePic.png";
 import { useRouter } from "next/router";
 
-// const loaderProp =({ src }: {src: string}) => {
-//     return src;
-// }
-
 const AuthLayout = (props: any) => {
     const router = useRouter();
     const { locale } = router;

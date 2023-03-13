@@ -1,10 +1,9 @@
 import React from "react";
-import { INotificationConfig } from "@/models/notification.interface";
 import ReactSwitch from "react-switch";
 
 interface IProp {
-  data: INotificationConfig;
-  toggle: (id: number) => void;
+  data: any;
+  toggle: (id: string) => void;
 }
 
 const ConfigCard = (props: IProp) => {

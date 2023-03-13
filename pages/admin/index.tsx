@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import TotalOrders from "@/components/admin/MazStats/TotalOrders";
 import TotalCustomer from "@/components/admin/MazStats/TotalCustomer";
 import WarehouseOrders from "@/components/admin/MazStats/WarehouseOrders";
-TotalCustomer;
 import StatGraph from "@/components/admin/MazStats/StatGraph";
 import OrdersTotalCountBar from "@/components/admin/MazStats/OrdersTotalCountBar";
 import StatLiveOrdres from "@/components/admin/MazStats/StatLiveOrdres";

@@ -1,19 +1,19 @@
-import React, { SyntheticEvent, useState } from "react";
+import React from "react";
 import Image from "next/image";
-import ReactFlagsSelect, { Im } from "react-flags-select";
+
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { FieldError } from "react-hook-form";
 interface IProp {
-    label: string;
-    value: string;
-    dropDownIcon?: {
-        iconIsEnabled: boolean;
-        iconSrc: string;
-    };
-    error?: FieldError;
-    onChange: any;
-    setCountry: React.Dispatch<React.SetStateAction<string>>;
+  label: string;
+  value: string;
+  dropDownIcon?: {
+    iconIsEnabled: boolean;
+    iconSrc: string;
+  };
+  error?: FieldError;
+  onChange: any;
+  setCountry: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const CountrySelector = (props: IProp) => {
@@ -57,9 +57,10 @@ const CountrySelector = (props: IProp) => {
                     {/* <span>eye</span> */}
                 </div>
                 {props.error && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{props.error.message}</p>}
-            </div>
-        </>
-    );
+           
+      </div>
+    </>
+  );
 };
 
 export default CountrySelector;

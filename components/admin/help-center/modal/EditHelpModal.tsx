@@ -2,18 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { IAddressProps } from "@/models/address.interface";
-import CountrySelector from "@/components/common/CountrySelector";
-import useUser from "@/lib/useUser";
-
-import fetchJson from "@/lib/fetchJson";
-import { IWarehouseProps } from "@/models/warehouse.interface";
+import useUser from "@/lib/hooks/useUser";
+import fetchJson from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
 
 interface IProp {
   show: boolean;
   close: () => void;
-  update: () => Promise<IWarehouseProps[] | undefined>;
+  update: () => Promise<any | undefined>;
   data: any
 }
 
@@ -33,7 +29,7 @@ interface IHelpForm {
 }
 
 const EditHelpModal = (props: IProp) => {
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   // const [data, setData] = useState(props.data);
 
   const {

@@ -14,9 +14,21 @@ import Cancel from "../public/cancel.png";
 import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Link from "next/link";
+import Head from "next/head";
+import { GetServerSidePropsContext } from "next";
+import useUser from "@/lib/hooks/useUser";
+import fetchJson from "@/lib/fetchSelf";
+
+interface HomeProps {
+  is_admin: boolean;
+}
 import axios from "axios";
 
-const Index = () => {
+const Home = (props: HomeProps) => {
+
+  // const { data: session, status: sessionStatus } = useSession();
+  const { user, mutateUser } = useUser();
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
@@ -45,9 +57,25 @@ const Index = () => {
     };
 
     const trackingIdInputHandler = (e: SyntheticEvent) => {
-        setTrackingIdError(false);
-        setTrackingId((e.target as HTMLInputElement).value);
+      setTrackingIdError(false);
+      setTrackingId((e.target as HTMLInputElement).value);
     };
+  
+    const trackingHandler = () => {
+      if (trackingId) {
+        console.log();
+        setTrackingIdError(false);
+      } else {
+        setTrackingIdError(true);
+      }
+    };
+  
+    const logoutHandler = () => {
+      // console.log("handle logout");
+      fetchJson("/api/auth/logout", { method: "GET" });
+      // await mutateUser();
+    };
+  
 
     const openPackageTrackingModal = () => {
         if (trackingId) {
@@ -176,8 +204,26 @@ const Index = () => {
         </>
     );
 };
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+   // console.log(session);
 
-export default Index;
+  // let is_admin = session?.user.is_admin;
+  // if (is_admin) {
+  //   return {
+  //     redirect: {
+  //       permanent: false,
+  //       destination: "/admin",
+  //     },
+  //     props: {},
+  //   };
+  // }
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
+  // const session = await getServerSession(ctx.req, ctx.res, authOptions);
+
+export default Home;
 
 export async function getStaticProps({ locale }: { locale: any }) {
     if (process.env.NODE_ENV === "development") {

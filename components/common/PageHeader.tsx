@@ -1,13 +1,15 @@
 import Head from "next/head";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Calendar from "react-calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import moment from "moment";
+
 import { useRouter } from "next/router";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import { useTranslation } from "next-i18next";
-import useTrackings from "@/lib/useTrackings";
+
+import useTrackings from "@/lib/hooks/useTrackings";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 import ClickOutside from "@/components/common/ClickOutside";
 interface IProp {
     content: string;
@@ -16,9 +18,9 @@ interface IProp {
     title?: string;
 }
 const PageHeader = (props: IProp) => {
-    const { user, mutateUser, userIsLoading } = useUser();
+    const { user, mutateUser} = useUser();
     const { tracking, trackingIsLoading } = useTrackings({
-        user_id: user?.id_users,
+        user_id: user?.id,
     });
     let trigger = useRef(null);
     const router = useRouter();

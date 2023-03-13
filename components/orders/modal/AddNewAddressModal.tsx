@@ -1,36 +1,35 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { FieldError } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { IAddressProps } from "@/models/address.interface";
 import CountrySelector from "@/components/common/CountrySelector";
 import RegionSelector from "@/components/common/RegionSelector";
-import useUser from "@/lib/useUser";
-import fetchJson from "@/lib/fetchJson";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import useUser from "@/lib/hooks/useUser";
 
+import fetchJson from "@/lib/fetchServer";
+import { Address } from "@/models/address.model";
 
 interface IProp {
     show: boolean;
     close: () => void;
-    update: () => Promise<IAddressProps[] | undefined>;
+    update: () => Promise<Address[] | undefined>;
 }
 
 const schema = yup
     .object({
-        tag_addresses: yup.string().required("Tag address is required field"),
-        address_1_addresses: yup.string().required("Address line 01 is required field"),
-        address_2_addresses: yup.string().required("Address line 02 is required field"),
-        country_addresses: yup.string().required("Country is required field"),
-        city_addresses: yup.string().required("City/Town is required field"),
+        tag: yup.string().required("Tag address is required field"),
+        address_1: yup.string().required("Address line 01 is required field"),
+        address_2: yup.string().required("Address line 02 is required field"),
+        country: yup.string().required("Country is required field"),
+        city: yup.string().required("City/Town is required field"),
 
-        phone_addresses: yup
+        phone: yup
             .number()
             .test("len", "Must be exactly 10 digits", (val) => val?.toString().length === 10)
             .required()
@@ -39,8 +38,7 @@ const schema = yup
     .required();
 
 const AddNewAddressModal = (props: IProp) => {
-
-    const { user, mutateUser, userIsLoading } = useUser();
+    const { user, mutateUser } = useUser();
 
     const router = useRouter();
     const { t } = useTranslation("common");
@@ -50,7 +48,6 @@ const AddNewAddressModal = (props: IProp) => {
     const cityList: { value: string; label: "string" }[] = t("addNewOrderPage.addressForm.CityOptions", { returnObjects: true });
 
     const [country, setCountry] = useState("LY");
-   
 
     const {
         register,
@@ -59,56 +56,55 @@ const AddNewAddressModal = (props: IProp) => {
         control,
         setValue,
         formState: { errors },
-    } = useForm<IAddressProps>({
+    } = useForm<Address & { default: "on" | "off" }>({
         defaultValues: {
-            // address_1_addresses: "V5RH+HVQ",
-            // address_2_addresses: "Amr Bin al A'ss St",
-            // city_addresses: "Tripoli",
-            // country_addresses: "Libya",
-            // default_addresses: "on",
-            // phone_addresses: 214441792,
-            // tag_addresses: "Al Mshket Hotel",
+            address_1: "Gold fields",
+            address_2: "Sheik street St",
+            city: "Tripoli",
+            country: "Libya",
+            default: "on",
+            phone: 214441792,
+            tag: "Al Mshket Hotel",
         },
         resolver: yupResolver(schema),
     });
 
-    const [addressIsDefault, setAddressIsDefault] = useState(user?.default_address_users === 1);
+    // const [addressIsDefault, setAddressIsDefault] = useState(user?.default_address_users === 1);
 
-    const toggleDefaultAddressHandler = () => {
-        setAddressIsDefault((prev) => !prev);
-    };
+    // const toggleDefaultAddressHandler = () => {
+    //     setAddressIsDefault((prev) => !prev);
+    // };
 
-    const onSubmit: SubmitHandler<IAddressProps> = async (data) => {
-        let address: any = { ...data };
-        delete address.default_addresses;
-        address.user_id = user?.id_users;
+    const onSubmit: SubmitHandler<Address & { default?: "on" | "off" }> = async (data) => {
+        if (user) {
+            let address = { ...data };
+            delete address.default;
 
-        //   console.log(address);
+            // console.log(address);
+            // console.log(data);
 
-        // add address
-        const addressResult = await fetchJson(`/api/addresses`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(address),
-        });
+            address.user = user;
 
-        // console.log(addressResult)
-        if (data.default_addresses === "on") {
-            const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
-                method: "PUT",
+            // add address
+            const addressResult = await fetchJson<Address>(`/api/addresses`, {
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ default_address_users: addressResult }),
+                body: JSON.stringify(address),
             });
-            if (user?.is_logged_in_users) {
-                // update user default
-                let newUserData = { ...user, default_address_user: addressResult };
-                mutateUser(newUserData, false);
-            }
-        }
+            // console.log(addressResult);
 
-        // console.log(result);
-        props.close();
-        props.update();
+            // set default if checked
+            if (data.default) {
+                const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ default_address: addressResult.id }),
+                });
+            }
+
+            props.close();
+            props.update();
+        }
     };
 
     return (
@@ -121,30 +117,30 @@ const AddNewAddressModal = (props: IProp) => {
                             <input
                                 id="tag_addresses"
                                 type="string"
-                                {...register("tag_addresses")}
+                                {...register("tag")}
                                 className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
                                 placeholder={inputFieldLabels[0]}
                             />
-                            {errors.tag_addresses && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{fieldErrors[0]}</p>}
+                            {errors.tag && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{fieldErrors[0]}</p>}
                         </div>
 
                         <ReactHookFormInput
                             label={inputFieldLabels[1]}
                             name="address_1_addresses"
                             type="string"
-                            register={register("address_1_addresses")}
-                            error={errors.address_1_addresses ? fieldErrors[1] : ""}
+                            register={register("address_1")}
+                            error={errors.address_1 ? fieldErrors[1] : ""}
                         />
                         <ReactHookFormInput
                             label={inputFieldLabels[2]}
                             name="address_2_addresses"
                             type="string"
-                            register={register("address_2_addresses")}
-                            error={errors.address_2_addresses ? fieldErrors[2] : ""}
+                            register={register("address_2")}
+                            error={errors.address_2 ? fieldErrors[2] : ""}
                         />
                         <div className="flex-type2 gap-x-[10px] w-full">
                             <Controller
-                                name="country_addresses"
+                                name="country"
                                 control={control}
                                 defaultValue="Libya"
                                 render={({ field: { onChange, value, ref } }) => (
@@ -153,7 +149,7 @@ const AddNewAddressModal = (props: IProp) => {
                                         value={value}
                                         onChange={onChange}
                                         setCountry={setCountry}
-                                        error={errors.country_addresses}
+                                        error={errors.country}
                                         dropDownIcon={{
                                             iconIsEnabled: true,
                                             iconSrc: "/lock.png",
@@ -184,10 +180,10 @@ const AddNewAddressModal = (props: IProp) => {
                                 name="city_addresses"
                                 type="string"
                                 IconEnabled={true}
-                                register={register("city_addresses")}
-                                error={errors.city_addresses ? fieldErrors[4] : ""}
+                                register={register("city")}
+                                error={errors.city ? fieldErrors[4] : ""}
                                 options={cityList}
-                                value={getValues("city_addresses")}
+                                value={getValues("city")}
                                 setValue={setValue}
                                 disabled={true}
                                 className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
@@ -206,17 +202,16 @@ const AddNewAddressModal = (props: IProp) => {
                             label={inputFieldLabels[5]}
                             name="phone_addresses"
                             type="number"
-                            register={register("phone_addresses")}
-                            error={errors.phone_addresses ? fieldErrors[5] : ""}
+                            register={register("phone")}
+                            error={errors.phone ? fieldErrors[5] : ""}
                         />
                         <div className="flex-type1 gap-x-[5px]">
                             <input
                                 type="radio"
                                 // defaultChecked={user?.default_address_users === }
-                                checked={addressIsDefault}
-                                onClick={toggleDefaultAddressHandler}
-                                {...register("default_addresses")}
-                                name="default_addresses"
+                                defaultChecked={true}
+                                {...register("default")}
+                                name="default"
                             />
 
                             <span>{inputFieldLabels[6]}</span>

@@ -1,19 +1,14 @@
 import React, { useEffect, useState ,useCallback} from "react";
-import Head from "next/head";
-import useOrders from "@/lib/useOrders";
+import useOrders from "@/lib/hooks/useOrders";
 import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { IOrderResponse } from "@/models/order.interface";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import { filter } from "@/lib/filter";
-import ReactPaginateComponent from "@/components/admin/ReactPaginate";
-import { ISearchKeyContext } from "@/models/SearchContextInterface";
-import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = [
   "Customer",
@@ -51,12 +46,12 @@ const Intransit = () => {
   }, []);
 
   const [allInTransitOrders, setallInTransitOrders] =
-    useState<IOrderResponse[]>();
+    useState<Order[]>();
 
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  const pageCount = Math.ceil(orders?.total_count! / itemsPerPage);
+  const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -77,7 +72,7 @@ const Intransit = () => {
       value,
       type,
       setSelectedOrder,
-     orders?.data,
+     orders,
       selectedOrder!
     );
   };
@@ -94,7 +89,7 @@ const Intransit = () => {
       <div>
         <InTransitPageHeader
           content="in-transit"
-          allLiveOrders={orders?.data!}
+          allLiveOrders={orders as Order[]}
           filterByDate={filterByCreatedDate}
           selectedOrder={selectedOrder}
           title="In-Transit | MazExpress Admin"
@@ -106,11 +101,11 @@ const Intransit = () => {
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders?.data && <BlankPage />}
-          {orders?.data && (
+          {!orders && <BlankPage />}
+          {orders && (
             <>
               <Table
-                rows={orders?.data!}
+                rows={orders as Order[]}
                 headings={tableHeaders}
                 type="in-transit"
                 onSelect={selectOrderHandler}
