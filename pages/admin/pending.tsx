@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import useOrders from "@/lib/hooks/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -6,12 +6,9 @@ import PendingPageHeader from "@/components/admin/PendingPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
-<<<<<<< HEAD
 import { Order } from "@/models/order.model";
-=======
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
->>>>>>> translate
 
 const tableHeaders = [
   "Customer",
@@ -50,20 +47,12 @@ const PendingOrders = () => {
 
   const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
-<<<<<<< HEAD
-  const currentPageHandler = (value: number) => {
-    setCurrentPage(value);
-  };
-  const itemPerPageHandler = useCallback((value: string | number) => {
-    setItemPerPage(value as number);
-=======
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
     };
     const itemPerPageHandler = useCallback((value: string | number) => {
       setCurrentPage(0)
       setItemPerPage(value as number);
->>>>>>> translate
   }, []);
 
   const filterByCreatedDate = (value: Date | string) => {

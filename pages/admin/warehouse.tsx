@@ -1,31 +1,23 @@
 import PageHeader from "@/components/common/PageHeader";
 import WarehouseCard from "@/components/admin/warehouse/WarehouseCard";
-<<<<<<< HEAD
 import useWarehouses from "@/lib/hooks/useWarehouses";
-import React, { useState } from "react";
 import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
 import { Warehouse } from "@/models/warehouse.model";
 
-
-const WarehousePage = () => {
-=======
-import useWarehouses from "@/lib/useWarehouses";
-import React, { useState,useEffect } from "react";
-import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
+import React, { useState, useEffect } from "react";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 
-const Warehouse = () => {
-  const router=useRouter();
->>>>>>> translate
+const WarehousePage = () => {
+  const router = useRouter();
   const { warehouses, mutateWarehouses } = useWarehouses();
 
   const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
-      console.log("use efft");
-      router.push(router.asPath, router.asPath, { locale: "en" });
+    console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
   const [showAddNewWarehouseModal, setShowAddNewWarehouseModal] =
     useState(false);
@@ -39,7 +31,13 @@ const Warehouse = () => {
       <PageHeader content="Warehouses" title="Warehouses | MazExpress Admin" />
       <div className="grid grid-cols-3 gap-3 py-5">
         {(warehouses as Warehouse[])?.map((data) => {
-          return <WarehouseCard key={data.id} address={data} update={mutateWarehouses} />;
+          return (
+            <WarehouseCard
+              key={data.id}
+              address={data}
+              update={mutateWarehouses}
+            />
+          );
         })}
       </div>
       <div>
@@ -59,18 +57,14 @@ const Warehouse = () => {
   );
 };
 
-<<<<<<< HEAD
 export default WarehousePage;
-=======
-export default Warehouse;
 export async function getStaticProps({ locale }: { locale: any }) {
   if (process.env.NODE_ENV === "development") {
-      await i18n?.reloadResources();
+    await i18n?.reloadResources();
   }
   return {
-      props: {
-          ...(await serverSideTranslations(locale, ["common"])),
-      },
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
   };
 }
->>>>>>> translate

@@ -13,6 +13,8 @@ import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 import AddButton from "@/components/common/AddButton";
 import AddNewAdminModal from "@/components/admin/modal/AddNewAdminModal";
+import useUsers from "@/lib/hooks/useUsers";
+import { User } from "@/models/user.model";
 
 const tableHeaders = [
   "Customer",
@@ -42,10 +44,17 @@ const AdminBase = () => {
     Date | string
   >("");
 
+  const { users, mutateUsers } = useUsers({
+    page: currentPage,
+    per_page: itemsPerPage,
+  });
+
+  const { users: totalUsersCount } = useUsers({ count_all: true, count: true });
+
   const [showAddNewAdminModal, setShowAddNewAdminModal] = useState(false);
 
   //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(allUser?.total_count / itemsPerPage);
+  const pageCount = Math.ceil((totalUsersCount as number) / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -63,36 +72,29 @@ const AdminBase = () => {
     setShowAddNewAdminModal((prev) => !prev);
   };
 
-  // const selectOrderHandler = (value: string, type: string) => {
-  //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
-  // };
-
-  // if (allUserIsLoading) {
-  //     return <LoadingPage />;
-  // }
-  if (error) {
-    return <div>some error happened</div>;
-  }
+//   if (error) {
+//     return <div>some error happened</div>;
+//   }
   return (
     <>
       <div>
         <UserbasePageHeader
           content="Admin Base"
-          allUsers={allUser?.data!}
+          allUsers={users as User[]}
           filterByDate={filterByCreatedDate}
           title="Admin Base | MazExpress Admin"
           pageCount={pageCount}
           currentPageHandler={currentPageHandler}
-          itemPerPageHandler={itemPerPageHandler!}
+        //   itemPerPageHandler={itemPerPageHandler!}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
         />
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!allUser?.data && <BlankPage />}
-          {allUser?.data && (
+          {!users && <BlankPage />}
+          {users && (
             <>
               <Table
-                rows={allUser.data}
+                rows={users as User[]}
                 headings={tableHeaders}
                 type="user_base"
               />
