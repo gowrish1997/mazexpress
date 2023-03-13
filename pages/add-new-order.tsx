@@ -174,9 +174,9 @@ const AddNewOrder = () => {
         </div>
         <div className="grid grid-cols-3 gap-3 py-5">
           {addressesIsLoading && <div>loading addresses...</div>}
-          {addresses?.data &&
-            addresses?.data !== null &&
-            (addresses?.data as Address[]).map((data: Address) => {
+          {addresses &&
+            addresses !== null &&
+            (addresses as Address[]).map((data: Address) => {
               return (
                 <UserSavedAddress
                   key={data.id}
