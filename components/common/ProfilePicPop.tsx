@@ -4,8 +4,9 @@ import useUser from "@/lib/hooks/useUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
-import axios from "axios";
-import fetchJson from "@/lib/fetchServer";
+import fetchServer from "@/lib/fetchServer";
+import { APIResponse } from "@/models/api.model";
+import { User } from "@/models/user.model";
 
 interface IProp {
   show: boolean;
@@ -22,17 +23,17 @@ const ProfilePicPop = (props: IProp) => {
 
   const deleteImage = async () => {
     // set back to default image
-    let updatedUser = user!
+    let updatedUser = user!;
 
     updatedUser.avatar_url = "default_user.png";
-    await fetchJson(`/api/users?id=${user?.id}`, {
+    await fetchServer(`/api/users?id=${user?.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ avatar_url: "default_user.png" }),
     });
   };
 
-  const updateUserImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const updateUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       // dev
       console.log(e.target.files[0]);
@@ -44,31 +45,22 @@ const ProfilePicPop = (props: IProp) => {
       console.log(fileName);
 
       // send file to api to write
-      axios
-        .post(
-          "/api/upload-user-image",
-          {
-            image: e.target.files[0],
-            userId: user?.id,
-            name: fileName,
-          },
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        )
-        .then(async (response) => {
-          if (response.status === 200) {
-            // mutate user with new user data
-            // setValue("avatar_url_users", fileName);
-            let updatedUser = { ...user };
-            updatedUser.avatar_url = fileName;
-            await fetchJson(`/api/users?id=${user?.id}`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ avatar_url: fileName }),
-            });
-          }
-        });
+      const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
+        headers: { "Content-Type": "multipart/form-data" },
+        method: "POST",
+        body: JSON.stringify({
+          image: e.target.files[0],
+          userId: user?.id,
+          name: fileName,
+        }),
+      });
+      const updatedUser: APIResponse<User> = await fetchServer(
+        `/api/user?id=${user?.id}`
+      );
+      if (updatedUser && updatedUser.count && updatedUser.count > 0) {
+        // there is new user
+        await mutateUser((updatedUser?.data as User[])?.[0]);
+      }
     }
   };
   return (

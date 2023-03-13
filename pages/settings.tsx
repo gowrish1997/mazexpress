@@ -14,6 +14,7 @@ import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
 import { User } from "@/models/user.model";
+import { getUserImageString } from "@/lib/utils";
 
 const schema = yup
   .object({
@@ -67,7 +68,7 @@ const Settings = () => {
   });
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     reset({ ...user, password: "" });
   }, [user, reset]);
 
@@ -172,11 +173,7 @@ const Settings = () => {
                   onClick={toggleProfilePicPop}
                 >
                   <Image
-                    src={
-                      user?.avatar_url?.startsWith("http")
-                        ? user?.avatar_url!
-                        : "/user-images/" + user?.avatar_url!
-                    }
+                    src={getUserImageString(user?.avatar_url)}
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}
