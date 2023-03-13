@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
-const mjml = () => {
+const registerSample = () => {
     const [htmlCode, setHtmlCode] = useState("");
+    const [toList, setToList] = useState([
+        {
+            type: "register",
+            toType: "admin",
+            header: "New User joined ✨",
+            name: "admin",
+            userName: "",
+            userProfile: "",
+            userContactNumber: "",
+            userEmail: "",
+        },
+    ]);
+
     const sendMailHanlder = () => {
         axios
-            .post("/api/emailTemplate")
+            .post("/api/mjmlreact")
             .then((data) => {
                 console.log(data.data.body.html);
                 setHtmlCode(data.data.body.html);
@@ -24,4 +37,4 @@ const mjml = () => {
     );
 };
 
-export default mjml;
+export default registerSample;

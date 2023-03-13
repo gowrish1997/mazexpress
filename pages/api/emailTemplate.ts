@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mjml2html from "mjml";
 import nodemailer from "nodemailer";
+
 type Data = {
     name: string;
 };
@@ -18,52 +19,106 @@ const htmlOutput = mjml2html(`
     <mjml>
     <mj-head>
     <mj-attributes>
-      <mj-text padding="0" letter-spacing="0.2px" font-style="normal" />
-    
+      <mj-text padding="0" letter-spacing="0.2px" font-style="normal" font-family= "manRope" />
+      <mj-button   letter-spacing="0.2px" font-style="normal" font-family= "manRope" color="#FFFFFF" padding="10px" />
+      <mj-class name="content_text" color="#384860" font-size="16px" line-height="24px" mjml-margin="20px" />
+      <mj-class name="footer_text" color="#202B3C" font-size="16px" line-height="24px" mjml-margin="20px" />
+      
     </mj-attributes>
     <mj-style>
-    td {
-      padding:0px !important;
-    }
-  </mj-style>
+.header td {
+  padding-top:0px !important;
+  padding-left:0px !important;
+  padding-right:0px !important;
+  padding-bottom:20px !important;
+}
+
+
+</mj-style>
+
+   
   </mj-head>
     <mj-body > 
   
 
    
-    <mj-section background-color="#F8FDFF" padding="30px" >
-
-<mj-section justify="space-between" >
-
-
-<mj-column  >
-<mj-image align="left" width="100px" src="http://191n.mj.am/img/191n/3s/x0l.png"></mj-image>
-
+    <mj-section background-color="#F8FDFF" padding="30px"  >
+    <mj-section css-class="header">
+<mj-column >
+<mj-image align="left" width="158px" height="44px" src='/email_logo.png'></mj-image>
 </mj-column>
+
+</mj-section>
+<mj-section background-color="#FFFFFF" padding="10px"  >
 <mj-column>
 
-<mj-section justify="space-between" >
-<mj-group>
-<mj-column  >
-<mj-image  src="http://191n.mj.am/img/191n/3s/x0l.png"></mj-image>
+
+<mj-text  align="left" color="#121A26" font-size="20px" line-height="30px"  >
+Welcome to Maz Express
+</mj-text>
+
+
+<mj-text  align="left" mj-class="content_text" padding-top="20px" >
+Hi alex,
+</mj-text>
+<mj-text  align="left" mj-class="content_text" padding-top="20px">
+We’re excited to welcome you to Untitled and we’re even more excited about what we’ve got planned. You’re already on your way get your products delivered.
+</mj-text>
+<mj-text  align="left" mj-class="content_text" padding-top="20px">
+Thanks
+</mj-text>
+<mj-text  align="left" mj-class="content_text">
+Maz team
+</mj-text>
+
+
+
+<mj-button  padding-left="0px" padding-bittom="0px" padding-left="0px" align="left font-family="manRope" background-color="#35C6F4" >Click me</mj-button>
 
 </mj-column>
-<mj-column  >
-<mj-image  src="http://191n.mj.am/img/191n/3s/x0l.png"></mj-image>
-
-</mj-column>
-<mj-column  >
-<mj-image  src="http://191n.mj.am/img/191n/3s/x0l.png"></mj-image>
-
-</mj-column>
-</mj-group>
 </mj-section>
 
 
+<mj-section>
+<mj-column>
+
+
+
+<mj-text  align="left" mj-class="footer_text">
+<mj-if condition="${false}">
+Questions or faq? Contact us at faq@mazexpress.com. If you'd rather not receive this kind of email, Don’t want any more emails from Maz? Unsubscribe.
+<mj-else>
+g
+</mj-else>
+</mj-if>
+</mj-text>
+
+
+<mj-text  align="left" mj-class="footer_text" padding-top="20px">
+
+
+100 Smith Street, Melbourne VIC 3000
+© 2022 Mazexpress
+</mj-text>
+
+
 
 </mj-column>
-
-
+</mj-section>
+<mj-section>
+<mj-column>
+  <mj-social font-size="15px" icon-size="30px" mode="horizontal">
+    <mj-social-element name="facebook" href="https://mjml.io/">
+    
+    </mj-social-element>
+    <mj-social-element name="instagram" href="https://mjml.io/">
+    
+    </mj-social-element>
+    <mj-social-element  name="twitter" href="https://mjml.io/">
+   
+    </mj-social-element>
+  </mj-social>
+</mj-column>
 </mj-section>
 
 </mj-section>
@@ -78,7 +133,7 @@ const mailData =
     {
         from: "test@example.com",
         to: "teste@xample.com",
-        subject: `New feedback from maz express`,
+        subject: `New Message from maz express team`,
         // text: `your odder  `,
         // html: `<p>${mailBody()}</p>`,
     };

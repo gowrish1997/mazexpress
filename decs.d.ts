@@ -4,3 +4,4 @@ declare module "react-languages-select";
 declare module 'file-saver';
 declare module 'mjml'
 declare module 'nodemailer'
+declare module 'mjml-react'

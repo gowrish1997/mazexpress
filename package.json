@@ -34,6 +34,7 @@
     "iron-session": "^6.3.1",
     "knex": "^2.4.2",
     "mjml": "^4.13.0",
+    "mjml-react": "^2.0.8",
     "moment": "^2.29.4",
     "multiparty": "^4.2.3",
     "mysql": "^2.18.1",

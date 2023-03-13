@@ -19,6 +19,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/customHook", "next-i18next.config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/customHook", "next-i18next.config.js", "pages/api/mjmlreact.js"],
   "exclude": ["node_modules"]
 }
