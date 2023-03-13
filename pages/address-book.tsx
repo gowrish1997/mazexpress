@@ -1,60 +1,84 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
-import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
-import useAddresses from "@/lib/useAddresses";
-import useUser from "@/lib/useUser";
-import { IAddressProps } from "@/models/address.interface";
-import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
+import useAddresses from "@/lib/hooks/useAddresses";
+import useUser from "@/lib/hooks/useUser";
+import { createToast } from "@/lib/toasts";
+import UserSavedAddress from "@/components/orders/UserSavedAddress";
+import { Address } from "@/models/address.model";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
-  const [editableAddress, setEditableAddress] = useState<IAddressProps>();
+  // const [editableAddress, setEditableAddress] = useState<IAddressProps>();
 
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
-    userId: user?.id_users,
+    user_id: user?.id,
   });
 
   const toggleAddNewAddressModal = () => {
     setShowAddNewAddressModal((prev) => !prev);
   };
 
-  const toggleEditUserAddressModal = (addressId?: number) => {
+  const toggleEditUserAddressModal = (addressId?: string) => {
     if (showEditUserAddressModal) {
       setShowEditUserAddressModal(false);
     } else {
       setShowEditUserAddressModal(true);
-      const address = addresses?.find((data) => {
-        return data.id_addresses == addressId;
-      });
-      setEditableAddress(address);
+      // const address = addresses?.find((data) => {
+      //   return data.id == addressId;
+      // });
+      // setEditableAddress(address);
     }
   };
+
+  const updateAddresses = () => {
+    createToast({
+      type: "success",
+      message: "Created new address.",
+      timeOut: 2000,
+      title: "Success",
+    });
+    mutateAddresses();
+  };
+
+  const updateUserAndAddresses = async () => {
+    console.log("updating user and addresses");
+    await mutateAddresses();
+    await mutateUser();
+  };
+
+  useEffect(() => {
+    console.log('running side effect')
+    console.log(user)
+  }, [user, addresses])
 
   return (
     <>
       <PageHeader content="My Address Book" title="Address Book | MazExpress" />
-      <div className="grid grid-cols-3 gap-3 py-5">
-        {addresses &&
-          addresses
-            ?.filter((el) => el.status_addresses === 1)
-            .map((data) => {
+      {addresses?.count === 0 ? (
+        <div className="py-5">No addresses yet. Add new address now!</div>
+      ) : (
+        <div className="grid grid-cols-3 gap-3 py-5">
+          {addressesIsLoading && <div>loading</div>}
+          {addresses?.data &&
+            addresses.data.map((data) => {
               return (
                 <UserSavedAddress
-                  key={data.id_addresses}
-                  address={data}
+                  key={(data as Address).id}
+                  address={data as Address}
                   edit={toggleEditUserAddressModal}
-                  update={mutateAddresses}
+                  update={updateUserAndAddresses}
                 />
               );
             })}
-      </div>
+        </div>
+      )}
       <div>
         <button
-          className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"
+          className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"
           onClick={toggleAddNewAddressModal}
         >
           + Add New
@@ -64,16 +88,16 @@ const AddressBook = () => {
       <AddNewAddressModal
         show={showAddNewAddressModal}
         close={toggleAddNewAddressModal}
-        update={mutateAddresses}
+        update={updateUserAndAddresses}
       />
-      {showEditUserAddressModal && (
+      {/* {showEditUserAddressModal && (
         <EditUserAddressModal
           update={mutateAddresses}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
-          address={editableAddress!}
+          // address={editableAddress!}
         />
-      )}
+      )} */}
     </>
   );
 };

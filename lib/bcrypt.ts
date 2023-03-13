@@ -1,7 +1,5 @@
 import bcrypt from "bcrypt";
 
-const myPlaintextPassword = "s0//P4$$w0rD";
-const someOtherPlaintextPassword = "not_bacon";
 
 function hashPassword(password: string): string {
   const saltRounds = 10;

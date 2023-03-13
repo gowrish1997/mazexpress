@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
-import ReactDropdown from "../common/ReactDropdown";
-import FilterOptionDropDown from "./FilterOptionDropDown";
-import { IUser } from "@/models/user.interface";
 import SendNotificatonConfirmModal from "./modal/SendNotificatonConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
+import ReactPaginateComponent from "./ReactPaginate";
+import { User } from "@/models/user.model";
+
 interface IProp {
   content: string;
   title?: string;
   selectedUser?: number[];
-  allUsers: IUser[];
+  allUsers: User[];
   filterByDate: (value: Date | string) => void;
+  pageCount: number;
+  currentPageHandler: (value: number) => void;
+  itemsPerPage: number;
+  currentPage: number;
+  // filterByUser:(value:string)=>void
 }
-
-const adminOption = ["Send notificatons"];
 
 const UserbasePageHeader = (props: IProp) => {
   const [
@@ -46,13 +48,16 @@ const UserbasePageHeader = (props: IProp) => {
           allLiveOrders={props.allUsers}
           filterByDate={props.filterByDate}
         />
+        <ReactPaginateComponent
+          pageCount={props.pageCount}
+          currentPageHandler={props.currentPageHandler}
+          itemsPerPage={props.itemsPerPage}
+          currentPage={props.currentPage}
+        />
         {props.allUsers && props.allUsers.length > 0 && (
           <div className="flex-type1 space-x-[10px]  ">
-            {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
-            {/* <FilterOptionDropDown options={warehousesDropDownOptoin} /> */}
             <AdminOptionDropDown
               orders={props.allUsers}
-              option={adminOption}
               toggle={toggleSendNotificatoinConfirmModal}
               disabled={!props.selectedUser?.length}
             />

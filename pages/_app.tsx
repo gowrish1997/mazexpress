@@ -1,37 +1,38 @@
 import "@/styles/globals.css";
+import React from "react";
 import type { AppProps } from "next/app";
 import Frame from "@/components/common/Frame";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
 import "react-notifications/lib/notifications.css";
-import { NotificationContainer } from "react-notifications";
 import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { NotificationContainer } from "react-notifications";
 
+import "reflect-metadata";
 config.autoAddCss = false;
 
 export default function App({
   Component,
-  // pageProps: { session, ...pageProps },
-  pageProps,
-}: AppProps) {
+  pageProps: { session, ...pageProps },
+}: // pageProps,
+AppProps) {
   const router = useRouter();
-
   if (router.pathname.startsWith("/auth/gate")) {
     // no frame
     return (
       <SWRConfig
         value={{
           fetcher: fetchJson,
-          onError: (err: FetchError) => {
+          onError: (err) => {
             createToast({
               type: "error",
               title: err.name,
               message: err.message,
               timeOut: 3000,
             });
-            // console.error(err);
+            console.error(err);
           },
         }}
       >
@@ -51,11 +52,17 @@ export default function App({
             message: err.message,
             timeOut: 3000,
           });
-          // console.error(err);
+          console.error(err);
         },
       }}
     >
       <Frame>
+        {/* <Script
+            src="https://accounts.google.com/gsi/client"
+            // strategy="beforeInteractive"
+            // onLoad={() => console.log('loaded')}
+            // onError={(err) => console.log(err)}
+          /> */}
         <Component {...pageProps} />
         <NotificationContainer />
       </Frame>

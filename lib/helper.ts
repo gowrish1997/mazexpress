@@ -17,12 +17,15 @@ const dataOptions = {
   day: "numeric",
 };
 
-const getDateInStringFormat = (date: any) => {
+const getDateInStringFormat = (date: Date) => {
+  console.log(date)
+  
   if (date) {
     const stringDate = new Date(date).toLocaleDateString(
       "en-US",
       dataOptions as any
     );
+    console.log('date',stringDate)
     const data = stringDate.replace(",", "");
     return data;
   }
@@ -33,28 +36,8 @@ const capitalizeFirstLetter = (s: string): string => {
   return newString;
 };
 
-const capitalizeAllFirstLetters = () => {};
-
-const mazID = (city: string) => {
-  // format BNG-MAZ-
-  let append = nanoid();
-
-  switch (city) {
-    case "Tripoli":
-      return "TRI" + "-MAZ-" + append;
-    case "Benghazi":
-      return "BNG" + "-MAZ-" + append;
-    case "Misrata":
-      return "MIS" + "-MAZ-" + append;
-    default:
-      return "TRI" + "-MAZ-" + append;
-  }
-};
-
 export {
   capitalizeFirstLetter,
-  capitalizeAllFirstLetters,
   getDateInStringFormat,
   getTimeInHourAndMinuteFormat,
-  mazID,
 };

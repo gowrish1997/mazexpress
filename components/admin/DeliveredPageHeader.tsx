@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import Head from "next/head";
-import Image from "next/image";
-import ReactDropdown from "../common/ReactDropdown";
-import { IOrderResponse } from "@/models/order.interface";
 import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
+import ReactPaginateComponent from "./ReactPaginate";
+import { Order } from "@/models/order.model";
+
 interface IProp {
   content: string;
   title?: string;
   selectedOrder?: string[];
-  allLiveOrders: IOrderResponse[];
+  allLiveOrders: Order[];
   filterByDate: (value: Date | string) => void;
+  pageCount: number;
+  currentPageHandler: (value: number) => void;
+  itemsPerPage: number;
+  currentPage: number;
+  itemPerPageHandler?: (value: string | number) => void;
+  // filterById:(value:string)=>void
 }
 
 const DeliveredPageHeader = (props: IProp) => {
@@ -32,10 +38,27 @@ const DeliveredPageHeader = (props: IProp) => {
           allLiveOrders={props.allLiveOrders}
           filterByDate={props.filterByDate}
         />
+        <ReactPaginateComponent
+          pageCount={props.pageCount}
+          currentPageHandler={props.currentPageHandler}
+          itemsPerPage={props.itemsPerPage}
+          currentPage={props.currentPage}
+        />
         {props.allLiveOrders && props.allLiveOrders.length > 0 && (
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown   /> */}
-            <FilterOptionDropDown options={warehousesDropDownOptoin} />
+            {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+            {/* <MazStatsDropddown
+              options={perPageOptions}
+              type="per_page"
+              onChange={props.itemPerPageHandler!}
+              className="h-[38px] px-[10px]"
+              itemsPerPage={props.itemsPerPage}
+            /> */}
+            <FilterOptionDropDown
+              options={warehousesDropDownOptoin}
+              type="warehouse"
+            />
 
             <AdminOptionDropDown orders={props.allLiveOrders} />
           </div>

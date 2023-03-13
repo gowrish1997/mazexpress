@@ -1,8 +1,6 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import * as yup from "yup";
-import useUser from "@/lib/useUser";
-import { INotificationForm } from "@/models/notification.interface";
+import useUser from "@/lib/hooks/useUser";
 import attachLogo from "@/public/pin_icon.png";
 import uploadIcon from "@/public/upload_icon.png";
 import Image from "next/image";
@@ -27,10 +25,10 @@ interface IProp {
 //   .required();
 
 const CreateNotificationModal = (props: IProp) => {
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const [showFileInputModal, setShowFileInputModal] = useState<boolean>(false);
   const [files, setFiles] = useState<any>([]);
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([])
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileUploadTriggerRef = useRef<HTMLButtonElement>(null);
@@ -41,7 +39,7 @@ const CreateNotificationModal = (props: IProp) => {
     getValues,
     control,
     formState: { errors },
-  } = useForm<INotificationForm>({
+  } = useForm<any>({
     defaultValues: {},
     // resolver: yupResolver(schema),
   });
@@ -52,26 +50,26 @@ const CreateNotificationModal = (props: IProp) => {
     setReusable((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<INotificationForm> = async (data) => {
+  const onSubmit: SubmitHandler<any> = async (data) => {
     console.log(data);
-    console.log(files);
+    // console.log(files);
 
     // multiparty here
     axios
-    .post(
-      "/api/notifications",
-      {
-        data: data,
-        files: files,
-        users: selectedUsers
-      },
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    ).then(response => {
-      console.log(response.data)
-    })
-    
+      .post(
+        "/api/notifications",
+        {
+          data: data,
+          files: files,
+          users: selectedUsers,
+        },
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+      });
 
     // console.log(fileInputRef.current?.files)
     props.close();
@@ -84,7 +82,7 @@ const CreateNotificationModal = (props: IProp) => {
   };
 
   const uploadFilesHandler: any = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     fileInputRef.current?.click();
   };
 
@@ -94,7 +92,7 @@ const CreateNotificationModal = (props: IProp) => {
   };
 
   const toggleFileInputHandler = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     // console.log("open");
     setShowFileInputModal((prev) => !prev);
   };
@@ -104,9 +102,9 @@ const CreateNotificationModal = (props: IProp) => {
   };
 
   const updateSelectedUsers = (list: number[]) => {
-    console.log(list)
-    setSelectedUsers(list)
-  }
+    console.log(list);
+    setSelectedUsers(list);
+  };
 
   useEffect(() => {
     console.log(files);
@@ -139,7 +137,7 @@ const CreateNotificationModal = (props: IProp) => {
                 htmlFor={"content_notifications"}
                 className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] "
               >
-                Describe Message
+                Message
               </label>
               <div
                 className={
@@ -158,7 +156,7 @@ const CreateNotificationModal = (props: IProp) => {
               </div>
               {errors.content_notifications && (
                 <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                  {errors.content_notifications.message}
+                  
                 </p>
               )}
             </div>
@@ -203,8 +201,6 @@ const CreateNotificationModal = (props: IProp) => {
                       style={{ display: "none" }}
                       ref={fileInputRef}
                       onChange={fileInputChangeHandler}
-                      //   {...register('files_notifications')}
-                      //   name="files_notifications"
                     />
                     <button
                       className="bg-[#3672DF] text-[14px] font-[600] text-white px-5 py-2 rounded"

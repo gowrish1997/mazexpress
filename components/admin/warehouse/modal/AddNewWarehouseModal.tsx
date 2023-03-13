@@ -2,87 +2,75 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { IAddressProps } from "@/models/address.interface";
 import CountrySelector from "@/components/common/CountrySelector";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
-import fetchJson from "@/lib/fetchJson";
-import { IWarehouseProps } from "@/models/warehouse.interface";
+import { Warehouse, WarehouseStatus } from "@/models/warehouse.model";
+import fetchJson from "@/lib/fetchServer";
 
 interface IProp {
   show: boolean;
   close: () => void;
-  update: () => Promise<IWarehouseProps[] | undefined>;
+  update: () => Promise<any | undefined>;
 }
 
 const schema = yup
   .object({
-    address_1_addresses: yup.string().required(),
-    address_2_addresses: yup.string().required(),
+    address_1: yup.string().required(),
+    address_2: yup.string().required(),
   })
   .required();
 
 const AddNewWarehouseModal = (props: IProp) => {
   const [country, setCountry] = useState("LY");
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const {
     register,
     handleSubmit,
     getValues,
     control,
     formState: { errors },
-  } = useForm<IAddressProps>({
+  } = useForm<Warehouse & { active: "on" | "off" }>({
     defaultValues: {
-      // address_1_addresses: "V5RH+HVQ",
-      // address_2_addresses: "Amr Bin al A'ss St",
-      // city_addresses: "Tripoli",
-      // country_addresses: "Libya",
-      // default_addresses: "on",
-      // phone_addresses: 214441792,
-      // tag_addresses: "Al Mshket Hotel",
+      address_1: "plaza st.",
+      address_2: "jacobscreek",
+      city: "istanbul",
+      country: "turkey",
+      active: "on",
+      phone: 214441792,
+      tag: "Main",
     },
     // resolver: yupResolver(schema),
   });
 
-  const [addressIsDefault, setAddressIsDefault] = useState(
-    user?.default_address_users === 1
-  );
+  const [warehouseIsActive, setWarehouseIsActive] = useState(true);
 
-  const toggleDefaultAddressHandler = () => {
-    setAddressIsDefault((prev) => !prev);
+  const toggleActiveHandler = () => {
+    setWarehouseIsActive((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<IAddressProps> = async (data) => {
+  const onSubmit: SubmitHandler<Warehouse & {active?: "on" | "off"}> = async (data) => {
     // let address: any = { ...data };
-    // delete address.default_addresses;
+    // delete address.default;
     // address.user_id = user?.id_users;
 
-      console.log(data);
+    // console.log(data);
+    
+    let warehouse = {...data}
+    warehouse.status = data.active === 'on' ? WarehouseStatus.A : WarehouseStatus.I 
+    delete warehouse.active
+    // await warehouse.save()
+    // console.log(warehouse)
 
-    // add address
-    // const addressResult = await fetchJson(`/api/addresses`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(address),
-    // });
+    const response = await fetchJson("/api/warehouses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(warehouse),
+    });
 
-    // console.log(addressResult)
-    // if (data.default_addresses === "on") {
-    //   const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ default_address_users: addressResult }),
-    //   });
-    //   if (user?.is_logged_in_users) {
-    //     // update user default
-    //     let newUserData = { ...user, default_address_user: addressResult };
-    //     mutateUser(newUserData, false);
-    //   }
-    // }
-
-    // console.log(result);
-    // props.close();
-    // props.update();
+    console.log(response);
+    props.close();
+    props.update();
   };
 
   return (
@@ -97,36 +85,36 @@ const AddNewWarehouseModal = (props: IProp) => {
               Add New Warehouse
             </p>
             <input
-              id="tag_addresses"
+              id="tag"
               type="string"
-              {...register("tag_addresses")}
+              {...register("tag")}
               className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give first title @Home"
             />
             <ReactHookFormInput
               label="Address line 01"
-              name="address_1_addresses"
+              name="address_1"
               type="string"
-              register={register("address_1_addresses")}
+              register={register("address_1")}
             />
             <ReactHookFormInput
               label="Address line 02"
-              name="address_2_addresses"
+              name="address_2"
               type="string"
-              register={register("address_2_addresses")}
+              register={register("address_2")}
             />
             <div className="flex-type2 space-x-[10px] w-full">
               <Controller
-                name="country_addresses"
+                name="country"
                 control={control}
-                defaultValue="Libya"
+                defaultValue="Turkey"
                 render={({ field: { onChange, value, ref } }) => (
                   <CountrySelector
                     label="Country"
                     value={value}
                     onChange={onChange}
                     setCountry={setCountry}
-                    error={errors.country_addresses}
+                    // error={errors.country}
                     dropDownIcon={{
                       iconIsEnabled: true,
                       iconSrc: "/lock.png",
@@ -136,10 +124,10 @@ const AddNewWarehouseModal = (props: IProp) => {
               />
               <CustomDropDown
                 label="City/Town"
-                name="city_addresses"
-                value={["Tripoli", "Benghazi", "Misrata"]}
-                register={register("city_addresses")}
-                error={errors.city_addresses}
+                name="city"
+                value={["Istanbul"]}
+                register={register("city")}
+                // error={errors.city}
                 dropDownIcon={{
                   iconIsEnabled: true,
                   iconSrc: "/downwardArrow.png",
@@ -148,27 +136,27 @@ const AddNewWarehouseModal = (props: IProp) => {
             </div>
             <ReactHookFormInput
               label="Mobile Number"
-              name="phone_addresses"
+              name="phone"
               type="number"
-              register={register("phone_addresses")}
+              register={register("phone")}
             />
             {/* <ReactHookFormInput
               label="Email ID"
-              name="address_1_addresses"
+              name="address_1"
               type="string"
-              register={register("address_1_addresses")}
+              register={register("address_1")}
             /> */}
             <div className=".flex-type1 space-x-[5px]">
               <input
                 type="radio"
-                // defaultChecked={user?.default_address_users === }
-                checked={addressIsDefault}
-                onClick={toggleDefaultAddressHandler}
-                {...register("default_addresses")}
-                name="default_addresses"
+                // defaultChecked={warehouseIsActive}
+                checked={warehouseIsActive}
+                onClick={toggleActiveHandler}
+                {...register("active")}
+                name="active"
               />
 
-              <span>Set as Default</span>
+              <span>Set as Active</span>
             </div>
             <div className="flex-type1 space-x-[10px] mt-[5px] ">
               <button

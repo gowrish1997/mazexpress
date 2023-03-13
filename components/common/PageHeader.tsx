@@ -1,15 +1,9 @@
 import Head from "next/head";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Calendar from "react-calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleDown,
-  faAngleLeft,
-  faAngleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
-import useUser from "@/lib/useUser";
-import useTrackings from "@/lib/useTrackings";
 import ClickOutside from "@/components/common/ClickOutside";
 interface IProp {
   content: string;
@@ -19,11 +13,6 @@ interface IProp {
 }
 const PageHeader = (props: IProp) => {
   let trigger = useRef(null);
-
-  const { user, mutateUser, userIsLoading } = useUser();
-  const { tracking, trackingIsLoading } = useTrackings({
-    user_id: user?.id_users,
-  });
 
   const [showCalender, setShowCalender] = useState<boolean>(false);
   const [allOrderDeliveryDate, setAllOrderDeliveryDate] = useState<

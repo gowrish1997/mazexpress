@@ -1,57 +1,38 @@
-import { IUser } from "@/models/user.interface";
-import { withSessionRoute } from "@/lib/config/withSession";
-import { db } from "@/lib/db";
+//==========================
+//     written by: raunak
+//==========================
+
+import { withIronSessionApiRoute } from "iron-session/next";
+import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
-import bcrypt from "bcrypt";
-import { updateUser } from "@/lib/setters";
+import fetchJson from "@/lib/fetchServer";
 
-// const VALID_EMAIL = "test@gmail.com";
-// const VALID_PASSWORD = "password";
+export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
-export default withSessionRoute(createSessionRoute);
+async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    // get user from db
 
-async function createSessionRoute(req: NextApiRequest, res: NextApiResponse) {
-  return new Promise((resolve, reject) => {
-    if (req.method === "POST") {
-      const { email, password } = req.body;
-      // console.log(email, password);
-      console.log(req.session);
-      // get user from db from pass and username
-      try {
-        db("users")
-          .where("email_users", email)
-          .first()
-          .then(async (data: IUser) => {
-            // check if pass is same
-            const match = bcrypt.compareSync(password, data.password_users!);
+    // const {
+    //   data: { login, avatar_url },
+    // } = await octokit.rest.users.getByUsername({ username });
 
-            if (match) {
-              // login with user
-              req.session.user = data;
-              req.session.user.is_logged_in_users = 1;
-              await req.session.save();
-              console.log(req.session);
-              
-              await updateUser(data.id_users, { is_logged_in_users: 1 });
-              delete data.password_users;
-              res.json(data);
-              resolve(data);
-              return;
-            } else {
-              res.status(403).send("");
-              reject();
-              return;
-            }
-          });
-      } catch (error) {
-        res.status(500).json({ message: (error as Error).message });
-        reject();
-        return;
-      }
+    // const user = { isLoggedIn: true, login, avatarUrl: avatar_url } as User;
+    const validUser = await fetchJson(`/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req.body),
+    });
+
+    // console.log(validUser);
+    if (validUser.data) {
+      req.session.user = validUser.data;
+      await req.session.save();
+      res.json(validUser);
     } else {
-      res.status(404).send("");
-      reject();
-      return;
+      res.status(200).json({ msg: validUser.msg, data: validUser.data });
     }
-  });
+  } catch (error) {
+    res.status(500).json({ message: (error as Error).message });
+  }
 }

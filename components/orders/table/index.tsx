@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import LineItem from "./LineItem";
 import { nanoid } from "nanoid";
 import LiveOrderLineItem from "./LiveOrderLineItem";
-import { IOrderResponse } from "@/models/order.interface";
-import { IUser } from "@/models/user.interface";
 import TableHeader from "./TableHeader";
 import UserLineItem from "./UserLineItem";
+import StatLineItem from "./StatLineItem";
+import { Order } from "@/models/order.model";
+import { User } from "@/models/user.model";
+
 interface TableProps {
   headings: Array<string>;
-  rows: Array<IOrderResponse> | Array<IUser>;
+  rows: Array<Order> | Array<User>;
   type: string;
   onSelect?: (e: any, type: string) => void;
   selectedOrder?: string[] | number[];
-  filterById?: (value: string) => void;
 }
 
 const Table = (props: TableProps) => {
@@ -27,6 +28,8 @@ const Table = (props: TableProps) => {
       return "live_order_table";
     } else if (props.type == "user_base") {
       return "user_table";
+    } else if (props.type == "stat_table") {
+      return "stat_table";
     } else {
       return "order_table";
     }
@@ -39,7 +42,6 @@ const Table = (props: TableProps) => {
           <TableHeader
             type={props.type}
             headings={props.headings}
-            filterById={props.filterById!}
             onSelect={props.onSelect!}
           />
           <tbody className="">
@@ -56,26 +58,35 @@ const Table = (props: TableProps) => {
                       <LiveOrderLineItem
                         key={nanoid()}
                         onSelect={props.onSelect!}
-                        row={data as IOrderResponse}
+                        row={data as Order}
                         type={props.type}
                         selectedOrder={props.selectedOrder as string[]}
+                      />
+                    );
+                  } else if (props.type == "stat_table") {
+                    return (
+                      <StatLineItem
+                        key={nanoid()}
+                        onSelect={props.onSelect!}
+                        row={data as Order}
+                        type={props.type}
                       />
                     );
                   } else if (props.type == "user_base") {
                     return (
                       <UserLineItem
                         key={nanoid()}
-                        row={data as IUser}
+                        row={data as User}
                         type={props.type}
                         onSelect={props.onSelect!}
-                        selectedOrder={props.selectedOrder as number[]}
+                        selectedOrder={props.selectedOrder as string[]}
                       />
                     );
                   } else {
                     return (
                       <LineItem
                         key={nanoid()}
-                        row={data as IOrderResponse}
+                        row={data as Order}
                         type={props.type}
                       />
                     );

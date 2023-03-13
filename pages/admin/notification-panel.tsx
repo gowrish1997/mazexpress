@@ -1,56 +1,60 @@
 import ConfigCard from "@/components/admin/notification-panel/ConfigCard";
 import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import PageHeader from "@/components/common/PageHeader";
-import { INotificationConfig } from "@/models/notification.interface";
-import { nanoid } from "nanoid";
-import React, { useEffect, useState } from "react";
-
-let hard_data: INotificationConfig[] = [
-  {
-    title: "Shipments Arrival Notification",
-    is_enabled: true,
-    desc: "Turn this on to notify the subscribed users in list when shipment has reached the Istanbul warehouse.",
-    id: nanoid(),
-  },
-  {
-    title: "Delivered Notification",
-    is_enabled: false,
-    desc: "Turn this on to notify the subscribed users in list when shipment has been delivered.",
-    id: nanoid(),
-  },
-  {
-    title: "Welcome Notifications",
-    is_enabled: false,
-    desc: "Turn this on to send a welcome message to all users upon account successful creation.",
-    id: nanoid(),
-  },
-];
+import fetchJson from "@/lib/fetchServer";
+import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
+import { NotificationConfig } from "@/models/notification-config.model";
+import React, { useState } from "react";
 
 const NotificationPanel = () => {
-  const [data, setData] = useState<INotificationConfig[]>(hard_data);
   const [showCreateNotificationModal, setShowCreateNotificationModal] =
     useState<boolean>(false);
 
-  const toggle = (id: string) => {
-    // console.log("called");
-    let newData = [...data];
-    let checked = newData.find((el) => el.id === id)!.is_enabled;
-    if (checked) {
-      newData.find((el) => el.id === id)!.is_enabled = false;
-    } else {
-      newData.find((el) => el.id === id)!.is_enabled = true;
-    }
+  const {
+    notificationSettings,
+    mutateNotificationSettings,
+    notificationSettingsIsLoading,
+  } = useNotificationSettings();
 
-    setData(newData);
+  const toggle = async (id: string) => {
+    // send put to notification settings
+    if (notificationSettings !== undefined) {
+      let setTo = notificationSettings?.find(
+        (el) => el.id === id
+      )?.is_enabled;
+      if (setTo) {
+        setTo = false;
+      } else {
+        setTo = true;
+      }
+      let facelift = [...notificationSettings];
+      let match = facelift.find((el) => el.id === id);
+      console.log("match", match);
+      if (match !== undefined) {
+        // facelift.find(
+        //   (el) => el.id_notification_config === id
+        // ).is_enabled_notification_config = setTo;
+        // mutateNotificationSettings(facelift, false);
+        await fetchJson(`/api/notification-settings`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: id,
+            setTo: setTo,
+          }),
+        });
+        mutateNotificationSettings();
+      }
+    }
   };
 
   const toggleShowCreateNotificationModal = () => {
     setShowCreateNotificationModal((prev) => !prev);
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  if (notificationSettingsIsLoading) {
+    return <div>Loading</div>;
+  }
 
   return (
     <>
@@ -59,9 +63,16 @@ const NotificationPanel = () => {
         title="Notification Panel | MazExpress Admin"
       />
       <div className="grid grid-cols-3 gap-3 py-5">
-        {data.map((el) => {
-          return <ConfigCard data={el} toggle={toggle} key={el.id} />;
-        })}
+        {notificationSettings &&
+          notificationSettings.map((el: NotificationConfig) => {
+            return (
+              <ConfigCard
+                data={el}
+                toggle={toggle}
+                key={el.id}
+              />
+            );
+          })}
       </div>
       <div>
         <button

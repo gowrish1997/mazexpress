@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
-import useUser from "@/lib/useUser";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
-import { IUser } from "@/models/user.interface";
-import user from "@/pages/api/auth/user";
+import { createToast } from "@/lib/toasts";
+import Image from "next/dist/client/image";
+import google_logo from "@/public/google.png";
+import useUser from "@/lib/hooks/useUser";
+import { FetchError } from "@/lib/fetchServer";
+import fetchSelf from "@/lib/fetchSelf";
 
 type Inputs = {
   password: string;
-  email: string;
+  username: string;
 };
 
 const schema = yup
   .object({
-    email: yup
+    username: yup
       .string()
       .required("Email is required")
       .email("please include @ in the email"),
@@ -28,37 +29,59 @@ const schema = yup
 const LogInComponent = (props: any) => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
+  const { user, mutateUser } = useUser();
 
-  const { user, mutateUser } = useUser({redirectIfFound: true});
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // console.log(data);
+
     try {
-      const result: IUser = await fetchJson("/api/auth/login", {
+      // console.log(data);
+      const response = await fetchSelf("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      // console.log(result);
-      await mutateUser(result, false);
+      // console.log(response);
 
-      // if (user?.is_admin_users === 1) {
-      //   // console.log('push to admin')
-      //   router.push("/admin");
-      // } else {
-      //   // console.log('push to home')
-      //   router.push("/");
-      // }
+      if (response.data) {
+        // console.log(response.data);
+        // createToast({
+        //   type: "success",
+        //   message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
+        //   title: "Success",
+        //   timeOut: 1000,
+        // });
+        if (response.data.is_admin) {
+          router.push("/admin");
+        } else {
+          router.push("/");
+        }
+
+        await mutateUser(response.data, false);
+      } else {
+        createToast({
+          type: "error",
+          message: response.msg,
+          title: "Error",
+          timeOut: 2000,
+        });
+      }
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);
+        createToast({
+          type: "error",
+          message: "Incorrect login credentials",
+          title: "Login failed",
+          timeOut: 2000,
+        });
       } else {
         console.error("An unexpected error happened:", error);
       }
@@ -75,9 +98,24 @@ const LogInComponent = (props: any) => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log()
-  // })
+  const googleSignInHandler = async () => {
+    // sign in with google
+    // const response = await signIn("google", {
+    //   callbackUrl: "http://localhost:3000",
+    //   redirect: false,
+    // });
+    // if (response?.ok === false) {
+    //   // no user found
+    //   createToast({
+    //     type: "error",
+    //     message: "No user found with this email id",
+    //     title: "No user found",
+    //     timeOut: 2000,
+    //   });
+    // }
+    // return response;
+    // console.log(response);
+  };
 
   return (
     <div className="w-[400px] space-y-[20px] ">
@@ -89,11 +127,11 @@ const LogInComponent = (props: any) => {
         className="flex-type6 gap-y-[12px] "
       >
         <ReactHookFormInput
-          label="Email"
-          name="email"
+          label="Username"
+          name="username"
           type="string"
-          register={register("email")}
-          error={errors.email}
+          register={register("username")}
+          error={errors.username}
         />
 
         <ReactHookFormInput
@@ -102,14 +140,11 @@ const LogInComponent = (props: any) => {
           type={passwordType}
           icon={{
             isEnabled: true,
-            src:
-              passwordType === "string"
-                ? "/eyeIconOpen.png"
-                : "/eyeIconClose.png",
+            type: passwordType === "string" ? "insecure" : "secure",
+            onClick: togglePasswordTypeHandler,
           }}
           register={register("password")}
           error={errors.password}
-          onClick={togglePasswordTypeHandler}
         />
         <button
           className="text-[14px] text-[#3672DF] font-[500] leading-[13px] cursor-pointer"
@@ -139,7 +174,22 @@ const LogInComponent = (props: any) => {
           </span>
         </p>
       </div>
-      <LogInWithMail />
+      <button
+        className="p-3 flex items-center justify-center border text-[14px] rounded text-center w-full transition duration-300 hover:shadow-lg hover:ring-2 manRope"
+        onClick={googleSignInHandler}
+      >
+        <Image
+          src={google_logo}
+          alt="google logo"
+          width={20}
+          height={20}
+          className="mr-3"
+          sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+        />
+        Sign in with google
+      </button>
     </div>
   );
 };

@@ -1,7 +1,8 @@
-import React from "react";
-
+import React, { useState } from "react";
 import Image from "next/image";
 import { FieldError } from "react-hook-form";
+import eyeOpen from "@/public/eyeIconOpen.png";
+import eyeClose from "@/public/eyeIconClose.png";
 
 interface IProp {
   label: string;
@@ -11,16 +12,28 @@ interface IProp {
   value?: string | number;
   icon?: {
     isEnabled: boolean;
-    src: string;
+    type?: "secure" | "insecure";
     onClick?: () => void;
   };
   error?: FieldError;
   onClick?: () => void;
   disabled?: boolean;
   autoComplete?: string;
+  className?: string;
 }
 
 const ReactHookFormInput = (props: IProp) => {
+  const [fieldVisibility, setFieldVisibility] = useState<
+    "secure" | "insecure" | undefined
+  >(props.icon?.type);
+
+  function getIconPath(type?: "secure" | "insecure") {
+    if (type === "secure") {
+      return eyeOpen;
+    }
+    return eyeClose;
+  }
+
   return (
     <div className={"w-full flex-type6"}>
       <label
@@ -31,11 +44,15 @@ const ReactHookFormInput = (props: IProp) => {
       </label>
       <div
         className={
-          "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative "
+          "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative" +
+          " " +
+          props.className
         }
-        style={{ borderColor: props.error ? "#f02849" : "" }}
+        // style={{ borderColor: props.error ? "#f02849" : "" }}
       >
-        {props.type == "number" && <span className="ml-[10px]">+281</span>}
+        {props.name == "phone_addresses" && (
+          <span className="ml-[10px]">+281</span>
+        )}
 
         <input
           id={props.name}
@@ -49,12 +66,13 @@ const ReactHookFormInput = (props: IProp) => {
         />
         {props.icon?.isEnabled ? (
           <Image
-            src={props.icon?.src}
+            src={getIconPath(props.icon.type)}
             alt="eyeIcon"
             height={18}
             width={18}
             className="cursor-pointer absolute right-[8px] "
             onClick={props.icon.onClick}
+            sizes="100vw"
           />
         ) : (
           ""

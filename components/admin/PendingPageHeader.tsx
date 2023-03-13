@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import ReactDropdown from "../common/ReactDropdown";
 import FilterOptionDropDown from "./FilterOptionDropDown";
-import { IOrderResponse } from "@/models/order.interface";
-
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
+import ReactPaginateComponent from "./ReactPaginate";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
+import { Order } from "@/models/order.model";
+
 interface IProp {
   content: string;
   title?: string;
   selectedOrder?: string[];
-  allLiveOrders: IOrderResponse[];
+  allLiveOrders: Order[] | undefined;
   filterByDate: (value: Date | string) => void;
+  //  filterById: (value: string) => void;
+  pageCount: number;
+  currentPageHandler: (value: number) => void;
+  itemsPerPage: number;
+  currentPage: number;
+  itemPerPageHandler?: (value: string | number) => void;
 }
 
 const adminOption = ["Move to Shipments"];
@@ -45,9 +52,26 @@ const PendingPageHeader = (props: IProp) => {
           allLiveOrders={props.allLiveOrders}
           filterByDate={props.filterByDate}
         />
+        <ReactPaginateComponent
+          pageCount={props.pageCount}
+          currentPageHandler={props.currentPageHandler}
+          itemsPerPage={props.itemsPerPage}
+          currentPage={props.currentPage}
+        />
         {props.allLiveOrders && props.allLiveOrders.length > 0 && (
           <div className="flex-type1 space-x-[10px]  ">
-            <FilterOptionDropDown options={warehousesDropDownOptoin} />
+            {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+            {/* <MazStatsDropddown
+              options={perPageOptions}
+              type="per_page"
+              onChange={props.itemPerPageHandler!}
+              className="h-[38px] px-[10px]"
+              itemsPerPage={props.itemsPerPage}
+            /> */}
+            <FilterOptionDropDown
+              options={warehousesDropDownOptoin}
+              type="warehouse"
+            />
 
             <AdminOptionDropDown
               option={adminOption}

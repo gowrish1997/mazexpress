@@ -1,91 +1,81 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { nanoid } from "nanoid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { IAddressProps } from "@/models/address.interface";
 import CountrySelector from "@/components/common/CountrySelector";
-import RegionSelector from "@/components/common/RegionSelector";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import CustomDropDown from "@/components/common/CustomDropDown";
-import fetchJson from "@/lib/fetchJson";
+import fetchJson from "@/lib/fetchServer";
+import { Address } from "@/models/address.model";
 
 interface IProp {
   show: boolean;
   close: () => void;
-  update: () => Promise<IAddressProps[] | undefined>;
+  update: () => void;
 }
 
 const schema = yup
   .object({
-    address_1_addresses: yup.string().required(),
-    address_2_addresses: yup.string().required(),
+    address_1: yup.string().required(),
+    address_2: yup.string().required(),
   })
   .required();
 
 const AddNewAddressModal = (props: IProp) => {
   const [country, setCountry] = useState("LY");
-  const { user, mutateUser, userIsLoading } = useUser();
+  const { user, mutateUser } = useUser();
   const {
     register,
     handleSubmit,
     getValues,
     control,
     formState: { errors },
-  } = useForm<IAddressProps>({
+  } = useForm<Address & { default: "on" | "off" }>({
     defaultValues: {
-      // address_1_addresses: "V5RH+HVQ",
-      // address_2_addresses: "Amr Bin al A'ss St",
-      // city_addresses: "Tripoli",
-      // country_addresses: "Libya",
-      // default_addresses: "on",
-      // phone_addresses: 214441792,
-      // tag_addresses: "Al Mshket Hotel",
+      address_1: "Gold fields",
+      address_2: "Sheik street St",
+      city: "Tripoli",
+      country: "Libya",
+      default: "on",
+      phone: 214441792,
+      tag: "Al Mshket Hotel",
     },
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
   });
 
-  const [addressIsDefault, setAddressIsDefault] = useState(
-    user?.default_address_users === 1
-  );
+  const onSubmit: SubmitHandler<
+    Address & { default?: "on" | "off" }
+  > = async (data) => {
+    if (user) {
+      let address = { ...data };
+      delete address.default;
 
-  const toggleDefaultAddressHandler = () => {
-    setAddressIsDefault((prev) => !prev);
-  };
+      // console.log(address);
+      // console.log(data);
 
-  const onSubmit: SubmitHandler<IAddressProps> = async (data) => {
-    let address: any = { ...data };
-    delete address.default_addresses;
-    address.user_id = user?.id_users;
+      address.user = user;
 
-    //   console.log(address);
-
-    // add address
-    const addressResult = await fetchJson(`/api/addresses`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(address),
-    });
-
-    // console.log(addressResult)
-    if (data.default_addresses === "on") {
-      const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
-        method: "PUT",
+      // add address
+      const addressResult = await fetchJson<Address>(`/api/addresses`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ default_address_users: addressResult }),
+        body: JSON.stringify(address),
       });
-      if (user?.is_logged_in_users) {
-        // update user default
-        let newUserData = { ...user, default_address_user: addressResult };
-        mutateUser(newUserData, false);
-      }
-    }
+      // console.log(addressResult);
 
-    // console.log(result);
-    props.close();
-    props.update();
+      // set default if checked
+      if (data.default) {
+        const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ default_address: addressResult.id }),
+        });
+      }
+
+      props.close();
+      props.update();
+    }
   };
 
   return (
@@ -100,27 +90,27 @@ const AddNewAddressModal = (props: IProp) => {
               Add New Address
             </p>
             <input
-              id="tag_addresses"
+              id="tag"
               type="string"
-              {...register("tag_addresses")}
+              {...register("tag")}
               className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give first title @Home"
             />
             <ReactHookFormInput
               label="Address line 01"
-              name="address_1_addresses"
+              name="address_1"
               type="string"
-              register={register("address_1_addresses")}
+              register={register("address_1")}
             />
             <ReactHookFormInput
               label="Address line 02"
-              name="address_2_addresses"
+              name="address_2"
               type="string"
-              register={register("address_2_addresses")}
+              register={register("address_2")}
             />
             <div className="flex-type2 space-x-[10px] w-full">
               <Controller
-                name="country_addresses"
+                name="country"
                 control={control}
                 defaultValue="Libya"
                 render={({ field: { onChange, value, ref } }) => (
@@ -129,7 +119,7 @@ const AddNewAddressModal = (props: IProp) => {
                     value={value}
                     onChange={onChange}
                     setCountry={setCountry}
-                    error={errors.country_addresses}
+                    error={errors.country}
                     dropDownIcon={{
                       iconIsEnabled: true,
                       iconSrc: "/lock.png",
@@ -137,58 +127,30 @@ const AddNewAddressModal = (props: IProp) => {
                   />
                 )}
               />
-              {/* <Controller
-                name="city_addresses"
-                control={control}
-                defaultValue="Badakhshan"
-                render={({ field: { onChange, value, ref } }) => (
-                  <RegionSelector
-                    label="City/Town"
-                    dropDownIcon={{
-                      iconIsEnabled: true,
-                      iconSrc: "/downwardArrow.png",
-                    }}
-                    value={value}
-                    country={country}
-                    onChange={onChange}
-                  />
-                )}
-              /> */}
               <CustomDropDown
                 label="City/Town"
-                name="city_addresses"
+                name="city"
                 value={["Tripoli", "Benghazi", "Misrata"]}
-                register={register("city_addresses")}
-                error={errors.city_addresses}
+                register={register("city")}
+                error={errors.city}
                 dropDownIcon={{
                   iconIsEnabled: true,
                   iconSrc: "/downwardArrow.png",
                 }}
               />
             </div>
-            <div className="flex-type2 space-x-[10px] w-full">
-              {/* <ReactHookFormInput label="State/Province/Region" name="state_addresses" type="string" register={register("state_addresses")} /> */}
-              {/* <ReactHookFormInput
-                label="Zip/Postal Code"
-                name="pincode_addresses"
-                type="string"
-                register={register("pincode_addresses")}
-              /> */}
-            </div>
             <ReactHookFormInput
-              label="Mobile Numbers"
-              name="phone_addresses"
+              label="Mobile Number"
+              name="phone"
               type="number"
-              register={register("phone_addresses")}
+              register={register("phone")}
             />
             <div className=".flex-type1 space-x-[5px]">
               <input
-                type="radio"
-                // defaultChecked={user?.default_address_users === }
-                checked={addressIsDefault}
-                onClick={toggleDefaultAddressHandler}
-                {...register("default_addresses")}
-                name="default_addresses"
+                type="checkbox"
+                defaultChecked={true}
+                {...register("default")}
+                name="default"
               />
 
               <span>Set as Default</span>

@@ -2,33 +2,32 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import LogInWithMail from "./LogInWithMail";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { ISignUp } from "@/models/user.interface";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
+import { User, UserGender } from "@/models/user.model";
+import fetchJson from "@/lib/fetchServer";
 
 const schema = yup
   .object({
-    first_name_users: yup.string().required("First name is required"),
-    last_name_users: yup.string().required("Last name is required"),
-    age_users: yup.string().required("Age is required"),
-    gender_users: yup.string().required("Gender is required"),
-    email_users: yup
+    first_name: yup.string().required("First name is required"),
+    last_name: yup.string().required("Last name is required"),
+    age: yup.string().required("Age is required"),
+    gender: yup.string().required("Gender is required"),
+    email: yup
       .string()
       .required("Email is required")
       .email("please include @ in the email"),
-    phone_users: yup
+    phone: yup
       .number()
       .test(
         "len",
         "Must be exactly 10 digits",
-        (val) => val?.toString().length === 10
+        (val) => val?.toString().length === 9
       )
       .required()
       .typeError("Mobile numbder is required field"),
-    password_users: yup
+    password: yup
       .string()
       .min(8, "Password must be 8 characters long")
       .matches(/[0-9]/, "Password requires a number")
@@ -37,62 +36,65 @@ const schema = yup
       .matches(/[^\w]/, "Password requires a symbol")
       .required()
       .typeError("Password is required field"),
-    confirmPassword_users: yup
+    confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password_users")], "Passwords must match")
+      .oneOf([yup.ref("password")], "Passwords must match")
       .required()
       .typeError("Confirm Password is required field"),
   })
   .required();
 
-const SignUpComponent = (props: any) => {
+const SignUpComponent = (props: { switch: (i: number) => void }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ISignUp>({
+  } = useForm<User & { confirmPassword: string }>({
     resolver: yupResolver(schema),
     defaultValues: {
-      //   age_users: "22",
-      //   email_users: "mohamed@maz.com",
-      //   first_name_users: "mohamed",
-      //   gender_users: "m",
-      //   last_name_users: "ali",
-      //   confirmPassword_users: "Test123$",
-      //   password_users: "Test123$",
-      //   phone_users: 1234567890,
+      email: "mohamed@maz.com",
+      first_name: "mohamed",
+      last_name: "ali",
+      confirmPassword: "Test123$",
+      password: "Test123$",
+      phone: 123456789,
+      age: "22",
+      gender: UserGender.MALE,
     },
   });
 
-  const onSubmit: SubmitHandler<ISignUp> = async (data) => {
+  const onSubmit: SubmitHandler<User & { confirmPassword: string }> = async (
+    data
+  ) => {
     // console.log(data);
-
     try {
-      const result = await fetchJson("/api/users", {
+      const newUser = await fetchJson("/api/users", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
       });
-      //   console.log(result); // id created
-
-      // toast
-      createToast({
-        type: "success",
-        title: "New user created.",
-        message: "Please log in with your new login credentials",
-        timeOut: 3000,
-      });
-
-      // send to login page with cred
-      props.switch(1);
-    } catch (error) {
-      if (error instanceof FetchError) {
-        setErrorMsg(error.data.message);
+      // console.log(newUser);
+      if (newUser && newUser.msg === "User exists already.") {
+        createToast({
+          type: "error",
+          title: "User exists",
+          message: "This email id is already taken.",
+          timeOut: 2000,
+        });
       } else {
-        console.error("An unexpected error happened:", error);
+        createToast({
+          type: "success",
+          title: "Created user",
+          message: "Successfully created new user",
+          timeOut: 2000,
+        });
+        router.push("/auth/gate");
       }
+    } catch (err) {
+      if (err) throw err;
+      console.error(err);
     }
   };
 
@@ -126,89 +128,83 @@ const SignUpComponent = (props: any) => {
         <div className="flex-type2 space-x-[10px] w-full">
           <ReactHookFormInput
             label="First name"
-            name="first_name_users"
+            name="first_name"
             type="string"
-            register={register("first_name_users")}
-            error={errors.first_name_users}
+            register={register("first_name")}
+            error={errors.first_name}
           />
 
           <ReactHookFormInput
             label="Last name"
-            name="last_name_users"
+            name="last_name"
             type="string"
-            register={register("last_name_users")}
-            error={errors.last_name_users}
+            register={register("last_name")}
+            error={errors.last_name}
           />
         </div>
         <div className="flex-type2 space-x-[10px] w-full">
           <ReactHookFormInput
             label="Age"
-            name="age_users"
+            name="age"
             type="string"
-            register={register("age_users")}
-            error={errors.age_users}
+            register={register("age")}
+            error={errors.age}
           />
 
           <ReactHookFormInput
             label="Gender"
-            name="gender_users"
+            name="gender"
             type="string"
-            register={register("gender_users")}
-            error={errors.gender_users}
+            register={register("gender")}
+            error={errors.gender}
           />
         </div>
 
         <ReactHookFormInput
           label="Email"
-          name="email_users"
+          name="email"
           type="string"
-          register={register("email_users")}
-          error={errors.email_users}
+          register={register("email")}
+          error={errors.email}
         />
 
         <ReactHookFormInput
           label="Mobile number"
-          name="phone_users"
+          name="phone"
           type="number"
-          register={register("phone_users")}
-          error={errors.phone_users}
+          register={register("phone")}
+          error={errors.phone}
         />
 
         <ReactHookFormInput
           label="Password"
-          name="password_users"
+          name="password"
           type={passwordType}
-          register={register("password_users")}
-          error={errors.password_users}
+          register={register("password")}
+          error={errors.password}
           icon={{
             isEnabled: true,
-            src:
-              passwordType === "string"
-                ? "/eyeIconOpen.png"
-                : "/eyeIconClose.png",
+            type: passwordType === "string" ? "insecure" : "secure",
+            onClick: togglePasswordTypeHandler,
           }}
-          onClick={togglePasswordTypeHandler}
         />
 
         <ReactHookFormInput
           label="Confirm Password"
-          name="confirmPassword_users"
+          name="confirmPassword"
           type={confirmPasswordType}
-          register={register("confirmPassword_users")}
-          error={errors.confirmPassword_users}
+          register={register("confirmPassword")}
+          error={errors.confirmPassword}
           icon={{
             isEnabled: true,
-            src:
-              confirmPasswordType === "string"
-                ? "/eyeIconOpen.png"
-                : "/eyeIconClose.png",
+            type: confirmPasswordType === "string" ? "insecure" : "secure",
+            onClick: toggleConfirmPasswordTypeHandler,
           }}
-          onClick={toggleConfirmPasswordTypeHandler}
         />
 
         <button
           type="submit"
-          className="w-full h-[46px] bg-[#BBC2CF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
+          className="w-full h-[46px] rounded-[4px] text-[14px] border border-2 transition duration-300 hover:shadow-lg hover:ring hover:ring-black/70 text-[#BBC2CF] hover:text-black/70 font-[600] leading-[19px] mt-[10px]"
         >
           Sign Up
         </button>
@@ -228,7 +224,7 @@ const SignUpComponent = (props: any) => {
           </span>
         </p>
       </div>
-      <LogInWithMail />
+      {/* <LogInWithMail /> */}
     </div>
   );
 };

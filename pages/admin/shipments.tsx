@@ -1,66 +1,60 @@
-import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import useOrders from "@/lib/useOrders";
+import React, { useState, useCallback } from "react";
+import useOrders from "@/lib/hooks/useOrders";
 import ShipmentsPageHeader from "@/components/admin/ShipmentsPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { IOrderResponse } from "@/models/order.interface";
 import { selectOrder } from "@/lib/selectOrder";
-import { filter } from "@/lib/filter";
 import BlankPage from "@/components/admin/BlankPage";
+import LoadingPage from "@/components/common/LoadingPage";
+import { Order } from "@/models/order.model";
+
 const tableHeaders = [
   "Customer",
   "MAZ Tracking ID",
   "Store Link",
   "Reference ID",
   "Created Date",
-  "Warehouse",
+  // "Warehouse",
   "Status",
 ];
 
 const Shipments = () => {
   const router = useRouter();
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
 
-  const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
-  const [filteredLiveOrders, setFilteredAllLiveOrders] =
-    useState<IOrderResponse[]>();
-
-  const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
-    useState<string>("");
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
     string | Date
   >("");
+
+  const [itemsPerPage, setItemPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    per_page: itemsPerPage,
+    page: currentPage,
+    status: ["at-warehouse"],
+  });
+
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  useEffect(() => {
-    const liveOrders = orders?.filter((el) => {
-      return el.status_orders == "at-warehouse";
-    });
-    setAllLiveOrders(liveOrders);
-    setFilteredAllLiveOrders(liveOrders);
-  }, [orders]);
+  const pageCount = Math.ceil((orders as Order[])?.length! / itemsPerPage);
 
-  const filterByMazTrackingId = (value: string) => {
-    setMazTrackingIdFilterKey(value);
-    setFilteredAllLiveOrders(
-      filter(allLiveOrders!, createdDateFilterKey, value)
-    );
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
   };
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setItemPerPage(value as number);
+  }, []);
 
   const filterByCreatedDate = (value: Date | string) => {
     setCreatedDateFilterKey(value);
-    setFilteredAllLiveOrders(
-      filter(allLiveOrders!, value, mazTrackingIdFilterKey!)
-    );
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    selectOrder(value, type, setSelectedOrder, allLiveOrders!, selectedOrder!);
+    selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
   };
 
   if (ordersIsLoading) {
-    return <div>this is loading</div>;
+    return <LoadingPage />;
   }
   if (ordersError) {
     return <div>some error happened</div>;
@@ -69,24 +63,29 @@ const Shipments = () => {
     <>
       <div>
         <ShipmentsPageHeader
-          content="Today Shipments"
-          allLiveOrders={allLiveOrders!}
+          content="Today's Shipments"
+          allLiveOrders={orders as Order[]}
           selectedOrder={selectedOrder}
           filterByDate={filterByCreatedDate}
-          title='Shipments for today | MazExpress Admin'
+          title="Shipments for today | MazExpress Admin"
+          pageCount={pageCount}
+          itemsPerPage={itemsPerPage}
+          currentPageHandler={currentPageHandler}
+          currentPage={currentPage}
+          itemPerPageHandler={itemPerPageHandler!}
+          // filterById={filterByMazTrackingId}
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!filteredLiveOrders && <BlankPage />}
-          {filteredLiveOrders && (
+          {!orders && <BlankPage />}
+          {orders && (
             <>
               <Table
-                rows={filteredLiveOrders}
+                rows={orders as Order[]}
                 headings={tableHeaders}
                 type="shipments"
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
-                filterById={filterByMazTrackingId}
               />
             </>
           )}

@@ -1,5 +1,5 @@
 import React from "react";
-import "react-step-progress-bar/styles.css";
+// import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import Vehicle from "../../public/svgVehicle.svg";
 import WareHouse from "../../public/svgWarehouse.svg";

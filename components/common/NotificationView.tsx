@@ -1,11 +1,12 @@
 import React, { forwardRef, RefObject, useEffect, useState } from "react";
-import Image from "next/image";
 import EachNotification from "./EachNotification";
-import useUser from "@/lib/useUser";
-import useNotifications from "@/lib/useNotifications";
-import { INotification } from "@/models/notification.interface";
+import useUser from "@/lib/hooks/useUser";
+import useNotifications from "@/lib/hooks/useNotifications";
 import ClickOutside from "./ClickOutside";
 import Cancel from "../../public/cancel_svg.svg";
+import { Notification } from "@/models/notification.model";
+import { User } from "@/models/user.model";
+
 interface IProp {
   close: () => void;
   show: boolean;
@@ -18,18 +19,18 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
     const { user, mutateUser } = useUser();
     const { notifications, notificationsIsLoading, mutateNotifications } =
       useNotifications({
-        userId: user?.id_users!,
+        user_id: user?.id!,
       });
 
     const [userNotifications, setUserNotifications] =
-      useState<INotification[]>();
+      useState<Notification[]>();
 
-    const deleteNotification = (id: number) => {
+    const deleteNotification = (id: string) => {
       // console.log("delete");
       setUserNotifications((prev) => {
         if (prev !== undefined) {
-          let newObjs: INotification[] = prev.filter(
-            (el) => el.id_notifications !== id
+          let newObjs: Notification[] = prev.filter(
+            (el) => el.id !== id
           );
 
           // console.log(newObjs);
@@ -38,7 +39,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
       });
       // update db
       // axios.put(`/api/notifications?id=${id}`, {
-      //   status_notifications: "deleted",
+      //   status: "deleted",
       // });
     };
 
@@ -85,13 +86,16 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
           </div>
           <div className="space-y-[20px]">
             {userNotifications
-              ?.sort((a,b) => b.id_notifications! - a.id_notifications!)
+            
+              // ?.sort((a,b) => b.created_on - a)
+              // sort in backend
+
               ?.map((data) => {
                 return (
                   <EachNotification
-                    id={data.id_notifications!}
+                    id={data.id!}
                     data={data}
-                    key={data.id_notifications}
+                    key={data.id}
                     delete={deleteNotification}
                   />
                 );

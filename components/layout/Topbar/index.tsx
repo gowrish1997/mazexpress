@@ -2,16 +2,20 @@ import React, { SyntheticEvent, useRef, useState } from "react";
 import Image from "next/image";
 import Bell from "@/public/bell_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons";
-import useUser from "@/lib/useUser";
-import useNotifications from "@/lib/useNotifications";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import useUser from "@/lib/hooks/useUser";
+import useNotifications from "@/lib/hooks/useNotifications";
 import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
+import { SearchKeyContext } from "@/components/common/Frame";
+import { getUserImageString } from "@/lib/utils";
 const Topbar = () => {
   const { user, mutateUser } = useUser();
 
+  const { setSearchKey } = React.useContext(SearchKeyContext) as any;
+
   const { notifications, notificationsIsLoading } = useNotifications({
-    userId: user?.id_users!,
+    user_id: user?.id!,
   });
 
   const [showNotifications, setShowNotifications] = useState(false);
@@ -26,6 +30,10 @@ const Topbar = () => {
 
   let trigger = useRef(null);
 
+  const searchKeyOnchangeHandler = (e: SyntheticEvent) => {
+    setSearchKey((e.target as HTMLInputElement).value);
+  };
+
   return (
     <>
       <div className="flex w-full min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-10">
@@ -35,6 +43,7 @@ const Topbar = () => {
             id="searchbar"
             type="text"
             placeholder="Search with MAZ ID"
+            onChange={searchKeyOnchangeHandler}
           />
           <div className="absolute w-[16px] h-[16px] right-[10px] top-[15px] cursor-pointer">
             <Image
@@ -58,7 +67,6 @@ const Topbar = () => {
               <span className="rounded-full block top-[3px] h-[7px] w-[7px] right-[34.5px] bg-[#FF2323] absolute"></span>
             )}
             <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
-              {/* <Image src={"/bell.png"} height={16} width={17} alt="notification" className="" /> */}
               <Bell className="bell_svg" />
             </div>
           </span>
@@ -66,23 +74,20 @@ const Topbar = () => {
 
         <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
           <Image
-            // src={
-            //   user?.avatar_url_users
-            //     ? "/user-images/" + user?.avatar_url_users
-            //     : "/user-images/default_user.png"
-            // }
-            src={"/user-images/" + user?.avatar_url_users}
+            src={getUserImageString(user?.avatar_url)}
             fill
             style={{ objectFit: "cover" }}
             alt="profileImage"
             sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 100vw,
                 100vw"
-            onError={(e: SyntheticEvent) => console.log("error at user image", e)}
+            onError={(e: SyntheticEvent) =>
+              console.log("error at user image", e)
+            }
           />
         </div>
         <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
-          {user?.first_name_users} {user?.last_name_users}
+          {user?.first_name} {user?.last_name}
         </p>
         <div className="w-3 h-3 flex items-center">
           <FontAwesomeIcon icon={faAngleDown} size="xs" color="#525D72" />

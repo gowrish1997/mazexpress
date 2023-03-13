@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import useOrders from "@/lib/useOrders";
+import React, { useEffect, useState ,useCallback} from "react";
+import useOrders from "@/lib/hooks/useOrders";
 import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
-import { IOrderResponse } from "@/models/order.interface";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
-import { filter } from "@/lib/filter";
+import LoadingPage from "@/components/common/LoadingPage";
+import { Order } from "@/models/order.model";
 
 const tableHeaders = [
   "Customer",
@@ -15,54 +14,62 @@ const tableHeaders = [
   "Store Link",
   "Reference ID",
   "Created Date",
-  "Warehouse",
+  // "Warehouse",
   "Status",
 ];
 
 const Intransit = () => {
   const router = useRouter();
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({});
 
-  const [allLiveOrders, setAllLiveOrders] = useState<IOrderResponse[]>();
-  const [filteredLiveOrders, setFilteredAllLiveOrders] =
-    useState<IOrderResponse[]>();
 
+
+  const [itemsPerPage, setItemPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(0);
   const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
     useState<string>("");
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
     string | Date
   >("");
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    per_page: itemsPerPage,
+    page: currentPage,
+    status: ['in-transit']
+  });
+
+  const [allInTransitOrders, setallInTransitOrders] =
+    useState<Order[]>();
+
+
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-  useEffect(() => {
-    const liveOrders = orders?.filter((el) => {
-      return el.status_orders == "in-transit";
-    });
-    setAllLiveOrders(liveOrders);
-    setFilteredAllLiveOrders(liveOrders);
-  }, [orders]);
+  const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
-  const filterByMazTrackingId = (value: string) => {
-    setMazTrackingIdFilterKey(value);
-    setFilteredAllLiveOrders(
-      filter(allLiveOrders!, createdDateFilterKey, value)
-    );
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
   };
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setItemPerPage(value as number);
+}, []);
+
 
   const filterByCreatedDate = (value: Date | string) => {
     setCreatedDateFilterKey(value);
-    setFilteredAllLiveOrders(
-      filter(allLiveOrders!, value, mazTrackingIdFilterKey!)
-    );
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    selectOrder(value, type, setSelectedOrder, allLiveOrders!, selectedOrder!);
+    selectOrder(
+      value,
+      type,
+      setSelectedOrder,
+      allInTransitOrders!,
+      selectedOrder!
+    );
   };
 
   if (ordersIsLoading) {
-    return <div>this is loading</div>;
+    return <LoadingPage />;
   }
+
   if (ordersError) {
     return <div>some error happened</div>;
   }
@@ -70,25 +77,30 @@ const Intransit = () => {
     <>
       <div>
         <InTransitPageHeader
-          content="In-transit"
-          allLiveOrders={allLiveOrders!}
+          content="in-transit"
+          allLiveOrders={orders as Order[]}
           filterByDate={filterByCreatedDate}
           selectedOrder={selectedOrder}
           title="In-Transit | MazExpress Admin"
+          pageCount={pageCount}
+          currentPageHandler={currentPageHandler}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          itemPerPageHandler={itemPerPageHandler!}
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!filteredLiveOrders && <BlankPage />}
-          {filteredLiveOrders && (
+          {!orders && <BlankPage />}
+          {orders && (
             <>
               <Table
-                rows={filteredLiveOrders}
+                rows={orders as Order[]}
                 headings={tableHeaders}
                 type="in-transit"
                 onSelect={selectOrderHandler}
                 selectedOrder={selectedOrder!}
-                filterById={filterByMazTrackingId}
               />
+            
             </>
           )}
         </div>

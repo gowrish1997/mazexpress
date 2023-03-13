@@ -1,99 +1,76 @@
-import React, { createRef, useRef, useState } from "react";
-import { useEffect } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
-import LiveOrderOptionModal from "@/components/admin/modal/LiveOrderOptionModal";
-import { IUser } from "@/models/user.interface";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getDateInStringFormat } from "@/lib/helper";
+import useOrders from "@/lib/hooks/useOrders";
+import { User } from "@/models/user.model";
+import { Order } from "@/models/order.model";
 
 interface IProp {
-  row: IUser;
+  row: User;
   type: string;
   onSelect: (e: any, type: string) => void;
-  selectedOrder: number[];
+  selectedOrder: string[];
 }
 
 const UserLineItem = (props: IProp) => {
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    user_id: props.row.id,
+  });
+  // console.log(props.row.created_on);
   const trigger = useRef<any>();
 
   const [gate, setGate] = useState(false);
-  console.log(gate);
 
-  function smartToggleGateHandler() {
-    setGate(false);
-  }
-  function toggleGateHandler() {
-    console.log("toggle gate");
-    setGate((prev) => !prev);
-  }
-  const inputCheckedStateHandler = () => {
-    const data = props?.selectedOrder?.find((el) => {
-      return el == props.row.id_users;
-    });
-    if (data) {
-      return true;
-    } else {
-      false;
+  const genderHanlder = (gender: string) => {
+    switch (gender) {
+      case "m":
+        return "male";
+      case "f":
+        return "female";
+      case "o":
+        return "other";
+      case "u":
+        return "unknown";
     }
   };
 
   return (
-    <tr
-      className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative"
-    >
-      <td className={`td0`}>
-        <input
-          type="checkbox"
-          // disabled={inputDisabledStateHandler()}
-          value={props.row.id_users}
-          name={props.row.id_users.toString()}
-          checked={inputCheckedStateHandler()}
-          onChange={(e) => props.onSelect(e.target.value, "selectSingleOrder")}
-          className="h-[10px] w-[10px] cursor-pointer "
-        />
-      </td>
-      <td
-        className={`td1`}
-      >{`${props.row.first_name_users} ${props.row.last_name_users}`}</td>
-      <td className={`td2 text-[#3672DF]`}>{props.row.email_users}</td>
-      <td className={`td3`}>{props.row.phone_users}</td>
-      <td className={`td4`}>
-        {getDateInStringFormat(props.row.created_on_user)}
-      </td>
-      <td className={`td5 `} style={{}}>
-        {props.row.age_users}
-      </td>
-      <td className={`flex flex-row justify-start items-center h-full `}>
-        {props.row.gender_users}
-      </td>
-      <td
-        className=""
-        // onClick={(e) => optionModalHandler(e, index)}
-      >
-        <div className="w-full h-full">
-          <div
-            onClick={toggleGateHandler}
-            ref={trigger}
-            className="cursor-pointer relative"
-          >
+    <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
+      <td className={`flex flex-row justify-start items-center capitalize `}>
+        {" "}
+        {props.row && (props.row as User)?.avatar_url !== undefined ? (
+          <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
+            {props.row.is_admin && (
+              <div className="absolute bg-yellow-600 w-4 h-8 z-10 opacity-60"></div>
+            )}
             <Image
-              src="/editicon.png"
-              // ref={trigger}
-              height={13}
-              width={4}
-              alt="editIcon"
+              src={"/user-images/" + (props.row as User)?.avatar_url}
+              fill
+              style={{ objectFit: "cover" }}
+              alt="profileImage"
             />
           </div>
-          {gate && (
-            <LiveOrderOptionModal
-              // ref={modalNode}
-              type={props.type}
-              row={props.row}
-              handler={smartToggleGateHandler}
-              trigger={trigger}
-            />
-          )}
-        </div>
+        ) : (
+          <div className="relative h-[30px] w-[30px] rounded-full   bg-slate-500">
+            <FontAwesomeIcon icon={faUser} />
+          </div>
+        )}
+        <span className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis ">
+          {(props.row as User)?.first_name +
+            " " +
+            (props.row as User)?.last_name}
+        </span>
       </td>
+      <td className={`td2 text-[#3672DF]`}>{props.row.email}</td>
+      <td className={`td3`}>{props.row.phone}</td>
+      <td className={`td4`}>{getDateInStringFormat(props.row.created_on)}</td>
+      <td className={`td5 `} style={{}}>
+        {props.row.age}
+      </td>
+      <td className={`td6 `}>{genderHanlder(props.row.gender)}</td>
+      <td className={`td7 `}>{orders && (orders as Order[])?.length}</td>
     </tr>
   );
 };

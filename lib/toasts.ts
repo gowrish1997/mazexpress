@@ -1,8 +1,10 @@
-import { IToast } from "@/models/toast.interface";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+//==========================
+//     written by: raunak
+//==========================
+
+
+import { IToast } from "@/models/toast.model";
+import { NotificationManager} from 'react-notifications';
 
 const createToast = (toast: IToast) => {
   //   console.log();

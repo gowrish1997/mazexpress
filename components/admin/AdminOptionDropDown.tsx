@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import download from "../../public/download.png";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
+import axios from "axios";
 interface Iprop {
   option?: string[];
   toggle?: (value?: string) => void;
@@ -16,6 +17,35 @@ const AdminOptionDropDown = (props: Iprop) => {
   const trigger = useRef<any>(null);
 
   const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
+  const [selectedOrdersStage, setselectedOrdersStage] = useState(0);
+
+  useEffect(() => {
+    if (props.type == "in-transit" && props.orders?.length > 0) {
+      const getLatestStageHandler = async () => {
+        try {
+          const result: any = await axios.post("/api/tracking", {
+            orders: props.orders,
+          });
+
+          const allEqual = () =>
+            result.data.data.every((val: any) => val === result.data.data[0]);
+          console.log(allEqual());
+
+          if (allEqual()) {
+            setselectedOrdersStage(result.data.data[0].stage);
+          } else {
+            setselectedOrdersStage(0);
+          }
+        } catch (error: any) {
+          console.log(error.message);
+        }
+      };
+
+      getLatestStageHandler();
+    } else if (props.type == "in-transit" && props.orders) {
+      setselectedOrdersStage(0);
+    }
+  }, [props.orders]);
 
   const toggleAdminOptionCard = () => {
     setShowAdminOptionCard((prev) => !prev);
@@ -48,7 +78,7 @@ const AdminOptionDropDown = (props: Iprop) => {
         }
         onClick={toggleAdminOptionCard}
       >
-        <span>select option</span>
+        <span>Actions</span>
         <div className="relative h-[6px] w-[8px]  ">
           <Image
             src="/downwardArrow.png"
@@ -68,7 +98,8 @@ const AdminOptionDropDown = (props: Iprop) => {
               <Image src={download} height={13} width={13} alt="download" />
               <span>download</span>
             </button>
-            {props.option &&
+            {props.type != "in-transit" &&
+              props.option &&
               props.option.map((data, index) => {
                 return (
                   <button
@@ -81,6 +112,31 @@ const AdminOptionDropDown = (props: Iprop) => {
                   </button>
                 );
               })}
+            {props.type == "in-transit" &&
+              props.option &&
+              props.option.map((data, index) => {
+                if (index + 2 == selectedOrdersStage)
+                  return (
+                    <button
+                      key={index}
+                      className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                      onClick={() => props.toggle?.(data)}
+                      disabled={props.disabled}
+                    >
+                      {data}
+                    </button>
+                  );
+              })}
+
+            {props.type == "in-transit" && (
+              <button
+                className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                onClick={() => props.toggle?.("Received in Libya")}
+                disabled={props.disabled}
+              >
+                Add comment
+              </button>
+            )}
           </div>
         </ClickOutside>
       )}

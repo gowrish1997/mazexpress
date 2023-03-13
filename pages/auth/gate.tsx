@@ -4,17 +4,25 @@ import AuthLayout from "@/components/auth/AuthLayout";
 import LogInView from "@/components/auth/LogInView";
 import ResetPasswordView from "@/components/auth/ResetPasswordView";
 import SignUpView from "@/components/auth/SignUpView";
-import useUser from "@/lib/useUser";
+import { useRouter } from "next/router";
 
 const Gate = () => {
+  const router = useRouter()
   const [mode, setMode] = useState<number>(1);
 
-  const { user, mutateUser, userIsLoading } = useUser();
   function toggleMode(i: number) {
     setMode(i);
   }
 
-  
+  useEffect(() => {
+    // set proper mode
+
+    // console.log(router.query)
+    if (router.query.mode) {
+      setMode(parseInt(router.query.mode as string))
+    }
+  }, [])
+
   return (
     <div>
       <Head>
