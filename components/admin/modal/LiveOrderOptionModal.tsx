@@ -33,14 +33,10 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
       }
     };
 
-    const commentHandler = () => {
-      console.log("commnet");
-    };
     const actionHandler = async () => {
       switch (props.type) {
         case "pending":
           let rowFixed: Order = props.row as Order;
-          // console.log("outer user", user);
           const result0 = await fetchServer(`/api/orders?id=${rowFixed.id}`, {
             method: "PUT",
             headers: { "Content-type": "application/json" },
@@ -59,7 +55,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
 
           // check notifications for user and send notification
           // get notification for user
-          if (user?.is_notifications_enabled) {
+          if ((props.row as Order).user.is_notifications_enabled) {
             // get admin notification on backend
             // send notification post
             const deliveredMessage = {
@@ -71,20 +67,24 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
               "/api/notifications",
               {
                 method: "POST",
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   data: deliveredMessage,
-                  files: null,
-                  users: [user.id],
-                  notification_config: 1,
+                  // files: [],
+                  users: [(props.row as Order).user.id],
+                  // notification_config: 1,
                 }),
               }
             );
+            // console.log(result0_3);
+
             if (result0_3?.count && result0_3?.count > 0) {
               createToast({
                 type: "success",
                 title: "Notified User",
-                message: `Sent order received notification to userID ${user.id}`,
+                message: `Sent order received notification to userID ${
+                  (props.row as Order).user.id
+                }`,
                 timeOut: 2000,
               });
             } else {
@@ -96,7 +96,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
               });
             }
           }
-          console.log(result0_2);
+          // console.log(result0_2);
           break;
         case "shipments":
           let rowFixed2: Order = props.row as Order;
@@ -112,13 +112,53 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
-              user_id: user?.id,
+              user_id: rowFixed2?.user.id,
               order_id: rowFixed2.id,
               stage: 2,
             }),
           });
           // console.log(result1_2);
-          // post to tracking
+          // check notifications for user and send notification
+          // get notification for user
+          if (rowFixed2.user.is_notifications_enabled) {
+            // get admin notification on backend
+            // send notification post
+            const deliveredMessage = {
+              title: "Order left Istanbul warehouse!",
+              content: `Your order number ${rowFixed2.id} has left our Istanbul warehouse and will be reach Libya soon.`,
+            };
+
+            const result0_3: APIResponse<Notification> = await fetchServer(
+              "/api/notifications",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  data: deliveredMessage,
+                  // files: [],
+                  users: [rowFixed2.user.id],
+                  // notification_config: 1,
+                }),
+              }
+            );
+            // console.log(result0_3);
+
+            if (result0_3?.count && result0_3?.count > 0) {
+              createToast({
+                type: "success",
+                title: "Notified User",
+                message: `Sent order received notification to userID ${rowFixed2.user.id}`,
+                timeOut: 2000,
+              });
+            } else {
+              createToast({
+                type: "error",
+                title: "Failed creating notification",
+                message: `check console for more info`,
+                timeOut: 2000,
+              });
+            }
+          }
 
           break;
         case "in-transit":
@@ -133,22 +173,115 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
               headers: { "Content-type": "application/json" },
               body: JSON.stringify({
                 order_id: rowFixed3.id,
-                user_id: user?.id,
+                user_id: rowFixed3?.user?.id,
                 stage: 3,
               }),
             });
+            // check notifications for user and send notification
+            // get notification for user
+            if (rowFixed3.user.is_notifications_enabled) {
+              // get admin notification on backend
+              // send notification post
+              const deliveredMessage = {
+                title: "Order received in Libya warehouse!",
+                content: `Your order number ${rowFixed3.id} has reached our Libya warehouse and will reach you soon.`,
+              };
+
+              const result0_3: APIResponse<Notification> = await fetchServer(
+                "/api/notifications",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    data: deliveredMessage,
+                    // files: [],
+                    users: [rowFixed3.user.id],
+                    // notification_config: 1,
+                  }),
+                }
+              );
+              // console.log(result0_3);
+
+              if (result0_3?.count && result0_3?.count > 0) {
+                createToast({
+                  type: "success",
+                  title: "Notified User",
+                  message: `Sent order received notification to userID ${rowFixed3.user.id}`,
+                  timeOut: 2000,
+                });
+              } else {
+                createToast({
+                  type: "error",
+                  title: "Failed creating notification",
+                  message: `check console for more info`,
+                  timeOut: 2000,
+                });
+              }
+            }
           }
           if (props.stage === 3) {
             // out for delivery action
+            // set order status
+            const result2 = await fetchServer(
+              `/api/orders?id=${rowFixed3.id}`,
+              {
+                method: "PUT",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({ status: "out-for-delivery" }),
+              }
+            );
+
             const result2_2 = await fetchServer("/api/tracking", {
               method: "POST",
               headers: { "Content-type": "application/json" },
               body: JSON.stringify({
                 order_id: rowFixed3.id,
-                user_id: user?.id,
+                user_id: rowFixed3?.user?.id,
                 stage: 4,
               }),
             });
+
+            // check notifications for user and send notification
+            // get notification for user
+            if (rowFixed3.user.is_notifications_enabled) {
+              // get admin notification on backend
+              // send notification post
+              const deliveredMessage = {
+                title: "Order out for delivery!",
+                content: `Your order number ${rowFixed3.id} is out for delivery and will reach you soon.`,
+              };
+
+              const result0_3: APIResponse<Notification> = await fetchServer(
+                "/api/notifications",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    data: deliveredMessage,
+                    // files: [],
+                    users: [rowFixed3.user.id],
+                    // notification_config: 1,
+                  }),
+                }
+              );
+              // console.log(result0_3);
+
+              if (result0_3?.count && result0_3?.count > 0) {
+                createToast({
+                  type: "success",
+                  title: "Notified User",
+                  message: `Sent order received notification to userID ${rowFixed3.user.id}`,
+                  timeOut: 2000,
+                });
+              } else {
+                createToast({
+                  type: "error",
+                  title: "Failed creating notification",
+                  message: `check console for more info`,
+                  timeOut: 2000,
+                });
+              }
+            }
           }
           if (props.stage === 4) {
             // delivered action
@@ -170,39 +303,51 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
               body: JSON.stringify({
                 order_id: rowFixed3.id,
                 stage: 5,
-                user_id: user?.id,
+                user_id: rowFixed3?.user?.id,
               }),
             });
 
-            // send notification
+            // check notifications for user and send notification
+            // get notification for user
+            if (rowFixed3.user.is_notifications_enabled) {
+              // get admin notification on backend
+              // send notification post
+              const deliveredMessage = {
+                title: "Order delivered!",
+                content: `Your order number ${rowFixed3.id} has been marked as delivered.`,
+              };
 
-            const deliveredMessage = {
-              title: "Order Delivered!",
-              content: `Your order number ${rowFixed3.id} has been delivered successfully, please leave a review if you liked our service.`,
-            };
-            axios
-              .post(
+              const result0_3: APIResponse<Notification> = await fetchServer(
                 "/api/notifications",
                 {
-                  data: deliveredMessage,
-                  files: null,
-                  users: [String(rowFixed3.user.id)],
-                  notification_config: 2,
-                },
-                {
-                  headers: { "Content-Type": "multipart/form-data" },
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    data: deliveredMessage,
+                    // files: [],
+                    users: [rowFixed3.user.id],
+                    // notification_config: 1,
+                  }),
                 }
-              )
-              .then((response) => {
+              );
+              // console.log(result0_3);
+
+              if (result0_3?.count && result0_3?.count > 0) {
                 createToast({
                   type: "success",
                   title: "Notified User",
-                  message: `Sent order delivered notification to userID ${rowFixed3.user.id}`,
+                  message: `Sent order received notification to userID ${rowFixed3.user.id}`,
                   timeOut: 2000,
                 });
-
-                //   console.log(response.data);
-              });
+              } else {
+                createToast({
+                  type: "error",
+                  title: "Failed creating notification",
+                  message: `check console for more info`,
+                  timeOut: 2000,
+                });
+              }
+            }
           }
           break;
         case "user_base":
@@ -264,7 +409,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                 </span>
               </div>
             </li>
-            {props.type == "in-transit" && (
+            {/* {props.type == "in-transit" && (
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
                 onClick={commentHandler}
@@ -273,7 +418,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                   <span className="w-full ">Add comment</span>
                 </div>
               </li>
-            )}
+            )} */}
           </ul>
         </div>
       </ClickOutside>

@@ -18,14 +18,14 @@ const dataOptions = {
 };
 
 const getDateInStringFormat = (date: Date) => {
-  console.log(date)
-  
+  // console.log(date)
+
   if (date) {
     const stringDate = new Date(date).toLocaleDateString(
       "en-US",
       dataOptions as any
     );
-    console.log('date',stringDate)
+    // console.log('date',stringDate)
     const data = stringDate.replace(",", "");
     return data;
   }
