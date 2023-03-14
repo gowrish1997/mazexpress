@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 import axios from "axios";
-const RegisterSample = () => {
+import { user_forgotPasswordContent } from "@/lib/emailContent/bodyContent";
+
+const ForgotPassword = () => {
     const [htmlCode, setHtmlCode] = useState("");
     const [toList, setToList] = useState([
+       
         {
-            type: "register",
-            toType: "admin",
-            header: "New User joined ✨",
-            name: "admin",
-            userName: "",
-            userProfile: "",
-            userContactNumber: "",
-            userEmail: "",
+            type: "forgot_password",
+            toType: "user",
+            header: "Your Maz Express Password Reset ✨",
+            toName: "Alex",
+            toMail: "kotarigowrish@gmail.com",
+            bodyContent:user_forgotPasswordContent(),
+            buttonContent: "Reset password",
+            redirectLink:""
         },
     ]);
 
     const sendMailHanlder = () => {
         axios
-            .post("/api/mjmlreact")
+            .post("/api/emailTemplate", toList)
             .then((data) => {
-                console.log(data.data.body.html);
-                setHtmlCode(data.data.body.html);
+                console.log(data.data.body[0].html);
+                // console.log(data.data.body.html);
+                // setHtmlCode(data.data.body);
             })
             .catch((error) => {
                 console.log("error", error);
@@ -32,9 +36,10 @@ const RegisterSample = () => {
             <button className="border-[1px] border-[blue] p-[5px] rounded-[6px] " onClick={sendMailHanlder}>
                 send mail
             </button>
+
             <div className="w-full" dangerouslySetInnerHTML={{ __html: htmlCode }}></div>
         </div>
     );
 };
 
-export default RegisterSample;
+export default ForgotPassword;
