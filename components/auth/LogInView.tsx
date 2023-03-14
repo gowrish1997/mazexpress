@@ -11,6 +11,7 @@ import useUser from "@/lib/hooks/useUser";
 import fetchSelf, { FetchError } from "@/lib/fetchSelf";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
+import LogInWithMail from "./LogInWithMail";
 type Inputs = {
   password: string;
   username: string;
@@ -40,7 +41,7 @@ const LogInComponent = (props: any) => {
   const submitButtons: string[] = t("loginView.form.SubmitButton", {
     returnObjects: true,
   });
-  const discription: string[] = t("loginView.form.Discription", {
+  const description: string[] = t("loginView.form.Description", {
     returnObjects: true,
   });
 
@@ -111,13 +112,9 @@ const LogInComponent = (props: any) => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log()
-  // })
-
   return (
     <div
-      className={`w-[300px] sm:w-[60%] xmd:w-[47%] space-y-[20px] flex flex-col justify-start items-center md:items-start ${
+      className={`w-[250px] space-y-[20px] flex flex-col justify-start items-center md:items-start ${
         locale == "en" ? "md:-ml-[20%]" : "md:-mr-[20%]"
       } `}
     >
@@ -161,7 +158,10 @@ const LogInComponent = (props: any) => {
           type={passwordType}
           icon={{
             isEnabled: true,
-            src: passwordType === 'password' ?  "/eyeIconOpen.png" : "/eyeIconClose.png",
+            src:
+              passwordType === "password"
+                ? "/eyeIconOpen.png"
+                : "/eyeIconClose.png",
             onClick: togglePasswordTypeHandler,
           }}
           register={register("password")}
@@ -174,30 +174,31 @@ const LogInComponent = (props: any) => {
         >
           {inputFieldLabel[2]}
         </button>
-        <button
-          type="submit"
-          className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] "
-        >
-          {submitButtons[0]}
-        </button>
+        <div className="flex flex-col items-center w-full space-x-[10px]">
+          <button
+            type="submit"
+            className="w-full h-[40px] py-[2px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px]"
+          >
+            {submitButtons[0]}
+          </button>
+          <LogInWithMail />
+        </div>
         <div className="w-full text-center text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[16px] ">
           <p>
-            {discription[0]}{" "}
-            <span className="text-[#0057FF]">{discription[1]}</span>
+            {description[0]}{" "}
+            <span className="text-[#0057FF]">{description[1]}</span>
           </p>
           <p className="">
-            {discription[2]}
+            {description[2]}
             <span
               className="text-[#0057FF] cursor-pointer"
               onClick={() => props.switch(0)}
             >
-              {discription[3]}
+              {description[3]}
             </span>
           </p>
         </div>
       </form>
-
-      {/* <LogInWithMail /> */}
     </div>
   );
 };

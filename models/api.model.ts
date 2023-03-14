@@ -1,5 +1,6 @@
-class APIResponse<T> {
+import { JwtPayload } from "jsonwebtoken";
 
+class APIResponse<T> {
   // carries list of data objects or string array for updated ids
   data?: T[] | null | string[];
 
@@ -14,7 +15,6 @@ class APIResponse<T> {
 
   // count of object or strings in data
   count?: number;
-  
 }
 
 export { APIResponse };

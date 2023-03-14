@@ -26,7 +26,7 @@ const CustomDropDown = (props: IProp) => {
         className={
           "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative "
         }
-        style={{ borderColor: props.error ? "#f02849" : "" }}
+        // style={{ borderColor: props.error ? "#f02849" : "" }}
       >
         <select name={props.name} {...props.register} id={props.name}>
           {props.value &&

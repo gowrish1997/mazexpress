@@ -18,6 +18,33 @@ declare module "iron-session" {
   }
 }
 
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
+
+declare module "jsonwebtoken" {
+  interface JwtPayload {
+    name: string;
+    picture: string;
+    given_name: string;
+    family_name: string;
+    email: string;
+    email_verified: boolean;
+    iss: string;
+    nbf: number;
+    aud: string;
+    sub: string;
+    azp: string;
+    iat: number;
+    exp: number;
+    jti: string;
+  }
+}
+window.google = window.google || {};
+
 // for server sign in
 namespace NodeJS {
   interface ProcessEnv {

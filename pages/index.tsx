@@ -16,17 +16,20 @@ import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
 import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import useUser from "@/lib/hooks/useUser";
+import Link from "next/link";
+import fetchJson from "@/lib/fetchSelf";
 
 const Index = () => {
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
-  console.log(locale);
   var section: string[] = t("landingPage.navBar.Section", {
     returnObjects: true,
   });
   var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
 
+  const { user, mutateUser } = useUser();
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
   const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -70,6 +73,13 @@ const Index = () => {
       setTrackingIdError(true);
       return;
     }
+  };
+
+  const logoutHandler = async () => {
+    // console.log("handle logout");
+    const result =await fetchJson("/api/auth/logout", { method: "GET" });
+    console.log(result)
+    await mutateUser();
   };
 
   const openPackageTrackingModal = () => {
@@ -202,15 +212,39 @@ const Index = () => {
               </ul>
             </div>
 
-            <div className="flex-type1 gap-x-[10px] md:gap-x-[20px]">
-              <button onClick={() => router.push("/auth/gate?mode=0")}>
-                {auth[1]}
-              </button>
-              <button className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] ">
-                {auth[0]}
-              </button>
-              <LanguageSwitcher />
-            </div>
+            {user !== null && user !== undefined ? (
+              <div className="flex items-center space-x-[20px]">
+                <div className="flex items-center space-x-[20px]">
+                  <p>{user.email}</p>
+                  {user.is_admin ? (
+                    <Link href={"/admin"}>Dashboard</Link>
+                  ) : (
+                    <Link href={"/orders"}>My orders</Link>
+                  )}
+                </div>
+                <div>
+                  <button
+                    onClick={logoutHandler}
+                    className="bg-[#2B2B2B] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
+                  >
+                    Logout
+                  </button>
+                </div>
+                <LanguageSwitcher />
+              </div>
+            ) : (
+              <div className="space-x-[20px]">
+                <Link href={"/auth/gate?mode=0"}>{auth[1]}</Link>
+                <Link
+                  href={"/auth/gate?mode=1"}
+                  className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px]"
+                >
+                  {auth[0]}
+                </Link>
+
+                <LanguageSwitcher />
+              </div>
+            )}
           </div>
           <div
             className="flex-type5 mt-[55px] w-[100%]"

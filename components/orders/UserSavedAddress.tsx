@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import fetchServer from "@/lib/fetchServer";
-import fetchSelf from '@/lib/fetchSelf'
+import fetchSelf from "@/lib/fetchSelf";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { Address } from "@/models/address.model";
 import { useTranslation } from "next-i18next";
@@ -16,18 +16,22 @@ const UserSavedAddress = (props: {
   const { user, mutateUser } = useUser();
 
   const { t } = useTranslation("common");
-    const content: string[] = t("addressBookPage.userSavedAddressCard.Content", { returnObjects: true });
+  const content: string[] = t("addressBookPage.userSavedAddressCard.Content", {
+    returnObjects: true,
+  });
 
   const deleteAddressHandler = async () => {
     // console.log('delete')
     if (user) {
       if (props.address.id === user?.default_address) {
         // update default address for user
-
       }
-      const result = await fetchServer(`/api/addresses?id=${props.address.id}&user=${user.id}`, {
-        method: "DELETE",
-      });
+      const result = await fetchServer(
+        `/api/addresses?id=${props.address.id}&user=${user.id}`,
+        {
+          method: "DELETE",
+        }
+      );
       // console.log(result)
       props.update();
     }
@@ -45,7 +49,7 @@ const UserSavedAddress = (props: {
       // console.log(newUserData)
 
       // await mutateUser(newUserData, false);
-      console.log(user)
+      console.log(user);
       const updateResponse = await fetchSelf(`/api/user?id=${user.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -58,7 +62,6 @@ const UserSavedAddress = (props: {
       // console.log(data)
     }
   };
-
 
   return (
     <div className="transition duration-300 flex items-start border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] h-full">
@@ -102,12 +105,15 @@ const UserSavedAddress = (props: {
 
         <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] flex justify-end flex-1 grow">
           <div className="space-x-[20px] flex items-end">
-          <button onClick={() => props.edit(props.address.id)} className="hover:font-[600]">
-                        {content[1]}
-                        </button>
-                        <button onClick={deleteAddressHandler} className="hover:font-[600]">
-                        {content[2]}
-                        </button>
+            <button
+              onClick={() => props.edit(props.address.id)}
+              className="hover:font-[600]"
+            >
+              {content[1]}
+            </button>
+            <button onClick={deleteAddressHandler} className="hover:font-[600]">
+              {content[2]}
+            </button>
           </div>
         </div>
       </div>
