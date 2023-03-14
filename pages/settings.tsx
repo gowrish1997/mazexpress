@@ -171,7 +171,7 @@ const Settings = () => {
               {t("settingsPage.Title")}
             </p>
             <p className="text-[14px] text-[#525D72] leading-[21px] font-[500] ">
-              {t("settingsPage.Discription")}{" "}
+              {t("settingsPage.Description")}{" "}
             </p>
           </div>
 
@@ -230,7 +230,11 @@ const Settings = () => {
                 error={errors.password}
                 icon={{
                   isEnabled: true,
-                  map: { on: "/eyeIconOpen.png", off: "/eyeIconClose.png" },
+                  src:
+                    passwordType === "password"
+                      ? "/eyeIconOpen.png"
+                      : "/eyeIconClose.png",
+                  onClick: togglePasswordTypeHandler,
                 }}
                 // disabled={true}
                 // autoComplete="off"
@@ -253,7 +257,11 @@ const Settings = () => {
                 error={errors.newPassword}
                 icon={{
                   isEnabled: true,
-                  map: { on: "/eyeIconOpen.png", off: "/eyeIconClose.png" },
+                  src:
+                    passwordType === "password"
+                      ? "/eyeIconOpen.png"
+                      : "/eyeIconClose.png",
+                  onClick: toggleNewPasswordTypeHandler,
                 }}
                 autoComplete="new-password"
               />
@@ -298,7 +306,7 @@ const Settings = () => {
                   {t("settingsPage.profileForm.notification.Title")}
                 </p>
                 <p className="text-[12px] text-[#525D72] leading-[18px] ">
-                  {t("settingsPage.profileForm.notification.Discription")}
+                  {t("settingsPage.profileForm.notification.Description")}
                 </p>
               </div>
               <Controller
