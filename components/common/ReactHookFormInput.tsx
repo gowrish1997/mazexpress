@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FieldError } from "react-hook-form";
 import eyeOpen from "@/public/eyeIconOpen.png";
 import eyeClose from "@/public/eyeIconClose.png";
-
+import dynamic from "next/dynamic";
 interface IProp {
   label: string;
   name: string;
@@ -12,9 +12,8 @@ interface IProp {
   value?: string | number;
   icon?: {
     isEnabled: boolean;
-    type?: "secure" | "insecure";
     onClick?: () => void;
-    src: string;
+    map: { on: string; off: string };
   };
   error?: FieldError;
   onClick?: () => void;
@@ -24,16 +23,17 @@ interface IProp {
 }
 
 const ReactHookFormInput = (props: IProp) => {
-  const [fieldVisibility, setFieldVisibility] = useState<
-    "secure" | "insecure" | undefined
-  >(props.icon?.type);
+  const [iconSwitch, setIconSwitch] = useState<"on" | "off">("on");
 
-  function getIconPath(type?: "secure" | "insecure") {
-    if (type === "secure") {
-      return eyeOpen;
-    }
-    return eyeClose;
-  }
+  const toggleIcon = () => {
+    setIconSwitch((prev) => {
+      if (prev === "off") {
+        return "on";
+      } else {
+        return "off";
+      }
+    });
+  };
 
   return (
     <div className={"w-full flex-type6"}>
@@ -67,17 +67,26 @@ const ReactHookFormInput = (props: IProp) => {
           autoComplete={props.autoComplete ? props.autoComplete : "on"}
         />
         {props.icon?.isEnabled ? (
-          <Image
-            src={props.icon?.src}
-            alt="eyeIcon"
-            height={18}
-            width={18}
-            className="cursor-pointer absolute right-[8px] "
-            onClick={props.onClick}
-          />
-        ) : (
-          ""
-        )}
+          iconSwitch === "on" ? (
+            <Image
+              src={props.icon?.map.on}
+              alt="eyeIcon"
+              height={18}
+              width={18}
+              className="cursor-pointer absolute right-[8px] "
+              onClick={toggleIcon}
+            />
+          ) : (
+            <Image
+              src={props.icon?.map.off}
+              alt="eyeIcon"
+              height={18}
+              width={18}
+              className="cursor-pointer absolute right-[8px] "
+              onClick={toggleIcon}
+            />
+          )
+        ) : null}
       </div>
       {props.error && (
         <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">

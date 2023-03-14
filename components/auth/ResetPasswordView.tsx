@@ -117,8 +117,7 @@ const ResetPasswordView = (props: any) => {
           // error={errors.password?.message && inputFieldErrors[0]}
           icon={{
             isEnabled: true,
-            type: passwordType == "string" ? "insecure" : "secure",
-            onClick: togglePasswordTypeHandler,
+            map: {on: '/eyeIconOpen.png', off: '/eyeIconClose.png'}
           }}
         />
 
@@ -130,8 +129,7 @@ const ResetPasswordView = (props: any) => {
           // error={errors.confirmPassword?.message && inputFieldErrors[1]}
           icon={{
             isEnabled: true,
-            type: confirmPasswordType == "string" ? "insecure" : "secure",
-            onClick: toggleConfirmPasswordTypeHandler,
+            map: {on: '/eyeIconOpen.png', off: '/eyeIconClose.png'}
           }}
         />
 

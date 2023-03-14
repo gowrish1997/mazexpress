@@ -204,9 +204,7 @@ return (
                 error={errors.password}
                 icon={{
                   isEnabled: true,
-                  type: passwordType == "string" ? "insecure" : "secure",
-                  onClick: togglePasswordTypeHandler,
-                  src: ''
+            map: {on: '/eyeIconOpen.png', off: '/eyeIconClose.png'}
                 }}
                 // disabled={true}
                 // autoComplete="off"
@@ -229,9 +227,7 @@ return (
                 error={errors.newPassword}
                 icon={{
                   isEnabled: true,
-                  type: newPasswordType == "string" ? "insecure" : "secure",
-                  onClick: toggleNewPasswordTypeHandler,
-                  src: ''
+            map: {on: '/eyeIconOpen.png', off: '/eyeIconClose.png'}
                 }}
                 autoComplete="new-password"
               />

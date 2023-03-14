@@ -167,7 +167,7 @@ const AddNewAddressModal = (props: IProp) => {
                 type="string"
                 IconEnabled={true}
                 register={register("city")}
-                error={errors.city ? fieldErrors[4] : ""}
+                error={errors.city}
                 options={cityList}
                 value={getValues("city")}
                 setValue={null}

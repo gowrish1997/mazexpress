@@ -152,7 +152,7 @@ const LogInComponent = (props: any) => {
           name="username"
           type="string"
           register={register("username")}
-          // error={errors.email?.message && inputFieldErrors[0]}
+          error={errors.username}
         />
 
         <ReactHookFormInput
@@ -161,7 +161,7 @@ const LogInComponent = (props: any) => {
           type={passwordType}
           icon={{
             isEnabled: true,
-            type: passwordType === "string" ? "insecure" : "secure",
+            map: {on: '/eyeIconOpen.png', off: '/eyeIconClose.png'}
           }}
           register={register("password")}
           onClick={togglePasswordTypeHandler}

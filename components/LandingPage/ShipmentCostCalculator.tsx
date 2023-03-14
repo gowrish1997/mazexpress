@@ -100,7 +100,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
             type="string"
             IconEnabled={true}
             register={register("warehouseAddress_address")}
-            error={errors.warehouseAddress_address?.message && fieldErrors[0]}
+            error={errors.warehouseAddress_address as FieldError}
             options={[
               { value: "gowrish", label: "gowrish" },
               { value: "gowrish", label: "gowrish" },
@@ -116,7 +116,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
             type="string"
             IconEnabled={true}
             register={register("city_name")}
-            error={errors.city_name?.message && fieldErrors[1]}
+            error={errors.city_name as FieldError}
             options={[
               { value: "gowrish", label: "gowrish" },
               { value: "gowrish", label: "gowrish" },
@@ -166,7 +166,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
               name="package_weight"
               type="number"
               register={register("package_weight")}
-              //   error={errors.package_weight?.message && fieldErrors[2]}
+              error={errors.package_weight as FieldError}
               className="rounded-l-[4px] rounded-r-none"
             />
             <div
