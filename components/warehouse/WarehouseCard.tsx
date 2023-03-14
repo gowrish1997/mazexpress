@@ -3,8 +3,16 @@ import Image from "next/image";
 import copy from "copy-to-clipboard";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { Warehouse } from "@/models/warehouse.model";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const WarehouseCard = (props: { address: Warehouse }) => {
+
+  const router = useRouter();
+  const { t } = useTranslation("common");
+    const { locale } = router;
+
+
   const getBg = (status: string) => {
     switch (status) {
       case "active":
@@ -151,7 +159,7 @@ const WarehouseCard = (props: { address: Warehouse }) => {
         onClick={copyToClipboard}
       >
         <Image src="/copy.png" alt="copy" height={12} width={12} />
-        <span>Copy</span>
+        <span>{t("warehousePage.warehouseCard.Content")}</span>
       </div>
     </div>
   );

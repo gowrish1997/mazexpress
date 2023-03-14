@@ -12,7 +12,7 @@ const WarehousePage = () => {
   const { warehouses, mutateWarehouses, warehousesIsLoading } = useWarehouses();
 
     const router = useRouter();
-    const { t } = useTranslation("common");
+  const { t } = useTranslation("common");
     const { locale } = router;
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const WarehousePage = () => {
     }, [router.locale]);
     return (
       <>
-      <PageHeader content="Our Warehouse" title="Our Warehouses | MazExpress" />
+      <PageHeader content={t("warehousePage.pageHeader.Title")} title="Our Warehouses | MazExpress" />
       {
         warehousesIsLoading && <div>Loading warehouses</div>
       }
