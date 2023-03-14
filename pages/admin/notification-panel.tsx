@@ -1,19 +1,11 @@
 import ConfigCard from "@/components/admin/notification-panel/ConfigCard";
 import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import PageHeader from "@/components/common/PageHeader";
-<<<<<<< HEAD
-import fetchJson from "@/lib/fetchServer";
-import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
-import { NotificationConfig } from "@/models/notification-config.model";
-import React, { useState,useEffect } from "react";
-import { useRouter } from "next/router";
-=======
 import fetchServer from "@/lib/fetchServer";
 import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
 import { NotificationConfig } from "@/models/notification-config.model";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
->>>>>>> sessions
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -30,17 +22,10 @@ const NotificationPanel = () => {
 
   const { locales, locale: activeLocale } = router;
 
-<<<<<<< HEAD
-    useEffect(() => {
-        console.log("use efft");
-        router.push(router.asPath, router.asPath, { locale: "en" });
-    }, []);
-=======
   useEffect(() => {
     console.log("use efft");
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
->>>>>>> sessions
 
   const toggle = async (id: string) => {
     // send put to notification settings

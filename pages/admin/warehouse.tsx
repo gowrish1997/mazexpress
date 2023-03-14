@@ -1,20 +1,5 @@
 import PageHeader from "@/components/common/PageHeader";
 import WarehouseCard from "@/components/admin/warehouse/WarehouseCard";
-<<<<<<< HEAD
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next/router";
-import useWarehouses from "@/lib/hooks/useWarehouses";
-import React, { useState,useEffect } from "react";
-import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
-import { Warehouse } from "@/models/warehouse.model";
-import { i18n } from "next-i18next";
-
-
-const WarehousePage = () => {
-
-  const router=useRouter();
-
-=======
 import useWarehouses from "@/lib/hooks/useWarehouses";
 import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
 import { Warehouse } from "@/models/warehouse.model";
@@ -26,7 +11,6 @@ import { useRouter } from "next/router";
 
 const WarehousePage = () => {
   const router = useRouter();
->>>>>>> sessions
   const { warehouses, mutateWarehouses } = useWarehouses();
 
   const { locales, locale: activeLocale } = router;

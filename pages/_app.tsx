@@ -8,15 +8,6 @@ import fetchJson, { FetchError } from "@/lib/fetchServer";
 import "react-notifications/lib/notifications.css";
 import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
-<<<<<<< HEAD
-import { appWithTranslation } from "next-i18next";
-import { NotificationContainer } from "react-notifications";
-
-import "reflect-metadata";
-config.autoAddCss = false;
-
- function App({
-=======
 import { NotificationContainer } from "react-notifications";
 import "reflect-metadata";
 
@@ -25,7 +16,6 @@ import { appWithTranslation } from "next-i18next";
 config.autoAddCss = false;
 
 function App({
->>>>>>> sessions
   Component,
   // pageProps: { session, ...pageProps },
   pageProps,

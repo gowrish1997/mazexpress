@@ -8,14 +8,7 @@ import { useTranslation } from "next-i18next";
 
 const WarehouseCard = (props: { address: Warehouse }) => {
 
-<<<<<<< HEAD
-  const router = useRouter();
   const { t } = useTranslation("common");
-    const { locale } = router;
-
-=======
-  const { t } = useTranslation("common");
->>>>>>> sessions
 
   const getBg = (status: string) => {
     switch (status) {
@@ -143,13 +136,8 @@ const WarehouseCard = (props: { address: Warehouse }) => {
           </span>
         </div>
       </div>
-<<<<<<< HEAD
-      <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] ">
-        Turkey
-=======
       <p className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] mt-[7px] capitalize ">
       {props.address.country}
->>>>>>> sessions
       </p>
       <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">{`${props.address.address_1}, ${props.address.address_2}`}</p>
       <p className="text-[12px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">

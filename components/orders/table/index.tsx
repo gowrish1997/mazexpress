@@ -17,20 +17,6 @@ interface TableProps {
 }
 
 const Table = (props: TableProps) => {
-<<<<<<< HEAD
-    console.log(props.selectedOrder)
-    const tableClassNameHandler = () => {
-        if (props.type == "live_order" || props.type == "pending" || props.type == "shipments" || props.type == "delivered" || props.type == "in-transit") {
-            return "live_order_table";
-        } else if (props.type == "user_base") {
-            return "user_table";
-        } else if (props.type == "stat_table") {
-            return "stat_table";
-        } else {
-            return "order_table";
-        }
-    };
-=======
   const tableClassNameHandler = () => {
     if (
       props.type == "live_order" ||
@@ -48,7 +34,6 @@ const Table = (props: TableProps) => {
       return "order_table";
     }
   };
->>>>>>> sessions
 
   return (
     <div className="flex-1 relative">

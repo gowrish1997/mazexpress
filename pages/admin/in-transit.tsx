@@ -6,15 +6,9 @@ import Table from "@/components/orders/table";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
-<<<<<<< HEAD
-import { i18n } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { Order } from "@/models/order.model";
-=======
 import { Order } from "@/models/order.model";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
->>>>>>> sessions
 
 const tableHeaders = [
   "Customer",
@@ -68,19 +62,8 @@ const Intransit = () => {
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-<<<<<<< HEAD
-    console.log(value)
-    selectOrder(
-      value,
-      type,
-      setSelectedOrder,
-     orders,
-      selectedOrder!
-    );
-=======
     console.log(value);
     selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
->>>>>>> sessions
   };
 
   if (ordersIsLoading) {

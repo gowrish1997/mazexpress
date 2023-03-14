@@ -2,16 +2,6 @@ import Head from "next/head";
 import React, { useState, useRef } from "react";
 import Calendar from "react-calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-<<<<<<< HEAD
-
-import { useRouter } from "next/router";
-import useUser from "@/lib/hooks/useUser";
-import { useTranslation } from "next-i18next";
-
-import useTrackings from "@/lib/hooks/useTrackings";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import moment from "moment";
-=======
 import {
   faAngleDown,
   faAngleLeft,
@@ -20,7 +10,6 @@ import {
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
->>>>>>> sessions
 import ClickOutside from "@/components/common/ClickOutside";
 import useUser from "@/lib/hooks/useUser";
 import useTracking from "@/lib/hooks/useTracking";
@@ -31,24 +20,6 @@ interface IProp {
   title?: string;
 }
 const PageHeader = (props: IProp) => {
-<<<<<<< HEAD
-    const { user, mutateUser} = useUser();
-    const { tracking, trackingIsLoading } = useTrackings({
-        user_id: user?.id,
-    });
-    let trigger = useRef(null);
-    const router = useRouter();
-    const { t } = useTranslation("common");
-    const { locale } = router;
-
-    const [showCalender, setShowCalender] = useState<boolean>(false);
-    const [allOrderDeliveryDate, setAllOrderDeliveryDate] = useState<string[] | null>(null);
-    const [calendarValue, setCalendarValue] = useState<Date>(new Date());
-
-    const toggleCalender = () => {
-        setShowCalender((prev) => !prev);
-    };
-=======
   const { user, mutateUser } = useUser();
   const { tracking, trackingIsLoading } = useTracking({
     user_id: user?.id,
@@ -63,7 +34,6 @@ const PageHeader = (props: IProp) => {
     string[] | null
   >(null);
   const [calendarValue, setCalendarValue] = useState<Date>(new Date());
->>>>>>> sessions
 
   const toggleCalender = () => {
     setShowCalender((prev) => !prev);

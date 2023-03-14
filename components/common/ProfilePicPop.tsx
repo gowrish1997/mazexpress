@@ -1,10 +1,7 @@
 import React, { ChangeEvent, useRef } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
-<<<<<<< HEAD
-=======
 import { useTranslation } from "next-i18next";
->>>>>>> sessions
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
@@ -22,17 +19,11 @@ const ProfilePicPop = (props: IProp) => {
   const { user, mutateUser } = useUser();
   const imageInputRef = useRef<HTMLInputElement>(null);
 
-<<<<<<< HEAD
-  const uploadImage = () => {
-    imageInputRef.current?.click();
-  };
-=======
   const { t } = useTranslation("common");
   const profilePicPopContent: string[] = t(
     "settingsPage.profileForm.ProfilePicPopContent",
     { returnObjects: true }
   );
->>>>>>> sessions
 
   const deleteImage = async () => {
     // set back to default image
@@ -46,11 +37,7 @@ const ProfilePicPop = (props: IProp) => {
     });
   };
 
-<<<<<<< HEAD
-  const updateUserImage = (e: ChangeEvent<HTMLInputElement>) => {
-=======
   const updateUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
->>>>>>> sessions
     if (e.target.files) {
       // dev
       console.log(e.target.files[0]);

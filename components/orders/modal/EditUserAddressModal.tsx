@@ -3,14 +3,6 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-<<<<<<< HEAD
-import CustomDropdown from "@/components/LandingPage/CustomDropdown";
-import useUser from "@/lib/hooks/useUser";
-import { Address, City } from "@/models/address.model";
-import fetchServer from "@/lib/fetchServer";
-import { useTranslation } from "next-i18next";
-import { useRouter } from "next/router";
-=======
 import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/hooks/useUser";
 import { Address, City } from "@/models/address.model";
@@ -23,7 +15,6 @@ import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 
->>>>>>> sessions
 interface IProp {
   show: boolean;
   close: () => void;
@@ -33,19 +24,6 @@ interface IProp {
 
 const schema = yup
   .object({
-<<<<<<< HEAD
-      tag: yup.string().required("Tag address is required field"),
-      address_1: yup.string().required("Address line 01 is required field"),
-      address_2: yup.string().required("Address line 02 is required field"),
-      country: yup.string().required("Country is required field"),
-      city: yup.string().required("City/Town is required field"),
-
-      phone: yup
-          .number()
-          .test("len", "Must be exactly 10 digits", (val) => val?.toString().length === 10)
-          .required()
-          .typeError("Mobile number is required field"),
-=======
     tag: yup.string().required("Tag address is required field"),
     address_1: yup
       .string()
@@ -65,7 +43,6 @@ const schema = yup
       )
       .required()
       .typeError("Mobile number is required field"),
->>>>>>> sessions
   })
   .required();
 
@@ -74,24 +51,6 @@ const schema = yup
 const EditUserAddressModal = (props: IProp) => {
   const [country, setCountry] = useState(props.address.country);
   const { user, mutateUser } = useUser();
-<<<<<<< HEAD
-  const router = useRouter();
-  const { t } = useTranslation("common");
-  const { locale } = router;
-  const inputFieldLabels: string[] = t("addNewOrderPage.addressForm.Labels", { returnObjects: true });
-  const fieldErrors: string[] = t("addNewOrderPage.addressForm.Errors", { returnObjects: true });
-  const cityList: { value: string; label: "string" }[] = t("addNewOrderPage.addressForm.CityOptions", { returnObjects: true });
-  const {
-      register,
-      handleSubmit,
-      getValues,
-      control,
-      setValue,
-      formState: { errors },
-  } = useForm<Address & { default?: "on" | "off" }>({
-      defaultValues: props.address,
-      resolver: yupResolver(schema),
-=======
 
   const router = useRouter();
   const { t } = useTranslation("common");
@@ -115,7 +74,6 @@ const EditUserAddressModal = (props: IProp) => {
   } = useForm<Address & { default: "on" | "off" }>({
     defaultValues: props.address,
     resolver: yupResolver(schema),
->>>>>>> sessions
   });
 
   const [addressIsDefault, setAddressIsDefault] = useState(
@@ -173,21 +131,6 @@ const EditUserAddressModal = (props: IProp) => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">
-<<<<<<< HEAD
-          {t("addNewOrderPage.editAddressForm.Title")}
-          </p>
-          <div>
-          <input
-            id="title"
-            type="string"
-            {...register("tag")}
-            className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
-            placeholder={inputFieldLabels[0]}
-          />
-          {errors.tag && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{fieldErrors[0]}</p>}
-          </div>
-         
-=======
             {t("addNewOrderPage.editAddressForm.Title")}
           </p>
           <div>
@@ -205,43 +148,18 @@ const EditUserAddressModal = (props: IProp) => {
             )}
           </div>
 
->>>>>>> sessions
           <ReactHookFormInput
             label={inputFieldLabels[1]}
             name="address_1"
             type="string"
             register={register("address_1")}
-<<<<<<< HEAD
-            error={errors.address_1 ? fieldErrors[1] : ""}
-=======
             error={errors.address_1}
->>>>>>> sessions
           />
           <ReactHookFormInput
             label={inputFieldLabels[2]}
             name="address_2"
             type="string"
             register={register("address_2")}
-<<<<<<< HEAD
-            error={errors.address_2 ? fieldErrors[2] : ""}
-          />
-          <div className="flex-type2 space-x-[10px] w-full">
-            <CustomDropdown
-              label={inputFieldLabels[4]}
-              name="city_addresses"
-              type="string"
-              IconEnabled={true}
-              register={register("city")}
-              error={errors.city ? fieldErrors[4] : ""}
-              options={cityList}
-              value={getValues("city")}
-              setValue={setValue}
-              disabled={true}
-              className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
-            
-            />
-          </div>
-=======
             error={errors.address_2}
           />
           <div className="flex-type2 space-x-[10px] w-full">
@@ -319,17 +237,12 @@ const EditUserAddressModal = (props: IProp) => {
                             value={props.address.pincode}
                         /> */}
           {/* </div> */}
->>>>>>> sessions
           <ReactHookFormInput
             label={inputFieldLabels[5]}
             name="phone"
             type="number"
             register={register("phone")}
-<<<<<<< HEAD
-            error={errors.phone ? fieldErrors[5] : ""}
-=======
             error={errors.phone}
->>>>>>> sessions
           />
           <div className=".flex-type1 space-x-[5px]">
             <input
@@ -349,22 +262,14 @@ const EditUserAddressModal = (props: IProp) => {
               className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"
               type="submit"
             >
-<<<<<<< HEAD
-             {t("addNewOrderPage.editAddressForm.SubmitButton")}
-=======
               {t("addNewOrderPage.editAddressForm.SubmitButton")}
->>>>>>> sessions
             </button>
 
             <button
               className="box-border w-[120px] h-[42px] border-[1px] border-[#ececec] rounded-[4px] font-[400] text-[14px] leading-[19px] text-[#030303] text-center "
               onClick={() => props.close()}
             >
-<<<<<<< HEAD
-             {t("addNewOrderPage.editAddressForm.CancelButton")}
-=======
               {t("addNewOrderPage.editAddressForm.CancelButton")}
->>>>>>> sessions
             </button>
           </div>
         </form>
