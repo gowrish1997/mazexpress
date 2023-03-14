@@ -1,6 +1,5 @@
 // written by raunak
 
-
 import React, { SyntheticEvent, useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import newlogoBlue from "../public/new_logo_blue.png";
@@ -17,7 +16,6 @@ import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
 import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import axios from "axios";
 
 const Index = () => {
   const router = useRouter();
@@ -205,7 +203,9 @@ const Index = () => {
             </div>
 
             <div className="flex-type1 gap-x-[10px] md:gap-x-[20px]">
-              <button onClick={() => router.push('/auth/gate?mode=0')}>{auth[1]}</button>
+              <button onClick={() => router.push("/auth/gate?mode=0")}>
+                {auth[1]}
+              </button>
               <button className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] ">
                 {auth[0]}
               </button>
@@ -247,7 +247,7 @@ const Index = () => {
                 {t("landingPage.Title")}
               </h1>
               <p className="text-center text-[16px] text-[#525D72] font-[500] leading-[25.5px]">
-                {t("landingPage.Discription")}
+                {t("landingPage.Description")}
               </p>
             </div>
           </div>
@@ -266,6 +266,7 @@ const Index = () => {
 export default Index;
 
 export async function getStaticProps({ locale }: { locale: any }) {
+  // console.log(locale)
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }

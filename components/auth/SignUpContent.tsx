@@ -65,7 +65,7 @@ const SignUpContent = (props: IProp) => {
   const submitButtons: string[] = t("signUpView.form.SubmitButton", {
     returnObjects: true,
   });
-  const discription: string[] = t("signUpView.form.Discription", {
+  const description: string[] = t("signUpView.form.Discription", {
     returnObjects: true,
   });
   const genderOption: { value: string; label: string }[] = t(
@@ -219,12 +219,12 @@ error={errors.gender}
         error={errors.password}
         icon={{
           isEnabled: true,
-          map: {
-            on: "/eyeIconOpen.png",
-            off: "/eyeIconClose.png",
-          },
+          src:
+            passwordType === "password"
+              ? "/eyeIconOpen.png"
+              : "/eyeIconClose.png",
+          onClick: togglePasswordTypeHandler,
         }}
-        onClick={togglePasswordTypeHandler}
       />
 
       <ReactHookFormInput
@@ -235,12 +235,9 @@ error={errors.gender}
         error={errors.confirmPassword}
         icon={{
           isEnabled: true,
-          map: {
-            on: "/eyeIconOpen.png",
-            off: "/eyeIconClose.png",
-          },
+          src: passwordType === 'password' ?  "/eyeIconOpen.png" : "/eyeIconClose.png",
+            onClick: toggleConfirmPasswordTypeHandler,
         }}
-        onClick={toggleConfirmPasswordTypeHandler}
       />
 
       <button
@@ -252,16 +249,16 @@ error={errors.gender}
       {props.type == "signUp" && (
         <div className="text-center w-full text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[10px] ">
           <p>
-            {discription[0]}{" "}
-            <span className="text-[#0057FF]">{discription[1]}</span>
+            {description[0]}{" "}
+            <span className="text-[#0057FF]">{description[1]}</span>
           </p>
           <p>
-            {discription[2]}
+            {description[2]}
             <span
               className="text-[#0057FF] cursor-pointer"
               onClick={() => props.switch?.(1)}
             >
-              {discription[3]}
+              {description[3]}
             </span>
           </p>
         </div>

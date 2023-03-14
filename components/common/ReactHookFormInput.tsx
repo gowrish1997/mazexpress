@@ -13,7 +13,7 @@ interface IProp {
   icon?: {
     isEnabled: boolean;
     onClick?: () => void;
-    map: { on: string; off: string };
+    src: string;
   };
   error?: FieldError;
   onClick?: () => void;
@@ -67,25 +67,14 @@ const ReactHookFormInput = (props: IProp) => {
           autoComplete={props.autoComplete ? props.autoComplete : "on"}
         />
         {props.icon?.isEnabled ? (
-          iconSwitch === "on" ? (
-            <Image
-              src={props.icon?.map.on}
-              alt="eyeIcon"
-              height={18}
-              width={18}
-              className="cursor-pointer absolute right-[8px] "
-              onClick={toggleIcon}
-            />
-          ) : (
-            <Image
-              src={props.icon?.map.off}
-              alt="eyeIcon"
-              height={18}
-              width={18}
-              className="cursor-pointer absolute right-[8px] "
-              onClick={toggleIcon}
-            />
-          )
+          <Image
+            src={props.icon?.src}
+            alt="eyeIcon"
+            height={18}
+            width={18}
+            className="cursor-pointer absolute right-[8px] "
+            onClick={props.onClick}
+          />
         ) : null}
       </div>
       {props.error && (

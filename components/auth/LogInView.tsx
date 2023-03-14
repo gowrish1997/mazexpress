@@ -161,10 +161,11 @@ const LogInComponent = (props: any) => {
           type={passwordType}
           icon={{
             isEnabled: true,
-            map: {on: '/eyeIconOpen.png', off: '/eyeIconClose.png'}
+            src: passwordType === 'password' ?  "/eyeIconOpen.png" : "/eyeIconClose.png",
+            onClick: togglePasswordTypeHandler,
           }}
           register={register("password")}
-          onClick={togglePasswordTypeHandler}
+
           // error={errors.password?.message && inputFieldErrors[1]}
         />
         <button

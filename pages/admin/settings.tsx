@@ -212,7 +212,11 @@ const Settings = () => {
                 error={errors.password}
                 icon={{
                   isEnabled: true,
-                  map: { on: "/eyeIconOpen.png", off: "/eyeIconClose.png" },
+                  src:
+                    passwordType === "password"
+                      ? "/eyeIconOpen.png"
+                      : "/eyeIconClose.png",
+                  onClick: togglePasswordTypeHandler,
                 }}
                 // disabled={true}
                 // autoComplete="off"
@@ -235,7 +239,11 @@ const Settings = () => {
                 error={errors.newPassword}
                 icon={{
                   isEnabled: true,
-                  map: { on: "/eyeIconOpen.png", off: "/eyeIconClose.png" },
+                  src:
+                    passwordType === "password"
+                      ? "/eyeIconOpen.png"
+                      : "/eyeIconClose.png",
+                  onClick: toggleNewPasswordTypeHandler,
                 }}
                 autoComplete="new-password"
               />

@@ -1,6 +1,6 @@
 {
   "signUpView": {
-    "Title": " Sign up to get started",
+    "Title": "Sign up to get started",
     "MobileViewTitle": "Get More Done With Our MAZ Services",
     "form": {
       "InputField": [
@@ -29,7 +29,7 @@
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
         "Confirm password is required field(Passwords must match) "
       ],
-      "Discription": [
+      "Description": [
         "By signing up, you agree to our",
         "Terms of Service.",
         "Already have an account?",
@@ -49,7 +49,7 @@
         "Email is required (Please provide valid email)",
         "Password is required field"
       ],
-      "Discription": [
+      "Description": [
         "By signing up, you agree to our",
         "Terms of Service.",
         "New to MAZ Express?",
@@ -70,7 +70,7 @@
         "Confirm password is required field(Passwords must match) "
       ],
       "SubmitButton": ["Reset Password"],
-      "Discription": [
+      "Description": [
         "By signing up, you agree to our",
         "Terms of Service.",
         "Already have an account?",
@@ -79,23 +79,23 @@
     }
   },
   "landingPage": {
-    "Header": " Plan your eCommerce shipments in an instant. Estimate courier charges using our quick courier charges.",
+    "Header": "Plan your eCommerce shipments in an instant. Estimate courier charges using our quick courier charges.",
     "navBar": {
       "Section": ["Track Order", "Shipment Calculator", "Support"],
-      "Auth": ["Log in", "Sign in"]
+      "Auth": ["Log in", "Sign up"]
     },
     "trackOrder": {
       "Placeholder": "Tracking Number",
-      "Error": "Please enter the tracking Id",
+      "Error": "Please enter the tracking ID",
       "SubmitButton": "Track Now",
-      "CaptionPart1": "Need help changing your delivery?",
-      "CaptionPart2": "LOL"
+      "CaptionPart1": "Get your order delivered fast.",
+      "CaptionPart2": "Contact us"
     },
     "Title": "Get More Done With Our MAZ Services",
-    "Discription": "Drop off and pick up packages from a location that’s open when you need it",
+    "Description": "Drop off and pick up packages from a location that’s open when you need it",
     "shipmentCostCalculator": {
       "Title": "Shipment Cost Calculator",
-      "Discription": "Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it",
+      "Description": "Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it",
       "form": {
         "InputField": [
           {
@@ -109,7 +109,7 @@
         "Errors": [
           "Warehouse Address is a required field",
           "Delivery City is a required field",
-          " Weight is a required field"
+          "Weight is a required field"
         ],
         "Dimensions": ["Length", "Width", "Height"],
         "SubmitButton": "Calculate Cost",
@@ -118,7 +118,7 @@
     },
     "communityForm": {
       "Title": "Join ⚡️ MAZ community",
-      "Discription": "Drop off and pick up packages from a location that’s open when you need it.",
+      "Description": "Drop off and pick up packages from a location that’s open when you need it.",
       "form": {
         "InputField": ["Email", "Mobile number", "Message"],
         "Errors": [
@@ -186,7 +186,7 @@
   },
   "indexPage": {
     "blankPage": {
-      "Discription": [
+      "Description": [
         "Oops, there are no orders on your list yet... Start adding now.",
         "Add Order Now"
       ]
@@ -262,7 +262,7 @@
       "Title": "Order Tracking"
     },
     "PageTitle": "Tracking",
-    "Discription": "Enter the Maz tracking id to find your package!",
+    "Description": "Enter the Maz tracking id to find your package!",
     "InputFieldLabel": "Search with MAZ ID"
   },
   "trackingView": {
@@ -325,7 +325,7 @@
     "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
     "LinkPPart2": "Link here →",
     "Title": "Account",
-    "Discription": "Review and update your account details",
+    "Description": "Review and update your account details",
     "profileForm": {
       "InputFieldLabel": [
         "First name",
@@ -346,7 +346,7 @@
 
       "notification": {
         "Title": "Notifications",
-        "Discription": "Enable or disable notifications for your account"
+        "Description": "Enable or disable notifications for your account"
       },
       "LanguageOption": [
         { "value": "ar", "label": "Arabic" },
