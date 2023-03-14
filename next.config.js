@@ -18,7 +18,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
+        protocol: "https",
         hostname: "mazexpress.portfolios.digital",
         port: "",
         pathname: "/**",

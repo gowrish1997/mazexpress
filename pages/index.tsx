@@ -1,13 +1,11 @@
+// written by raunak
+
+
 import React, { SyntheticEvent, useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import newlogoBlue from "../public/new_logo_blue.png";
 import ShipmentCostCalculator from "@/components/LandingPage/ShipmentCostCalculator";
 import Footer from "@/components/LandingPage/Footer";
-import Link from "next/link";
-import Head from "next/head";
-import { GetServerSidePropsContext } from "next";
-import useUser from "@/lib/hooks/useUser";
-import fetchJson from "@/lib/fetchSelf";
 import fetchServer from "@/lib/fetchServer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -16,7 +14,6 @@ import PackageTrackingModal from "@/components/LandingPage/PackageTrackingModal"
 import { useRouter } from "next/router";
 import LanguageSwitcher from "@/components/LandingPage/LanguageSwitcher";
 import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
-import Cancel from "../public/cancel.png";
 import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -208,7 +205,7 @@ const Index = () => {
             </div>
 
             <div className="flex-type1 gap-x-[10px] md:gap-x-[20px]">
-              <button>{auth[1]}</button>
+              <button onClick={() => router.push('/auth/gate?mode=0')}>{auth[1]}</button>
               <button className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] ">
                 {auth[0]}
               </button>

@@ -12,7 +12,7 @@ import useUser from "@/lib/hooks/useUser";
 import { useRouter } from "next/router";
 import { createToast } from "@/lib/toasts";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
-import blueExclamatory from '@/public/blueExclamatory.png';
+import blueExclamatory from "@/public/blueExclamatory.png";
 import { User } from "@/models/user.model";
 const schema = yup
   .object({
@@ -51,7 +51,7 @@ const Settings = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const [newPasswordType, setNewPasswordType] = useState("password");
-  const [showProfilePicPop, setShowProfilePicPop] = useState<boolean>(false)
+  const [showProfilePicPop, setShowProfilePicPop] = useState<boolean>(false);
 
   const router = useRouter();
   const {
@@ -61,11 +61,10 @@ const Settings = () => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<User & {default_language: string, newPassword: string}>({
+  } = useForm<User & { default_language: string; newPassword: string }>({
     resolver: yupResolver(schema),
     defaultValues: { ...user, password: "" },
   });
-
 
   const togglePasswordTypeHandler = () => {
     if (passwordType == "string") {
@@ -83,14 +82,14 @@ const Settings = () => {
   };
 
   const toggleProfilePicPop = (e: any) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setShowProfilePicPop((prev) => !prev)
+    e.preventDefault();
+    e.stopPropagation();
+    setShowProfilePicPop((prev) => !prev);
   };
 
-  
-
-  const onSubmit: SubmitHandler<User & {default_language: string, newPassword: string}> = async (data) => {
+  const onSubmit: SubmitHandler<
+    User & { default_language: string; newPassword: string }
+  > = async (data) => {
     console.log(data);
     createToast({
       title: "Success",
@@ -133,23 +132,32 @@ const Settings = () => {
   }, [user, reset]);
   // if (userIsLoading) return <div>loading</div>;
 
-return (
-  <>
-      <PageHeader content="Settings" className="border-none pb-[10px]" title="My Settings | MazExpress" />
+  return (
+    <>
+      <PageHeader
+        content="Settings"
+        className="border-none pb-[10px]"
+        title="My Settings | MazExpress"
+      />
       <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} />
       <Layout>
-          <div className="w-full space-y-[30px] ">
-              <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
-                  <Image src={blueExclamatory} alt="icon" width={16} height={16} />
-                  <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-                      Here is a link to some fake information that contains crucial information, <span className="text-[#3672DF]">Link here →</span>
-                  </p>
-              </div>
-              <div>
-                  <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">Account</p>
-                  <p className="text-[14px] text-[#525D72] leading-[21px] font-[500] ">Review and update your account details</p>
-              </div>
-              <form
+        <div className="w-full space-y-[30px] ">
+          <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
+            <Image src={blueExclamatory} alt="icon" width={16} height={16} />
+            <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
+              Here is a link to some fake information that contains crucial
+              information, <span className="text-[#3672DF]">Link here →</span>
+            </p>
+          </div>
+          <div>
+            <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">
+              Account
+            </p>
+            <p className="text-[14px] text-[#525D72] leading-[21px] font-[500] ">
+              Review and update your account details
+            </p>
+          </div>
+          <form
             className="flex-type6 w-3/4 gap-y-[10px] "
             onSubmit={handleSubmit(onSubmit)}
           >
@@ -204,7 +212,7 @@ return (
                 error={errors.password}
                 icon={{
                   isEnabled: true,
-            map: {on: '/eyeIconOpen.png', off: '/eyeIconClose.png'}
+                  map: { on: "/eyeIconOpen.png", off: "/eyeIconClose.png" },
                 }}
                 // disabled={true}
                 // autoComplete="off"
@@ -227,7 +235,7 @@ return (
                 error={errors.newPassword}
                 icon={{
                   isEnabled: true,
-            map: {on: '/eyeIconOpen.png', off: '/eyeIconClose.png'}
+                  map: { on: "/eyeIconOpen.png", off: "/eyeIconClose.png" },
                 }}
                 autoComplete="new-password"
               />
