@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useCallback,useEffect } from "react";
+=======
+import React, { useState, useCallback, useEffect } from "react";
+>>>>>>> sessions
 import useOrders from "@/lib/hooks/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -6,9 +10,15 @@ import DeliveredPageHeader from "@/components/admin/DeliveredPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
+<<<<<<< HEAD
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Order } from "@/models/order.model";
+=======
+import { Order } from "@/models/order.model";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+>>>>>>> sessions
 
 const tableHeaders = [
   "Customer",
@@ -35,6 +45,7 @@ const DeliveredOrders = () => {
     status: ["delivered"],
   });
 
+<<<<<<< HEAD
     const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
@@ -44,11 +55,20 @@ const DeliveredOrders = () => {
 
 
   const [allDeliveredOrders, setAllDeliveredOrders] = useState<Order[]>();
+=======
+  const { locales, locale: activeLocale } = router;
+
+  // useEffect(() => {
+  //   console.log("use efft");
+  //   router.push(router.asPath, router.asPath, { locale: "en" });
+  // }, []);
+>>>>>>> sessions
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
   const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
+<<<<<<< HEAD
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
     };
@@ -56,12 +76,22 @@ const DeliveredOrders = () => {
         setCurrentPage(0)
         setItemPerPage(value as number);
     }, []);
+=======
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
+  };
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
+    setItemPerPage(value as number);
+  }, []);
+>>>>>>> sessions
 
   const filterByCreatedDate = (value: Date | string) => {
     setCreatedDateFilterKey(value);
   };
 
   const selectOrderHandler = (value: string, type: string) => {
+<<<<<<< HEAD
     selectOrder(
       value,
       type,
@@ -69,6 +99,9 @@ const DeliveredOrders = () => {
       orders,
       selectedOrder!
     );
+=======
+    selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
+>>>>>>> sessions
   };
   if (ordersIsLoading) {
     return <LoadingPage />;
@@ -116,12 +149,12 @@ const DeliveredOrders = () => {
 
 export default DeliveredOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
   }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}

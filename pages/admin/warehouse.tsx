@@ -1,5 +1,6 @@
 import PageHeader from "@/components/common/PageHeader";
 import WarehouseCard from "@/components/admin/warehouse/WarehouseCard";
+<<<<<<< HEAD
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import useWarehouses from "@/lib/hooks/useWarehouses";
@@ -13,13 +14,26 @@ const WarehousePage = () => {
 
   const router=useRouter();
 
+=======
+import useWarehouses from "@/lib/hooks/useWarehouses";
+import AddNewWarehouseModal from "@/components/admin/warehouse/modal/AddNewWarehouseModal";
+import { Warehouse } from "@/models/warehouse.model";
+
+import React, { useState, useEffect } from "react";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
+
+const WarehousePage = () => {
+  const router = useRouter();
+>>>>>>> sessions
   const { warehouses, mutateWarehouses } = useWarehouses();
 
   const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
-      console.log("use efft");
-      router.push(router.asPath, router.asPath, { locale: "en" });
+    console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
   const [showAddNewWarehouseModal, setShowAddNewWarehouseModal] =
     useState(false);
@@ -33,7 +47,13 @@ const WarehousePage = () => {
       <PageHeader content="Warehouses" title="Warehouses | MazExpress Admin" />
       <div className="grid grid-cols-3 gap-3 py-5">
         {(warehouses as Warehouse[])?.map((data) => {
-          return <WarehouseCard key={data.id} address={data} update={mutateWarehouses} />;
+          return (
+            <WarehouseCard
+              key={data.id}
+              address={data}
+              update={mutateWarehouses}
+            />
+          );
         })}
       </div>
       <div>
@@ -56,11 +76,11 @@ const WarehousePage = () => {
 export default WarehousePage;
 export async function getStaticProps({ locale }: { locale: any }) {
   if (process.env.NODE_ENV === "development") {
-      await i18n?.reloadResources();
+    await i18n?.reloadResources();
   }
   return {
-      props: {
-          ...(await serverSideTranslations(locale, ["common"])),
-      },
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
   };
 }

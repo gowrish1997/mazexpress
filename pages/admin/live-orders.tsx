@@ -4,10 +4,17 @@ import LiveOrderPageHeader from "@/components/admin/LiveOrderPageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import LoadingPage from "@/components/common/LoadingPage";
+<<<<<<< HEAD
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Order } from "@/models/order.model";
 import BlankPage from "@/components/admin/BlankPage";
+=======
+import { Order } from "@/models/order.model";
+import BlankPage from "@/components/admin/BlankPage";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+>>>>>>> sessions
 
 const tableHeaders = [
   "Customer",
@@ -39,6 +46,7 @@ const LiveOrders = () => {
         : statusFilterKey,
   });
 
+<<<<<<< HEAD
 
     const { locales, locale: activeLocale } = router;
 
@@ -48,10 +56,19 @@ const LiveOrders = () => {
     }, []);
 
 ;
+=======
+  const { locales, locale: activeLocale } = router;
+
+  useEffect(() => {
+    console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
+>>>>>>> sessions
 
   const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
 
+<<<<<<< HEAD
 
     const currentPageHandler = useCallback((value: number) => {
         setCurrentPage(value);
@@ -60,6 +77,12 @@ const LiveOrders = () => {
         setCurrentPage(0);
         setItemPerPage(value as number);
     }, []);
+=======
+  // const filterByStatusHandler = (value: string[]) => {
+  //     console.log('status changeing is calling')
+  //     setStatusFilterKey(value);
+  // };
+>>>>>>> sessions
 
   const filterByStatusHandler = useCallback((value: string[]) => {
     setStatusFilterKey(value);
@@ -79,7 +102,10 @@ const LiveOrders = () => {
     return <div>some error happened</div>;
   }
 
+<<<<<<< HEAD
   console.log(statusFilterKey);
+=======
+>>>>>>> sessions
   return (
     <>
       <div>
@@ -116,12 +142,12 @@ const LiveOrders = () => {
 
 export default LiveOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }

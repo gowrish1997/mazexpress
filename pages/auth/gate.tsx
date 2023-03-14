@@ -10,21 +10,19 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 
 const Gate = () => {
-  const router = useRouter()
+    
   const [mode, setMode] = useState<number>(1);
+  const router = useRouter();
 
   function toggleMode(i: number) {
     setMode(i);
   }
 
   useEffect(() => {
-    // set proper mode
-
-    // console.log(router.query)
     if (router.query.mode) {
-      setMode(parseInt(router.query.mode as string))
+      setMode(parseInt(router.query.mode as string));
     }
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -43,12 +41,12 @@ const Gate = () => {
 export default Gate;
 
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }

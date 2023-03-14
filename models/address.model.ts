@@ -44,6 +44,9 @@ export class Address extends BaseEntity {
   @Column({ type: "varchar" })
   tag!: string;
 
+  @Column({ type: "varchar" })
+  status!: string;
+
   @ManyToOne(() => User, (user) => user.addresses, {
     createForeignKeyConstraints: true,
   })

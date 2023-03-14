@@ -11,6 +11,8 @@ import useTracking from "@/lib/hooks/useTracking";
 import { Order } from "@/models/order.model";
 import { Tracking } from "@/models/tracking.model";
 import { User } from "@/models/user.model";
+import useUsers from "@/lib/hooks/useUsers";
+import { getUserImageString } from "@/lib/utils";
 
 interface IProp {
   row: Order;
@@ -21,7 +23,7 @@ interface IProp {
 const StatLineItem = (props: IProp) => {
   const trigger = useRef<any>();
 
-  const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
+  const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
     user_id: props.row.user.id,
   });
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
@@ -32,8 +34,8 @@ const StatLineItem = (props: IProp) => {
 
   useEffect(() => {
     // console.log(tracking);
-    if (tracking?.data !== undefined && tracking.data !== null) {
-      let sorted = [...tracking.data];
+    if (tracking !== undefined && tracking !== null) {
+      let sorted = [...tracking];
       sorted.sort((a: any, b: any) => a?.stage - b?.stage);
       setPackageStatus((sorted.pop() as Tracking)?.stage);
     }
@@ -80,29 +82,24 @@ const StatLineItem = (props: IProp) => {
   return (
     <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
       <td className={`flex flex-row justify-start items-center capitalize`}>
-        {allUser && (allUser as User)?.avatar_url !== undefined ? (
-          <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
-            <Image
-              src={"/user-images/" + (allUser as User)?.avatar_url}
-              fill
-              style={{ objectFit: "cover" }}
-              alt="profileImage"
-            />
-          </div>
-        ) : (
-          <div className="relative h-[30px] w-[30px] rounded-full   bg-slate-500">
-            <FontAwesomeIcon icon={faUser} />
-          </div>
-        )}
+        <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
+          <Image
+            src={getUserImageString((users as User[])?.[0].avatar_url)}
+            fill
+            style={{ objectFit: "cover" }}
+            alt="profileImage"
+          />
+        </div>
+
         <div className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
           <p className=" text-[12px] text-[#18181B] font-[800] leading-[22px] ">
-            {(allUser as User)?.first_name +
-              "" +
-              (allUser as User)?.last_name}
+            {(users as User[])?.[0].first_name +
+              " " +
+              (users as User[])?.[0].last_name}
           </p>
           <p className="text-[12px] text-[#71717A] font-[400] leading-[22px] ">
             {" "}
-            {(allUser as User)?.email}
+            {(users as User[])?.[0].email}
           </p>
         </div>
       </td>
@@ -114,7 +111,7 @@ const StatLineItem = (props: IProp) => {
           width: "100%",
         }}
       >
-        {props.row.id}
+        {props.row.maz_id}
       </td>
 
       <td className={`td3 capitalize `}>{warehoueStatusHanlder()}</td>

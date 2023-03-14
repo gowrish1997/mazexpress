@@ -20,7 +20,7 @@ const OrderOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
         // ref={ref}
       >
         <ul className=" w-full text-[#525D72] text-[14px] font-[400] leading-[39px]  ">
-          <Link href={`/track/${props.row.id}`}>
+          <Link href={`/track/${props.row.maz_id}`}>
             <li className="hover:bg-[#EDF5F9] w-full rounded-[4px] ">
               <div className="cursor-pointer">
                 <span className="ml-[15px] w-full ">Track order</span>

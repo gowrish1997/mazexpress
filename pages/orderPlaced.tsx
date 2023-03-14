@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-const orderPlaced = () => {
+const OrderPlaced = () => {
     const [htmlCode, setHtmlCode] = useState("");
     const sendMailHanlder = () => {
         axios
@@ -24,4 +24,4 @@ const orderPlaced = () => {
     );
 };
 
-export default orderPlaced
+export default OrderPlaced

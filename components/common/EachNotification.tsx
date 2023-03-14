@@ -9,6 +9,7 @@ interface IProp {
   data: any;
   id: string;
   delete: (id: string) => void;
+  update: () => void
 }
 
 const EachNotification = (props: IProp) => {
@@ -25,38 +26,38 @@ const EachNotification = (props: IProp) => {
   const markAsDeleted = async () => {
     props.delete(props.id);
 
-    if (notification !== undefined) {
-      // console.log(notificationError);
-      try {
-        const resp = await mutateNotification(
-          await fetchJson(`/api/notifications?id=${props.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status: "deleted" }),
-          }),
-          false
-        );
-        // console.log(resp)
-      } catch (error) {
-        if (error instanceof FetchError) {
-          // setErrorMsg(error.data.message);
-          console.log(error.data.message);
-        } else {
-          console.error("An unexpected error happened:", error);
-        }
-      }
-    }
+    // if (notification !== undefined) {
+    //   // console.log(notificationError);
+    //   try {
+    //     const resp = await mutateNotification(
+    //       await fetchJson(`/api/notifications?id=${props.id}`, {
+    //         method: "PUT",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({ status: "deleted" }),
+    //       }),
+    //       false
+    //     );
+    //     // console.log(resp)
+    //   } catch (error) {
+    //     if (error instanceof FetchError) {
+    //       // setErrorMsg(error.data.message);
+    //       console.log(error.data.message);
+    //     } else {
+    //       console.error("An unexpected error happened:", error);
+    //     }
+    //   }
+    // }
   };
 
   const markAsRead = async () => {
-    mutateNotification(
-      await fetchJson(`/api/notifications?id=${props.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "read" }),
-      }),
-      false
-    );
+    // mutateNotification(
+    //   await fetchJson(`/api/notifications?id=${props.id}`, {
+    //     method: "PUT",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ status: "read" }),
+    //   }),
+    //   false
+    // );
   };
 
   if (notificationIsLoading) {

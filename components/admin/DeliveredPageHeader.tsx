@@ -6,7 +6,7 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
-
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { Order } from "@/models/order.model";
 
 
@@ -39,13 +39,13 @@ const DeliveredPageHeader = (props:IPageHeaderProp) => {
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown   /> */}
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-            {/* <MazStatsDropddown
-              options={perPageOptions}
+            <MazStatsDropddown
+              options={perPageOptinsList}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            /> */}
+            />
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
               type="warehouse"

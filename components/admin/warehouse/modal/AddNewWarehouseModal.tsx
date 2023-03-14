@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import CountrySelector from "@/components/common/CountrySelector";
 import useUser from "@/lib/hooks/useUser";
 // import CustomDropDown from "@/components/common/CustomDropDown";
 import { Warehouse, WarehouseStatus } from "@/models/warehouse.model";
 import fetchJson from "@/lib/fetchServer";
+import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 
 interface IProp {
   show: boolean;
@@ -49,16 +49,19 @@ const AddNewWarehouseModal = (props: IProp) => {
     setWarehouseIsActive((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<Warehouse & {active?: "on" | "off"}> = async (data) => {
+  const onSubmit: SubmitHandler<Warehouse & { active?: "on" | "off" }> = async (
+    data
+  ) => {
     // let address: any = { ...data };
     // delete address.default;
     // address.user_id = user?.id_users;
 
     // console.log(data);
-    
-    let warehouse = {...data}
-    warehouse.status = data.active === 'on' ? WarehouseStatus.A : WarehouseStatus.I 
-    delete warehouse.active
+
+    let warehouse = { ...data };
+    warehouse.status =
+      data.active === "on" ? WarehouseStatus.A : WarehouseStatus.I;
+    delete warehouse.active;
     // await warehouse.save()
     // console.log(warehouse)
 
@@ -104,25 +107,7 @@ const AddNewWarehouseModal = (props: IProp) => {
               register={register("address_2")}
             />
             <div className="flex-type2 space-x-[10px] w-full">
-              <Controller
-                name="country"
-                control={control}
-                defaultValue="Turkey"
-                render={({ field: { onChange, value, ref } }) => (
-                  <CountrySelector
-                    label="Country"
-                    value={value}
-                    onChange={onChange}
-                    setCountry={setCountry}
-                    // error={errors.country}
-                    dropDownIcon={{
-                      iconIsEnabled: true,
-                      iconSrc: "/lock.png",
-                    }}
-                  />
-                )}
-              />
-              {/* <CustomDropDown
+              <CustomDropdown
                 label="City/Town"
                 name="city"
                 value={["Istanbul"]}
@@ -132,7 +117,7 @@ const AddNewWarehouseModal = (props: IProp) => {
                   iconIsEnabled: true,
                   iconSrc: "/downwardArrow.png",
                 }}
-              /> */}
+              /> 
             </div>
             <ReactHookFormInput
               label="Mobile Number"

@@ -1,11 +1,19 @@
 import ConfigCard from "@/components/admin/notification-panel/ConfigCard";
 import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import PageHeader from "@/components/common/PageHeader";
+<<<<<<< HEAD
 import fetchJson from "@/lib/fetchServer";
 import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
 import { NotificationConfig } from "@/models/notification-config.model";
 import React, { useState,useEffect } from "react";
 import { useRouter } from "next/router";
+=======
+import fetchServer from "@/lib/fetchServer";
+import useNotificationSettings from "@/lib/hooks/useNotificationSettings";
+import { NotificationConfig } from "@/models/notification-config.model";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+>>>>>>> sessions
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -22,17 +30,22 @@ const NotificationPanel = () => {
 
   const { locales, locale: activeLocale } = router;
 
+<<<<<<< HEAD
     useEffect(() => {
         console.log("use efft");
         router.push(router.asPath, router.asPath, { locale: "en" });
     }, []);
+=======
+  useEffect(() => {
+    console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
+>>>>>>> sessions
 
   const toggle = async (id: string) => {
     // send put to notification settings
     if (notificationSettings !== undefined) {
-      let setTo = notificationSettings?.find(
-        (el) => el.id === id
-      )?.is_enabled;
+      let setTo = notificationSettings?.find((el) => el.id === id)?.is_enabled;
       if (setTo) {
         setTo = false;
       } else {
@@ -46,7 +59,7 @@ const NotificationPanel = () => {
         //   (el) => el.id_notification_config === id
         // ).is_enabled_notification_config = setTo;
         // mutateNotificationSettings(facelift, false);
-        await fetchJson(`/api/notification-settings`, {
+        await fetchServer(`/api/notification-settings`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -76,13 +89,7 @@ const NotificationPanel = () => {
       <div className="grid grid-cols-3 gap-3 py-5">
         {notificationSettings &&
           notificationSettings.map((el: NotificationConfig) => {
-            return (
-              <ConfigCard
-                data={el}
-                toggle={toggle}
-                key={el.id}
-              />
-            );
+            return <ConfigCard data={el} toggle={toggle} key={el.id} />;
           })}
       </div>
       <div>
@@ -106,11 +113,11 @@ export default NotificationPanel;
 
 export async function getStaticProps({ locale }: { locale: any }) {
   if (process.env.NODE_ENV === "development") {
-      await i18n?.reloadResources();
+    await i18n?.reloadResources();
   }
   return {
-      props: {
-          ...(await serverSideTranslations(locale, ["common"])),
-      },
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
   };
 }

@@ -22,17 +22,14 @@ const WarehousePage = () => {
         document.querySelector("html")?.setAttribute("lang", lang);
     }, [router.locale]);
     return (
-      <>
-      <PageHeader content={t("warehousePage.pageHeader.Title")} title="Our Warehouses | MazExpress" />
-      {
-        warehousesIsLoading && <div>Loading warehouses</div>
-      }
-      <div className="grid grid-cols-3 gap-3 py-5">
-        {warehouses?.map((data) => {
-          return <WarehouseCard key={(data as Warehouse).id} address={data as Warehouse} />;
-        })}
-      </div>
-    </>
+        <>
+            <PageHeader content={t("warehousePage.pageHeader.Title")} title="Our Warehouses | MazExpress" />
+            <div className="grid grid-cols-3 gap-3 py-5">
+                {warehouses?.map((data) => {
+                    return <WarehouseCard key={data.id} address={data} />;
+                })}
+            </div>
+        </>
     );
 };
 export default WarehousePage;
@@ -46,6 +43,3 @@ export async function getStaticProps({ locale }: { locale: any }) {
         },
     };
 }
-
-
-

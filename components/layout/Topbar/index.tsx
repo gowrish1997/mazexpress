@@ -8,6 +8,10 @@ import useNotifications from "@/lib/hooks/useNotifications";
 import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
 import { SearchKeyContext } from "@/components/common/Frame";
+<<<<<<< HEAD
+=======
+import { getUserImageString } from "@/lib/utils";
+>>>>>>> sessions
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { getUserImageString } from "@/lib/utils";
@@ -21,7 +25,8 @@ const Topbar = () => {
   const { setSearchKey } = React.useContext(SearchKeyContext) as any;
 
   const { notifications, notificationsIsLoading } = useNotifications({
-    user_id: user?.id!,
+    user_id: user?.id,
+    status: ['unread']
   });
 
   const [showNotifications, setShowNotifications] = useState(false);

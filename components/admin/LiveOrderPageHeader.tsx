@@ -74,5 +74,3 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
 };
 
 export default React.memo(LiveOrderPageHeader);
-
-

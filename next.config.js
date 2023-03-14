@@ -1,20 +1,33 @@
 /** @type {import('next').NextConfig} */
+<<<<<<< HEAD
 
 const nextConfig = {
   reactStrictMode: true,
 
   webpack(config, options) {
 
+=======
+const { i18n } = require("./next-i18next.config");
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  i18n,
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
+>>>>>>> sessions
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
     return config;
   },
+
   images: {
     remotePatterns: [
       {
-        protocol: "http",
+        protocol: "https",
         hostname: "mazexpress.portfolios.digital",
         port: "",
         pathname: "/**",

@@ -1,23 +1,38 @@
 import React, { useEffect, useState, useCallback } from "react";
-import useOrders from "@/lib/useOrders";
 import moment from "moment";
+<<<<<<< HEAD
 
+=======
+>>>>>>> sessions
 import UserbasePageHeader from "@/components/admin/UserbasePageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import BlankPage from "@/components/admin/BlankPage";
+<<<<<<< HEAD
 
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 import orders from "../api/orders";
 import { ISearchKeyContext } from "@/models/SearchContextInterface";
+=======
+import useUsers from "@/lib/hooks/useUsers";
+import { User } from "@/models/user.model";
+import ReactPaginateComponent from "@/components/admin/ReactPaginate";
+// import { ISearchKeyContext } from "@/models/SearchContextInterface";
+>>>>>>> sessions
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+<<<<<<< HEAD
 import useAllUser from "@/lib/hooks/useAllUsers";
 import useUsers from "@/lib/hooks/useUsers";
 import { User } from "@/models/user.model";
+=======
+>>>>>>> sessions
 
+interface ISearchKeyContext {
+  searchKey: any;
+}
 const tableHeaders = [
   "Customer",
   "Email ID",
@@ -29,6 +44,7 @@ const tableHeaders = [
 ];
 
 const UserBase = () => {
+<<<<<<< HEAD
     const router = useRouter();
     const { locales, locale: activeLocale } = router;
 
@@ -46,10 +62,33 @@ const UserBase = () => {
       page: currentPage,
       is_admin: false,
     });
+=======
+  const router = useRouter();
+  const { locales, locale: activeLocale } = router;
+
+  useEffect(() => {
+    console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
+
+  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+  const [itemsPerPage, setItemPerPage] = useState(4);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+    Date | string
+  >("");
+  const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
+    per_page: itemsPerPage,
+    page: currentPage,
+    is_admin: false,
+  });
+  // console.log(allUser);
+>>>>>>> sessions
 
   //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil((users as User[] || []).length / itemsPerPage);
+  const pageCount = Math.ceil(((users as User[]) || []).length / itemsPerPage);
 
+<<<<<<< HEAD
 
 
     const currentPageHandler = (value: number) => {
@@ -62,11 +101,24 @@ const UserBase = () => {
   const filterByCreatedDate = (value: Date | string) => {
     setCreatedDateFilterKey(value);
   };
+=======
+  const filterByCreatedDate = (value: Date | string) => {
+    setCreatedDateFilterKey(value);
+  };
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
+  };
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
+    setItemPerPage(value as number);
+  }, []);
+>>>>>>> sessions
 
   // const selectOrderHandler = (value: string, type: string) => {
   //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
   // };
 
+<<<<<<< HEAD
     // const selectOrderHandler = (value: string, type: string) => {
     //     selectOrder(value, type, setSelectedUser, filteredUsers!, selectedUser!);
     // };
@@ -100,6 +152,8 @@ const UserBase = () => {
                     )}
                 </div>
                 {/* {selectedUser?.length! > 0 && (
+=======
+>>>>>>> sessions
   if (usersIsLoading) {
     return <div>this is loading</div>;
   }
@@ -141,12 +195,12 @@ const UserBase = () => {
 
 export default UserBase;
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }

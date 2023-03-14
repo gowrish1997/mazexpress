@@ -12,11 +12,11 @@ interface IProp {
     register?: any;
     value?: string;
     IconEnabled: boolean;
-    error?: string;
+    error?: FieldError;
     disabled?: boolean;
     options?: { value: string; label: string}[];
     placeHolder?: string;
-    setValue: any;
+    setValue?: any;
     className?: string;
 }
 
@@ -131,7 +131,7 @@ const CusotmDropdown = (props: IProp) => {
                     </div>
                 </ClickOutside>
             )}
-            {props.error && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{props.error}</p>}
+            {props.error && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">{props.error.message}</p>}
         </div>
     );
 };

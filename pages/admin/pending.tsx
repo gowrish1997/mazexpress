@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useCallback,useEffect } from "react";
+=======
+import React, { useState, useCallback, useEffect } from "react";
+>>>>>>> sessions
 import useOrders from "@/lib/hooks/useOrders";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
@@ -6,9 +10,15 @@ import PendingPageHeader from "@/components/admin/PendingPageHeader";
 import { selectOrder } from "@/lib/selectOrder";
 import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
+<<<<<<< HEAD
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Order } from "@/models/order.model";
+=======
+import { Order } from "@/models/order.model";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+>>>>>>> sessions
 
 const tableHeaders = [
   "Customer",

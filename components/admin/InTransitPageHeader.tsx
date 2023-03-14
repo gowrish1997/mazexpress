@@ -7,6 +7,8 @@ import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
 import ReactPaginateComponent from "./ReactPaginate";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
+import { perPageOptinsList } from "@/lib/helper";
 
 
 const adminOption = [
@@ -78,14 +80,14 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-            {/* 
+            
             <MazStatsDropddown
-              options={perPageOptions}
+              options={perPageOptinsList}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            /> */}
+            />
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
               type="warehouse"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-const registerSample = () => {
+const RegisterSample = () => {
     const [htmlCode, setHtmlCode] = useState("");
     const [toList, setToList] = useState([
         {
@@ -37,4 +37,4 @@ const registerSample = () => {
     );
 };
 
-export default registerSample;
+export default RegisterSample;

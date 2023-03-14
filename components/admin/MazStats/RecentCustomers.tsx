@@ -28,7 +28,7 @@ const RecentCustomers = () => {
           (users as User[]).length > 0 &&
           (users as User[])?.map((data: User) => {
             return (
-              <td className={`flex flex-row justify-start items-center`}>
+              <td className={`flex flex-row justify-start items-center`} key={data.id}>
                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
                   <Image
                     src={getUserImageString(data.avatar_url)}

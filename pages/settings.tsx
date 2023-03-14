@@ -7,19 +7,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
-
 import useUser from "@/lib/hooks/useUser";
-import { useRouter } from "next/router";
+import { User } from "@/models/user.model";
+import { getUserImageString } from "@/lib/utils";
+import { FieldError } from "react-hook-form";
+import axios from "axios";
+import { nanoid } from "nanoid";
 import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
-import { User } from "@/models/user.model";
-import { getUserImageString } from "@/lib/utils";
-import CustomDropdown from "@/components/LandingPage/CustomDropdown";
 import { useTranslation } from "next-i18next";
-
+import { useRouter } from "next/router";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 
 const schema = yup
     .object({
@@ -44,38 +45,31 @@ const schema = yup
     })
     .required();
 
+    
 
 const Settings = () => {
   const { user, mutateUser } = useUser();
-  
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
 
-  const inputFieldLabels: string[] = t("settingsPage.profileForm.InputFieldLabel", { returnObjects: true });
-  const fieldErrors: string[] = t("settingsPage.profileForm.Errors", { returnObjects: true });
-
-  const languageOption: { value: string; label: string }[] = t("settingsPage.profileForm.LanguageOption", { returnObjects: true });
-
-  useEffect(() => {
-      let dir = router.locale == "ar" ? "rtl" : "ltr";
-      let lang = router.locale == "ar" ? "ar" : "en";
-      document.querySelector("html")?.setAttribute("dir", dir);
-      document.querySelector("html")?.setAttribute("lang", lang);
-  }, [router.locale]);
-
+  const inputFieldLabels: string[] = t(
+    "settingsPage.profileForm.InputFieldLabel",
+    { returnObjects: true }
+  );
+  const fieldErrors: string[] = t("settingsPage.profileForm.Errors", {
+    returnObjects: true,
+  });
   const [errorMsg, setErrorMsg] = useState("");
   const [showProfilePicPop, setShowProfilePicPop] = useState<boolean>(false);
 
-
   const {
     register,
-        handleSubmit,
-        control,
-        setValue,
-        getValues,
-        reset,
-        formState: { errors },
+    handleSubmit,
+    control,
+    setValue,
+    reset,
+    formState: { errors },
   } = useForm<User & { default_language: string; newPassword: string }>({
     resolver: yupResolver(schema),
     defaultValues: { ...user, password: "" },
@@ -85,6 +79,18 @@ const Settings = () => {
     // console.log(user);
     reset({ ...user, password: "" });
   }, [user, reset]);
+
+  const languageOption: { value: string; label: string }[] = t(
+    "settingsPage.profileForm.LanguageOption",
+    { returnObjects: true }
+  );
+
+  useEffect(() => {
+    let dir = router.locale == "ar" ? "rtl" : "ltr";
+    let lang = router.locale == "ar" ? "ar" : "en";
+    document.querySelector("html")?.setAttribute("dir", dir);
+    document.querySelector("html")?.setAttribute("lang", lang);
+  }, [router.locale]);
 
   const [passwordType, setPasswordType] = useState("password");
   const [newPasswordType, setNewPasswordType] = useState("password");
@@ -113,65 +119,50 @@ const Settings = () => {
     User & { default_language: string; newPassword: string }
   > = async (data) => {
     // console.log(data);
-    createToast({
-      title: "Success",
-      type: "success",
-      message: "Updated user info.",
-      timeOut: 2000,
-      onClick: () => alert("click"),
-    });
-    // let updateObj = { ...data };
-    // delete updateObj.newPassword_users;
-    // delete updateObj.password_users;
-    // delete updateObj.default_language_users;
-    // updateObj.id_users = user?.id_users;
+    try {
+      // console.log(result);
 
-    // if (user && user.id_users) {
-    //   // update user
-    //   try {
-    //     mutateUser(
-    //       await fetchJson(`/api/users?id=${user.id_users}`, {
-    //         method: "PUT",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify(updateObj),
-    //       }),
-    //       false
-    //     );
-    //     // router.push("/");
-    //   } catch (error) {
-    //     if (error instanceof FetchError) {
-    //       setErrorMsg(error.data.message);
-    //     } else {
-    //       console.error("An unexpected error happened:", error);
-    //     }
-    //   }
-    // }
+      createToast({
+        type: "success",
+        title: "Success",
+        message: "Created order successfully",
+      });
+    } catch (err) {
+      console.log(err);
+      createToast({
+        type: "error",
+        title: "An error occurred",
+        message: "Check console for more info.",
+        timeOut: 3000,
+      });
+    }
   };
-
-  // if (userIsLoading === "loading") return <div>loading</div>;
 
   return (
     <>
       <PageHeader
-       content={t("settingsPage.pageHeader.Title")}
+        content={t("settingsPage.pageHeader.Title")}
         className="border-none pb-[10px]"
         title="My Settings | MazExpress"
       />
       <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} />
       <Layout>
         <div className="w-full space-y-[30px] ">
-          <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
+          <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
             <Image src={blueExclamatory} alt="icon" width={16} height={16} />
             <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-            {t("settingsPage.LinkPPart1")} <span className="text-[#3672DF]">{t("settingsPage.LinkPPart2")} </span>
+              {t("settingsPage.LinkPPart1")}{" "}
+              <span className="text-[#3672DF]">
+                {t("settingsPage.LinkPPart2")}{" "}
+              </span>
             </p>
           </div>
           <div>
             <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">
-            {t("settingsPage.Title")}
+              {t("settingsPage.Title")}
             </p>
             <p className="text-[14px] text-[#525D72] leading-[21px] font-[500] ">
-            {t("settingsPage.Discription")}
+              {t("settingsPage.Description")}{" "}
             </p>
           </div>
 
@@ -203,10 +194,10 @@ const Settings = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-type1 w-full space-x-[20px] ">
-              <div className="flex-type2 space-x-[10px] w-full">
+            <div className="flex-type2 w-full gap-x-[20px] ">
+              <div className="flex-type2 gap-x-[10px] w-full">
                 <ReactHookFormInput
-                    label={inputFieldLabels[0]}
+                  label={inputFieldLabels[0]}
                   name="first_name"
                   type="string"
                   register={register("first_name")}
@@ -214,8 +205,8 @@ const Settings = () => {
                 />
 
                 <ReactHookFormInput
-                 label={inputFieldLabels[1]}
-                  name=" last_name"
+                  label={inputFieldLabels[1]}
+                  name="last_name"
                   type="string"
                   register={register("last_name")}
                   error={errors.last_name?.message && fieldErrors[1]}
@@ -223,23 +214,26 @@ const Settings = () => {
               </div>
 
               <ReactHookFormInput
-                 label={inputFieldLabels[2]}
+                label={inputFieldLabels[2]}
                 name="password"
                 type={passwordType}
                 register={register("password")}
                 error={errors.password?.message}
                 icon={{
                   isEnabled: true,
-                  src: passwordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
+                  src:
+                    passwordType === "password"
+                      ? "/eyeIconOpen.png"
+                      : "/eyeIconClose.png",
                   onClick: togglePasswordTypeHandler,
               }}
                 // disabled={true}
                 // autoComplete="off"
               />
             </div>
-            <div className="flex-type1 w-full space-x-[20px]">
+            <div className="flex-type2 w-full gap-x-[20px]">
               <ReactHookFormInput
-               label={inputFieldLabels[3]}
+                label={inputFieldLabels[3]}
                 name="email"
                 type="string"
                 register={register("email")}
@@ -247,37 +241,51 @@ const Settings = () => {
               />
 
               <ReactHookFormInput
-                 label={inputFieldLabels[4]}
+                label={inputFieldLabels[4]}
                 name="newPassword"
                 type={newPasswordType}
                 register={register("newPassword")}
                 error={errors.newPassword?.message && fieldErrors[3]}
                 icon={{
                   isEnabled: true,
-                  src: newPasswordType == "string" ? "/eyeIconOpen.png" : "/eyeIconClose.png",
+                  src:
+                    passwordType === "password"
+                      ? "/eyeIconOpen.png"
+                      : "/eyeIconClose.png",
                   onClick: toggleNewPasswordTypeHandler,
               }}
                 autoComplete="new-password"
               />
             </div>
-            <div className="flex-type1 w-full space-x-[20px]">
+            <div className="flex-type2 w-full gap-x-[20px]">
               <ReactHookFormInput
-               label={inputFieldLabels[5]}
+                label={inputFieldLabels[5]}
                 name="phone"
                 type="number"
                 register={register("phone")}
                 error={errors.phone?.message && fieldErrors[4]}
               />
-
-              <CustomDropdown
+              {/* 
+                          <CustomDropDown
+                              label="Language"
+                              name="default_language"
+                              value={["Arabic", "English"]}
+                              register={register("default_language")}
+                              error={errors.default_language}
+                              dropDownIcon={{
+                                  iconIsEnabled: true,
+                                  iconSrc: "/downwardArrow.png",
+                              }}
+                          /> */}
+              <CusotmDropdown
                 label={inputFieldLabels[6]}
-                name="default_language_users"
+                name="default_language"
                 type="string"
                 IconEnabled={true}
                 register={register("default_language")}
-                error={errors.default_language?.message}
+                error={errors.default_language}
                 options={languageOption}
-                value={getValues("default_language")}
+                // value={getValues("default_language")}
                 setValue={setValue}
                 disabled={true}
                 className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
@@ -286,10 +294,10 @@ const Settings = () => {
             <div className="flex-type3 w-full space-x-[20px] mt-[10px] ">
               <div className="font-[500]">
                 <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">
-                {t("settingsPage.profileForm.notification.Title")}
+                  {t("settingsPage.profileForm.notification.Title")}
                 </p>
                 <p className="text-[12px] text-[#525D72] leading-[18px] ">
-                {t("settingsPage.profileForm.notification.Discription")}
+                  {t("settingsPage.profileForm.notification.Description")}
                 </p>
               </div>
               <Controller
@@ -325,3 +333,13 @@ const Settings = () => {
 };
 
 export default Settings;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
