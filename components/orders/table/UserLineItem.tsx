@@ -6,6 +6,7 @@ import { getDateInStringFormat } from "@/lib/helper";
 import useOrders from "@/lib/hooks/useOrders";
 import { User } from "@/models/user.model";
 import { Order } from "@/models/order.model";
+import { getUserImageString } from "@/lib/utils";
 
 interface IProp {
   row: User;
@@ -46,7 +47,7 @@ const UserLineItem = (props: IProp) => {
               <div className="absolute bg-yellow-600 w-4 h-8 z-10 opacity-60"></div>
             )}
             <Image
-              src={"/user-images/" + (props.row as User)?.avatar_url}
+              src={getUserImageString(props.row.avatar_url)}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"

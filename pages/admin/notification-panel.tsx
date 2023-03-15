@@ -23,7 +23,7 @@ const NotificationPanel = () => {
   const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
-    console.log("use efft");
+    // console.log("use efft");
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
 
@@ -38,7 +38,7 @@ const NotificationPanel = () => {
       }
       let facelift = [...notificationSettings];
       let match = facelift.find((el) => el.id === id);
-      console.log("match", match);
+      // console.log("match", match);
       if (match !== undefined) {
         // facelift.find(
         //   (el) => el.id_notification_config === id
@@ -61,6 +61,10 @@ const NotificationPanel = () => {
     setShowCreateNotificationModal((prev) => !prev);
   };
 
+  useEffect(() => {
+    console.log(notificationSettings);
+  }, [notificationSettings]);
+
   if (notificationSettingsIsLoading) {
     return <div>Loading</div>;
   }
@@ -73,6 +77,7 @@ const NotificationPanel = () => {
       />
       <div className="grid grid-cols-3 gap-3 py-5">
         {notificationSettings &&
+          notificationSettings.length > 0 &&
           notificationSettings.map((el: NotificationConfig) => {
             return <ConfigCard data={el} toggle={toggle} key={el.id} />;
           })}

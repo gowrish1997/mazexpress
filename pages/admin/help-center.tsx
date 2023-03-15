@@ -2,7 +2,9 @@ import PageHeader from "@/components/common/PageHeader";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import EditHelpModal from "@/components/admin/help-center/modal/EditHelpModal";
-import fetchJson from "@/lib/fetchServer";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import fetchJson from "@/lib/fetchSelf";
 
 const HelpCenter = () => {
   const [showEditHelpModal, setShowEditHelpModal] = useState(false);
@@ -86,3 +88,13 @@ const HelpCenter = () => {
 };
 
 export default HelpCenter;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}

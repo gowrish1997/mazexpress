@@ -47,6 +47,7 @@ const AdminBase = () => {
   const { users, mutateUsers } = useUsers({
     page: currentPage,
     per_page: itemsPerPage,
+    is_admin: true
   });
 
   const { users: totalUsersCount } = useUsers({ count_all: true, count: true });

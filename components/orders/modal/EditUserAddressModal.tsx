@@ -25,12 +25,8 @@ interface IProp {
 const schema = yup
   .object({
     tag: yup.string().required("Tag address is required field"),
-    address_1: yup
-      .string()
-      .required("Address line 01 is required field"),
-    address_2: yup
-      .string()
-      .required("Address line 02 is required field"),
+    address_1: yup.string().required("Address line 01 is required field"),
+    address_2: yup.string().required("Address line 02 is required field"),
     country: yup.string().required("Country is required field"),
     city: yup.string().required("City/Town is required field"),
 
@@ -38,15 +34,13 @@ const schema = yup
       .number()
       .test(
         "len",
-        "Must be exactly 10 digits",
-        (val) => val?.toString().length === 10
+        "Must be exactly 9 digits",
+        (val) => val?.toString().length === 9
       )
       .required()
       .typeError("Mobile number is required field"),
   })
   .required();
-
-
 
 const EditUserAddressModal = (props: IProp) => {
   const [country, setCountry] = useState(props.address.country);
@@ -247,9 +241,7 @@ const EditUserAddressModal = (props: IProp) => {
           <div className=".flex-type1 space-x-[5px]">
             <input
               type="radio"
-              defaultChecked={
-                props.address.id === user?.default_address
-              }
+              defaultChecked={props.address.id === user?.default_address}
               onClick={toggleDefaultAddressHandler}
               {...register("default")}
               name="default"
