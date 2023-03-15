@@ -20,24 +20,24 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "next-i18next";
 
 const userIcon = (id: number) => {
-    switch (id) {
-        case 0:
-            return <Order />;
-        case 1:
-            return <Location />;
-        case 2:
-            return <Warehosue />;
-        case 3:
-            return <Address />;
-        case 4:
-            return <Settings />;
+  switch (id) {
+    case 0:
+      return <Order />;
+    case 1:
+      return <Location />;
+    case 2:
+      return <Warehosue />;
+    case 3:
+      return <Address />;
+    case 4:
+      return <Settings />;
 
-        case 5:
-            return <Helpcenter />;
+    case 5:
+      return <Helpcenter />;
 
-        default:
-            return "";
-    }
+    default:
+      return "";
+  }
 };
 const adminIcon = (id: number) => {
   switch (id) {
@@ -141,7 +141,9 @@ const NavLink = (props: IProp) => {
               <span
                 className="absolute left-0 transition duration-300 rounded-full h-[12px] w-[12px] flex items-center justify-center"
                 style={{
-                    backgroundColor: isActivePath(props.content) ? "#EDF5F9" : "#fff",
+                  backgroundColor: isActivePath(props.content)
+                    ? "#EDF5F9"
+                    : "#fff",
                 }}
               ></span>
             ) : null}

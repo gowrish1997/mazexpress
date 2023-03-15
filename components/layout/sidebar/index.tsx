@@ -100,6 +100,12 @@ const adminSidebarPanel = [
   },
   {
     id: nanoid(),
+    title: "Admin Base",
+    icon: "/help.png",
+    path: "/admin/admins",
+  },
+  {
+    id: nanoid(),
     title: "Notification Panel",
     icon: "/address.png",
     path: "/admin/notification-panel",
@@ -163,21 +169,23 @@ const Sidebar = () => {
       <Header />
       <div className="flex flex-col justify-between items-start px-6 pb-6 h-[89vh] overflow-y-auto  box-border overflow-x-hidden slimScrollBar">
         <ul className="w-full box-border flex flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
-          {sidebarContentHandler(user?.is_admin!).map((content, index) => {
-            return (
-              <NavLink
-                key={content.id}
-                id={index}
-                content={content}
-                transalateContent={transalateSidebarContentHandler()[index]}
-              />
-            );
-          })}
+          {sidebarContentHandler(user?.is_admin === true).map(
+            (content, index) => {
+              return (
+                <NavLink
+                  key={content.id}
+                  id={index}
+                  content={content}
+                  transalateContent={transalateSidebarContentHandler()[index]}
+                />
+              );
+            }
+          )}
         </ul>
 
         <div
           className="w-[100%] box-border rounded self-center flex flex-row items-center justify-start bg-[#3672DF] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
-        //   onClick={toggleLogoutConfirmModal}
+          //   onClick={toggleLogoutConfirmModal}
           onClick={logoutHandler}
         >
           <div className="relative w-[14px] h-[14px] ">
@@ -191,9 +199,7 @@ const Sidebar = () => {
                 33vw"
             />
           </div>
-          <p
-            className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500]"
-          >
+          <p className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500]">
             {t("sidebar.Logout")}
           </p>
         </div>

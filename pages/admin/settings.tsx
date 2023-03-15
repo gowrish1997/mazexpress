@@ -14,6 +14,8 @@ import { createToast } from "@/lib/toasts";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
 import blueExclamatory from "@/public/blueExclamatory.png";
 import { User } from "@/models/user.model";
+import { i18n } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const schema = yup
   .object({
     first_name: yup.string().required("First name is required"),
@@ -311,3 +313,13 @@ const Settings = () => {
 };
 
 export default Settings;
+export async function getStaticProps({ locale }: { locale: any }) {
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
