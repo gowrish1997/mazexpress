@@ -66,7 +66,7 @@ const TrackOrder = (props: any) => {
                 {t("orderTrackingPage.PageTitle")}
               </p>
               <p className="text-[12px] text-[#8794AD] leading-[17px]">
-                {t("orderTrackingPage.Discription")}
+                {t("orderTrackingPage.Description")}
               </p>
             </div>
             <div className="flex-1 min-h-[46px] border-[0.5px] boder-[#8794AD] rounded-[6px] flex px-[15px] relative">

@@ -73,7 +73,7 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
                     className="flex-type1 gap-x-[5px] cursor-pointer"
                   >
                     <div className="relative h-[20px] w-[20px] ">
-                      <Image src={data.url} fill alt="logo" />
+                      <Image src={data.url} fill alt="logo" sizes="" />
                     </div>
                     <div className="">{footerRightSide[index]}</div>
                   </div>
@@ -88,7 +88,7 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
                     className="flex-type1 gap-x-[5px] cursor-pointer"
                   >
                     <div className="relative h-[20px] w-[20px] ">
-                      <Image src={data.url} fill alt="logo" />
+                      <Image src={data.url} fill alt="logo" sizes="" />
                     </div>
                     <div className="">{footerRightSide[index + 3]}</div>
                   </div>

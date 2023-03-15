@@ -20,8 +20,8 @@ export default function useUser({
     "/api/user",
     fetchSelf,
     {
-      refreshInterval: 3000,
-      revalidateOnFocus: true
+      // refreshInterval: 3000,
+      // revalidateOnFocus: true
     }
   );
 

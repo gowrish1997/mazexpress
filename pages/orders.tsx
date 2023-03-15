@@ -31,7 +31,7 @@ const MyOrders = () => {
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
-  const blankPageDiscription: string[] = t("indexPage.blankPage.Discription", {
+  const blankPageDiscription: string[] = t("indexPage.blankPage.Description", {
     returnObjects: true,
   });
   const tableHeaders: string[] = t("indexPage.orderTable.TableHeader", {

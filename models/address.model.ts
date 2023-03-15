@@ -16,6 +16,11 @@ export enum City {
   M = "misrata",
 }
 
+export enum AddressStatus {
+  I = "inactive",
+  A = "active",
+}
+
 @Entity({ name: "addresses" })
 export class Address extends BaseEntity {
   constructor(address: Partial<Address>) {
@@ -44,7 +49,7 @@ export class Address extends BaseEntity {
   @Column({ type: "varchar" })
   tag!: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: "enum", enum: AddressStatus, default: AddressStatus.A })
   status!: string;
 
   @ManyToOne(() => User, (user) => user.addresses, {

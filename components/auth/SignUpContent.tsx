@@ -10,33 +10,40 @@ import { useTranslation } from "next-i18next";
 import { User, UserGender } from "@/models/user.model";
 import fetchServer from "@/lib/fetchServer";
 import { FetchError } from "@/lib/fetchSelf";
+import { Address, City } from "@/models/address.model";
 
 const schema = yup
   .object({
-    first_name: yup.string().required("First name is required field"),
-    last_name: yup.string().required("Last name is required field"),
-    age: yup.string().required("Age is required field"),
-    gender: yup.string().required("Gender is required field"),
-    email: yup
-      .string()
-      .required("Email is required field")
-      .email("Please provide valid email"),
-    phone: yup
-      .number()
-      .test(
-        "len",
-        "Must be exactly 10 digits",
-        (val) => val?.toString().length === 10
-      )
-      .required()
-      .typeError("Mobile numbder is required field"),
-    password: yup
-      .string()
-      .matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
-        excludeEmptyString: true,
-        message:
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-      }),
+    user: yup.object({
+      first_name: yup.string().required("First name is required field"),
+      last_name: yup.string().required("Last name is required field"),
+      age: yup.string().required("Age is required field"),
+      gender: yup.string().required("Gender is required field"),
+      email: yup
+        .string()
+        .required("Email is required field")
+        .email("Please provide valid email"),
+      phone: yup
+        .number()
+        .test(
+          "len",
+          "Must be exactly 10 digits",
+          (val) => val?.toString().length === 10
+        )
+        .required()
+        .typeError("Mobile numbder is required field"),
+      password: yup
+        .string()
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/,
+          {
+            excludeEmptyString: true,
+            message:
+              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+          }
+        ),
+    }),
+    addr: yup.object({}),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "Passwords must match")
@@ -56,6 +63,12 @@ const SignUpContent = (props: IProp) => {
   const { t } = useTranslation("");
   const { locale } = router;
 
+  interface ISignupForm {
+    user: User;
+    addr: Address;
+    confirmPassword: string;
+  }
+
   const inputFieldLabel: string[] = t("signUpView.form.InputField", {
     returnObjects: true,
   });
@@ -65,13 +78,19 @@ const SignUpContent = (props: IProp) => {
   const submitButtons: string[] = t("signUpView.form.SubmitButton", {
     returnObjects: true,
   });
-  const description: string[] = t("signUpView.form.Discription", {
+  const description: string[] = t("signUpView.form.Description", {
     returnObjects: true,
   });
   const genderOption: { value: string; label: string }[] = t(
     "signUpView.form.GenderOptions",
     { returnObjects: true }
   );
+  const cityOption: { value: string; label: string }[] = t(
+    "addNewOrderPage.addressForm.CityOptions",
+    { returnObjects: true }
+  );
+
+  console.log(cityOption)
 
   const {
     register,
@@ -79,23 +98,31 @@ const SignUpContent = (props: IProp) => {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm<User & { confirmPassword: string }>({
+  } = useForm<ISignupForm>({
     resolver: yupResolver(schema),
     defaultValues: {
-      age: "22",
-      email: "mohamed@maz.com",
-      first_name: "mohamed",
-      gender: UserGender.UNKNOWN,
-      last_name: "ali",
+      user: {
+        age: "22",
+        email: "mohamed@maz.com",
+        first_name: "mohamed",
+        gender: UserGender.UNKNOWN,
+        last_name: "ali",
+        password: "Test123$",
+        phone: 123456789,
+      },
+      addr: {
+        address_1: "",
+        address_2: "",
+        city: City.T,
+        country: "Libya",
+        phone: 123456789,
+        tag: "default addr",
+      },
       confirmPassword: "Test123$",
-      password: "Test123$",
-      phone: 1234567890,
     },
   });
 
-  const onSubmit: SubmitHandler<User & { confirmPassword: string }> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<ISignupForm> = async (data) => {
     console.log(data);
 
     try {
@@ -151,44 +178,36 @@ const SignUpContent = (props: IProp) => {
       <div className="flex-type2 gap-x-[10px] w-full">
         <ReactHookFormInput
           label={inputFieldLabel[0]}
-          name="first_name"
+          name="user.first_name"
           type="string"
-          register={register("first_name")}
-          error={errors.first_name}
+          register={register("user.first_name")}
+          error={errors.user?.first_name}
         />
 
         <ReactHookFormInput
           label={inputFieldLabel[1]}
-          name="last_name"
+          name="user.last_name"
           type="string"
-          register={register("last_name")}
-          error={errors.last_name}
+          register={register("user.last_name")}
+          error={errors.user?.last_name}
         />
       </div>
       <div className="flex-type2 gap-x-[10px] w-full">
         <ReactHookFormInput
           label={inputFieldLabel[2]}
-          name="age"
+          name="user.age"
           type="string"
-          register={register("age")}
-          error={errors.age}
+          register={register("user.age")}
+          error={errors.user?.age}
         />
-        {/* 
-<ReactHookFormInput
-label="Gender"
-name="gender"
-type="string"
-register={register("gender")}
-error={errors.gender}
-/> */}
         <CusotmDropdown
           label={inputFieldLabel[3]}
-          name="gender"
+          name="user.gender"
           type="string"
           IconEnabled={true}
-          register={register("gender")}
-          error={errors.gender}
-          value={getValues("gender")}
+          register={register("user.gender")}
+          error={errors.user?.gender}
+          value={getValues("user.gender")}
           setValue={setValue}
           options={genderOption}
           disabled={true}
@@ -197,26 +216,26 @@ error={errors.gender}
 
       <ReactHookFormInput
         label={inputFieldLabel[4]}
-        name="email"
+        name="user.email"
         type="string"
-        register={register("email")}
-        error={errors.email}
+        register={register("user.email")}
+        error={errors.user?.email}
       />
 
       <ReactHookFormInput
         label={inputFieldLabel[5]}
-        name="phone"
+        name="user.phone"
         type="number"
-        register={register("phone")}
-        error={errors.phone}
+        register={register("user.phone")}
+        error={errors.user?.phone}
       />
 
       <ReactHookFormInput
         label={inputFieldLabel[6]}
-        name="password"
+        name="user.password"
         type={passwordType}
-        register={register("password")}
-        error={errors.password}
+        register={register("user.password")}
+        error={errors.user?.password}
         icon={{
           isEnabled: true,
           src:
@@ -235,11 +254,51 @@ error={errors.gender}
         error={errors.confirmPassword}
         icon={{
           isEnabled: true,
-          src: passwordType === 'password' ?  "/eyeIconOpen.png" : "/eyeIconClose.png",
-            onClick: toggleConfirmPasswordTypeHandler,
+          src:
+            passwordType === "password"
+              ? "/eyeIconOpen.png"
+              : "/eyeIconClose.png",
+          onClick: toggleConfirmPasswordTypeHandler,
         }}
       />
+      <div className="flex-type2 gap-x-[10px] w-full">
+        <ReactHookFormInput
+          label={"Address line 1"}
+          name="addr.address_1"
+          type="string"
+          register={register("addr.address_1")}
+          error={errors.addr?.address_1}
+        />
 
+        <ReactHookFormInput
+          label={"Address line 2"}
+          name="addr.address_2"
+          type="string"
+          register={register("addr.address_2")}
+          error={errors.addr?.address_2}
+        />
+      </div>
+      <div className="flex-type2 gap-x-[10px] w-full">
+        <ReactHookFormInput
+          label={"Address phone"}
+          name="addr.phone"
+          type="string"
+          register={register("addr.phone")}
+          error={errors.addr?.phone}
+        />
+        <CusotmDropdown
+          label={"City"}
+          name="addr.city"
+          type="string"
+          IconEnabled={true}
+          register={register("addr.city")}
+          error={errors.addr?.city}
+          value={getValues("addr.city")}
+          setValue={setValue}
+          options={cityOption}
+          // disabled={true}
+        />
+      </div>
       <button
         type="submit"
         className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"

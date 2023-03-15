@@ -8,36 +8,44 @@ interface IFrameProps {
   children: React.ReactNode;
 }
 interface ISearchKeyContext {}
-export const SearchKeyContext = React.createContext<ISearchKeyContext | null>(null);
+export const SearchKeyContext = React.createContext<ISearchKeyContext | null>(
+  null
+);
 
 const Frame = (props: IFrameProps) => {
-    const router = useRouter();
-    // const { t } = useTranslation("");
-    const { locale } = router;
-    const [searchKey, setSearchKey] = useState<string>("");
+  const router = useRouter();
+  // const { t } = useTranslation("");
+  const { locale } = router;
+  const [searchKey, setSearchKey] = useState<string>("");
 
-    useEffect(() => {
-        let dir = router.locale == "ar" ? "rtl" : "ltr";
-        let lang = router.locale == "ar" ? "ar" : "en";
-        document.querySelector("html")?.setAttribute("dir", dir);
-        document.querySelector("html")?.setAttribute("lang", lang);
-    }, [router.locale]);
+  useEffect(() => {
+    let dir = router.locale == "ar" ? "rtl" : "ltr";
+    let lang = router.locale == "ar" ? "ar" : "en";
+    document.querySelector("html")?.setAttribute("dir", dir);
+    document.querySelector("html")?.setAttribute("lang", lang);
+  }, [router.locale]);
 
-    return (
-        <SearchKeyContext.Provider value={{ searchKey, setSearchKey }}>
-            <div className="flex bg-[#FFFFFF] relative min-h-screen">
-                {!(router.pathname == "/") && <Sidebar />}
-                {!(router.pathname == "/") ? (
-                    <div className={`box-border flex-1 px-7 pb-5 flex flex-col ${locale == "en" ? " ml-[18%]" : " mr-[18%]"}  relative`}>
-                        <Topbar />
-                        {props.children}
-                    </div>
-                ) : (
-                    props.children
-                )}
-            </div>
-        </SearchKeyContext.Provider>
-    );
+  return (
+    <SearchKeyContext.Provider value={{ searchKey, setSearchKey }}>
+      <div className="flex bg-[#FFFFFF] relative min-h-screen">
+        {!(router.pathname == "/") && (
+          <div className="md:w-[30%] lg:w-[300px] fixed h-screen">
+            <Sidebar />
+          </div>
+        )}
+        {!(router.pathname == "/") ? (
+          <div className={`box-border flex-1 lg:ml-[300px] p-5 pt-0 flex flex-col relative`}>
+            <Topbar />
+            {props.children}
+          </div>
+        ) : (
+          <div className={`box-border flex-1 pb-5 flex flex-col relative`}>
+            {props.children}
+          </div>
+        )}
+      </div>
+    </SearchKeyContext.Provider>
+  );
 };
 
 export default Frame;
