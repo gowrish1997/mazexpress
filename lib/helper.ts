@@ -37,11 +37,11 @@ const capitalizeFirstLetter = (s: string): string => {
 };
 const perPageOptinsList = () => {
   return [
-      { value: "5", label: "default" },
-      { value: "10", label: "10" },
-      { value: "15", label: "15" },
-      { value: 20, label: 20 },
-      { value: 25, label: 25 },
+    { value: "5", label: "default" },
+    { value: "10", label: "10" },
+    { value: "15", label: "15" },
+    { value: 20, label: 20 },
+    { value: 25, label: 25 },
   ];
 };
 
@@ -49,5 +49,5 @@ export {
   capitalizeFirstLetter,
   getDateInStringFormat,
   getTimeInHourAndMinuteFormat,
-  perPageOptinsList
+  perPageOptinsList,
 };

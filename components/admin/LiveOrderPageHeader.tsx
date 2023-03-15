@@ -11,13 +11,13 @@ import { IPageHeaderProp } from "@/models/pageHeader.interface";
 const warehouse = ["istanbul"];
 
 const LiveOrderPageHeader = (props: IPageHeaderProp) => {
-    const perPageOptions = perPageOptinsList();
-    const packageStatusDropDownOptoin = useMemo(() => {
-        return ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
-    }, []);
-    const warehouseDropDownOption = useMemo(() => {
-        return ["istanbul"];
-    }, []);
+  const perPageOptions = perPageOptinsList();
+  const packageStatusDropDownOptoin = useMemo(() => {
+    return ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
+  }, []);
+  const warehouseDropDownOption = useMemo(() => {
+    return ["istanbul"];
+  }, []);
 
   //         setPackageStatusDropDownOptoin((prev) => {
   //             return ["all status", ...(Array.from(packageStatus) as string[])];
@@ -47,20 +47,23 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
           currentPage={props.currentPage}
         />
 
-      
+        {props.allLiveOrders && props.allLiveOrders.length > 0 && (
+          <div className="flex-type1 space-x-[10px] ">
+            {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
 
-                {props.allLiveOrders && props.allLiveOrders.length > 0 && (
-                    <div className="flex-type1 space-x-[10px] ">
-                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-
-                        <MazStatsDropddown
-                            options={perPageOptions}
-                            type="per_page"
-                            onChange={props.itemPerPageHandler!}
-                            className="h-[38px] px-[10px]"
-                            itemsPerPage={props.itemsPerPage}
-                        />
-                        <FilterOptionDropDown options={packageStatusDropDownOptoin} type="packageStatus" onChange={props.onChangeStatus!} statusFilterKey={props.statusFilterKey} />
+            <MazStatsDropddown
+              options={perPageOptions}
+              header="per_page"
+              onChange={props.itemPerPageHandler!}
+              className="h-[38px] px-[10px]"
+              selection={[]}
+            />
+            <FilterOptionDropDown
+              options={packageStatusDropDownOptoin}
+              type="packageStatus"
+              onChange={props.onChangeStatus!}
+              statusFilterKey={props.statusFilterKey}
+            />
 
             <AdminOptionDropDown
               disabled={!props.selectedOrder?.length}

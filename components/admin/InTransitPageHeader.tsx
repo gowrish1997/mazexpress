@@ -10,7 +10,6 @@ import { IPageHeaderProp } from "@/models/pageHeader.interface";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { perPageOptinsList } from "@/lib/helper";
 
-
 const adminOption = [
   "Received in Libya",
   "Out for delivery",
@@ -80,13 +79,13 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-            
+
             <MazStatsDropddown
-              options={perPageOptinsList}
-              type="per_page"
+              options={perPageOptinsList()}
+              header="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
-              itemsPerPage={props.itemsPerPage}
+              selection={[]}
             />
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
