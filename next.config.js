@@ -29,6 +29,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "mazapi.portfolios.digital",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   async redirects() {

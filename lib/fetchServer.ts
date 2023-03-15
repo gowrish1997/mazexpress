@@ -43,6 +43,7 @@ export default async function fetchJson<JSON = any>(
     }
   }
 
+  // console.log(process.env.NEXT_PUBLIC_SERVER_HOST, process.env.NEXT_PUBLIC_SERVER_PORT)
   const response = await fetch(
     `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}` +
       input,

@@ -1,3 +1,7 @@
+//==========================
+//     written by: raunak
+//==========================
+
 import React, { ChangeEvent, useRef } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
@@ -6,9 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
 import fetchServer from "@/lib/fetchServer";
-import { APIResponse } from "@/models/api.model";
-import { User } from "@/models/user.model";
 import { getUserImageString } from "@/lib/utils";
+import { createToast } from "@/lib/toasts";
 
 interface IProp {
   show: boolean;
@@ -42,35 +45,34 @@ const ProfilePicPop = (props: IProp) => {
   };
 
   const updateUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+
     if (e.target.files) {
-      // dev
-      console.log(e.target.files[0]);
+      const formData = new FormData();
 
       // rename to unique name
       const fileName =
         nanoid() + "." + String(e.target.files[0].name).split(".").pop();
-      // dev
-      console.log(fileName);
+
+      formData.append("name", fileName);
+      formData.append("user", user?.id as string);
+      formData.append("image", e.target.files[0]);
 
       // send file to api to write
       const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
-        // headers: { "Content-Type": "multipart/form-data" },
         method: "POST",
-        body: JSON.stringify({
-          image: e.target.files[0],
-          user: user?.id,
-          name: fileName,
-        }),
+        body: formData,
       });
-      console.log(imageUploadResult)
 
-      // const updatedUser: APIResponse<User> = await fetchServer(
-      //   `/api/user?id=${user?.id}`
-      // );
-      // if (updatedUser && updatedUser.count && updatedUser.count > 0) {
-      //   // there is new user
-      //   await mutateUser((updatedUser?.data as User[])?.[0]);
-      // }
+      if(imageUploadResult.ok === true){
+        createToast({
+          type: "success",
+          message: "Image uploaded",
+          title: "Success",
+          timeOut: 1000
+        })
+        props.close(e)
+      }
     }
   };
   return (
