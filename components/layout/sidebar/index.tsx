@@ -213,12 +213,11 @@ const Sidebar = () => {
                         )}
                     </div>
                     <ul className="hidden sm:flex w-full box-border  flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
-                    {sidebarContentHandler(user?.is_admin!).map((content, index) => {
-                        return <NavLink key={content.id} id={index} content={content} transalateContent={transalateSidebarContentHandler()[index]} />;
-                    })}
-                </ul>
+                        {sidebarContentHandler(user?.is_admin!).map((content, index) => {
+                            return <NavLink key={content.id} id={index} content={content} transalateContent={transalateSidebarContentHandler()[index]} />;
+                        })}
+                    </ul>
                 </div>
-              
 
                 <div
                     className="hidden sm:flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#3672DF] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
