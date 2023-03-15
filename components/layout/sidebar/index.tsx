@@ -122,7 +122,7 @@ const adminSidebarPanel = [
 ];
 
 const sidebarContentHandler = (user: boolean) => {
-    if (user) {
+    if (!user) {
         return adminSidebarPanel;
     } else {
         return userSidebarPanel;
@@ -141,7 +141,7 @@ const Sidebar = () => {
     });
 
     const transalateSidebarContentHandler = () => {
-        if (user?.is_admin) {
+        if (!user?.is_admin) {
             return adminSidebarContent;
         } else {
             return userSidebarContent;
