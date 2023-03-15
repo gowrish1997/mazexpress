@@ -117,7 +117,7 @@ const NavLink = (props: IProp) => {
           backgroundColor: isActivePath(props.content) ? "#EDF5F9" : "#fff",
         }}
       >
-        <div className=" flex flex-row justify-start items-center w-full">
+        <div className=" flex flex-row justify-start items-center w-full gap-x-[10px] ">
           <div
             className={`${
               router.pathname.includes(props.content.path)
