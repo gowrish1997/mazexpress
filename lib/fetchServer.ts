@@ -29,14 +29,17 @@ export default async function fetchJson<JSON = any>(
       input,
     init
   );
+
   // if the server replies, there's always some data in json
   // if there's a network error, it will throw at the previous line
+
+
   const data = await response.json();
 
   // response.ok is true when res.status is 2xx
   // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
   if (response.ok) {
-    // console.log(data);
+     console.log(data);
     return data;
   }
   throw new FetchError({
