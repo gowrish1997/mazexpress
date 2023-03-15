@@ -23,7 +23,6 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
-
     const { user, mutateUser } = useUser();
     const { notifications, notificationsIsLoading, mutateNotifications } =
       useNotifications({

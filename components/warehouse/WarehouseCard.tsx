@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { useTranslation } from "next-i18next";
 import copy from "copy-to-clipboard";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { Warehouse } from "@/models/warehouse.model";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const WarehouseCard = (props: { address: Warehouse }) => {
 
@@ -120,7 +121,7 @@ const WarehouseCard = (props: { address: Warehouse }) => {
         <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
           {capitalizeFirstLetter(props.address.tag)}
         </p>
-        <div className="flex items-center gap-x-[5px] ">
+        <div className="flex items-center">
           <div
             className="border box-border p-[2px] rounded-full flex flex-col items-center justify-center"
             style={getBorder(props.address.status)}
@@ -143,7 +144,7 @@ const WarehouseCard = (props: { address: Warehouse }) => {
         {props.address.city}
       </p>
 
-      <div className="flex-type1 mt-[15px] gap-x-[10px]">
+      <div className="flex-type1 mt-[15px]">
         <Image src="/mobile.png" height={12} width={12} alt="mobile" />
         <div className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] ml-[10px]">
           {props.address.phone}
@@ -151,7 +152,7 @@ const WarehouseCard = (props: { address: Warehouse }) => {
       </div>
 
       <div
-        className="flex justify-end text-[12px] text-[#3672DF] font-[500] leading-[17px] gap-x-[5px] mt-[15px] cursor-pointer "
+        className="flex justify-end text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[5px] mt-[15px] cursor-pointer "
         onClick={copyToClipboard}
       >
         <Image src="/copy.png" alt="copy" height={12} width={12} />

@@ -23,7 +23,7 @@ const TrackOrder = (props: any) => {
   const { t } = useTranslation("common");
   const { locale } = router;
 
-  const [packageStatus, setPackageStatus] = useState(0);
+    const [packageStatus, setPackageStatus] = useState(0);
 
   useEffect(() => {
     let dir = router.locale == "ar" ? "rtl" : "ltr";

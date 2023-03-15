@@ -13,8 +13,8 @@ import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
 import LogInWithMail from "./LogInWithMail";
 type Inputs = {
-  password: string;
-  username: string;
+    password: string;
+    username: string;
 };
 
 const schema = yup
@@ -64,19 +64,19 @@ const LogInComponent = (props: any) => {
       });
       // console.log(response);
 
-      if (response.data) {
-        // console.log(response.data);
-        // createToast({
-        //   type: "success",
-        //   message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
-        //   title: "Success",
-        //   timeOut: 1000,
-        // });
-        if (response.data.is_admin) {
-          router.push("/admin");
-        } else {
-          router.push("/");
-        }
+            if (response.data) {
+                // console.log(response.data);
+                // createToast({
+                //   type: "success",
+                //   message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
+                //   title: "Success",
+                //   timeOut: 1000,
+                // });
+                if (response.data.is_admin) {
+                    router.push("/admin");
+                } else {
+                    router.push("/");
+                }
 
         await mutateUser(response.data, false);
       } else {

@@ -6,25 +6,12 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
 import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
-import { Order } from "@/models/order.model";
+import { IPageHeaderProp } from "@/models/pageHeader.interface";
 
-interface IProp {
-  content: string;
-  title?: string;
-  selectedOrder?: string[];
-  allLiveOrders: Order[] | undefined;
-  filterByDate: (value: Date | string) => void;
-  //  filterById: (value: string) => void;
-  pageCount: number;
-  currentPageHandler: (value: number) => void;
-  itemsPerPage: number;
-  currentPage: number;
-  itemPerPageHandler?: (value: string | number) => void;
-}
 
 const adminOption = ["Move to Shipments"];
 
-const PendingPageHeader = (props: IProp) => {
+const PendingPageHeader = (props: IPageHeaderProp) => {
   const warehousesDropDownOptoin = ["istanbul"];
   const [showMoveToShipmentConfirmModal, setShowMoveToShipmentConfirmModal] =
     useState(false);

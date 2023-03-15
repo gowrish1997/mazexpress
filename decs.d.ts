@@ -7,3 +7,7 @@ declare module 'file-saver';
 declare module 'mjml'
 declare module 'nodemailer'
 declare module 'mjml-react'
+declare module 'next-i18next'
+declare module 'next-i18next/serverSideTranslations'
+declare module 'chart.js'
+declare module 'react-chartjs-2'

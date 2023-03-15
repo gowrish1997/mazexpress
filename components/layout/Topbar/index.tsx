@@ -11,6 +11,7 @@ import { SearchKeyContext } from "@/components/common/Frame";
 import { getUserImageString } from "@/lib/utils";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+
 const Topbar = () => {
     const { user, mutateUser } = useUser();
     const router = useRouter();

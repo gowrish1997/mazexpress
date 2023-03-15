@@ -1,5 +1,6 @@
-import { Order } from '@/models/order.model';
-export interface IProp {
+
+import { Order } from "./order.model";
+export interface IPageHeaderProp {
     content: string;
     title?: string;
     onChangeStatus?: (value: string[]) => void;

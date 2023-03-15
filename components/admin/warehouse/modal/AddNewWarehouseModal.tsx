@@ -3,9 +3,10 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import useUser from "@/lib/hooks/useUser";
-import CustomDropDown from "@/components/common/CustomDropDown";
+// import CustomDropDown from "@/components/common/CustomDropDown";
 import { Warehouse, WarehouseStatus } from "@/models/warehouse.model";
 import fetchJson from "@/lib/fetchServer";
+import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 
 interface IProp {
   show: boolean;
@@ -106,7 +107,7 @@ const AddNewWarehouseModal = (props: IProp) => {
               register={register("address_2")}
             />
             <div className="flex-type2 space-x-[10px] w-full">
-              <CustomDropDown
+              <CustomDropdown
                 label="City/Town"
                 name="city"
                 value={["Istanbul"]}
@@ -116,7 +117,7 @@ const AddNewWarehouseModal = (props: IProp) => {
                   iconIsEnabled: true,
                   iconSrc: "/downwardArrow.png",
                 }}
-              />
+              /> 
             </div>
             <ReactHookFormInput
               label="Mobile Number"

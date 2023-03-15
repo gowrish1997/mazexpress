@@ -5,38 +5,19 @@ import PageheaderTitle from "./PageheaderTitle";
 import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import AdminOptionDropDown from "./AdminOptionDropDown";
-
-interface IProp {
-  content: string;
-  title?: string;
-  onChangeStatus?: (value: string[]) => void;
-  itemPerPageHandler?: (value: string | number) => void;
-  selectedOrder?: string[];
-  allLiveOrders: number;
-  filterByDate: (value: Date | string) => void;
-  pageCount: number;
-  currentPageHandler: (value: number) => void;
-  itemsPerPage: number;
-  currentPage: number;
-  statusFilterKey: string[];
-}
+import { perPageOptinsList } from "@/lib/helper";
+import { IPageHeaderProp } from "@/models/pageHeader.interface";
 
 const warehouse = ["istanbul"];
 
-const LiveOrderPageHeader = (props: IProp) => {
-  const packageStatusDropDownOptoin = useMemo(() => {
-    return ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
-  }, []);
-  const warehouseDropDownOption = useMemo(() => {
-    return ["istanbul"];
-  }, []);
-
-  // useEffect(() => {
-  //     const packageStatus = new Set();
-  //     if (props.allLiveOrders) {
-  //         for (const object of props.allLiveOrders) {
-  //             packageStatus.add(object.status_orders);
-  //         }
+const LiveOrderPageHeader = (props: IPageHeaderProp) => {
+    const perPageOptions = perPageOptinsList();
+    const packageStatusDropDownOptoin = useMemo(() => {
+        return ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
+    }, []);
+    const warehouseDropDownOption = useMemo(() => {
+        return ["istanbul"];
+    }, []);
 
   //         setPackageStatusDropDownOptoin((prev) => {
   //             return ["all status", ...(Array.from(packageStatus) as string[])];
@@ -66,28 +47,20 @@ const LiveOrderPageHeader = (props: IProp) => {
           currentPage={props.currentPage}
         />
 
-        {props.allLiveOrders > 0 && (
-          <div className="flex-type1 space-x-[10px] ">
-            {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+      
 
-            {/* <MazStatsDropddown
-              options={perPageOptions}
-              type="per_page"
-              onChange={props.itemPerPageHandler!}
-              className="h-[38px] px-[10px]"
-              itemsPerPage={props.itemsPerPage}
-            /> */}
-            <FilterOptionDropDown
-              options={packageStatusDropDownOptoin}
-              type="packageStatus"
-              onChange={props.onChangeStatus!}
-              statusFilterKey={props.statusFilterKey}
-            />
+                {props.allLiveOrders && props.allLiveOrders.length > 0 && (
+                    <div className="flex-type1 space-x-[10px] ">
+                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
 
-            <FilterOptionDropDown
-              options={warehouseDropDownOption}
-              type="warehouse"
-            />
+                        <MazStatsDropddown
+                            options={perPageOptions}
+                            type="per_page"
+                            onChange={props.itemPerPageHandler!}
+                            className="h-[38px] px-[10px]"
+                            itemsPerPage={props.itemsPerPage}
+                        />
+                        <FilterOptionDropDown options={packageStatusDropDownOptoin} type="packageStatus" onChange={props.onChangeStatus!} statusFilterKey={props.statusFilterKey} />
 
             <AdminOptionDropDown
               disabled={!props.selectedOrder?.length}
@@ -101,5 +74,3 @@ const LiveOrderPageHeader = (props: IProp) => {
 };
 
 export default React.memo(LiveOrderPageHeader);
-
-// { backgroundColor: "#BBC2CF", color: "#FFFFFF" }

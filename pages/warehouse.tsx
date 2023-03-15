@@ -6,12 +6,13 @@ import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { Warehouse } from "@/models/warehouse.model";
 
-const Warehouse = () => {
-    const { warehouses, mutateWarehouses } = useWarehouses();
+const WarehousePage = () => {
+  const { warehouses, mutateWarehouses, warehousesIsLoading } = useWarehouses();
 
     const router = useRouter();
-    const { t } = useTranslation("common");
+  const { t } = useTranslation("common");
     const { locale } = router;
 
     useEffect(() => {
@@ -31,7 +32,7 @@ const Warehouse = () => {
         </>
     );
 };
-export default Warehouse;
+export default WarehousePage;
 export async function getStaticProps({ locale }: { locale: any }) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();

@@ -10,13 +10,13 @@ import Linkedin from "../../public/linkedin.png";
 import Twitter from "../../public/twitter.png";
 
 const media_type1 = [
-  { url: Instagram, label: "Instagram" },
-  { url: Facebook, label: "Facebook" },
-  { url: Youtube, label: "YouTube" },
+    { url: Instagram, label: "Instagram" },
+    { url: Facebook, label: "Facebook" },
+    { url: Youtube, label: "YouTube" },
 ];
 const media_type2 = [
-  { url: Linkedin, label: "LinkedIn" },
-  { url: Twitter, label: "Twitter" },
+    { url: Linkedin, label: "LinkedIn" },
+    { url: Twitter, label: "Twitter" },
 ];
 
 const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
@@ -111,5 +111,4 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
-Footer.displayName = "Footer";
 export default Footer;

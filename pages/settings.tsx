@@ -23,37 +23,29 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 
 const schema = yup
-  .object({
-    first_name: yup.string().required("First name is required"),
-    last_name: yup.string().required("Last name is required"),
-    email: yup
-      .string()
-      .required("Email is required")
-      .email("Please provide valid email"),
-    phone: yup
-      .number()
-      .test(
-        "len",
-        "Must be exactly 10 digits",
-        (val) => val?.toString().length === 10
-      )
-      .required()
-      .typeError("Mobile number is required field"),
+    .object({
+        first_name: yup.string().required("First name is required"),
+        last_name: yup.string().required("Last name is required"),
+        email: yup.string().required("Email is required").email("Please provide valid email"),
+        phone: yup
+            .number()
+            .test("len", "Must be exactly 10 digits", (val) => val?.toString().length === 10)
+            .required()
+            .typeError("Mobile number is required field"),
 
-    // password: yup.string().required("Password is required field"),
-    password: yup.string(),
-    newPassword: yup
-      .string()
-      .matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
-        excludeEmptyString: true,
-        message:
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-      }),
-    avatar_url: yup.string(),
-    is_notifications_enabled: yup.boolean().required(),
-    //  default_language: yup.string().required(),
-  })
-  .required();
+        // password_users: yup.string().required("Password is required field"),
+        password: yup.string(),
+        newPassword: yup.string().matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
+            excludeEmptyString: true,
+            message: "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+        }),
+        avatar_url: yup.string(),
+        is_notifications_enabled: yup.boolean().required(),
+         default_language: yup.string().required(),
+    })
+    .required();
+
+    
 
 const Settings = () => {
   const { user, mutateUser } = useUser();
@@ -117,7 +109,6 @@ const Settings = () => {
       setNewPasswordType("string");
     }
   };
-
   const toggleProfilePicPop = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
@@ -210,7 +201,7 @@ const Settings = () => {
                   name="first_name"
                   type="string"
                   register={register("first_name")}
-                  error={errors.first_name}
+                  error={errors.first_name?.message && fieldErrors[0]}
                 />
 
                 <ReactHookFormInput
@@ -218,7 +209,7 @@ const Settings = () => {
                   name="last_name"
                   type="string"
                   register={register("last_name")}
-                  error={errors.last_name}
+                  error={errors.last_name?.message && fieldErrors[1]}
                 />
               </div>
 
@@ -227,7 +218,7 @@ const Settings = () => {
                 name="password"
                 type={passwordType}
                 register={register("password")}
-                error={errors.password}
+                error={errors.password?.message}
                 icon={{
                   isEnabled: true,
                   src:
@@ -235,7 +226,7 @@ const Settings = () => {
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
                   onClick: togglePasswordTypeHandler,
-                }}
+              }}
                 // disabled={true}
                 // autoComplete="off"
               />
@@ -246,7 +237,7 @@ const Settings = () => {
                 name="email"
                 type="string"
                 register={register("email")}
-                error={errors.email}
+                error={errors.email?.message && fieldErrors[2]}
               />
 
               <ReactHookFormInput
@@ -254,7 +245,7 @@ const Settings = () => {
                 name="newPassword"
                 type={newPasswordType}
                 register={register("newPassword")}
-                error={errors.newPassword}
+                error={errors.newPassword?.message && fieldErrors[3]}
                 icon={{
                   isEnabled: true,
                   src:
@@ -262,7 +253,7 @@ const Settings = () => {
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
                   onClick: toggleNewPasswordTypeHandler,
-                }}
+              }}
                 autoComplete="new-password"
               />
             </div>
@@ -272,7 +263,7 @@ const Settings = () => {
                 name="phone"
                 type="number"
                 register={register("phone")}
-                error={errors.phone}
+                error={errors.phone?.message && fieldErrors[4]}
               />
               {/* 
                           <CustomDropDown

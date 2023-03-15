@@ -6,21 +6,10 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 import CommentModal from "./modal/AddCommentModal";
 import ReactPaginateComponent from "./ReactPaginate";
-import { Order } from "@/models/order.model";
+import { IPageHeaderProp } from "@/models/pageHeader.interface";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
+import { perPageOptinsList } from "@/lib/helper";
 
-interface IProp {
-  content: string;
-  title?: string;
-  selectedOrder?: string[];
-  allLiveOrders: Order[];
-  filterByDate: (value: Date | string) => void;
-  pageCount: number;
-  currentPageHandler: (value: number) => void;
-  itemsPerPage: number;
-  currentPage: number;
-  itemPerPageHandler?: (value: string | number) => void;
-  // filterById:(value:string)=>void
-}
 
 const adminOption = [
   "Received in Libya",
@@ -28,7 +17,7 @@ const adminOption = [
   "Mark as delivered",
 ];
 
-const InTransitPageHeader = (props: IProp) => {
+const InTransitPageHeader = (props: IPageHeaderProp) => {
   const warehousesDropDownOptoin = ["istanbul"];
 
   const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] =
@@ -91,14 +80,14 @@ const InTransitPageHeader = (props: IProp) => {
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-            {/* 
+            
             <MazStatsDropddown
-              options={perPageOptions}
+              options={perPageOptinsList}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            /> */}
+            />
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
               type="warehouse"

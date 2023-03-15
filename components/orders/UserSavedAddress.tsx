@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import fetchServer from "@/lib/fetchServer";
-import fetchSelf from "@/lib/fetchSelf";
+import fetchSelf from '@/lib/fetchSelf'
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { Address } from "@/models/address.model";
-import { useTranslation } from "next-i18next";
 
-const UserSavedAddress = (props: {
+
+const   UserSavedAddress = (props: {
   address: Address;
   register?: any;
   edit: (id: string) => void;

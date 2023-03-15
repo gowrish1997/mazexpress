@@ -15,7 +15,7 @@ interface IProp {
     onClick?: () => void;
     src: string;
   };
-  error?: FieldError;
+  error?: FieldError | string ;
   onClick?: () => void;
   disabled?: boolean;
   autoComplete?: string;

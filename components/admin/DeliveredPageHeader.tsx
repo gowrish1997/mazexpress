@@ -4,23 +4,14 @@ import FilterOptionDropDown from "./FilterOptionDropDown";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
+import { perPageOptinsList } from "@/lib/helper";
+import { IPageHeaderProp } from "@/models/pageHeader.interface";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { Order } from "@/models/order.model";
 
-interface IProp {
-  content: string;
-  title?: string;
-  selectedOrder?: string[];
-  allLiveOrders: Order[];
-  filterByDate: (value: Date | string) => void;
-  pageCount: number;
-  currentPageHandler: (value: number) => void;
-  itemsPerPage: number;
-  currentPage: number;
-  itemPerPageHandler?: (value: string | number) => void;
-  // filterById:(value:string)=>void
-}
 
-const DeliveredPageHeader = (props: IProp) => {
+
+const DeliveredPageHeader = (props:IPageHeaderProp) => {
   const warehousesDropDownOptoin = ["istanbul"];
 
   return (
@@ -48,13 +39,13 @@ const DeliveredPageHeader = (props: IProp) => {
           <div className="flex-type1 space-x-[10px]  ">
             {/* <ReactDropdown /> */}
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-            {/* <MazStatsDropddown
-              options={perPageOptions}
+            <MazStatsDropddown
+              options={perPageOptinsList}
               type="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               itemsPerPage={props.itemsPerPage}
-            /> */}
+            />
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}
               type="warehouse"

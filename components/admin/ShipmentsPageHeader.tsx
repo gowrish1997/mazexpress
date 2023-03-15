@@ -6,25 +6,13 @@ import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
-import { Order } from "@/models/order.model";
+import { IPageHeaderProp } from "@/models/pageHeader.interface";
 
-interface IProp {
-  content: string;
-  title?: string;
-  selectedOrder?: string[];
-  allLiveOrders: Order[];
-  filterByDate: (value: Date | string) => void;
-  pageCount: number;
-  currentPageHandler: (value: number) => void;
-  itemsPerPage: number;
-  currentPage: number;
-  itemPerPageHandler?: (value: string | number) => void;
-  // filterById:(value:string)=>void
-}
+
 
 const adminOption = ["Moved out"];
 
-const ShipmentsPageHeader = (props: IProp) => {
+const ShipmentsPageHeader = (props: IPageHeaderProp) => {
   const warehousesDropDownOptoin = ["istanbul"];
   const [showMovedOutConfirmModal, setMovedOutConfirmModal] = useState(false);
 
