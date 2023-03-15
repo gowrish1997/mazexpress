@@ -72,9 +72,9 @@ const AdminBase = () => {
     setShowAddNewAdminModal((prev) => !prev);
   };
 
-//   if (error) {
-//     return <div>some error happened</div>;
-//   }
+  //   if (error) {
+  //     return <div>some error happened</div>;
+  //   }
   return (
     <>
       <div>
@@ -85,7 +85,7 @@ const AdminBase = () => {
           title="Admin Base | MazExpress Admin"
           pageCount={pageCount}
           currentPageHandler={currentPageHandler}
-        //   itemPerPageHandler={itemPerPageHandler!}
+          //   itemPerPageHandler={itemPerPageHandler!}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
         />
