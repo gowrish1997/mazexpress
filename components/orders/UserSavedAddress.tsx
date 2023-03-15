@@ -2,13 +2,9 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import fetchServer from "@/lib/fetchServer";
-<<<<<<< HEAD
 import fetchSelf from '@/lib/fetchSelf'
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-=======
-import fetchSelf from "@/lib/fetchSelf";
->>>>>>> sessions
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { Address } from "@/models/address.model";
 
