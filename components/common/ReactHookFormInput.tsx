@@ -15,7 +15,7 @@ interface IProp {
     onClick?: () => void;
     src: string;
   };
-  error?: FieldError | string ;
+  error?: FieldError | string;
   onClick?: () => void;
   disabled?: boolean;
   autoComplete?: string;
@@ -77,9 +77,14 @@ const ReactHookFormInput = (props: IProp) => {
           />
         ) : null}
       </div>
-      {props.error && (
+      {props.error && !(typeof props.error === "string") && (
         <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
           {props.error.message}
+        </p>
+      )}
+      {props.error && typeof props.error === "string" && (
+        <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+          {props.error}
         </p>
       )}
     </div>

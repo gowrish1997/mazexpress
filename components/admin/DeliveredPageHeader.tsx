@@ -9,9 +9,7 @@ import { IPageHeaderProp } from "@/models/pageHeader.interface";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { Order } from "@/models/order.model";
 
-
-
-const DeliveredPageHeader = (props:IPageHeaderProp) => {
+const DeliveredPageHeader = (props: IPageHeaderProp) => {
   const warehousesDropDownOptoin = ["istanbul"];
 
   return (
@@ -40,11 +38,11 @@ const DeliveredPageHeader = (props:IPageHeaderProp) => {
             {/* <ReactDropdown /> */}
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
             <MazStatsDropddown
-              options={perPageOptinsList}
-              type="per_page"
+              options={perPageOptinsList()}
+              header="per_page"
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
-              itemsPerPage={props.itemsPerPage}
+              selection={[]}
             />
             <FilterOptionDropDown
               options={warehousesDropDownOptoin}

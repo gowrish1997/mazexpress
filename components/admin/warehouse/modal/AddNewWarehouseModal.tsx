@@ -7,6 +7,7 @@ import useUser from "@/lib/hooks/useUser";
 import { Warehouse, WarehouseStatus } from "@/models/warehouse.model";
 import fetchJson from "@/lib/fetchServer";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
+import CustomDropdown from "@/components/LandingPage/CustomDropdown";
 
 interface IProp {
   show: boolean;
@@ -110,14 +111,12 @@ const AddNewWarehouseModal = (props: IProp) => {
               <CustomDropdown
                 label="City/Town"
                 name="city"
-                value={["Istanbul"]}
+                value={"Istanbul"}
                 register={register("city")}
                 // error={errors.city}
-                dropDownIcon={{
-                  iconIsEnabled: true,
-                  iconSrc: "/downwardArrow.png",
-                }}
-              /> 
+                IconEnabled={true}
+                type='text'
+              />
             </div>
             <ReactHookFormInput
               label="Mobile Number"
