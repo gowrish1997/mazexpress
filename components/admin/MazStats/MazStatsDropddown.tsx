@@ -23,7 +23,7 @@ const MazStatsDropddown = (props: IProp) => {
   };
 
   return (
-    <div className="relative min-w-[120px]">
+    <div className="relative min-w-[120px]  ">
       <div
         className={
           "border-[1px] border-[#BBC2CF] rounded-[4px] text-[12px] text-[#2B2B2B] font-[600] leading-[18px] box-border px-[10px] py-[5px] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative cursor-pointer" +
@@ -47,7 +47,7 @@ const MazStatsDropddown = (props: IProp) => {
         </div>
       </div>
       {showDropdown && (
-        <div className="w-full bg-[white] box-border absolute  border-[1px] border-[#ccc] rounded-[4px] p-[5px] space-y-[4px]">
+        <div className="w-full bg-[white] box-border absolute  border-[1px] border-[#ccc] rounded-[4px] p-[5px] space-y-[4px] z-20 ">
           {props.options.map((data, index) => {
             return (
               <div

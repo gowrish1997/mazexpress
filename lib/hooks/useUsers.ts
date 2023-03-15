@@ -50,7 +50,7 @@ export default function useUsers(props: IProps) {
   } else {
     // return all order count
     queryString += "?count=all";
-    if (props.is_admin === true) {
+    if (true) {
       queryString += "&admin=true";
     } else {
       queryString += "&admin=false";

@@ -56,12 +56,13 @@ const LogInComponent = (props: any) => {
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      // console.log(data);
+       console.log(data);
       const response = await fetchSelf("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      console.log(response)
       // console.log(response);
 
             if (response.data) {
@@ -102,7 +103,7 @@ const LogInComponent = (props: any) => {
     }
   };
 
-  const [passwordType, setPasswordType] = useState("password");
+  const [passwordType, setPasswordType] = useState("string");
 
   const togglePasswordTypeHandler = () => {
     if (passwordType === "string") {
