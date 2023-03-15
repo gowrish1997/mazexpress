@@ -40,7 +40,7 @@ const ProfilePicPop = (props: IProp) => {
   const uploadImage = () => {
     imageInputRef.current?.click();
   };
-  
+
   const updateUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       // dev
@@ -54,21 +54,23 @@ const ProfilePicPop = (props: IProp) => {
 
       // send file to api to write
       const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
-        headers: { "Content-Type": "multipart/form-data" },
+        // headers: { "Content-Type": "multipart/form-data" },
         method: "POST",
         body: JSON.stringify({
           image: e.target.files[0],
-          userId: user?.id,
+          user: user?.id,
           name: fileName,
         }),
       });
-      const updatedUser: APIResponse<User> = await fetchServer(
-        `/api/user?id=${user?.id}`
-      );
-      if (updatedUser && updatedUser.count && updatedUser.count > 0) {
-        // there is new user
-        await mutateUser((updatedUser?.data as User[])?.[0]);
-      }
+      console.log(imageUploadResult)
+
+      // const updatedUser: APIResponse<User> = await fetchServer(
+      //   `/api/user?id=${user?.id}`
+      // );
+      // if (updatedUser && updatedUser.count && updatedUser.count > 0) {
+      //   // there is new user
+      //   await mutateUser((updatedUser?.data as User[])?.[0]);
+      // }
     }
   };
   return (

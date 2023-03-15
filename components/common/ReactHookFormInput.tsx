@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { FieldError } from "react-hook-form";
-import eyeOpen from "@/public/eyeIconOpen.png";
-import eyeClose from "@/public/eyeIconClose.png";
-import dynamic from "next/dynamic";
+
 interface IProp {
   label: string;
   name: string;
@@ -23,17 +21,6 @@ interface IProp {
 }
 
 const ReactHookFormInput = (props: IProp) => {
-  const [iconSwitch, setIconSwitch] = useState<"on" | "off">("on");
-
-  const toggleIcon = () => {
-    setIconSwitch((prev) => {
-      if (prev === "off") {
-        return "on";
-      } else {
-        return "off";
-      }
-    });
-  };
 
   return (
     <div className={"w-full flex-type6"}>
@@ -49,7 +36,7 @@ const ReactHookFormInput = (props: IProp) => {
           " " +
           props.className
         }
-        style={{ borderColor: props.error ? "#f02849" : "" }}
+        // style={{ borderColor: props.error ? "#f02849" : "" }}
       >
         {props.name == "phone_addresses" && (
           <span className="mx-[10px]">+281</span>

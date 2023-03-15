@@ -57,7 +57,7 @@ export default async function fetchJson<JSON = any>(
   // response.ok is true when res.status is 2xx
   // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
   if (response.ok) {
-    console.log(data);
+    // console.log(data);
     return data;
   }
   throw new FetchError({

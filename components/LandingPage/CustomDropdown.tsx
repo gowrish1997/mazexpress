@@ -33,7 +33,7 @@ const genderHandler = (type: string, locale: string) => {
   }
 };
 const languageHandler = (type: string, locale: string) => {
-  console.log('type, locale', type, locale)
+  // console.log('type, locale', type, locale)
   switch (type) {
     case "ar":
       return locale == "en" ? "Arabic" : "عربي";
@@ -65,7 +65,7 @@ const CusotmDropdown = (props: IProp) => {
   };
 
   const dropdownValueHanlder = (label: string, value: string) => {
-    console.log('label', value);
+    // console.log('label', value);
     switch (label) {
       case "Gender":
         return genderHandler(value, locale!);

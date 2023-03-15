@@ -85,7 +85,7 @@ const Settings = () => {
   });
 
   useEffect(() => {
-    // console.log(user);
+    console.log(user);
     reset({ ...user, password: "" });
   }, [user, reset]);
 
@@ -95,6 +95,7 @@ const Settings = () => {
   );
 
   useEffect(() => {
+    // console.log(user)
     let dir = router.locale == "ar" ? "rtl" : "ltr";
     let lang = router.locale == "ar" ? "ar" : "en";
     document.querySelector("html")?.setAttribute("dir", dir);
@@ -300,12 +301,13 @@ const Settings = () => {
               <Controller
                 name="is_notifications_enabled"
                 control={control}
-                // defaultValue={user?.is_notifications_enabled}
+                defaultValue={user?.is_notifications_enabled!}
 
                 render={({ field: { onChange, value } }) => (
+                  
                   <ReactSwitch
                     onChange={onChange}
-                    checked={value as boolean}
+                    checked={value}
                     // defaultChecked={value as boolean}
                     checkedIcon={false}
                     uncheckedIcon={false}
