@@ -43,6 +43,7 @@ export default async function fetchJson<JSON = any>(
     }
   }
 
+  // console.log(process.env.NEXT_PUBLIC_SERVER_HOST, process.env.NEXT_PUBLIC_SERVER_PORT)
   const response = await fetch(
     `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}` +
       input,
@@ -57,7 +58,7 @@ export default async function fetchJson<JSON = any>(
   // response.ok is true when res.status is 2xx
   // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
   if (response.ok) {
-    console.log(data);
+    // console.log(data);
     return data;
   }
   throw new FetchError({
