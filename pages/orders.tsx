@@ -61,7 +61,7 @@ const MyOrders = () => {
         title="My Orders | MazExpress"
       />
 
-      {/* <div className="flex flex-col justify-between relative flex-1 h-full">
+      <div className="flex flex-col justify-between relative flex-1 h-full">
         {(!orders || (orders && (orders as Order[]).length <= 0)) && (
           <div className="flex-1 flex flex-col justify-center items-center w-full ">
             <div className="relative h-[221px] w-[322px] ">
@@ -94,7 +94,7 @@ const MyOrders = () => {
             <AddButton onClick={addNewOrderHandler} />
           </>
         )}
-      </div> */}
+      </div>
     </>
   );
 };

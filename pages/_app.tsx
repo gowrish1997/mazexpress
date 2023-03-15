@@ -15,6 +15,7 @@ import fetchSelf from "@/lib/fetchSelf";
 
 import { appWithTranslation } from "next-i18next";
 import Script from "next/script";
+import GSIContext from "@/components/context/GSI.context";
 
 config.autoAddCss = false;
 
@@ -86,11 +87,13 @@ function App({
   }
 
   useEffect(() => {
+    
     if (gsi) {
       google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_ID as string,
         callback: handleCredentialResponse,
       });
+      // notify components
     }
   }, [gsi]);
 
@@ -111,12 +114,20 @@ function App({
           },
         }}
       >
-        <Script
-          src="https://accounts.google.com/gsi/client"
-          onLoad={loadedGSIHandler}
-        />
-        <Component {...pageProps} />
-        <NotificationContainer />
+        <GSIContext.Provider
+          value={{
+            gsi: gsi,
+            setGsi: setGsi,
+          }}
+        >
+          <Script
+            src="https://accounts.google.com/gsi/client"
+            onLoad={loadedGSIHandler}
+            // strategy={'beforeInteractive'}
+          />
+          <Component {...pageProps} />
+          <NotificationContainer />
+        </GSIContext.Provider>
       </SWRConfig>
     );
   }
@@ -135,14 +146,22 @@ function App({
         },
       }}
     >
-      <Frame>
-        <Script
-          src="https://accounts.google.com/gsi/client"
-          onLoad={loadedGSIHandler}
-        />
-        <Component {...pageProps} />
-        <NotificationContainer />
-      </Frame>
+      <GSIContext.Provider
+        value={{
+          gsi: gsi,
+          setGsi: setGsi,
+        }}
+      >
+        <Frame>
+          <Script
+            src="https://accounts.google.com/gsi/client"
+            onLoad={loadedGSIHandler}
+            // strategy={'beforeInteractive'}
+          />
+          <Component {...pageProps} />
+          <NotificationContainer />
+        </Frame>
+      </GSIContext.Provider>
     </SWRConfig>
   );
 }

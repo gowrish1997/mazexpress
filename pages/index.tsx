@@ -77,8 +77,8 @@ const Index = () => {
 
   const logoutHandler = async () => {
     // console.log("handle logout");
-    const result =await fetchJson("/api/auth/logout", { method: "GET" });
-    console.log(result)
+    const result = await fetchJson("/api/auth/logout", { method: "GET" });
+    console.log(result);
     await mutateUser();
   };
 
@@ -300,7 +300,7 @@ const Index = () => {
 export default Index;
 
 export async function getStaticProps({ locale }: { locale: any }) {
-  // console.log(locale)
+  // console.log(process.env);
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }

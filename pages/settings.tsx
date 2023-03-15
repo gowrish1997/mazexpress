@@ -8,7 +8,7 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
 import useUser from "@/lib/hooks/useUser";
-import { User } from "@/models/user.model";
+import { User, UserGender, UserTongue } from "@/models/user.model";
 import { getUserImageString } from "@/lib/utils";
 import { FieldError } from "react-hook-form";
 import axios from "axios";
@@ -23,29 +23,37 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 
 const schema = yup
-    .object({
-        first_name: yup.string().required("First name is required"),
-        last_name: yup.string().required("Last name is required"),
-        email: yup.string().required("Email is required").email("Please provide valid email"),
-        phone: yup
-            .number()
-            .test("len", "Must be exactly 10 digits", (val) => val?.toString().length === 10)
-            .required()
-            .typeError("Mobile number is required field"),
+  .object({
+    first_name: yup.string().required("First name is required"),
+    last_name: yup.string().required("Last name is required"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Please provide valid email"),
+    phone: yup
+      .number()
+      .test(
+        "len",
+        "Must be exactly 9 digits",
+        (val) => val?.toString().length === 9
+      )
+      .required()
+      .typeError("Mobile number is required field"),
 
-        // password_users: yup.string().required("Password is required field"),
-        password: yup.string(),
-        newPassword: yup.string().matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
-            excludeEmptyString: true,
-            message: "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        }),
-        avatar_url: yup.string(),
-        is_notifications_enabled: yup.boolean().required(),
-         default_language: yup.string().required(),
-    })
-    .required();
-
-    
+    // password_users: yup.string().required("Password is required field"),
+    password: yup.string(),
+    newPassword: yup
+      .string()
+      .matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
+        excludeEmptyString: true,
+        message:
+          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+      }),
+    avatar_url: yup.string(),
+    is_notifications_enabled: yup.boolean().required(),
+    lang: yup.string().required(),
+  })
+  .required();
 
 const Settings = () => {
   const { user, mutateUser } = useUser();
@@ -68,9 +76,10 @@ const Settings = () => {
     handleSubmit,
     control,
     setValue,
+    getValues,
     reset,
     formState: { errors },
-  } = useForm<User & { default_language: string; newPassword: string }>({
+  } = useForm<User & { newPassword: string }>({
     resolver: yupResolver(schema),
     defaultValues: { ...user, password: "" },
   });
@@ -115,20 +124,19 @@ const Settings = () => {
     setShowProfilePicPop((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<
-    User & { default_language: string; newPassword: string }
-  > = async (data) => {
-    // console.log(data);
+  const onSubmit: SubmitHandler<User & { newPassword: string }> = async (
+    data
+  ) => {
+    console.log("settings submission", data);
     try {
       // console.log(result);
-
       createToast({
         type: "success",
         title: "Success",
-        message: "Created order successfully",
+        message: "Updated user.",
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       createToast({
         type: "error",
         title: "An error occurred",
@@ -226,7 +234,7 @@ const Settings = () => {
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
                   onClick: togglePasswordTypeHandler,
-              }}
+                }}
                 // disabled={true}
                 // autoComplete="off"
               />
@@ -253,7 +261,7 @@ const Settings = () => {
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
                   onClick: toggleNewPasswordTypeHandler,
-              }}
+                }}
                 autoComplete="new-password"
               />
             </div>
@@ -265,27 +273,15 @@ const Settings = () => {
                 register={register("phone")}
                 error={errors.phone?.message && fieldErrors[4]}
               />
-              {/* 
-                          <CustomDropDown
-                              label="Language"
-                              name="default_language"
-                              value={["Arabic", "English"]}
-                              register={register("default_language")}
-                              error={errors.default_language}
-                              dropDownIcon={{
-                                  iconIsEnabled: true,
-                                  iconSrc: "/downwardArrow.png",
-                              }}
-                          /> */}
               <CusotmDropdown
                 label={inputFieldLabels[6]}
-                name="default_language"
+                name="lang"
                 type="string"
                 IconEnabled={true}
-                register={register("default_language")}
-                error={errors.default_language}
+                register={register("lang")}
+                error={errors.lang}
                 options={languageOption}
-                // value={getValues("default_language")}
+                value={getValues("lang")}
                 setValue={setValue}
                 disabled={true}
                 className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
@@ -300,14 +296,17 @@ const Settings = () => {
                   {t("settingsPage.profileForm.notification.Description")}
                 </p>
               </div>
+
               <Controller
                 name="is_notifications_enabled"
                 control={control}
-                defaultValue={false}
+                // defaultValue={user?.is_notifications_enabled}
+
                 render={({ field: { onChange, value } }) => (
                   <ReactSwitch
                     onChange={onChange}
                     checked={value as boolean}
+                    // defaultChecked={value as boolean}
                     checkedIcon={false}
                     uncheckedIcon={false}
                     width={36}

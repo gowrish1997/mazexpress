@@ -37,6 +37,10 @@ const ProfilePicPop = (props: IProp) => {
     });
   };
 
+  const uploadImage = () => {
+    imageInputRef.current?.click();
+  };
+  
   const updateUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       // dev
@@ -102,7 +106,7 @@ const ProfilePicPop = (props: IProp) => {
             <div className="flex flex-row justify-between items-center w-full space-x-[10px] ">
               <button
                 className="flex flex-col items-center text-[#525D72] hover:bg-[#EDF5F9] p-2 rounded text-[14px] space-y-[5px] transition duration-300"
-                // onClick={uploadImage}
+                onClick={uploadImage}
               >
                 <FontAwesomeIcon icon={faPen} className="w-5" />
                 <p className="">{profilePicPopContent[1]}</p>

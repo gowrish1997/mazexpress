@@ -27,82 +27,61 @@ export enum UserGender {
   UNKNOWN = "u",
 }
 
-@Entity({ name: "users" })
-export class User extends BaseEntity {
-  constructor(user: Partial<User>) {
-    super();
-    Object.assign(this, user);
-  }
-
-  // @Exclude()
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
-
-  @CreateDateColumn()
-  created_on!: Date;
-
-  @Column({ type: "varchar" })
-  first_name!: string;
-
-  @Column({ type: "varchar" })
-  last_name!: string;
-
-  // @Index()
-  @Column({ type: "varchar", unique: true })
-  email!: string;
-
-  @Column({ type: "varchar", nullable: true, transformer: transformer.date })
-  email_verified!: string | null;
-
-  // @Exclude()
-  @Column({ type: "varchar" })
-  password!: string;
-
-  @Column({ type: "varchar", default: "default_user.png" })
-  avatar_url!: string;
-
-  @Column({ type: "int", nullable: true, default: null, width: 3 })
-  age!: string | null;
-
-  @Column({ type: "int", width: 9, nullable: true, default: null })
-  phone!: number;
-
-  @Column({ type: "enum", enum: UserGender, default: UserGender.UNKNOWN })
-  gender!: UserGender;
-
-  @Column({ type: "boolean", default: false })
-  is_admin!: boolean;
-
-  @Column({ type: "boolean", default: true })
-  is_notifications_enabled!: boolean;
-
-  @Column({ type: "varchar", nullable: true, default: null })
-  default_address!: string | null;
-
-  @OneToMany(() => Session, (session) => session.user)
-  sessions!: Session[];
-
-  @OneToMany(() => Account, (account) => account.user)
-  accounts!: Account[];
-
-  @OneToMany(() => Address, (address) => address.user)
-  addresses!: Address[];
-
-  @OneToMany(() => Order, (order) => order.user)
-  orders!: Order[];
-
-  @OneToMany(() => Tracking, (tracking) => tracking.user)
-  tracking!: Tracking[];
-
-  @ManyToMany(() => Notification, (notification) => notification.users)
-  notifications!: Notification[];
-
-  // @BeforeInsert()
-  // hashPassword() {
-  //     this.password = hashSync(this.password, 10)
-  // }
-
-  // toJSON() {
-  //     return instanceToPlain(this)
-  // }
+export enum UserTongue {
+  E = "english",
+  A = "arabic"
 }
+
+export interface User {
+  // constructor(user?: Partial<User>) {
+  //   // super();
+  //   if(user){
+
+  //     Object.assign(this, user);
+  //   }
+  // }
+
+  id: string;
+
+  created_on: Date;
+
+  first_name: string;
+
+  last_name: string;
+
+  email: string;
+
+  email_verified: string | null;
+
+  password: string;
+
+  avatar_url: string;
+
+  age: string | null;
+
+  phone: number;
+
+  gender: UserGender;
+
+  is_admin: boolean;
+
+  is_notifications_enabled: boolean;
+
+  default_address: string | null;
+
+  sessions: Session[];
+
+  accounts: Account[];
+
+  addresses: Address[];
+
+  orders: Order[];
+
+  tracking: Tracking[];
+
+  notifications: Notification[];
+
+  lang: UserTongue;
+}
+
+ 

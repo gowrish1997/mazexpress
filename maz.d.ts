@@ -48,16 +48,16 @@ window.google = window.google || {};
 // for server sign in
 namespace NodeJS {
   interface ProcessEnv {
-    FACEBOOK_ID: string;
-    FACEBOOK_SECRET: string;
+
 
     GOOGLE_ID: string;
     GOOGLE_SECRET: string;
 
     DATABASE_URL: string;
-    NEXTAUTH_SECRET: string;
 
-    NEXT_PUBLIC_SERVER_HOST: string;
-    NEXT_PUBLIC_SERVER_PORT: string;
+    readonly NEXT_PUBLIC_SERVER_HOST: string;
+    readonly NEXT_PUBLIC_SERVER_PORT: string;
+    
+    readonly NEXT_PUBLIC_C4: string;
   }
 }
