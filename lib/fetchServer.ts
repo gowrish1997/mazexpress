@@ -24,29 +24,29 @@ export default async function fetchJson<JSON = any>(
     }
   }
 
-  // const response = await fetch(
-  //   `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}` +
-  //     input,
-  //   init
-  // );
+  const response = await fetch(
+    `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}` +
+      input,
+    init
+  );
 
   // if the server replies, there's always some data in json
   // if there's a network error, it will throw at the previous line
 
 
-  // const data = await response.json();
+  const data = await response.json();
 
   // response.ok is true when res.status is 2xx
   // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-  // if (response.ok) {
-  //    console.log(data);
-  //   return data;
-  // }
-  // throw new FetchError({
-  //   message: response.statusText,
-  //   response,
-  //   data,
-  // });
+  if (response.ok) {
+     console.log(data);
+    return data;
+  }
+  throw new FetchError({
+    message: response.statusText,
+    response,
+    data,
+  });
 }
 
 export class FetchError extends Error {
