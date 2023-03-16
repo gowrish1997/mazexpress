@@ -9,7 +9,6 @@ import "react-notifications/lib/notifications.css";
 import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { NotificationContainer } from "react-notifications";
-import "reflect-metadata";
 
 import { appWithTranslation } from "next-i18next";
 import useGoogle from "@/lib/hooks/useGoogle";

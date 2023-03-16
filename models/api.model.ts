@@ -1,4 +1,3 @@
-import { JwtPayload } from "jsonwebtoken";
 
 class APIResponse<T> {
   // carries list of data objects or string array for updated ids

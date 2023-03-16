@@ -1,22 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import type { Relation } from "typeorm";
-import { transformer } from "../lib/entity-helper";
 import { User } from "./user.model";
 
-@Entity({ name: "sessions" })
-export class Session {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
+export interface Session {
+  id: string;
 
-  @Column({ type: "varchar", unique: true })
-  session_token!: string;
+  session_token: string;
 
-  @Column({ type: "uuid" })
-  user_id!: string;
+  user_id: string;
 
-  @Column({ type: "varchar", transformer: transformer.date })
-  expires!: string;
+  expires: string;
 
-  @ManyToOne(() => User, (user) => user.sessions)
-  user!: Relation<User>;
+  user: User;
 }

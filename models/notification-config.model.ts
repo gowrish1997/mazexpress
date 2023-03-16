@@ -1,30 +1,15 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-} from "typeorm";
+export interface NotificationConfig {
+  id: string;
 
-@Entity({ name: "notification_config" })
-export class NotificationConfig {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  created_on: Date;
 
-  @CreateDateColumn()
-  created_on!: Date;
+  title: string;
 
-  @Column({ type: "varchar" })
-  title!: string;
+  desc: string;
 
-  @Column({ type: "varchar" })
-  desc!: string;
+  is_enabled: boolean;
 
-  @Column({ type: "boolean", default: false })
-  is_enabled!: boolean;
+  is_custom: boolean;
 
-  @Column({ type: "boolean", default: false })
-  is_custom!: boolean;
-
-  @Column({ type: "boolean", default: false })
-  is_reusable!: boolean;
+  is_reusable: boolean;
 }

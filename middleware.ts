@@ -25,7 +25,7 @@ export const middleware = async (req: NextRequest) => {
   // or maybe you want to destroy session:
   // await session.destroy();
 
-  console.log("from middleware", session);
+  // console.log("from middleware", session);
 
   // demo:
   if (!session.user) {

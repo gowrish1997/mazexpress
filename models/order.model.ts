@@ -1,16 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  CreateDateColumn,
-  OneToMany,
-  BaseEntity,
-} from "typeorm";
-import type { Relation } from "typeorm";
-import { User } from "./user.model";
 import { Address } from "./address.model";
 import { Tracking } from "./tracking.model";
+import { User } from "./user.model";
 
 export enum OrderStatus {
   I = "in-transit",
@@ -19,55 +9,30 @@ export enum OrderStatus {
   P = "pending",
 }
 
-@Entity({ name: "orders" })
-export class Order extends BaseEntity {
-  constructor(user: Partial<User>) {
-    super();
-    Object.assign(this, user);
-  }
+export interface Order {
+  id: string;
 
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  maz_id: string;
 
-  @Column({ type: "uuid" })
-  maz_id!: string;
+  reference_id: string;
 
-  @Column({ type: "uuid" })
-  reference_id!: string;
+  shipping_amt: number;
 
-  @Column({ type: "int", nullable: true, default: null })
-  shipping_amt!: number;
+  created_on: Date;
 
-  @CreateDateColumn()
-  created_on!: Date;
+  shipped_on: Date;
 
-  @Column({ type: "timestamp", nullable: true, default: null })
-  shipped_on!: Date;
+  delivered_on: Date;
 
-  @Column({ type: "timestamp", nullable: true, default: null })
-  delivered_on!: Date;
+  received_on: Date;
 
-  @Column({ type: "timestamp", nullable: true, default: null })
-  received_on!: Date;
+  status: string;
 
-  @Column({ type: "enum", enum: OrderStatus, default: OrderStatus.P })
-  status!: string;
+  store_link: string;
 
-  @Column({ type: "varchar" })
-  store_link!: string;
+  user: User;
 
-  @ManyToOne(() => User, (user) => user.orders, {
-    createForeignKeyConstraints: true,
-    eager: true,
-  })
-  user!: Relation<User>;
+  address: Address;
 
-  @ManyToOne(() => Address, (address) => address.orders, {
-    createForeignKeyConstraints: true,
-    eager: true,
-  })
-  address!: Relation<Address>;
-
-  @OneToMany(() => Tracking, (tracking) => tracking.order)
-  tracking!: Tracking[];
+  tracking: Tracking[];
 }
