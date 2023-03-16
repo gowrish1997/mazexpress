@@ -24,6 +24,7 @@ const TrackOrder = (props: any) => {
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
     maz_id: router.query.id as string,
   });
+  console.log(tracking)
   const { t } = useTranslation("common");
   const { locale } = router;
 

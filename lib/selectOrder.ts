@@ -6,6 +6,7 @@ export const selectOrder = (
   selectedOrder: any
 ) => {
   if (type == "selectAllOrder") {
+    console.log(filteredLiveOrders,selectOrder)
     if (value) {
       const order = filteredLiveOrders?.map((el: any) => {
         if (el.id_orders) {
