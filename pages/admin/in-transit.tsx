@@ -23,7 +23,7 @@ const tableHeaders = [
 const Intransit = () => {
   const router = useRouter();
 
-  const [itemsPerPage, setItemPerPage] = useState(5);
+  const [itemsPerPage, setItemPerPage] = useState(30);
   const [currentPage, setCurrentPage] = useState(0);
   const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
     useState<string>("");

@@ -48,6 +48,7 @@ const AddNewAddressModal = (props: IProp) => {
     register,
     handleSubmit,
     getValues,
+    setValue,
     control,
     formState: { errors },
   } = useForm<Address & { default: "on" | "off" }>({
@@ -170,7 +171,7 @@ const AddNewAddressModal = (props: IProp) => {
                 error={errors.city}
                 options={cityList}
                 value={getValues("city")}
-                setValue={null}
+                setValue={setValue}
                 disabled={true}
                 className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
               />
