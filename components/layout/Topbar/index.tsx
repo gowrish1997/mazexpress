@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useRef, useState } from "react";
+import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Bell from "@/public/bell_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +23,7 @@ const Topbar = () => {
 
   const { setSearchKey } = React.useContext(SearchKeyContext) as any;
 
-  const { notifications, notificationsIsLoading } = useNotifications({
+  const { notifications, notificationsIsLoading, mutateNotifications } = useNotifications({
     user_id: user?.id,
     status: ["unread"],
   });
@@ -44,6 +44,10 @@ const Topbar = () => {
     setSearchKey((e.target as HTMLInputElement).value);
   };
 
+  useEffect(() => {
+    console.log('update')
+  }, [notifications])
+  
   return (
     <>
       <div className="flex w-full min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-30">
@@ -117,6 +121,7 @@ const Topbar = () => {
         show={showNotifications}
         trigger={trigger}
         handler={smartToggleNotificationsHandler}
+        update={mutateNotifications}
       />
     </>
   );

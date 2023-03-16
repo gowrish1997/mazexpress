@@ -85,7 +85,7 @@ const Settings = () => {
   });
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     reset({ ...user, password: "" });
   }, [user, reset]);
 
