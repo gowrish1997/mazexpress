@@ -1,6 +1,8 @@
 import ClickOutside from "@/components/common/ClickOutside";
 import fetchJson from "@/lib/fetchServer";
 import { capitalizeFirstLetter } from "@/lib/helper";
+import useUsers from "@/lib/hooks/useUsers";
+import { getUserImageString } from "@/lib/utils";
 import { User } from "@/models/user.model";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,9 +15,10 @@ interface IProp {
 
 const UserSelect = (props: any) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [users, setUsers] = useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [markAll, setMarkAll] = useState<boolean>(false);
+
+  const { users, mutateUsers } = useUsers({});
 
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef(null);
@@ -46,7 +49,7 @@ const UserSelect = (props: any) => {
       if (selectedUsers.find((item) => item === id)) {
         // ignore
       } else {
-        if (selectedUsers.length === users.length - 1) {
+        if (selectedUsers.length === (users as User[]).length - 1) {
           setMarkAll(true);
         }
         setSelectedUsers((prev) => [...prev, id]);
@@ -66,7 +69,7 @@ const UserSelect = (props: any) => {
 
     // console.log(e.target.checked);
     if (e.target.checked) {
-      let newList = users.map((item) => {
+      let newList = (users as User[]).map((item) => {
         return item.id;
       });
       setSelectedUsers(newList);
@@ -83,14 +86,6 @@ const UserSelect = (props: any) => {
     setSelectedUsers([]);
     setMarkAll(false);
   };
-
-  useEffect(() => {
-    // console.log("get users");
-    fetchJson("/api/users").then((result) => {
-      //   console.log(result);
-      setUsers(result as User[]);
-    });
-  }, []);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -121,41 +116,25 @@ const UserSelect = (props: any) => {
         {!showDropdown && selectedUsers.length > 0 && !markAll && (
           <div className="flex items-center w-full h-[45px] p-3">
             <div className="w-7 h-7 rounded-full relative overflow-hidden">
-              {users.find((item) => item.id === selectedUsers[0])
-                ?.avatar_url !== undefined &&
-                users
-                  .find((item) => item.id === selectedUsers[0])
-                  ?.avatar_url.startsWith("https:") && (
-                  <Image
-                    src={
-                      users.find((item) => item.id === selectedUsers[0])
-                        ?.avatar_url!
-                    }
-                    fill
-                    style={{ objectFit: "cover" }}
-                    alt={"user image"}
-                  />
+              <Image
+                src={getUserImageString(
+                  (users as User[]).find((item) => item.id === selectedUsers[0])
+                    ?.avatar_url
                 )}
-              {users.find((item) => item.id === selectedUsers[0])
-                ?.avatar_url !== undefined &&
-                !users
-                  .find((item) => item.id === selectedUsers[0])
-                  ?.avatar_url.startsWith("https:") && (
-                  <Image
-                    src={
-                      "/user-images/" +
-                      users.find((item) => item.id === selectedUsers[0])
-                        ?.avatar_url!
-                    }
-                    fill
-                    style={{ objectFit: "cover" }}
-                    alt={"user image"}
-                  />
-                )}
+                fill
+                style={{ objectFit: "cover" }}
+                alt={"user image"}
+              />
             </div>
             <p className="text-[#2B2B2B] text-[14px] mx-2">
-              {users.find((item) => item.id === selectedUsers[0])?.first_name}{" "}
-              {users.find((item) => item.id === selectedUsers[0])?.last_name}
+              {
+                (users as User[]).find((item) => item.id === selectedUsers[0])
+                  ?.first_name
+              }{" "}
+              {
+                (users as User[]).find((item) => item.id === selectedUsers[0])
+                  ?.last_name
+              }
             </p>
             {selectedUsers.length > 1 ? (
               <p className="text-[#3672DF] text-[14px]">
@@ -217,7 +196,7 @@ const UserSelect = (props: any) => {
               <hr />
             </div>
             <div className="space-y-[14px]">
-              {users.map((el) => {
+              {(users as User[]).map((el) => {
                 return (
                   <div className="flex items-center w-full" key={el.id}>
                     <div className="w-10 h-10 rounded-full relative overflow-hidden">

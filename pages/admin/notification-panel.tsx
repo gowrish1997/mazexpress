@@ -62,7 +62,7 @@ const NotificationPanel = () => {
   };
 
   useEffect(() => {
-    console.log(notificationSettings);
+    // console.log(notificationSettings);
   }, [notificationSettings]);
 
   if (notificationSettingsIsLoading) {

@@ -16,6 +16,7 @@ interface IProp {
   show: boolean;
   trigger: RefObject<HTMLDivElement>;
   handler: () => void;
+  update: () => void
 }
 
 const NotificationView = forwardRef<HTMLDivElement, IProp>(
@@ -46,6 +47,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
       );
       if (deletedNotification) {
         console.log("done delete");
+        props.update()
         mutateNotifications();
       } else {
         console.log("delete failed");

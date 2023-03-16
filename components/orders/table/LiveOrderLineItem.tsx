@@ -142,7 +142,7 @@ const LiveOrderLineItem = (props: IProp) => {
           width: "100%",
         }}
       >
-        {props.row.id}
+        {props.row.maz_id}
       </td>
       <td className={`td3 text-[#3672DF]`}>{props.row.store_link}</td>
       <td className={`td4`}>{props.row.reference_id}</td>

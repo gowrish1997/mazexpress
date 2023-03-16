@@ -3,17 +3,15 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import CustomDropDown from "@/components/common/CustomDropDown";
 import useUser from "@/lib/hooks/useUser";
 import { Address, City } from "@/models/address.model";
 import fetchServer from "@/lib/fetchServer";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 import CountrySelector from "@/components/common/CountrySelector";
-import RegionSelector from "@/components/common/RegionSelector";
-import { FieldError } from "react-hook-form";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
+import fetchJson from "@/lib/fetchServer";
+import { createToast } from "@/lib/toasts";
 
 interface IProp {
   show: boolean;
@@ -63,6 +61,7 @@ const EditUserAddressModal = (props: IProp) => {
     register,
     handleSubmit,
     getValues,
+    setValue,
     control,
     formState: { errors },
   } = useForm<Address & { default: "on" | "off" }>({
@@ -87,34 +86,52 @@ const EditUserAddressModal = (props: IProp) => {
   const onSubmit: SubmitHandler<Address & { default?: "on" | "off" }> = async (
     data
   ) => {
-    console.log(data);
-    let address = { ...data };
-    delete address.default;
+    if (user) {
+      let address = { ...data };
+      delete address.default;
 
-    console.log(address);
-    if (data.default === "on") {
-      // set default for user
-      const userUpdate = await fetchServer(`/api/users?id=${user?.id}`, {
-        method: "PUT",
-        body: JSON.stringify({ default_address: address.id }),
-      });
-      if (userUpdate) {
-        console.log("updated user default address");
+      // console.log(address);
+      // console.log(data);
+
+      address.user = user;
+
+      // update address
+      const addressResult = await fetchJson<Address>(
+        `/api/addresses?id=${props.address.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(address),
+        }
+      );
+      if(addressResult){
+        // set default if checked
+        if (data.default === "on") {
+          const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ default_address: props.address.id }),
+          });
+        }
+        createToast({
+          type: "success",
+          message: "Your address edit was submitted.",
+          title: "Success",
+          timeOut: 1000,
+        });
+        props.close();
+        props.update();
       } else {
-        console.log("updated user default address: failed");
+        createToast({
+          type: "error",
+          message: "Your address edit failed. contact admin for help.",
+          title: "Error",
+          timeOut: 1000,
+        });
+        props.close();
+        props.update();
       }
     }
-
-    const addressResult = await fetchServer(`/api/addresses?id=${data.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(address),
-    });
-
-    console.log(addressResult);
-
-    props.close();
-    props.update();
   };
 
   return (
@@ -209,28 +226,12 @@ const EditUserAddressModal = (props: IProp) => {
               ]}
               placeHolder="Warehouse address"
               value={getValues("city")}
-              // setValue={setValue}
+              setValue={setValue}
               disabled={true}
               className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
             />
           </div>
-          {/* <div className="flex-type2 space-x-[10px] w-full">
-                        <ReactHookFormInput
-                            label="State/Province/Region"
-                            name="state"
-                            type="string"
-                            register={register("state")}
-                            value={props.address.state}
-                        />
 
-                        <ReactHookFormInput
-                            label="Zip/Postal Code"
-                            name="postalCode"
-                            type="string"
-                            register={register("pincode")}
-                            value={props.address.pincode}
-                        /> */}
-          {/* </div> */}
           <ReactHookFormInput
             label={inputFieldLabels[5]}
             name="phone"
