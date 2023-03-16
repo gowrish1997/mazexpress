@@ -33,7 +33,7 @@ const Intransit = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     per_page: itemsPerPage,
     page: currentPage,
-    status: ["in-transit"],
+    status: ["in-transit", "out-for-delivery"],
   });
 
   const { locales, locale: activeLocale } = router;
