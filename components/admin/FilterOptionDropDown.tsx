@@ -1,28 +1,43 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ClickOutside from "../common/ClickOutside";
+import { Order } from "@/models/order.model";
 interface Iprop {
     options: string[];
     onChange?: (value: string[]) => void;
     type: string;
     statusFilterKey?: string[];
+    allLiveOrders?:Order[]
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
+    console.log(props.allLiveOrders)
     //   console.log("filter optindropdown");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
     const [currentValue, setCurrentValue] = useState<Array<string>>([]);
+    const [statusLiseInLiveOrder,setStatusListInLiveOrder]=useState<string[]>([])
 
     useEffect(() => {
         setCurrentValue(props.statusFilterKey!);
         if (props.type == "warehouse") {
             setCurrentValue(props.options);
         }
-    }, []);
 
-    const dropDownOnChangeHandler = (value: string) => {
-        if (props.onChange) {
+        // console.log([...new Set(props.allLiveOrders?.map((data)=>{
+        //     return data.status
+        // }))])
+     
+    setStatusListInLiveOrder(["all status",...new Set(props.allLiveOrders?.map((data)=>{
+            return data.status
+        }))])
+    }, []);
+    console.log(statusLiseInLiveOrder)
+   
+
+    const dropDownOnChangeHandler = (value: string,type:string) => {
+
+        if (props.onChange && type=="allowed") {
             if (value == "all status") {
                 props?.onChange?.([]);
                 setCurrentValue(["all status"]);
@@ -96,9 +111,13 @@ const FilterOptionDropDown = (props: Iprop) => {
                                     <div key={index} className="flex flex-row justify-start items-center">
                                         <button
                                             key={index}
-                                            className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                            onClick={() => dropDownOnChangeHandler(data)}
+                                        className={` w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] leading-[21px] capitalize disabled:opacity-50 text-left ${statusLiseInLiveOrder.includes(data)?"cursor-pointer":"cursor-not-allowed"} `}
+                                           
+                                            onClick={() => dropDownOnChangeHandler(data,statusLiseInLiveOrder.includes(
+                                                data
+                                            )?"allowed":"not-allowed")}
                                             style={currentValue.includes(data) ? { backgroundColor: "#f2f9fc" } : {}}
+                                            
                                         >
                                             {data}
                                         </button>

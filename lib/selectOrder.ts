@@ -6,13 +6,13 @@ export const selectOrder = (
   selectedOrder: any
 ) => {
   if (type == "selectAllOrder") {
-    console.log(filteredLiveOrders,selectOrder)
+    console.log(filteredLiveOrders,selectedOrder)
     if (value) {
       const order = filteredLiveOrders?.map((el: any) => {
-        if (el.id_orders) {
-          return el.id_orders;
+        if (el.id) {
+          return el.id;
         } else {
-          return el.id_users;
+          return el.id;
         }
       });
       setSelectedOrder(order);
