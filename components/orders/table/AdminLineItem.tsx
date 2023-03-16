@@ -7,7 +7,7 @@ import useOrders from "@/lib/hooks/useOrders";
 import { User } from "@/models/user.model";
 import { Order } from "@/models/order.model";
 import { getUserImageString } from "@/lib/utils";
-import AdminOptionModal from "@/components/admin/modal/AdminOrderOptionModal";
+import AdminOptionModal from "@/components/admin/modal/AdminOptionModal";
 
 interface IProp {
     row: User;
@@ -42,14 +42,30 @@ const AdminLineItem = (props: IProp) => {
         }
     };
 
+    const inputCheckedStateHandler = () => {
+        const data = props?.selectedOrder?.find((el) => {
+            return el == props.row.id;
+        });
+        if (data) {
+            return true;
+        } else {
+            false;
+        }
+    };
+
     return (
-        <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
+        <tr
+            className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative"
+            style={
+                inputCheckedStateHandler() ? { backgroundColor: "#EDF5F9" } : {}
+            }
+        >
             <td className={`td0`}>
                 <input
                     type="checkbox"
                     value={props.row.id}
                     name={props.row.id}
-                    // checked={inputCheckedStateHandler()}
+                    checked={inputCheckedStateHandler()}
                     onChange={(e) =>
                         props.onSelect(e.target.value, "selectSingleOrder")
                     }
@@ -116,7 +132,6 @@ const AdminLineItem = (props: IProp) => {
                     </div>
                     {gate && (
                         <AdminOptionModal
-                            type={props.type}
                             row={props.row}
                             handler={smartToggleGateHandler}
                             trigger={trigger}
