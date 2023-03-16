@@ -101,7 +101,7 @@ const Index = () => {
 
   return (
     <>
-      <div className="">
+      <div className="w-full">
         <div className="box-border w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[12px] md:text-[14px] text-[#FFFFFF] font-[500] leading-[24px] p-[15px] ">
           {t("landingPage.Header")}
         </div>

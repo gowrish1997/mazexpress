@@ -1,34 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ClickOutside from "../common/ClickOutside";
-import { Order } from "@/models/order.model";
 interface Iprop {
     options: string[];
     onChange?: (value: string[]) => void;
     type: string;
     statusFilterKey?: string[];
-    allLiveOrders: Order[];
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
+    //   console.log("filter optindropdown");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
     const [currentValue, setCurrentValue] = useState<Array<string>>([]);
-    const [statusListInLiveOrders, setStatusListInLiveOrdeers] = useState([]);
 
     useEffect(() => {
         setCurrentValue(props.statusFilterKey!);
         if (props.type == "warehouse") {
             setCurrentValue(props.options);
         }
-
-        setStatusListInLiveOrdeers([...new Set(
-            props.allLiveOrders.map((data) => {
-                return data.status;
-            }))]
-        );
     }, []);
-    console.log(statusListInLiveOrders);
 
     const dropDownOnChangeHandler = (value: string) => {
         if (props.onChange) {
@@ -84,77 +75,34 @@ const FilterOptionDropDown = (props: Iprop) => {
     return (
         <div className="relative z-40">
             <button
-                className="box-border border-[1px] border-[#BBC2CF] h-[38px] min-w-[140px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative "
-                style={
-                    showAdminOptionCard
-                        ? { backgroundColor: "#3672DF", color: "#FFFFFF" }
-                        : {}
-                }
+                className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[140px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative cursor-pointer"
+                style={showAdminOptionCard ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
                 onClick={toggleAdminOptionCard}
             >
-                <span className="capitalize">{`${
-                    currentValue?.length == 0 ? "all status" : currentValue?.[0]
-                }`}</span>
+                <span className="capitalize">{`${currentValue?.length == 0 ? "all status" : currentValue?.[0]}`}</span>
                 {currentValue && currentValue?.length > 1 && (
-                    <span
-                        className="text-[#3672DF] text-[14px]"
-                        style={showAdminOptionCard ? { color: "#FFFFFF" } : {}}
-                    >{`${currentValue.length - 1}+more`}</span>
+                    <span className="text-[#3672DF] text-[14px]" style={showAdminOptionCard ? { color: "#FFFFFF" } : {}}>{`${currentValue.length - 1}+more`}</span>
                 )}
                 <div className="relative h-[6px] w-[8px]  ">
-                    <Image
-                        src="/downwardArrow.png"
-                        fill={true}
-                        alt="arrow"
-                        objectFit="cover"
-                    />
+                    <Image src="/downwardArrow.png" fill={true} alt="arrow" objectFit="cover" />
                 </div>
             </button>
             {showAdminOptionCard && (
-                <ClickOutside
-                    trigger={trigger}
-                    handler={smartToggleGateHandler}
-                >
+                <ClickOutside trigger={trigger} handler={smartToggleGateHandler}>
                     <div className="w-full  bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
                         {props.options &&
                             props.options.map((data, index) => {
                                 return (
-                                    <div
-                                        key={index}
-                                        className="flex flex-row justify-start items-center"
-                                        style={
-                                            statusListInLiveOrders?.includes(data)
-                                                ? {
-                                                    cursor:"pointer"
-                                                  }
-                                                : {
-                                                    cursor:"not-allowed" 
-                                                }
-                                        }
-                                    >
+                                    <div key={index} className="flex flex-row justify-start items-center">
                                         <button
                                             key={index}
-                                            className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] leading-[21px] capitalize disabled:opacity-50 text-left "
-                                            onClick={() =>
-                                                dropDownOnChangeHandler(data)
-                                            }
-                                            style={
-                                                currentValue.includes(data)
-                                                    ? {
-                                                          backgroundColor:
-                                                              "#f2f9fc",
-                                                      }
-                                                    : {}
-                                            }
-                                           
+                                            className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                            onClick={() => dropDownOnChangeHandler(data)}
+                                            style={currentValue.includes(data) ? { backgroundColor: "#f2f9fc" } : {}}
                                         >
                                             {data}
                                         </button>
-                                        {currentValue.includes(data) ? (
-                                            <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#3672DF] " />
-                                        ) : (
-                                            <></>
-                                        )}
+                                        {currentValue.includes(data) ? <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#3672DF] " /> : <></>}
                                     </div>
                                 );
                             })}

@@ -8,7 +8,7 @@ export interface IPageHeaderProp {
     selectedOrder?: string[];
     allLiveOrders: Order[];
     filterByDate: (value: Date | string) => void;
-    pageCount?: number;
+    pageCount: number;
     currentPageHandler: (value: number) => void;
     itemsPerPage: number;
     currentPage: number;
