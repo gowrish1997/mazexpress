@@ -26,7 +26,7 @@ interface IProp {
 }
 
 const UserbasePageHeader = (props: IProp) => {
-    console.log(props);
+
     const perPageOptions = perPageOptinsList();
     const [
         showSendNotificatoinConfirmModal,
