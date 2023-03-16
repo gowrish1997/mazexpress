@@ -10,6 +10,8 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 import ClickOutside from "@/components/common/ClickOutside";
 import { createToast } from "@/lib/toasts";
 import axios from "axios";
+import fetchServer from "@/lib/fetchServer";
+import { APIResponse } from "@/models/api.model";
 
 interface IProp {
   show: boolean;
@@ -51,34 +53,55 @@ const CreateNotificationModal = (props: IProp) => {
   };
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log(data);
-    // console.log(files);
+    console.log("send", data);
+    console.log("to", selectedUsers);
 
     // multiparty here
-    axios
-      .post(
-        "/api/notifications",
-        {
-          data: data,
-          files: files,
-          users: selectedUsers,
-        },
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-      });
+    let notificationData = {
+      title: data.title,
+      content: data.content,
+    };
 
-    // console.log(fileInputRef.current?.files)
-    props.close();
-    createToast({
-      type: "success",
-      title: "Success!",
-      message: "Notification sent successfully",
-      timeOut: 3000,
-    });
+    const createResult: APIResponse<Notification> = await fetchServer(
+      `/api/notifications`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          data: notificationData,
+          users: selectedUsers,
+        }),
+      }
+    );
+
+    console.log(createResult);
+    if (createResult.ok) {
+      createToast({
+        type: "success",
+        title: "Success!",
+        message: "Notification sent successfully",
+        timeOut: 1000,
+      });
+      props.close();
+    }
+    // old code below
+    // axios
+    //   .post(
+    //     "/api/notifications",
+    //     {
+    //       data: data,
+    //       files: files,
+    //       users: selectedUsers,
+    //     },
+    //     {
+    //       headers: { "Content-Type": "multipart/form-data" },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   });
+
+    // // console.log(fileInputRef.current?.files)
   };
 
   const uploadFilesHandler: any = (e: any) => {
@@ -106,14 +129,10 @@ const CreateNotificationModal = (props: IProp) => {
     setSelectedUsers(list);
   };
 
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
-
   return (
     <>
       {props.show && (
-        <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-10 flex flex-row justify-center items-center">
+        <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-40 flex flex-row justify-center items-center">
           <form
             className=" box-border flex-type6 bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] space-y-[10px]"
             onSubmit={handleSubmit(onSubmit)}
@@ -126,15 +145,15 @@ const CreateNotificationModal = (props: IProp) => {
               <UserSelect update={updateSelectedUsers} />
             </div>
             <input
-              id="title_notifications"
+              id="title"
               type="string"
-              {...register("title_notifications")}
+              {...register("title")}
               className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give notification title @hi"
             />
             <div className={"w-full"}>
               <label
-                htmlFor={"content_notifications"}
+                htmlFor={"content"}
                 className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] "
               >
                 Message
@@ -146,18 +165,16 @@ const CreateNotificationModal = (props: IProp) => {
                 // style={{ borderColor: props.error ? "#f02849" : "" }}
               >
                 <textarea
-                  id="content_notifications"
-                  {...register("content_notifications")}
+                  id="content"
+                  {...register("content")}
                   rows={30}
                   //   value={props.value}
                   className="rounded-[5px] focus:outline-none top-0 absolute p-4 w-full"
-                  name={"content_notifications"}
+                  name={"content"}
                 />
               </div>
-              {errors.content_notifications && (
-                <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                  
-                </p>
+              {errors.content && (
+                <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]"></p>
               )}
             </div>
             <div className="flex items-center cursor-pointer relative">
@@ -238,8 +255,8 @@ const CreateNotificationModal = (props: IProp) => {
 
                 checked={reusable}
                 onClick={toggleReusable}
-                {...register("reusable_notifications")}
-                name="reusable_notifications"
+                {...register("reusable")}
+                name="reusable"
               />
               <span>Make notification reusable</span>
             </div>

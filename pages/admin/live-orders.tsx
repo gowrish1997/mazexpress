@@ -23,7 +23,7 @@ const LiveOrders = () => {
 
   
   const router = useRouter();
-  const [itemsPerPage, setItemPerPage] = useState<number>(5);
+  const [itemsPerPage, setItemPerPage] = useState<number>(30);
   const [currentPage, setCurrentPage] = useState(0);
   const [statusFilterKey, setStatusFilterKey] = useState<string[]>([]);
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
@@ -42,7 +42,7 @@ const LiveOrders = () => {
   const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
-    console.log("use efft");
+    // console.log("use efft");
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
 
