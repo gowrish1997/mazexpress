@@ -4,12 +4,14 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import jwt from "jsonwebtoken";
 import GSIContext from "../context/GSI.context";
+import useGoogle from "@/lib/hooks/useGoogle";
 
 const LogInWithMail = () => {
   const { t } = useTranslation("");
   const submitButtons: string[] = t("signUpView.form.SubmitButton", {
     returnObjects: true,
   });
+  const { status: googleStatus } = useGoogle({});
 
   const gsiHandler = () => {};
 
@@ -32,25 +34,27 @@ const LogInWithMail = () => {
   const gsi = useContext(GSIContext)["gsi"];
 
   useEffect(() => {
-    console.log(window)
-    window.onload = () => {
-      console.log("working")
+    console.log(googleStatus);
+    if (googleStatus === "initialized") {
+      let container = document.getElementById("g_signin");
+      let conf: google.accounts.id.GsiButtonConfiguration = {
+        type: "standard",
+        // click_listener: gsiHandler,
+        theme: "filled_black",
+        width: "250",
+      };
+      if (container) {
+        google.accounts.id.renderButton(container, conf);
+      }
     }
-    let container = document.getElementById("g_signin");
-    let conf: google.accounts.id.GsiButtonConfiguration = {
-      type: "standard",
-      // click_listener: gsiHandler,
-      theme: "filled_black",
-      width: "250",
-    };
-    if (!window.google) {
-      console.log("google not initialized");
-    }
-    // if (container && window.google !== undefined) {
-    //   google.accounts.id.renderButton(container, conf);
+    // window.onload = () => {
+    //   console.log("working")
+    // }
+    // if (!window.google) {
+    //   console.log("google not initialized");
     // }
     // window.google.accounts.id.renderButton(container, conf);
-  }, [router.pathname, gsi]);
+  }, [googleStatus]);
 
   return (
     <div className="w-full box-border space-y-[10px] text-[14px] font-[500] leading-[19px]">
