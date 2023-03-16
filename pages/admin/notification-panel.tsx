@@ -52,7 +52,7 @@ const NotificationPanel = () => {
             setTo: setTo,
           }),
         });
-        mutateNotificationSettings();
+        await mutateNotificationSettings();
       }
     }
   };
