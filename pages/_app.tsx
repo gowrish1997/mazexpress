@@ -24,10 +24,6 @@ function App({
   const router = useRouter();
   const { status: googleStatus } = useGoogle({});
 
-  useEffect(() => {
-    console.log("google client", googleStatus);
-  }, [googleStatus]);
-
   if (router.pathname.startsWith("/auth/gate")) {
     // no frame
     return (

@@ -13,25 +13,8 @@ const LogInWithMail = () => {
   });
   const { status: googleStatus } = useGoogle({});
 
-  const gsiHandler = () => {};
-
-  function handleCredentialResponse(
-    response: google.accounts.id.CredentialResponse
-  ) {
-    // console.log(response.credential)
-    const payload = jwt.decode(response.credential, {
-      json: true,
-    });
-    if (payload) {
-      console.log(payload);
-    } else {
-      console.log(payload);
-    }
-  }
-
   const router = useRouter();
 
-  const gsi = useContext(GSIContext)["gsi"];
 
   useEffect(() => {
     console.log(googleStatus);
@@ -39,7 +22,6 @@ const LogInWithMail = () => {
       let container = document.getElementById("g_signin");
       let conf: google.accounts.id.GsiButtonConfiguration = {
         type: "standard",
-        // click_listener: gsiHandler,
         theme: "filled_black",
         width: "250",
       };
@@ -47,13 +29,6 @@ const LogInWithMail = () => {
         google.accounts.id.renderButton(container, conf);
       }
     }
-    // window.onload = () => {
-    //   console.log("working")
-    // }
-    // if (!window.google) {
-    //   console.log("google not initialized");
-    // }
-    // window.google.accounts.id.renderButton(container, conf);
   }, [googleStatus]);
 
   return (
