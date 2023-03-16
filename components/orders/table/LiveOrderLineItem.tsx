@@ -18,6 +18,7 @@ interface IProp {
 }
 
 const LiveOrderLineItem = (props: IProp) => {
+  console.log(props.row)
   const trigger = useRef<any>();
 
   // const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
@@ -25,8 +26,10 @@ const LiveOrderLineItem = (props: IProp) => {
   // });
 
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
-    order_id: props.row.id,
+    maz_id: props.row.maz_id,
   });
+  
+  console.log(tracking)
 
   const [packageStatus, setPackageStatus] = useState(0);
 

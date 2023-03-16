@@ -17,7 +17,9 @@ const TableHeader = (props: IProp) => {
       <tr className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px] border-b-[1px] border-[#e3e3e3] ">
         {(props.type == "pending" ||
           props.type == "shipments" ||
-          props.type == "in-transit") && (
+          props.type == "in-transit" ||
+          props.type=="admin_base"
+          ) && (
           <th className="th0">
             <input
               type="checkbox"
