@@ -32,7 +32,7 @@ const FilterOptionDropDown = (props: Iprop) => {
             return data.status
         }))])
     }, []);
-    console.log(statusLiseInLiveOrder)
+  
    
 
     const dropDownOnChangeHandler = (value: string,type:string) => {

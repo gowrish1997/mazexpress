@@ -195,23 +195,7 @@ const EditUserAddressModal = (props: IProp) => {
                 />
               )}
             />
-            {/* <Controller
-              name="city"
-              control={control}
-              // defaultValue="Badakhshan"
-              render={({ field: { onChange, value, ref } }) => (
-                <RegionSelector
-                  label="City/Town"
-                  dropDownIcon={{
-                    iconIsEnabled: true,
-                    iconSrc: "/downwardArrow.png",
-                  }}
-                  value={value}
-                  country={country}
-                onChange={onChange}
-                />
-              )}
-            /> */}
+           
             <CusotmDropdown
               label={inputFieldLabels[4]}
               name="city"
