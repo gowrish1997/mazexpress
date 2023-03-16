@@ -1,8 +1,9 @@
+import { NotificationConfig } from "@/models/notification-config.model";
 import React from "react";
 import ReactSwitch from "react-switch";
 
 interface IProp {
-  data: any;
+  data: NotificationConfig;
   toggle: (id: string) => void;
 }
 
@@ -11,12 +12,8 @@ const ConfigCard = (props: IProp) => {
     <div
       className="min-w-[32%] min-h-[180px] rounded-[4px] p-[25px]"
       style={{
-        backgroundColor: props.data.is_enabled
-          ? "#EDF5F9"
-          : "white",
-        border: props.data.is_enabled
-          ? "none"
-          : "1px solid #BBC2CF",
+        backgroundColor: props.data.is_enabled ? "#EDF5F9" : "white",
+        border: props.data.is_enabled ? "none" : "1px solid #BBC2CF",
       }}
     >
       <div className="flex items-center justify-between">
@@ -25,11 +22,11 @@ const ConfigCard = (props: IProp) => {
         </p>
 
         <div className="flex items-center self-start">
-          {/* <label className="text-[10px] Inter mr-1">
+          <label className="text-[10px] Inter mr-1">
             {props.data.is_enabled ? "Enabled" : "Disabled"}
-          </label> */}
+          </label>
           <ReactSwitch
-            checked={props.data.is_enabled as boolean}
+            checked={props.data.is_enabled}
             onChange={() => props.toggle(props.data.id)}
             checkedIcon={false}
             uncheckedIcon={false}

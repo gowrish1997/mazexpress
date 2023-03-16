@@ -35,6 +35,14 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "mazapi.easydesk.work",
+        port: "",
+        pathname: "/**",
+      },
+
+      
     ],
   },
   async redirects() {
