@@ -27,36 +27,11 @@ const TableHeader = (props: IProp) => {
           </th>
         )}
         {props.headings.map((data, index) => {
-          // if (data == "MAZ Tracking ID") {
-          //     return (
-          //         <>
-          //             <th key={index} className={`th${index + 1} cursor-pointer relative`}>
-          //                 <div className="flex-type1" onClick={toggleSearchInputHandler}>
-          //                     <span>{data}</span>
-          //                     <Image src={downwardArrow} height={9} width={9} alt="arrow" className="ml-[5px]" />
-          //                 </div>
-          //                 {showSearchInput && (
-          //                     <ClickOutside trigger={trigger} handler={smartToggleGateHandler}>
-          //                         <input
-          //                             className=" box-border fixed top-[210px] border-[1px] border-[#BBC2CF] rounded-[4px] h-[35px] z-50 shadow pl-[10px]"
-          //                             // style={showSearchInput ? { borderColor: "black" } : {}}
-          //                             value={searchKey}
-          //                             ref={searchInputRef}
-          //                             placeholder="search ID here"
-          //                             onChange={searchInputChangeHandler}
-          //                         />
-          //                     </ClickOutside>
-          //                 )}
-          //             </th>
-          //         </>
-          //     );
-          // } else {
           return (
             <th key={index} className={`th${index + 1}`}>
               {data}
             </th>
           );
-          // }
         })}
         <th className={`th${props.headings?.length + 1}`}></th>
       </tr>

@@ -42,7 +42,9 @@ export default function useNotifications(props: IProps) {
     data: notifications,
     mutate: mutateNotifications,
     isLoading: notificationsIsLoading,
-  } = useSWR<APIResponse<Notification>>(`/api/notifications${queryString}`);
+  } = useSWR<APIResponse<Notification>>(
+    props.user_id ? `/api/notifications${queryString}` : null
+  );
 
   return {
     notifications: notifications?.data as Notification[],

@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import PageHeader from "@/components/common/PageHeader";
 import Layout from "@/components/layout";
-import PackageTrackingView from "@/components/ordertracking/PackageTrackingView";
-import WarehouseTracking from "@/components/ordertracking/WarehouseTracking";
 import useOrders from "@/lib/hooks/useOrders";
 import useUser from "@/lib/hooks/useUser";
-import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import TrackingPageView from "@/components/ordertracking/TrackingPageView";
 import { useRouter } from "next/router";
 import useTracking from "@/lib/hooks/useTracking";
@@ -40,7 +37,7 @@ const TrackOrder = (props: any) => {
   const [packageStatus, setPackageStatus] = useState(0);
 
   useEffect(() => {
-    // console.log(tracking);
+    console.log(tracking);
     if (tracking !== undefined) {
       let sorted = [...(tracking as Tracking[])];
       sorted.sort((a: any, b: any) => a?.stage - b?.stage);
@@ -89,9 +86,9 @@ const TrackOrder = (props: any) => {
             <div className="space-y-[10px]">
               {(orders as Order[])?.map((data) => {
                 return (
-                  <Link href={`/track/${data.id}`} key={data.id}>
+                  <Link href={`/track/${data.maz_id}`} key={data.id}>
                     <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
-                      {data.id}
+                      {data.maz_id}
                     </p>
                   </Link>
                 );

@@ -103,12 +103,80 @@ const NavLink = (props: IProp) => {
     return false;
   };
 
+  if (props.content.path === "/track") {
+
+    return (
+      <Link
+        href={{
+          pathname:
+            router.pathname.startsWith('/track') ? `/track/${router.query.id}` : "/orders",
+        }}
+        onClick={!router.pathname.startsWith('/track') ? () => alert('no direct access allowed'):() => {}}
+        passHref
+      >
+        <div
+          className=" box-border w-full flex flex-row justify-between items-center relative cursor-pointer px-[10px] rounded-[4px] py-[5px]   hover:bg-[#EDF5F9]"
+          style={{
+            backgroundColor: isActivePath(props.content) ? "#EDF5F9" : "#fff",
+          }}
+        >
+          <div className=" flex flex-row justify-start items-center w-full gap-x-[10px] ">
+            <div
+              className={`${
+                router.pathname.includes(props.content.path)
+                  ? "sidebar_icon_hover"
+                  : "sidebar_icon"
+              } relative`}
+            >
+              {user?.is_admin ? adminIcon(props.id) : userIcon(props.id)}
+              {props.content.title === "Delivered Order" ? (
+                <span className="absolute top-0 bg-green-600 rounded-full h-[12px] w-[12px] flex items-center justify-center">
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className="font-[600] w-[7px] "
+                    color="white"
+                    // size="xs"
+                    // style={{fontSize: '8px'}}
+                  />
+                </span>
+              ) : null}
+              {props.content.title === "Live Orders" ? (
+                <span
+                  className="absolute left-0 transition duration-300 rounded-full h-[12px] w-[12px] flex items-center justify-center"
+                  style={{
+                    backgroundColor: isActivePath(props.content)
+                      ? "#EDF5F9"
+                      : "#fff",
+                  }}
+                ></span>
+              ) : null}
+            </div>
+            <div
+              className=" text-[#525D72] font-[500] text-[14px] leading-[21px] hover:text-[#2B2B2B] hover:font-[600] py-2 transition duration-300 cursor-pointer"
+              style={
+                isActivePath(props.content)
+                  ? {
+                      color: "#2B2B2B",
+                      fontWeight: "600",
+                    }
+                  : {}
+              }
+            >
+              {props.transalateContent}
+            </div>
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
   return (
     <Link
       href={{
         pathname: props.content.path,
       }}
       passHref
+
       // style={{ ...props.style }}
     >
       <div
