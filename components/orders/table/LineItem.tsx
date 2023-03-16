@@ -9,6 +9,7 @@ import { getDateInStringFormat } from "@/lib/helper";
 import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
+import GreyRadioButton from '../../../public/grey_svg.svg'
 import { Order } from "@/models/order.model";
 import { Tracking } from "@/models/tracking.model";
 
@@ -55,7 +56,7 @@ const LineItem = (props: IProp) => {
       case "at-warehouse":
         return <YellowRadioButton />;
       case "pending":
-        return <YellowRadioButton />;
+        return <GreyRadioButton/>;
       default:
         return "pending";
     }

@@ -107,7 +107,7 @@ const AdminBase = () => {
                     <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedUser?.length} orders are selected`}</div>
                 )} */}
       </div>
-      {/* <AddNewAdminModal/> */}
+      <AddNewAdminModal/>
     </>
   );
 };

@@ -139,7 +139,7 @@ export const data = {
   datasets: [
     {
       label: "Customers",
-      data: [33, 53, 85, 41, 44, 65, 40, 33, 53, 85, 41, 44, 65],
+      data: [1000, 53, 200, 41,100, 65, 40, 33, 53, 85, 41, 44, 65],
       borderColor: "#FF0000",
 
       lineTension: 0.3,
@@ -157,7 +157,7 @@ export const data = {
     {
       label: "Orders",
       lineTension: 0.3,
-      data: [33, 25, 35, 51, 54, 76, 40, 33, 25, 35, 51, 54, 76],
+      data: [33, 25, 35, 51, 3000, 76, 40, 33, 25, 35, 51, 54, 76],
       borderColor: "#3672DF",
       fill: {
         target: "origin",

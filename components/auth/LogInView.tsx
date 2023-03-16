@@ -12,9 +12,10 @@ import fetchSelf, { FetchError } from "@/lib/fetchSelf";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
 import LogInWithMail from "./LogInWithMail";
+import useGoogle from "@/lib/hooks/useGoogle";
 type Inputs = {
-    password: string;
-    username: string;
+  password: string;
+  username: string;
 };
 
 const schema = yup
@@ -31,6 +32,8 @@ const LogInComponent = (props: any) => {
   const { t } = useTranslation("");
   const { locale } = router;
   const [errorMsg, setErrorMsg] = useState("");
+
+  const {status: googleStatus} = useGoogle({})
 
   const inputFieldLabel: string[] = t("loginView.form.InputField", {
     returnObjects: true,
@@ -56,27 +59,28 @@ const LogInComponent = (props: any) => {
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      // console.log(data);
+      console.log(data);
       const response = await fetchSelf("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      console.log(response);
       // console.log(response);
 
-            if (response.data) {
-                // console.log(response.data);
-                // createToast({
-                //   type: "success",
-                //   message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
-                //   title: "Success",
-                //   timeOut: 1000,
-                // });
-                if (response.data.is_admin) {
-                    router.push("/admin");
-                } else {
-                    router.push("/");
-                }
+      if (response.data) {
+        // console.log(response.data);
+        // createToast({
+        //   type: "success",
+        //   message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
+        //   title: "Success",
+        //   timeOut: 1000,
+        // });
+        if (response.data.is_admin) {
+          router.push("/admin");
+        } else {
+          router.push("/");
+        }
 
         await mutateUser(response.data, false);
       } else {
@@ -102,7 +106,7 @@ const LogInComponent = (props: any) => {
     }
   };
 
-  const [passwordType, setPasswordType] = useState("password");
+  const [passwordType, setPasswordType] = useState("string");
 
   const togglePasswordTypeHandler = () => {
     if (passwordType === "string") {
@@ -112,9 +116,13 @@ const LogInComponent = (props: any) => {
     }
   };
 
+  useEffect(() => {
+    console.log(googleStatus)
+  }, [googleStatus])
+
   return (
     <div
-      className={`w-[250px] space-y-[20px] flex flex-col justify-start items-center md:items-start ${
+      className={`w-[45%] space-y-[20px] flex flex-col justify-start items-center md:items-start ${
         locale == "en" ? "md:-ml-[20%]" : "md:-mr-[20%]"
       } `}
     >

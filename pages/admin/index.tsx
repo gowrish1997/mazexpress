@@ -29,12 +29,12 @@ const AdminHome = () => {
           here’s what’s happening at your warehouse
         </span>
       </p>
-      <div className="flex-type3 gap-x-[10px]">
+      <div className="flex-type3 gap-x-[10px] z-20 ">
         <TotalOrders />
         <TotalCustomer />
         <WarehouseOrders />
       </div>
-      <div className="flex-type3 gap-x-[10px] h-[300px] relative z-10">
+      <div className="flex-type3 gap-x-[10px] h-[300px] relative ">
         <StatGraph />
         <OrdersTotalCountBar />
       </div>
