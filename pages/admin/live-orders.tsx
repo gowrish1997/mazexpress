@@ -10,25 +10,25 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const tableHeaders = [
-  "Customer",
-  "MAZ Tracking ID",
-  "Store Link",
-  "Reference ID",
-  "Created Date",
-  //   "Warehouse",
-  "Status",
+    "Customer",
+    "MAZ Tracking ID",
+    "Store Link",
+    "Reference ID",
+    "Created Date",
+    //   "Warehouse",
+    "Status",
 ];
 
 const LiveOrders = () => {
+    const router = useRouter();
+    const [itemsPerPage, setItemPerPage] = useState<number>(5);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [statusFilterKey, setStatusFilterKey] = useState<string[]>([]);
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+        Date | string
+    >("");
 
   
-  const router = useRouter();
-  const [itemsPerPage, setItemPerPage] = useState<number>(5);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [statusFilterKey, setStatusFilterKey] = useState<string[]>([]);
-  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-    Date | string
-  >("");
 
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     per_page: itemsPerPage,
@@ -48,7 +48,12 @@ const LiveOrders = () => {
 
   const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
+ 
 
+    useEffect(() => {
+        console.log("use efft");
+        router.push(router.asPath, router.asPath, { locale: "en" });
+    }, []);
 
     const currentPageHandler = useCallback((value: number) => {
         setCurrentPage(value);
@@ -57,47 +62,46 @@ const LiveOrders = () => {
         setCurrentPage(0);
         setItemPerPage(value as number);
     }, []);
-  // const filterByStatusHandler = (value: string[]) => {
-  //     console.log('status changeing is calling')
-  //     setStatusFilterKey(value);
-  // };
+    // const filterByStatusHandler = (value: string[]) => {
+    //     console.log('status changeing is calling')
+    //     setStatusFilterKey(value);
+    // };
 
-  const filterByStatusHandler = useCallback((value: string[]) => {
-    setStatusFilterKey(value);
-    setCurrentPage(0);
-  }, []);
+    const filterByStatusHandler = useCallback((value: string[]) => {
+        setStatusFilterKey(value);
+        setCurrentPage(0);
+    }, []);
 
-  const filterByCreatedDate = useCallback((value: Date | string) => {
-    setCreatedDateFilterKey(value);
-  }, []);
+    const filterByCreatedDate = useCallback((value: Date | string) => {
+        setCreatedDateFilterKey(value);
+    }, []);
 
+    if (ordersIsLoading) {
+        return <LoadingPage />;
+    }
+    if (ordersError) {
+        return <div>some error happened</div>;
+    }
 
+    return (
+        <>
+            <div>
+                <LiveOrderPageHeader
+                    content="Live Orders"
+                    allLiveOrders={orders as Order[]}
+                    onChangeStatus={filterByStatusHandler}
+                    itemPerPageHandler={itemPerPageHandler!}
+                    filterByDate={filterByCreatedDate}
+                    title="Live Orders | MazExpress Admin"
+                    currentPageHandler={currentPageHandler}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
+                    statusFilterKey={statusFilterKey}
+                />
+                <div className="flex flex-col justify-between relative flex-1 h-full">
+                    {!orders && <BlankPage />}
 
-  if (ordersIsLoading) {
-    return <LoadingPage />;
-  }
-  if (ordersError) {
-    return <div>some error happened</div>;
-  }
-
-  return (
-    <>
-      <div>
-        <LiveOrderPageHeader
-          content="Live Orders"
-          allLiveOrders={ (orders as Order[])}
-          onChangeStatus={filterByStatusHandler}
-          itemPerPageHandler={itemPerPageHandler!}
-          filterByDate={filterByCreatedDate}
-          title="Live Orders | MazExpress Admin"
-          pageCount={pageCount}
-          currentPageHandler={currentPageHandler}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          statusFilterKey={statusFilterKey}
-        />
-        <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders && <BlankPage />}
+ 
 
           {orders && (
             <>
@@ -116,12 +120,12 @@ const LiveOrders = () => {
 
 export default LiveOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
-  if (process.env.NODE_ENV === "development") {
-    await i18n?.reloadResources();
-  }
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
 }
