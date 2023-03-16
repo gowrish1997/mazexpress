@@ -40,8 +40,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/track",
-        destination: "/orders?error=no_direct_access_allowed",
+        source: "/:locale/track",
+        destination: "/:locale/orders",
         permanent: true,
       },
     ];
