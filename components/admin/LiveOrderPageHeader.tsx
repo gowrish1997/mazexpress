@@ -59,6 +59,7 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
               selection={[]}
             />
             <FilterOptionDropDown
+              allLiveOrders={props.allLiveOrders}
               options={packageStatusDropDownOptoin}
               type="packageStatus"
               onChange={props.onChangeStatus!}
