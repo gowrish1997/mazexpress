@@ -39,8 +39,7 @@ const schema = yup
       .required()
       .typeError("Mobile number is required field"),
 
-    // password_users: yup.string().required("Password is required field"),
-    password: yup.string(),
+    password: yup.string().required("Password is required field"),
     newPassword: yup
       .string()
       .min(8, "Password must be 8 characters long")
@@ -114,7 +113,7 @@ const Settings = () => {
   const [newPasswordType, setNewPasswordType] = useState("password");
 
   const togglePasswordTypeHandler = () => {
-    console.log("passowerd");
+    // console.log("passowerd");
     if (passwordType == "string") {
       setPasswordType("password");
     } else {
@@ -122,7 +121,7 @@ const Settings = () => {
     }
   };
   const toggleNewPasswordTypeHandler = () => {
-    console.log("new password");
+    // console.log("new password");
     if (newPasswordType == "string") {
       setNewPasswordType("password");
     } else {
@@ -141,13 +140,22 @@ const Settings = () => {
     console.log("settings submission", data);
     try {
       // console.log(result);
+      if (!passwordCheck) {
+        createToast({
+          type: "error",
+          title: "An error occurred",
+          message: "Old password is wrong",
+          timeOut: 3000,
+        });
+        return;
+      }
       createToast({
         type: "success",
         title: "Success",
         message: "Updated user.",
       });
     } catch (err) {
-      // console.log(err);
+      console.error(err);
       createToast({
         type: "error",
         title: "An error occurred",
@@ -162,7 +170,7 @@ const Settings = () => {
   ) => {
     // console.log(e.target.value);
     const reee = await checkPassword(e.target.value, user?.id!);
-    console.log(reee);
+    // console.log(reee);
     if (reee) setPasswordCheck(true);
     else setPasswordCheck(false);
   };

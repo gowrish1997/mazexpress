@@ -2,28 +2,21 @@
 //     written by: raunak
 //==========================
 
-
 import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
 import fetchSelf from "../fetchSelf";
 import { User } from "@/models/user.model";
 
-
-// use the current user profile from sessions 
+// use the current user profile from sessions
 
 export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
-  
 } = {}) {
   const { data: user, mutate: mutateUser } = useSWR<User | null>(
     "/api/user",
-    fetchSelf,
-    {
-      // refreshInterval: 3000,
-      // revalidateOnFocus: true
-    }
+    fetchSelf
   );
 
   useEffect(() => {
