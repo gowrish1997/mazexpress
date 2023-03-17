@@ -44,7 +44,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             req.session.users = newuser.data as User[];
             await req.session.save();
 
-            res.status(200).json({ ok: true, user: newuser.data[0] });
+            res.status(200).json({ ok: true, user: newuser.data[0]});
             // resolve(newuser);
           } else {
             res.status(401).json({ ok: false, user: null });

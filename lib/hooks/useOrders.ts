@@ -38,7 +38,7 @@ export default function useOrders(props: IProps) {
       queryString += `&maz_id=${props.maz_id}`;
     }
   } else {
-    console.log("coutn all")
+    // console.log("coutn all")
     // return all order count
     queryString += '?count=all'
   }
