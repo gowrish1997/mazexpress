@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "@/components/common/PageHeader";
 import ReactSwitch from "react-switch";
 import Image from "next/image";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import Layout from "@/components/layout";
-import useUser from "@/lib/hooks/useUser";
-import { User, UserGender, UserTongue } from "@/models/user.model";
-import { getUserImageString } from "@/lib/utils";
-import { FieldError } from "react-hook-form";
-import axios from "axios";
-import { nanoid } from "nanoid";
-import { createToast } from "@/lib/toasts";
 import blueExclamatory from "@/public/blueExclamatory.png";
-import ProfilePicPop from "@/components/common/ProfilePicPop";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import PageHeader from "@/components/common/PageHeader";
+import ReactHookFormInput from "@/components/common/ReactHookFormInput";
+import Layout from "@/components/layout";
+import useUser from "@/lib/hooks/useUser";
+import { User } from "@/models/user.model";
+import { getUserImageString } from "@/lib/utils";
+import { createToast } from "@/lib/toasts";
+import ProfilePicPop from "@/components/common/ProfilePicPop";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
 
 const schema = yup
@@ -44,11 +41,18 @@ const schema = yup
     password: yup.string(),
     newPassword: yup
       .string()
-      .matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
-        excludeEmptyString: true,
-        message:
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-      }),
+      .min(8, "Password must be 8 characters long")
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol"),
+    // newPassword: yup
+    //   .string()
+    //   .matches(/^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/, {
+    //     excludeEmptyString: true,
+    //     message:
+    //       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+    //   }),
     avatar_url: yup.string(),
     is_notifications_enabled: yup.boolean().required(),
     lang: yup.string().required(),

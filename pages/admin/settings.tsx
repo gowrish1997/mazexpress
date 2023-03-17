@@ -34,19 +34,20 @@ const schema = yup
             .required()
             .typeError("Mobile number is required field"),
 
-        // password: yup.string().required("Password is required field"),
-        password: yup.string(),
-        newPassword: yup.string(),
-        //   .min(8, "Password must be 8 characters long")
-        //   .matches(/[0-9]/, "Password requires a number")
-        //   .matches(/[a-z]/, "Password requires a lowercase letter"),
-        //   .matches(/[A-Z]/, "Password requires an uppercase letter")
-        //   .matches(/[^\w]/, "Password requires a symbol"),
-        avatar_url: yup.string(),
-        is_notifications_enabled: yup.boolean().required(),
-        //  default_language: yup.string().required(),
-    })
-    .required();
+    // password: yup.string().required("Password is required field"),
+    password: yup.string(),
+    newPassword: yup
+      .string()
+      .min(8, "Password must be 8 characters long")
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol"),
+    avatar_url: yup.string(),
+    is_notifications_enabled: yup.boolean().required(),
+    //  default_language: yup.string().required(),
+  })
+  .required();
 
 const Settings = () => {
     const { user, mutateUser } = useUser();
@@ -324,12 +325,12 @@ const Settings = () => {
 
 export default Settings;
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }
