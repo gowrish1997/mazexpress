@@ -109,7 +109,7 @@ const AddNewOrder = () => {
         store_link: string | null | undefined;
         address_id: string | null | undefined;
     }> = async (data) => {
-        // console.log(data);
+     console.log(data);
         try {
             let orderObj = {
                 user_id: user?.id,
