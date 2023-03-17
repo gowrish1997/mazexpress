@@ -11,6 +11,7 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import { User } from "@/models/user.model";
+import useUsers from "@/lib/hooks/useUsers";
 interface IProp {
     content: string;
     title?: string;
@@ -26,6 +27,11 @@ interface IProp {
 }
 
 const UserbasePageHeader = (props: IProp) => {
+    const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
+        per_page: itemsPerPage,
+        page: currentPage,
+        is_admin: false,
+    });
 
     const perPageOptions = perPageOptinsList();
     const [

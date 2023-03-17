@@ -5,7 +5,7 @@ import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
-import CusotmDropdown from "../LandingPage/CustomDropdown";
+import CustomDropdown from "../LandingPage/CustomDropdown";
 import { useTranslation } from "next-i18next";
 import { User, UserGender } from "@/models/user.model";
 import fetchServer from "@/lib/fetchServer";
@@ -27,26 +27,32 @@ const schema = yup
                 .number()
                 .test(
                     "len",
-                    "Must be exactly 10 digits",
-                    (val) => val?.toString().length === 10
+                    "Must be exactly 9 digits",
+                    (val) => val?.toString().length === 9
                 )
                 .required()
-                .typeError("Mobile numbder is required field"),
+                .typeError("Mobile number is required field"),
             password: yup
                 .string()
-                .matches(
-                    /^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/,
-                    {
-                        excludeEmptyString: true,
-                        message:
-                            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-                    }
-                ),
+                .min(8, "Password must be 8 characters long")
+                .matches(/[0-9]/, "Password requires a number")
+                .matches(/[a-z]/, "Password requires a lowercase letter")
+                .matches(/[A-Z]/, "Password requires an uppercase letter")
+                .matches(/[^\w]/, "Password requires a symbol"),
+            // .string()
+            // .matches(
+            //   /^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/,
+            //   {
+            //     excludeEmptyString: true,
+            //     message:
+            //       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+            //   }
+            // ),
         }),
         addr: yup.object({}),
         confirmPassword: yup
             .string()
-            .oneOf([yup.ref("password")], "Passwords must match")
+            .oneOf([yup.ref("user.password")], "Passwords must match")
             .required()
             .typeError("Confirm Password is required field"),
     })
@@ -63,7 +69,6 @@ const SignUpContent = (props: IProp) => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
-    console.log(router);
 
     interface ISignupForm {
         user: User;
@@ -92,7 +97,7 @@ const SignUpContent = (props: IProp) => {
         { returnObjects: true }
     );
 
-    console.log(cityOption);
+    //   console.log(cityOption);
 
     const {
         register,
@@ -105,9 +110,9 @@ const SignUpContent = (props: IProp) => {
         defaultValues: {
             user: {
                 age: "22",
-                is_admin: router.pathname.includes("admin") ? true : false,
                 email: "mohamed@maz.com",
                 first_name: "mohamed",
+                is_admin: router.pathname.includes("admin") ? true : false,
                 gender: UserGender.UNKNOWN,
                 last_name: "ali",
                 password: "Test123$",
@@ -126,26 +131,48 @@ const SignUpContent = (props: IProp) => {
     });
 
     const onSubmit: SubmitHandler<ISignupForm> = async (data) => {
-        console.log(data);
+        // console.log(data);
 
         try {
-            const result = await fetchServer("/api/users", {
+            const userResult = await fetchServer("/api/users", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-            });
-            //   console.log(result); // id created
-
-            // toast
-            createToast({
-                type: "success",
-                title: "New user created.",
-                message: "Please log in with your new login credentials",
-                timeOut: 3000,
+                body: JSON.stringify(data.user),
             });
 
-            // send to login page with cred
-            props.switch?.(1);
+            console.log(userResult); // id created
+
+            // add address
+            const addressResult = await fetchServer("/api/addresses", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    addr: { ...data.addr },
+                    user: userResult.data[0].id,
+                }),
+            });
+
+            console.log(addressResult.data);
+            if (userResult.ok === true && addressResult.ok === true) {
+                // toast
+                createToast({
+                    type: "success",
+                    title: "New user created.",
+                    message: "Please log in with your new login credentials",
+                    timeOut: 3000,
+                });
+
+                // send to login page with cred
+                props.switch?.(1);
+            } else {
+                // toast
+                createToast({
+                    type: "error",
+                    title: "Sign up failed.",
+                    message: "Please try again.",
+                    timeOut: 3000,
+                });
+            }
         } catch (error) {
             if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);
@@ -203,7 +230,7 @@ const SignUpContent = (props: IProp) => {
                     register={register("user.age")}
                     error={errors.user?.age}
                 />
-                <CusotmDropdown
+                <CustomDropdown
                     label={inputFieldLabel[3]}
                     name="user.gender"
                     type="string"
@@ -289,7 +316,7 @@ const SignUpContent = (props: IProp) => {
                     register={register("addr.phone")}
                     error={errors.addr?.phone}
                 />
-                <CusotmDropdown
+                <CustomDropdown
                     label={"City"}
                     name="addr.city"
                     type="string"

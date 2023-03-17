@@ -13,7 +13,7 @@ const WarehouseOrders = () => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     status: ["at-warehouse"],
     count: true,
-    count_all: true
+    // count_all: true
   });
 
   const wareHouseChangeHanlder = (value: string | number) => {
