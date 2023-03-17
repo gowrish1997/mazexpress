@@ -7,7 +7,7 @@ interface IProp {
   options: { value: string | number; label: string | number }[];
   onChange?: (value: string | number) => void;
   header?: string;
-  itemPerPage:number
+  itemPerPage?:number
   className?: string;
   selection: (string | number)[];
 }
