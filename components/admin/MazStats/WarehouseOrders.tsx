@@ -3,21 +3,31 @@ import StatCard from "./StatCard";
 import MazStatsDropddown from "./MazStatsDropddown";
 import useOrders from "@/lib/hooks/useOrders";
 const options = [
-  { value: "", label: "all age" },
-  { value: "10-20", label: "10-20" },
-  { value: "10-20", label: "10-20" },
-  { value: "10-20", label: "10-20" },
+  { value: "", label: "All" },
+  { value: "benghazi", label: "Benghazi" },
+  { value: "misrata", label: "Misrata" },
+  { value: "tripoli", label: "Tripoli" },
 ];
+
 const WarehouseOrders = () => {
   const [selectedDate, setSelectedDate] = useState("");
+  const [statusSelection, setStatusSelection] = useState<string[]>([]);
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    status: ["at-warehouse"],
+    status: statusSelection,
     count: true,
     // count_all: true
   });
 
   const wareHouseChangeHanlder = (value: string | number) => {
-    console.log(value);
+    // console.log(value);
+
+    setStatusSelection((prev) => {
+      if (prev.includes(value as string)) {
+        return prev.filter((el) => el !== value);
+      } else {
+        return [...prev, value as string];
+      }
+    });
   };
 
   return (
@@ -30,7 +40,7 @@ const WarehouseOrders = () => {
           options={options}
           header="city"
           onChange={wareHouseChangeHanlder}
-          selection={[]}
+          selection={statusSelection}
         />
       </div>
       <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">
