@@ -40,7 +40,7 @@ const Table = (props: TableProps) => {
 
     return (
         <div className="flex-1 relative">
-            {props.rows && (
+            {/* {props.rows  && ( */}
                 <table className={tableClassNameHandler()}>
                     <TableHeader
                         type={props.type}
@@ -116,7 +116,7 @@ const Table = (props: TableProps) => {
                             : null}
                     </tbody>
                 </table>
-            )}
+            {/* )} */}
         </div>
     );
 };

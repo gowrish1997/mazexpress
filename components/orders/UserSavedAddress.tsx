@@ -9,10 +9,12 @@ import { capitalizeFirstLetter } from "@/lib/helper";
 import { Address } from "@/models/address.model";
 
 const UserSavedAddress = (props: {
+    type: string;
     address: Address;
     register?: any;
     edit: (id: string) => void;
     update: () => void;
+    updateDeliveryAddress?:(id:string)=>void
 }) => {
     const { user, mutateUser } = useUser();
 
@@ -42,35 +44,36 @@ const UserSavedAddress = (props: {
     };
 
     const updateUser = async (id: string) => {
-        // console.log("update user call");
-        console.log(id);
-        // console.log(user);
+        console.log(id)
+      
+        if (props.type == "address-book") {
+            if (user) {
+                let newUserData = user;
+                newUserData.default_address = id;
 
-        console.log(user);
+                // console.log(newUserData)
 
-        if (user) {
-            let newUserData = user;
-            newUserData.default_address = id;
+                mutateUser({ ...user, default_address: id }, false);
 
-            // console.log(newUserData)
+                console.log({...user,default_address: id});
+                const updateResponse = await fetchServer(
+                    `/api/users?id=${user.id}`,
+                    {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({default_address: id }),
+                    }
+                );
 
-            mutateUser({ ...user, default_address: id }, false);
+                 console.log(updateResponse);
+                // update user backend
 
-            console.log(user);
-            const updateResponse = await fetchServer(
-                `/api/users?id=${user.id}`,
-                {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ default_address: id }),
-                }
-            );
-
-            // console.log(updateResponse);
-            // update user backend
-
-            props.update();
-            // console.log(data)
+                props.update();
+                // console.log(data)
+            }
+        }
+        else{
+            props.updateDeliveryAddress?.(id)
         }
     };
 

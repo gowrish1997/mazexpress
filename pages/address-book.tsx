@@ -64,6 +64,7 @@ const AddressBook = () => {
             .map((data) => {
               return (
                 <UserSavedAddress
+                type="address-book"
                   key={data.id}
                   address={data}
                   edit={toggleEditUserAddressModal}

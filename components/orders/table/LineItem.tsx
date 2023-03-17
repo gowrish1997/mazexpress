@@ -49,6 +49,8 @@ const LineItem = (props: IProp) => {
     switch (status) {
       case "in-transit":
         return <RedRadioButton />;
+        case "out-for-delivery":
+        return <RedRadioButton />;
 
       case "delivered":
         return <GreenRadioButton />;

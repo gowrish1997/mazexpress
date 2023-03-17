@@ -47,13 +47,14 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
           currentPage={props.currentPage}
         />
 
-        {props.allLiveOrders && props.allLiveOrders.length > 0 && (
+        {(props.allLiveOrders || !props.statusFilterKey?.includes("all status")) && (
           <div className="flex-type1 space-x-[10px] ">
             {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
 
             <MazStatsDropddown
               options={perPageOptions}
               header="per_page"
+              itemPerPage={props.itemsPerPage}
               onChange={props.itemPerPageHandler!}
               className="h-[38px] px-[10px]"
               selection={[]}
