@@ -27,12 +27,6 @@ interface IProp {
 }
 
 const UserbasePageHeader = (props: IProp) => {
-    const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
-        per_page: itemsPerPage,
-        page: currentPage,
-        is_admin: false,
-    });
-
     const perPageOptions = perPageOptinsList();
     const [
         showSendNotificatoinConfirmModal,
@@ -103,13 +97,13 @@ const UserbasePageHeader = (props: IProp) => {
                     </div>
                 )}
             </div>
-            {
-              showRemoveAdminConfirmModal &&  <RemoveAdminConfirmModal
+            {showRemoveAdminConfirmModal && (
+                <RemoveAdminConfirmModal
                     close={toggleRemoveAdminConfirmModal}
                     total={props.selectedUser?.length!}
                     confirm={removeAdmins}
                 />
-            }
+            )}
             {/* <SendNotificatonConfirmModal
                 close={toggleSendNotificatoinConfirmModal}
                 show={showSendNotificatoinConfirmModal}
