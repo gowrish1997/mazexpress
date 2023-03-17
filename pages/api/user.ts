@@ -7,7 +7,7 @@ export default withIronSessionApiRoute(userRoute, sessionOptions);
 async function userRoute(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     if (req.session.users && req.session.users.length > 0) {
-      console.log("sess", req.session.users);
+      // console.log("sess", req.session.users);
 
       // return the only user
       const user = await fetchServer(
