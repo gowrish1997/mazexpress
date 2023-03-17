@@ -3,25 +3,25 @@ import Image from "next/image";
 import { FieldError } from "react-hook-form";
 
 interface IProp {
-    label: string;
-    name: string;
-    type: string;
-    register?: any;
-    value?: string | number;
-    icon?: {
-        isEnabled: boolean;
-        onClick?: () => void;
-        src: string;
-    };
-    error?: FieldError | string;
+  label: string;
+  name: string;
+  type: string;
+  register?: any;
+  value?: string | number;
+  icon?: {
+    isEnabled: boolean;
     onClick?: () => void;
-    disabled?: boolean;
-    autoComplete?: string;
-    className?: string;
+    src: string;
+  };
+  error?: FieldError | string;
+  onClick?: () => void;
+  disabled?: boolean;
+  autoComplete?: string;
+  className?: string;
+  onChange?: (...args: any[]) => void
 }
 
 const ReactHookFormInput = (props: IProp) => {
-
   return (
     <div className={"w-full flex-type6"}>
       <label
@@ -42,42 +42,41 @@ const ReactHookFormInput = (props: IProp) => {
           <span className="mx-[10px]">+281</span>
         )}
 
-                <input
-                    id={props.name}
-                    type={props.type}
-                    {...props.register}
-                    value={props.value}
-                    className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
-                    name={props.name}
-                    step="0.1"
-                    disabled={props.disabled}
-                    autoComplete={
-                        props.autoComplete ? props.autoComplete : "on"
-                    }
-                />
-                {props.icon?.isEnabled ? (
-                    <Image
-                        src={props.icon?.src}
-                        alt="eyeIcon"
-                        height={18}
-                        width={18}
-                        className="cursor-pointer absolute right-[8px] "
-                        onClick={()=>props.onClick?.()}
-                    />
-                ) : null}
-            </div>
-            {props.error && !(typeof props.error === "string") && (
-                <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                    {props.error.message}
-                </p>
-            )}
-            {props.error && typeof props.error === "string" && (
-                <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                    {props.error}
-                </p>
-            )}
-        </div>
-    );
+        <input
+          id={props.name}
+          type={props.type}
+          {...props.register}
+          value={props.value}
+          className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
+          name={props.name}
+          step="0.1"
+          disabled={props.disabled}
+          autoComplete={props.autoComplete ? props.autoComplete : "on"}
+          onChange={(e) => props.onChange?.(e)}
+        />
+        {props.icon?.isEnabled ? (
+          <Image
+            src={props.icon?.src}
+            alt="eyeIcon"
+            height={18}
+            width={18}
+            className="cursor-pointer absolute right-[8px] "
+            onClick={() => props.onClick?.()}
+          />
+        ) : null}
+      </div>
+      {props.error && !(typeof props.error === "string") && (
+        <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+          {props.error.message}
+        </p>
+      )}
+      {props.error && typeof props.error === "string" && (
+        <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+          {props.error}
+        </p>
+      )}
+    </div>
+  );
 };
 
 export default ReactHookFormInput;

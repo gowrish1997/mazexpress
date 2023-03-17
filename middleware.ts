@@ -14,7 +14,7 @@ export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
   const session = await getIronSession(req, res, sessionOptions);
 
-  // console.log("from middleware", session);
+  console.log("from middleware", session);
   
   // console.log(session.users?.[0].lang)
   // add redirect to correct locale here...
