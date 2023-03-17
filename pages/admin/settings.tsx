@@ -36,12 +36,13 @@ const schema = yup
 
     // password: yup.string().required("Password is required field"),
     password: yup.string(),
-    newPassword: yup.string(),
-    //   .min(8, "Password must be 8 characters long")
-    //   .matches(/[0-9]/, "Password requires a number")
-    //   .matches(/[a-z]/, "Password requires a lowercase letter"),
-    //   .matches(/[A-Z]/, "Password requires an uppercase letter")
-    //   .matches(/[^\w]/, "Password requires a symbol"),
+    newPassword: yup
+      .string()
+      .min(8, "Password must be 8 characters long")
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol"),
     avatar_url: yup.string(),
     is_notifications_enabled: yup.boolean().required(),
     //  default_language: yup.string().required(),
