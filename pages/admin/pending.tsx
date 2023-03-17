@@ -83,7 +83,7 @@ const PendingOrders = () => {
           currentPageHandler={currentPageHandler}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
-          itemPerPageHandler={itemPerPageHandler!}
+        itemPerPageHandler={itemPerPageHandler!}
           //   filterById={filterByMazTrackingId}
         />
 

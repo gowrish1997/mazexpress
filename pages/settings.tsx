@@ -61,6 +61,7 @@ const schema = yup
 
 const Settings = () => {
   const { user, mutateUser } = useUser();
+  console.log(user)
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;

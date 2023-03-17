@@ -9,7 +9,7 @@ import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
 
 
-const adminOption = ["Move to Shipments"];
+const adminOption = ["Move to Shipments,View Order"];
 
 const PendingPageHeader = (props: IPageHeaderProp) => {
   const warehousesDropDownOptoin = ["istanbul"];
