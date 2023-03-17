@@ -5,13 +5,13 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
-import fetchJson from "@/lib/fetchServer";
+import fetchServer from "@/lib/fetchServer";
 
 export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
 async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const validUser = await fetchJson(`/api/auth/login`, {
+    const validUser = await fetchServer(`/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(req.body),
@@ -22,9 +22,9 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     if (validUser.data && req.session.users && req.session.users.length > 0) {
       req.session.users = [...req.session.users, validUser.data];
       await req.session.save();
-      res.json(validUser);
+      res.json(validUser.data);
     } else if (validUser.data) {
-      req.session.users = [validUser.data];
+      req.session.users = validUser.data;
       await req.session.save();
       res.status(200).json({ msg: validUser.msg, data: validUser.data });
     } else {
