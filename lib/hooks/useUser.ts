@@ -10,11 +10,12 @@ import fetchSelf from "../fetchSelf";
 import { User } from "@/models/user.model";
 
 
-// get user from session object 
+// use the current user profile from sessions 
 
 export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
+  
 } = {}) {
   const { data: user, mutate: mutateUser } = useSWR<User | null>(
     "/api/user",

@@ -94,7 +94,7 @@ const MazCommunityForm = () => {
                 " "
               }
               style={{
-                borderColor: errors.user_message?.message ? "#f02849" : "",
+                // borderColor: errors.user_message?.message ? "#f02849" : "",
               }}
             >
               <textarea

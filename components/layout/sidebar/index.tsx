@@ -127,13 +127,14 @@ const adminSidebarPanel = [
     },
 ];
 
-const sidebarContentHandler = (user: boolean) => {
-    if (user) {
-        return adminSidebarPanel;
-    } else {
-        return userSidebarPanel;
-    }
+const sidebarContentHandler = (admin: boolean) => {
+  if (admin) {
+    return adminSidebarPanel;
+  } else {
+    return userSidebarPanel;
+  }
 };
+
 const Sidebar = () => {
     const { user, mutateUser } = useUser();
     const router = useRouter();
@@ -146,13 +147,13 @@ const Sidebar = () => {
         returnObjects: true,
     });
 
-    const transalateSidebarContentHandler = () => {
-        if (user?.is_admin) {
-            return adminSidebarContent;
-        } else {
-            return userSidebarContent;
-        }
-    };
+  const transalateSidebarContentHandler = () => {
+    if (user?.is_admin) {
+      return adminSidebarContent;
+    } else {
+      return userSidebarContent;
+    }
+  };
 
     const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
     const [showOptionModal, setShowOptionModal] = useState(false);

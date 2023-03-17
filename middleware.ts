@@ -1,6 +1,8 @@
 //==========================
-//     written by: raunak
+//     co-author: raunak
+//     co-author: gowrish
 //==========================
+
 
 // /middleware.ts
 import { NextResponse } from "next/server";
@@ -12,23 +14,17 @@ export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
   const session = await getIronSession(req, res, sessionOptions);
 
-  // do anything with session here:
-  // const { user } = session;
-
-  // like mutate user:
-  // user.something = someOtherThing;
-  // or:
-  // session.user = someoneElse;
-
-  // uncomment next line to commit changes:
-  // await session.save();
-  // or maybe you want to destroy session:
-  // await session.destroy();
-
   // console.log("from middleware", session);
+  
+  // console.log(session.users?.[0].lang)
+  // add redirect to correct locale here...
+  
+  // console.log(session.users?.[0].lang)
+  // add restrictions to users for admin routes
+
 
   // demo:
-  if (!session.user) {
+  if (!session.users) {
     return NextResponse.redirect(new URL("/auth/gate", req.url), {
       statusText: "Unauthorized.",
     });

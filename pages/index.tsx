@@ -1,4 +1,7 @@
-// written by raunak
+//==========================
+//     co-author: gowrish
+//     co-author: raunak
+//==========================
 
 import React, { SyntheticEvent, useState, useRef, useEffect } from "react";
 import Image from "next/image";
@@ -78,7 +81,7 @@ const Index = () => {
   const logoutHandler = async () => {
     // console.log("handle logout");
     const result = await fetchJson("/api/auth/logout", { method: "GET" });
-    console.log(result);
+    // console.log(result);
     await mutateUser();
   };
 
