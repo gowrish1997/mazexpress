@@ -59,7 +59,7 @@ const MazCommunityForm = () => {
           {t("landingPage.communityForm.Title")}
         </h1>
         <p className="w-[85%] text-[16px] text-[#525D72] font-[500] leading-[25px] text-center ">
-          {t("landingPage.communityForm.Discription")}
+          {t("landingPage.communityForm.Description")}
         </p>
         <form
           className=" w-full bg-[#FFFFFF] rounded-[16px]  space-y-[20px]"
@@ -93,9 +93,11 @@ const MazCommunityForm = () => {
                 "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[100px] relative" +
                 " "
               }
-              style={{
-                // borderColor: errors.user_message?.message ? "#f02849" : "",
-              }}
+              style={
+                {
+                  // borderColor: errors.user_message?.message ? "#f02849" : "",
+                }
+              }
             >
               <textarea
                 className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] resize-none p-[5px]"

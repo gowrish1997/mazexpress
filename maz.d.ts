@@ -9,7 +9,7 @@ export {};
 // This is where we specify the typings of req.session.*
 declare module "iron-session" {
   interface IronSessionData {
-    users?: Partial<User>[] | null;
+    users?: Partial<User>[];
   }
 }
 

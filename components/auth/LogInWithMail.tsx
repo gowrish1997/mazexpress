@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { useTranslation } from "next-i18next";
-import Script from "next/script";
 import { useRouter } from "next/router";
-import jwt from "jsonwebtoken";
-import GSIContext from "../context/GSI.context";
 import useGoogle from "@/lib/hooks/useGoogle";
 
 const LogInWithMail = () => {
@@ -17,7 +14,7 @@ const LogInWithMail = () => {
 
 
   useEffect(() => {
-    console.log(googleStatus);
+    // console.log(googleStatus);
     if (googleStatus === "initialized") {
       let container = document.getElementById("g_signin");
       let conf: google.accounts.id.GsiButtonConfiguration = {

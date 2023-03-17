@@ -31,7 +31,7 @@ const TotalOrders = () => {
     []
   );
   const { orders: totalOrders, mutateOrders: mutateTotalOrders } = useOrders({
-    // count_all: true,
+    count_all: true,
     count: true,
     status: statusSelection as string[],
   });

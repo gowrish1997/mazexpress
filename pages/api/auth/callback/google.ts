@@ -4,7 +4,6 @@ import { sessionOptions } from "@/lib/session";
 import fetchJson from "@/lib/fetchServer";
 import { APIResponse } from "@/models/api.model";
 import { User } from "@/models/user.model";
-import { nanoid } from "nanoid";
 import { JwtPayload } from "jsonwebtoken";
 
 export default withIronSessionApiRoute(handler, sessionOptions);
@@ -20,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         );
         // console.log("existing user", user);
         if (user.data && user.data.length > 0) {
-          req.session.user = user.data[0];
+          req.session.users = user.data as User[];
           await req.session.save();
 
           res.status(200).json({ ok: true, user: user.data[0] });
@@ -42,7 +41,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           // console.log("new user", newuser);
           if (newuser.data && newuser.data.length > 0) {
             // success
-            req.session.user = (newuser.data as User[])[0];
+            req.session.users = newuser.data as User[];
             await req.session.save();
 
             res.status(200).json({ ok: true, user: newuser.data[0] });

@@ -1,4 +1,3 @@
-import PageHeader from "@/components/common/PageHeader";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import TotalOrders from "@/components/admin/MazStats/TotalOrders";
@@ -17,7 +16,7 @@ const AdminHome = () => {
   const { locales, locale: activeLocale } = router;
   const { user, mutateUser } = useUser();
   useEffect(() => {
-    console.log("use efft");
+    // console.log("use efft");
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
 
