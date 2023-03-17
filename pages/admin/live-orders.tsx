@@ -20,8 +20,6 @@ const tableHeaders = [
 ];
 
 const LiveOrders = () => {
-
-  
   const router = useRouter();
   const [itemsPerPage, setItemPerPage] = useState<number>(30);
   const [currentPage, setCurrentPage] = useState(0);
@@ -48,15 +46,13 @@ const LiveOrders = () => {
 
   const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
-
-
-    const currentPageHandler = useCallback((value: number) => {
-        setCurrentPage(value);
-    }, []);
-    const itemPerPageHandler = useCallback((value: string | number) => {
-        setCurrentPage(0);
-        setItemPerPage(value as number);
-    }, []);
+  const currentPageHandler = useCallback((value: number) => {
+    setCurrentPage(value);
+  }, []);
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
+    setItemPerPage(value as number);
+  }, []);
   // const filterByStatusHandler = (value: string[]) => {
   //     console.log('status changeing is calling')
   //     setStatusFilterKey(value);
@@ -71,8 +67,6 @@ const LiveOrders = () => {
     setCreatedDateFilterKey(value);
   }, []);
 
-
-
   if (ordersIsLoading) {
     return <LoadingPage />;
   }
@@ -85,7 +79,7 @@ const LiveOrders = () => {
       <div>
         <LiveOrderPageHeader
           content="Live Orders"
-          allLiveOrders={ (orders as Order[])}
+          allLiveOrders={orders as Order[]}
           onChangeStatus={filterByStatusHandler}
           itemPerPageHandler={itemPerPageHandler!}
           filterByDate={filterByCreatedDate}

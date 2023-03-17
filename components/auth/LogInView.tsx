@@ -33,7 +33,7 @@ const LogInComponent = (props: any) => {
   const { locale } = router;
   const [errorMsg, setErrorMsg] = useState("");
 
-  const {status: googleStatus} = useGoogle({})
+  const { status: googleStatus } = useGoogle({});
 
   const inputFieldLabel: string[] = t("loginView.form.InputField", {
     returnObjects: true,
@@ -59,7 +59,7 @@ const LogInComponent = (props: any) => {
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      console.log(data);
+      // console.log(data);
       const response = await fetchSelf("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -70,17 +70,19 @@ const LogInComponent = (props: any) => {
 
       if (response.data) {
         // console.log(response.data);
+        if (response.data.is_admin) {
+          router.push("/admin");
+        } else {
+          router.push("/");
+        }
+        // setTimeout(() => {
+        // }, 800);
         // createToast({
         //   type: "success",
         //   message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
         //   title: "Success",
         //   timeOut: 1000,
         // });
-        if (response.data.is_admin) {
-          router.push("/admin");
-        } else {
-          router.push("/");
-        }
 
         await mutateUser(response.data, false);
       } else {
@@ -117,8 +119,8 @@ const LogInComponent = (props: any) => {
   };
 
   useEffect(() => {
-    console.log(googleStatus)
-  }, [googleStatus])
+    console.log(googleStatus);
+  }, [googleStatus]);
 
   return (
     <div
