@@ -106,6 +106,7 @@ const Settings = () => {
   const [newPasswordType, setNewPasswordType] = useState("password");
 
   const togglePasswordTypeHandler = () => {
+    console.log("passowerd")
     if (passwordType == "string") {
       setPasswordType("password");
     } else {
@@ -113,6 +114,7 @@ const Settings = () => {
     }
   };
   const toggleNewPasswordTypeHandler = () => {
+    console.log('new password')
     if (newPasswordType == "string") {
       setNewPasswordType("password");
     } else {
@@ -231,11 +233,12 @@ const Settings = () => {
                 icon={{
                   isEnabled: true,
                   src:
-                    passwordType === "password"
+                    passwordType === "string"
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
-                  onClick: togglePasswordTypeHandler,
+                 
                 }}
+                onClick= {togglePasswordTypeHandler}
                 // disabled={true}
                 // autoComplete="off"
               />
@@ -258,11 +261,12 @@ const Settings = () => {
                 icon={{
                   isEnabled: true,
                   src:
-                    passwordType === "password"
+                    newPasswordType === "string"
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
-                  onClick: toggleNewPasswordTypeHandler,
+                 
                 }}
+                onClick={ toggleNewPasswordTypeHandler}
                 autoComplete="new-password"
               />
             </div>

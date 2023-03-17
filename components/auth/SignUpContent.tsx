@@ -55,7 +55,7 @@ const schema = yup
 interface IProp {
     switch?: (i: number) => void;
     type: string;
-    close?:()=>void
+    close?: () => void;
 }
 
 const SignUpContent = (props: IProp) => {
@@ -240,11 +240,11 @@ const SignUpContent = (props: IProp) => {
                 icon={{
                     isEnabled: true,
                     src:
-                        passwordType === "password"
+                        passwordType === "string"
                             ? "/eyeIconOpen.png"
                             : "/eyeIconClose.png",
-                    onClick: togglePasswordTypeHandler,
                 }}
+                onClick={togglePasswordTypeHandler}
             />
 
             <ReactHookFormInput
@@ -253,14 +253,14 @@ const SignUpContent = (props: IProp) => {
                 type={confirmPasswordType}
                 register={register("confirmPassword")}
                 error={errors.confirmPassword}
-                icon={{
-                    isEnabled: true,
-                    src:
-                        passwordType === "password"
-                            ? "/eyeIconOpen.png"
-                            : "/eyeIconClose.png",
-                    onClick: toggleConfirmPasswordTypeHandler,
-                }}
+                // icon={{
+                //     isEnabled: true,
+                //     src:
+                //         confirmPasswordType === "string"
+                //             ? "/eyeIconOpen.png"
+                //             : "/eyeIconClose.png",
+                // }}
+                // onClick={toggleConfirmPasswordTypeHandler}
             />
             <div className="flex-type2 gap-x-[10px] w-full">
                 <ReactHookFormInput
@@ -305,7 +305,7 @@ const SignUpContent = (props: IProp) => {
                     type="submit"
                     className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
                 >
-                    { submitButtons[0]}
+                    {submitButtons[0]}
                 </button>
             ) : (
                 <div className="w-full flex flex-row justify-between  items-center">
@@ -313,13 +313,12 @@ const SignUpContent = (props: IProp) => {
                         type="submit"
                         className=" h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[15px] "
                     >
-                        
-                           Create Admin
+                        Create Admin
                     </button>
                     <button
                         type="submit"
                         className=" h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[15px] "
-                        onClick={()=>props?.close?.()}
+                        onClick={() => props?.close?.()}
                     >
                         Cancel
                     </button>

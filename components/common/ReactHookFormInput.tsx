@@ -62,7 +62,7 @@ const ReactHookFormInput = (props: IProp) => {
                         height={18}
                         width={18}
                         className="cursor-pointer absolute right-[8px] "
-                        onClick={props.onClick}
+                        onClick={()=>props.onClick?.()}
                     />
                 ) : null}
             </div>
