@@ -63,6 +63,7 @@ const SignUpContent = (props: IProp) => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
+    console.log(router);
 
     interface ISignupForm {
         user: User;
@@ -100,10 +101,11 @@ const SignUpContent = (props: IProp) => {
         getValues,
         formState: { errors },
     } = useForm<ISignupForm>({
-        resolver: yupResolver(schema),
+        // resolver: yupResolver(schema),
         defaultValues: {
             user: {
                 age: "22",
+                is_admin: router.pathname.includes("admin") ? true : false,
                 email: "mohamed@maz.com",
                 first_name: "mohamed",
                 gender: UserGender.UNKNOWN,
