@@ -2,6 +2,8 @@
 //     written by: raunak
 //==========================
 
+import fetchJson from "./fetchServer";
+
 const getUserImageString = (avatar_url?: string) => {
   if (avatar_url === null || avatar_url === undefined) {
     return "/user-images/default_user.png";
@@ -13,4 +15,16 @@ const getUserImageString = (avatar_url?: string) => {
   }
 };
 
-export { getUserImageString };
+async function checkPassword(password: string, user_id: string) {
+  const result: boolean = await fetchJson(`/api/auth/validate-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      password: password,
+      user: user_id,
+    }),
+  });
+  return result
+}
+
+export { getUserImageString, checkPassword };

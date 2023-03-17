@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import ReactSwitch from "react-switch";
 import Image from "next/image";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -14,10 +14,12 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
 import useUser from "@/lib/hooks/useUser";
 import { User } from "@/models/user.model";
-import { getUserImageString } from "@/lib/utils";
+import { checkPassword, getUserImageString } from "@/lib/utils";
 import { createToast } from "@/lib/toasts";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 
 const schema = yup
   .object({
@@ -65,6 +67,8 @@ const Settings = () => {
   const { t } = useTranslation("common");
   const { locale } = router;
 
+  const [passwordCheck, setPasswordCheck] = useState(false);
+
   const inputFieldLabels: string[] = t(
     "settingsPage.profileForm.InputFieldLabel",
     { returnObjects: true }
@@ -110,7 +114,7 @@ const Settings = () => {
   const [newPasswordType, setNewPasswordType] = useState("password");
 
   const togglePasswordTypeHandler = () => {
-    console.log("passowerd")
+    console.log("passowerd");
     if (passwordType == "string") {
       setPasswordType("password");
     } else {
@@ -118,7 +122,7 @@ const Settings = () => {
     }
   };
   const toggleNewPasswordTypeHandler = () => {
-    console.log('new password')
+    console.log("new password");
     if (newPasswordType == "string") {
       setNewPasswordType("password");
     } else {
@@ -151,6 +155,16 @@ const Settings = () => {
         timeOut: 3000,
       });
     }
+  };
+
+  const updatePasswordChecker = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // console.log(e.target.value);
+    const reee = await checkPassword(e.target.value, user?.id!);
+    console.log(reee);
+    if (reee) setPasswordCheck(true);
+    else setPasswordCheck(false);
   };
 
   return (
@@ -209,8 +223,8 @@ const Settings = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-type2 w-full gap-x-[20px] ">
-              <div className="flex-type2 gap-x-[10px] w-full">
+            <div className="flex w-full gap-x-[20px] items-center relative">
+              <div className="flex-type2 gap-x-[10px] w-full items-center">
                 <ReactHookFormInput
                   label={inputFieldLabels[0]}
                   name="first_name"
@@ -240,12 +254,29 @@ const Settings = () => {
                     passwordType === "string"
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
-                 
                 }}
-                onClick= {togglePasswordTypeHandler}
+                onClick={togglePasswordTypeHandler}
+                onChange={updatePasswordChecker}
                 // disabled={true}
                 // autoComplete="off"
               />
+              {!passwordCheck ? (
+                <div className="border border-red-600 block rounded-full absolute -right-7 bottom-[14px] flex items-center justify-center h-5 w-5">
+                  <FontAwesomeIcon
+                    icon={faX}
+                    size="xs"
+                    className="h-2 w-2 text-red-600"
+                  />
+                </div>
+              ) : (
+                <div className="border border-green-600 block rounded-full absolute -right-7 bottom-[14px] flex items-center justify-center h-5 w-5">
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size="xs"
+                    className="h-2 w-2 text-green-600"
+                  />
+                </div>
+              )}
             </div>
             <div className="flex-type2 w-full gap-x-[20px]">
               <ReactHookFormInput
@@ -268,9 +299,8 @@ const Settings = () => {
                     newPasswordType === "string"
                       ? "/eyeIconOpen.png"
                       : "/eyeIconClose.png",
-                 
                 }}
-                onClick={ toggleNewPasswordTypeHandler}
+                onClick={toggleNewPasswordTypeHandler}
                 autoComplete="new-password"
               />
             </div>
@@ -310,9 +340,7 @@ const Settings = () => {
                 name="is_notifications_enabled"
                 control={control}
                 defaultValue={user?.is_notifications_enabled!}
-
                 render={({ field: { onChange, value } }) => (
-                  
                   <ReactSwitch
                     onChange={onChange}
                     checked={value}
