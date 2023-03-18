@@ -48,7 +48,7 @@ const LogInComponent = (props: any) => {
     returnObjects: true,
   });
 
-  const { user, mutateUser } = useUser({ redirectIfFound: true });
+  const { user, mutateUser } = useUser();
   const {
     register,
     handleSubmit,
