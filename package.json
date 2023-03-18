@@ -6,7 +6,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "c4": "cross-env NEXT_PUBLIC_C4=true NODE_ENV=development next dev"
   },
   "dependencies": {
