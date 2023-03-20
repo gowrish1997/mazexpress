@@ -75,10 +75,16 @@ const ProfilePicPop = (props: IProp) => {
       // }
 
       axios
-        .post("http://localhost:5000/api/upload-user-image", formData, {
-          method: "POST",
-          headers: { "Content-Type": "multipart/form-data" },
-        })
+        .post(
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:5000/api/upload-user-image"
+            : "https://mazapi.easydesk.work/api/upload-user-image",
+          formData,
+          {
+            method: "POST",
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
         .then((response) => {
           if (response.data.ok === true) {
             createToast({
