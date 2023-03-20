@@ -10,6 +10,7 @@ import { IPageHeaderProp } from "@/models/pageHeader.interface";
 import useOrders from "@/lib/hooks/useOrders";
 import axios from "axios";
 import fetchJson from "@/lib/fetchServer";
+
 const adminOption = ["Move to Shipments"];
 
 const PendingPageHeader = (props: IPageHeaderProp) => {
@@ -25,20 +26,17 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
     const toggleMoveToShipmentHandler = () => {
         setShowMoveToShipmentConfirmModal((prev) => !prev);
     };
-
     const moveToShipmentsHandler = async () => {
+        console.log(props.selectedOrder);
         const result0_2 = await fetchJson(`/api/orders/bulk`, {
             method: "PUT",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
                 ids: props.selectedOrder,
-                status: "",
+                action: "moveto shipment",
             }),
         });
-
         console.log(result0_2);
-
-        // console.log(props.selectedOrder);
     };
 
     return (

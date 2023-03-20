@@ -25,10 +25,10 @@ const PendingOrders = () => {
 
   const { locales, locale: activeLocale } = router;
 
-    useEffect(() => {
-        console.log("use efft");
-        router.push(router.asPath, router.asPath, { locale: "en" });
-    }, []);
+  useEffect(() => {
+    // console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
 
   const [itemsPerPage, setItemPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
@@ -47,12 +47,12 @@ const PendingOrders = () => {
 
   const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
-    const currentPageHandler = (value: number) => {
-        setCurrentPage(value);
-    };
-    const itemPerPageHandler = useCallback((value: string | number) => {
-      setCurrentPage(0)
-      setItemPerPage(value as number);
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
+  };
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
+    setItemPerPage(value as number);
   }, []);
 
   const filterByCreatedDate = (value: Date | string) => {
@@ -112,11 +112,11 @@ const PendingOrders = () => {
 export default PendingOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
   if (process.env.NODE_ENV === "development") {
-      await i18n?.reloadResources();
+    await i18n?.reloadResources();
   }
   return {
-      props: {
-          ...(await serverSideTranslations(locale, ["common"])),
-      },
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
   };
 }
