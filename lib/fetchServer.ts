@@ -32,6 +32,8 @@ export default async function fetchJson<JSON = any>(
   } else if (process.env.NEXT_PUBLIC_C4) {
     // run code for frontend dev
     console.log("c4 fetch called");
+    console.log(process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST)
+    console.log(input)
     const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
