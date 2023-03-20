@@ -3,7 +3,13 @@
 //     co-author: raunak
 //==========================
 
-import React, { SyntheticEvent, useState, useRef, useEffect } from "react";
+import React, {
+  SyntheticEvent,
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+} from "react";
 import Image from "next/image";
 import newlogoBlue from "../public/new_logo_blue.png";
 import ShipmentCostCalculator from "@/components/LandingPage/ShipmentCostCalculator";
@@ -55,9 +61,20 @@ const Index = () => {
     setShowOptionModal((prev) => !prev);
   };
 
-  const trackingIdInputHandler = (e: SyntheticEvent) => {
-    setTrackingIdError(false);
-    setTrackingId((e.target as HTMLInputElement).value);
+  const trackingIdInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const isValidMazId = await fetchServer(`/api/orders/validate-maz-id`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ maz_id: e.target.value }),
+    });
+    console.log(isValidMazId);
+    if (isValidMazId) {
+      setTrackingId((e.target as HTMLInputElement).value);
+      setTrackingIdError(false);
+    } else {
+      setTrackingId("");
+      setTrackingIdError(true);
+    }
   };
 
   const trackingHandler = async () => {

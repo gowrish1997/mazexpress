@@ -8,6 +8,7 @@ import StatLineItem from "./StatLineItem";
 import AdminLineItem from "./AdminLineItem";
 import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
+import BlankPage from "@/components/admin/BlankPage";
 
 interface TableProps {
   headings: Array<string>;
@@ -82,7 +83,6 @@ const Table = (props: TableProps) => {
                       row={data as User}
                       type={props.type}
                       onSelect={props.onSelect!}
-                      
                     />
                   );
                 } else if (props.type == "admin_base") {
@@ -107,6 +107,7 @@ const Table = (props: TableProps) => {
               })
             : null}
         </tbody>
+        {props.rows && props.rows.length == 0 && <div className="w-full h-full"><BlankPage /></div>}
       </table>
       {/* )} */}
     </div>
