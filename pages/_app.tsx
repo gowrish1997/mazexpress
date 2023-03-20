@@ -60,7 +60,7 @@ function App({
                 }}
             >
                 <Component {...pageProps} />
-                {/* <NotificationContainer /> */}
+                <NotificationContainer />
             </SWRConfig>
         );
     }
@@ -81,7 +81,7 @@ function App({
         >
             <Frame>
                 <Component {...pageProps} />
-                {/* <NotificationContainer /> */}
+                <NotificationContainer />
             </Frame>
         </SWRConfig>
     );

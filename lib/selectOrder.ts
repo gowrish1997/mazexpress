@@ -10,9 +10,9 @@ export const selectOrder = (
     if (value) {
       const order = filteredLiveOrders?.map((el: any) => {
         if (el.id) {
-          return el.id;
+          return el;
         } else {
-          return el.id;
+          return el;
         }
       });
       setSelectedOrder(order);
@@ -20,6 +20,7 @@ export const selectOrder = (
       setSelectedOrder([]);
     }
   } else {
+    console.log(value)
     const order = selectedOrder?.find((el: any) => el == value);
 
     if (!order) {

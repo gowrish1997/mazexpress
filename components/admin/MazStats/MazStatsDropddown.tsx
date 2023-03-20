@@ -9,7 +9,7 @@ interface IProp {
   header?: string;
   itemPerPage?:number
   className?: string;
-  selection: (string | number)[];
+  selection?: (string | number)[];
 }
 
 const MazStatsDropddown = (props: IProp) => {
@@ -62,7 +62,7 @@ const MazStatsDropddown = (props: IProp) => {
                 >
                   {data.label}
                 </button>
-                {props.selection.includes(data.value) ? (
+                {props.selection?.includes(data.value) ? (
                   <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#35C6F4] " />
                 ) : (
                   <></>

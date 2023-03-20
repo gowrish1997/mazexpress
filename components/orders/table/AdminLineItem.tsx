@@ -13,7 +13,7 @@ interface IProp {
     row: User;
     type: string;
     onSelect: (e: any, type: string) => void;
-    selectedOrder: string[];
+    selectedOrder?: any;
 }
 
 const AdminLineItem = (props: IProp) => {
@@ -44,7 +44,7 @@ const AdminLineItem = (props: IProp) => {
     };
 
     const inputCheckedStateHandler = () => {
-        const data = props?.selectedOrder?.find((el) => {
+        const data = props?.selectedOrder?.find((el:any) => {
             return el == props.row.id;
         });
         if (data) {

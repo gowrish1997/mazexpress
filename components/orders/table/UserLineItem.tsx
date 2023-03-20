@@ -12,7 +12,7 @@ interface IProp {
   row: User;
   type: string;
   onSelect: (e: any, type: string) => void;
-  selectedOrder: string[];
+
 }
 
 const UserLineItem = (props: IProp) => {

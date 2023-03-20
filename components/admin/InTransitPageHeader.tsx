@@ -103,7 +103,7 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                             option={adminOption}
                             toggle={toggleIntransitChangeStatusConfirmModal}
                             disabled={!props.selectedOrder?.length}
-                            orders={props.selectedOrder}
+                            orders={props.selectedOrder!}
                             type={props.content}
                         />
                     </div>
@@ -116,12 +116,12 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                 total={props.selectedOrder?.length!}
                 confirm={inTransitChangeStatusHandler}
             />
-            <CommentModal
+            {/* <CommentModal
                 close={closeAddCommentModal}
                 show={showAddCommentModal}
                 total={props.selectedOrder!}
                 confirm={addCommentHandler}
-            />
+            /> */}
         </>
     );
 };

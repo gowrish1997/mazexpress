@@ -14,7 +14,7 @@ interface TableProps {
   rows: Array<Order> | Array<User>;
   type: string;
   onSelect?: (e: any, type: string) => void;
-  selectedOrder?: string[] | number[];
+  selectedOrder?: Order[];
 }
 
 const Table = (props: TableProps) => {
@@ -63,7 +63,7 @@ const Table = (props: TableProps) => {
                       onSelect={props.onSelect!}
                       row={data as Order}
                       type={props.type}
-                      selectedOrder={props.selectedOrder as string[]}
+                      selectedOrder={props.selectedOrder as Order[]}
                     />
                   );
                 } else if (props.type == "stat_table") {
@@ -82,7 +82,7 @@ const Table = (props: TableProps) => {
                       row={data as User}
                       type={props.type}
                       onSelect={props.onSelect!}
-                      selectedOrder={props.selectedOrder as string[]}
+                      
                     />
                   );
                 } else if (props.type == "admin_base") {
@@ -92,7 +92,7 @@ const Table = (props: TableProps) => {
                       row={data as User}
                       type={props.type}
                       onSelect={props.onSelect!}
-                      selectedOrder={props.selectedOrder as string[]}
+                      selectedOrder={props.selectedOrder as Order[]}
                     />
                   );
                 } else {
