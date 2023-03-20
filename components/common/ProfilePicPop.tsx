@@ -77,6 +77,7 @@ const ProfilePicPop = (props: IProp) => {
       axios
         .post("https://mazapi.easydesk.work/api/upload-user-image", formData, {
           method: "POST",
+          headers: { "Content-Type": "multipart/form-data" },
         })
         .then((response) => {
           if (response.data.ok === true) {
