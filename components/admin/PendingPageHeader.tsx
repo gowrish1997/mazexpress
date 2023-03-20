@@ -8,8 +8,9 @@ import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
 import useOrders from "@/lib/hooks/useOrders";
-
-const adminOption = ["Move to Shipments,View Order"];
+import axios from "axios";
+import fetchJson from "@/lib/fetchServer";
+const adminOption = ["Move to Shipments"];
 
 const PendingPageHeader = (props: IPageHeaderProp) => {
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
@@ -25,8 +26,19 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
         setShowMoveToShipmentConfirmModal((prev) => !prev);
     };
 
-    const moveToShipmentsHandler = () => {
-        console.log(props.selectedOrder);
+    const moveToShipmentsHandler = async () => {
+        const result0_2 = await fetchJson(`/api/orders/bulk`, {
+            method: "PUT",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                ids: props.selectedOrder,
+                status: "",
+            }),
+        });
+
+        console.log(result0_2);
+
+        // console.log(props.selectedOrder);
     };
 
     return (
