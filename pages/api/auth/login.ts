@@ -22,7 +22,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     });
     // console.log('valid user', validUser) // validUser.data => object[]
 
-    console.log('session from login', req.session.users)
+    // console.log('session from login', req.session.users)
     if (validUser.data && req.session.users && req.session.users.length > 0) {
       req.session.users = [...req.session.users, validUser.data[0] as User];
       await req.session.save();
