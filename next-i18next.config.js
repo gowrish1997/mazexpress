@@ -7,4 +7,11 @@ module.exports = {
     localeDetection: false,
     // localePath: path.resolve("./public/locales"),
   },
+  // localePath: path.resolve("./public/locales"),
+  // detection: {
+  //   order: ["cookie", "header"],
+  //   caches: ["cookie"],
+  //   cookieKey: "i18n_redirected",
+  // },
 };
+

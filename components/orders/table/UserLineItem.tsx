@@ -13,7 +13,7 @@ interface IProp {
   row: User;
   type: string;
   onSelect: (e: any, type: string) => void;
-  selectedOrder: string[];
+
 }
 
 const UserLineItem = (props: IProp) => {
@@ -66,7 +66,7 @@ const UserLineItem = (props: IProp) => {
             (props.row as User)?.last_name}
         </span>
       </td>
-      <td className={`td2 text-[#3672DF]`}>{props.row.email}</td>
+      <td className={`td2 text-[#35C6F4]`}>{props.row.email}</td>
       <td className={`td3`}>{props.row.phone}</td>
       <td className={`td4`}>{getDateInStringFormat(props.row.created_on)}</td>
       <td className={`td5 `} style={{}}>

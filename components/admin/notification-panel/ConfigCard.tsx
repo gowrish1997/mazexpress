@@ -33,7 +33,7 @@ const ConfigCard = (props: IProp) => {
             handleDiameter={10}
             height={13}
             width={22}
-            onColor={"#3672DF"}
+            onColor={"#35C6F4"}
             offColor={"#BBC2CF"}
             offHandleColor={"#fff"}
             //   className={props.data.is_enabled ? "blue_border":"gray_border"}

@@ -69,7 +69,7 @@ const WarehouseCard = (props: { address: Warehouse }) => {
             </div>
 
             <div
-                className="flex justify-end text-[12px] text-[#3672DF] font-[500] leading-[17px] space-x-[5px] mt-[15px] cursor-pointer "
+                className="flex justify-end text-[12px] text-[#35C6F4] font-[500] leading-[17px] space-x-[5px] mt-[15px] cursor-pointer "
                 onClick={copyToClipboard}
             >
                 <Image src="/copy.png" alt="copy" height={12} width={12} />

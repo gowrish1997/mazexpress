@@ -48,9 +48,9 @@ export default function useUsers(props: IProps) {
       queryString += `&gender=${props.gender}`;
     }
   } else {
-    // return all order count
+    // return all order countord
     queryString += "?count=all";
-    if (true) {
+    if (props.is_admin==true) {
       queryString += "&admin=true";
     } else {
       queryString += "&admin=false";

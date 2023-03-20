@@ -102,7 +102,7 @@ const EditHelpModal = (props: IProp) => {
               id="name_warehouse"
               type="string"
               {...register("name_warehouse")}
-              className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
+              className="w-full h-[46px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give first title @Home"
             />
             <ReactHookFormInput
@@ -133,7 +133,7 @@ const EditHelpModal = (props: IProp) => {
 
             <div className="flex-type1 space-x-[10px] mt-[5px] ">
               <button
-                className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"
+                className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
                 type="submit"
               >
                 Add to warehouse

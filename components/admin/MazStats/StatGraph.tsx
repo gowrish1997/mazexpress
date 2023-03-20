@@ -158,13 +158,13 @@ export const data = {
       label: "Orders",
       lineTension: 0.3,
       data: [33, 25, 35, 51, 3000, 76, 40, 33, 25, 35, 51, 54, 76],
-      borderColor: "#3672DF",
+      borderColor: "#35C6F4",
       fill: {
         target: "origin",
         above: "#DFE7FF80", // Area will be red above the origin
         // And blue below the origin
       },
-      backgroundColor: "#3672DF",
+      backgroundColor: "#35C6F4",
       yAxisID: "y1",
       xAxisID: "x1",
     },

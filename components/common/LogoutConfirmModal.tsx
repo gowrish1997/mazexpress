@@ -24,7 +24,7 @@ const LogoutConfirmModal = (props: IProp) => {
             <div>{content[0]}</div>
             <div className="flex flex-row justify-end items-center w-full space-x-[10px] ">
               <button
-                className="w-[120px] h-[42px] border-[1px] border-[#ececec] rounded-[4px] font-[400] text-[14px] leading-[19px] text-[#ffffff] bg-[#3672DF] text-center ml-[5px] "
+                className="w-[120px] h-[42px] border-[1px] border-[#ececec] rounded-[4px] font-[400] text-[14px] leading-[19px] text-[#ffffff] bg-[#35C6F4] text-center ml-[5px] "
                 onClick={() => props.confirm()}
               >
                 {content[1]}

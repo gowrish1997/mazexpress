@@ -149,7 +149,7 @@ const EditUserAddressModal = (props: IProp) => {
               id="title"
               type="string"
               {...register("tag")}
-              className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
+              className="w-full h-[46px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none"
               placeholder={inputFieldLabels[0]}
             />
             {errors.tag && (
@@ -236,7 +236,7 @@ const EditUserAddressModal = (props: IProp) => {
           </div>
           <div className="flex-type1 space-x-[10px] mt-[5px] ">
             <button
-              className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"
+              className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
               type="submit"
             >
               {t("addNewOrderPage.editAddressForm.SubmitButton")}

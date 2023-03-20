@@ -50,15 +50,7 @@ const nextConfig = {
       
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/:locale/track",
-        destination: "/:locale/orders",
-        permanent: true,
-      },
-    ];
-  },
+  
 };
 module.exports = nextConfig;
 // export default nextConfig;

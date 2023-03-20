@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../../public/logo.png";
+import Logo from "../../../public/new_logo_blue.png";
 
 const Header = () => {
   const [imageError, setImageError] = useState(false);
@@ -9,11 +9,11 @@ const Header = () => {
     <div className="px-6 py-6">
       <div className="flex items-center">
         <Link href={"/"} passHref>
-          <div className="flex items-center cursor-pointer">
-            <div className="relative w-[47px] h-[47px]">
+          <div className="flex items-center cursor-pointer pl-[10px]">
+            <div className="relative w-[60px] h-[60px]  ">
               <Image
                 priority={true}
-                src={logo}
+                src={Logo}
                 fill
                 style={{ objectFit: "contain" }}
                 alt="logo"

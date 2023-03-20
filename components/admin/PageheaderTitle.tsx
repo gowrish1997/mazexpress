@@ -59,7 +59,7 @@ const PageheaderTitle = (props: IProp) => {
               alt="button"
             />
           </div>
-          <span className="box-border font-[500] text-[16px] leading-[22.4px] text-[#3672DF] text-center">
+          <span className="box-border font-[500] text-[16px] leading-[22.4px] text-[#35C6F4] text-center">
             {filterDate
               ? getDateInStringFormat(filterDate as Date)
               : "No date selected"}

@@ -15,6 +15,7 @@ interface IProps {
   row: Order | User;
   type: string;
   stage?: number;
+  click?:()=>void
 }
 export type Ref = HTMLDivElement;
 
@@ -409,6 +410,14 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                 </span>
               </div>
             </li>
+            <li
+                className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"
+                onClick={props.click}
+              >
+                <div className="cursor-pointer">
+                  <span className="w-full ">View Order</span>
+                </div>
+              </li>
             {/* {props.type == "in-transit" && (
               <li
                 className="hover:bg-[#EDF5F9] w-full rounded-[4px] px-[5px]"

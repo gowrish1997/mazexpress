@@ -43,7 +43,7 @@ const Shipments = () => {
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
 
-  const [selectedOrder, setSelectedOrder] = useState<string[]>();
+  const [selectedOrder, setSelectedOrder] = useState<Order[]>();
 
   const pageCount = Math.ceil((orders as Order[])?.length! / itemsPerPage);
 

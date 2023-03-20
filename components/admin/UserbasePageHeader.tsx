@@ -11,6 +11,7 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import { User } from "@/models/user.model";
+import useUsers from "@/lib/hooks/useUsers";
 interface IProp {
     content: string;
     title?: string;
@@ -26,7 +27,6 @@ interface IProp {
 }
 
 const UserbasePageHeader = (props: IProp) => {
-
     const perPageOptions = perPageOptinsList();
     const [
         showSendNotificatoinConfirmModal,
@@ -97,13 +97,13 @@ const UserbasePageHeader = (props: IProp) => {
                     </div>
                 )}
             </div>
-            {
-              showRemoveAdminConfirmModal &&  <RemoveAdminConfirmModal
+            {showRemoveAdminConfirmModal && (
+                <RemoveAdminConfirmModal
                     close={toggleRemoveAdminConfirmModal}
                     total={props.selectedUser?.length!}
                     confirm={removeAdmins}
                 />
-            }
+            )}
             {/* <SendNotificatonConfirmModal
                 close={toggleSendNotificatoinConfirmModal}
                 show={showSendNotificatoinConfirmModal}
