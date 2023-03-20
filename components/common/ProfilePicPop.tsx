@@ -16,6 +16,7 @@ import { createToast } from "@/lib/toasts";
 interface IProp {
   show: boolean;
   close: (e: any) => void;
+  update: () => void
 }
 
 const ProfilePicPop = (props: IProp) => {
@@ -45,10 +46,10 @@ const ProfilePicPop = (props: IProp) => {
   };
 
   const updateUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-
+    // e.preventDefault();
+    console.log(e.target.files);
     if (e.target.files) {
-      const formData = new FormData();
+      let formData = new FormData();
 
       // rename to unique name
       const fileName =
@@ -56,26 +57,33 @@ const ProfilePicPop = (props: IProp) => {
 
       formData.append("name", fileName);
       formData.append("user", user?.id as string);
-      formData.append("image", e.target.files[0]);
+      formData.append("image", e.target.files[0], fileName);
 
+      // console.log(formData.entries());
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}, ${pair[1]}`);
+      }
       // send file to api to write
       const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
         method: "POST",
         body: formData,
-        headers: {"Content-Type": "multipart/form-data"}
+        
       });
 
-      if(imageUploadResult.ok === true){
+      if (imageUploadResult.ok === true) {
         createToast({
           type: "success",
           message: "Image uploaded",
           title: "Success",
-          timeOut: 1000
-        })
-        props.close(e)
+          timeOut: 1000,
+        });
+        props.close(e);
+        props.update()
       }
     }
   };
+
+  console.log(user?.avatar_url)
   return (
     <>
       {props.show && (
@@ -102,7 +110,7 @@ const ProfilePicPop = (props: IProp) => {
             </div>
             <div className="w-[300px] h-[300px] relative rounded-full overflow-hidden self-center">
               <Image
-                src={getUserImageString(user?.avatar_url)}
+                src={user?.avatar_url || '/user-images/default_user.png'}
                 alt="profile"
                 fill
                 style={{ objectFit: "cover" }}
