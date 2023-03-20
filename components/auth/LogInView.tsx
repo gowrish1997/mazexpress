@@ -6,7 +6,6 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import { createToast } from "@/lib/toasts";
 import Image from "next/dist/client/image";
-import google_logo from "@/public/google.png";
 import useUser from "@/lib/hooks/useUser";
 import fetchSelf, { FetchError } from "@/lib/fetchSelf";
 import { useTranslation } from "next-i18next";
@@ -68,23 +67,16 @@ const LogInComponent = (props: any) => {
       console.log(response);
       // console.log(response);
 
-      if (response.data) {
+      if (response.data && response.data.length > 0) {
         // console.log(response.data);
-        if (response.data.is_admin) {
+        await mutateUser(response.data?.[0], false);
+        if (response.data?.[0].is_admin) {
           router.push("/admin");
         } else {
           router.push("/");
         }
-        // setTimeout(() => {
-        // }, 800);
-        // createToast({
-        //   type: "success",
-        //   message: `You are now logged in ${response.data.first_name} ${response.data.last_name}`,
-        //   title: "Success",
-        //   timeOut: 1000,
-        // });
+        
 
-        await mutateUser(response.data, false);
       } else {
         createToast({
           type: "error",
@@ -118,9 +110,9 @@ const LogInComponent = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    console.log(googleStatus);
-  }, [googleStatus]);
+  // useEffect(() => {
+  //   console.log(googleStatus);
+  // }, [googleStatus]);
 
   return (
     <div
