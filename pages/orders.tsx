@@ -48,9 +48,9 @@ const MyOrders = () => {
   const addNewOrderHandler = () => {
     router.push(`/add-new-order`);
   };
-  // if (ordersIsLoading) {
-  //     return <LoadingPage />;
-  // }
+  if (ordersIsLoading) {
+      return <LoadingPage />;
+  }
 
   if (ordersError) throw ordersError;
   return (

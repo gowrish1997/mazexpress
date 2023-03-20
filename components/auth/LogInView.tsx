@@ -64,7 +64,7 @@ const LogInComponent = (props: any) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      console.log(response);
+      console.log(response.data);
       // console.log(response);
 
       if (response.data && response.data.length > 0) {

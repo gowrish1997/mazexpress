@@ -1,8 +1,6 @@
 //==========================
-//     co-author: raunak
-//     co-author: gowrish
+//     written by: raunak
 //==========================
-
 
 // /middleware.ts
 import { NextResponse } from "next/server";
@@ -14,14 +12,38 @@ export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
   const session = await getIronSession(req, res, sessionOptions);
 
-  console.log("from middleware", session);
-  
+  // console.log("from middleware", session);
+
   // console.log(session.users?.[0].lang)
   // add redirect to correct locale here...
-  
-  // console.log(session.users?.[0].lang)
-  // add restrictions to users for admin routes
 
+  // add restrictions to users for admin routes
+  if (session.users && session.users.length > 0) {
+    // user is present do not allow login page
+    if (req.nextUrl.pathname.startsWith("/auth")) {
+      return NextResponse.redirect(new URL("/", req.url), {
+        statusText: "Unauthorized.",
+      });
+    }
+
+    // comment to let user on all routes
+    if (!session.users[0].is_admin) {
+      if (req.nextUrl.pathname.startsWith("/admin")) {
+        return NextResponse.redirect(new URL("/", req.url), {
+          statusText: "Unauthorized.",
+        });
+      }
+    }
+
+    // comment to let admin on all routes
+    if (session.users[0].is_admin) {
+      if (!req.nextUrl.pathname.startsWith("/admin")) {
+        return NextResponse.redirect(new URL("/admin", req.url), {
+          statusText: "Unauthorized.",
+        });
+      }
+    }
+  }
 
   // demo:
   if (!session.users) {
@@ -53,4 +75,3 @@ export const config = {
     // "/((?!.*).*)",
   ],
 };
-
