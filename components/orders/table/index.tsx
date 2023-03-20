@@ -10,115 +10,107 @@ import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
 
 interface TableProps {
-    headings: Array<string>;
-    rows: Array<Order> | Array<User>;
-    type: string;
-    onSelect?: (e: any, type: string) => void;
-    selectedOrder?: string[] | number[];
+  headings: Array<string>;
+  rows: Array<Order> | Array<User>;
+  type: string;
+  onSelect?: (e: any, type: string) => void;
+  selectedOrder?: string[] | number[];
 }
 
 const Table = (props: TableProps) => {
-    const tableClassNameHandler = () => {
-        if (
-            props.type == "live_order" ||
-            props.type == "pending" ||
-            props.type == "shipments" ||
-            props.type == "delivered" ||
-            props.type == "in-transit"
-        ) {
-            return "live_order_table";
-        } else if (props.type == "user_base") {
-            return "user_table";
-        } else if (props.type == "admin_base") {
-            return "admin_table";
-        } else if (props.type == "stat_table") {
-            return "stat_table";
-        } else {
-            return "order_table";
-        }
-    };
+  const tableClassNameHandler = () => {
+    if (
+      props.type == "live_order" ||
+      props.type == "pending" ||
+      props.type == "shipments" ||
+      props.type == "delivered" ||
+      props.type == "in-transit"
+    ) {
+      return "live_order_table";
+    } else if (props.type == "user_base") {
+      return "user_table";
+    } else if (props.type == "admin_base") {
+      return "admin_table";
+    } else if (props.type == "stat_table") {
+      return "stat_table";
+    } else {
+      return "order_table";
+    }
+  };
 
-    return (
-        <div className="flex-1 relative">
-            {/* {props.rows  && ( */}
-                <table className={tableClassNameHandler()}>
-                    <TableHeader
-                        type={props.type}
-                        headings={props.headings}
-                        onSelect={props.onSelect!}
+  return (
+    <div className="flex-1 relative">
+      {/* {props.rows  && ( */}
+      <table className={tableClassNameHandler()}>
+        <TableHeader
+          type={props.type}
+          headings={props.headings}
+          onSelect={props.onSelect!}
+        />
+        <tbody className="">
+          {props.rows && props.rows.length > 0
+            ? props.rows.map((data, index) => {
+                if (
+                  props.type == "live_order" ||
+                  props.type == "pending" ||
+                  props.type == "shipments" ||
+                  props.type == "delivered" ||
+                  props.type == "in-transit"
+                ) {
+                  return (
+                    <LiveOrderLineItem
+                      key={nanoid()}
+                      onSelect={props.onSelect!}
+                      row={data as Order}
+                      type={props.type}
+                      selectedOrder={props.selectedOrder as string[]}
                     />
-                    <tbody className="">
-                        {props.rows && props.rows.length > 0
-                            ? props.rows.map((data, index) => {
-                                  if (
-                                      props.type == "live_order" ||
-                                      props.type == "pending" ||
-                                      props.type == "shipments" ||
-                                      props.type == "delivered" ||
-                                      props.type == "in-transit"
-                                  ) {
-                                      return (
-                                          <LiveOrderLineItem
-                                              key={nanoid()}
-                                              onSelect={props.onSelect!}
-                                              row={data as Order}
-                                              type={props.type}
-                                              selectedOrder={
-                                                  props.selectedOrder as string[]
-                                              }
-                                          />
-                                      );
-                                  } else if (props.type == "stat_table") {
-                                      return (
-                                          <StatLineItem
-                                              key={nanoid()}
-                                              onSelect={props.onSelect!}
-                                              row={data as Order}
-                                              type={props.type}
-                                          />
-                                      );
-                                  } else if (props.type == "user_base") {
-                                      return (
-                                          <UserLineItem
-                                              key={nanoid()}
-                                              row={data as User}
-                                              type={props.type}
-                                              onSelect={props.onSelect!}
-                                              selectedOrder={
-                                                  props.selectedOrder as string[]
-                                              }
-                                          />
-                                      );
-                                  }
-                                  else if (props.type == "admin_base") {
-                                    return (
-                                        <AdminLineItem
-                                            key={nanoid()}
-                                            row={data as User}
-                                            type={props.type}
-                                            onSelect={props.onSelect!}
-                                            selectedOrder={
-                                                props.selectedOrder as string[]
-                                            }
-                                        />
-                                    );
-                                }
-                                 else {
-                                      return (
-                                          <LineItem
-                                              key={nanoid()}
-                                              row={data as Order}
-                                              type={props.type}
-                                          />
-                                      );
-                                  }
-                              })
-                            : null}
-                    </tbody>
-                </table>
-            {/* )} */}
-        </div>
-    );
+                  );
+                } else if (props.type == "stat_table") {
+                  return (
+                    <StatLineItem
+                      key={nanoid()}
+                      onSelect={props.onSelect!}
+                      row={data as Order}
+                      type={props.type}
+                    />
+                  );
+                } else if (props.type == "user_base") {
+                  return (
+                    <UserLineItem
+                      key={nanoid()}
+                      row={data as User}
+                      type={props.type}
+                      onSelect={props.onSelect!}
+                      selectedOrder={props.selectedOrder as string[]}
+                    />
+                  );
+                } else if (props.type == "admin_base") {
+                  return (
+                    <AdminLineItem
+                      key={nanoid()}
+                      row={data as User}
+                      type={props.type}
+                      onSelect={props.onSelect!}
+                      selectedOrder={props.selectedOrder as string[]}
+                    />
+                  );
+                } else {
+                  return (
+                    <LineItem
+                      key={nanoid()}
+                      row={data as Order}
+                      type={props.type}
+                    />
+                  );
+                }
+              })
+            : null}
+        </tbody>
+      </table>
+      {/* )} */}
+    </div>
+  );
 };
 
 export default React.memo(Table);

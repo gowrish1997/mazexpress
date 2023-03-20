@@ -7,7 +7,7 @@ import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
 import ReactPaginateComponent from "./ReactPaginate";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
-
+import fetchJson from "@/lib/fetchServer";
 
 const adminOption = ["Move to Shipments"];
 
@@ -20,8 +20,17 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
     setShowMoveToShipmentConfirmModal((prev) => !prev);
   };
 
-  const moveToShipmentsHandler = () => {
+  const moveToShipmentsHandler = async () => {
     console.log(props.selectedOrder);
+    const result0_2 = await fetchJson(`/api/orders/bulk`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        ids: props.selectedOrder,
+        action: "moveto shipment",
+      }),
+    });
+    console.log(result0_2);
   };
 
   return (
