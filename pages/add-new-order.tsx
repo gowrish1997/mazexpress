@@ -157,7 +157,7 @@ const AddNewOrder = () => {
                     />
                     <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
                         {t("addNewOrderPage.LinkPPart1")}
-                        <span className="text-[#3672DF]">
+                        <span className="text-[#35C6F4]">
                             {t("addNewOrderPage.LinkPPart2")}
                         </span>
                     </p>
@@ -182,7 +182,7 @@ const AddNewOrder = () => {
                     <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px]">
                         {t("addNewOrderPage.addressBook.Title")}
                         <span
-                            className="text-[#3672DF] mx-[10px] cursor-pointer hover:bg-[#EDF5F9] p-[5px] rounded-[4px]  "
+                            className="text-[#35C6F4] mx-[10px] cursor-pointer hover:bg-[#EDF5F9] p-[5px] rounded-[4px]  "
                             onClick={toggleAddNewAddressModal}
                         >
                             {t("addNewOrderPage.addressBook.AddButton")}
@@ -207,7 +207,7 @@ const AddNewOrder = () => {
                         })}
                 </div>
                 <button
-                    className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"
+                    className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
                     type="submit"
                 >
                     {t("addNewOrderPage.SubmitButton")}

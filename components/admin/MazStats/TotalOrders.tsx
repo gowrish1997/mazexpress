@@ -98,7 +98,7 @@ const TotalOrders = () => {
             onClick={toggleCalendar}
             style={
               showCalendar
-                ? { backgroundColor: "#3672DF", color: "#FFFFFF" }
+                ? { backgroundColor: "#35C6F4", color: "#FFFFFF" }
                 : {}
             }
             ref={trigger}

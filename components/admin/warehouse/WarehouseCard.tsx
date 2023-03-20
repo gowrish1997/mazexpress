@@ -75,7 +75,7 @@ const WarehouseCard = (props: { address: Warehouse; update: () => void }) => {
                 </div>
             </div>
 
-            <div className="text-[12px] text-[#3672DF] font-[500] leading-[17px] flex justify-end flex-1 grow">
+            <div className="text-[12px] text-[#35C6F4] font-[500] leading-[17px] flex justify-end flex-1 grow">
                 <div className="space-x-[20px] flex items-end  ">
                     <button className="hover:font-[600] ">Edit</button>
                     <button

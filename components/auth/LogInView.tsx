@@ -169,7 +169,7 @@ const LogInComponent = (props: any) => {
           // error={errors.password?.message && inputFieldErrors[1]}
         />
         <button
-          className="text-[14px] text-[#3672DF] font-[500] leading-[13px] cursor-pointer"
+          className="text-[14px] text-[#35C6F4] font-[500] leading-[13px] cursor-pointer"
           onClick={() => props.switch(2)}
         >
           {inputFieldLabel[2]}
@@ -177,7 +177,7 @@ const LogInComponent = (props: any) => {
         <div className="flex flex-col items-center w-full space-x-[10px]">
           <button
             type="submit"
-            className="w-full h-[40px] py-[2px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px]"
+            className="w-full h-[40px] py-[2px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px]"
           >
             {submitButtons[0]}
           </button>

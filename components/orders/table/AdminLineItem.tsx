@@ -14,7 +14,7 @@ interface IProp {
     row: User;
     type: string;
     onSelect: (e: any, type: string) => void;
-    selectedOrder: string[];
+    selectedOrder?: any;
 }
 
 const AdminLineItem = (props: IProp) => {
@@ -46,7 +46,7 @@ const AdminLineItem = (props: IProp) => {
     };
 
     const inputCheckedStateHandler = () => {
-        const data = props?.selectedOrder?.find((el) => {
+        const data = props?.selectedOrder?.find((el:any) => {
             return el == props.row.id;
         });
         if (data) {
@@ -102,7 +102,7 @@ const AdminLineItem = (props: IProp) => {
                         (props.row as User)?.last_name}
                 </span>
             </td>
-            <td className={`td2 text-[#3672DF]`}>{props.row.email}</td>
+            <td className={`td2 text-[#35C6F4]`}>{props.row.email}</td>
             <td className={`td3`}>{props.row.phone}</td>
             <td className={`td4`}>
                 {getDateInStringFormat(props.row.created_on)}

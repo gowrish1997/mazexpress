@@ -30,10 +30,10 @@ const UserBase = () => {
     const router = useRouter();
     const { locales, locale: activeLocale } = router;
 
-    useEffect(() => {
-        console.log("use efft");
-        router.push(router.asPath, router.asPath, { locale: "en" });
-    }, []);
+    // useEffect(() => {
+    //     console.log("use efft");
+    //     router.push(router.asPath, router.asPath, { locale: "en" });
+    // }, []);
 
     const { searchKey } = React.useContext(
         SearchKeyContext

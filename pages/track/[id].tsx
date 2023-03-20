@@ -66,7 +66,7 @@ const TrackOrder = (props: any) => {
               />
               <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
                 {t("trackingView.LinkPPart1")}{" "}
-                <span className="text-[#3672DF]">
+                <span className="text-[#35C6F4]">
                   {t("trackingView.LinkPPart2")}
                 </span>
               </p>

@@ -18,7 +18,7 @@ const StatLiveOrdres = () => {
           Live Orders
         </p>
         <Link href="/admin/live-orders">
-          <p className="text-[12px] text-[#3672DF] font-[500] leading-[21px] cursor-pointer">{`See All Live Orders >`}</p>
+          <p className="text-[12px] text-[#35C6F4] font-[500] leading-[21px] cursor-pointer">{`See All Live Orders >`}</p>
         </Link>
       </div>
       {orders && (

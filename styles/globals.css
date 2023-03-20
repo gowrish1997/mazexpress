@@ -995,11 +995,11 @@ option {
 }
 
 .shcedule_shipment_calender .react-calendar__tile:enabled:focus {
-    background-color: #3672df;
+    background-color: #35C6F4;
     border-radius: 100%;
 }
 .react-calendar__tile--now {
-    background: #3672df;
+    background: #35C6F4;
     border-radius: 100%;
     color: #ffffff;
 }
@@ -1018,7 +1018,7 @@ option {
 }
 
 .react-calendar__tile--now:enabled:focus {
-    background: #3672df;
+    background: #35C6F4;
 }
 .react-calendar__tile--hasActive {
     background: #76baff;
@@ -1106,7 +1106,7 @@ abbr:where([title]) {
     border: 1px solid #bbc2cf;
 }
 .blue_border {
-    border: 1px solid #3672df;
+    border: 1px solid #35C6F4;
 }
 .Inter {
     font-family: "Inter" !;
@@ -1145,7 +1145,7 @@ input[type="checkbox"]:disabled {
     visibility: hidden;
 }
 .prev-page-item:hover {
-    color: #3672df;
+    color: #35C6F4;
 }
 .next-page-item,
 .next-page-link {
@@ -1157,10 +1157,10 @@ input[type="checkbox"]:disabled {
 }
 
 .next-page-item:hover {
-    color: #3672df;
+    color: #35C6F4;
 }
 .active {
-    background-color: #3672df;
+    background-color: #35C6F4;
     border: none;
 }
 
@@ -1170,7 +1170,7 @@ input[type="checkbox"]:disabled {
     height: 5px;
 }
 .barCompleted {
-    background: #3672df;
+    background: #35C6F4;
     border-radius: 71.5px;
     height: 5px;
 }
@@ -1189,7 +1189,7 @@ input[type="string"]:disabled {
 }
 
 .slimScrollBar::-webkit-scrollbar-thumb {
-    background-color: #3672df;
+    background-color: #35C6F4;
     /* outline: 1px solid slategrey; */
     border-radius: 10px;
     position: absolute;

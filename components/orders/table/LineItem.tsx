@@ -85,7 +85,7 @@ const LineItem = (props: IProp) => {
   return (
     <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
       <td className={`td1`}>{props.row.maz_id}</td>
-      <td className={`td2 text-[#3672DF]`}>{props.row.store_link}</td>
+      <td className={`td2 text-[#35C6F4]`}>{props.row.store_link}</td>
       <td className={`td3`}>{props.row.reference_id}</td>
       <td className={`td4`}>{estDelivery}</td>
       <td className={`td5 `} style={{}}>

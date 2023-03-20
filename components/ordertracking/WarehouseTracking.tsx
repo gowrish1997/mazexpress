@@ -20,7 +20,7 @@ const WarehouseTracking = (props: { packageStatus: number }) => {
           <div
             className="h-[10px] w-[10px]  rounded-[50%] bg-[#A9A9A9]"
             style={
-              props.packageStatus >= 2 ? { backgroundColor: "#3672DF" } : {}
+              props.packageStatus >= 2 ? { backgroundColor: "#35C6F4" } : {}
             }
           />
           <div
@@ -36,7 +36,7 @@ const WarehouseTracking = (props: { packageStatus: number }) => {
           <div
             className="h-[10px] w-[10px] rounded-[50%] bg-[#A9A9A9]"
             style={
-              props.packageStatus >= 3 ? { backgroundColor: "#3672DF" } : {}
+              props.packageStatus >= 3 ? { backgroundColor: "#35C6F4" } : {}
             }
           />
           <div
@@ -50,7 +50,7 @@ const WarehouseTracking = (props: { packageStatus: number }) => {
       <div className="flex-type2">
         <div
           className="h-[10px] w-[10px] rounded-[50%] bg-[#A9A9A9]"
-          style={props.packageStatus >= 4 ? { backgroundColor: "#3672DF" } : {}}
+          style={props.packageStatus >= 4 ? { backgroundColor: "#35C6F4" } : {}}
         />
 
         <p className="flex-1 mx-[10px]  -mt-[4px] ">{warehouseStatus[2]}</p>

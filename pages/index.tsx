@@ -44,6 +44,7 @@ const Index = () => {
     useState(false);
 
   useEffect(() => {
+    document.cookie = `NEXT_LOCALE=${router.locale};path=/`;
     let dir = router.locale == "ar" ? "rtl" : "ltr";
     let lang = router.locale == "ar" ? "ar" : "en";
     document.querySelector("html")?.setAttribute("dir", dir);
@@ -222,7 +223,7 @@ const Index = () => {
                   {user.is_admin ? (
                     <Link href={"/admin"}>Dashboard</Link>
                   ) : (
-                    <Link href={"/orders"}>My orders</Link>
+                    <Link href={"/admin/live-orders"}>My orders</Link>
                   )}
                 </div>
                 <div>
@@ -275,7 +276,7 @@ const Index = () => {
             <div className="">
               <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
                 {t("landingPage.trackOrder.CaptionPart1")}{" "}
-                <span className="text-[#3672DF] cursor-pointer ">
+                <span className="text-[#35C6F4] cursor-pointer ">
                   {" "}
                   {t("landingPage.trackOrder.CaptionPart2")}
                 </span>

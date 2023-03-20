@@ -81,7 +81,7 @@ const EachNotification = (props: IProp) => {
           )},  ${getTimeInHourAndMinuteFormat(data.created_on)}`}
         </span>
         <button
-          className="text-[#3672DF] text-[12px] font-[500] leading-[18px]"
+          className="text-[#35C6F4] text-[12px] font-[500] leading-[18px]"
           onClick={markAsDeleted}
         >
           Clear

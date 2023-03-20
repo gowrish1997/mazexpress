@@ -169,7 +169,7 @@ const Settings = () => {
             <Image src={blueExclamatory} alt="icon" width={16} height={16} />
             <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
               Here is a link to some fake information that contains crucial
-              information, <span className="text-[#3672DF]">Link here →</span>
+              information, <span className="text-[#35C6F4]">Link here →</span>
             </p>
           </div>
           <div>
@@ -342,7 +342,7 @@ const Settings = () => {
 
             <button
               type="submit"
-              className="w-1/2 h-[46px] border-[1px] bg-[#3672DF] rounded-[4px] text-[#FFFFFF] mt-[10px] "
+              className="w-1/2 h-[46px] border-[1px] bg-[#35C6F4] rounded-[4px] text-[#FFFFFF] mt-[10px] "
             >
               Update settings
             </button>
