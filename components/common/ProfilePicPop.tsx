@@ -16,7 +16,7 @@ import { createToast } from "@/lib/toasts";
 interface IProp {
   show: boolean;
   close: (e: any) => void;
-  update: () => void
+  update: () => void;
 }
 
 const ProfilePicPop = (props: IProp) => {
@@ -31,14 +31,13 @@ const ProfilePicPop = (props: IProp) => {
 
   const deleteImage = async () => {
     // set back to default image
-    let updatedUser = user!;
 
-    updatedUser.avatar_url = "default_user.png";
-    await fetchServer(`/api/users?id=${user?.id}`, {
+    const imageUpdateResult = await fetchServer(`/api/users?id=${user?.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ avatar_url: "default_user.png" }),
+      body: JSON.stringify({ avatar_url: null }),
     });
+    console.log(imageUpdateResult);
   };
 
   const uploadImage = () => {
@@ -67,7 +66,6 @@ const ProfilePicPop = (props: IProp) => {
       const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
         method: "POST",
         body: formData,
-        
       });
 
       if (imageUploadResult.ok === true) {
@@ -78,12 +76,12 @@ const ProfilePicPop = (props: IProp) => {
           timeOut: 1000,
         });
         props.close(e);
-        props.update()
+        props.update();
       }
     }
   };
 
-  console.log(user?.avatar_url)
+  console.log(user?.avatar_url);
   return (
     <>
       {props.show && (
@@ -110,7 +108,7 @@ const ProfilePicPop = (props: IProp) => {
             </div>
             <div className="w-[300px] h-[300px] relative rounded-full overflow-hidden self-center">
               <Image
-                src={user?.avatar_url || '/user-images/default_user.png'}
+                src={user?.avatar_url || "/user-images/default_user.png"}
                 alt="profile"
                 fill
                 style={{ objectFit: "cover" }}
