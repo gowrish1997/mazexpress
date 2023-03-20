@@ -14,7 +14,7 @@ const ProgressBar = (props: IProp) => {
       </div>
       <div className="w-full h-[5px] rounded-[71px] bg-[#F4F4F5] relative ">
         <div
-          className={`absolute h-[5px] rounded-[71px] bg-[#3672DF]  `}
+          className={`absolute h-[5px] rounded-[71px] bg-[#35C6F4]  `}
           style={{ width: `${props.orderCountPer}%` }}
         ></div>
       </div>

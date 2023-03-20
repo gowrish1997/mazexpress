@@ -332,7 +332,7 @@ const SignUpContent = (props: IProp) => {
             {props.type == "signUp" ? (
                 <button
                     type="submit"
-                    className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
+                    className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
                 >
                     {submitButtons[0]}
                 </button>
@@ -340,13 +340,13 @@ const SignUpContent = (props: IProp) => {
                 <div className="w-full flex flex-row justify-between  items-center">
                     <button
                         type="submit"
-                        className=" h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[15px] "
+                        className=" h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[15px] "
                     >
                         Create Admin
                     </button>
                     <button
                         type="submit"
-                        className=" h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#3672DF] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[15px] "
+                        className=" h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[15px] "
                         onClick={() => props?.close?.()}
                     >
                         Cancel

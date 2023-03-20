@@ -32,7 +32,7 @@ const MazStatsDropddown = (props: IProp) => {
           props.className
         }
         style={
-          showDropdown ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}
+          showDropdown ? { backgroundColor: "#35C6F4", color: "#FFFFFF" } : {}
         }
         onClick={toggleDropdownHandler}
       >
@@ -63,7 +63,7 @@ const MazStatsDropddown = (props: IProp) => {
                   {data.label}
                 </button>
                 {props.selection.includes(data.value) ? (
-                  <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#3672DF] " />
+                  <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#35C6F4] " />
                 ) : (
                   <></>
                 )}

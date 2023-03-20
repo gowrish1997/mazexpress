@@ -185,7 +185,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
             {t("landingPage.shipmentCostCalculator.form.SubmitButton")}
           </button>
           <div
-            className="w-full text-center text-[14px] text-[#3672DF] font-[500] leading-[19px] cursor-pointer "
+            className="w-full text-center text-[14px] text-[#35C6F4] font-[500] leading-[19px] cursor-pointer "
             onClick={() => {
               reset();
             }}

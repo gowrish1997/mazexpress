@@ -136,7 +136,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                         )}
                     </div>
                     {notifications?  <p
-                        className="text-[#3672DF] text-[14px] font-[500] leading-[18px] cursor-pointer"
+                        className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
                         onClick={clearAllNotificatons}
                     >
                         Clear all Notifications...

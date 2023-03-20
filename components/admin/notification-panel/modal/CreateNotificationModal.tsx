@@ -148,7 +148,7 @@ const CreateNotificationModal = (props: IProp) => {
               id="title"
               type="string"
               {...register("title")}
-              className="w-full h-[46px] text-[18px] text-[#3672DF] font-[700] leading-[25px] focus:outline-none"
+              className="w-full h-[46px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give notification title @hi"
             />
             <div className={"w-full"}>
@@ -187,7 +187,7 @@ const CreateNotificationModal = (props: IProp) => {
                 />
               </div>
               <button
-                className="text-[#3672DF] font-[500] text-[14px] ml-1"
+                className="text-[#35C6F4] font-[500] text-[14px] ml-1"
                 onClick={toggleFileInputHandler}
                 ref={fileUploadTriggerRef}
               >
@@ -220,7 +220,7 @@ const CreateNotificationModal = (props: IProp) => {
                       onChange={fileInputChangeHandler}
                     />
                     <button
-                      className="bg-[#3672DF] text-[14px] font-[600] text-white px-5 py-2 rounded"
+                      className="bg-[#35C6F4] text-[14px] font-[600] text-white px-5 py-2 rounded"
                       onClick={uploadFilesHandler}
                     >
                       Upload
@@ -234,7 +234,7 @@ const CreateNotificationModal = (props: IProp) => {
                 {files?.map((file: any, index: number) => {
                   return (
                     <div className="flex items-center" key={file.name}>
-                      <p className="text-[#3672DF] font-[500] text-[14px] ml-5">
+                      <p className="text-[#35C6F4] font-[500] text-[14px] ml-5">
                         {file.name}
                       </p>
                       <div
@@ -262,7 +262,7 @@ const CreateNotificationModal = (props: IProp) => {
             </div>
             <div className="flex-type1 space-x-[10px] mt-[5px] ">
               <button
-                className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]"
+                className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
                 type="submit"
               >
                 Send Notification

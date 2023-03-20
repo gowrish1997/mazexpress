@@ -68,7 +68,7 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                             className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px] mt-[5px] text-[14px] font-[700] text-[#525D72] leading-[19px] tracking-wider hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50"
                             disabled={!props.selectedOrder?.length}
                             onClick={toggleScheduleShipmentModal}
-                            style={showSheduleShipmentModal ? { backgroundColor: "#3672DF", color: "#FFFFFF" } : {}}
+                            style={showSheduleShipmentModal ? { backgroundColor: "#35C6F4", color: "#FFFFFF" } : {}}
                         >
                             Schedule Deliver
                         </button> */}

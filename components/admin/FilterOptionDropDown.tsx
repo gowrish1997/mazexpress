@@ -92,7 +92,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                 className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[140px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative cursor-pointer"
                 style={
                     showAdminOptionCard
-                        ? { backgroundColor: "#3672DF", color: "#FFFFFF" }
+                        ? { backgroundColor: "#35C6F4", color: "#FFFFFF" }
                         : {}
                 }
                 onClick={toggleAdminOptionCard}
@@ -102,7 +102,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                 }`}</span>
                 {currentValue && currentValue?.length > 1 && (
                     <span
-                        className="text-[#3672DF] text-[14px]"
+                        className="text-[#35C6F4] text-[14px]"
                         style={showAdminOptionCard ? { color: "#FFFFFF" } : {}}
                     >{`${currentValue.length - 1}+more`}</span>
                 )}
@@ -146,7 +146,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                                             {data}
                                         </button>
                                         {currentValue.includes(data) ? (
-                                            <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#3672DF] " />
+                                            <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#35C6F4] " />
                                         ) : (
                                             <></>
                                         )}

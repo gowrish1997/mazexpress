@@ -43,7 +43,7 @@ const CommentModal = (props: IProp) => {
                                     style={props.total && props.total.length > 1 ? { overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" } : {}}
                                     value={props.total && props.total[0]}
                                 />
-                                {props.total && props.total?.length > 1 && <span className="text-[#3672DF] text-[14px]">{`${props.total.length - 1}+more`}</span>}
+                                {props.total && props.total?.length > 1 && <span className="text-[#35C6F4] text-[14px]">{`${props.total.length - 1}+more`}</span>}
                             </div>
                         </div>
 
@@ -68,7 +68,7 @@ const CommentModal = (props: IProp) => {
                         {error && <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">Please add some comment</p>}
 
                         <div className="flex-type1 space-x-[10px] mt-[5px] ">
-                            <button className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px]" onClick={commentHandler}>
+                            <button className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]" onClick={commentHandler}>
                                 Send Comment
                             </button>
                             <button

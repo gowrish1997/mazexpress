@@ -164,7 +164,7 @@ const LiveOrderLineItem = (props: IProp) => {
                 >
                     {props.row.maz_id}
                 </td>
-                <td className={`td3 text-[#3672DF]`}>{props.row.store_link}</td>
+                <td className={`td3 text-[#35C6F4]`}>{props.row.store_link}</td>
                 <td className={`td4`}>{props.row.reference_id}</td>
                 <td className={`td5`}>
                     {getDateInStringFormat(props.row.created_on)}

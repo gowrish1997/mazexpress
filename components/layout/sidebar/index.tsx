@@ -128,7 +128,7 @@ const adminSidebarPanel = [
 ];
 
 const sidebarContentHandler = (admin: boolean) => {
-    if (!admin) {
+    if (admin) {
         return adminSidebarPanel;
     } else {
         return userSidebarPanel;
@@ -148,7 +148,7 @@ const Sidebar = () => {
     });
 
     const transalateSidebarContentHandler = () => {
-        if (!user?.is_admin) {
+        if (user?.is_admin) {
             return adminSidebarContent;
         } else {
             return userSidebarContent;
@@ -232,7 +232,7 @@ const Sidebar = () => {
                                         }
                                     )}
                                     <div
-                                        className="flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#3672DF] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
+                                        className="flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#35C6F4] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
                                         //   onClick={toggleLogoutConfirmModal}
                                         onClick={logoutHandler}
                                     >
@@ -276,7 +276,7 @@ const Sidebar = () => {
                 </div>
 
                 <div
-                    className="hidden sm:flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#3672DF] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
+                    className="hidden sm:flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#35C6F4] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
                     //   onClick={toggleLogoutConfirmModal}
                     onClick={logoutHandler}
                 >

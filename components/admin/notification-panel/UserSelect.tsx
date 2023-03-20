@@ -137,7 +137,7 @@ const UserSelect = (props: any) => {
               }
             </p>
             {selectedUsers.length > 1 ? (
-              <p className="text-[#3672DF] text-[14px]">
+              <p className="text-[#35C6F4] text-[14px]">
                 + {selectedUsers.length - 1} customers
               </p>
             ) : null}
@@ -186,7 +186,7 @@ const UserSelect = (props: any) => {
                 </label>
               </div>
               <button
-                className="text-[14px] font-[600] text-[#3672DF] cursor-pointer"
+                className="text-[14px] font-[600] text-[#35C6F4] cursor-pointer"
                 onClick={clearAllHandler}
               >
                 Clear all
@@ -232,7 +232,7 @@ const UserSelect = (props: any) => {
               })}
             </div>
             <button
-              className="bg-[#3672DF] text-[14px] rounded text-white w-full mt-4 px-4 py-2 self-center"
+              className="bg-[#35C6F4] text-[14px] rounded text-white w-full mt-4 px-4 py-2 self-center"
               onClick={closeDropdown}
             >
               Done!

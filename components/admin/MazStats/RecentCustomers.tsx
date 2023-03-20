@@ -20,7 +20,7 @@ const RecentCustomers = () => {
           Recent Customers
         </p>
         <Link href="/admin/users">
-          <p className="text-[12px] text-[#3672DF] font-[500] leading-[21px] cursor-pointer">{`See All Customers >`}</p>
+          <p className="text-[12px] text-[#35C6F4] font-[500] leading-[21px] cursor-pointer">{`See All Customers >`}</p>
         </Link>
       </div>
       <div className="space-y-[15px]">

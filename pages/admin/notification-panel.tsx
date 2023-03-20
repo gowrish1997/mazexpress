@@ -84,7 +84,7 @@ const NotificationPanel = () => {
       </div>
       <div>
         <button
-          className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#3672DF] rounded-[4px] p-[10px] mt-[25px]"
+          className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
           onClick={toggleShowCreateNotificationModal}
         >
           Create notification

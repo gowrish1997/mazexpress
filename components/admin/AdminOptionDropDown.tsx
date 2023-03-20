@@ -73,7 +73,7 @@ const AdminOptionDropDown = (props: Iprop) => {
         className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[180px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative"
         style={
           showAdminOptionCard
-            ? { backgroundColor: "#3672DF", color: "#FFFFFF" }
+            ? { backgroundColor: "#35C6F4", color: "#FFFFFF" }
             : {}
         }
         onClick={toggleAdminOptionCard}

@@ -31,11 +31,18 @@ interface ISearchKeyContext {
 const AdminBase = () => {
     const router = useRouter();
     const { locales, locale: activeLocale } = router;
-
+    console.log(activeLocale)
     useEffect(() => {
-        console.log("use efft");
-        router.push(router.asPath, router.asPath, { locale: "en" });
-    }, []);
+        let dir = router.locale == "ar" ? "rtl" : "ltr";
+        let lang = router.locale == "ar" ? "ar" : "en";
+        document.querySelector("html")?.setAttribute("dir", dir);
+        document.querySelector("html")?.setAttribute("lang", lang);
+    }, [router.locale]);
+
+    // useEffect(() => {
+    //     console.log("use efft");
+    //     router.push(router.asPath, router.asPath, { locale: "en" });
+    // }, []);
 
     const { searchKey } = React.useContext(
         SearchKeyContext

@@ -21,6 +21,7 @@ const tableHeaders = [
 
 const LiveOrders = () => {
     const router = useRouter();
+    console.log(router)
     const [itemsPerPage, setItemPerPage] = useState<number>(5);
     const [currentPage, setCurrentPage] = useState(0);
     const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
@@ -40,11 +41,19 @@ const LiveOrders = () => {
     });
 
     const { locales, locale: activeLocale } = router;
+    console.log(router.pathname)
 
+    // useEffect(() => {
+    //     // console.log("use efft");
+    //     router.push(router.asPath, router.asPath, { locale: "en" });
+    // }, []);
     useEffect(() => {
-        // console.log("use efft");
-        router.push(router.asPath, router.asPath, { locale: "en" });
-    }, []);
+        document.cookie = `NEXT_LOCALE=en;path=/`;
+        let dir = router.locale == "ar" ? "rtl" : "ltr";
+        let lang = router.locale == "ar" ? "ar" : "en";
+        document.querySelector("html")?.setAttribute("dir", "ltr");
+        document.querySelector("html")?.setAttribute("lang", "en");
+      }, [router.locale]);
 
     const currentPageHandler = useCallback((value: number) => {
         setCurrentPage(value);
