@@ -10,7 +10,11 @@ import { getDateInStringFormat } from "@/lib/helper";
 import { Tracking } from "@/models/tracking.model";
 import { Order } from "@/models/order.model";
 import { getUserImageString } from "@/lib/utils";
+<<<<<<< HEAD
 import OrderDetailModal from "@/components/admin/OrderDetailModal";
+=======
+import useUser from "@/lib/hooks/useUser";
+>>>>>>> micro
 interface IProp {
     row: Order;
     type: string;
@@ -21,16 +25,32 @@ interface IProp {
 const LiveOrderLineItem = (props: IProp) => {
     const trigger = useRef<any>();
 
+<<<<<<< HEAD
     // const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
     //   user_id: props.row.user.id as string,
     // });
+=======
+  const {user, mutateUser} = useUser()
+>>>>>>> micro
 
     const { tracking, mutateTracking, trackingIsLoading } = useTracking({
         maz_id: props.row.maz_id,
     });
 
+<<<<<<< HEAD
     const [packageStatus, setPackageStatus] = useState(0);
     const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
+=======
+      <td className={`flex flex-row justify-start items-center capitalize`}>
+        <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
+          <Image
+            src={user?.avatar_url || '/user-images/default_user.png'}
+            fill
+            style={{ objectFit: "cover" }}
+            alt="profileImage"
+          />
+        </div>
+>>>>>>> micro
 
     useEffect(() => {
         // console.log(tracking);

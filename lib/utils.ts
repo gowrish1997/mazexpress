@@ -5,14 +5,15 @@
 import fetchJson from "./fetchServer";
 
 const getUserImageString = (avatar_url?: string) => {
-  if (avatar_url === null || avatar_url === undefined) {
-    return "/user-images/default_user.png";
-  } else {
-    if (avatar_url.startsWith("http")) {
-      return avatar_url;
-    }
-    return "/user-images/" + avatar_url;
-  }
+  return avatar_url
+  // if (avatar_url === null || avatar_url === undefined) {
+  //   return "https://mazapi.easydesk.work/api/users/images/default_user.png";
+  // } else {
+  //   if (avatar_url.startsWith("http")) {
+  //     return avatar_url;
+  //   }
+  //   return "/user-images/" + avatar_url;
+  // }
 };
 
 async function checkPassword(password: string, user_id: string) {

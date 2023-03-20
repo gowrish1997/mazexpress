@@ -167,8 +167,8 @@ const Sidebar = () => {
 
   const logoutHandler = async () => {
     await fetchSelf("/api/auth/logout", { method: "GET" });
-    await mutateUser();
-    router.push("/auth/gate");
+    // await mutateUser();
+    router.push("/");
     // router.reload()
   };
 

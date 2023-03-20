@@ -5,7 +5,10 @@ import { User } from "@/models/user.model";
 import { getUserImageString } from "@/lib/utils";
 import Image from "next/image";
 import { capitalizeFirstLetter } from "@/lib/helper";
+import useUser from "@/lib/hooks/useUser";
 const RecentCustomers = () => {
+  const {user, mutateUser } = useUser()
+  
   const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
     per_page: 6,
   });
@@ -31,7 +34,7 @@ const RecentCustomers = () => {
               <td className={`flex flex-row justify-start items-center`} key={data.id}>
                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
                   <Image
-                    src={getUserImageString(data.avatar_url)}
+                    src={user?.avatar_url || '/user-images/default_user.png'}
                     fill
                     style={{ objectFit: "cover" }}
                     alt="profileImage"

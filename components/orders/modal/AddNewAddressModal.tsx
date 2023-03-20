@@ -28,7 +28,7 @@ const schema = yup
 
 const AddNewAddressModal = (props: IProp) => {
   const [country, setCountry] = useState("LY");
-  const [addressIsDefault, setAddressIsDefault] = useState(false)
+  const [addressIsDefault, setAddressIsDefault] = useState(false);
   const { user, mutateUser } = useUser();
   const router = useRouter();
   const { t } = useTranslation("common");
@@ -77,19 +77,19 @@ const AddNewAddressModal = (props: IProp) => {
       address.user = user;
 
       // add address
-      const addressResult = await fetchJson<Address>(`/api/addresses`, {
+      const addressResult = await fetchJson(`/api/addresses`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(address),
       });
-      // console.log(addressResult);
+      console.log(addressResult);
 
       // set default if checked
       if (data.default) {
         const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ default_address: addressResult.id }),
+          body: JSON.stringify({ default_address: addressResult.data?.[0].id }),
         });
       }
 
@@ -99,8 +99,8 @@ const AddNewAddressModal = (props: IProp) => {
   };
 
   const toggleDefaultAddressHandler = () => {
-    setAddressIsDefault((prev) => !prev)
-  }
+    setAddressIsDefault((prev) => !prev);
+  };
 
   return (
     <>

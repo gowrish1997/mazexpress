@@ -9,7 +9,7 @@ export default async function fetchJson<JSON = any>(
   const environment = process.env.NODE_ENV;
   if (environment === "production") {
     const response = await fetch(
-      `https://${process.env.NEXT_PUBLIC_SERVER_HOST}` + input,
+      `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
     );
     // if the server replies, there's always some data in json

@@ -8,6 +8,7 @@ import { User } from "@/models/user.model";
 import { Order } from "@/models/order.model";
 import { getUserImageString } from "@/lib/utils";
 import AdminOptionModal from "@/components/admin/modal/AdminOptionModal";
+import useUser from "@/lib/hooks/useUser";
 
 interface IProp {
     row: User;
@@ -17,7 +18,8 @@ interface IProp {
 }
 
 const AdminLineItem = (props: IProp) => {
-  
+    const {user, mutateUser} = useUser()
+    
     // console.log(props.row.created_on);
     const trigger = useRef<any>();
 
@@ -83,7 +85,7 @@ const AdminLineItem = (props: IProp) => {
                             <div className="absolute bg-yellow-600 w-4 h-8 z-10 opacity-60"></div>
                         )}
                         <Image
-                            src={getUserImageString(props.row.avatar_url)}
+                            src={user?.avatar_url || '/user-images/default_user.png'}
                             fill
                             style={{ objectFit: "cover" }}
                             alt="profileImage"
