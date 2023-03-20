@@ -12,6 +12,7 @@ import { nanoid } from "nanoid";
 import fetchServer from "@/lib/fetchServer";
 import { getUserImageString } from "@/lib/utils";
 import { createToast } from "@/lib/toasts";
+import axios from "axios";
 
 interface IProp {
   show: boolean;
@@ -73,23 +74,34 @@ const ProfilePicPop = (props: IProp) => {
       //   console.log(`${pair[0]}, ${pair[1]}`);
       // }
 
-      // send file to api to write
-      const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
-        method: "POST",
-        body: formData,
-      });
-      console.log(imageUploadResult)
-      
-      if (imageUploadResult.ok === true) {
-        createToast({
-          type: "success",
-          message: "Image uploaded",
-          title: "Success",
-          timeOut: 1000,
+      axios
+        .post("https://mazapi.easydesk.work/api/upload-user-image", formData, {
+          method: "POST",
+        })
+        .then((response) => {
+          if (response.data.ok === true) {
+            createToast({
+              type: "success",
+              message: "Image uploaded",
+              title: "Success",
+              timeOut: 1000,
+            });
+            props.update();
+            props.close(e);
+          }
+          console.log(response);
+        })
+        .catch((err) => {
+          if (err) throw err;
+          console.error(err);
         });
-        props.update();
-        props.close(e);
-      }
+
+      // send file to api to write
+      // const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
+      //   method: "POST",
+      //   body: formData,
+      // });
+      // console.log(imageUploadResult);
     }
   };
 
