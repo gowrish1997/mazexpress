@@ -62,6 +62,7 @@ const ProfilePicPop = (props: IProp) => {
       const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
         method: "POST",
         body: formData,
+        headers: {"Content-Type": "multipart/form-data"}
       });
 
       if(imageUploadResult.ok === true){

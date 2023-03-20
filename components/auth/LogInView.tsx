@@ -75,8 +75,6 @@ const LogInComponent = (props: any) => {
         } else {
           router.push("/");
         }
-        
-
       } else {
         createToast({
           type: "error",
@@ -164,9 +162,8 @@ const LogInComponent = (props: any) => {
               passwordType === "password"
                 ? "/eyeIconOpen.png"
                 : "/eyeIconClose.png",
-           
           }}
-          onClick= {togglePasswordTypeHandler}
+          onClick={togglePasswordTypeHandler}
           register={register("password")}
 
           // error={errors.password?.message && inputFieldErrors[1]}
