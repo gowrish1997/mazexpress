@@ -29,7 +29,7 @@ const ProfilePicPop = (props: IProp) => {
     { returnObjects: true }
   );
 
-  const deleteImage = async () => {
+  const deleteImage = async (e: any) => {
     // set back to default image
 
     const imageUpdateResult = await fetchServer(`/api/users?id=${user?.id}`, {
@@ -38,6 +38,16 @@ const ProfilePicPop = (props: IProp) => {
       body: JSON.stringify({ avatar_url: null }),
     });
     console.log(imageUpdateResult);
+    if (imageUpdateResult.ok === true) {
+      createToast({
+        type: "success",
+        message: "Image uploaded",
+        title: "Success",
+        timeOut: 1000,
+      });
+      props.update();
+      props.close(e);
+    }
   };
 
   const uploadImage = () => {
@@ -46,7 +56,7 @@ const ProfilePicPop = (props: IProp) => {
 
   const updateUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
     // e.preventDefault();
-    console.log(e.target.files);
+    // console.log(e.target.files);
     if (e.target.files) {
       let formData = new FormData();
 
@@ -59,15 +69,17 @@ const ProfilePicPop = (props: IProp) => {
       formData.append("image", e.target.files[0], fileName);
 
       // console.log(formData.entries());
-      for (const pair of formData.entries()) {
-        console.log(`${pair[0]}, ${pair[1]}`);
-      }
+      // for (const pair of formData.entries()) {
+      //   console.log(`${pair[0]}, ${pair[1]}`);
+      // }
+
       // send file to api to write
       const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
         method: "POST",
         body: formData,
       });
-
+      console.log(imageUploadResult)
+      
       if (imageUploadResult.ok === true) {
         createToast({
           type: "success",
@@ -75,13 +87,13 @@ const ProfilePicPop = (props: IProp) => {
           title: "Success",
           timeOut: 1000,
         });
-        props.close(e);
         props.update();
+        props.close(e);
       }
     }
   };
 
-  console.log(user?.avatar_url);
+  // console.log(user?.avatar_url);
   return (
     <>
       {props.show && (
@@ -124,7 +136,7 @@ const ProfilePicPop = (props: IProp) => {
               </button>
               <button
                 className="flex flex-col items-center text-[#525D72] hover:bg-[#EDF5F9] p-2 rounded text-[14px] space-y-[5px] transition duration-300"
-                onClick={deleteImage}
+                onClick={(e) => deleteImage(e)}
               >
                 <FontAwesomeIcon icon={faTrash} className="w-5" />
                 <p className="">{profilePicPopContent[2]}</p>

@@ -9,6 +9,7 @@ export default async function fetchJson<JSON = any>(
   const environment = process.env.NODE_ENV;
 
   if (environment === "production") {
+    console.log("production fetch called");
     const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
@@ -23,11 +24,14 @@ export default async function fetchJson<JSON = any>(
       // console.log(data);
       return data;
     }
-  }
-
-  if (process.env.NEXT_PUBLIC_C4) {
+    throw new FetchError({
+      message: response.statusText,
+      response,
+      data,
+    });
+  } else if (process.env.NEXT_PUBLIC_C4) {
     // run code for frontend dev
-
+    console.log("c4 fetch called");
     const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
@@ -39,31 +43,37 @@ export default async function fetchJson<JSON = any>(
     if (response.ok) {
       return data;
     }
+    throw new FetchError({
+      message: response.statusText,
+      response,
+      data,
+    });
+  } else {
+    // console.log(process.env.NEXT_PUBLIC_SERVER_HOST, process.env.NEXT_PUBLIC_SERVER_PORT)
+    console.log("dev fetch called");
+    const response = await fetch(
+      `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}` +
+        input,
+      init
+    );
+
+    // if the server replies, there's always some data in json
+    // if there's a network error, it will throw at the previous line
+
+    const data = await response.json();
+
+    // response.ok is true when res.status is 2xx
+    // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
+    if (response.ok) {
+      // console.log(data);
+      return data;
+    }
+    throw new FetchError({
+      message: response.statusText,
+      response,
+      data,
+    });
   }
-
-  // console.log(process.env.NEXT_PUBLIC_SERVER_HOST, process.env.NEXT_PUBLIC_SERVER_PORT)
-  const response = await fetch(
-    `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}` +
-      input,
-    init
-  );
-
-  // if the server replies, there's always some data in json
-  // if there's a network error, it will throw at the previous line
-
-  const data = await response.json();
-
-  // response.ok is true when res.status is 2xx
-  // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-  if (response.ok) {
-    // console.log(data);
-    return data;
-  }
-  throw new FetchError({
-    message: response.statusText,
-    response,
-    data,
-  });
 }
 
 export class FetchError extends Error {
