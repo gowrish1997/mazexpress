@@ -10,6 +10,7 @@ import { getDateInStringFormat } from "@/lib/helper";
 import { Tracking } from "@/models/tracking.model";
 import { Order } from "@/models/order.model";
 import { getUserImageString } from "@/lib/utils";
+import useUser from "@/lib/hooks/useUser";
 interface IProp {
   row: Order;
   type: string;
@@ -20,9 +21,7 @@ interface IProp {
 const LiveOrderLineItem = (props: IProp) => {
   const trigger = useRef<any>();
 
-  // const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
-  //   user_id: props.row.user.id as string,
-  // });
+  const {user, mutateUser} = useUser()
 
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
     maz_id: props.row.maz_id,
@@ -122,7 +121,7 @@ const LiveOrderLineItem = (props: IProp) => {
       <td className={`flex flex-row justify-start items-center capitalize`}>
         <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
           <Image
-            src={getUserImageString(props.row.user.avatar_url)}
+            src={user?.avatar_url || '/user-images/default_user.png'}
             fill
             style={{ objectFit: "cover" }}
             alt="profileImage"

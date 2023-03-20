@@ -1,6 +1,7 @@
 import ClickOutside from "@/components/common/ClickOutside";
 import fetchJson from "@/lib/fetchServer";
 import { capitalizeFirstLetter } from "@/lib/helper";
+import useUser from "@/lib/hooks/useUser";
 import useUsers from "@/lib/hooks/useUsers";
 import { getUserImageString } from "@/lib/utils";
 import { User } from "@/models/user.model";
@@ -19,6 +20,7 @@ const UserSelect = (props: any) => {
   const [markAll, setMarkAll] = useState<boolean>(false);
 
   const { users, mutateUsers } = useUsers({});
+  const { user, mutateUser } = useUser();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef(null);
@@ -117,10 +119,7 @@ const UserSelect = (props: any) => {
           <div className="flex items-center w-full h-[45px] p-3">
             <div className="w-7 h-7 rounded-full relative overflow-hidden">
               <Image
-                src={getUserImageString(
-                  (users as User[]).find((item) => item.id === selectedUsers[0])
-                    ?.avatar_url
-                )}
+                src={user?.avatar_url || '/user-images/default_user.png'}
                 fill
                 style={{ objectFit: "cover" }}
                 alt={"user image"}
