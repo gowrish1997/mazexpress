@@ -8,6 +8,7 @@ import BlankPage from "@/components/admin/BlankPage";
 import LoadingPage from "@/components/common/LoadingPage";
 import { Order } from "@/models/order.model";
 import { i18n } from "next-i18next";
+import { SearchKeyContext } from "@/components/common/Frame";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -23,7 +24,7 @@ const tableHeaders = [
 
 const PendingOrders = () => {
     const router = useRouter();
-
+    const { searchKey } = React.useContext(SearchKeyContext) as any;
     const { locales, locale: activeLocale } = router;
 
     useEffect(() => {
@@ -45,8 +46,6 @@ const PendingOrders = () => {
     // console.log(orders);
 
     const [selectedOrder, setSelectedOrder] = useState<Order[]>();
-
-    const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
@@ -75,28 +74,32 @@ const PendingOrders = () => {
         <>
             <div>
                 <PendingPageHeader
-                    content="pending"
-                    allLiveOrders={orders as Order[]}
+                    content="Pending"
+                    allLiveOrders={orders?.data as Order[]}
                     selectedOrder={selectedOrder}
                     filterByDate={filterByCreatedDate}
                     title="Pending Orders | MazExpress Admin"
-                    pageCount={pageCount}
+                    pageCount={Math.ceil(
+                        (orders?.count as number) / itemsPerPage
+                    )}
                     currentPageHandler={currentPageHandler}
                     itemsPerPage={itemsPerPage}
                     currentPage={currentPage}
                     itemPerPageHandler={itemPerPageHandler!}
+                    mutateOrder={mutateOrders}
+                    setSelectedOrder={setSelectedOrder}
                     //   filterById={filterByMazTrackingId}
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!orders && <BlankPage />}
-                    {orders && (
+                    {!orders?.data && <BlankPage />}
+                    {orders?.data && (
                         <>
                             <Table
-                                rows={orders as Order[]}
+                                rows={orders.data as Order[]}
                                 headings={tableHeaders}
                                 type="pending"
-                                onSelect={selectOrderHandler}
+                            onSelect={selectOrderHandler}
                                 selectedOrder={selectedOrder!}
                             />
                         </>

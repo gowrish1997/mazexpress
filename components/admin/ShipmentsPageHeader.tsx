@@ -14,6 +14,7 @@ import { APIResponse } from "@/models/api.model";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
 import { perPageOptinsList } from "@/lib/helper";
+import { getUserIdList } from "@/lib/selectOrder";
 
 const adminOption = ["Moved out"];
 
@@ -32,6 +33,8 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
     };
 
     const MovedOutHanlder = async () => {
+        let sendNotification = true;
+
         for (let i = 0; i < props.selectedOrder?.length!; i++) {
             let rowFixed2: Order = props.selectedOrder?.[i] as Order;
 
@@ -78,24 +81,32 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                 // console.log(result0_3);
 
                 if (result0_3?.count && result0_3?.count > 0) {
-                    createToast({
-                        type: "success",
-                        title: "Notified User",
-                        message: `Sent order received notification to userID ${rowFixed2.user.id}`,
-                        timeOut: 2000,
-                    });
+                    sendNotification = true;
                 } else {
-                    createToast({
-                        type: "error",
-                        title: "Failed creating notification",
-                        message: `check console for more info`,
-                        timeOut: 2000,
-                    });
+                    sendNotification = false;
                 }
             }
         }
 
-        router.reload();
+        if (sendNotification) {
+            createToast({
+                type: "success",
+                title: "Notified User",
+                message: `Sent order left Istanbul warehouse notification to userID ${getUserIdList(
+                    props.selectedOrder
+                )}`,
+                timeOut: 2000,
+            });
+        } else {
+            createToast({
+                type: "error",
+                title: "Failed creating notification",
+                message: `check console for more info`,
+                timeOut: 2000,
+            });
+        }
+        props.mutateOrder?.();
+        props.setSelectedOrder?.([]);
     };
 
     return (
@@ -114,9 +125,7 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                     filterByDate={props.filterByDate}
                 />
                 <ReactPaginateComponent
-                    pageCount={Math.ceil(
-                        (orders as number) / props.itemsPerPage
-                    )}
+                    pageCount={props.pageCount!}
                     currentPageHandler={props.currentPageHandler}
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}

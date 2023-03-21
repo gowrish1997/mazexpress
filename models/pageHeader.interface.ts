@@ -1,11 +1,13 @@
-
 import { Order } from "./order.model";
+import { User } from "./user.model";
+import { APIResponse } from "./api.model";
+import { KeyedMutator } from "swr";
 export interface IPageHeaderProp {
     content: string;
     title?: string;
     onChangeStatus?: (value: string[]) => void;
     itemPerPageHandler?: (value: string | number) => void;
-    selectedOrder?: Order[];
+    selectedOrder?: Order[] | User[];
     allLiveOrders: Order[];
     filterByDate: (value: Date | string) => void;
     pageCount?: number;
@@ -13,4 +15,6 @@ export interface IPageHeaderProp {
     itemsPerPage: number;
     currentPage: number;
     statusFilterKey?: string[];
+    mutateOrder?: KeyedMutator<APIResponse<Order>>;
+    setSelectedOrder?:React.Dispatch<React.SetStateAction<Order[] | undefined>>
 }

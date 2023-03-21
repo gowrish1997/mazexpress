@@ -33,9 +33,7 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                     filterByDate={props.filterByDate}
                 />
                 <ReactPaginateComponent
-                    pageCount={Math.ceil(
-                        (orders as number) / props.itemsPerPage
-                    )}
+                    pageCount={props.pageCount}
                     currentPageHandler={props.currentPageHandler}
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}

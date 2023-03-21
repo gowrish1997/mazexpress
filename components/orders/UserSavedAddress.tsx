@@ -114,15 +114,15 @@ const UserSavedAddress = (props: {
 
         <div className="text-[12px] text-[#35C6F4] font-[500] leading-[17px] flex justify-end flex-1 grow mt-[10px] ">
           <div className="space-x-[20px] flex items-end">
-            <button
+            <div
               onClick={() => props.edit(props.address.id)}
               className="hover:font-[600]"
             >
               {content[1]}
-            </button>
-            <button onClick={deleteAddressHandler} className="hover:font-[600]">
+            </div>
+            <div onClick={deleteAddressHandler} className="hover:font-[600]">
               {content[2]}
-            </button>
+            </div>
           </div>
         </div>
       </div>

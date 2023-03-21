@@ -13,11 +13,7 @@ const warehouse = ["istanbul"];
 
 const LiveOrderPageHeader = (props: IPageHeaderProp) => {
     const perPageOptions = perPageOptinsList();
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        count_all: true,
-        count: true,
-    });
-    console.log(orders);
+
     const packageStatusDropDownOptoin = useMemo(() => {
         return [
             "all status",
@@ -53,9 +49,7 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
                     filterByDate={props.filterByDate}
                 />
                 <ReactPaginateComponent
-                    pageCount={Math.ceil(
-                        (orders as number) / props.itemsPerPage
-                    )}
+                    pageCount={props.pageCount!}
                     currentPageHandler={props.currentPageHandler}
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}

@@ -51,9 +51,9 @@ const Topbar = () => {
   return (
     <>
       <div className="flex w-full min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-30">
-        <div className="flex-1 h-[46px] border-[0.5px] boder-[#8794AD] rounded-[6px] p-[5px] pl-[15px] relative">
+        <div className="flex-1 h-[46px] border-[0.5px] boder-[#8794AD] rounded-[6px] p-[5px] pl-[15px] relative px-[5px]">
           <input
-            className="h-full mr-5 bg-transparent focus:outline-none searchbar"
+            className="h-full w-full bg-transparent focus:outline-none searchbar"
             id="searchbar"
             type="text"
             placeholder={

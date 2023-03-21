@@ -22,6 +22,10 @@ import { useTranslation } from "next-i18next";
 
 const schema = yup
     .object({
+        address_id: yup
+            .string()
+            .required("Adress is required field")
+            .typeError("Adress is required field"),
         reference_id: yup.string().required("Reference ID is required field"),
         store_link: yup.string().required("Store Link is required field"),
     })
@@ -36,8 +40,6 @@ const AddNewOrder = () => {
     const { addresses, mutateAddresses } = useAddresses({
         user_id: user?.id,
     });
-
-   
 
     const router = useRouter();
     const { t } = useTranslation("common");
@@ -100,16 +102,16 @@ const AddNewOrder = () => {
         }
     };
 
-    const updataDeliveryAdressId=(id:string)=>{
-      setValue("address_id",id,{shouldValidate:true})
-    }
+    const updataDeliveryAdressId = (id: string) => {
+        setValue("address_id", id, { shouldValidate: true });
+    };
 
     const onSubmit: SubmitHandler<{
         reference_id: string | null | undefined;
         store_link: string | null | undefined;
         address_id: string | null | undefined;
     }> = async (data) => {
-     console.log(data);
+        console.log(data);
         try {
             let orderObj = {
                 user_id: user?.id,
@@ -189,23 +191,33 @@ const AddNewOrder = () => {
                         </span>
                     </p>
                 </div>
-                <div className="grid grid-cols-3 gap-3 py-5">
-                    {addresses &&
-                        addresses !== null &&
-                        (addresses as Address[]).map((data: Address) => {
-                            return (
-                                <UserSavedAddress
-                                    type="add-new-order"
-                                    key={data.id}
-                                    address={data}
-                                    register={register("address_id")}
-                                    edit={toggleEditUserAddressModal}
-                                    update={mutateAddresses}
-                                    updateDeliveryAddress={updataDeliveryAdressId}
-                                />
-                            );
-                        })}
-                </div>
+                {errors.address_id?.message && (
+                    <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px] mt-[10px] ">
+                        {errors.address_id.message}
+                    </p>
+                )}
+                {addresses && addresses.length > 0 && (
+                    <div className="grid grid-cols-3 gap-3 py-5">
+                        {addresses &&
+                            addresses !== null &&
+                            (addresses as Address[]).map((data: Address) => {
+                                return (
+                                    <UserSavedAddress
+                                        type="add-new-order"
+                                        key={data.id}
+                                        address={data}
+                                        register={register("address_id")}
+                                        edit={toggleEditUserAddressModal}
+                                        update={mutateAddresses}
+                                        updateDeliveryAddress={
+                                            updataDeliveryAdressId
+                                        }
+                                    />
+                                );
+                            })}
+                    </div>
+                )}
+
                 <button
                     className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
                     type="submit"

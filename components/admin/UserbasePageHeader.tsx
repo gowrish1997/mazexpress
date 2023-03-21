@@ -27,6 +27,7 @@ interface IProp {
 }
 
 const UserbasePageHeader = (props: IProp) => {
+    console.log(props);
     const perPageOptions = perPageOptinsList();
     const [
         showSendNotificatoinConfirmModal,
@@ -90,7 +91,6 @@ const UserbasePageHeader = (props: IProp) => {
                                     ? ["Remove admin"]
                                     : []
                             }
-                            orders={props.selectedUser}
                             toggle={toggleRemoveAdminConfirmModal}
                             disabled={!props.selectedUser?.length}
                         />

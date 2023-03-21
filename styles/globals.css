@@ -543,12 +543,16 @@ input::-webkit-inner-spin-button {
 .live_order_table .th6,
 .live_order_table .td5,
 .live_order_table .td6 {
-    width: 12%;
+    width: 11%;
+}
+.live_order_table .th6,
+.live_order_table .td6 {
+    width: 13%;
 }
 
-.live_order_table .td7 .live_order_table .th7 {
-    width: 12%;
-}
+/* .live_order_table .td7 .live_order_table .th7 {
+    width: 14%; */
+/* } */
 .live_order_table .address_table {
     width: 70px;
     overflow: hidden;

@@ -17,18 +17,17 @@ import { APIResponse } from "@/models/api.model";
 import useUser from "@/lib/hooks/useUser";
 import { useRouter } from "next/router";
 import { perPageOptinsList } from "@/lib/helper";
+import { getUserIdList } from "@/lib/selectOrder";
 
 const adminOption = ["Move to Shipments"];
 
 const PendingPageHeader = (props: IPageHeaderProp) => {
+    console.log(typeof fetchServer);
+
+    console.log(props);
     const perPageOptions = perPageOptinsList();
     const router = useRouter();
     const { user, mutateUser } = useUser();
-
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        count: true,
-        status: ["pending"],
-    });
 
     const warehousesDropDownOptoin = ["istanbul"];
     const [showMoveToShipmentConfirmModal, setShowMoveToShipmentConfirmModal] =
@@ -39,15 +38,24 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
     };
 
     const moveToShipmentsHandler = async () => {
-        console.log(props.selectedOrder);
+        let sendNotification = true;
 
         for (let i = 0; i < props.selectedOrder?.length!; i++) {
             let rowFixed: Order = props.selectedOrder?.[i] as Order;
-            const result0 = await fetchServer(`/api/orders?id=${rowFixed.id}`, {
-                method: "PUT",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ status: "at-warehouse" }),
-            });
+
+            try {
+                const result0 = await fetchServer(
+                    `/api/orders?id=${rowFixed.id}`,
+                    {
+                        method: "PUT",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify({ status: "at-warehouse" }),
+                    }
+                );
+            } catch (error) {
+                console.log(error);
+            }
+
             const result0_2 = await fetchServer(`/api/tracking`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
@@ -57,6 +65,7 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
                     stage: 1,
                 }),
             });
+
             if (rowFixed.user?.is_notifications_enabled) {
                 // get admin notification on backend
                 // send notification post
@@ -77,25 +86,34 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
                         }),
                     }
                 );
-                // console.log(result0_3);
+
                 if (result0_3?.count && result0_3?.count > 0) {
-                    createToast({
-                        type: "success",
-                        title: "Notified User",
-                        message: `Sent order received notification to userID ${rowFixed.user.id}`,
-                        timeOut: 2000,
-                    });
+                    sendNotification = true;
                 } else {
-                    createToast({
-                        type: "error",
-                        title: "Failed creating notification",
-                        message: `check console for more info`,
-                        timeOut: 2000,
-                    });
                 }
             }
         }
-        router.reload();
+
+        if (sendNotification) {
+            createToast({
+                type: "success",
+                title: "Notified User",
+                message: `Sent order received notification to userID ${getUserIdList(
+                    props.selectedOrder
+                )}`,
+                timeOut: 2000,
+            });
+        } else {
+            createToast({
+                type: "error",
+                title: "Failed creating notification",
+                message: `check console for more info`,
+                timeOut: 2000,
+            });
+        }
+
+        props.mutateOrder?.();
+        props.setSelectedOrder?.([]);
     };
 
     return (
@@ -114,9 +132,7 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
                     filterByDate={props.filterByDate}
                 />
                 <ReactPaginateComponent
-                    pageCount={Math.ceil(
-                        (orders as number) / props.itemsPerPage
-                    )}
+                    pageCount={props.pageCount!}
                     currentPageHandler={props.currentPageHandler}
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}

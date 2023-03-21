@@ -10,6 +10,10 @@ import { IPageHeaderProp } from "@/models/pageHeader.interface";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { perPageOptinsList } from "@/lib/helper";
 import useOrders from "@/lib/hooks/useOrders";
+import { Order } from "@/models/order.model";
+import { bulkActionHandler } from "@/lib/selectOrder";
+import { createToast } from "@/lib/toasts";
+import { getUserIdList } from "@/lib/selectOrder";
 
 const adminOption = [
     "Received in Libya",
@@ -18,10 +22,6 @@ const adminOption = [
 ];
 
 const InTransitPageHeader = (props: IPageHeaderProp) => {
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        count: true,
-        status: ["in-transit"],
-    });
     const warehousesDropDownOptoin = ["istanbul"];
 
     const [showMarkedAsConfirmModal, setShowMarkedAsConfirmModal] =
@@ -38,16 +38,95 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
         }
     };
 
-    const inTransitChangeStatusHandler = () => {
+    const inTransitChangeStatusHandler = async () => {
         switch (inTrasitCurrentStatus) {
             case "Received in Libya":
                 console.log("Received in Libya");
+                const status1 = await bulkActionHandler(
+                    props.selectedOrder as Order[],
+                    "in-transit",
+                    3,
+                    "Order received at Libya warehouse!",
+                    "received at Libya warehouse!"
+                );
+                console.log(status1);
+                if (status1) {
+                    createToast({
+                        type: "success",
+                        title: "Notified User",
+                        message: `Sent order received in Libya warehouse notification to userID ${getUserIdList(
+                            props.selectedOrder
+                        )}`,
+                        timeOut: 2000,
+                    });
+                } else {
+                    createToast({
+                        type: "error",
+                        title: "Failed creating notification",
+                        message: `check console for more info`,
+                        timeOut: 2000,
+                    });
+                }
+                props.mutateOrder?.();
+                props.setSelectedOrder?.([]);
                 break;
             case "Out for delivery":
                 console.log("out for Delivery");
+                const status2 = await bulkActionHandler(
+                    props.selectedOrder as Order[],
+                    "in-transit",
+                    4,
+                    " Order out for delivery",
+                    "has been out for delivery"
+                );
+                if (status2) {
+                    createToast({
+                        type: "success",
+                        title: "Notified User",
+                        message: `Sent order out for delivery notification to userID ${getUserIdList(
+                            props.selectedOrder
+                        )}`,
+                        timeOut: 2000,
+                    });
+                } else {
+                    createToast({
+                        type: "error",
+                        title: "Failed creating notification",
+                        message: `check console for more info`,
+                        timeOut: 2000,
+                    });
+                }
+                props.mutateOrder?.();
+                props.setSelectedOrder?.([]);
                 break;
             case "Mark as delivered":
                 console.log("mark as delivered");
+                const status3 = await bulkActionHandler(
+                    props.selectedOrder as Order[],
+                    "delivered",
+                    5,
+                    "order delivered",
+                    "has delivered "
+                );
+                if (status3) {
+                    createToast({
+                        type: "success",
+                        title: "Notified User",
+                        message: `Sent order delivered notification to userID ${getUserIdList(
+                            props.selectedOrder
+                        )}`,
+                        timeOut: 2000,
+                    });
+                } else {
+                    createToast({
+                        type: "error",
+                        title: "Failed creating notification",
+                        message: `check console for more info`,
+                        timeOut: 2000,
+                    });
+                }
+                props.mutateOrder?.();
+                props.setSelectedOrder?.([]);
         }
     };
 
@@ -75,9 +154,7 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                     filterByDate={props.filterByDate}
                 />
                 <ReactPaginateComponent
-                    pageCount={Math.ceil(
-                        (orders as number) / props.itemsPerPage
-                    )}
+                    pageCount={props.pageCount!}
                     currentPageHandler={props.currentPageHandler}
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}
@@ -103,7 +180,7 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                             option={adminOption}
                             toggle={toggleIntransitChangeStatusConfirmModal}
                             disabled={!props.selectedOrder?.length}
-                            orders={props.selectedOrder!}
+                            orders={props.selectedOrder as Order[]}
                             type={props.content}
                         />
                     </div>
