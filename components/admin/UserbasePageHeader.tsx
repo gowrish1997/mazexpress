@@ -15,7 +15,7 @@ import useUsers from "@/lib/hooks/useUsers";
 interface IProp {
     content: string;
     title?: string;
-    selectedUser?: number[] | string[];
+    selectedUser?:any;
     allUsers: User[];
     filterByDate: (value: Date | string) => void;
     pageCount: number;
@@ -91,7 +91,7 @@ const UserbasePageHeader = (props: IProp) => {
                                     : []
                             }
                             orders={props.selectedUser}
-                            toggle={toggleRemoveAdminConfirmModal}
+                        toggle={toggleRemoveAdminConfirmModal}
                             disabled={!props.selectedUser?.length}
                         />
                     </div>
