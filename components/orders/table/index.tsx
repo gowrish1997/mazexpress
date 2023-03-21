@@ -107,7 +107,11 @@ const Table = (props: TableProps) => {
               })
             : null}
         </tbody>
-        {props.rows && props.rows.length == 0 && <div className="w-full h-full"><BlankPage /></div>}
+        {props.rows && props.rows.length == 0 && (
+          <div className="w-full h-full">
+            <BlankPage />
+          </div>
+        )}
       </table>
       {/* )} */}
     </div>
