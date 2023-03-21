@@ -223,7 +223,7 @@ const Index = () => {
                   {user.is_admin ? (
                     <Link href={"/admin"}>Dashboard</Link>
                   ) : (
-                    <Link href={"/admin/live-orders"}>My orders</Link>
+                    <Link href={"/orders"}>My orders</Link>
                   )}
                 </div>
                 <div>
