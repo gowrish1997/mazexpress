@@ -5,7 +5,7 @@ export interface IPageHeaderProp {
     title?: string;
     onChangeStatus?: (value: string[]) => void;
     itemPerPageHandler?: (value: string | number) => void;
-    selectedOrder?: Order[];
+    selectedOrder?: any;
     allLiveOrders: Order[];
     filterByDate: (value: Date | string) => void;
     pageCount?: number;

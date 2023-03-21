@@ -218,7 +218,7 @@ const AddNewOrder = () => {
                 show={showAddNewAddressModal}
                 close={toggleAddNewAddressModal}
                 update={mutateAddresses}
-            />
+        />
             {showEditUserAddressModal && (
                 <EditUserAddressModal
                     update={mutateAddresses}

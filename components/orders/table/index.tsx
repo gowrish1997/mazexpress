@@ -15,7 +15,7 @@ interface TableProps {
   rows: Array<Order> | Array<User>;
   type: string;
   onSelect?: (e: any, type: string) => void;
-  selectedOrder?: Order[];
+  selectedOrder?: any;
 }
 
 const Table = (props: TableProps) => {
