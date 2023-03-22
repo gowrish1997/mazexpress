@@ -20,6 +20,7 @@ import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { checkPassword } from "@/lib/utils";
 import { useTranslation } from "next-i18next";
+import fetchJson from "@/lib/fetchServer";
 const schema = yup
   .object({
     first_name: yup.string().required("First name is required"),
@@ -83,7 +84,19 @@ const Settings = () => {
     getValues,
     reset,
     formState: { errors },
-  } = useForm<User & { newPassword: string }>({
+  } = useForm<
+    Pick<
+      User,
+      | "first_name"
+      | "last_name"
+      | "email"
+      | "phone"
+      | "lang"
+      | "password"
+      | "avatar_url"
+      | "is_notifications_enabled"
+    > & { newPassword: string }
+  >({
     resolver: yupResolver(schema),
     defaultValues: { ...user, password: "" },
   });
@@ -113,6 +126,20 @@ const Settings = () => {
     data
   ) => {
     console.log("settings submission", data);
+    // let picked: Pick<
+    //   User,
+    //   | "first_name"
+    //   | "last_name"
+    //   | "email"
+    //   | "phone"
+    //   | "lang"
+    //   | "password"
+    //   | "avatar_url"
+    //   | "is_notifications_enabled"
+    // > & { newPassword: string } ;
+    // // Object.assign(picked, data)
+
+    // console.log("picked", picked);
     try {
       // console.log(result);
       if (!passwordCheck) {
@@ -124,6 +151,16 @@ const Settings = () => {
         });
         return;
       }
+
+      // update user here
+      const sendObj = data;
+
+      const updateRes = await fetchJson(`/api/users/${user?.email}`, {
+        method: "PUT",
+
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
       createToast({
         type: "success",
         title: "Success",
@@ -151,8 +188,21 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    console.log(user);
-    reset({ ...user, password: "" });
+    // console.log(user);
+    reset({
+      ...(user as Pick<
+        User,
+        | "first_name"
+        | "last_name"
+        | "email"
+        | "phone"
+        | "lang"
+        | "password"
+        | "avatar_url"
+        | "is_notifications_enabled"
+      > & { newPassword: string }),
+    });
+    setPasswordCheck(false);
   }, [user, reset]);
 
   return (
@@ -195,7 +245,7 @@ const Settings = () => {
                   onClick={toggleProfilePicPop}
                 >
                   <Image
-                    src={"/user-images/" + user?.avatar_url}
+                    src={user?.avatar_url || "/user-images/default_user.png"}
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}

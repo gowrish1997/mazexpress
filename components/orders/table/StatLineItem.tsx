@@ -84,7 +84,7 @@ const StatLineItem = (props: IProp) => {
       <td className={`flex flex-row justify-start items-center capitalize`}>
         <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
           <Image
-            src={user?.avatar_url || "/user-images/default_user.png"}
+            src={props.row.user?.avatar_url || "/user-images/default_user.png"}
             fill
             style={{ objectFit: "cover" }}
             alt="profileImage"

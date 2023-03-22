@@ -2,7 +2,6 @@
 //     written by: raunak
 //==========================
 
-
 import fetchServer from "@/lib/fetchServer";
 import { APIResponse } from "@/models/api.model";
 import { User } from "@/models/user.model";
@@ -16,21 +15,27 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse) {
     let responseObj = new APIResponse<Partial<User>>();
     try {
       if (req.session.user) {
-        // console.log(req.session.user);
+        console.log('session user', req.session.user);
         // check for updates with a preflight call and then update user
-        let preflight = false;
-
-        if (preflight && req.session.user.email) {
+        // let preflight = false;
+        const preflight: boolean = await fetchServer(`/api/users/preflight`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user: req.session.user }),
+        });
+        // console.log(preflight)
+        if (!preflight && req.session.user.email) {
           // update user
-          const user: APIResponse<User> = await fetchServer(
+          const user: APIResponse<Partial<User>> = await fetchServer(
             `/api/users/${req.session.user.email}`,
             {
               method: "GET",
               headers: { "Content-Type": "application/json" },
             }
           );
+          console.log("update user", user.data)
           if (user.ok && user?.data?.[0]) {
-            req.session.user = user.data[0] as User;
+            req.session.user = user.data[0] as Partial<User>;
             await req.session.save();
             responseObj.ok = true;
             responseObj.count = 1;

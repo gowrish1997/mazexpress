@@ -12,6 +12,7 @@ interface IProps {
   include_users?: boolean;
   age?: number[];
   gender?: string[];
+  date?: string
 }
 export default function useUsers(props: IProps) {
   const qs = new QS(props);

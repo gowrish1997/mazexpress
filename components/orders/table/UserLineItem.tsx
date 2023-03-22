@@ -43,11 +43,11 @@ const UserLineItem = (props: IProp) => {
         {" "}
         {props.row && (props.row as User)?.avatar_url !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
-            {props.row.is_admin && (
+            {(props.row as User).is_admin && (
               <div className="absolute bg-yellow-600 w-4 h-8 z-10 opacity-60"></div>
             )}
             <Image
-              src={user?.avatar_url || "/user-images/default_user.png"}
+              src={(props.row as User).avatar_url || "/user-images/default_user.png"}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"

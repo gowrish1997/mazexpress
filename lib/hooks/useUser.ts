@@ -39,7 +39,7 @@ export default function useUser({
   }, [user, redirectIfFound, redirectTo]);
 
   return {
-    user: user?.data !== null ? (user?.data?.[0] as User) : null,
+    user: user?.data !== null ? (user?.data?.[0] as Partial<User>) : null,
     mutateUser,
   };
 }

@@ -16,6 +16,7 @@ import AddNewAdminModal from "@/components/admin/modal/AddNewAdminModal";
 import useUsers from "@/lib/hooks/useUsers";
 import { User } from "@/models/user.model";
 import useUserCount from "@/lib/hooks/useUserCount";
+import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
   "User",
@@ -45,7 +46,7 @@ const AdminBase = () => {
   // }, []);
 
   const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
-  const [itemsPerPage, setItemPerPage] = useState(5);
+  const [itemsPerPage, setItemPerPage] = useState(25);
   const [currentPage, setCurrentPage] = useState(0);
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
     Date | string
@@ -55,11 +56,12 @@ const AdminBase = () => {
     page: currentPage,
     per_page: itemsPerPage,
     include_admins: true,
+    date: getDateInDBFormat(createdDateFilterKey as Date),
   });
 
   const { userCount } = useUserCount({
     include_admins: true,
-    include_users: true
+    include_users: true,
   });
 
   const [showAddNewAdminModal, setShowAddNewAdminModal] = useState(false);
