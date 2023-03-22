@@ -7,6 +7,7 @@ import Router from "next/router";
 import useSWR from "swr";
 import fetchSelf from "../fetchSelf";
 import { User } from "@/models/user.model";
+import { APIResponse } from "@/models/api.model";
 
 // use the current user profile from sessions
 
@@ -14,13 +15,15 @@ export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
 } = {}) {
-  const { data: user, mutate: mutateUser } = useSWR<{data: User[]} | null>(
+  const { data: user, mutate: mutateUser } = useSWR<APIResponse<Partial<User>>>(
     "/api/user",
     fetchSelf
   );
 
+  // console.log(user);
   useEffect(() => {
-    console.log(user)
+    // console.log(user);
+    
     // if no redirect needed, just return (example: already on /dashboard)
     // if user data not yet there (fetch in progress, logged in or not) then don't do anything yet
     if (!redirectTo || !user) return;
@@ -35,5 +38,8 @@ export default function useUser({
     }
   }, [user, redirectIfFound, redirectTo]);
 
-  return { user: user ? user?.data?.[0] : null, mutateUser };
+  return {
+    user: user?.data !== null ? (user?.data?.[0] as User) : null,
+    mutateUser,
+  };
 }

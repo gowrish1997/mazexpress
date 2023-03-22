@@ -1,3 +1,9 @@
+//==========================
+//     co-author: raunak
+//     co-author: gowrish
+//==========================
+
+
 import React, { useState, useCallback, useEffect } from "react";
 import useOrders from "@/lib/hooks/useOrders";
 import ShipmentsPageHeader from "@/components/admin/ShipmentsPageHeader";
@@ -9,6 +15,7 @@ import LoadingPage from "@/components/common/LoadingPage";
 import { Order } from "@/models/order.model";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
   "Customer",
@@ -34,12 +41,13 @@ const Shipments = () => {
     per_page: itemsPerPage,
     page: currentPage,
     status: ["at-warehouse"],
+    date: getDateInDBFormat(createdDateFilterKey as Date),
   });
 
   const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
-    console.log("use efft");
+    // console.log("use efft");
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
 

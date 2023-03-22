@@ -1,3 +1,8 @@
+//==========================
+//     co-author: raunak
+//     co-author: gowrish
+//==========================
+
 import React, { useEffect, useState, useCallback } from "react";
 import useOrders from "@/lib/hooks/useOrders";
 import InTransitPageHeader from "@/components/admin/InTransitPageHeader";
@@ -9,6 +14,7 @@ import LoadingPage from "@/components/common/LoadingPage";
 import { Order } from "@/models/order.model";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
   "Customer",
@@ -34,12 +40,13 @@ const Intransit = () => {
     per_page: itemsPerPage,
     page: currentPage,
     status: ["in-transit", "out-for-delivery"],
+    date: getDateInDBFormat(createdDateFilterKey as Date),
   });
 
   const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
-    console.log("use efft");
+    // console.log("use efft");
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
 
@@ -62,7 +69,7 @@ const Intransit = () => {
   };
 
   const selectOrderHandler = (value: string, type: string) => {
-    console.log(value);
+    // console.log(value);
     selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
   };
 

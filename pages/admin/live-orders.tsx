@@ -21,7 +21,7 @@ const tableHeaders = [
 
 const LiveOrders = () => {
   const router = useRouter();
-  console.log(router);
+  // console.log(router);
   const [itemsPerPage, setItemPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState(0);
   const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
@@ -41,7 +41,7 @@ const LiveOrders = () => {
   });
 
   const { locales, locale: activeLocale } = router;
-  console.log(router.pathname);
+  // console.log(router.pathname);
 
   // useEffect(() => {
   //     // console.log("use efft");

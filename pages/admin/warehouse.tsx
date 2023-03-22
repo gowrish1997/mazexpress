@@ -16,7 +16,7 @@ const WarehousePage = () => {
   const { locales, locale: activeLocale } = router;
 
   useEffect(() => {
-    console.log("use efft");
+    // console.log("use efft");
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
   const [showAddNewWarehouseModal, setShowAddNewWarehouseModal] =

@@ -7,8 +7,6 @@ export default async function fetchJson<JSON = any>(
   init?: RequestInit
 ): Promise<JSON> {
 
-  console.log('this is fetchself')
-
   const response = await fetch(input, init);
   // if the server replies, there's always some data in json
   // if there's a network error, it will throw at the previous line

@@ -1,4 +1,11 @@
+//==========================
+//     written by: raunak
+//==========================
+
+
 import fetchServer from "@/lib/fetchServer";
+import { APIResponse } from "@/models/api.model";
+import { User } from "@/models/user.model";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -6,27 +13,54 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default withIronSessionApiRoute(userRoute, sessionOptions);
 async function userRoute(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
-    if (req.session.users && req.session.users.length > 0) {
-      // console.log("sess", req.session.users);
+    let responseObj = new APIResponse<Partial<User>>();
+    try {
+      if (req.session.user) {
+        // console.log(req.session.user);
+        // check for updates with a preflight call and then update user
+        let preflight = false;
 
-      // return the only user
-      const user = await fetchServer(
-        `/api/users?id=${req.session.users[0].id}`,
-        { method: "GET", headers: { "Content-Type": "application/json" } }
-      );
-      // console.log("user", user);
-      req.session.users = user.data;
-      await req.session.save();
+        if (preflight && req.session.user.email) {
+          // update user
+          const user: APIResponse<User> = await fetchServer(
+            `/api/users/${req.session.user.email}`,
+            {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          if (user.ok && user?.data?.[0]) {
+            req.session.user = user.data[0] as User;
+            await req.session.save();
+            responseObj.ok = true;
+            responseObj.count = 1;
+            responseObj.data = [req.session.user];
+            responseObj.msg = "user was updated";
+            return res.status(200).json(responseObj);
+          }
+        }
 
-      if (user?.data?.[0]) {
-        res.json({ data: user?.data });
+        // return session user
+        responseObj.ok = true;
+        responseObj.count = 1;
+        responseObj.data = [req.session.user];
+        responseObj.msg = "no updates to user";
+        return res.status(200).json(responseObj);
       } else {
-        res.json(null);
+        // no user in session
+        responseObj.ok = true;
+        responseObj.count = 0;
+        responseObj.data = null;
+        responseObj.msg = "no user";
+        return res.status(200).json(responseObj);
       }
-      
-    } else {
-      // no users in session
-      res.json(null);
+    } catch (err) {
+      console.error(err);
+      responseObj.ok = false;
+      responseObj.count = 0;
+      responseObj.data = null;
+      responseObj.msg = (err as Error).message;
+      return res.status(500).json(responseObj);
     }
   }
 }

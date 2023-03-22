@@ -8,7 +8,7 @@ export default async function fetchJson<JSON = any>(
 ): Promise<JSON> {
   const environment = process.env.NODE_ENV;
   if (environment === "production") {
-    console.log("production fetch called");
+    // console.log("production fetch called");
     const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
@@ -30,9 +30,9 @@ export default async function fetchJson<JSON = any>(
     });
   } else if (process.env.NEXT_PUBLIC_C4) {
     // run code for frontend dev
-    console.log("c4 fetch called");
-    console.log(process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST)
-    console.log(input)
+    // console.log("c4 fetch called");
+    // console.log(process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST)
+    // console.log(input)
     const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
@@ -54,7 +54,7 @@ export default async function fetchJson<JSON = any>(
     });
   } else {
     // console.log(process.env.NEXT_PUBLIC_SERVER_HOST, process.env.NEXT_PUBLIC_SERVER_PORT)
-    console.log("dev fetch called");
+    // console.log("dev fetch called");
     const response = await fetch(
       `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}` +
         input,

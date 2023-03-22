@@ -9,6 +9,7 @@ import LoadingPage from "@/components/common/LoadingPage";
 import { Order } from "@/models/order.model";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
   "Customer",
@@ -33,6 +34,7 @@ const DeliveredOrders = () => {
     per_page: itemsPerPage,
     page: currentPage,
     status: ["delivered"],
+    date: getDateInDBFormat(createdDateFilterKey as Date),
   });
 
   const { locales, locale: activeLocale } = router;

@@ -109,9 +109,9 @@ const Settings = () => {
     setShowProfilePicPop((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<
-    User & { newPassword: string }
-  > = async (data) => {
+  const onSubmit: SubmitHandler<User & { newPassword: string }> = async (
+    data
+  ) => {
     console.log("settings submission", data);
     try {
       // console.log(result);
@@ -144,7 +144,7 @@ const Settings = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     // console.log(e.target.value);
-    const reee = await checkPassword(e.target.value, user?.id!);
+    const reee = await checkPassword(e.target.value, user?.email!);
     // console.log(reee);
     if (reee) setPasswordCheck(true);
     else setPasswordCheck(false);
@@ -162,7 +162,11 @@ const Settings = () => {
         className="border-none pb-[10px]"
         title="My Settings | MazExpress"
       />
-      <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} update={mutateUser} />
+      <ProfilePicPop
+        show={showProfilePicPop}
+        close={toggleProfilePicPop}
+        update={mutateUser}
+      />
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">

@@ -169,7 +169,7 @@ const Settings = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     // console.log(e.target.value);
-    const reee = await checkPassword(e.target.value, user?.id!);
+    const reee = await checkPassword(e.target.value, user?.email!);
     // console.log(reee);
     if (reee) setPasswordCheck(true);
     else setPasswordCheck(false);
