@@ -15,6 +15,7 @@ import AddButton from "@/components/common/AddButton";
 import AddNewAdminModal from "@/components/admin/modal/AddNewAdminModal";
 import useUsers from "@/lib/hooks/useUsers";
 import { User } from "@/models/user.model";
+import useUserCount from "@/lib/hooks/useUserCount";
 
 const tableHeaders = [
   "User",
@@ -53,19 +54,19 @@ const AdminBase = () => {
   const { users, mutateUsers } = useUsers({
     page: currentPage,
     per_page: itemsPerPage,
-    is_admin: true,
+    include_admins: true,
   });
 
-  const { users: totalUsersCount } = useUsers({
-    count_all: true,
-    count: true,
+  const { userCount } = useUserCount({
+    include_admins: true,
+    include_users: true
   });
 
   const [showAddNewAdminModal, setShowAddNewAdminModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<string[]>();
 
   //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil((totalUsersCount as number) / itemsPerPage);
+  const pageCount = Math.ceil((userCount || 0) / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);

@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import Image from "next/image";
 import OrderOptionModal from "../modal/OrderOptionModal";
-import useAddresses from "@/lib/hooks/useAddresses";
 import useUser from "@/lib/hooks/useUser";
 import useTracking from "@/lib/hooks/useTracking";
 import { getDateInStringFormat } from "@/lib/helper";
@@ -23,10 +22,6 @@ const LineItem = (props: IProp) => {
   const trigger = useRef<any>();
 
   const { user, mutateUser } = useUser();
-
-  const { addresses, mutateAddresses } = useAddresses({
-    user_id: user?.id,
-  });
 
   //   console.log(addresses);
   const { tracking, trackingIsLoading, mutateTracking } = useTracking({

@@ -4,7 +4,7 @@ import { Warehouse } from "@/models/warehouse.model";
 import useSWR from "swr";
 
 interface IProp {}
-export default function useWarehouses(props: IProp) {
+export default function useWarehouses() {
   const {
     data: warehouses,
     mutate: mutateWarehouses,

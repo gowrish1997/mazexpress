@@ -46,7 +46,8 @@ const UserBase = () => {
     const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
         per_page: itemsPerPage,
         page: currentPage,
-        is_admin: false,
+        include_admins: false,
+        include_users: true,
     });
     // console.log(allUser);
 

@@ -11,7 +11,6 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import { User } from "@/models/user.model";
-import useUsers from "@/lib/hooks/useUsers";
 interface IProp {
   content: string;
   title?: string;
