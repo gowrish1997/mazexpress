@@ -3,7 +3,6 @@ import fetchJson from "@/lib/fetchServer";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import useUser from "@/lib/hooks/useUser";
 import useUsers from "@/lib/hooks/useUsers";
-import { getUserImageString } from "@/lib/utils";
 import { User } from "@/models/user.model";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

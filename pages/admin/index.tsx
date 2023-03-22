@@ -35,12 +35,12 @@ const AdminHome = () => {
         <WarehouseOrders />
       </div>
       <div className="flex-type3 gap-x-[10px] h-[300px] relative ">
-        {/* <StatGraph />
-        <OrdersTotalCountBar /> */}
+        <StatGraph />
+        <OrdersTotalCountBar />
       </div>
       <div className="flex-type3 gap-x-[10px]  h-[420px]">
-        {/* <StatLiveOrdres />
-        <RecentCustomers /> */}
+        <StatLiveOrdres />
+        <RecentCustomers />
       </div>
     </div>
   );

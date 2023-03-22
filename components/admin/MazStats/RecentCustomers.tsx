@@ -2,13 +2,12 @@ import React from "react";
 import Link from "next/link";
 import useUsers from "@/lib/hooks/useUsers";
 import { User } from "@/models/user.model";
-import { getUserImageString } from "@/lib/utils";
 import Image from "next/image";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import useUser from "@/lib/hooks/useUser";
 const RecentCustomers = () => {
-  const {user, mutateUser } = useUser()
-  
+  const { user, mutateUser } = useUser();
+
   const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
     per_page: 6,
   });
@@ -31,10 +30,13 @@ const RecentCustomers = () => {
           (users as User[]).length > 0 &&
           (users as User[])?.map((data: User) => {
             return (
-              <td className={`flex flex-row justify-start items-center`} key={data.id}>
+              <td
+                className={`flex flex-row justify-start items-center`}
+                key={data.email}
+              >
                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
                   <Image
-                    src={user?.avatar_url || '/user-images/default_user.png'}
+                    src={user?.avatar_url || "/user-images/default_user.png"}
                     fill
                     style={{ objectFit: "cover" }}
                     alt="profileImage"

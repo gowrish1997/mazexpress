@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
 import fetchServer from "@/lib/fetchServer";
-import { getUserImageString } from "@/lib/utils";
 import { createToast } from "@/lib/toasts";
 import axios from "axios";
 

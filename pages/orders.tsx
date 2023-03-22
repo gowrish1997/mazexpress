@@ -25,7 +25,7 @@ const tableHeaders = [
 const MyOrders = () => {
   const { user, mutateUser } = useUser();
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    user_id: user?.id as string,
+    username: user?.email as string,
   });
 
   const router = useRouter();
@@ -49,7 +49,7 @@ const MyOrders = () => {
     router.push(`/add-new-order`);
   };
   if (ordersIsLoading) {
-      return <LoadingPage />;
+    return <LoadingPage />;
   }
 
   if (ordersError) throw ordersError;

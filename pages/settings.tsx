@@ -14,7 +14,7 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
 import useUser from "@/lib/hooks/useUser";
 import { User } from "@/models/user.model";
-import { checkPassword, getUserImageString } from "@/lib/utils";
+import { checkPassword } from "@/lib/utils";
 import { createToast } from "@/lib/toasts";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";

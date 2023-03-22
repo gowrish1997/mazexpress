@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StatCard from "./StatCard";
 import MazStatsDropddown from "./MazStatsDropddown";
 import useOrders from "@/lib/hooks/useOrders";
@@ -29,6 +29,12 @@ const WarehouseOrders = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (citySelection.length === 0) {
+      setCitySelection(["TRI", "MIS", "BNG"]);
+    }
+  }, [citySelection]);
 
   return (
     <StatCard>

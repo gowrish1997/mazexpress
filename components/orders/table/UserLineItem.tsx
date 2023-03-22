@@ -6,19 +6,17 @@ import { getDateInStringFormat } from "@/lib/helper";
 import useOrders from "@/lib/hooks/useOrders";
 import { User } from "@/models/user.model";
 import { Order } from "@/models/order.model";
-import { getUserImageString } from "@/lib/utils";
 import useUser from "@/lib/hooks/useUser";
 
 interface IProp {
   row: User;
   type: string;
   onSelect: (e: any, type: string) => void;
-
 }
 
 const UserLineItem = (props: IProp) => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    user_id: props.row.id,
+    username: props.row.email,
   });
   const { user, mutateUser } = useUser();
   // console.log(props.row.created_on);

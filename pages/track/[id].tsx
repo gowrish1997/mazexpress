@@ -18,7 +18,7 @@ const TrackOrder = (props: any) => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
   const { orders, ordersIsLoading } = useOrders({
-    user_id: user?.id as string,
+    username: user?.email as string,
   });
 
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
