@@ -14,7 +14,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const AdminHome = () => {
   const router = useRouter();
   const { locales, locale: activeLocale } = router;
-  console.log(activeLocale)
+  console.log(activeLocale);
   const { user, mutateUser } = useUser();
   useEffect(() => {
     // console.log("use efft");
@@ -35,12 +35,12 @@ const AdminHome = () => {
         <WarehouseOrders />
       </div>
       <div className="flex-type3 gap-x-[10px] h-[300px] relative ">
-        <StatGraph />
-        <OrdersTotalCountBar />
+        {/* <StatGraph />
+        <OrdersTotalCountBar /> */}
       </div>
       <div className="flex-type3 gap-x-[10px]  h-[420px]">
-        <StatLiveOrdres />
-        <RecentCustomers />
+        {/* <StatLiveOrdres />
+        <RecentCustomers /> */}
       </div>
     </div>
   );

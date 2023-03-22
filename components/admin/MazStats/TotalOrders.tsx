@@ -12,11 +12,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 
-
 import { getDateInStringFormat } from "@/lib/helper";
 import Calendar from "react-calendar";
 
 import ClickOutside from "@/components/common/ClickOutside";
+import useOrderCount from "@/lib/hooks/useOrderCount";
+import { getDateInDBFormat } from "@/lib/utils";
 
 const options = [
   // { value: "", label: "all" },
@@ -30,10 +31,18 @@ const TotalOrders = () => {
   const [statusSelection, setStatusSelection] = useState<(string | number)[]>(
     []
   );
-  const { orders: totalOrders, mutateOrders: mutateTotalOrders } = useOrders({
-    count_all: true,
-    count: true,
-    status: statusSelection as string[],
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const { orderCount, mutateOrderCount } = useOrderCount({
+    // status: statusSelection as string[],
+    status: [
+      "pending",
+      "at-warehouse",
+      "in-transit",
+      "out-for-delivery",
+      "delivered",
+    ],
+    date: selectedDate ? getDateInDBFormat(selectedDate as Date) : undefined,
   });
 
   const statusChangeHandler = (value: string | number) => {
@@ -49,9 +58,6 @@ const TotalOrders = () => {
 
   const trigger = useRef<any>(null);
 
-  const [selectedDate, setSelectedDate] = useState<Date | string>(new Date());
-  const [showCalendar, setShowCalendar] = useState<boolean>(false);
-
   const toggleCalendar = () => {
     setShowCalendar((prev) => !prev);
   };
@@ -66,8 +72,8 @@ const TotalOrders = () => {
   };
 
   useEffect(() => {
-    console.log(totalOrders);
-  }, [statusSelection]);
+    console.log(orderCount);
+  }, [selectedDate]);
 
   return (
     // <StatCard>
@@ -103,11 +109,12 @@ const TotalOrders = () => {
             }
             ref={trigger}
           >
-            <span className="box-border  text-center">
+            <span className="box-border text-center">
               {moment(selectedDate).format("DD-MM-YYYY") ===
               moment(new Date()).format("DD-MM-YYYY")
                 ? "today"
                 : getDateInStringFormat(selectedDate as Date)}
+              {!selectedDate && "no date selected"}
             </span>
             <div className="relative h-[6px] w-[8px]  ">
               <Image
@@ -118,6 +125,11 @@ const TotalOrders = () => {
               />
             </div>
           </div>
+          {selectedDate && (
+            <span className="mx-2" onClick={() => setSelectedDate(null)}>
+              x
+            </span>
+          )}
 
           {showCalendar ? (
             <ClickOutside handler={smartToggleGateHandler} trigger={trigger}>
@@ -152,7 +164,7 @@ const TotalOrders = () => {
         </div>
       </div>
       <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">
-        {totalOrders as number}
+        {orderCount}
       </p>
     </StatCard>
   );

@@ -20,8 +20,7 @@ export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
   const session = await getIronSession(req, res, sessionOptions);
 
-  // console.log("from middleware", session);
-  // console.log("from middleware", session);
+  console.log("from middleware", session);
 
   // console.log(session.user?.[0].lang)
   // add redirect to correct locale here...
@@ -29,6 +28,7 @@ export const middleware = async (req: NextRequest) => {
   // add restrictions to user for admin routes
   if (session.user) {
     // user is present do not allow login page
+    // console.log(first)
     if (req.nextUrl.pathname.startsWith("/auth")) {
       return NextResponse.redirect(new URL("/", req.url), {
         statusText: "Unauthorized.",
@@ -62,9 +62,11 @@ export const middleware = async (req: NextRequest) => {
 
   // demo:
   if (!session.user) {
-    return NextResponse.redirect(new URL("/auth/gate", req.url), {
-      statusText: "Unauthorized.",
-    });
+    if (!req.nextUrl.pathname.startsWith("/auth/gate")) {
+      return NextResponse.redirect(new URL("/auth/gate", req.url), {
+        statusText: "Unauthorized.",
+      });
+    }
   }
 
   // if (req.nextUrl.locale == "ar") {
@@ -102,7 +104,7 @@ export const config = {
 
     // deploy
     // match all except these links
-    "/((?!api|_next/static|_next/image|favicon.ico|auth/gate|image|$).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|image|$).*)",
 
     // dev
     // match none

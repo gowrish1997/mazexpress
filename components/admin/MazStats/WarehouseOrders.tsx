@@ -2,26 +2,26 @@ import React, { useState } from "react";
 import StatCard from "./StatCard";
 import MazStatsDropddown from "./MazStatsDropddown";
 import useOrders from "@/lib/hooks/useOrders";
+import useOrderCount from "@/lib/hooks/useOrderCount";
 const options = [
   { value: "", label: "All" },
-  { value: "benghazi", label: "Benghazi" },
-  { value: "misrata", label: "Misrata" },
-  { value: "tripoli", label: "Tripoli" },
+  { value: "BNG", label: "Benghazi" },
+  { value: "MIS", label: "Misrata" },
+  { value: "TRI", label: "Tripoli" },
 ];
 
 const WarehouseOrders = () => {
   const [selectedDate, setSelectedDate] = useState("");
-  const [statusSelection, setStatusSelection] = useState<string[]>([]);
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    status: statusSelection,
-    count: true,
-    // count_all: true
-  });
+  const [citySelection, setCitySelection] = useState<string[]>([]);
+  const { orderCount, mutateOrderCount, orderCountIsLoading, orderCountError } =
+    useOrderCount({
+      city: citySelection,
+    });
 
   const wareHouseChangeHanlder = (value: string | number) => {
     // console.log(value);
 
-    setStatusSelection((prev) => {
+    setCitySelection((prev) => {
       if (prev.includes(value as string)) {
         return prev.filter((el) => el !== value);
       } else {
@@ -40,11 +40,11 @@ const WarehouseOrders = () => {
           options={options}
           header="city"
           onChange={wareHouseChangeHanlder}
-          selection={statusSelection}
+          selection={citySelection}
         />
       </div>
       <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">
-        {orders as number}
+        {orderCount}
       </p>
     </StatCard>
   );
