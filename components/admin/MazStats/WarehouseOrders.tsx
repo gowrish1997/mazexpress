@@ -4,7 +4,7 @@ import MazStatsDropddown from "./MazStatsDropddown";
 import useOrders from "@/lib/hooks/useOrders";
 import useOrderCount from "@/lib/hooks/useOrderCount";
 const options = [
-  { value: "", label: "All" },
+  { value: "all", label: "All" },
   { value: "BNG", label: "Benghazi" },
   { value: "MIS", label: "Misrata" },
   { value: "TRI", label: "Tripoli" },
@@ -12,29 +12,40 @@ const options = [
 
 const WarehouseOrders = () => {
   const [selectedDate, setSelectedDate] = useState("");
-  const [citySelection, setCitySelection] = useState<string[]>([]);
+  const [citySelection, setCitySelection] = useState<string[]>([
+    "TRI",
+    "MIS",
+    "BNG",
+  ]);
   const { orderCount, mutateOrderCount, orderCountIsLoading, orderCountError } =
     useOrderCount({
-      city: citySelection,
+      city: citySelection.length > 0 ? citySelection : undefined,
     });
 
   const wareHouseChangeHanlder = (value: string | number) => {
     // console.log(value);
-
-    setCitySelection((prev) => {
-      if (prev.includes(value as string)) {
-        return prev.filter((el) => el !== value);
+    if (value === "all") {
+      // set all
+      if (citySelection.length === 3) {
+        // unselect
+        setCitySelection([]);
       } else {
-        return [...prev, value as string];
+        setCitySelection(["TRI", "MIS", "BNG"]);
       }
-    });
+    } else {
+      setCitySelection((prev) => {
+        if (prev.includes(value as string)) {
+          return prev.filter((el) => el !== value);
+        } else {
+          return [...prev, value as string];
+        }
+      });
+    }
   };
 
   useEffect(() => {
-    if (citySelection.length === 0) {
-      setCitySelection(["TRI", "MIS", "BNG"]);
-    }
-  }, [citySelection]);
+    console.log(orderCount)
+  }, [orderCount])
 
   return (
     <StatCard>
