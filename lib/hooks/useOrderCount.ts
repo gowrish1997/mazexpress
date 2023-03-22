@@ -5,6 +5,7 @@
 import { APIResponse } from "@/models/api.model";
 import { Order } from "@/models/order.model";
 import useSWR from "swr";
+import { QS } from "@/components/common/QS";
 
 interface IProps {
   username?: string;
@@ -17,26 +18,14 @@ interface IProps {
   city?: string[]
 }
 export default function useOrders(props: IProps) {
-  let queryString = "";
-  if (Object.keys(props).length > 0) {
-    queryString += "?";
-  }
-
-  for (var i = 0; i < Object.keys(props).length; i++) {
-    const field = Object.keys(props)[i];
-    if (props[field as keyof typeof props] !== undefined) {
-      queryString += `${field}=${props[field as keyof typeof props]}`;
-      if (i !== Object.keys(props).length - 1) {
-        queryString += "&";
-      }
-    }
-  }
+  const qs = new QS(props)
+  // qs.clg("pd")
   const {
     data: orderCount,
     mutate: mutateOrderCount,
     isLoading: orderCountIsLoading,
     error: orderCountError,
-  } = useSWR<APIResponse<Order>>(`/api/orders/count` + queryString);
+  } = useSWR<APIResponse<Order>>(`/api/orders/count` + qs.stringified);
 
   return {
     orderCount: orderCount?.count,

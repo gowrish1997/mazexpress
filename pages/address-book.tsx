@@ -20,8 +20,8 @@ const AddressBook = () => {
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
   const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
-    user_id: user?.id,
-    status: "active",
+    username: user?.email,
+    status: ["active"],
   });
 
   const router = useRouter();
@@ -51,6 +51,13 @@ const AddressBook = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(addresses)
+  
+   
+  }, [addresses])
+  
+
   return (
     <>
       <PageHeader
@@ -59,19 +66,17 @@ const AddressBook = () => {
       />
       <div className="grid grid-cols-3 gap-3 py-5">
         {addresses &&
-          (addresses as Address[])
-            ?.filter((el) => el.status === 'active')
-            .map((data) => {
-              return (
-                <UserSavedAddress
+          (addresses as Address[]).map((data) => {
+            return (
+              <UserSavedAddress
                 type="address-book"
-                  key={data.id}
-                  address={data}
-                  edit={toggleEditUserAddressModal}
-                  update={mutateAddresses}
-                />
-              );
-            })}
+                key={data.id}
+                address={data}
+                edit={toggleEditUserAddressModal}
+                update={mutateAddresses}
+              />
+            );
+          })}
       </div>
       <div>
         <button
