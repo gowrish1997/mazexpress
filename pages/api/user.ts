@@ -17,8 +17,16 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse) {
       if (req.session.user) {
         console.log('session user', req.session.user);
         // check for updates with a preflight call and then update user
-        // let preflight = false;
-        const preflight: boolean = await fetchServer(`/api/users/preflight`, {
+        let preflight: boolean = false;
+        
+        // if(!process.env.NODE_ENV === "production"){
+        //   preflight = await fetchServer(`/api/users/preflight`, {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({ user: req.session.user }),
+        //   });
+        // }
+        preflight = await fetchServer(`/api/users/preflight`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ user: req.session.user }),

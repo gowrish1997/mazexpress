@@ -122,9 +122,19 @@ const Settings = () => {
     setShowProfilePicPop((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<User & { newPassword: string }> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<
+    Pick<
+      User,
+      | "first_name"
+      | "last_name"
+      | "email"
+      | "phone"
+      | "lang"
+      | "password"
+      | "avatar_url"
+      | "is_notifications_enabled"
+    > & { newPassword: string }
+  > = async (data) => {
     console.log("settings submission", data);
     // let picked: Pick<
     //   User,
