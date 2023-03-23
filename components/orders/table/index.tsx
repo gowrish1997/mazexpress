@@ -42,14 +42,6 @@ const Table = (props: TableProps) => {
         }
     };
 
-    useEffect(() => {
-        let sort = props.rows.sort(
-            (a, b) =>
-                new Date(a.created_on).getTime() -
-                new Date(b.created_on).getTime()
-        );
-        console.log(sort);
-    }, []);
 
     return (
         <div className="flex-1 relative">
@@ -130,17 +122,9 @@ const Table = (props: TableProps) => {
                             })}
                     </tbody>
                 ) : (
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    <tr className="w-[100%] h-[300px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[30px] whitespace-nowrap flex  ">
-=======
                     <div className="w-f h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] whitespace-nowrap ">
->>>>>>> Stashed changes
-=======
-                    <div className="w-f h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] whitespace-nowrap ">
->>>>>>> Stashed changes
                         No results found
-                    </tr>
+                    </div>
                 )}
             </table>
         </div>
