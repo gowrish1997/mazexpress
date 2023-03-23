@@ -1,6 +1,7 @@
 import { QS } from "@/components/common/QS";
 import { APIResponse } from "@/models/api.model";
 import { User } from "@/models/user.model";
+import user from "@/pages/api/user";
 import useSWR from "swr";
 
 interface IProps {

@@ -8,7 +8,6 @@ import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
 
-
 const WarehouseCard = (props: { address: Warehouse; update: () => void }) => {
     const wareHouseStatusColorHandler = (status: string) => {
         switch (status) {
@@ -35,15 +34,19 @@ const WarehouseCard = (props: { address: Warehouse; update: () => void }) => {
     };
 
     const deleteWarehouseHandler = async () => {
-        const result = await fetchJson(
-            `/api/warehouses?id=${props.address.id}`,
-            {
-                method: "DELETE",
-            }
-        );
-        if (result.ok)
-            // console.log(result)
-            props.update();
+        try {
+            const result = await fetchJson(
+                `/api/warehouses?id=${props.address.id}`,
+                {
+                    method: "DELETE",
+                }
+            );
+            if (result.ok)
+                // console.log(result)
+                props.update();
+        } catch (error) {
+            console.error(error);
+        }
     };
     return (
         <div className="min-w-[32%] min-h-[180px] bg-[#EDF5F9] rounded-[4px] p-[25px] ">

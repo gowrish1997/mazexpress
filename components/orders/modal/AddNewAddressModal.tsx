@@ -11,11 +11,13 @@ import { Address } from "@/models/address.model";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import CustomDropdown from "@/components/LandingPage/CustomDropdown";
+import useAddresses from "@/lib/hooks/useAddresses";
 
 interface IProp {
   show: boolean;
   close: () => void;
   update: () => void;
+  updateuser?: () => void;
 }
 
 const schema = yup
@@ -26,9 +28,14 @@ const schema = yup
   .required();
 
 const AddNewAddressModal = (props: IProp) => {
+  const { user, mutateUser } = useUser();
+  const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
+    username: user?.email,
+    status: ["active"],
+  });
+
   const [country, setCountry] = useState("LY");
   const [addressIsDefault, setAddressIsDefault] = useState(false);
-  const { user, mutateUser } = useUser();
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
@@ -52,13 +59,13 @@ const AddNewAddressModal = (props: IProp) => {
     formState: { errors },
   } = useForm<Address & { default: "on" | "off" }>({
     defaultValues: {
-      address_1: "#202, gold fields",
-      address_2: "الفويهات الشمالي،,",
-      city: "benghazi",
+      address_1: "Gold fields",
+      address_2: "Sheik street St",
+      city: "Tripoli",
       country: "Libya",
       default: "on",
-      phone: 214441777,
-      tag: "فندق زهرة البطنان (Zahrat Al-batnan Hotel)",
+      phone: 214441792,
+      tag: "Al Mshket Hotel",
     },
     resolver: yupResolver(schema),
   });
@@ -74,24 +81,32 @@ const AddNewAddressModal = (props: IProp) => {
       // console.log(data);
 
       // add address
-      const addressResult = await fetchJson(`/api/addresses/${user.email}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(address),
-      });
-      console.log(addressResult);
 
-      // set default if checked
-      if (data.default) {
-        const userResult = await fetchJson(`/api/users/${user?.email}`, {
-          method: "PUT",
+      try {
+        const addressResult = await fetchJson(`/api/addresses`, {
+          method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ default_address: addressResult.data?.[0].id }),
+          body: JSON.stringify(address),
         });
+        console.log(addressResult);
+        if (data.default || addresses?.length == 0) {
+          const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              default_address: addressResult.data?.[0].id,
+            }),
+          });
+        }
+
+        props.close();
+        props.update();
+        props.updateuser?.();
+      } catch (error) {
+        console.log(error);
       }
 
-      props.close();
-      props.update();
+      // set default if checked
     }
   };
 

@@ -1,7 +1,3 @@
-//==========================
-//     written by: raunak
-//==========================
-
 import fetchServer from "@/lib/fetchServer";
 import { APIResponse } from "@/models/api.model";
 import { User } from "@/models/user.model";
@@ -78,3 +74,4 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 }
+

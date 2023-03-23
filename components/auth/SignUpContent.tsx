@@ -106,7 +106,7 @@ const SignUpContent = (props: IProp) => {
         getValues,
         formState: { errors },
     } = useForm<ISignupForm>({
-        // resolver: yupResolver(schema),
+        resolver: yupResolver(schema),
         defaultValues: {
             user: {
                 age: "22",

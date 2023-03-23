@@ -13,16 +13,20 @@ import useOrderCount from "@/lib/hooks/useOrderCount";
 const warehouse = ["istanbul"];
 
 const LiveOrderPageHeader = (props: IPageHeaderProp) => {
-  const perPageOptions = perPageOptinsList();
-  const { orderCount, mutateOrderCount, orderCountError, orderCountIsLoading } =
-    useOrderCount({});
-  //   console.log(orderCount);
-  const packageStatusDropDownOptoin = useMemo(() => {
-    return ["all status", "pending", "in-transit", "at-warehouse", "delivered"];
-  }, []);
-  const warehouseDropDownOption = useMemo(() => {
-    return ["istanbul"];
-  }, []);
+    const perPageOptions = perPageOptinsList();
+
+    const packageStatusDropDownOptoin = useMemo(() => {
+        return [
+            "all status",
+            "pending",
+            "in-transit",
+            "at-warehouse",
+            "delivered",
+        ];
+    }, []);
+    const warehouseDropDownOption = useMemo(() => {
+        return ["istanbul"];
+    }, []);
 
   //         setPackageStatusDropDownOptoin((prev) => {
   //             return ["all status", ...(Array.from(packageStatus) as string[])];
@@ -30,27 +34,27 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
   //     }
   // }, [props.allLiveOrders]);
 
-  return (
-    <>
-      <div
-        className={
-          "w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative z-10 "
-        }
-      >
-        <Head>
-          <title>{props.title}</title>
-        </Head>
-        <PageheaderTitle
-          content={props.content}
-          allLiveOrders={props.allLiveOrders}
-          filterByDate={props.filterByDate}
-        />
-        <ReactPaginateComponent
-          pageCount={Math.ceil((orderCount || 0) / props.itemsPerPage)}
-          currentPageHandler={props.currentPageHandler}
-          itemsPerPage={props.itemsPerPage}
-          currentPage={props.currentPage}
-        />
+    return (
+        <>
+            <div
+                className={
+                    "w-full flex-type3 border-b-[1px] border-b-[#E3E3E3] pb-[20px] px-[5px] relative z-10 "
+                }
+            >
+                <Head>
+                    <title>{props.title}</title>
+                </Head>
+                <PageheaderTitle
+                    content={props.content}
+                    allLiveOrders={props.allLiveOrders}
+                    filterByDate={props.filterByDate}
+                />
+                <ReactPaginateComponent
+                    pageCount={props.pageCount!}
+                    currentPageHandler={props.currentPageHandler}
+                    itemsPerPage={props.itemsPerPage}
+                    currentPage={props.currentPage}
+                />
 
         {(props.allLiveOrders ||
           !props.statusFilterKey?.includes("all status")) && (

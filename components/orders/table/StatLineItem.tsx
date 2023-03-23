@@ -25,6 +25,7 @@ const StatLineItem = (props: IProp) => {
   const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
     username: props.row.user.email,
   });
+  console.log(users)
   const { user, mutateUser } = useUser();
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
     order_id: props.row.id,

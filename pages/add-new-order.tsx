@@ -22,6 +22,10 @@ import { useTranslation } from "next-i18next";
 
 const schema = yup
   .object({
+    address_id: yup
+      .string()
+      .required("Adress is required field")
+      .typeError("Adress is required field"),
     reference_id: yup.string().required("Reference ID is required field"),
     store_link: yup.string().required("Store Link is required field"),
   })
@@ -35,7 +39,7 @@ const AddNewOrder = () => {
   const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses } = useAddresses({
     username: user?.email,
-    status: ['active']
+    status: ["active"],
   });
 
   const router = useRouter();
@@ -58,7 +62,7 @@ const AddNewOrder = () => {
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
   const defaultAddressHandler = () => {
-    mutateAddresses();
+    // mutateAddresses();
     const address = (addresses as Address[])?.find(
       (el) => el.id === user?.default_address
     );
@@ -70,6 +74,7 @@ const AddNewOrder = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<{
     reference_id: string;
@@ -122,12 +127,21 @@ const AddNewOrder = () => {
         body: JSON.stringify(orderObj),
       });
       // console.log(result);
-
-      createToast({
-        type: "success",
-        title: "Success",
-        message: "Created order successfully",
-      });
+      if (result.ok) {
+        createToast({
+          type: "success",
+          title: "Success",
+          message: "Created order successfully",
+          timeOut: 1000,
+        });
+      } else {
+        createToast({
+          type: "error",
+          title: "An error occurred",
+          message: "Order create pipe failed, contact dev",
+          timeOut: 3000,
+        });
+      }
     } catch (err) {
       console.log(err);
       createToast({
@@ -183,23 +197,33 @@ const AddNewOrder = () => {
             </span>
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-3 py-5">
-          {addresses &&
-            addresses !== null &&
-            (addresses as Address[]).map((data: Address) => {
-              return (
-                <UserSavedAddress
-                  type="add-new-order"
-                  key={data.id}
-                  address={data}
-                  register={register("address_id")}
-                  edit={toggleEditUserAddressModal}
-                  update={mutateAddresses}
-                  updateDeliveryAddress={updataDeliveryAdressId}
-                />
-              );
-            })}
-        </div>
+        {errors.address_id?.message && (
+          <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px] mt-[10px] ">
+            {errors.address_id.message}
+          </p>
+        )}
+        {addresses && addresses.length > 0 && (
+          <div className="grid grid-cols-3 gap-3 py-5">
+            {addresses &&
+              addresses !== null &&
+              (addresses as Address[]).map((data: Address) => {
+                return (
+                  <UserSavedAddress
+                    type="add-new-order"
+                    key={data.id}
+                    address={data}
+                    allAddresses={addresses}
+                    register={register("address_id")}
+                    edit={toggleEditUserAddressModal}
+                    update={mutateAddresses}
+                    updateDeliveryAddress={updataDeliveryAdressId}
+                    selectedAddressId={getValues("address_id")}
+                  />
+                );
+              })}
+          </div>
+        )}
+
         <button
           className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
           type="submit"
@@ -212,6 +236,7 @@ const AddNewOrder = () => {
         show={showAddNewAddressModal}
         close={toggleAddNewAddressModal}
         update={mutateAddresses}
+        updateuser={mutateUser}
       />
       {showEditUserAddressModal && (
         <EditUserAddressModal

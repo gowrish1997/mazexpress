@@ -39,6 +39,7 @@ const Index = () => {
   var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
 
   const { user, mutateUser } = useUser();
+  console.log(user)
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
   const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -120,9 +121,7 @@ const Index = () => {
     setShowPackageTrackingModal(false);
   };
 
-  useEffect(() => {
-    console.log(user)
-  }, [user])
+  console.log(user)
 
   return (
     <>

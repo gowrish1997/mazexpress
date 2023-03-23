@@ -10,11 +10,11 @@ interface IProp {
 }
 
 const ReactPaginateComponent = (props: IProp) => {
-  //   console.log(props.pageCount)
-  // const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-  //   count:true,status:['pending']
-  // });
-  // console.log(orders)
+
+    // const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    //   count:true,status:['pending']
+    // });
+    // console.log(orders)
 
   const [currentPage, setCurrentPage] = useState(0);
 

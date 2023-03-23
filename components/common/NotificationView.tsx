@@ -27,7 +27,8 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
         const { user, mutateUser } = useUser();
         const { notifications, notificationsIsLoading, mutateNotifications } =
             useNotifications({
-                user_id: user?.id,
+                type: "get_by_user_id",
+                user_id: user?.email,
                 status: ["unread", "read"],
             });
 
@@ -35,29 +36,9 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             useState<Notification[]>();
 
         const deleteNotification = async (id: string) => {
-            const deletedNotification = await fetchServer(
-                `/api/notifications?id=${id}`,
-                {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        status: "deleted",
-                    }),
-                }
-            );
-            if (deletedNotification) {
-                console.log("done delete");
-                props.update();
-                mutateNotifications();
-            } else {
-                console.log("delete failed");
-            }
-        };
-
-        const clearAllNotificatons = async () => {
-            for (let i = 0; i < notifications.length; i++) {
+            try {
                 const deletedNotification = await fetchServer(
-                    `/api/notifications?id=${notifications[i].id}`,
+                    `/api/notifications?id=${id}`,
                     {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -73,6 +54,34 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                 } else {
                     console.log("delete failed");
                 }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const clearAllNotificatons = async () => {
+            try {
+                for (let i = 0; i < notifications.length; i++) {
+                    const deletedNotification = await fetchServer(
+                        `/api/notifications?id=${notifications[i].id}`,
+                        {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                status: "deleted",
+                            }),
+                        }
+                    );
+                    if (deletedNotification) {
+                        console.log("done delete");
+                        props.update();
+                        mutateNotifications();
+                    } else {
+                        console.log("delete failed");
+                    }
+                }
+            } catch (error) {
+                console.error(error);
             }
         };
 
@@ -82,9 +91,9 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             }
         }, [notificationsIsLoading, notifications]);
 
-        useEffect(() => {
-            console.log(userNotifications);
-        }, [userNotifications]);
+        // useEffect(() => {
+        //     console.log(userNotifications);
+        // }, [userNotifications]);
 
         return (
             <ClickOutside trigger={props.trigger} handler={props.handler}>
@@ -135,13 +144,16 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                             </div>
                         )}
                     </div>
-                    {notifications?  <p
-                        className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
-                        onClick={clearAllNotificatons}
-                    >
-                        Clear all Notifications...
-                    </p>:""}
-                  
+                    {notifications ? (
+                        <p
+                            className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
+                            onClick={clearAllNotificatons}
+                        >
+                            Clear all Notifications...
+                        </p>
+                    ) : (
+                        ""
+                    )}
                 </div>
             </ClickOutside>
         );

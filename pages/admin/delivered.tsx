@@ -9,7 +9,7 @@ import LoadingPage from "@/components/common/LoadingPage";
 import { Order } from "@/models/order.model";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { getDateInDBFormat } from "@/lib/utils";
+import { SearchKeyContext } from "@/components/common/Frame";
 
 const tableHeaders = [
   "Customer",
@@ -23,7 +23,7 @@ const tableHeaders = [
 
 const DeliveredOrders = () => {
   const router = useRouter();
-
+  const { searchKey } = React.useContext(SearchKeyContext) as any;
   const [itemsPerPage, setItemPerPage] = useState(25);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -31,10 +31,10 @@ const DeliveredOrders = () => {
     Date | string
   >("");
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    search: searchKey,
     per_page: itemsPerPage,
     page: currentPage,
     status: ["delivered"],
-    date: getDateInDBFormat(createdDateFilterKey as Date),
   });
 
   const { locales, locale: activeLocale } = router;
@@ -45,8 +45,6 @@ const DeliveredOrders = () => {
   // }, []);
 
   const [selectedOrder, setSelectedOrder] = useState<string[]>();
-
-  const pageCount = Math.ceil((orders as Order[])?.length / itemsPerPage);
 
   const currentPageHandler = (value: number) => {
     setCurrentPage(value);
@@ -74,11 +72,10 @@ const DeliveredOrders = () => {
       <div>
         <DeliveredPageHeader
           content="Delivered"
-          allLiveOrders={orders as Order[]}
-          selectedOrder={selectedOrder}
+          allLiveOrders={orders?.data as Order[]}
           filterByDate={filterByCreatedDate}
           title="Delivered orders | MazExpress Admin"
-          pageCount={pageCount}
+          pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
           itemsPerPage={itemsPerPage}
           currentPageHandler={currentPageHandler}
           currentPage={currentPage}
@@ -86,15 +83,14 @@ const DeliveredOrders = () => {
         />
 
         <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders && <BlankPage />}
+          {!orders?.data && <BlankPage />}
           {orders && (
             <>
               <Table
-                rows={orders as Order[]}
+                rows={orders.data as Order[]}
                 headings={tableHeaders}
                 type="delivered"
                 onSelect={selectOrderHandler}
-                selectedOrder={selectedOrder!}
               />
             </>
           )}
