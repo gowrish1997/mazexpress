@@ -33,7 +33,6 @@ interface IProp {
     isFilterPresent?: boolean;
 }
 const PageHeader = (props: IProp) => {
-    console.log(props);
     const { user, mutateUser } = useUser();
     const { tracking, trackingIsLoading } = useTracking({
         user_id: user?.id,

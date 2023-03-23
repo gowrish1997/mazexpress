@@ -120,7 +120,6 @@ const Table = (props: TableProps) => {
                     </div>
                 )}
             </table>
-            {/* )} */}
         </div>
     );
 };

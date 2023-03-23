@@ -13,6 +13,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import LoadingPage from "@/components/common/LoadingPage";
 import { SearchKeyContext } from "@/components/common/Frame";
+import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
     "MAZ Tracking ID",
@@ -41,6 +42,7 @@ const MyOrders = () => {
         user_id: user?.email as string,
         per_page: itemsPerPage,
         page: currentPage,
+        date: getDateInDBFormat(createdDateFilterKey as Date),
     });
 
     console.log(orders);
@@ -79,7 +81,7 @@ const MyOrders = () => {
 
     const filterByCreatedDate = useCallback((value: Date | string) => {
         console.log(value);
-        // setCreatedDateFilterKey(value);
+        setCreatedDateFilterKey(value);
     }, []);
 
     if (ordersIsLoading) {

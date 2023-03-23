@@ -13,9 +13,11 @@ interface IProps {
     count_all?: boolean;
     count?: boolean;
     maz_id?: string;
+    date?: string;
     // future warehouse addition
 }
 export default function useOrders(props: IProps) {
+    console.log(props);
     //   console.log('calling use orders')
     console.log(props);
     let queryString = "";
