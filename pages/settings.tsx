@@ -86,14 +86,45 @@ const Settings = () => {
     getValues,
     reset,
     formState: { errors },
-  } = useForm<User & { newPassword: string }>({
-    resolver: yupResolver(schema),
+  } = useForm<
+    Pick<
+      User,
+      | "first_name"
+      | "last_name"
+      | "email"
+      | "phone"
+      | "lang"
+      | "password"
+      | "avatar_url"
+      | "is_notifications_enabled"
+    > & { newPassword: string }
+  >({
+    /**
+     * removed resolver temporarily for update user function in backend
+     * 
+     * add back error before deploy copy from admin/settings 
+     * 
+     */
+    // resolver: yupResolver(schema),
     defaultValues: { ...user, password: "" },
   });
 
   useEffect(() => {
     // console.log(user);
-    reset({ ...user, password: "" });
+    reset({
+      ...(user as Pick<
+        User,
+        | "first_name"
+        | "last_name"
+        | "email"
+        | "phone"
+        | "lang"
+        | "password"
+        | "avatar_url"
+        | "is_notifications_enabled"
+      > & { newPassword: string }),
+    });
+    setPasswordCheck(false);
   }, [user, reset]);
 
   const languageOption: { value: string; label: string }[] = t(
@@ -134,9 +165,19 @@ const Settings = () => {
     setShowProfilePicPop((prev) => !prev);
   };
 
-  const onSubmit: SubmitHandler<User & { newPassword: string }> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<
+    Pick<
+      User,
+      | "first_name"
+      | "last_name"
+      | "email"
+      | "phone"
+      | "lang"
+      | "password"
+      | "avatar_url"
+      | "is_notifications_enabled"
+    > & { newPassword: string }
+  > = async (data) => {
     console.log("settings submission", data);
     try {
       // console.log(result);

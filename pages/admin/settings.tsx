@@ -163,19 +163,43 @@ const Settings = () => {
       }
 
       // update user here
-      const sendObj = data;
+      let sendObj: Pick<
+        User,
+        | "first_name"
+        | "last_name"
+        | "email"
+        | "phone"
+        | "lang"
+        | "password"
+        | "avatar_url"
+        | "is_notifications_enabled"
+      > & { newPassword?: string } = {
+        ...data,
+        password: data.newPassword,
+      };
+      delete sendObj.newPassword;
+
+      // console.log("sendObj", sendObj);
 
       const updateRes = await fetchJson(`/api/users/${user?.email}`, {
         method: "PUT",
-
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
+        body: JSON.stringify(sendObj),
       });
-      createToast({
-        type: "success",
-        title: "Success",
-        message: "Updated user.",
-      });
+      // console.log(updateRes)
+      if (updateRes.ok === true) {
+        createToast({
+          type: "success",
+          title: "Success",
+          message: "Updated user.",
+        });
+      } else {
+        createToast({
+          type: "error",
+          title: "Error in user update, contact dev",
+          message: "Update user failed.",
+        });
+      }
     } catch (err) {
       console.error(err);
       createToast({
