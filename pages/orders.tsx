@@ -28,7 +28,6 @@ const MyOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     console.log(searchKey);
 
-
     const [itemsPerPage, setItemPerPage] = useState<number>(5);
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -38,9 +37,8 @@ const MyOrders = () => {
     const { user, mutateUser } = useUser();
     console.log(user);
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        type: "get_by_user_id",
         search: searchKey,
-        user_id: user?.email as string,
+        username: user?.email as string,
         per_page: itemsPerPage,
         page: currentPage,
         date: getDateInDBFormat(createdDateFilterKey as Date),

@@ -39,7 +39,7 @@ const UserSavedAddress = (props: {
             ) {
                 console.log("delteing default address");
                 const updateResponse = await fetchServer(
-                    `/api/users?id=${user?.id}`,
+                    `/api/users?email=${user?.email}`,
                     {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -110,7 +110,9 @@ const UserSavedAddress = (props: {
                         // checked={
                         //     props.selectedAddressId === props.address.id
                         // }
-                        defaultChecked={user?.default_address === props.address.id}
+                        defaultChecked={
+                            user?.default_address === props.address.id
+                        }
                         value={props.address.id}
                         {...props.register}
                         className="cursor-pointer mt-[4px]"

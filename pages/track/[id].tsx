@@ -18,7 +18,7 @@ const TrackOrder = (props: any) => {
     const router = useRouter();
     const { user, mutateUser } = useUser();
     const { orders, ordersIsLoading } = useOrders({
-        user_id: user?.email as string,
+        username: user?.email as string,
     });
 
     const { tracking, mutateTracking, trackingIsLoading } = useTracking({
@@ -85,7 +85,7 @@ const TrackOrder = (props: any) => {
                             {t("trackingView.listOfTrackingId.Title")}
                         </div>
                         <div className="space-y-[10px]">
-                            {(orders as Order[])?.map((data) => {
+                            {(orders?.data as Order[])?.map((data) => {
                                 return (
                                     <Link
                                         href={`/track/${data.maz_id}`}

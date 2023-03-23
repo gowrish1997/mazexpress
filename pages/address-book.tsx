@@ -20,15 +20,14 @@ const AddressBook = () => {
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
     const { user, mutateUser } = useUser();
     const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
-        type: "get_by_user_id",
-        user_id: user?.email,
-        status: "active",
+        username: user?.email,
+        status: ["active"],
     });
 
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
-    console.log(addresses)
+    console.log(addresses);
 
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";

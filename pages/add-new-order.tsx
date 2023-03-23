@@ -38,9 +38,8 @@ const AddNewOrder = () => {
         useState<boolean>(false);
     const { user, mutateUser } = useUser();
     const { addresses, mutateAddresses } = useAddresses({
-        type: "get_by_user_id",
-        user_id: user?.email,
-        status: "active"
+        username: user?.email,
+        status: ["active"],
     });
 
     const router = useRouter();
@@ -114,7 +113,7 @@ const AddNewOrder = () => {
         store_link: string | null | undefined;
         address_id: string | null | undefined;
     }> = async (data) => {
-        console.log("sunmit")
+        console.log("sunmit");
         console.log(data);
         // try {
         //     let orderObj = {
@@ -217,7 +216,9 @@ const AddNewOrder = () => {
                                         updateDeliveryAddress={
                                             updataDeliveryAdressId
                                         }
-                                        selectedAddressId={getValues('address_id')}
+                                        selectedAddressId={getValues(
+                                            "address_id"
+                                        )}
                                     />
                                 );
                             })}
