@@ -58,7 +58,11 @@ const UserSavedAddress = (props: {
             }
             const result = await fetchServer(
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 `/api/addresses/${props.address.id}`,
+=======
+                `/api/addresses?id=${props.address.id}`,
+>>>>>>> Stashed changes
 =======
                 `/api/addresses?id=${props.address.id}`,
 >>>>>>> Stashed changes

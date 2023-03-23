@@ -30,7 +30,11 @@ const MyOrders = () => {
     // console.log(searchKey);
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const [itemsPerPage, setItemPerPage] = useState<number>(25);
+=======
+    const [itemsPerPage, setItemPerPage] = useState<number>(20);
+>>>>>>> Stashed changes
 =======
     const [itemsPerPage, setItemPerPage] = useState<number>(20);
 >>>>>>> Stashed changes
