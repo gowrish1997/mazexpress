@@ -11,7 +11,7 @@ interface Iprop {
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
-    console.log(props.statusFilterKey);
+
     //   console.log("filter optindropdown");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
@@ -84,10 +84,10 @@ const FilterOptionDropDown = (props: Iprop) => {
         console.log("smart togglere");
         setShowAdminOptionCard(false);
     };
-    console.log(currentValue);
+    
 
     return (
-        <div className="relative z-40">
+        <div className="relative z-20">
             <button
                 className="box-border border-[1px] border-[#BBC2CF] h-[38px] w-[140px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] tracking-wider disabled:opacity-50 flex flex-row justify-between items-center space-x-[5px] relative cursor-pointer"
                 style={

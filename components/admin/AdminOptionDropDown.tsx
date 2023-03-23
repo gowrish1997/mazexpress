@@ -6,45 +6,56 @@ import * as XLSX from "xlsx";
 import ClickOutside from "../common/ClickOutside";
 import axios from "axios";
 import { Order } from "@/models/order.model";
+import fetchJson from "@/lib/fetchServer";
 interface Iprop {
     option?: string[];
     toggle?: (value?: string) => void;
     disabled?: boolean;
-    orders: Order[];
+    orders?: Order[];
     type?: string;
 }
 
 const AdminOptionDropDown = (props: Iprop) => {
-
     const trigger = useRef<any>(null);
 
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
-    const [selectedOrdersStage, setselectedOrdersStage] = useState(0);
+    const [selectedOrdersStage, setselectedOrdersStage] = useState<number>(0);
 
     useEffect(() => {
-        if (props.type == "in-transit" && props.orders?.length > 0) {
+        let allSelectedOrderStatus: string[] = [];
+
+        if (props.type == "in-transit" && props.orders?.length! > 0) {
             const getLatestStageHandler = async () => {
-                try {
-                    const result: any = await axios.post("/api/tracking", {
-                        orders: props.orders.map((data) => {
-                            return data.id;
-                        }),
-                    });
-                    console.log(result)
-
-                    const allEqual = () =>
-                        result.data.data.every(
-                            (val: any) => val === result.data.data[0]
+                for (let i = 0; i < props.orders?.length!; i++) {
+                    try {
+                        const result: any = await fetchJson(
+                            `/api/tracking?maz_id=${props.orders?.[i].maz_id}`,
+                            {
+                                method: "GET",
+                                headers: { "Content-type": "application/json" },
+                            }
                         );
-                    console.log(allEqual());
 
-                    if (allEqual()) {
-                        setselectedOrdersStage(result.data.data[0].stage);
-                    } else {
-                        setselectedOrdersStage(0);
+                        result.data.sort(
+                            (a: any, b: any) => a?.stage - b?.stage
+                        );
+
+                        allSelectedOrderStatus.push(result.data.pop()?.stage!);
+                    } catch (error: any) {
+                        console.log(error.message);
                     }
-                } catch (error: any) {
-                    console.log(error.message);
+                }
+
+                const allEqual = () => {
+                    return allSelectedOrderStatus.every(
+                        (data, index) => data == allSelectedOrderStatus[0]
+                    );
+                };
+
+                if (allEqual()) {
+                    setselectedOrdersStage(allSelectedOrderStatus[0]! as any);
+                } else {
+                    setselectedOrdersStage(0);
                 }
             };
 
@@ -67,7 +78,7 @@ const AdminOptionDropDown = (props: Iprop) => {
 
     const exportToCSV = () => {
         // console.log("downloading");
-        const ws = XLSX.utils.json_to_sheet(props.orders);
+        const ws = XLSX.utils.json_to_sheet(props.orders!);
         const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
         const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
         const data1 = new Blob([excelBuffer], { type: fileType });
@@ -130,17 +141,18 @@ const AdminOptionDropDown = (props: Iprop) => {
                         {props.type == "in-transit" &&
                             props.option &&
                             props.option.map((data, index) => {
-                                if (index + 2 == selectedOrdersStage)
-                                    return (
-                                        <button
-                                            key={index}
-                                            className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                            onClick={() => props.toggle?.(data)}
-                                            disabled={props.disabled}
-                                        >
-                                            {data}
-                                        </button>
-                                    );
+                                return (
+                                    <button
+                                        key={index}
+                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                        onClick={() => props.toggle?.(data)}
+                                        disabled={
+                                            !(index + 2 == selectedOrdersStage)
+                                        }
+                                    >
+                                        {data}
+                                    </button>
+                                );
                             })}
 
                         {/* {props.type == "in-transit" && (

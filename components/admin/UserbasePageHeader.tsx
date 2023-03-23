@@ -15,7 +15,7 @@ import useUsers from "@/lib/hooks/useUsers";
 interface IProp {
     content: string;
     title?: string;
-    selectedUser?:any;
+    selectedUser?: any;
     allUsers: User[];
     filterByDate: (value: Date | string) => void;
     pageCount: number;
@@ -27,6 +27,7 @@ interface IProp {
 }
 
 const UserbasePageHeader = (props: IProp) => {
+    console.log(props);
     const perPageOptions = perPageOptinsList();
     const [
         showSendNotificatoinConfirmModal,
@@ -90,8 +91,7 @@ const UserbasePageHeader = (props: IProp) => {
                                     ? ["Remove admin"]
                                     : []
                             }
-                            orders={props.selectedUser}
-                        toggle={toggleRemoveAdminConfirmModal}
+                            toggle={toggleRemoveAdminConfirmModal}
                             disabled={!props.selectedUser?.length}
                         />
                     </div>

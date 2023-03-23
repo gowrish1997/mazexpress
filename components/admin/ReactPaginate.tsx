@@ -11,7 +11,7 @@ interface IProp {
 }
 
 const ReactPaginateComponent = (props: IProp) => {
-  console.log(props.pageCount)
+
     // const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     //   count:true,status:['pending']
     // });

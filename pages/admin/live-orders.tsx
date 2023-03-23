@@ -8,6 +8,7 @@ import { Order } from "@/models/order.model";
 import BlankPage from "@/components/admin/BlankPage";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { SearchKeyContext } from "@/components/common/Frame";
 
 const tableHeaders = [
     "Customer",
@@ -21,7 +22,8 @@ const tableHeaders = [
 
 const LiveOrders = () => {
     const router = useRouter();
-    console.log(router)
+    const { searchKey } = React.useContext(SearchKeyContext) as any;
+    console.log(searchKey);
     const [itemsPerPage, setItemPerPage] = useState<number>(5);
     const [currentPage, setCurrentPage] = useState(0);
     const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
@@ -32,6 +34,7 @@ const LiveOrders = () => {
     >("");
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+        search: searchKey,
         per_page: itemsPerPage,
         page: currentPage,
         status:
@@ -39,9 +42,10 @@ const LiveOrders = () => {
                 ? ["pending", "in-transit", "at-warehouse", "delivered"]
                 : statusFilterKey,
     });
+    console.log(orders);
 
     const { locales, locale: activeLocale } = router;
-    console.log(router.pathname)
+    console.log(router.pathname);
 
     // useEffect(() => {
     //     // console.log("use efft");
@@ -53,7 +57,7 @@ const LiveOrders = () => {
         let lang = router.locale == "ar" ? "ar" : "en";
         document.querySelector("html")?.setAttribute("dir", "ltr");
         document.querySelector("html")?.setAttribute("lang", "en");
-      }, [router.locale]);
+    }, [router.locale]);
 
     const currentPageHandler = useCallback((value: number) => {
         setCurrentPage(value);
@@ -89,7 +93,7 @@ const LiveOrders = () => {
             <div>
                 <LiveOrderPageHeader
                     content="Live Orders"
-                    allLiveOrders={orders as Order[]}
+                    allLiveOrders={orders?.data as Order[]}
                     onChangeStatus={filterByStatusHandler}
                     itemPerPageHandler={itemPerPageHandler!}
                     filterByDate={filterByCreatedDate}
@@ -98,16 +102,19 @@ const LiveOrders = () => {
                     itemsPerPage={itemsPerPage}
                     currentPage={currentPage}
                     statusFilterKey={statusFilterKey}
+                    pageCount={Math.ceil(
+                        (orders?.count as number) / itemsPerPage
+                    )}
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!orders && statusFilterKey.includes("all status") && (
-                        <BlankPage />
-                    )}
+                    {!orders?.data &&
+                        statusFilterKey.includes("all status") && <BlankPage />}
 
-                    {(orders || !statusFilterKey.includes("all status")) && (
+                    {(orders?.data ||
+                        !statusFilterKey.includes("all status")) && (
                         <>
                             <Table
-                                rows={orders as Order[]}
+                                rows={orders?.data as Order[]}
                                 headings={tableHeaders}
                                 type="live_order"
                             />

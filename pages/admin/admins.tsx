@@ -14,8 +14,8 @@ import LoadingPage from "@/components/common/LoadingPage";
 import AddButton from "@/components/common/AddButton";
 import AddNewAdminModal from "@/components/admin/modal/AddNewAdminModal";
 import useUsers from "@/lib/hooks/useUsers";
-import { User } from "@/models/user.model";
 
+import { User } from "@/models/user.model";
 
 const tableHeaders = [
     "User",
@@ -30,8 +30,9 @@ interface ISearchKeyContext {
 }
 const AdminBase = () => {
     const router = useRouter();
+
     const { locales, locale: activeLocale } = router;
-    console.log(activeLocale)
+
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";
         let lang = router.locale == "ar" ? "ar" : "en";
@@ -87,8 +88,8 @@ const AdminBase = () => {
     };
 
     const selectUserHandler = (value: string, type: string) => {
-      console.log(value);
-      selectOrder(value, type, setSelectedUser, users, selectedUser!);
+        console.log(value);
+        selectOrder(value, type, setSelectedUser, users, selectedUser!);
     };
 
     //   if (error) {

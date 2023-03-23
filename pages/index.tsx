@@ -33,6 +33,7 @@ const Index = () => {
   var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
 
   const { user, mutateUser } = useUser();
+  console.log(user)
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
   const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -102,6 +103,8 @@ const Index = () => {
     router.back();
     setShowPackageTrackingModal(false);
   };
+
+  console.log(user)
 
   return (
     <>

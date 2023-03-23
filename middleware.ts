@@ -36,13 +36,13 @@ export const middleware = async (req: NextRequest) => {
     }
 
     // comment to let user on all routes
-    if (!session.users[0].is_admin) {
-      if (req.nextUrl.pathname.startsWith("/admin")) {
-        return NextResponse.redirect(new URL("/", req.url), {
-          statusText: "Unauthorized.",
-        });
-      }
-    }
+    // if (!session.users[0].is_admin) {
+    //   if (req.nextUrl.pathname.startsWith("/admin")) {
+    //     return NextResponse.redirect(new URL("/", req.url), {
+    //       statusText: "Unauthorized.",
+    //     });
+    //   }
+    // }
 
     // comment to let admin on all routes
     if (session.users[0].is_admin) {
@@ -102,10 +102,10 @@ export const config = {
 
         // deploy
         // match all except these links
-        "/((?!api|_next/static|_next/image|favicon.ico|auth/gate|image|$).*)",
+        // "/((?!api|_next/static|_next/image|favicon.ico|auth/gate|image|$).*)",
 
         // dev
         // match none
-        // "/((?!.*).*)",
+        "/((?!.*).*)",
     ],
 };

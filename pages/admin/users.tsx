@@ -13,6 +13,8 @@ import LoadingPage from "@/components/common/LoadingPage";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import user from "../api/user";
+
 interface ISearchKeyContext {
     searchKey: any;
 }
@@ -38,7 +40,7 @@ const UserBase = () => {
     const { searchKey } = React.useContext(
         SearchKeyContext
     ) as ISearchKeyContext;
-    const [itemsPerPage, setItemPerPage] = useState(4);
+    const [itemsPerPage, setItemPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
         Date | string
@@ -48,7 +50,7 @@ const UserBase = () => {
         page: currentPage,
         is_admin: false,
     });
-    // console.log(allUser);
+    console.log(users);
 
     //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(
@@ -81,20 +83,23 @@ const UserBase = () => {
             <div>
                 <UserbasePageHeader
                     content="User Base"
-                    allUsers={users as User[]}
+                    allUsers={users?.data as User[]}
                     filterByDate={filterByCreatedDate}
                     title="User Base | MazExpress Admin"
-                    pageCount={pageCount}
+                    pageCount={Math.ceil(
+                        (users?.count as number) / itemsPerPage
+                    )}
                     currentPageHandler={currentPageHandler}
                     itemsPerPage={itemsPerPage}
+                    itemPerPageHandler={itemPerPageHandler}
                     currentPage={currentPage}
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!users && <BlankPage />}
-                    {users && (
+                    {!users?.data && <BlankPage />}
+                    {users?.data && (
                         <>
                             <Table
-                                rows={users as User[]}
+                                rows={users.data as User[]}
                                 headings={tableHeaders}
                                 type="user_base"
                             />

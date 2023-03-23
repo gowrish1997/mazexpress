@@ -12,11 +12,14 @@ import { Order } from "@/models/order.model";
 import { getUserImageString } from "@/lib/utils";
 import OrderDetailModal from "@/components/admin/OrderDetailModal";
 import useUser from "@/lib/hooks/useUser";
+import { APIResponse } from "@/models/api.model";
+import { KeyedMutator } from "swr";
 interface IProp {
     row: Order;
     type: string;
     onSelect: (e: Order, type: string) => void;
     selectedOrder: Order[];
+    mutateOrder?: KeyedMutator<APIResponse<Order>>;
 }
 
 const LiveOrderLineItem = (props: IProp) => {
@@ -25,7 +28,7 @@ const LiveOrderLineItem = (props: IProp) => {
     // const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
     //   user_id: props.row.user.id as string,
     // });
-  const {user, mutateUser} = useUser()
+    const { user, mutateUser } = useUser();
 
     const { tracking, mutateTracking, trackingIsLoading } = useTracking({
         maz_id: props.row.maz_id,
@@ -137,7 +140,10 @@ const LiveOrderLineItem = (props: IProp) => {
                 >
                     <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
                         <Image
-                            src={user?.avatar_url || '/user-images/default_user.png'}
+                            src={
+                                user?.avatar_url ||
+                                "/user-images/default_user.png"
+                            }
                             fill
                             style={{ objectFit: "cover" }}
                             alt="profileImage"
@@ -210,6 +216,7 @@ const LiveOrderLineItem = (props: IProp) => {
                                 trigger={trigger}
                                 stage={packageStatus}
                                 click={toggleOrderDetailModal}
+                                mutateOrder={props.mutateOrder}
                             />
                         )}
                     </div>
