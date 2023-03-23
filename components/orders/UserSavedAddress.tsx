@@ -32,6 +32,8 @@ const UserSavedAddress = (props: {
     );
 
     const deleteAddressHandler = async () => {
+        console.log("delete user address");
+
         if (user) {
             if (
                 props.address.id === user?.default_address &&
@@ -55,7 +57,11 @@ const UserSavedAddress = (props: {
                 mutateUser();
             }
             const result = await fetchServer(
+<<<<<<< Updated upstream
                 `/api/addresses/${props.address.id}`,
+=======
+                `/api/addresses?id=${props.address.id}`,
+>>>>>>> Stashed changes
                 {
                     method: "DELETE",
                 }

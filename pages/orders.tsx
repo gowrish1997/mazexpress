@@ -29,7 +29,11 @@ const MyOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     // console.log(searchKey);
 
+<<<<<<< Updated upstream
     const [itemsPerPage, setItemPerPage] = useState<number>(25);
+=======
+    const [itemsPerPage, setItemPerPage] = useState<number>(20);
+>>>>>>> Stashed changes
     const [currentPage, setCurrentPage] = useState(0);
 
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
