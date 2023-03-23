@@ -24,7 +24,7 @@ const LiveOrders = () => {
     const router = useRouter();
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     console.log(searchKey);
-    const [itemsPerPage, setItemPerPage] = useState<number>(5);
+    const [itemsPerPage, setItemPerPage] = useState<number>(25);
     const [currentPage, setCurrentPage] = useState(0);
     const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
         "all status",

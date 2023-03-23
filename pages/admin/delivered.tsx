@@ -24,7 +24,7 @@ const tableHeaders = [
 const DeliveredOrders = () => {
     const router = useRouter();
     const { searchKey } = React.useContext(SearchKeyContext) as any;
-    const [itemsPerPage, setItemPerPage] = useState(5);
+    const [itemsPerPage, setItemPerPage] = useState(25);
     const [currentPage, setCurrentPage] = useState(0);
 
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
