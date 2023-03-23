@@ -12,7 +12,11 @@
         "Mobile Number",
         "Password",
         "Confirm Password",
-        "Address Tag"
+        "Address Tag",
+        "Address line 1",
+        "Address line 2",
+        "Address phone",
+        "City"
       ],
       "GenderOptions": [
         { "value": "m", "label": "Male" },
@@ -27,18 +31,18 @@
         "Age is required field",
         "Gender is required field",
         "Email is required (Please provide valid email)",
-        "Mobile number is required field (Must be exactly 10 digits)",
+        "Mobile number is required field (Must be exactly 9 digits)",
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
         "Confirm password is required field(Passwords must match) "
       ],
-      "Description": [
+      "Discription": [
         "By signing up, you agree to our",
         "Terms of Service.",
         "Already have an account?",
         "Log in."
       ],
 
-      "SubmitButton": ["Sign up", "Sign up using Email", "Sign up using Google"]
+      "SubmitButton": ["Sign up","Create Admin","Cancel", "Sign up using Email", "Sign up using Google"]
     }
   },
   "loginView": {
@@ -341,6 +345,7 @@
       "Errors": [
         "First name is required",
         "Last name is required",
+        "Password is required field",
         "Email is required (Please provide valid email)",
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
         "Mobile number is required field (Must be exactly 10 digits)"

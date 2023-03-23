@@ -22,17 +22,17 @@ const tableHeaders = [
 ];
 
 const LiveOrders = () => {
-  const router = useRouter();
-  const { searchKey } = React.useContext(SearchKeyContext) as any;
-  // console.log(searchKey);
-  const [itemsPerPage, setItemPerPage] = useState<number>(25);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
-    "all status",
-  ]);
-  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-    Date | string
-  >("");
+    const router = useRouter();
+    const { searchKey } = React.useContext(SearchKeyContext) as any;
+    // console.log(searchKey);
+    const [itemsPerPage, setItemPerPage] = useState<number>(25);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
+        "all status",
+    ]);
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+        Date | string
+    >("");
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
         search: searchKey,
@@ -41,25 +41,31 @@ const LiveOrders = () => {
         date: getDateInDBFormat(createdDateFilterKey as Date),
         status:
             statusFilterKey.length == 0 || statusFilterKey[0] == "all status"
-                ? ["pending", "in-transit", "at-warehouse", "delivered"]
+                ? [
+                      "pending",
+                      "in-transit",
+                      "at-warehouse",
+                      "out-for-delivery",
+                      "delivered",
+                  ]
                 : statusFilterKey,
     });
     console.log(orders);
 
-  const { locales, locale: activeLocale } = router;
-  console.log(router.pathname);
+    const { locales, locale: activeLocale } = router;
+    console.log(router.pathname);
 
-  // useEffect(() => {
-  //     // console.log("use efft");
-  //     router.push(router.asPath, router.asPath, { locale: "en" });
-  // }, []);
-  useEffect(() => {
-    document.cookie = `NEXT_LOCALE=en;path=/`;
-    let dir = router.locale == "ar" ? "rtl" : "ltr";
-    let lang = router.locale == "ar" ? "ar" : "en";
-    document.querySelector("html")?.setAttribute("dir", "ltr");
-    document.querySelector("html")?.setAttribute("lang", "en");
-  }, [router.locale]);
+    // useEffect(() => {
+    //     // console.log("use efft");
+    //     router.push(router.asPath, router.asPath, { locale: "en" });
+    // }, []);
+    useEffect(() => {
+        document.cookie = `NEXT_LOCALE=en;path=/`;
+        let dir = router.locale == "ar" ? "rtl" : "ltr";
+        let lang = router.locale == "ar" ? "ar" : "en";
+        document.querySelector("html")?.setAttribute("dir", "ltr");
+        document.querySelector("html")?.setAttribute("lang", "en");
+    }, [router.locale]);
 
     const currentPageHandler = useCallback((value: number) => {
         setCurrentPage(value);

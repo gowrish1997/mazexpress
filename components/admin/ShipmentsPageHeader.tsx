@@ -79,6 +79,7 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                     content={props.content}
                     allLiveOrders={props.allLiveOrders}
                     filterByDate={props.filterByDate}
+                    createdDateFilterKey={props.createdDateFilterKey}
                 />
                 <ReactPaginateComponent
                     pageCount={props.pageCount!}
@@ -86,7 +87,8 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}
                 />
-                {props.allLiveOrders && props.allLiveOrders.length > 0 && (
+                {((props.allLiveOrders && props.allLiveOrders.length > 0) ||
+                    props.isFilterPresent) && (
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}

@@ -28,6 +28,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import useUser from "@/lib/hooks/useUser";
 import Link from "next/link";
 import fetchJson from "@/lib/fetchSelf";
+import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 
 const Index = () => {
     const router = useRouter();
@@ -49,6 +50,8 @@ const Index = () => {
     const [trackingIdError, setTrackingIdError] = useState<boolean>(false);
     const [showPackageTrackingModal, setShowPackageTrackingModal] =
         useState(false);
+
+    const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
     useEffect(() => {
         document.cookie = `NEXT_LOCALE=${router.locale};path=/`;
@@ -97,6 +100,10 @@ const Index = () => {
             setTrackingIdError(true);
             return;
         }
+    };
+
+    const toggleLogoutConfirmModal = () => {
+        setShowLogoutConfirmModal((prev) => !prev);
     };
 
     const logoutHandler = async () => {
@@ -276,7 +283,7 @@ const Index = () => {
                                 </div>
                                 <div>
                                     <button
-                                        onClick={logoutHandler}
+                                        onClick={toggleLogoutConfirmModal}
                                         className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
                                     >
                                         Logout
@@ -352,6 +359,12 @@ const Index = () => {
             </div>
             {showPackageTrackingModal && (
                 <PackageTrackingModal close={closePackageTrackingModal} />
+            )}
+            {showLogoutConfirmModal && (
+                <LogoutConfirmModal
+                    logout={logoutHandler}
+                    close={toggleLogoutConfirmModal}
+                />
             )}
         </>
     );

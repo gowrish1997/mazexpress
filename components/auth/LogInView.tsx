@@ -57,6 +57,7 @@ const LogInComponent = (props: any) => {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data)
     try {
       // console.log(data);
       const response = await fetchSelf("/api/auth/login", {
@@ -149,7 +150,7 @@ const LogInComponent = (props: any) => {
           name="username"
           type="string"
           register={register("username")}
-          error={errors.username}
+          error={errors.username &&  inputFieldErrors[0] }
         />
 
         <ReactHookFormInput
@@ -166,7 +167,7 @@ const LogInComponent = (props: any) => {
           onClick={togglePasswordTypeHandler}
           register={register("password")}
 
-          // error={errors.password?.message && inputFieldErrors[1]}
+          error={errors.password?.message && inputFieldErrors[1]}
         />
         <button
           className="text-[14px] text-[#35C6F4] font-[500] leading-[13px] cursor-pointer"

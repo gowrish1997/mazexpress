@@ -20,13 +20,13 @@ import { getDateInStringFormat } from "@/lib/helper";
 import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
-  "Customer",
-  "MAZ Tracking ID",
-  "Store Link",
-  "Reference ID",
-  "Created Date",
-  // "Warehouse",
-  "Status",
+    "Customer",
+    "MAZ Tracking ID",
+    "Store Link",
+    "Reference ID",
+    "Created Date",
+    // "Warehouse",
+    "Status",
 ];
 
 const PendingOrders = () => {
@@ -34,26 +34,27 @@ const PendingOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     const { locales, locale: activeLocale } = router;
 
-  useEffect(() => {
-    // console.log("use efft");
-    router.push(router.asPath, router.asPath, { locale: "en" });
-  }, []);
+    useEffect(() => {
+        // console.log("use efft");
+        router.push(router.asPath, router.asPath, { locale: "en" });
+    }, []);
 
-  const [itemsPerPage, setItemPerPage] = useState(25);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-    string | Date
-  >("");
+    const [itemsPerPage, setItemPerPage] = useState(25);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+        string | Date
+    >("");
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
         search: searchKey,
         per_page: itemsPerPage,
         page: currentPage,
+        date: getDateInDBFormat(createdDateFilterKey as Date),
         status: ["pending"],
     });
     // console.log(orders);
 
-  const [selectedOrder, setSelectedOrder] = useState<Order[]>();
+    const [selectedOrder, setSelectedOrder] = useState<Order[]>();
 
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
@@ -63,22 +64,22 @@ const PendingOrders = () => {
         setItemPerPage(value as number);
     }, []);
 
-  const filterByCreatedDate = (value: Date | string) => {
-    console.log(value)
-    console.log(typeof value)
-    setCreatedDateFilterKey(value);
-  };
+    const filterByCreatedDate = (value: Date | string) => {
+        console.log(value);
+        console.log(typeof value);
+        setCreatedDateFilterKey(value);
+    };
 
-  const selectOrderHandler = (value: Order, type: string) => {
-    selectOrder(value, type, setSelectedOrder, orders, selectedOrder);
-  };
+    const selectOrderHandler = (value: Order, type: string) => {
+        selectOrder(value, type, setSelectedOrder, orders, selectedOrder);
+    };
 
-  if (ordersIsLoading) {
-    // return <LoadingPage />;
-  }
-  if (ordersError) {
-    return <div>some error happened</div>;
-  }
+    if (ordersIsLoading) {
+        // return <LoadingPage />;
+    }
+    if (ordersError) {
+        return <div>some error happened</div>;
+    }
 
     return (
         <>
@@ -94,22 +95,25 @@ const PendingOrders = () => {
                     )}
                     currentPageHandler={currentPageHandler}
                     itemsPerPage={itemsPerPage}
+                    createdDateFilterKey={createdDateFilterKey}
                     currentPage={currentPage}
                     itemPerPageHandler={itemPerPageHandler!}
                     mutateOrder={mutateOrders}
                     setSelectedOrder={setSelectedOrder}
+                    isFilterPresent={searchKey || createdDateFilterKey}
                     //   filterById={filterByMazTrackingId}
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!orders?.data && <BlankPage />}
-                    {orders?.data && (
+                    {!orders?.data && !searchKey && !createdDateFilterKey ? (
+                        <BlankPage />
+                    ) : (
                         <>
                             <Table
-                                rows={orders.data as Order[]}
+                                rows={orders?.data as Order[]}
                                 headings={tableHeaders}
                                 type="pending"
-                            onSelect={selectOrderHandler}
+                                onSelect={selectOrderHandler}
                                 selectedOrder={selectedOrder!}
                             />
                         </>
@@ -125,12 +129,12 @@ const PendingOrders = () => {
 
 export default PendingOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
-  if (process.env.NODE_ENV === "development") {
-    await i18n?.reloadResources();
-  }
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
 }

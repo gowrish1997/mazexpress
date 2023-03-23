@@ -12,11 +12,15 @@ import useOrders from "@/lib/hooks/useOrders";
 import useOrderCount from "@/lib/hooks/useOrderCount";
 
 const DeliveredPageHeader = (props: IPageHeaderProp) => {
-  const { orderCount, mutateOrderCount, orderCountIsLoading, orderCountError } =
-    useOrderCount({
-      status: ["delivered"],
+    const {
+        orderCount,
+        mutateOrderCount,
+        orderCountIsLoading,
+        orderCountError,
+    } = useOrderCount({
+        status: ["delivered"],
     });
-  const warehousesDropDownOptoin = ["istanbul"];
+    const warehousesDropDownOptoin = ["istanbul"];
 
     return (
         <>
@@ -32,6 +36,7 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                     content={props.content}
                     allLiveOrders={props.allLiveOrders}
                     filterByDate={props.filterByDate}
+                    createdDateFilterKey={props.createdDateFilterKey}
                 />
                 <ReactPaginateComponent
                     pageCount={props.pageCount!}
@@ -39,7 +44,8 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}
                 />
-                {props.allLiveOrders && props.allLiveOrders.length > 0 && (
+                {((props.allLiveOrders && props.allLiveOrders.length > 0) ||
+                    props.isFilterPresent) && (
                     <div className="flex-type1 space-x-[10px]  ">
                         {/* <ReactDropdown /> */}
                         {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
@@ -55,12 +61,12 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                             type="warehouse"
                         />
 
-            <AdminOptionDropDown orders={props.allLiveOrders} />
-          </div>
-        )}
-      </div>
-    </>
-  );
+                        <AdminOptionDropDown orders={props.allLiveOrders} />
+                    </div>
+                )}
+            </div>
+        </>
+    );
 };
 
 export default DeliveredPageHeader;

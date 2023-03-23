@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Table from "@/components/orders/table";
 import BlankPage from "@/components/admin/BlankPage";
 import useUsers from "@/lib/hooks/useUsers";
+import useUsersCount from "@/lib/hooks/useUserCount";
 import { User } from "@/models/user.model";
 import ReactPaginateComponent from "@/components/admin/ReactPaginate";
 // import { ISearchKeyContext } from "@/models/SearchContextInterface";
@@ -53,6 +54,16 @@ const UserBase = () => {
         include_users: true,
         date: getDateInDBFormat(createdDateFilterKey as Date),
     });
+
+    console.log(users)
+    // const { userCount, mutateUserCount, userCountIsLoading, userCountError } =
+    //     useUsersCount({
+    //         search: searchKey,
+    //         per_page: itemsPerPage,
+    //         page: currentPage,
+    //         include_users: true,
+    //         date: getDateInDBFormat(createdDateFilterKey as Date),
+    //     });
     // console.log(allUser);
 
     //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);

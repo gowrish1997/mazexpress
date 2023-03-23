@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LineItem from "./LineItem";
 import { nanoid } from "nanoid";
 import LiveOrderLineItem from "./LiveOrderLineItem";
@@ -10,6 +10,7 @@ import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
 import { APIResponse } from "@/models/api.model";
 import { KeyedMutator } from "swr";
+import moment from "moment";
 
 interface TableProps {
     headings: Array<string>;
@@ -41,6 +42,15 @@ const Table = (props: TableProps) => {
         }
     };
 
+    useEffect(() => {
+        let sort = props.rows.sort(
+            (a, b) =>
+                new Date(a.created_on).getTime() -
+                new Date(b.created_on).getTime()
+        );
+        console.log(sort);
+    }, []);
+
     return (
         <div className="flex-1 relative">
             {/* {props.rows  && ( */}
@@ -52,66 +62,72 @@ const Table = (props: TableProps) => {
                 />
                 {props.rows && props.rows.length > 0 ? (
                     <tbody className="">
-                        {props.rows.map((data, index) => {
-                            if (
-                                props.type == "live_order" ||
-                                props.type == "pending" ||
-                                props.type == "shipments" ||
-                                props.type == "delivered" ||
-                                props.type == "in-transit"
-                            ) {
-                                return (
-                                    <LiveOrderLineItem
-                                        key={nanoid()}
-                                        onSelect={props.onSelect!}
-                                        row={data as Order}
-                                        type={props.type}
-                                        selectedOrder={
-                                            props.selectedOrder as Order[]
-                                        }
-                                        mutateOrder={props.mutateOrder}
-                                    />
-                                );
-                            } else if (props.type == "stat_table") {
-                                return (
-                                    <StatLineItem
-                                        key={nanoid()}
-                                        onSelect={props.onSelect!}
-                                        row={data as Order}
-                                        type={props.type}
-                                    />
-                                );
-                            } else if (props.type == "user_base") {
-                                return (
-                                    <UserLineItem
-                                        key={nanoid()}
-                                        row={data as User}
-                                        type={props.type}
-                                        onSelect={props.onSelect!}
-                                    />
-                                );
-                            } else if (props.type == "admin_base") {
-                                return (
-                                    <AdminLineItem
-                                        key={nanoid()}
-                                        row={data as User}
-                                        type={props.type}
-                                        onSelect={props.onSelect!}
-                                        selectedOrder={
-                                            props.selectedOrder as Order[]
-                                        }
-                                    />
-                                );
-                            } else {
-                                return (
-                                    <LineItem
-                                        key={nanoid()}
-                                        row={data as Order}
-                                        type={props.type}
-                                    />
-                                );
-                            }
-                        })}
+                        {props.rows
+                            .sort(
+                                (a, b) =>
+                                    new Date(a.created_on).getTime() -
+                                    new Date(b.created_on).getTime()
+                            )
+                            .map((data, index) => {
+                                if (
+                                    props.type == "live_order" ||
+                                    props.type == "pending" ||
+                                    props.type == "shipments" ||
+                                    props.type == "delivered" ||
+                                    props.type == "in-transit"
+                                ) {
+                                    return (
+                                        <LiveOrderLineItem
+                                            key={nanoid()}
+                                            onSelect={props.onSelect!}
+                                            row={data as Order}
+                                            type={props.type}
+                                            selectedOrder={
+                                                props.selectedOrder as Order[]
+                                            }
+                                            mutateOrder={props.mutateOrder}
+                                        />
+                                    );
+                                } else if (props.type == "stat_table") {
+                                    return (
+                                        <StatLineItem
+                                            key={nanoid()}
+                                            onSelect={props.onSelect!}
+                                            row={data as Order}
+                                            type={props.type}
+                                        />
+                                    );
+                                } else if (props.type == "user_base") {
+                                    return (
+                                        <UserLineItem
+                                            key={nanoid()}
+                                            row={data as User}
+                                            type={props.type}
+                                            onSelect={props.onSelect!}
+                                        />
+                                    );
+                                } else if (props.type == "admin_base") {
+                                    return (
+                                        <AdminLineItem
+                                            key={nanoid()}
+                                            row={data as User}
+                                            type={props.type}
+                                            onSelect={props.onSelect!}
+                                            selectedOrder={
+                                                props.selectedOrder as Order[]
+                                            }
+                                        />
+                                    );
+                                } else {
+                                    return (
+                                        <LineItem
+                                            key={nanoid()}
+                                            row={data as Order}
+                                            type={props.type}
+                                        />
+                                    );
+                                }
+                            })}
                     </tbody>
                 ) : (
                     <tr className="w-[100%] h-[300px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[30px] whitespace-nowrap flex  ">
