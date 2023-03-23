@@ -105,7 +105,7 @@ const EditUserAddressModal = (props: IProp) => {
 
       if (addressResult) {
         // set default if checked
-        if (data.default === "on") {
+        if (data.default) {
           const userResult = await fetchJson(`/api/users/${user?.email}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },

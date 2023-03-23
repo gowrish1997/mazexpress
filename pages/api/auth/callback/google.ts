@@ -15,7 +15,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       // console.log(payload)
       if (payload) {
         const user: APIResponse<User> = await fetchJson(
-          `/api/users?email=${payload.email}`
+          `/api/users/${payload.email}`
         );
         // console.log("existing user", user);
         if (user.data && user.data.length > 0) {

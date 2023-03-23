@@ -8,15 +8,12 @@ export default function useNotification({ id }: { id: string }) {
     mutate: mutateNotification,
     isLoading: notificationIsLoading,
     error: notificationError,
-  } = useSWR<APIResponse<Notification>>(`/api/notifications?id=${id}`, {
-    // refreshInterval: 1000,
-    // revalidateIfStale: true,
-    // revalidateOnFocus: true,
-    // revalidateOnReconnect: true,
+  } = useSWR<APIResponse<Notification>>(`/api/notifications/id/${id}`, {
+
   });
 
   return {
-    notification,
+    notification: notification?.data,
     mutateNotification,
     notificationIsLoading,
     notificationError,

@@ -8,7 +8,7 @@ import { getDateInStringFormat } from "@/lib/helper";
 import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
-import GreyRadioButton from '../../../public/grey_svg.svg'
+import GreyRadioButton from "../../../public/grey_svg.svg";
 import { Order } from "@/models/order.model";
 import { Tracking } from "@/models/tracking.model";
 
@@ -25,7 +25,7 @@ const LineItem = (props: IProp) => {
 
   //   console.log(addresses);
   const { tracking, trackingIsLoading, mutateTracking } = useTracking({
-    order_id: props.row.id,
+    maz_id: props.row.maz_id,
   });
 
   const [estDelivery, setEstDelivery] = useState<string>("...");
@@ -44,7 +44,7 @@ const LineItem = (props: IProp) => {
     switch (status) {
       case "in-transit":
         return <RedRadioButton />;
-        case "out-for-delivery":
+      case "out-for-delivery":
         return <RedRadioButton />;
 
       case "delivered":
@@ -53,7 +53,7 @@ const LineItem = (props: IProp) => {
       case "at-warehouse":
         return <YellowRadioButton />;
       case "pending":
-        return <GreyRadioButton/>;
+        return <GreyRadioButton />;
       default:
         return "pending";
     }
@@ -61,11 +61,7 @@ const LineItem = (props: IProp) => {
 
   useEffect(() => {
     // console.log("tracking rerender");
-    if (
-      tracking !== undefined &&
-      tracking !== null &&
-      tracking.length > 0
-    ) {
+    if (tracking !== undefined && tracking !== null && tracking.length > 0) {
       // sort and set delivery
       let latestUpdate = [...(tracking as Tracking[])].sort(
         (a, b) => b.stage - a.stage
