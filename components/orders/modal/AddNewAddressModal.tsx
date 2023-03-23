@@ -30,9 +30,8 @@ const schema = yup
 const AddNewAddressModal = (props: IProp) => {
     const { user, mutateUser } = useUser();
     const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
-        type: "get_by_user_id",
-        user_id: user?.id,
-        status: "active",
+        username: user?.email,
+        status: ["active"],
     });
 
     const [country, setCountry] = useState("LY");
@@ -80,8 +79,6 @@ const AddNewAddressModal = (props: IProp) => {
 
             // console.log(address);
             // console.log(data);
-
-            address.user = user;
 
             // add address
 

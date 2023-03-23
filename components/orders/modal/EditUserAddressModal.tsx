@@ -93,8 +93,6 @@ const EditUserAddressModal = (props: IProp) => {
             // console.log(address);
             // console.log(data);
 
-            address.user = user;
-
             // update address
             const addressResult = await fetchJson<Address>(
                 `/api/addresses?id=${props.address.id}`,

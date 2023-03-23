@@ -16,7 +16,7 @@ interface TableProps {
     rows: Array<Order> | Array<User>;
     type: string;
     onSelect?: (e: any, type: string) => void;
-    selectedOrder?: Order[];
+    selectedOrder?: Order[] | string[];
     mutateOrder?: KeyedMutator<APIResponse<Order>>;
 }
 
@@ -115,8 +115,7 @@ const Table = (props: TableProps) => {
                     </tbody>
                 ) : (
                     <div className="w-full h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] whitespace-nowrap ">
-                        Oops, We couldn't find any result
-                        <br />
+                        No results found
                     </div>
                 )}
             </table>
