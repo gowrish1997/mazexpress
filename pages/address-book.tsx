@@ -57,6 +57,7 @@ const AddressBook = () => {
    
   }, [addresses])
   
+  if(addressesIsLoading) return <div>loading</div>
 
   return (
     <>

@@ -78,7 +78,10 @@ const AdminLineItem = (props: IProp) => {
               <div className="absolute bg-yellow-600 w-4 h-8 z-10 opacity-60"></div>
             )}
             <Image
-              src={(props.row as User).avatar_url || "/user-images/default_user.png"}
+              src={
+                (props.row as User).avatar_url ||
+                "/user-images/default_user.png"
+              }
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"

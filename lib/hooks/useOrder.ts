@@ -1,6 +1,7 @@
 import { APIResponse } from "@/models/api.model";
 import { Order } from "@/models/order.model";
 import useSWR from "swr";
+import useOrders from "./useOrders";
 export default function useOrder({ maz_id }: { maz_id?: string }) {
   const {
     data: order,
@@ -10,3 +11,4 @@ export default function useOrder({ maz_id }: { maz_id?: string }) {
 
   return { order: order?.data?.[0] , mutateOrder, orderIsLoading };
 }
+useOrders

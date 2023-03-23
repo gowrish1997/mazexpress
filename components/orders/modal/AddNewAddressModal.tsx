@@ -6,12 +6,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import useUser from "@/lib/hooks/useUser";
-import CustomDropDown from "@/components/common/CustomDropDown";
 import fetchJson from "@/lib/fetchServer";
 import { Address } from "@/models/address.model";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
+import CustomDropdown from "@/components/LandingPage/CustomDropdown";
 
 interface IProp {
   show: boolean;
@@ -53,13 +52,13 @@ const AddNewAddressModal = (props: IProp) => {
     formState: { errors },
   } = useForm<Address & { default: "on" | "off" }>({
     defaultValues: {
-      address_1: "Gold fields",
-      address_2: "Sheik street St",
-      city: "Tripoli",
+      address_1: "#202, gold fields",
+      address_2: "الفويهات الشمالي،,",
+      city: "benghazi",
       country: "Libya",
       default: "on",
-      phone: 214441792,
-      tag: "Al Mshket Hotel",
+      phone: 214441777,
+      tag: "فندق زهرة البطنان (Zahrat Al-batnan Hotel)",
     },
     resolver: yupResolver(schema),
   });
@@ -74,10 +73,8 @@ const AddNewAddressModal = (props: IProp) => {
       // console.log(address);
       // console.log(data);
 
-      address.user = user;
-
       // add address
-      const addressResult = await fetchJson(`/api/addresses`, {
+      const addressResult = await fetchJson(`/api/addresses/${user.email}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(address),
@@ -86,7 +83,7 @@ const AddNewAddressModal = (props: IProp) => {
 
       // set default if checked
       if (data.default) {
-        const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
+        const userResult = await fetchJson(`/api/users/${user?.email}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ default_address: addressResult.data?.[0].id }),
@@ -162,7 +159,7 @@ const AddNewAddressModal = (props: IProp) => {
                 )}
               /> */}
 
-              <CusotmDropdown
+              <CustomDropdown
                 label={inputFieldLabels[4]}
                 name="city"
                 type="string"

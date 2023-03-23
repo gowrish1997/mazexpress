@@ -1,6 +1,7 @@
+// author: raunak (a7)
+
 import QueryString from "qs";
 
-// author: raunak (a7)
 export class QS {
   public page?: number;
   public per_page?: number;

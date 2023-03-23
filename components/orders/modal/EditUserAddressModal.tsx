@@ -93,21 +93,20 @@ const EditUserAddressModal = (props: IProp) => {
       // console.log(address);
       // console.log(data);
 
-      address.user = user;
-
       // update address
       const addressResult = await fetchJson<Address>(
-        `/api/addresses?id=${props.address.id}`,
+        `/api/addresses/${props.address.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(address),
         }
       );
-      if(addressResult){
+
+      if (addressResult) {
         // set default if checked
         if (data.default === "on") {
-          const userResult = await fetchJson(`/api/users?id=${user?.id}`, {
+          const userResult = await fetchJson(`/api/users/${user?.email}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ default_address: props.address.id }),
@@ -195,7 +194,7 @@ const EditUserAddressModal = (props: IProp) => {
                 />
               )}
             />
-           
+
             <CusotmDropdown
               label={inputFieldLabels[4]}
               name="city"
