@@ -11,7 +11,6 @@ import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import { User } from "@/models/user.model";
-import useUsers from "@/lib/hooks/useUsers";
 interface IProp {
     content: string;
     title?: string;
@@ -36,21 +35,21 @@ const UserbasePageHeader = (props: IProp) => {
     const [showRemoveAdminConfirmModal, setShowRemoveConfirmModal] =
         useState(false);
 
-    const toggleRemoveAdminConfirmModal = () => {
-        setShowRemoveConfirmModal((prev) => !prev);
-    };
+  const toggleRemoveAdminConfirmModal = () => {
+    setShowRemoveConfirmModal((prev) => !prev);
+  };
 
-    const removeAdmins = () => {
-        console.log("remvoe admins");
-    };
+  const removeAdmins = () => {
+    console.log("remvoe admins");
+  };
 
-    // const toggleSendNotificatoinConfirmModal = () => {
-    //     setShowSendNotificatoinConfirmModal((prev) => !prev);
-    // };
+  // const toggleSendNotificatoinConfirmModal = () => {
+  //     setShowSendNotificatoinConfirmModal((prev) => !prev);
+  // };
 
-    // const sendNotificatoinHanlder = () => {
-    //     console.log();
-    // };
+  // const sendNotificatoinHanlder = () => {
+  //     console.log();
+  // };
 
     return (
         <>
@@ -110,8 +109,8 @@ const UserbasePageHeader = (props: IProp) => {
                 total={props.selectedUser?.length!}
                 confirm={sendNotificatoinHanlder}
             /> */}
-        </>
-    );
+    </>
+  );
 };
 
 export default UserbasePageHeader;

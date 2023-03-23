@@ -8,7 +8,6 @@ import useNotifications from "@/lib/hooks/useNotifications";
 import NotificationView from "@/components/common/NotificationView";
 import searchIcon from "@/public/search.png";
 import { SearchKeyContext } from "@/components/common/Frame";
-import { getUserImageString } from "@/lib/utils";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 

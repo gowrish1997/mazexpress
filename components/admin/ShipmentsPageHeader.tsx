@@ -22,10 +22,7 @@ const adminOption = ["Moved out"];
 const ShipmentsPageHeader = (props: IPageHeaderProp) => {
     const perPageOptions = perPageOptinsList();
     const router = useRouter();
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        count: true,
-        status: ["at-warehouse"],
-    });
+
     const warehousesDropDownOptoin = ["istanbul"];
     const [showMovedOutConfirmModal, setMovedOutConfirmModal] = useState(false);
 

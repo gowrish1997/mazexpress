@@ -20,6 +20,7 @@ import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { checkPassword } from "@/lib/utils";
 import { useTranslation } from "next-i18next";
+import fetchJson from "@/lib/fetchServer";
 const schema = yup
   .object({
     first_name: yup.string().required("First name is required"),
@@ -83,7 +84,19 @@ const Settings = () => {
     getValues,
     reset,
     formState: { errors },
-  } = useForm<User & { newPassword: string }>({
+  } = useForm<
+    Pick<
+      User,
+      | "first_name"
+      | "last_name"
+      | "email"
+      | "phone"
+      | "lang"
+      | "password"
+      | "avatar_url"
+      | "is_notifications_enabled"
+    > & { newPassword: string }
+  >({
     resolver: yupResolver(schema),
     defaultValues: { ...user, password: "" },
   });
@@ -110,9 +123,33 @@ const Settings = () => {
   };
 
   const onSubmit: SubmitHandler<
-    User & { newPassword: string }
+    Pick<
+      User,
+      | "first_name"
+      | "last_name"
+      | "email"
+      | "phone"
+      | "lang"
+      | "password"
+      | "avatar_url"
+      | "is_notifications_enabled"
+    > & { newPassword: string }
   > = async (data) => {
     console.log("settings submission", data);
+    // let picked: Pick<
+    //   User,
+    //   | "first_name"
+    //   | "last_name"
+    //   | "email"
+    //   | "phone"
+    //   | "lang"
+    //   | "password"
+    //   | "avatar_url"
+    //   | "is_notifications_enabled"
+    // > & { newPassword: string } ;
+    // // Object.assign(picked, data)
+
+    // console.log("picked", picked);
     try {
       // console.log(result);
       if (!passwordCheck) {
@@ -124,6 +161,16 @@ const Settings = () => {
         });
         return;
       }
+
+      // update user here
+      const sendObj = data;
+
+      const updateRes = await fetchJson(`/api/users/${user?.email}`, {
+        method: "PUT",
+
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
       createToast({
         type: "success",
         title: "Success",
@@ -144,15 +191,28 @@ const Settings = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     // console.log(e.target.value);
-    const reee = await checkPassword(e.target.value, user?.id!);
+    const reee = await checkPassword(e.target.value, user?.email!);
     // console.log(reee);
     if (reee) setPasswordCheck(true);
     else setPasswordCheck(false);
   };
 
   useEffect(() => {
-    console.log(user);
-    reset({ ...user, password: "" });
+    // console.log(user);
+    reset({
+      ...(user as Pick<
+        User,
+        | "first_name"
+        | "last_name"
+        | "email"
+        | "phone"
+        | "lang"
+        | "password"
+        | "avatar_url"
+        | "is_notifications_enabled"
+      > & { newPassword: string }),
+    });
+    setPasswordCheck(false);
   }, [user, reset]);
 
   return (
@@ -162,7 +222,11 @@ const Settings = () => {
         className="border-none pb-[10px]"
         title="My Settings | MazExpress"
       />
-      <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} update={mutateUser} />
+      <ProfilePicPop
+        show={showProfilePicPop}
+        close={toggleProfilePicPop}
+        update={mutateUser}
+      />
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
@@ -191,7 +255,7 @@ const Settings = () => {
                   onClick={toggleProfilePicPop}
                 >
                   <Image
-                    src={"/user-images/" + user?.avatar_url}
+                    src={user?.avatar_url || "/user-images/default_user.png"}
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}

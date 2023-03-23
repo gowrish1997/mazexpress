@@ -9,13 +9,14 @@ import { IPageHeaderProp } from "@/models/pageHeader.interface";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { Order } from "@/models/order.model";
 import useOrders from "@/lib/hooks/useOrders";
+import useOrderCount from "@/lib/hooks/useOrderCount";
 
 const DeliveredPageHeader = (props: IPageHeaderProp) => {
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        count: true,
-        status: ["delivered"],
+  const { orderCount, mutateOrderCount, orderCountIsLoading, orderCountError } =
+    useOrderCount({
+      status: ["delivered"],
     });
-    const warehousesDropDownOptoin = ["istanbul"];
+  const warehousesDropDownOptoin = ["istanbul"];
 
     return (
         <>
@@ -33,7 +34,7 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                     filterByDate={props.filterByDate}
                 />
                 <ReactPaginateComponent
-                    pageCount={props.pageCount}
+                    pageCount={props.pageCount!}
                     currentPageHandler={props.currentPageHandler}
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}
@@ -54,12 +55,12 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                             type="warehouse"
                         />
 
-                        <AdminOptionDropDown orders={props.allLiveOrders} />
-                    </div>
-                )}
-            </div>
-        </>
-    );
+            <AdminOptionDropDown orders={props.allLiveOrders} />
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default DeliveredPageHeader;

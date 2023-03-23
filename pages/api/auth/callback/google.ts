@@ -19,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         );
         // console.log("existing user", user);
         if (user.data && user.data.length > 0) {
-          req.session.users = user.data as User[];
+          req.session.user = user.data[0] as User;
           await req.session.save();
 
           res.status(200).json({ ok: true, user: user.data[0] });
@@ -41,10 +41,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           // console.log("new user", newuser);
           if (newuser.data && newuser.data.length > 0) {
             // success
-            req.session.users = newuser.data as User[];
+            req.session.user = newuser.data[0] as User;
             await req.session.save();
 
-            res.status(200).json({ ok: true, user: newuser.data[0]});
+            res.status(200).json({ ok: true, user: newuser.data[0] });
             // resolve(newuser);
           } else {
             res.status(401).json({ ok: false, user: null });

@@ -1,3 +1,8 @@
+//==========================
+//     co-author: raunak
+//     co-author: gowrish
+//==========================
+
 import React, { useState, useCallback, useEffect } from "react";
 import useOrders from "@/lib/hooks/useOrders";
 import { useRouter } from "next/router";
@@ -11,15 +16,17 @@ import { i18n } from "next-i18next";
 import { SearchKeyContext } from "@/components/common/Frame";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { getDateInStringFormat } from "@/lib/helper";
+import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
-    "Customer",
-    "MAZ Tracking ID",
-    "Store Link",
-    "Reference ID",
-    "Created Date",
-    // "Warehouse",
-    "Status",
+  "Customer",
+  "MAZ Tracking ID",
+  "Store Link",
+  "Reference ID",
+  "Created Date",
+  // "Warehouse",
+  "Status",
 ];
 
 const PendingOrders = () => {
@@ -27,16 +34,16 @@ const PendingOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     const { locales, locale: activeLocale } = router;
 
-    useEffect(() => {
-        // console.log("use efft");
-        router.push(router.asPath, router.asPath, { locale: "en" });
-    }, []);
+  useEffect(() => {
+    // console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
 
-    const [itemsPerPage, setItemPerPage] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-        string | Date
-    >("");
+  const [itemsPerPage, setItemPerPage] = useState(25);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+    string | Date
+  >("");
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
         search: searchKey,
@@ -46,7 +53,7 @@ const PendingOrders = () => {
     });
     // console.log(orders);
 
-    const [selectedOrder, setSelectedOrder] = useState<Order[]>();
+  const [selectedOrder, setSelectedOrder] = useState<Order[]>();
 
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);
@@ -56,20 +63,22 @@ const PendingOrders = () => {
         setItemPerPage(value as number);
     }, []);
 
-    const filterByCreatedDate = (value: Date | string) => {
-        setCreatedDateFilterKey(value);
-    };
+  const filterByCreatedDate = (value: Date | string) => {
+    console.log(value)
+    console.log(typeof value)
+    setCreatedDateFilterKey(value);
+  };
 
-    const selectOrderHandler = (value: Order, type: string) => {
-        selectOrder(value, type, setSelectedOrder, orders, selectedOrder);
-    };
+  const selectOrderHandler = (value: Order, type: string) => {
+    selectOrder(value, type, setSelectedOrder, orders, selectedOrder);
+  };
 
-    if (ordersIsLoading) {
-        // return <LoadingPage />;
-    }
-    if (ordersError) {
-        return <div>some error happened</div>;
-    }
+  if (ordersIsLoading) {
+    // return <LoadingPage />;
+  }
+  if (ordersError) {
+    return <div>some error happened</div>;
+  }
 
     return (
         <>
@@ -116,12 +125,12 @@ const PendingOrders = () => {
 
 export default PendingOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }

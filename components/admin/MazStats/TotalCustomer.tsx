@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import StatCard from "./StatCard";
 import MazStatsDropddown from "./MazStatsDropddown";
-import useUsers from "@/lib/hooks/useUsers";
+import useUserCount from "@/lib/hooks/useUserCount";
 
 const ageOptions = [
   { value: "", label: "all" },
@@ -21,22 +21,25 @@ const genderOptions = [
 
 const TotalCustomer = () => {
   const [ageSelection, setAgeSelection] = useState<(number | string)[]>([]);
-  const [genderSelection, setGenderSelection] = useState<(number | string)[]>(['m', 'f', 'u', 'o']);
+  const [genderSelection, setGenderSelection] = useState<(number | string)[]>([
+    "m",
+    "f",
+    "u",
+    "o",
+  ]);
 
-  const { users, mutateUsers } = useUsers({
-    is_admin: false,
-    count: true,
+  const { userCount, mutateUserCount } = useUserCount({
+    include_admins: false,
+    include_users: true,
     gender: genderSelection as string[],
-    age: ageSelection as string[]
-    
+    // age: ageSelection as string[],
   });
-
 
   const ageChangeHandler = (value: number | string) => {
     // console.log(value);
     setAgeSelection((prev) => {
       if (prev.includes(value)) {
-        return prev.filter(el => el !== value);
+        return prev.filter((el) => el !== value);
       } else {
         return [...prev, value];
       }
@@ -47,17 +50,16 @@ const TotalCustomer = () => {
     console.log(value);
     setGenderSelection((prev) => {
       if (prev.includes(value)) {
-        return prev.filter(el => el !== value);
+        return prev.filter((el) => el !== value);
       } else {
         return [...prev, value];
       }
     });
   };
 
-
   useEffect(() => {
-    console.log(users)
-  }, [ageSelection, genderSelection])
+    console.log(userCount);
+  }, [ageSelection, genderSelection]);
 
   return (
     <StatCard>
@@ -81,7 +83,7 @@ const TotalCustomer = () => {
         </div>
       </div>
       <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">
-        {users as number}
+        {userCount}
       </p>
     </StatCard>
   );

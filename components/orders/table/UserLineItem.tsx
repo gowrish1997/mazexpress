@@ -6,19 +6,17 @@ import { getDateInStringFormat } from "@/lib/helper";
 import useOrders from "@/lib/hooks/useOrders";
 import { User } from "@/models/user.model";
 import { Order } from "@/models/order.model";
-import { getUserImageString } from "@/lib/utils";
 import useUser from "@/lib/hooks/useUser";
 
 interface IProp {
   row: User;
   type: string;
   onSelect: (e: any, type: string) => void;
-
 }
 
 const UserLineItem = (props: IProp) => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    user_id: props.row.id,
+    username: props.row.email,
   });
   const { user, mutateUser } = useUser();
   // console.log(props.row.created_on);
@@ -45,11 +43,11 @@ const UserLineItem = (props: IProp) => {
         {" "}
         {props.row && (props.row as User)?.avatar_url !== undefined ? (
           <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
-            {props.row.is_admin && (
+            {(props.row as User).is_admin && (
               <div className="absolute bg-yellow-600 w-4 h-8 z-10 opacity-60"></div>
             )}
             <Image
-              src={user?.avatar_url || "/user-images/default_user.png"}
+              src={(props.row as User).avatar_url || "/user-images/default_user.png"}
               fill
               style={{ objectFit: "cover" }}
               alt="profileImage"

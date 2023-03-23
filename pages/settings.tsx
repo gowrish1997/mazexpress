@@ -14,7 +14,7 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
 import useUser from "@/lib/hooks/useUser";
 import { User } from "@/models/user.model";
-import { checkPassword, getUserImageString } from "@/lib/utils";
+import { checkPassword } from "@/lib/utils";
 import { createToast } from "@/lib/toasts";
 import ProfilePicPop from "@/components/common/ProfilePicPop";
 import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
@@ -169,7 +169,7 @@ const Settings = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     // console.log(e.target.value);
-    const reee = await checkPassword(e.target.value, user?.id!);
+    const reee = await checkPassword(e.target.value, user?.email!);
     // console.log(reee);
     if (reee) setPasswordCheck(true);
     else setPasswordCheck(false);
@@ -182,7 +182,11 @@ const Settings = () => {
         className="border-none pb-[10px]"
         title="My Settings | MazExpress"
       />
-      <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} update={mutateUser} />
+      <ProfilePicPop
+        show={showProfilePicPop}
+        close={toggleProfilePicPop}
+        update={mutateUser}
+      />
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
@@ -214,7 +218,7 @@ const Settings = () => {
                   onClick={toggleProfilePicPop}
                 >
                   <Image
-                    src={user?.avatar_url || '/user-images/default_user.png'}
+                    src={user?.avatar_url || "/user-images/default_user.png"}
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}

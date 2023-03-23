@@ -11,7 +11,6 @@ import { Order } from "@/models/order.model";
 import { Tracking } from "@/models/tracking.model";
 import { User } from "@/models/user.model";
 import useUsers from "@/lib/hooks/useUsers";
-import { getUserImageString } from "@/lib/utils";
 import useUser from "@/lib/hooks/useUser";
 
 interface IProp {
@@ -24,7 +23,7 @@ const StatLineItem = (props: IProp) => {
   const trigger = useRef<any>();
 
   const { users, mutateUsers, usersIsLoading, usersError } = useUsers({
-    user_id: props.row.user.id,
+    username: props.row.user.email,
   });
   const { user, mutateUser } = useUser();
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
@@ -85,7 +84,7 @@ const StatLineItem = (props: IProp) => {
       <td className={`flex flex-row justify-start items-center capitalize`}>
         <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
           <Image
-            src={user?.avatar_url || '/user-images/default_user.png'}
+            src={props.row.user?.avatar_url || "/user-images/default_user.png"}
             fill
             style={{ objectFit: "cover" }}
             alt="profileImage"

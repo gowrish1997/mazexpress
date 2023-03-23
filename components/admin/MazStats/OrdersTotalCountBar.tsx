@@ -1,37 +1,40 @@
+import useOrderCount from "@/lib/hooks/useOrderCount";
 import useOrders from "@/lib/hooks/useOrders";
 import React from "react";
 
 import ProgressBar1 from "./ProgressBar";
 const OrdersTotalCountBar = () => {
   const {
-    orders: totalOrders,
-    mutateOrders: mutateTotalOrders,
-    ordersIsLoading: totalOrdersIsLoading,
-  } = useOrders({ count: true, count_all: true });
+    orderCount: totalOrders,
+    mutateOrderCount: mutateTotalOrders,
+    orderCountIsLoading: totalOrdersIsLoading,
+  } = useOrderCount({
+    status: ["delivered", "in-transit", "out-for-delivery", "at-warehouse"],
+  });
 
   const {
-    orders: deliveredOrders,
-    mutateOrders: mutateDeliveredOrders,
-    ordersIsLoading: deliveredOrdersIsLoading,
-  } = useOrders({ count: true, status: ["delivered"] });
+    orderCount: deliveredOrders,
+    mutateOrderCount: mutateDeliveredOrders,
+    orderCountIsLoading: deliveredOrdersIsLoading,
+  } = useOrderCount({ status: ["delivered"] });
 
   const {
-    orders: inTransitOrders,
-    mutateOrders: mutateInTransitOrders,
-    ordersIsLoading: inTransitOrdersIsLoading,
-  } = useOrders({ count: true, status: ["in-transit"] });
+    orderCount: inTransitOrders,
+    mutateOrderCount: mutateInTransitOrders,
+    orderCountIsLoading: inTransitOrdersIsLoading,
+  } = useOrderCount({ status: ["in-transit"] });
 
   const {
-    orders: outOrders,
-    mutateOrders: mutateOutOrders,
-    ordersIsLoading: outOrdersIsLoading,
-  } = useOrders({ count: true, status: ["out-for-delivery"] });
+    orderCount: outOrders,
+    mutateOrderCount: mutateOutOrders,
+    orderCountIsLoading: outOrdersIsLoading,
+  } = useOrderCount({ status: ["out-for-delivery"] });
 
   const {
-    orders: atWarehouseOrders,
-    mutateOrders: mutateAtWarehouseOrders,
-    ordersIsLoading: atWarehouseOrdersIsLoading,
-  } = useOrders({ count: true, status: ["at-warehouse"] });
+    orderCount: atWarehouseOrders,
+    mutateOrderCount: mutateAtWarehouseOrders,
+    orderCountIsLoading: atWarehouseOrdersIsLoading,
+  } = useOrderCount({ status: ["at-warehouse"] });
 
   return (
     <div
@@ -60,7 +63,9 @@ const OrdersTotalCountBar = () => {
         <ProgressBar1
           title="At Warehouse"
           orderCount={atWarehouseOrders as number}
-          orderCountPer={(atWarehouseOrders as number) / (totalOrders as number)}
+          orderCountPer={
+            (atWarehouseOrders as number) / (totalOrders as number)
+          }
         />
       </div>
     </div>

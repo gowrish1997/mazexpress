@@ -14,7 +14,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const AdminHome = () => {
   const router = useRouter();
   const { locales, locale: activeLocale } = router;
-  console.log(activeLocale)
+  console.log(activeLocale);
   const { user, mutateUser } = useUser();
   useEffect(() => {
     // console.log("use efft");

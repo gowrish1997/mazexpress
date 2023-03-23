@@ -11,13 +11,13 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchKeyContext } from "@/components/common/Frame";
 
 const tableHeaders = [
-    "Customer",
-    "MAZ Tracking ID",
-    "Store Link",
-    "Reference ID",
-    "Created Date",
-    //   "Warehouse",
-    "Status",
+  "Customer",
+  "MAZ Tracking ID",
+  "Store Link",
+  "Reference ID",
+  "Created Date",
+  //   "Warehouse",
+  "Status",
 ];
 
 const LiveOrders = () => {
@@ -59,34 +59,34 @@ const LiveOrders = () => {
         document.querySelector("html")?.setAttribute("lang", "en");
     }, [router.locale]);
 
-    const currentPageHandler = useCallback((value: number) => {
-        setCurrentPage(value);
-    }, []);
-    const itemPerPageHandler = useCallback((value: string | number) => {
-        setCurrentPage(0);
-        setItemPerPage(value as number);
-    }, []);
-    // const filterByStatusHandler = (value: string[]) => {
-    //     console.log('status changeing is calling')
-    //     setStatusFilterKey(value);
-    // };
+  const currentPageHandler = useCallback((value: number) => {
+    setCurrentPage(value);
+  }, []);
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
+    setItemPerPage(value as number);
+  }, []);
+  // const filterByStatusHandler = (value: string[]) => {
+  //     console.log('status changeing is calling')
+  //     setStatusFilterKey(value);
+  // };
 
-    const filterByStatusHandler = useCallback((value: string[]) => {
-        setStatusFilterKey(value);
-        setCurrentPage(0);
-    }, []);
+  const filterByStatusHandler = useCallback((value: string[]) => {
+    setStatusFilterKey(value);
+    setCurrentPage(0);
+  }, []);
 
-    const filterByCreatedDate = useCallback((value: Date | string) => {
-        setCreatedDateFilterKey(value);
-    }, []);
+  const filterByCreatedDate = useCallback((value: Date | string) => {
+    setCreatedDateFilterKey(value);
+  }, []);
 
-    if (ordersIsLoading) {
-        return <LoadingPage />;
-    }
-    if (ordersError) {
-        return <div>some error happened</div>;
-    }
-    console.log(orders || !statusFilterKey.includes("all status"));
+  if (ordersIsLoading) {
+    return <LoadingPage />;
+  }
+  if (ordersError) {
+    return <div>some error happened</div>;
+  }
+  console.log(orders || !statusFilterKey.includes("all status"));
 
     return (
         <>
@@ -128,12 +128,12 @@ const LiveOrders = () => {
 
 export default LiveOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }

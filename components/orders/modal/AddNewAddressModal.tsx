@@ -6,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import useUser from "@/lib/hooks/useUser";
-import CustomDropDown from "@/components/common/CustomDropDown";
 import fetchJson from "@/lib/fetchServer";
 import { Address } from "@/models/address.model";
 import { useTranslation } from "next-i18next";
