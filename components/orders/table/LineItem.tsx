@@ -97,7 +97,7 @@ const LineItem = (props: IProp) => {
         </div>
       </td>
       <td className={`td6 `}>
-        <div className="h-full flex flex-row justify-start items-center ">
+        <div className="h-full flex flex-ropw justify-start items-center ">
           <div className="pending__icon">
             {orderStatusColorHandler(props.row.status)}
           </div>

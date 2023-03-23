@@ -727,7 +727,7 @@ input::-webkit-inner-spin-button {
     position: absolute;
     width: 2px !important;
     height: 0% !important;
-    transition: height 5s linear;
+    /* transition: height 5s linear; */
     background: #009e3f !important;
     z-index: -1;
 }

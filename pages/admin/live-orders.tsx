@@ -9,15 +9,16 @@ import BlankPage from "@/components/admin/BlankPage";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchKeyContext } from "@/components/common/Frame";
+import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
-  "Customer",
-  "MAZ Tracking ID",
-  "Store Link",
-  "Reference ID",
-  "Created Date",
-  //   "Warehouse",
-  "Status",
+    "Customer",
+    "MAZ Tracking ID",
+    "Store Link",
+    "Reference ID",
+    "Created Date",
+    //   "Warehouse",
+    "Status",
 ];
 
 const LiveOrders = () => {
@@ -37,6 +38,7 @@ const LiveOrders = () => {
         search: searchKey,
         per_page: itemsPerPage,
         page: currentPage,
+        date: getDateInDBFormat(createdDateFilterKey as Date),
         status:
             statusFilterKey.length == 0 || statusFilterKey[0] == "all status"
                 ? ["pending", "in-transit", "at-warehouse", "delivered"]
@@ -59,34 +61,34 @@ const LiveOrders = () => {
         document.querySelector("html")?.setAttribute("lang", "en");
     }, [router.locale]);
 
-  const currentPageHandler = useCallback((value: number) => {
-    setCurrentPage(value);
-  }, []);
-  const itemPerPageHandler = useCallback((value: string | number) => {
-    setCurrentPage(0);
-    setItemPerPage(value as number);
-  }, []);
-  // const filterByStatusHandler = (value: string[]) => {
-  //     console.log('status changeing is calling')
-  //     setStatusFilterKey(value);
-  // };
+    const currentPageHandler = useCallback((value: number) => {
+        setCurrentPage(value);
+    }, []);
+    const itemPerPageHandler = useCallback((value: string | number) => {
+        setCurrentPage(0);
+        setItemPerPage(value as number);
+    }, []);
+    // const filterByStatusHandler = (value: string[]) => {
+    //     console.log('status changeing is calling')
+    //     setStatusFilterKey(value);
+    // };
 
-  const filterByStatusHandler = useCallback((value: string[]) => {
-    setStatusFilterKey(value);
-    setCurrentPage(0);
-  }, []);
+    const filterByStatusHandler = useCallback((value: string[]) => {
+        setStatusFilterKey(value);
+        setCurrentPage(0);
+    }, []);
 
-  const filterByCreatedDate = useCallback((value: Date | string) => {
-    setCreatedDateFilterKey(value);
-  }, []);
+    const filterByCreatedDate = useCallback((value: Date | string) => {
+        setCreatedDateFilterKey(value);
+    }, []);
 
-  if (ordersIsLoading) {
-    return <LoadingPage />;
-  }
-  if (ordersError) {
-    return <div>some error happened</div>;
-  }
-  console.log(orders || !statusFilterKey.includes("all status"));
+    if (ordersIsLoading) {
+        return <LoadingPage />;
+    }
+    if (ordersError) {
+        return <div>some error happened</div>;
+    }
+    console.log(orders || !statusFilterKey.includes("all status"));
 
     return (
         <>
@@ -101,17 +103,24 @@ const LiveOrders = () => {
                     currentPageHandler={currentPageHandler}
                     itemsPerPage={itemsPerPage}
                     currentPage={currentPage}
+                    createdDateFilterKey={createdDateFilterKey}
                     statusFilterKey={statusFilterKey}
                     pageCount={Math.ceil(
                         (orders?.count as number) / itemsPerPage
                     )}
+                    isFilterPresent={
+                        searchKey ||
+                        createdDateFilterKey ||
+                        !statusFilterKey.includes("all status")
+                    }
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
                     {!orders?.data &&
-                        statusFilterKey.includes("all status") && <BlankPage />}
-
-                    {(orders?.data ||
-                        !statusFilterKey.includes("all status")) && (
+                    statusFilterKey.includes("all status") &&
+                    !searchKey &&
+                    !createdDateFilterKey ? (
+                        <BlankPage />
+                    ) : (
                         <>
                             <Table
                                 rows={orders?.data as Order[]}
@@ -128,12 +137,12 @@ const LiveOrders = () => {
 
 export default LiveOrders;
 export async function getStaticProps({ locale }: { locale: any }) {
-  if (process.env.NODE_ENV === "development") {
-    await i18n?.reloadResources();
-  }
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+        },
+    };
 }

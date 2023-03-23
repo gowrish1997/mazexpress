@@ -16,5 +16,9 @@ export interface IPageHeaderProp {
     currentPage: number;
     statusFilterKey?: string[];
     mutateOrder?: KeyedMutator<APIResponse<Order>>;
-    setSelectedOrder?:React.Dispatch<React.SetStateAction<Order[] | undefined>>
+    createdDateFilterKey?:string | Date,
+    setSelectedOrder?: React.Dispatch<
+        React.SetStateAction<Order[] | undefined>
+    >;
+    isFilterPresent?: boolean;
 }

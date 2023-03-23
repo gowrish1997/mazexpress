@@ -54,7 +54,7 @@ const ResetPasswordView = (props: any) => {
   const submitButtons: string[] = t("resetPasswordView.form.SubmitButton", {
     returnObjects: true,
   });
-  const discription: string[] = t("resetPasswordView.form.Discription", {
+  const discription: string[] = t("resetPasswordView.form.Description", {
     returnObjects: true,
   });
 

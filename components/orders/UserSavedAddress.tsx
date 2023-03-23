@@ -38,31 +38,29 @@ const UserSavedAddress = (props: {
                 props.allAddresses.length > 1
             ) {
                 console.log("delteing default address");
-                const updateResponse = await fetchServer(
-                    `/api/users?email=${user?.email}`,
-                    {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            default_address:
-                                props.address.id ==
-                                (props.allAddresses?.[0] as Address).id
-                                    ? (props.allAddresses?.[1] as Address).id
-                                    : (props.allAddresses?.[0] as Address).id,
-                        }),
-                    }
-                );
-                mutateUser();
+                // const updateResponse = await fetchServer(
+                //     `/api/users/email=${user?.email}`,
+                //     {
+                //         method: "PUT",
+                //         headers: { "Content-Type": "application/json" },
+                //         body: JSON.stringify({
+                //             default_address:
+                //                 props.address.id ==
+                //                 (props.allAddresses?.[0] as Address).id
+                //                     ? (props.allAddresses?.[1] as Address).id
+                //                     : (props.allAddresses?.[0] as Address).id,
+                //         }),
+                //     }
+                // );
+                // mutateUser();
             }
             const result = await fetchServer(
-                `/api/addresses?id=${props.address.id}&user=${user.id}`,
+                `/api/addresses/${props.address.id}`,
                 {
                     method: "DELETE",
                 }
             );
-
             props.update();
-
             if (props.type == "add-new-order") {
                 props.updateDeliveryAddress?.("");
             }

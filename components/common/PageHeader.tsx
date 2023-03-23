@@ -1,10 +1,13 @@
 import Head from "next/head";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Calendar from "react-calendar";
 import MazStatsDropddown from "../admin/MazStats/MazStatsDropddown";
 import { perPageOptinsList } from "@/lib/helper";
 import ReactPaginateComponent from "../admin/ReactPaginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import cancel from "../../public/cancel.png";
+import calendarIcon from "@/public/calendar_icon.png";
+import Image from "next/image";
 import {
     faAngleDown,
     faAngleLeft,
@@ -17,6 +20,7 @@ import ClickOutside from "@/components/common/ClickOutside";
 import useUser from "@/lib/hooks/useUser";
 import useTracking from "@/lib/hooks/useTracking";
 import { Order } from "@/models/order.model";
+import { getDateInStringFormat } from "@/lib/helper";
 interface IProp {
     content: string;
     className?: string;
@@ -31,8 +35,10 @@ interface IProp {
     itemsPerPage?: number;
     currentPage?: number;
     isFilterPresent?: boolean;
+    createdDateFilterKey?: string | Date;
 }
 const PageHeader = (props: IProp) => {
+    console.log(props);
     const { user, mutateUser } = useUser();
     const { tracking, trackingIsLoading } = useTracking({
         user_id: user?.id,
@@ -46,7 +52,11 @@ const PageHeader = (props: IProp) => {
     const [allOrderDeliveryDate, setAllOrderDeliveryDate] = useState<
         string[] | null
     >(null);
-    const [calendarValue, setCalendarValue] = useState<Date>(new Date());
+    const [filterDate, setFilterDate] = useState<Date | string>("");
+
+    useEffect(() => {
+        setFilterDate(props.createdDateFilterKey!);
+    }, []);
 
     const toggleCalender = () => {
         setShowCalender((prev) => !prev);
@@ -54,13 +64,19 @@ const PageHeader = (props: IProp) => {
 
     const calendarChange = (value: Date, event: any) => {
         props.filterByDate?.(value);
-
+        setFilterDate(value);
         // get clicked day and calc datePointer
         // console.log(value)
         // console.log(new Date())
         // console.log((value - new Date())/(1000 * 3600 * 24))
         // console.log(event)
     };
+    const clearDateHandler = () => {
+        props.filterByDate?.("");
+        // props.filterByDate(value);
+        setFilterDate("");
+    };
+    console.log(allOrderDeliveryDate);
 
     return (
         <div
@@ -97,14 +113,25 @@ const PageHeader = (props: IProp) => {
                         selection={[]}
                     />
                     <div className="relative flex-type1 space-x-[10px]">
-                        {props.showCalender && (
-                            <button
-                                className="border-[1px] border-[#BBC2CF] text-[14px] text-[#2b2b2b] font-[19px] leading-[19px] p-[10px] rounded-[4px] hover:bg-[#EDF5F9] hover:text-[#2b2b2b] "
-                                onClick={toggleCalender}
-                            >
-                                {t("indexPage.pageHeader.CalenderTitle")}
-                            </button>
-                        )}
+                        <div
+                            className="flex-type1 border-[1px] border-[#BBC2CF] rounded-[4px] ml-[10px] py-[7px] px-[10px] space-x-[10px] cursor-pointer "
+                            onClick={toggleCalender}
+                            ref={trigger}
+                        >
+                            <div className="relative h-[18px] w-[16px] text-[#9845DB] cursor-pointer">
+                                <Image
+                                    src={calendarIcon}
+                                    fill
+                                    style={{ objectFit: "contain" }}
+                                    alt="button"
+                                />
+                            </div>
+                            <span className="box-border font-[500] text-[16px] leading-[22.4px] text-[#35C6F4] text-center">
+                                {filterDate
+                                    ? getDateInStringFormat(filterDate as Date)
+                                    : "No date selected"}
+                            </span>
+                        </div>
                         {showCalender ? (
                             <ClickOutside
                                 trigger={trigger}
@@ -119,7 +146,7 @@ const PageHeader = (props: IProp) => {
                                 >
                                     <Calendar
                                         onChange={calendarChange}
-                                        value={calendarValue}
+                                        // value={calendarValue}
                                         next2Label={null}
                                         prev2Label={null}
                                         nextLabel={
@@ -137,9 +164,13 @@ const PageHeader = (props: IProp) => {
                                         view={"month"}
                                         tileClassName={({ date, view }) => {
                                             if (
-                                                allOrderDeliveryDate?.find(
+                                                props.allLiveOrders?.find(
                                                     (x) =>
-                                                        x ===
+                                                        moment(
+                                                            x.created_on
+                                                        ).format(
+                                                            "DD-MM-YYYY"
+                                                        ) ===
                                                         moment(date).format(
                                                             "DD-MM-YYYY"
                                                         )
@@ -152,6 +183,16 @@ const PageHeader = (props: IProp) => {
                                 </div>
                             </ClickOutside>
                         ) : null}
+                        {filterDate && (
+                            <Image
+                                src={cancel}
+                                height={15}
+                                width={15}
+                                alt="cancel"
+                                className="ml-[5px] cursor-pointer"
+                                onClick={clearDateHandler}
+                            />
+                        )}
                     </div>
                 </div>
             )}

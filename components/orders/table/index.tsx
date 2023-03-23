@@ -114,9 +114,9 @@ const Table = (props: TableProps) => {
                         })}
                     </tbody>
                 ) : (
-                    <div className="w-full h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] whitespace-nowrap ">
+                    <tr className="w-[100%] h-[300px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[30px] whitespace-nowrap flex  ">
                         No results found
-                    </div>
+                    </tr>
                 )}
             </table>
         </div>

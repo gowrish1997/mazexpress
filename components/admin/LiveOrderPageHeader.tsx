@@ -28,11 +28,11 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
         return ["istanbul"];
     }, []);
 
-  //         setPackageStatusDropDownOptoin((prev) => {
-  //             return ["all status", ...(Array.from(packageStatus) as string[])];
-  //         });
-  //     }
-  // }, [props.allLiveOrders]);
+    //         setPackageStatusDropDownOptoin((prev) => {
+    //             return ["all status", ...(Array.from(packageStatus) as string[])];
+    //         });
+    //     }
+    // }, [props.allLiveOrders]);
 
     return (
         <>
@@ -48,6 +48,7 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
                     content={props.content}
                     allLiveOrders={props.allLiveOrders}
                     filterByDate={props.filterByDate}
+                    createdDateFilterKey={props.createdDateFilterKey}
                 />
                 <ReactPaginateComponent
                     pageCount={props.pageCount!}
@@ -56,36 +57,36 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
                     currentPage={props.currentPage}
                 />
 
-        {(props.allLiveOrders ||
-          !props.statusFilterKey?.includes("all status")) && (
-          <div className="flex-type1 space-x-[10px] ">
-            {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
+                {((props.allLiveOrders && props.allLiveOrders.length > 0) ||
+                    props.isFilterPresent) && (
+                    <div className="flex-type1 space-x-[10px] ">
+                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
 
-            <MazStatsDropddown
-              options={perPageOptions}
-              header="per_page"
-              itemPerPage={props.itemsPerPage}
-              onChange={props.itemPerPageHandler!}
-              className="h-[38px] px-[10px]"
-              selection={[]}
-            />
-            <FilterOptionDropDown
-              allLiveOrders={props.allLiveOrders}
-              options={packageStatusDropDownOptoin}
-              type="packageStatus"
-              onChange={props.onChangeStatus!}
-              statusFilterKey={props.statusFilterKey}
-            />
+                        <MazStatsDropddown
+                            options={perPageOptions}
+                            header="per_page"
+                            itemPerPage={props.itemsPerPage}
+                            onChange={props.itemPerPageHandler!}
+                            className="h-[38px] px-[10px]"
+                            selection={[]}
+                        />
+                        <FilterOptionDropDown
+                            allLiveOrders={props.allLiveOrders}
+                            options={packageStatusDropDownOptoin}
+                            type="packageStatus"
+                            onChange={props.onChangeStatus!}
+                            statusFilterKey={props.statusFilterKey}
+                        />
 
-            <AdminOptionDropDown
-              disabled={!props.selectedOrder?.length}
-              orders={props.allLiveOrders}
-            />
-          </div>
-        )}
-      </div>
-    </>
-  );
+                        <AdminOptionDropDown
+                            disabled={!props.selectedOrder?.length}
+                            orders={props.allLiveOrders}
+                        />
+                    </div>
+                )}
+            </div>
+        </>
+    );
 };
 
 export default React.memo(LiveOrderPageHeader);

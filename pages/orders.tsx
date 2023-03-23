@@ -99,13 +99,14 @@ const MyOrders = () => {
                 currentPageHandler={currentPageHandler}
                 itemsPerPage={itemsPerPage}
                 currentPage={currentPage}
+                createdDateFilterKey={createdDateFilterKey}
                 allLiveOrders={orders?.data as Order[]}
                 pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
-                isFilterPresent={searchKey}
+                isFilterPresent={searchKey || createdDateFilterKey}
             />
 
             <div className="flex flex-col justify-between relative flex-1 h-full">
-                {!orders?.data && !searchKey ? (
+                {!orders?.data && !searchKey && !createdDateFilterKey ? (
                     <div className="flex-1 flex flex-col justify-center items-center w-full ">
                         <div className="relative h-[221px] w-[322px] ">
                             <Image

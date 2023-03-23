@@ -15,7 +15,7 @@ const PackageTrackingModal = (props: IProp) => {
   const router = useRouter();
 
   const { tracking, trackingIsLoading } = useTracking({
-    order_id: router.query.id as string,
+    maz_id: router.query.id as string,
   });
   console.log(tracking);
 
