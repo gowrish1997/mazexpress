@@ -17,7 +17,7 @@ const PackageTrackingModal = (props: IProp) => {
   const { tracking, trackingIsLoading } = useTracking({
     maz_id: router.query.id as string,
   });
-  console.log(tracking);
+  // console.log(tracking);
 
   const [packageStatus, setPackageStatus] = useState(0);
 

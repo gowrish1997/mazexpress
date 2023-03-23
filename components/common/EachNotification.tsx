@@ -9,7 +9,7 @@ interface IProp {
   data: any;
   id: string;
   delete: (id: string) => void;
-  update: () => void
+  update: () => void;
 }
 
 const EachNotification = (props: IProp) => {
@@ -50,14 +50,14 @@ const EachNotification = (props: IProp) => {
   };
 
   const markAsRead = async () => {
-    // mutateNotification(
-    //   await fetchJson(`/api/notifications?id=${props.id}`, {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ status: "read" }),
-    //   }),
-    //   false
-    // );
+    mutateNotification(
+      await fetchJson(`/api/notifications?id=${props.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "read" }),
+      }),
+      false
+    );
   };
 
   if (notificationIsLoading) {

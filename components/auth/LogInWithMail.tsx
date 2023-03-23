@@ -12,7 +12,6 @@ const LogInWithMail = () => {
 
   const router = useRouter();
 
-
   useEffect(() => {
     // console.log(googleStatus);
     if (googleStatus === "initialized") {

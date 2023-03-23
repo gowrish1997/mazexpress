@@ -32,7 +32,7 @@ const ProfilePicPop = (props: IProp) => {
   const deleteImage = async (e: any) => {
     // set back to default image
 
-    const imageUpdateResult = await fetchServer(`/api/users?id=${user?.id}`, {
+    const imageUpdateResult = await fetchServer(`/api/users/${user?.email}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ avatar_url: null }),

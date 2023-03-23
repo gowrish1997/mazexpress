@@ -40,9 +40,7 @@ interface IProp {
 const PageHeader = (props: IProp) => {
     console.log(props);
     const { user, mutateUser } = useUser();
-    const { tracking, trackingIsLoading } = useTracking({
-        user_id: user?.id,
-    });
+
     let trigger = useRef(null);
     const router = useRouter();
     const { t } = useTranslation("common");

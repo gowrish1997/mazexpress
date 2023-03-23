@@ -11,7 +11,8 @@
         "Email",
         "Mobile Number",
         "Password",
-        "Confirm Password"
+        "Confirm Password",
+        "Address Tag"
       ],
       "GenderOptions": [
         { "value": "m", "label": "Male" },
