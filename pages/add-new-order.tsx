@@ -38,7 +38,9 @@ const AddNewOrder = () => {
         useState<boolean>(false);
     const { user, mutateUser } = useUser();
     const { addresses, mutateAddresses } = useAddresses({
-        user_id: user?.id,
+        type: "get_by_user_id",
+        user_id: user?.email,
+        status: "active"
     });
 
     const router = useRouter();
@@ -61,7 +63,7 @@ const AddNewOrder = () => {
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
     const defaultAddressHandler = () => {
-        mutateAddresses();
+        // mutateAddresses();
         const address = (addresses as Address[])?.find(
             (el) => el.id === user?.default_address
         );
@@ -73,6 +75,7 @@ const AddNewOrder = () => {
         register,
         handleSubmit,
         setValue,
+        getValues,
         formState: { errors },
     } = useForm<{
         reference_id: string;
@@ -111,35 +114,36 @@ const AddNewOrder = () => {
         store_link: string | null | undefined;
         address_id: string | null | undefined;
     }> = async (data) => {
+        console.log("sunmit")
         console.log(data);
-        try {
-            let orderObj = {
-                user_id: user?.id,
-                address_id: data.address_id,
-                reference_id: data.reference_id,
-                store_link: data.store_link,
-            };
-            const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(orderObj),
-            });
-            // console.log(result);
+        // try {
+        //     let orderObj = {
+        //         user_id: user?.id,
+        //         address_id: data.address_id,
+        //         reference_id: data.reference_id,
+        //         store_link: data.store_link,
+        //     };
+        //     const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
+        //         method: "POST",
+        //         headers: { "Content-Type": "application/json" },
+        //         body: JSON.stringify(orderObj),
+        //     });
+        //     // console.log(result);
 
-            createToast({
-                type: "success",
-                title: "Success",
-                message: "Created order successfully",
-            });
-        } catch (err) {
-            console.log(err);
-            createToast({
-                type: "error",
-                title: "An error occurred",
-                message: "Check console for more info.",
-                timeOut: 3000,
-            });
-        }
+        //     createToast({
+        //         type: "success",
+        //         title: "Success",
+        //         message: "Created order successfully",
+        //     });
+        // } catch (err) {
+        //     console.log(err);
+        //     createToast({
+        //         type: "error",
+        //         title: "An error occurred",
+        //         message: "Check console for more info.",
+        //         timeOut: 3000,
+        //     });
+        // }
     };
 
     return (
@@ -206,12 +210,14 @@ const AddNewOrder = () => {
                                         type="add-new-order"
                                         key={data.id}
                                         address={data}
+                                        allAddresses={addresses}
                                         register={register("address_id")}
                                         edit={toggleEditUserAddressModal}
                                         update={mutateAddresses}
                                         updateDeliveryAddress={
                                             updataDeliveryAdressId
                                         }
+                                        selectedAddressId={getValues('address_id')}
                                     />
                                 );
                             })}
@@ -230,6 +236,7 @@ const AddNewOrder = () => {
                 show={showAddNewAddressModal}
                 close={toggleAddNewAddressModal}
                 update={mutateAddresses}
+                updateuser={mutateUser}
             />
             {showEditUserAddressModal && (
                 <EditUserAddressModal

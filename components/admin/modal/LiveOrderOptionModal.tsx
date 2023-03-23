@@ -8,6 +8,7 @@ import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
 import { APIResponse } from "@/models/api.model";
 import useOrders from "@/lib/hooks/useOrders";
+import { singleOrderAction } from "@/lib/selectOrder";
 
 import { KeyedMutator } from "swr";
 interface IProps {
@@ -40,50 +41,17 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
         const actionHandler = async () => {
             switch (props.type) {
                 case "pending":
-                    let rowFixed: Order = props.row as Order;
-                    const result0 = await fetchServer(
-                        `/api/orders?id=${rowFixed.id}`,
-                        {
-                            method: "PUT",
-                            headers: { "Content-type": "application/json" },
-                            body: JSON.stringify({ status: "at-warehouse" }),
-                        }
-                    );
-                    //   console.log(result0);
-                    const result0_2 = await fetchServer(`/api/tracking`, {
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            order_id: props.row.id,
-                            user_id: user?.id,
-                            stage: 1,
-                        }),
-                    });
+                    try {
+                        const result0_3 = await singleOrderAction(
+                            props.row as Order,
+                            "at-warehouse",
+                            1,
+                            "Order arrived at Istanbul warehouse!",
+                            "has been received at our Istanbul warehouse and will be shipped soon.",
+                            true
+                        );
 
-                    // check notifications for user and send notification
-                    // get notification for user
-                    if ((props.row as Order).user.is_notifications_enabled) {
-                        // get admin notification on backend
-                        // send notification post
-                        const deliveredMessage = {
-                            title: "Order arrived at Istanbul warehouse!",
-                            content: `Your order number ${rowFixed.id} has been received at our Istanbul warehouse and will be shipped soon.`,
-                        };
-
-                        const result0_3: APIResponse<Notification> =
-                            await fetchServer("/api/notifications", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                    data: deliveredMessage,
-                                    // files: [],
-                                    users: [(props.row as Order).user.id],
-                                    // notification_config: 1,
-                                }),
-                            });
-                        // console.log(result0_3);
-
-                        if (result0_3?.count && result0_3?.count > 0) {
+                        if (result0_3) {
                             createToast({
                                 type: "success",
                                 title: "Notified User",
@@ -100,61 +68,32 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 timeOut: 2000,
                             });
                         }
+                    } catch (error) {
+                        console.error(error);
                     }
+
                     props.mutateOrder?.();
+
                     // console.log(result0_2);
                     break;
                 case "shipments":
-                    let rowFixed2: Order = props.row as Order;
+                    try {
+                        const result0_3 = await singleOrderAction(
+                            props.row as Order,
+                            "in-transit",
+                            2,
+                            "Order left Istanbul warehouse!",
+                            "has left our Istanbul warehouse and will be reach Libya soon.",
+                            true
+                        );
 
-                    // put to order
-                    const result1 = await fetchServer(
-                        `/api/orders?id=${rowFixed2.id}`,
-                        {
-                            method: "PUT",
-                            headers: { "Content-type": "application/json" },
-                            body: JSON.stringify({ status: "in-transit" }),
-                        }
-                    );
-                    // console.log(result1);
-                    const result1_2 = await fetchServer("/api/tracking", {
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            user_id: rowFixed2?.user.id,
-                            order_id: rowFixed2.id,
-                            stage: 2,
-                        }),
-                    });
-                    // console.log(result1_2);
-                    // check notifications for user and send notification
-                    // get notification for user
-                    if (rowFixed2.user.is_notifications_enabled) { 
-                        // get admin notification on backend
-                        // send notification post
-                        const deliveredMessage = {
-                            title: "Order left Istanbul warehouse!",
-                            content: `Your order number ${rowFixed2.id} has left our Istanbul warehouse and will be reach Libya soon.`,
-                        };
-
-                        const result0_3: APIResponse<Notification> =
-                            await fetchServer("/api/notifications", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                    data: deliveredMessage,
-                                    // files: [],
-                                    users: [rowFixed2.user.id],
-                                    // notification_config: 1,
-                                }),
-                            });
-                        // console.log(result0_3);
-
-                        if (result0_3?.count && result0_3?.count > 0) {
+                        if (result0_3) {
                             createToast({
                                 type: "success",
                                 title: "Notified User",
-                                message: `Sent order received notification to userID ${rowFixed2.user.id}`,
+                                message: `Sent order left Istanbul warehouse notification to userID ${
+                                    (props.row as Order).user.id
+                                }`,
                                 timeOut: 2000,
                             });
                         } else {
@@ -165,7 +104,12 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 timeOut: 2000,
                             });
                         }
+                    } catch (error) {
+                        console.error(error);
                     }
+
+                    // console.log(result1);
+
                     props.mutateOrder?.();
                     break;
                 case "in-transit":
@@ -175,45 +119,24 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
 
                     if (props.stage === 2) {
                         // received in libya action
-                        const result2_2 = await fetchServer("/api/tracking", {
-                            method: "POST",
-                            headers: { "Content-type": "application/json" },
-                            body: JSON.stringify({
-                                order_id: rowFixed3.id,
-                                user_id: rowFixed3?.user?.id,
-                                stage: 3,
-                            }),
-                        });
-                        // check notifications for user and send notification
-                        // get notification for user
-                        if (rowFixed3.user.is_notifications_enabled) {
-                            // get admin notification on backend
-                            // send notification post
-                            const deliveredMessage = {
-                                title: "Order received in Libya warehouse!",
-                                content: `Your order number ${rowFixed3.id} has reached our Libya warehouse and will reach you soon.`,
-                            };
 
-                            const result0_3: APIResponse<Notification> =
-                                await fetchServer("/api/notifications", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({
-                                        data: deliveredMessage,
-                                        // files: [],
-                                        users: [rowFixed3.user.id],
-                                        // notification_config: 1,
-                                    }),
-                                });
-                            // console.log(result0_3);
+                        try {
+                            const result0_3 = await singleOrderAction(
+                                props.row as Order,
+                                "in-transit",
+                                3,
+                                "Order received in Libya warehouse!",
+                                "has reached our Libya warehouse and will reach you soon.",
+                                false
+                            );
 
-                            if (result0_3?.count && result0_3?.count > 0) {
+                            if (result0_3) {
                                 createToast({
                                     type: "success",
                                     title: "Notified User",
-                                    message: `Sent order received notification to userID ${rowFixed3.user.id}`,
+                                    message: `Sent order received in Libya warehouse notification to userID ${
+                                        (props.row as Order).user.id
+                                    }`,
                                     timeOut: 2000,
                                 });
                             } else {
@@ -224,63 +147,33 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                     timeOut: 2000,
                                 });
                             }
+                        } catch (error) {
+                            console.error(error);
                         }
+
+                        // check notifications for user and send notification
+                        // get notification for user
+
                         props.mutateOrder?.();
                     }
                     if (props.stage === 3) {
-                        // out for delivery action
-                        // set order status
-                        const result2 = await fetchServer(
-                            `/api/orders?id=${rowFixed3.id}`,
-                            {
-                                method: "PUT",
-                                headers: { "Content-type": "application/json" },
-                                body: JSON.stringify({
-                                    status: "out-for-delivery",
-                                }),
-                            }
-                        );
+                        try {
+                            const result0_3 = await singleOrderAction(
+                                props.row as Order,
+                                "out-for-delivery",
+                                4,
+                                "Order out for delivery!",
+                                "is out for delivery and will reach you soon.",
+                                false
+                            );
 
-                        const result2_2 = await fetchServer("/api/tracking", {
-                            method: "POST",
-                            headers: { "Content-type": "application/json" },
-                            body: JSON.stringify({
-                                order_id: rowFixed3.id,
-                                user_id: rowFixed3?.user?.id,
-                                stage: 4,
-                            }),
-                        });
-
-                        // check notifications for user and send notification
-                        // get notification for user
-                        if (rowFixed3.user.is_notifications_enabled) {
-                            // get admin notification on backend
-                            // send notification post
-                            const deliveredMessage = {
-                                title: "Order out for delivery!",
-                                content: `Your order number ${rowFixed3.id} is out for delivery and will reach you soon.`,
-                            };
-
-                            const result0_3: APIResponse<Notification> =
-                                await fetchServer("/api/notifications", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({
-                                        data: deliveredMessage,
-                                        // files: [],
-                                        users: [rowFixed3.user.id],
-                                        // notification_config: 1,
-                                    }),
-                                });
-                            // console.log(result0_3);
-
-                            if (result0_3?.count && result0_3?.count > 0) {
+                            if (result0_3) {
                                 createToast({
                                     type: "success",
                                     title: "Notified User",
-                                    message: `Sent order received notification to userID ${rowFixed3.user.id}`,
+                                    message: `Sent order out for delivery notification to userID ${
+                                        (props.row as Order).user.id
+                                    }`,
                                     timeOut: 2000,
                                 });
                             } else {
@@ -291,63 +184,30 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                     timeOut: 2000,
                                 });
                             }
+                        } catch (error) {
+                            console.error(error);
                         }
+
                         props.mutateOrder?.();
                     }
                     if (props.stage === 4) {
-                        // delivered action
+                        try {
+                            const result0_3 = await singleOrderAction(
+                                props.row as Order,
+                                "delivered",
+                                5,
+                                "Order delivered!",
+                                "has been marked as delivered.",
+                                true
+                            );
 
-                        // set order status
-                        const result2 = await fetchServer(
-                            `/api/orders?id=${rowFixed3.id}`,
-                            {
-                                method: "PUT",
-                                headers: { "Content-type": "application/json" },
-                                body: JSON.stringify({ status: "delivered" }),
-                            }
-                        );
-
-                        // enter tracking data
-                        const result2_2 = await fetchServer("/api/tracking", {
-                            method: "POST",
-                            headers: { "Content-type": "application/json" },
-                            body: JSON.stringify({
-                                order_id: rowFixed3.id,
-                                stage: 5,
-                                user_id: rowFixed3?.user?.id,
-                            }),
-                        });
-
-                        // check notifications for user and send notification
-                        // get notification for user
-                        if (rowFixed3.user.is_notifications_enabled) {
-                            // get admin notification on backend
-                            // send notification post
-                            const deliveredMessage = {
-                                title: "Order delivered!",
-                                content: `Your order number ${rowFixed3.id} has been marked as delivered.`,
-                            };
-
-                            const result0_3: APIResponse<Notification> =
-                                await fetchServer("/api/notifications", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({
-                                        data: deliveredMessage,
-                                        // files: [],
-                                        users: [rowFixed3.user.id],
-                                        // notification_config: 1,
-                                    }),
-                                });
-                            // console.log(result0_3);
-
-                            if (result0_3?.count && result0_3?.count > 0) {
+                            if (result0_3) {
                                 createToast({
                                     type: "success",
                                     title: "Notified User",
-                                    message: `Sent order received notification to userID ${rowFixed3.user.id}`,
+                                    message: `Sent order delivered notification to userID ${
+                                        (props.row as Order).user.id
+                                    }`,
                                     timeOut: 2000,
                                 });
                             } else {
@@ -358,7 +218,12 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                     timeOut: 2000,
                                 });
                             }
+                        } catch (error) {
+                            console.error(error);
                         }
+
+                        // check notifications for user and send notification
+
                         props.mutateOrder?.();
                     }
                     break;

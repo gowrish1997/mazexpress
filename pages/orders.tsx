@@ -34,11 +34,16 @@ const MyOrders = () => {
         Date | string
     >("");
     const { user, mutateUser } = useUser();
+    console.log(user);
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        user_id: user?.id as string,
+        type: "get_by_user_id",
+        search: searchKey,
+        user_id: user?.email as string,
         per_page: itemsPerPage,
         page: currentPage,
     });
+
+    console.log(orders);
 
     const router = useRouter();
     const { t } = useTranslation("common");
@@ -95,11 +100,11 @@ const MyOrders = () => {
                 currentPage={currentPage}
                 allLiveOrders={orders?.data as Order[]}
                 pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
+                isFilterPresent={searchKey}
             />
 
             <div className="flex flex-col justify-between relative flex-1 h-full">
-                {(!orders?.data ||
-                    (orders?.data && (orders.data as Order[]).length <= 0)) && (
+                {!orders?.data && !searchKey ? (
                     <div className="flex-1 flex flex-col justify-center items-center w-full ">
                         <div className="relative h-[221px] w-[322px] ">
                             <Image
@@ -124,11 +129,10 @@ const MyOrders = () => {
                             </Link>
                         </div>
                     </div>
-                )}
-                {orders?.data && (orders.data as Order[]).length > 0 && (
+                ) : (
                     <>
                         <Table
-                            rows={orders.data as any}
+                            rows={orders?.data as any}
                             headings={tableHeaders}
                             type="order"
                         />

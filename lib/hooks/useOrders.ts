@@ -3,6 +3,7 @@ import { Order } from "@/models/order.model";
 import useSWR from "swr";
 
 interface IProps {
+    type?: string;
     user_id?: string;
     search?: string;
     page?: number;
@@ -16,7 +17,7 @@ interface IProps {
 }
 export default function useOrders(props: IProps) {
     //   console.log('calling use orders')
-    //   console.log(props.page)
+    console.log(props);
     let queryString = "";
     if (!props.count_all) {
         queryString += `?page=${
@@ -24,7 +25,7 @@ export default function useOrders(props: IProps) {
         }&per_page=${props.per_page !== undefined ? props.per_page : 20}`;
 
         if (props?.user_id) {
-            queryString += `&user=${props.user_id}`;
+            queryString += `&username=${props.user_id}`;
         }
 
         if (props?.search) {
@@ -48,7 +49,13 @@ export default function useOrders(props: IProps) {
         mutate: mutateOrders,
         isLoading: ordersIsLoading,
         error: ordersError,
-    } = useSWR<APIResponse<Order>>(`/api/orders` + queryString);
+    } = useSWR<APIResponse<Order>>(
+        props.type == "get_by_user_id"
+            ? props.user_id
+                ? `/api/orders` + queryString
+                : null
+            : `/api/orders` + queryString
+    );
 
     return {
         orders: orders,

@@ -24,7 +24,7 @@ const tableHeaders = [
 const Intransit = () => {
     const router = useRouter();
     const { searchKey } = React.useContext(SearchKeyContext) as any;
-    const [itemsPerPage, setItemPerPage] = useState(30);
+    const [itemsPerPage, setItemPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
     const [mazTrackingIdFilterKey, setMazTrackingIdFilterKey] =
         useState<string>("");
@@ -32,6 +32,7 @@ const Intransit = () => {
         string | Date
     >("");
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+        search: searchKey,
         per_page: itemsPerPage,
         page: currentPage,
         status: ["in-transit", "out-for-delivery"],

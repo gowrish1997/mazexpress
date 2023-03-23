@@ -42,91 +42,106 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
         switch (inTrasitCurrentStatus) {
             case "Received in Libya":
                 console.log("Received in Libya");
-                const status1 = await bulkActionHandler(
-                    props.selectedOrder as Order[],
-                    "in-transit",
-                    3,
-                    "Order received at Libya warehouse!",
-                    "received at Libya warehouse!"
-                );
-                console.log(status1);
-                if (status1) {
-                    createToast({
-                        type: "success",
-                        title: "Notified User",
-                        message: `Sent order received in Libya warehouse notification to userID ${getUserIdList(
-                            props.selectedOrder
-                        )}`,
-                        timeOut: 2000,
-                    });
-                } else {
-                    createToast({
-                        type: "error",
-                        title: "Failed creating notification",
-                        message: `check console for more info`,
-                        timeOut: 2000,
-                    });
+                try {
+                    const status1 = await bulkActionHandler(
+                        props.selectedOrder as Order[],
+                        "in-transit",
+                        3,
+                        "Order received at Libya warehouse!",
+                        "received at Libya warehouse!"
+                    );
+                    console.log(status1);
+                    if (status1) {
+                        createToast({
+                            type: "success",
+                            title: "Notified User",
+                            message: `Sent order received in Libya warehouse notification to userID ${getUserIdList(
+                                props.selectedOrder
+                            )}`,
+                            timeOut: 2000,
+                        });
+                    } else {
+                        createToast({
+                            type: "error",
+                            title: "Failed creating notification",
+                            message: `check console for more info`,
+                            timeOut: 2000,
+                        });
+                    }
+                    props.mutateOrder?.();
+                    props.setSelectedOrder?.([]);
+                } catch (error) {
+                    console.error(error);
                 }
-                props.mutateOrder?.();
-                props.setSelectedOrder?.([]);
+
                 break;
             case "Out for delivery":
                 console.log("out for Delivery");
-                const status2 = await bulkActionHandler(
-                    props.selectedOrder as Order[],
-                    "in-transit",
-                    4,
-                    " Order out for delivery",
-                    "has been out for delivery"
-                );
-                if (status2) {
-                    createToast({
-                        type: "success",
-                        title: "Notified User",
-                        message: `Sent order out for delivery notification to userID ${getUserIdList(
-                            props.selectedOrder
-                        )}`,
-                        timeOut: 2000,
-                    });
-                } else {
-                    createToast({
-                        type: "error",
-                        title: "Failed creating notification",
-                        message: `check console for more info`,
-                        timeOut: 2000,
-                    });
+                try {
+                    const status2 = await bulkActionHandler(
+                        props.selectedOrder as Order[],
+                        "in-transit",
+                        4,
+                        " Order out for delivery",
+                        "has been out for delivery"
+                    );
+                    if (status2) {
+                        createToast({
+                            type: "success",
+                            title: "Notified User",
+                            message: `Sent order out for delivery notification to userID ${getUserIdList(
+                                props.selectedOrder
+                            )}`,
+                            timeOut: 2000,
+                        });
+                    } else {
+                        createToast({
+                            type: "error",
+                            title: "Failed creating notification",
+                            message: `check console for more info`,
+                            timeOut: 2000,
+                        });
+                    }
+                    props.mutateOrder?.();
+                    props.setSelectedOrder?.([]);
+                } catch (error) {
+                    console.error(error);
                 }
-                props.mutateOrder?.();
-                props.setSelectedOrder?.([]);
+
                 break;
             case "Mark as delivered":
                 console.log("mark as delivered");
-                const status3 = await bulkActionHandler(
-                    props.selectedOrder as Order[],
-                    "delivered",
-                    5,
-                    "order delivered",
-                    "has delivered "
-                );
-                if (status3) {
-                    createToast({
-                        type: "success",
-                        title: "Notified User",
-                        message: `Sent order delivered notification to userID ${getUserIdList(
-                            props.selectedOrder
-                        )}`,
-                        timeOut: 2000,
-                    });
-                } else {
-                    createToast({
-                        type: "error",
-                        title: "Failed creating notification",
-                        message: `check console for more info`,
-                        timeOut: 2000,
-                    });
+
+                try {
+                    const status3 = await bulkActionHandler(
+                        props.selectedOrder as Order[],
+                        "delivered",
+                        5,
+                        "order delivered",
+                        "has delivered "
+                    );
+                    if (status3) {
+                        createToast({
+                            type: "success",
+                            title: "Notified User",
+                            message: `Sent order delivered notification to userID ${getUserIdList(
+                                props.selectedOrder
+                            )}`,
+                            timeOut: 2000,
+                        });
+                    } else {
+                        createToast({
+                            type: "error",
+                            title: "Failed creating notification",
+                            message: `check console for more info`,
+                            timeOut: 2000,
+                        });
+                    }
+                    props.mutateOrder?.();
+                    props.setSelectedOrder?.([]);
+                } catch (error) {
+                    console.error(error);
                 }
-                props.mutateOrder?.();
-                props.setSelectedOrder?.([]);
         }
     };
 

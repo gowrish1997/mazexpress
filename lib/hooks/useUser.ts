@@ -35,5 +35,5 @@ export default function useUser({
     }
   }, [user, redirectIfFound, redirectTo]);
 
-  return { user: user ? user?.data?.[0] : null, mutateUser };
+  return { user: user ? user?.data?.[1] : null, mutateUser };
 }

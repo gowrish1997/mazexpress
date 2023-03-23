@@ -34,6 +34,7 @@ const LiveOrders = () => {
     >("");
 
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+        search: searchKey,
         per_page: itemsPerPage,
         page: currentPage,
         status:

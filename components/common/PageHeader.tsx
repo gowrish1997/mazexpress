@@ -30,8 +30,10 @@ interface IProp {
     currentPageHandler?: (value: number) => void;
     itemsPerPage?: number;
     currentPage?: number;
+    isFilterPresent?: boolean;
 }
 const PageHeader = (props: IProp) => {
+    console.log(props);
     const { user, mutateUser } = useUser();
     const { tracking, trackingIsLoading } = useTracking({
         user_id: user?.id,
@@ -75,15 +77,17 @@ const PageHeader = (props: IProp) => {
             <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px]">
                 {props.content}
             </p>
+            {router.pathname.includes("orders") && (
+                <ReactPaginateComponent
+                    pageCount={props.pageCount!}
+                    currentPageHandler={props.currentPageHandler!}
+                    itemsPerPage={props.itemsPerPage!}
+                    currentPage={props.currentPage!}
+                />
+            )}
 
-            <ReactPaginateComponent
-                pageCount={props.pageCount!}
-                currentPageHandler={props.currentPageHandler!}
-                itemsPerPage={props.itemsPerPage!}
-                currentPage={props.currentPage!}
-            />
-
-            {props.allLiveOrders && props.allLiveOrders.length > 0 && (
+            {((props.allLiveOrders && props.allLiveOrders.length > 0) ||
+                props.isFilterPresent) && (
                 <div className="flex-type1 space-x-[10px]">
                     <MazStatsDropddown
                         options={perPageOptinsList()}

@@ -70,6 +70,82 @@ export const bulkActionHandler = async (
             console.log(error);
         }
 
+        try {
+            const result0_2 = await fetchServer(`/api/tracking`, {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    order_id: rowFixed.id,
+                    user_id: rowFixed.user?.id,
+                    stage: trckingStatus,
+                }),
+            });
+        } catch (error) {
+            console.error(error);
+        }
+
+        if (rowFixed.user?.is_notifications_enabled) {
+            // get admin notification on backend
+            // send notification post
+
+            try {
+                const deliveredMessage = {
+                    title: title,
+                    content: `Your order number ${rowFixed.id} ${content}`,
+                };
+                const result0_3: APIResponse<Notification> = await fetchServer(
+                    "/api/notifications",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            data: deliveredMessage,
+                            // files: [],
+                            users: [rowFixed.user.id],
+                            // notification_config: 1,
+                        }),
+                    }
+                );
+
+                if (result0_3?.count && result0_3?.count > 0) {
+                    sendNotification = true;
+                } else {
+                    sendNotification = false;
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
+    return sendNotification;
+};
+
+export const singleOrderAction = async (
+    selectedOrder: Order,
+    status: string,
+    trckingStatus: number,
+    title: string,
+    content: string,
+    execute: boolean
+) => {
+    let sendNotification = true;
+    let rowFixed: Order = selectedOrder as Order;
+
+    if (execute) {
+        try {
+            const result0 = await fetchServer(`/api/orders?id=${rowFixed.id}`, {
+                method: "PUT",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    status: status,
+                }),
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    try {
         const result0_2 = await fetchServer(`/api/tracking`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
@@ -79,32 +155,39 @@ export const bulkActionHandler = async (
                 stage: trckingStatus,
             }),
         });
-
-        if (rowFixed.user?.is_notifications_enabled) {
-            // get admin notification on backend
-            // send notification post
-            const deliveredMessage = {
-                title: title,
-                content: `Your order number ${rowFixed.id} ${content}`,
-            };
-            const result0_3: APIResponse<Notification> = await fetchServer(
+    } catch (error) {
+        console.error(error);
+    }
+    if ((rowFixed as Order).user.is_notifications_enabled) {
+        const deliveredMessage = {
+            title: title,
+            content: `Your order number ${rowFixed.id} ${content}`,
+        };
+        try {
+            let result0_3: APIResponse<Notification> = await fetchServer(
                 "/api/notifications",
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                     body: JSON.stringify({
                         data: deliveredMessage,
                         // files: [],
-                        users: [rowFixed.user.id],
+                        users: [(rowFixed as Order).user.id],
                         // notification_config: 1,
                     }),
                 }
             );
-
             if (result0_3?.count && result0_3?.count > 0) {
                 sendNotification = true;
             } else {
+                sendNotification = false;
             }
+
+            // console.log(result0_3);
+        } catch (error) {
+            console.error(error);
         }
     }
     return sendNotification;

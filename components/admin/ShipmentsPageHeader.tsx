@@ -15,6 +15,7 @@ import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
 import { perPageOptinsList } from "@/lib/helper";
 import { getUserIdList } from "@/lib/selectOrder";
+import { bulkActionHandler } from "@/lib/selectOrder";
 
 const adminOption = ["Moved out"];
 
@@ -33,80 +34,38 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
     };
 
     const MovedOutHanlder = async () => {
-        let sendNotification = true;
-
-        for (let i = 0; i < props.selectedOrder?.length!; i++) {
-            let rowFixed2: Order = props.selectedOrder?.[i] as Order;
-
-            // put to order
-            const result1 = await fetchJson(`/api/orders?id=${rowFixed2.id}`, {
-                method: "PUT",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ status: "in-transit" }),
-            });
-            // console.log(result1);
-            const result1_2 = await fetchJson("/api/tracking", {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({
-                    user_id: rowFixed2?.user.id,
-                    order_id: rowFixed2.id,
-                    stage: 2,
-                }),
-            });
-            // console.log(result1_2);
-            // check notifications for user and send notification
-            // get notification for user
-            if (rowFixed2.user.is_notifications_enabled) {
-                // get admin notification on backend
-                // send notification post
-                const deliveredMessage = {
-                    title: "Order left Istanbul warehouse!",
-                    content: `Your order number ${rowFixed2.id} has left our Istanbul warehouse and will be reach Libya soon.`,
-                };
-
-                const result0_3: APIResponse<Notification> = await fetchJson(
-                    "/api/notifications",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            data: deliveredMessage,
-                            // files: [],
-                            users: [rowFixed2.user.id],
-                            // notification_config: 1,
-                        }),
-                    }
-                );
-                // console.log(result0_3);
-
-                if (result0_3?.count && result0_3?.count > 0) {
-                    sendNotification = true;
-                } else {
-                    sendNotification = false;
-                }
+        try {
+            const status = await bulkActionHandler(
+                props.selectedOrder as Order[],
+                "in-transit",
+                2,
+                "Order left Istanbul warehouse!",
+                "has left our Istanbul warehouse and will be reach Libya soon."
+            );
+            console.log(status);
+            if (status) {
+                createToast({
+                    type: "success",
+                    title: "Notified User",
+                    message: `Sent order left Istanbul warehouse notification to userID ${getUserIdList(
+                        props.selectedOrder
+                    )}`,
+                    timeOut: 2000,
+                });
+            } else {
+                createToast({
+                    type: "error",
+                    title: "Failed creating notification",
+                    message: `check console for more info`,
+                    timeOut: 2000,
+                });
             }
-        }
 
-        if (sendNotification) {
-            createToast({
-                type: "success",
-                title: "Notified User",
-                message: `Sent order left Istanbul warehouse notification to userID ${getUserIdList(
-                    props.selectedOrder
-                )}`,
-                timeOut: 2000,
-            });
-        } else {
-            createToast({
-                type: "error",
-                title: "Failed creating notification",
-                message: `check console for more info`,
-                timeOut: 2000,
-            });
+            props.mutateOrder?.();
+            props.setSelectedOrder?.([]);
+        } catch (error) {
+            console.error(error);
         }
-        props.mutateOrder?.();
-        props.setSelectedOrder?.([]);
     };
 
     return (
