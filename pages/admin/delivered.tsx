@@ -24,7 +24,7 @@ const tableHeaders = [
 const DeliveredOrders = () => {
   const router = useRouter();
 
-  const [itemsPerPage, setItemPerPage] = useState(30);
+  const [itemsPerPage, setItemPerPage] = useState(25);
   const [currentPage, setCurrentPage] = useState(0);
 
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<

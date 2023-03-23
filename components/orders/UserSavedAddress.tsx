@@ -27,14 +27,13 @@ const UserSavedAddress = (props: {
     // console.log('delete')
     if (user) {
       if (props.address.id === user?.default_address) {
-        // update default address for user
+        // update default address for user here
+        
+
       }
-      const result = await fetchServer(
-        `/api/addresses?id=${props.address.id}&user=${user.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const result = await fetchServer(`/api/addresses/${props.address.id}`, {
+        method: "DELETE",
+      });
       // console.log(result)
       props.update();
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LineItem from "./LineItem";
 import { nanoid } from "nanoid";
 import LiveOrderLineItem from "./LiveOrderLineItem";
@@ -38,6 +38,11 @@ const Table = (props: TableProps) => {
       return "order_table";
     }
   };
+
+useEffect(() => {
+
+}, [])
+
 
   return (
     <div className="flex-1 relative">

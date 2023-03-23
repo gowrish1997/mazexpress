@@ -183,7 +183,7 @@ const AddNewAddressModal = (props: IProp) => {
             />
             <div className="flex-type1 gap-x-[5px]">
               <input
-                type="radio"
+                type="checkbox"
                 checked={addressIsDefault}
                 onClick={toggleDefaultAddressHandler}
                 {...register("default")}

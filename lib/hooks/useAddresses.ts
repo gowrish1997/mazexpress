@@ -19,9 +19,7 @@ export default function useAddresses(props: IProps) {
     data: addresses,
     mutate: mutateAddresses,
     isLoading: addressesIsLoading,
-  } = useSWR<APIResponse<Address>>(
-    props.username !== undefined ? `/api/addresses` + qs.stringified : null
-  );
+  } = useSWR<APIResponse<Address>>(`/api/addresses` + qs.stringified);
 
   return {
     addresses: addresses?.data as Address[],

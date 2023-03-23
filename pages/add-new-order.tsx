@@ -35,6 +35,7 @@ const AddNewOrder = () => {
   const { user, mutateUser } = useUser();
   const { addresses, mutateAddresses } = useAddresses({
     username: user?.email,
+    status: ['active']
   });
 
   const router = useRouter();
@@ -110,7 +111,7 @@ const AddNewOrder = () => {
     console.log(data);
     try {
       let orderObj = {
-        user_id: user?.id,
+        username: user?.email,
         address_id: data.address_id,
         reference_id: data.reference_id,
         store_link: data.store_link,

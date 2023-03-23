@@ -90,8 +90,8 @@ const EditUserAddressModal = (props: IProp) => {
       let address = { ...data };
       delete address.default;
 
-      // console.log(address);
-      // console.log(data);
+      console.log(data);
+      console.log(address);
 
       // update address
       const addressResult = await fetchJson<Address>(
@@ -105,7 +105,7 @@ const EditUserAddressModal = (props: IProp) => {
 
       if (addressResult) {
         // set default if checked
-        if (data.default === "on") {
+        if (data.default) {
           const userResult = await fetchJson(`/api/users/${user?.email}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -118,8 +118,8 @@ const EditUserAddressModal = (props: IProp) => {
           title: "Success",
           timeOut: 1000,
         });
-        props.close();
         props.update();
+        props.close();
       } else {
         createToast({
           type: "error",
@@ -127,8 +127,8 @@ const EditUserAddressModal = (props: IProp) => {
           title: "Error",
           timeOut: 1000,
         });
-        props.close();
         props.update();
+        props.close();
       }
     }
   };
@@ -224,7 +224,7 @@ const EditUserAddressModal = (props: IProp) => {
           />
           <div className=".flex-type1 space-x-[5px]">
             <input
-              type="radio"
+              type="checkbox"
               defaultChecked={props.address.id === user?.default_address}
               onClick={toggleDefaultAddressHandler}
               {...register("default")}

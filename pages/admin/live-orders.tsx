@@ -22,7 +22,7 @@ const tableHeaders = [
 const LiveOrders = () => {
   const router = useRouter();
   // console.log(router);
-  const [itemsPerPage, setItemPerPage] = useState<number>(5);
+  const [itemsPerPage, setItemPerPage] = useState<number>(25);
   const [currentPage, setCurrentPage] = useState(0);
   const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
     "all status",
@@ -82,7 +82,7 @@ const LiveOrders = () => {
   if (ordersError) {
     return <div>some error happened</div>;
   }
-  console.log(orders || !statusFilterKey.includes("all status"));
+  // console.log(orders || !statusFilterKey.includes("all status"));
 
   return (
     <>
