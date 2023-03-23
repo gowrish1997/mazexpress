@@ -120,6 +120,10 @@ const Index = () => {
     setShowPackageTrackingModal(false);
   };
 
+  useEffect(() => {
+    console.log(user)
+  }, [user])
+
   return (
     <>
       <div className="w-full">

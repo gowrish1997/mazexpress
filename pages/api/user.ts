@@ -13,12 +13,13 @@ export default withIronSessionApiRoute(userRoute, sessionOptions);
 async function userRoute(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     let responseObj = new APIResponse<Partial<User>>();
+    console.log("/api/user called: ", req.session.user);
     try {
       if (req.session.user) {
-        console.log('session user', req.session.user);
+        // console.log('session user', req.session.user);
         // check for updates with a preflight call and then update user
         let preflight: boolean = false;
-        
+
         // if(!process.env.NODE_ENV === "production"){
         //   preflight = await fetchServer(`/api/users/preflight`, {
         //     method: "POST",
@@ -31,9 +32,9 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ user: req.session.user }),
         });
-        // console.log(preflight)
-        if (!preflight && req.session.user.email) {
-          // update user
+        console.log("preflight", preflight);
+        if (!preflight && req.session.user) {
+          // update user if preflight is false => users are not same
           const user: APIResponse<Partial<User>> = await fetchServer(
             `/api/users/${req.session.user.email}`,
             {

@@ -182,7 +182,11 @@ const Settings = () => {
         className="border-none pb-[10px]"
         title="My Settings | MazExpress"
       />
-      <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} update={mutateUser} />
+      <ProfilePicPop
+        show={showProfilePicPop}
+        close={toggleProfilePicPop}
+        update={mutateUser}
+      />
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
@@ -214,7 +218,7 @@ const Settings = () => {
                   onClick={toggleProfilePicPop}
                 >
                   <Image
-                    src={user?.avatar_url || '/user-images/default_user.png'}
+                    src={user?.avatar_url || "/user-images/default_user.png"}
                     alt="profile"
                     fill
                     style={{ objectFit: "cover" }}
