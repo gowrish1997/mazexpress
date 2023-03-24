@@ -376,7 +376,7 @@ const Settings = () => {
                                 <div
                                     className={`border border-red-600 rounded-full absolute ${
                                         locale == "en" ? "-right-7" : "-left-7"
-                                    } bottom-[14px] flex items-center justify-center h-5 w-5`}
+                                    } top-[35px] flex items-center justify-center h-5 w-5`}
                                 >
                                     <FontAwesomeIcon
                                         icon={faX}

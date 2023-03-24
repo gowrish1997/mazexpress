@@ -343,7 +343,7 @@ const Settings = () => {
                                 // autoComplete="off"
                             />
                             {!passwordCheck ? (
-                                <div className="border border-red-600 block rounded-full absolute -right-7 bottom-[14px] flex items-center justify-center h-5 w-5">
+                                <div className="border border-red-600 block rounded-full absolute -right-7 top-[35px] flex items-center justify-center h-5 w-5">
                                     <FontAwesomeIcon
                                         icon={faX}
                                         size="xs"
@@ -351,7 +351,7 @@ const Settings = () => {
                                     />
                                 </div>
                             ) : (
-                                <div className="border border-green-600 block rounded-full absolute -right-7 bottom-[14px] flex items-center justify-center h-5 w-5">
+                                <div className="border border-green-600 block rounded-full absolute -right-7 top-[35px] flex items-center justify-center h-5 w-5">
                                     <FontAwesomeIcon
                                         icon={faCheck}
                                         size="xs"
