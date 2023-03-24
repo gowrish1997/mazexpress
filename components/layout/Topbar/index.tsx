@@ -23,7 +23,7 @@ const Topbar = () => {
   const { setSearchKey } = React.useContext(SearchKeyContext) as any;
 
   const { notifications, notificationsIsLoading, mutateNotifications } = useNotifications({
-    user_id: user?.id,
+    username: user?.email,
     status: ["unread"],
   });
 

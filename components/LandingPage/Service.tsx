@@ -51,9 +51,9 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                         {t("landingPage.service.Title")}
                     </p>
                     <div className="mt-[20px] flex flex-col justify-start items-start  gap-y-[40px]">
-                        {content.map((data) => {
+                        {content.map((data,index) => {
                             return (
-                                <div className="flex flex-row justify-start items-start gap-[10px] ">
+                                <div key={index} className="flex flex-row justify-start items-start gap-[10px] ">
                                     <div className="relative w-[20px] h-[15px] ">
                                         <Image src={Cloud} alt="cloud" fill />
                                     </div>
@@ -73,5 +73,5 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
         </div>
     );
 });
-
+Service.displayName="Service"
 export default Service;

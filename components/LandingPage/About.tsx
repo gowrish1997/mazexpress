@@ -46,9 +46,12 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
                 </div>
             </div>
             <div className="w-[80%] mt-[70px] flex flex-row justify-start items-center flex-wrap  gap-x-[120px]">
-                {content.map((data) => {
+                {content.map((data, index) => {
                     return (
-                        <div className="w-[100%] xmd:w-[43%]  mt-[40px] flex flex-row justify-start items-start gap-x-[5px] ">
+                        <div
+                            key={index}
+                            className="w-[100%] xmd:w-[43%]  mt-[40px] flex flex-row justify-start items-start gap-x-[5px] "
+                        >
                             <div className="relative h-[22px] w-[22px] ">
                                 <Image src={Icon} fill alt="imag" />
                             </div>
@@ -63,4 +66,5 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
     );
 });
 
+About.displayName = "About";
 export default About;

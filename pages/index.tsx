@@ -364,7 +364,7 @@ const Index = () => {
                     <div className="w-[100%] flex flex-row justify-center ">
                         <div className="w-[75%] mt-[30px] ">
                             <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[36px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
-                                Welcome to MAZ Express
+                                Welcome to MAZ Exppress
                             </h1>
                             <p className="text-center text-[16px] md:text-[18px] xmd:text-[20px] text-[#121212] font-[500] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[15px] ">
                                 Your one-stop logistics solution for shipping
@@ -375,12 +375,12 @@ const Index = () => {
                                 cutting-edge logistics services that are
                                 efficient, reliable, and cost-effective. At MAZ
                                 Express, we understand that shipping can be
-                                complicated and stressful. That's why we provide
+                                complicated and stressful. That&apos;s why we provide
                                 a simple and streamlined experience, from
                                 shopping to delivery. With experienced team, we
                                 can handle all your logistics needs, including
                                 warehousing, shipping, and tracking. Whether
-                                you're a business or an individual, we have the
+                                you&apos;re a business or an individual, we have the
                                 solutions to help you succeed. Contact us today
                                 to learn more.
                             </p>

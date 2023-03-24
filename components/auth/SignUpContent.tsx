@@ -136,53 +136,53 @@ const SignUpContent = (props: IProp) => {
         console.log(data);
 
         try {
-          const userResult = await fetchServer("/api/users", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data.user),
-          });
+            const userResult = await fetchServer("/api/users", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data.user),
+            });
 
-          console.log(userResult); // id created
+            console.log(userResult); // id created
 
-          // add address
-          const addressResult = await fetchServer(
-            `/api/addresses/${userResult.data[0].email}`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                ...data.addr,
-              }),
+            // add address
+            const addressResult = await fetchServer(
+                `/api/addresses/${userResult.data[0].email}`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        ...data.addr,
+                    }),
+                }
+            );
+
+            console.log(addressResult.data);
+            if (userResult.ok === true && addressResult.ok === true) {
+                // toast
+                createToast({
+                    type: "success",
+                    title: "New user created.",
+                    message: "Please log in with your new login credentials",
+                    timeOut: 3000,
+                });
+
+                // send to login page with cred
+                props.switch?.(1);
+            } else {
+                // toast
+                createToast({
+                    type: "error",
+                    title: "Sign up failed.",
+                    message: "Please try again.",
+                    timeOut: 3000,
+                });
             }
-          );
-
-          console.log(addressResult.data);
-          if (userResult.ok === true && addressResult.ok === true) {
-            // toast
-            createToast({
-              type: "success",
-              title: "New user created.",
-              message: "Please log in with your new login credentials",
-              timeOut: 3000,
-            });
-
-            // send to login page with cred
-            props.switch?.(1);
-          } else {
-            // toast
-            createToast({
-              type: "error",
-              title: "Sign up failed.",
-              message: "Please try again.",
-              timeOut: 3000,
-            });
-          }
         } catch (error) {
-          if (error instanceof FetchError) {
-            setErrorMsg(error.data.message);
-          } else {
-            console.error("An unexpected error happened:", error);
-          }
+            if (error instanceof FetchError) {
+                setErrorMsg(error.data.message);
+            } else {
+                console.error("An unexpected error happened:", error);
+            }
         }
     };
 
@@ -240,8 +240,7 @@ const SignUpContent = (props: IProp) => {
                     type="string"
                     IconEnabled={true}
                     register={register("user.gender")}
-                    error={errors.user?.gender && (inputFieldErrors[3] as string)
-                    }
+                    error={errors.user?.gender}
                     value={getValues("user.gender")}
                     setValue={setValue}
                     options={genderOption}
@@ -307,7 +306,7 @@ const SignUpContent = (props: IProp) => {
 
             <div className="flex-type2 gap-x-[10px] w-full">
                 <ReactHookFormInput
-                   label={inputFieldLabel[9]}
+                    label={inputFieldLabel[9]}
                     name="addr.address_1"
                     type="string"
                     register={register("addr.address_1")}
@@ -315,7 +314,7 @@ const SignUpContent = (props: IProp) => {
                 />
 
                 <ReactHookFormInput
-                   label={inputFieldLabel[10]}
+                    label={inputFieldLabel[10]}
                     name="addr.address_2"
                     type="string"
                     register={register("addr.address_2")}
@@ -324,7 +323,7 @@ const SignUpContent = (props: IProp) => {
             </div>
             <div className="flex-type2 gap-x-[10px] w-full">
                 <ReactHookFormInput
-                   label={inputFieldLabel[11]}
+                    label={inputFieldLabel[11]}
                     name="addr.phone"
                     type="string"
                     register={register("addr.phone")}
