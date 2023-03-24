@@ -136,20 +136,6 @@ const Settings = () => {
     > & { newPassword: string }
   > = async (data) => {
     console.log("settings submission", data);
-    // let picked: Pick<
-    //   User,
-    //   | "first_name"
-    //   | "last_name"
-    //   | "email"
-    //   | "phone"
-    //   | "lang"
-    //   | "password"
-    //   | "avatar_url"
-    //   | "is_notifications_enabled"
-    // > & { newPassword: string } ;
-    // // Object.assign(picked, data)
-
-    // console.log("picked", picked);
     try {
       // console.log(result);
       if (!passwordCheck) {
