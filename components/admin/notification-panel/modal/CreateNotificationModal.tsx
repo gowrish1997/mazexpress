@@ -12,6 +12,8 @@ import { createToast } from "@/lib/toasts";
 import axios from "axios";
 import fetchServer from "@/lib/fetchServer";
 import { APIResponse } from "@/models/api.model";
+import { NotificationConfig } from "@/models/notification-config.model";
+import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 
 interface IProp {
   show: boolean;
@@ -53,8 +55,8 @@ const CreateNotificationModal = (props: IProp) => {
   };
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log("send", data);
-    console.log("to", selectedUsers);
+    // console.log("send", data);
+    // console.log("to", selectedUsers);
 
     // multiparty here
     let notificationData = {
@@ -62,6 +64,50 @@ const CreateNotificationModal = (props: IProp) => {
       content: data.content,
     };
 
+    if (data.reusable === true) {
+      try {
+        // store config for reuse
+        const createResult: APIResponse<NotificationConfig> = await fetchServer(
+          `/api/notification-settings`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title: data.config_title,
+              desc: data.config_desc,
+              is_enabled: true,
+              is_custom: true,
+              is_reusable: true,
+            }),
+          }
+        );
+        if (createResult.ok) {
+          props.close();
+          createToast({
+            type: "success",
+            title: "Success!",
+            message: "Notification sent successfully",
+            timeOut: 1000,
+          });
+        } else {
+          createToast({
+            type: "error",
+            title: "Failed!",
+            message: "Notification was not sent contact dev",
+            timeOut: 1000,
+          });
+        }
+      } catch(err) {
+        console.error(err)
+        createToast({
+          type: "error",
+          title: "check console!",
+          message: "Notification was not sent contact dev",
+          timeOut: 1000,
+        });
+      }
+    }
+    // send notification normally
     try {
       const createResult: APIResponse<Notification> = await fetchServer(
         `/api/notifications`,
@@ -75,18 +121,24 @@ const CreateNotificationModal = (props: IProp) => {
         }
       );
 
-      console.log(createResult);
+      // console.log(createResult);
       if (createResult.ok) {
+        props.close();
         createToast({
           type: "success",
           title: "Success!",
           message: "Notification sent successfully",
           timeOut: 1000,
         });
-        props.close();
       }
     } catch (error) {
       console.error(error);
+      createToast({
+        type: "error",
+        title: "check console!",
+        message: "Notification was not sent contact dev",
+        timeOut: 1000,
+      });
     }
   };
 
@@ -111,7 +163,7 @@ const CreateNotificationModal = (props: IProp) => {
   };
 
   const updateSelectedUsers = (list: number[]) => {
-    console.log(list);
+    // console.log(list);
     setSelectedUsers(list);
   };
 
@@ -137,7 +189,7 @@ const CreateNotificationModal = (props: IProp) => {
               className="w-full h-[46px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give notification title @hi"
             />
-            <div className={"w-full"}>
+            <div className={"w-full relative"}>
               <label
                 htmlFor={"content"}
                 className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] "
@@ -146,17 +198,18 @@ const CreateNotificationModal = (props: IProp) => {
               </label>
               <div
                 className={
-                  "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] relative h-[300px] overflow-y-scroll"
+                  "h-[200px] w-full border-[1px] border-[#BBC2CF] rounded-[4px] relative"
                 }
                 // style={{ borderColor: props.error ? "#f02849" : "" }}
               >
                 <textarea
                   id="content"
                   {...register("content")}
-                  rows={30}
+                  // rows={30}
                   //   value={props.value}
-                  className="rounded-[5px] focus:outline-none top-0 absolute p-4 w-full"
+                  className="rounded-[5px] focus:outline-none top-0 p-4 w-full h-full overflow-y-auto slimScrollBar"
                   name={"content"}
+                  style={{ resize: "none" }}
                 />
               </div>
               {errors.content && (
@@ -248,6 +301,24 @@ const CreateNotificationModal = (props: IProp) => {
               />
               <span>Make notification reusable</span>
             </div>
+            {reusable && (
+              <div className="flex flex-col space-y-[10px] w-full">
+                <ReactHookFormInput
+                  label={"Config title"}
+                  name="config_title"
+                  type="string"
+                  register={register("config_title")}
+                  // error={errors.address_1 ? fieldErrors[1] : ""}
+                />
+                <ReactHookFormInput
+                  label={"Config Description"}
+                  name="config_desc"
+                  type="string"
+                  register={register("config_desc")}
+                  // error={errors.address_1 ? fieldErrors[1] : ""}
+                />
+              </div>
+            )}
             <div className="flex-type1 space-x-[10px] mt-[5px] ">
               <button
                 className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
