@@ -126,43 +126,43 @@ const AddNewOrder = () => {
         address_id: string | null | undefined;
     }> = async (data) => {
         console.log(data);
-        // try {
-        //   let orderObj = {
-        //     username: user?.email,
-        //     address_id: data.address_id,
-        //     reference_id: data.reference_id,
-        //     store_link: data.store_link,
-        //   };
-        //   const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(orderObj),
-        //   });
-        //   // console.log(result);
-        //   if (result.ok) {
-        //     createToast({
-        //       type: "success",
-        //       title: "Success",
-        //       message: "Created order successfully",
-        //       timeOut: 1000,
-        //     });
-        //   } else {
-        //     createToast({
-        //       type: "error",
-        //       title: "An error occurred",
-        //       message: "Order create pipe failed, contact dev",
-        //       timeOut: 3000,
-        //     });
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        //   createToast({
-        //     type: "error",
-        //     title: "An error occurred",
-        //     message: "Check console for more info.",
-        //     timeOut: 3000,
-        //   });
-        // }
+        try {
+          let orderObj = {
+            username: user?.email,
+            address_id: data.address_id,
+            reference_id: data.reference_id,
+            store_link: data.store_link,
+          };
+          const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(orderObj),
+          });
+          // console.log(result);
+          if (result.ok) {
+            createToast({
+              type: "success",
+              title: "Success",
+              message: "Created order successfully",
+              timeOut: 1000,
+            });
+          } else {
+            createToast({
+              type: "error",
+              title: "An error occurred",
+              message: "Order create pipe failed, contact dev",
+              timeOut: 3000,
+            });
+          }
+        } catch (err) {
+          console.log(err);
+          createToast({
+            type: "error",
+            title: "An error occurred",
+            message: "Check console for more info.",
+            timeOut: 3000,
+          });
+        }
     };
 
     return (
