@@ -20,7 +20,8 @@ const UserSavedAddress = (props: {
     updateDeliveryAddress?: (id: string) => void;
     selectedAddressId?: any;
 }) => {
-    //   console.log(props);
+    console.log(props);
+
     const { user, mutateUser } = useUser();
 
     const { t } = useTranslation("common");
@@ -41,7 +42,7 @@ const UserSavedAddress = (props: {
             ) {
                 // console.log("delteing default address");
                 const updateResponse = await fetchServer(
-                    `/api/users?email=${user?.email}`,
+                    `/api/users/${user?.email}`,
                     {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -57,7 +58,7 @@ const UserSavedAddress = (props: {
                 mutateUser();
             }
             const result = await fetchServer(
-                `/api/addresses?id=${props.address.id}`,
+                `/api/addresses/${props.address.id}`,
 
                 {
                     method: "DELETE",
@@ -66,7 +67,11 @@ const UserSavedAddress = (props: {
 
             props.update();
 
-            if (props.type == "add-new-order") {
+            if (
+                props.type == "add-new-order" &&
+                props.selectedAddressId == props.address.id
+            ) {
+                console.log();
                 props.updateDeliveryAddress?.("");
             }
         }
@@ -110,12 +115,10 @@ const UserSavedAddress = (props: {
                     <input
                         type="radio"
                         name="address"
-                        // checked={
-                        //     props.selectedAddressId === props.address.id
+                        checked={props.selectedAddressId === props.address.id}
+                        // defaultChecked={
+                        //     user?.default_address === props.address.id
                         // }
-                        defaultChecked={
-                            user?.default_address === props.address.id
-                        }
                         value={props.address.id}
                         {...props.register}
                         className="cursor-pointer mt-[4px]"

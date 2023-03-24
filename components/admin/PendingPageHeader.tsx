@@ -23,9 +23,6 @@ import { bulkActionHandler } from "@/lib/selectOrder";
 const adminOption = ["Move to Shipments"];
 
 const PendingPageHeader = (props: IPageHeaderProp) => {
-    console.log(typeof fetchServer);
-
-    console.log(props);
     const perPageOptions = perPageOptinsList();
     const router = useRouter();
     const { user, mutateUser } = useUser();

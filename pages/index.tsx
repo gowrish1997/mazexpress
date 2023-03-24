@@ -29,6 +29,8 @@ import useUser from "@/lib/hooks/useUser";
 import Link from "next/link";
 import fetchJson from "@/lib/fetchSelf";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
+import About from "@/components/LandingPage/About";
+import Service from "@/components/LandingPage/Service";
 
 const Index = () => {
     const router = useRouter();
@@ -44,6 +46,8 @@ const Index = () => {
     const trackingSectionRef = useRef<HTMLDivElement>(null);
     const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
     const supportSectionRef = useRef<HTMLDivElement>(null);
+    const AboutSectionRef = useRef<HTMLDivElement>(null);
+    const ServicetSectionRef = useRef<HTMLDivElement>(null);
 
     const [showOptionModal, setShowOptionModal] = useState(false);
     const [trackingId, setTrackingId] = useState<string>("");
@@ -138,7 +142,7 @@ const Index = () => {
                 <div className="box-border w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[12px] md:text-[14px] text-[#FFFFFF] font-[500] leading-[24px] p-[15px] ">
                     {t("landingPage.Header")}
                 </div>
-                <div>{}</div>
+
                 <div className="px-[30px] xmd:px-[150px]  ">
                     <div className="w-full flex flex-row justify-between items-end h-[80px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
                         <div className="flex flex-row justify-between items-end gap-x-[20px] ">
@@ -225,6 +229,32 @@ const Index = () => {
                                                 >
                                                     {t(section[2])}
                                                 </li>
+                                                <li
+                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                                                    onClick={() =>
+                                                        AboutSectionRef?.current?.scrollIntoView(
+                                                            {
+                                                                behavior:
+                                                                    "smooth",
+                                                            }
+                                                        )
+                                                    }
+                                                >
+                                                    {t(section[3])}
+                                                </li>
+                                                <li
+                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                                                    onClick={() =>
+                                                        ServicetSectionRef?.current?.scrollIntoView(
+                                                            {
+                                                                behavior:
+                                                                    "smooth",
+                                                            }
+                                                        )
+                                                    }
+                                                >
+                                                    {t(section[4])}
+                                                </li>
                                             </ul>
                                         </div>
                                     )}
@@ -268,6 +298,30 @@ const Index = () => {
                                 >
                                     {t(section[2])}
                                 </li>
+                                <li
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                        AboutSectionRef?.current?.scrollIntoView(
+                                            {
+                                                behavior: "smooth",
+                                            }
+                                        )
+                                    }
+                                >
+                                    {t(section[3])}
+                                </li>
+                                <li
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                        ServicetSectionRef?.current?.scrollIntoView(
+                                            {
+                                                behavior: "smooth",
+                                            }
+                                        )
+                                    }
+                                >
+                                    {t(section[4])}
+                                </li>
                             </ul>
                         </div>
 
@@ -307,8 +361,34 @@ const Index = () => {
                             </div>
                         )}
                     </div>
+                    <div className="w-[100%] flex flex-row justify-center ">
+                        <div className="w-[75%] mt-[30px] ">
+                            <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[36px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
+                                Welcome to MAZ Express
+                            </h1>
+                            <p className="text-center text-[16px] md:text-[18px] xmd:text-[20px] text-[#121212] font-[500] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[15px] ">
+                                Your one-stop logistics solution for shipping
+                                from Turkey to Libya.
+                            </p>
+                            <p className="text-center text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#525D72] font-[500] leading-[15px] md:leading-[20px] xmd:leading-[25px] ">
+                                Our company is committed to providing
+                                cutting-edge logistics services that are
+                                efficient, reliable, and cost-effective. At MAZ
+                                Express, we understand that shipping can be
+                                complicated and stressful. That's why we provide
+                                a simple and streamlined experience, from
+                                shopping to delivery. With experienced team, we
+                                can handle all your logistics needs, including
+                                warehousing, shipping, and tracking. Whether
+                                you're a business or an individual, we have the
+                                solutions to help you succeed. Contact us today
+                                to learn more.
+                            </p>
+                        </div>
+                    </div>
+
                     <div
-                        className="flex-type5 mt-[55px] w-[100%]"
+                        className="flex-type5 mt-[70px] w-[100%]"
                         ref={trackingSectionRef}
                     >
                         <div className="w-[100%] md:w-[65%] flex flex-row justify-center gap-x-[20px]">
@@ -334,26 +414,18 @@ const Index = () => {
                                 {t("landingPage.trackOrder.Error")}
                             </p>
                         )}
-                        <div className="">
-                            <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
-                                {t("landingPage.trackOrder.CaptionPart1")}{" "}
-                                <span className="text-[#35C6F4] cursor-pointer ">
-                                    {" "}
-                                    {t("landingPage.trackOrder.CaptionPart2")}
-                                </span>
-                            </p>
-                            <h1 className="text-center text-[26px] md:text-[32px] text-[#121212] font-[600] leading-[30px] md:leading-[50px] mt-[25px] md:mt-[40px] ">
-                                {t("landingPage.Title")}
-                            </h1>
-                            <p className="text-center text-[16px] text-[#525D72] font-[500] leading-[25.5px]">
-                                {t("landingPage.Description")}
-                            </p>
-                        </div>
+                        <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
+                            {t("landingPage.trackOrder.CaptionPart1")}{" "}
+                            <span className="text-[#35C6F4] cursor-pointer ">
+                                {" "}
+                                {t("landingPage.trackOrder.CaptionPart2")}
+                            </span>
+                        </p>
                     </div>
-                    <ShipmentCostCalculator
-                        ref={shipmentCalculatorSectionRef}
-                    />
                 </div>
+                <About ref={AboutSectionRef} />
+                <Service ref={ServicetSectionRef} />
+                <ShipmentCostCalculator ref={shipmentCalculatorSectionRef} />
                 <MazCommunityForm />
                 <Footer ref={supportSectionRef} />
             </div>

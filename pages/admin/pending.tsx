@@ -52,7 +52,6 @@ const PendingOrders = () => {
         date: getDateInDBFormat(createdDateFilterKey as Date),
         status: ["pending"],
     });
-    // console.log(orders);
 
     const [selectedOrder, setSelectedOrder] = useState<Order[]>();
 

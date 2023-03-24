@@ -58,7 +58,7 @@ const AdminBase = () => {
     >("");
 
     const { users, mutateUsers } = useUsers({
-        search:searchKey,
+        search: searchKey,
         page: currentPage,
         per_page: itemsPerPage,
         include_admins: true,
@@ -106,21 +106,26 @@ const AdminBase = () => {
                 <UserbasePageHeader
                     content="Admin Base"
                     selectedUser={selectedUser}
-                    allUsers={users as User[]}
+                    allUsers={users?.data as User[]}
                     filterByDate={filterByCreatedDate}
                     title="Admin Base | MazExpress Admin"
-                    pageCount={pageCount}
+                    pageCount={Math.ceil(
+                        (users?.count as number) / itemsPerPage
+                    )}
                     currentPageHandler={currentPageHandler}
                     itemPerPageHandler={itemPerPageHandler!}
                     itemsPerPage={itemsPerPage}
                     currentPage={currentPage}
+                    createdDateFilterKey={createdDateFilterKey}
+                    isFilterPresent={searchKey || createdDateFilterKey}
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!users && <BlankPage />}
-                    {users && (
+                    {!users?.data && !searchKey && !createdDateFilterKey ? (
+                        <BlankPage />
+                    ) : (
                         <>
                             <Table
-                                rows={users as User[]}
+                                rows={users?.data as User[]}
                                 headings={tableHeaders}
                                 type="admin_base"
                                 onSelect={selectUserHandler}

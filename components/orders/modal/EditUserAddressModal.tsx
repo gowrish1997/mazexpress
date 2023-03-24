@@ -224,7 +224,7 @@ const EditUserAddressModal = (props: IProp) => {
           />
           <div className=".flex-type1 space-x-[5px]">
             <input
-              type="radio"
+              type="checkbox"
               defaultChecked={props.address.id === user?.default_address}
               onClick={toggleDefaultAddressHandler}
               {...register("default")}

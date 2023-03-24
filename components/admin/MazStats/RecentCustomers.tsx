@@ -27,8 +27,8 @@ const RecentCustomers = () => {
       </div>
       <div className="space-y-[15px]">
         {users &&
-          (users as User[]).length > 0 &&
-          (users as User[])?.map((data: User) => {
+          (users.data as User[])?.length > 0 &&
+          (users.data as User[])?.map((data: User) => {
             return (
               <td
                 className={`flex flex-row justify-start items-center`}

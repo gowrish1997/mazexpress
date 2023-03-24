@@ -38,7 +38,6 @@ interface IProp {
     createdDateFilterKey?: string | Date;
 }
 const PageHeader = (props: IProp) => {
-    console.log(props);
     const { user, mutateUser } = useUser();
 
     let trigger = useRef(null);

@@ -22,6 +22,8 @@ interface IProp {
     itemsPerPage: number;
     currentPage: number;
     itemPerPageHandler?: (value: string | number) => void;
+    isFilterPresent?: boolean;
+    createdDateFilterKey?: string | Date;
     // filterByUser:(value:string)=>void
 }
 
@@ -35,21 +37,21 @@ const UserbasePageHeader = (props: IProp) => {
     const [showRemoveAdminConfirmModal, setShowRemoveConfirmModal] =
         useState(false);
 
-  const toggleRemoveAdminConfirmModal = () => {
-    setShowRemoveConfirmModal((prev) => !prev);
-  };
+    const toggleRemoveAdminConfirmModal = () => {
+        setShowRemoveConfirmModal((prev) => !prev);
+    };
 
-  const removeAdmins = () => {
-    console.log("remvoe admins");
-  };
+    const removeAdmins = () => {
+        console.log("remvoe admins");
+    };
 
-  // const toggleSendNotificatoinConfirmModal = () => {
-  //     setShowSendNotificatoinConfirmModal((prev) => !prev);
-  // };
+    // const toggleSendNotificatoinConfirmModal = () => {
+    //     setShowSendNotificatoinConfirmModal((prev) => !prev);
+    // };
 
-  // const sendNotificatoinHanlder = () => {
-  //     console.log();
-  // };
+    // const sendNotificatoinHanlder = () => {
+    //     console.log();
+    // };
 
     return (
         <>
@@ -65,6 +67,7 @@ const UserbasePageHeader = (props: IProp) => {
                     content={props.content}
                     allLiveOrders={props.allUsers}
                     filterByDate={props.filterByDate}
+                    createdDateFilterKey={props.createdDateFilterKey}
                 />
                 <ReactPaginateComponent
                     pageCount={props.pageCount}
@@ -72,7 +75,8 @@ const UserbasePageHeader = (props: IProp) => {
                     itemsPerPage={props.itemsPerPage}
                     currentPage={props.currentPage}
                 />
-                {props.allUsers && props.allUsers.length > 0 && (
+                {((props.allUsers && props.allUsers.length > 0) ||
+                    props.isFilterPresent) && (
                     <div className="flex-type1 space-x-[10px]  ">
                         <MazStatsDropddown
                             options={perPageOptions}
@@ -80,6 +84,7 @@ const UserbasePageHeader = (props: IProp) => {
                             onChange={props.itemPerPageHandler!}
                             className="h-[38px] px-[10px]"
                             selection={[]}
+                            itemPerPage={props.itemsPerPage}
                         />
                         {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
                         {/* <FilterOptionDropDown options={warehousesDropDownOptoin} /> */}
@@ -109,8 +114,8 @@ const UserbasePageHeader = (props: IProp) => {
                 total={props.selectedUser?.length!}
                 confirm={sendNotificatoinHanlder}
             /> */}
-    </>
-  );
+        </>
+    );
 };
 
 export default UserbasePageHeader;

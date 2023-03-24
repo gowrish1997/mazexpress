@@ -1,366 +1,426 @@
 {
-  "signUpView": {
-    "Title": "Sign up to get started",
-    "MobileViewTitle": "Get More Done With Our MAZ Services",
-    "form": {
-      "InputField": [
-        "First name",
-        "Last name",
-        "Age",
-        "Gender",
-        "Email",
-        "Mobile Number",
-        "Password",
-        "Confirm Password",
-        "Address Tag",
-        "Address line 1",
-        "Address line 2",
-        "Address phone",
-        "City"
-      ],
-      "GenderOptions": [
-        { "value": "m", "label": "Male" },
-        { "value": "f", "label": "Female" },
-        { "value": "u", "label": "Unknown" },
-        { "value": "o", "label": "Other" }
-      ],
-      
-      "Errors": [
-        "First name is required field",
-        "Last name is required field",
-        "Age is required field",
-        "Gender is required field",
-        "Email is required (Please provide valid email)",
-        "Mobile number is required field (Must be exactly 9 digits)",
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        "Confirm password is required field(Passwords must match) "
-      ],
-      "Discription": [
-        "By signing up, you agree to our",
-        "Terms of Service.",
-        "Already have an account?",
-        "Log in."
-      ],
+    "signUpView": {
+        "Title": "Sign up to get started",
+        "MobileViewTitle": "Get More Done With Our MAZ Services",
+        "form": {
+            "InputField": [
+                "First name",
+                "Last name",
+                "Age",
+                "Gender",
+                "Email",
+                "Mobile Number",
+                "Password",
+                "Confirm Password",
+                "Address Tag",
+                "Address line 1",
+                "Address line 2",
+                "Address phone",
+                "City"
+            ],
+            "GenderOptions": [
+                { "value": "m", "label": "Male" },
+                { "value": "f", "label": "Female" },
+                { "value": "u", "label": "Unknown" },
+                { "value": "o", "label": "Other" }
+            ],
 
-      "SubmitButton": ["Sign up","Create Admin","Cancel", "Sign up using Email", "Sign up using Google"]
-    }
-  },
-  "loginView": {
-    "Title": "Log in",
-    "MobileViewTitle": "Get More Done With Our MAZ Services",
-    "form": {
-      "InputField": ["Email", "Password", "Forgot password"],
+            "Errors": [
+                "First name is required field",
+                "Last name is required field",
+                "Age is required field",
+                "Gender is required field",
+                "Email is required (Please provide valid email)",
+                "Mobile number is required field (Must be exactly 9 digits)",
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+                "Confirm password is required field(Passwords must match) "
+            ],
+            "Discription": [
+                "By signing up, you agree to our",
+                "Terms of Service.",
+                "Already have an account?",
+                "Log in."
+            ],
 
-      "Errors": [
-        "Email is required (Please provide valid email)",
-        "Password is required field"
-      ],
-      "Description": [
-        "By signing up, you agree to our",
-        "Terms of Service.",
-        "New to MAZ Express?",
-        "Sign up."
-      ],
-
-      "SubmitButton": ["Log in", "Log in using Email", "Login using Google"]
-    }
-  },
-  "resetPasswordView": {
-    "Title": "Reset Password",
-    "MobileViewTitle": "Get More Done With Our MAZ Services",
-    "form": {
-      "InputField": ["Password", "Confirm password"],
-
-      "Errors": [
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        "Confirm password is required field(Passwords must match) "
-      ],
-      "SubmitButton": ["Reset Password"],
-      "Description": [
-        "By signing up, you agree to our",
-        "Terms of Service.",
-        "Already have an account?",
-        "Log in."
-      ]
-    }
-  },
-  "landingPage": {
-    "Header": "Plan your eCommerce shipments in an instant. Estimate courier charges using our quick courier charges.",
-    "navBar": {
-      "Section": ["Track Order", "Shipment Calculator", "Support"],
-      "Auth": ["Log in", "Sign up"]
-    },
-    "trackOrder": {
-      "Placeholder": "Tracking Number",
-      "Error": "Please enter valid maz tracking ID",
-      "SubmitButton": "Track Now",
-      "CaptionPart1": "Get your order delivered fast.",
-      "CaptionPart2": "Contact us"
-    },
-    "Title": "Get More Done With Our MAZ Services",
-    "Description": "Drop off and pick up packages from a location that’s open when you need it",
-    "shipmentCostCalculator": {
-      "Title": "Shipment Cost Calculator",
-      "Description": "Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it",
-      "form": {
-        "InputField": [
-          {
-            "placeholder": "Warehouse Address",
-            "label": "Pick - Up Warehouse address"
-          },
-          { "placeholder": "City", "label": "Delivery City" },
-          { "placeholder": "", "label": "Dimensions ( Optional )" },
-          { "placeholder": "", "label": "Weight*" }
-        ],
-        "Errors": [
-          "Warehouse Address is a required field",
-          "Delivery City is a required field",
-          "Weight is a required field"
-        ],
-        "Dimensions": ["Length", "Width", "Height"],
-        "SubmitButton": "Calculate Cost",
-        "ResetButton": "Reset"
-      }
-    },
-    "communityForm": {
-      "Title": "Join ⚡️ MAZ community",
-      "Description": "Drop off and pick up packages from a location that’s open when you need it.",
-      "form": {
-        "InputField": ["Email", "Mobile number", "Message"],
-        "Errors": [
-          "Email is a required field",
-          "Mobile number is a required field",
-          "Message is a required field"
-        ],
-
-        "SubmitButton": "Get started now"
-      }
-    },
-    "footer": {
-      "leftSide": {
-        "Title": "Express",
-        "Content": [
-          "Tracking",
-          "Shipping",
-          "Help & Support",
-          "About Us",
-          "Contact Us"
-        ]
-      },
-      "rightSide": {
-        "Title": "Connect with Us",
-        "Content": ["Instagram", "Facebook", "YouTube", "LinkedIn", "Twitter"]
-      },
-      "Copyright": "Copyright ©1994- 2023 United Parcel Service of America, Inc. All rights reserved. "
-    }
-  },
-  "sidebar": {
-    "UserSidebarContent": [
-      "My Orders",
-      "Order Tracking",
-      "Warehouse",
-      "Address Book",
-      "Settings",
-      "Help center"
-    ],
-    "AdminSidebarContent": [
-      "Dashboard",
-      "Live Orders",
-      "Pending Orders",
-      "Today Shipments",
-      "Out From Warehouse",
-      "Delivered Order",
-      "Warehouse",
-      "User Base",
-      "Admin Base",
-      "Notification Panel",
-      "Settings",
-      "Help center"
-    ],
-    "Logout": "Logout",
-    "logoutConfirmModal": {
-      "Content": ["Log out from Maz Express", "Yes, log out", "Cancel"]
-    }
-  },
-  "topbar": {
-    "inputField": {
-      "Placeholder": ["Search with user ID", "Search with MAZ ID"]
-    },
-    "notificationView": {
-      "Content": "Notifications"
-    }
-  },
-  "indexPage": {
-    "blankPage": {
-      "Description": [
-        "Oops, there are no orders on your list yet... Start adding now.",
-        "Add Order Now"
-      ]
-    },
-    "pageHeader": {
-      "Title": "My Orders",
-      "CalenderTitle": "Order Calender"
-    },
-    "orderTable": {
-      "TableHeader": [
-        "MAZ Tracking ID",
-        "Store Link",
-        "Reference ID",
-        "Est. Delivery",
-        "Address",
-        "Status"
-      ]
-    }
-  },
-  "addNewOrderPage": {
-    "pageHeader": {
-      "Title": "My Orders"
-    },
-    "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
-    "LinkPPart2": "Link here →",
-    "ordersForm": {
-      "Labels": ["Reference ID", "Store Link"],
-      "Errors": [
-        "Reference ID is required field",
-        "Store Link is required field"
-      ]
-    },
-    "addressBook": {
-      "Title": "Address Book",
-      "AddButton": "+ Add New"
-    },
-    "SubmitButton": "Place order",
-    "addressForm": {
-      "Title": "Add New Address",
-      "Labels": [
-        "Give first title @Home",
-        "Address line 01",
-        "Address line 02",
-        "Country",
-        "City/Town",
-        "Mobile number",
-        "Set as Default"
-      ],
-      "Errors": [
-        "Tag address is required field",
-        "Address line 01 is required field",
-        "Address line 02 is required field",
-        "Country is required field",
-        "City/Town is required field",
-        "Mobile number is required field (Must be exactly 10 digits)"
-      ],
-      "CityOptions": [
-        { "value": "Tripoli", "label": "Tripoli" },
-        { "value": "Benghazi", "label": "Benghazi" },
-        { "value": "Misrata", "label": "Misrata" }
-      ],
-      "SubmitButton": "Add to address book",
-      "CancelButton": "Cancel"
-    },
-    "editAddressForm": {
-      "Title": "Edit Address",
-      "SubmitButton": "Save Edit",
-      "CancelButton": "Cancel"
-    }
-  },
-  "orderTrackingPage": {
-    "pageHeader": {
-      "Title": "Order Tracking"
-    },
-    "PageTitle": "Tracking",
-    "Description": "Enter the Maz tracking id to find your package!",
-    "InputFieldLabel": "Search with MAZ ID"
-  },
-  "trackingView": {
-    "pageHeader": {
-      "Title": "Order Tracking"
-    },
-    "listOfTrackingId": {
-      "Title": "MAZ Tracking ID"
-    },
-    "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
-    "LinkPPart2": "Link here →",
-    "view": {
-      "Title": "Tracking",
-      "packageStatus": {
-        "stageFirst": {
-          "Title": "Source website",
-          "Status": ["Delivered", "Received"]
-        },
-        "stageSecond": {
-          "Title": "Warehouse",
-          "Status": ["Completed", "Received", "Pending"],
-          "WarehouseStatus": [
-            "Package left warehouse in Istanbul, Turkey.",
-            "Package arrived at warehouse in Libya.",
-            "Package left warehouse in Libya."
-          ]
-        },
-        "stageThird": {
-          "Title": "Out for delivery",
-          "Status": ["Received", "Completed", "Pending"]
-        },
-        "stageFour": {
-          "Title": "Delivered",
-          "Status": ["Enjoy", "Pending"]
+            "SubmitButton": [
+                "Sign up",
+                "Create Admin",
+                "Cancel",
+                "Sign up using Email",
+                "Sign up using Google"
+            ]
         }
-      }
-    }
-  },
-  "warehousePage": {
-    "pageHeader": {
-      "Title": "Our Warehouse"
     },
-    "warehouseCard": {
-      "Content": "Copy"
-    }
-  },
-  "addressBookPage": {
-    "pageHeader": {
-      "Title": "My Address Book"
-    },
-    "AddNewButton": " + Add new",
-    "userSavedAddressCard": {
-      "Content": [" Default", "Edit", "Remove"]
-    }
-  },
-  "settingsPage": {
-    "pageHeader": {
-      "Title": "Settings"
-    },
-    "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
-    "LinkPPart2": "Link here →",
-    "Title": "Account",
-    "Description": "Review and update your account details",
-    "profileForm": {
-      "InputFieldLabel": [
-        "First name",
-        "Last name",
-        "Password",
-        "Email",
-        "New Password",
-        "Mobile number",
-        "Language"
-      ],
-      "Errors": [
-        "First name is required",
-        "Last name is required",
-        "Password is required field",
-        "Email is required (Please provide valid email)",
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        "Mobile number is required field (Must be exactly 10 digits)"
-      ],
+    "loginView": {
+        "Title": "Log in",
+        "MobileViewTitle": "Get More Done With Our MAZ Services",
+        "form": {
+            "InputField": ["Email", "Password", "Forgot password"],
 
-      "notification": {
-        "Title": "Notifications",
-        "Description": "Enable or disable notifications for your account"
-      },
-      "LanguageOption": [
-        { "value": "ar", "label": "Arabic" },
-        { "value": "en", "label": "English" }
-      ],
-      "ProfilePicPopContent": ["ProfilePhoto", "Edit", "Remove"],
-      "SubmitButton": "Update setttings"
+            "Errors": [
+                "Email is required (Please provide valid email)",
+                "Password is required field"
+            ],
+            "Description": [
+                "By signing up, you agree to our",
+                "Terms of Service.",
+                "New to MAZ Express?",
+                "Sign up."
+            ],
+
+            "SubmitButton": [
+                "Log in",
+                "Log in using Email",
+                "Login using Google"
+            ]
+        }
+    },
+    "resetPasswordView": {
+        "Title": "Reset Password",
+        "MobileViewTitle": "Get More Done With Our MAZ Services",
+        "form": {
+            "InputField": ["Password", "Confirm password"],
+
+            "Errors": [
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+                "Confirm password is required field(Passwords must match) "
+            ],
+            "SubmitButton": ["Reset Password"],
+            "Description": [
+                "By signing up, you agree to our",
+                "Terms of Service.",
+                "Already have an account?",
+                "Log in."
+            ]
+        }
+    },
+    "landingPage": {
+        "Header": "Plan your eCommerce shipments in an instant. Estimate courier charges using our quick courier charges.",
+        "navBar": {
+            "Section": [
+                "Track Order",
+                "Shipment Calculator",
+                "Support",
+                "About",
+                "Service"
+            ],
+            "Auth": ["Log in", "Sign up"]
+        },
+
+        "welcome": {
+            "Title": "Welcome to MAZ Express",
+            "Caption": "Your one-stop logistics solution for shipping from Turkey to Libya.",
+            "Description": "Our company is committed to providing cutting-edge logistics services that are efficient, reliable, and cost-effective. At MAZ Express, we understand that shipping can be complicated and stressful. That's why we provide a simple and streamlined experience, from shopping to delivery. With experienced team, we can handle all your logistics needs, including warehousing, shipping, and tracking. Whether you're a business or an individual, we have the solutions to help you succeed. Contact us today to learn more."
+        },
+
+        "trackOrder": {
+            "Placeholder": "Tracking Number",
+            "Error": "Please enter valid maz tracking ID",
+            "SubmitButton": "Track Now",
+            "CaptionPart1": "Need help changing your delivery? ",
+            "CaptionPart2": "Get Help"
+        },
+        "about": {
+            "Title": "About MAZ express",
+            "Description": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",
+            "Content": [
+                "We specialize in providing warehousing services in Istanbul for customers who shop online from Turkish retailers. Our warehouse is equipped with security measures to ensure that your goods are safe and secure. We have a team of experienced professionals who manage our warehouse operations and ensure that your goods are handled with care and precision.",
+                "We understand that every customer has unique shipping needs, which is why we offer a wide range of transportation solutions tailored to meet your specific requirements. Whether you need air, sea, or land transportation services, we have the expertise and resources to get your goods where they need to go.",
+                "So, if you're looking for a reliable logistics partner to help you with your shipping needs, look no further than our company. Contact us today to learn more about our services and how we can help you streamline your shipping operations.",
+                "Once your orders are placed, we collect them from the retailers and prepare them for shipment to Libya. Our transportation services are designed to be fast, reliable, and cost-effective. We work with a network of trusted carriers to ensure that your goods arrive at their destination on time and in perfect condition.",
+                "Our commitment to customer satisfaction is what sets us apart from other logistics providers. We are dedicated to providing exceptional customer service and communication throughout the entire shipping process. Our team is always available to answer your questions and address any concerns you may have."
+            ]
+        },
+        "service": {
+            "Title": "Services we offer",
+            "content": [
+                {
+                    "Title": "Warehousing:",
+                    "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
+                },
+                {
+                    "Title": "Warehousing:",
+                    "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
+                },
+                {
+                    "Title": "Warehousing:",
+                    "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
+                },
+                {
+                    "Title": "Warehousing:",
+                    "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
+                }
+            ]
+        },
+
+        "shipmentCostCalculator": {
+            "Title": "Shipment Cost Calculator",
+            "Description": "Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it",
+            "form": {
+                "InputField": [
+                    {
+                        "placeholder": "Warehouse Address",
+                        "label": "Pick - Up Warehouse address"
+                    },
+                    { "placeholder": "City", "label": "Delivery City" },
+                    { "placeholder": "", "label": "Dimensions ( Optional )" },
+                    { "placeholder": "", "label": "Weight*" }
+                ],
+                "Errors": [
+                    "Warehouse Address is a required field",
+                    "Delivery City is a required field",
+                    "Weight is a required field"
+                ],
+                "Dimensions": ["Length", "Width", "Height"],
+                "SubmitButton": "Calculate Cost",
+                "ResetButton": "Reset"
+            }
+        },
+        "communityForm": {
+            "Title": "Join ⚡️ MAZ community",
+            "Description": "Drop off and pick up packages from a location that’s open when you need it.",
+            "form": {
+                "InputField": ["Email", "Mobile number", "Message"],
+                "Errors": [
+                    "Email is a required field",
+                    "Mobile number is a required field",
+                    "Message is a required field"
+                ],
+
+                "SubmitButton": "Get started now"
+            }
+        },
+        "footer": {
+            "leftSide": {
+                "Title": "Express",
+                "Content": [
+                    "Tracking",
+                    "Shipping",
+                    "Help & Support",
+                    "About Us",
+                    "Contact Us"
+                ]
+            },
+            "rightSide": {
+                "Title": "Connect with Us",
+                "Content": [
+                    "Instagram",
+                    "Facebook",
+                    "YouTube",
+                    "LinkedIn",
+                    "Twitter"
+                ]
+            },
+            "Copyright": "Copyright ©1994- 2023 United Parcel Service of America, Inc. All rights reserved. "
+        }
+    },
+    "sidebar": {
+        "UserSidebarContent": [
+            "My Orders",
+            "Order Tracking",
+            "Warehouse",
+            "Address Book",
+            "Settings",
+            "Help center"
+        ],
+        "AdminSidebarContent": [
+            "Dashboard",
+            "Live Orders",
+            "Pending Orders",
+            "Today Shipments",
+            "Out From Warehouse",
+            "Delivered Order",
+            "Warehouse",
+            "User Base",
+            "Admin Base",
+            "Notification Panel",
+            "Settings",
+            "Help center"
+        ],
+        "Logout": "Logout",
+        "logoutConfirmModal": {
+            "Content": ["Log out from Maz Express", "Yes, log out", "Cancel"]
+        }
+    },
+    "topbar": {
+        "inputField": {
+            "Placeholder": ["Search with user ID", "Search with MAZ ID"]
+        },
+        "notificationView": {
+            "Content": "Notifications"
+        }
+    },
+    "indexPage": {
+        "blankPage": {
+            "Description": [
+                "Oops, there are no orders on your list yet... Start adding now.",
+                "Add Order Now"
+            ]
+        },
+        "pageHeader": {
+            "Title": "My Orders",
+            "CalenderTitle": "Order Calender"
+        },
+        "orderTable": {
+            "TableHeader": [
+                "MAZ Tracking ID",
+                "Store Link",
+                "Reference ID",
+                "Est. Delivery",
+                "Address",
+                "Status"
+            ]
+        }
+    },
+    "addNewOrderPage": {
+        "pageHeader": {
+            "Title": "My Orders"
+        },
+        "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
+        "LinkPPart2": "Link here →",
+        "ordersForm": {
+            "Labels": ["Reference ID", "Store Link"],
+            "Errors": [
+                "Reference ID is required field",
+                "Store Link is required field"
+            ]
+        },
+        "addressBook": {
+            "Title": "Address Book",
+            "AddButton": "+ Add New"
+        },
+        "SubmitButton": "Place order",
+        "addressForm": {
+            "Title": "Add New Address",
+            "Labels": [
+                "Give first title @Home",
+                "Address line 01",
+                "Address line 02",
+                "Country",
+                "City/Town",
+                "Mobile number",
+                "Set as Default"
+            ],
+            "Errors": [
+                "Tag address is required field",
+                "Address line 01 is required field",
+                "Address line 02 is required field",
+                "Country is required field",
+                "City/Town is required field",
+                "Mobile number is required field (Must be exactly 10 digits)"
+            ],
+            "CityOptions": [
+                { "value": "Tripoli", "label": "Tripoli" },
+                { "value": "Benghazi", "label": "Benghazi" },
+                { "value": "Misrata", "label": "Misrata" }
+            ],
+            "SubmitButton": "Add to address book",
+            "CancelButton": "Cancel"
+        },
+        "editAddressForm": {
+            "Title": "Edit Address",
+            "SubmitButton": "Save Edit",
+            "CancelButton": "Cancel"
+        }
+    },
+    "orderTrackingPage": {
+        "pageHeader": {
+            "Title": "Order Tracking"
+        },
+        "PageTitle": "Tracking",
+        "Description": "Enter the Maz tracking id to find your package!",
+        "InputFieldLabel": "Search with MAZ ID"
+    },
+    "trackingView": {
+        "pageHeader": {
+            "Title": "Order Tracking"
+        },
+        "listOfTrackingId": {
+            "Title": "MAZ Tracking ID"
+        },
+        "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
+        "LinkPPart2": "Link here →",
+        "view": {
+            "Title": "Tracking",
+            "packageStatus": {
+                "stageFirst": {
+                    "Title": "Source website",
+                    "Status": ["Delivered", "Received"]
+                },
+                "stageSecond": {
+                    "Title": "Warehouse",
+                    "Status": ["Completed", "Received", "Pending"],
+                    "WarehouseStatus": [
+                        "Package left warehouse in Istanbul, Turkey.",
+                        "Package arrived at warehouse in Libya.",
+                        "Package left warehouse in Libya."
+                    ]
+                },
+                "stageThird": {
+                    "Title": "Out for delivery",
+                    "Status": ["Received", "Completed", "Pending"]
+                },
+                "stageFour": {
+                    "Title": "Delivered",
+                    "Status": ["Enjoy", "Pending"]
+                }
+            }
+        }
+    },
+    "warehousePage": {
+        "pageHeader": {
+            "Title": "Our Warehouse"
+        },
+        "warehouseCard": {
+            "Content": "Copy"
+        }
+    },
+    "addressBookPage": {
+        "pageHeader": {
+            "Title": "My Address Book"
+        },
+        "AddNewButton": " + Add new",
+        "userSavedAddressCard": {
+            "Content": [" Default", "Edit", "Remove"]
+        }
+    },
+    "settingsPage": {
+        "pageHeader": {
+            "Title": "Settings"
+        },
+        "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
+        "LinkPPart2": "Link here →",
+        "Title": "Account",
+        "Description": "Review and update your account details",
+        "profileForm": {
+            "InputFieldLabel": [
+                "First name",
+                "Last name",
+                "Password",
+                "Email",
+                "New Password",
+                "Mobile number",
+                "Language"
+            ],
+            "Errors": [
+                "First name is required",
+                "Last name is required",
+                "Password is required field",
+                "Email is required (Please provide valid email)",
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+                "Mobile number is required field (Must be exactly 10 digits)"
+            ],
+
+            "notification": {
+                "Title": "Notifications",
+                "Description": "Enable or disable notifications for your account"
+            },
+            "LanguageOption": [
+                { "value": "ar", "label": "Arabic" },
+                { "value": "en", "label": "English" }
+            ],
+            "ProfilePicPopContent": ["ProfilePhoto", "Edit", "Remove"],
+            "SubmitButton": "Update setttings"
+        }
     }
-  }
 }

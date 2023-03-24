@@ -27,8 +27,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
         const { user, mutateUser } = useUser();
         const { notifications, notificationsIsLoading, mutateNotifications } =
             useNotifications({
-                type: "get_by_user_id",
-                user_id: user?.email,
+                username: user?.email,
                 status: ["unread", "read"],
             });
 
@@ -38,7 +37,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
         const deleteNotification = async (id: string) => {
             try {
                 const deletedNotification = await fetchServer(
-                    `/api/notifications?id=${id}`,
+                    `/api/notifications/${id}`,
                     {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -54,6 +53,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                 } else {
                     console.log("delete failed");
                 }
+                mutateNotifications();
             } catch (error) {
                 console.error(error);
             }
@@ -63,7 +63,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             try {
                 for (let i = 0; i < notifications.length; i++) {
                     const deletedNotification = await fetchServer(
-                        `/api/notifications?id=${notifications[i].id}`,
+                        `/api/notifications/${notifications[i].id}`,
                         {
                             method: "PUT",
                             headers: { "Content-Type": "application/json" },
@@ -80,6 +80,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                         console.log("delete failed");
                     }
                 }
+                mutateNotifications();
             } catch (error) {
                 console.error(error);
             }

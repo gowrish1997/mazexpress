@@ -55,7 +55,7 @@ const UserBase = () => {
         date: getDateInDBFormat(createdDateFilterKey as Date),
     });
 
-    console.log(users)
+    console.log(users);
     // const { userCount, mutateUserCount, userCountIsLoading, userCountError } =
     //     useUsersCount({
     //         search: searchKey,
@@ -67,9 +67,7 @@ const UserBase = () => {
     // console.log(allUser);
 
     //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(
-        ((users as User[]) || []).length / itemsPerPage
-    );
+  
 
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
@@ -97,23 +95,26 @@ const UserBase = () => {
             <div>
                 <UserbasePageHeader
                     content="User Base"
-                    allUsers={users as User[]}
+                    allUsers={users?.data as User[]}
                     filterByDate={filterByCreatedDate}
                     title="User Base | MazExpress Admin"
                     pageCount={Math.ceil(
-                        (users?.length as number) / itemsPerPage
+                        (users?.count as number) / itemsPerPage
                     )}
                     currentPageHandler={currentPageHandler}
                     itemsPerPage={itemsPerPage}
                     itemPerPageHandler={itemPerPageHandler}
                     currentPage={currentPage}
+                    createdDateFilterKey={createdDateFilterKey}
+                    isFilterPresent={searchKey || createdDateFilterKey}
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!users && <BlankPage />}
-                    {users && (
+                    {!users?.data && !searchKey && !createdDateFilterKey ? (
+                        <BlankPage />
+                    ) : (
                         <>
                             <Table
-                                rows={users as User[]}
+                                rows={users?.data as User[]}
                                 headings={tableHeaders}
                                 type="user_base"
                             />
