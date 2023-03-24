@@ -37,19 +37,18 @@ const NotificationPanel = () => {
         setTo = true;
       }
       let facelift = [...notificationSettings];
-      let match = facelift.find((el) => el.id === id);
+      let match = facelift.find((el: NotificationConfig) => el.id === id);
       // console.log("match", match);
       if (match !== undefined) {
         // facelift.find(
         //   (el) => el.id_notification_config === id
         // ).is_enabled_notification_config = setTo;
         // mutateNotificationSettings(facelift, false);
-        await fetchServer(`/api/notification-settings`, {
+        await fetchServer(`/api/notification-settings/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            id: id,
-            setTo: setTo,
+            is_enabled: setTo,
           }),
         });
         await mutateNotificationSettings();

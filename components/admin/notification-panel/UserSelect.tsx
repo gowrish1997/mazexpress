@@ -25,7 +25,7 @@ const UserSelect = (props: any) => {
   const triggerRef = useRef(null);
 
   const fetchMatchingUsers = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const openDropdown = () => {
@@ -71,7 +71,7 @@ const UserSelect = (props: any) => {
     // console.log(e.target.checked);
     if (e.target.checked) {
       let newList = (users as User[]).map((item) => {
-        return item.id;
+        return item.email;
       });
       setSelectedUsers(newList);
       setMarkAll(true);
@@ -118,7 +118,7 @@ const UserSelect = (props: any) => {
           <div className="flex items-center w-full h-[45px] p-3">
             <div className="w-7 h-7 rounded-full relative overflow-hidden">
               <Image
-                src={user?.avatar_url || '/user-images/default_user.png'}
+                src={users.find(el => el.email === selectedUsers[0])?.avatar_url || "/user-images/default_user.png"}
                 fill
                 style={{ objectFit: "cover" }}
                 alt={"user image"}
@@ -126,11 +126,11 @@ const UserSelect = (props: any) => {
             </div>
             <p className="text-[#2B2B2B] text-[14px] mx-2">
               {
-                (users as User[]).find((item) => item.id === selectedUsers[0])
+                (users as User[]).find((item) => item.email === selectedUsers[0])
                   ?.first_name
               }{" "}
               {
-                (users as User[]).find((item) => item.id === selectedUsers[0])
+                (users as User[]).find((item) => item.email === selectedUsers[0])
                   ?.last_name
               }
             </p>
@@ -166,7 +166,7 @@ const UserSelect = (props: any) => {
           trigger={triggerRef}
           className={""}
         >
-          <div className="absolute flex flex-col w-[400px] h-[350px] z-10 top-[130%] rounded border bg-white shadow-lg p-4 overflow-y-scroll">
+          <div className="absolute flex flex-col w-[400px] h-[350px] z-10 top-[130%] rounded border bg-white shadow-lg p-4 overflow-y-scroll slimScrollBar">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -199,11 +199,7 @@ const UserSelect = (props: any) => {
                   <div className="flex items-center w-full" key={el.id}>
                     <div className="w-10 h-10 rounded-full relative overflow-hidden">
                       <Image
-                        src={
-                          el.avatar_url !== null && el.avatar_url !== undefined
-                            ? `/user-images/${el.avatar_url}`
-                            : "/user-images/default_user.png"
-                        }
+                        src={el.avatar_url || "/user-images/default_user.png"}
                         fill
                         style={{ objectFit: "cover" }}
                         alt={"user image"}
@@ -218,11 +214,11 @@ const UserSelect = (props: any) => {
                         type={"checkbox"}
                         className="w-3 h-3"
                         checked={
-                          selectedUsers.find((seel) => seel === el.id)
+                          selectedUsers.find((seel) => seel === el.email)
                             ? true
                             : false
                         }
-                        onChange={(e) => updateSelectedUsers(e, el.id)}
+                        onChange={(e) => updateSelectedUsers(e, el.email)}
                       />
                     </div>
                   </div>
