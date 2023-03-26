@@ -31,6 +31,7 @@ import fetchJson from "@/lib/fetchSelf";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import About from "@/components/LandingPage/About";
 import Service from "@/components/LandingPage/Service";
+import Line from "../public/line.png";
 
 const Index = () => {
     const router = useRouter();
@@ -48,7 +49,6 @@ const Index = () => {
     const supportSectionRef = useRef<HTMLDivElement>(null);
     const AboutSectionRef = useRef<HTMLDivElement>(null);
     const ServicetSectionRef = useRef<HTMLDivElement>(null);
-
     const [showOptionModal, setShowOptionModal] = useState(false);
     const [trackingId, setTrackingId] = useState<string>("");
     const [trackingIdError, setTrackingIdError] = useState<boolean>(false);
@@ -146,11 +146,11 @@ const Index = () => {
                 <div className="px-[30px] xmd:px-[150px]  ">
                     <div className="w-full flex flex-row justify-between items-end h-[80px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
                         <div className="flex flex-row justify-between items-end gap-x-[20px] ">
-                            <div className="relative h-[47px] w-[47px] ">
+                            <div className="relative h-[47px] w-[60px] ">
                                 <Image src={newlogoBlue} fill alt="logo" />
                             </div>
 
-                            <div className="md:hidden  relative ">
+                            <div className="min-[850px]:hidden relative ">
                                 <div
                                     className="flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]"
                                     style={
@@ -255,13 +255,23 @@ const Index = () => {
                                                 >
                                                     {t(section[4])}
                                                 </li>
+                                                <li className=""> 
+                                                    <button
+                                                        onClick={
+                                                            toggleLogoutConfirmModal
+                                                        }
+                                                        className="w-full bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] text-left "
+                                                    >
+                                                        {auth[2]}
+                                                    </button>
+                                                </li>
                                             </ul>
                                         </div>
                                     )}
                                 </div>
                             </div>
 
-                            <ul className="flex-type3 gap-x-[20px] hidden md:flex">
+                            <ul className="flex-type3 gap-x-[20px] hidden min-[850px]:flex">
                                 <li
                                     className="cursor-pointer"
                                     onClick={() =>
@@ -326,8 +336,8 @@ const Index = () => {
                         </div>
 
                         {user !== null && user !== undefined ? (
-                            <div className="flex items-center space-x-[20px]">
-                                <div className="flex items-center space-x-[20px]">
+                            <div className="flex items-center gap-x-[15px]">
+                                <div className="flex items-center gap-x-[10px]">
                                     <p>{user.email}</p>
                                     {user.is_admin ? (
                                         <Link href={"/admin"}>Dashboard</Link>
@@ -335,12 +345,12 @@ const Index = () => {
                                         <Link href={"/orders"}>My orders</Link>
                                     )}
                                 </div>
-                                <div>
+                                <div className="hidden min-[850px]:block">
                                     <button
                                         onClick={toggleLogoutConfirmModal}
                                         className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
                                     >
-                                        Logout
+                                        {auth[2]}
                                     </button>
                                 </div>
                                 <LanguageSwitcher />
@@ -364,25 +374,13 @@ const Index = () => {
                     <div className="w-[100%] flex flex-row justify-center ">
                         <div className="w-[75%] mt-[30px] ">
                             <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[36px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
-                                Welcome to MAZ Exppress
+                                {t("landingPage.welcome.Title")}
                             </h1>
                             <p className="text-center text-[16px] md:text-[18px] xmd:text-[20px] text-[#121212] font-[500] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[15px] ">
-                                Your one-stop logistics solution for shipping
-                                from Turkey to Libya.
+                                {t("landingPage.welcome.Caption")}
                             </p>
                             <p className="text-center text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#525D72] font-[500] leading-[15px] md:leading-[20px] xmd:leading-[25px] ">
-                                Our company is committed to providing
-                                cutting-edge logistics services that are
-                                efficient, reliable, and cost-effective. At MAZ
-                                Express, we understand that shipping can be
-                                complicated and stressful. That&apos;s why we provide
-                                a simple and streamlined experience, from
-                                shopping to delivery. With experienced team, we
-                                can handle all your logistics needs, including
-                                warehousing, shipping, and tracking. Whether
-                                you&apos;re a business or an individual, we have the
-                                solutions to help you succeed. Contact us today
-                                to learn more.
+                                {t("landingPage.welcome.Description")}
                             </p>
                         </div>
                     </div>

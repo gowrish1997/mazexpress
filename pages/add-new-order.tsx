@@ -52,8 +52,6 @@ const AddNewOrder = () => {
         returnObjects: true,
     });
 
-    const [defaultAddress, setDefaultAddress] = useState("");
-
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";
         let lang = router.locale == "ar" ? "ar" : "en";
@@ -63,15 +61,14 @@ const AddNewOrder = () => {
 
     const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
 
-    // const defaultAddressHandler = () => {
-    //     // mutateAddresses();
-    //     const address = (addresses as Address[])?.find(
-    //         (el) => el.id === user?.default_address
-    //     );
-    //     console.log(address);
+    const defaultAddressHandler = () => {
+        // mutateAddresses();
+        const address = (addresses as Address[])?.find(
+            (el) => el.id === user?.default_address
+        );
 
-    //     return address;
-    // };
+        return address;
+    };
 
     const {
         register,
@@ -85,18 +82,17 @@ const AddNewOrder = () => {
         address_id: string;
     }>({
         defaultValues: {
-            address_id: defaultAddress,
+            address_id: "",
         },
         resolver: yupResolver(schema),
     });
 
     useEffect(() => {
-        console.log("updatein defaul address");
         const address = (addresses as Address[])?.find(
             (el) => el.id === user?.default_address
         );
-        setDefaultAddress(address?.id!);
-        setValue("address_id", address?.id!);
+        console.log(address?.id);
+        setValue("address_id", address?.id!, { shouldValidate: true });
     }, [addresses]);
 
     const toggleAddNewAddressModal = () => {
@@ -126,43 +122,43 @@ const AddNewOrder = () => {
         address_id: string | null | undefined;
     }> = async (data) => {
         console.log(data);
-        try {
-          let orderObj = {
-            username: user?.email,
-            address_id: data.address_id,
-            reference_id: data.reference_id,
-            store_link: data.store_link,
-          };
-          const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(orderObj),
-          });
-          // console.log(result);
-          if (result.ok) {
-            createToast({
-              type: "success",
-              title: "Success",
-              message: "Created order successfully",
-              timeOut: 1000,
-            });
-          } else {
-            createToast({
-              type: "error",
-              title: "An error occurred",
-              message: "Order create pipe failed, contact dev",
-              timeOut: 3000,
-            });
-          }
-        } catch (err) {
-          console.log(err);
-          createToast({
-            type: "error",
-            title: "An error occurred",
-            message: "Check console for more info.",
-            timeOut: 3000,
-          });
-        }
+        // try {
+        //   let orderObj = {
+        //     username: user?.email,
+        //     address_id: data.address_id,
+        //     reference_id: data.reference_id,
+        //     store_link: data.store_link,
+        //   };
+        //   const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify(orderObj),
+        //   });
+        //   // console.log(result);
+        //   if (result.ok) {
+        //     createToast({
+        //       type: "success",
+        //       title: "Success",
+        //       message: "Created order successfully",
+        //       timeOut: 1000,
+        //     });
+        //   } else {
+        //     createToast({
+        //       type: "error",
+        //       title: "An error occurred",
+        //       message: "Order create pipe failed, contact dev",
+        //       timeOut: 3000,
+        //     });
+        //   }
+        // } catch (err) {
+        //   console.log(err);
+        //   createToast({
+        //     type: "error",
+        //     title: "An error occurred",
+        //     message: "Check console for more info.",
+        //     timeOut: 3000,
+        //   });
+        // }
     };
 
     return (
@@ -219,37 +215,31 @@ const AddNewOrder = () => {
                         {errors.address_id.message}
                     </p>
                 )}
-                {addresses && addresses.length > 0 && defaultAddress &&
-                        <div className="grid grid-cols-3 gap-3 py-5">
-                            {addresses &&
-                                addresses !== null &&
-                                (addresses as Address[]).map(
-                                    (data: Address) => {
-                                        return (
-                                            <UserSavedAddress
-                                                type="add-new-order"
-                                                key={data.id}
-                                                address={data}
-                                                allAddresses={addresses}
-                                                register={register(
-                                                    "address_id"
-                                                )}
-                                                edit={
-                                                    toggleEditUserAddressModal
-                                                }
-                                                update={mutateAddresses}
-                                                updateDeliveryAddress={
-                                                    updataDeliveryAdressId
-                                                }
-                                                selectedAddressId={getValues(
-                                                    "address_id"
-                                                )}
-                                            />
-                                        );
-                                    }
-                                )}
-                        </div>
-                    }
+                {addresses && addresses.length > 0 && (
+                    <div className="grid grid-cols-3 gap-3 py-5">
+                        {addresses &&
+                            addresses !== null &&
+                            (addresses as Address[]).map((data: Address) => {
+                                return (
+                                    <UserSavedAddress
+                                        type="add-new-order"
+                                        key={data.id}
+                                        address={data}
+                                        allAddresses={addresses}
+                                        register={register("address_id")}
+                                        edit={toggleEditUserAddressModal}
+                                        update={mutateAddresses}
+                                        updateDeliveryAddress={
+                                            updataDeliveryAdressId
+                                        }
+                                        selectedAddressId={getValues(
+                                            "address_id"
+                                        )}
+                                    />
+                                );
+                            })}
+                    </div>
+                )}
 
                 <button
                     className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"

@@ -104,7 +104,7 @@
                 "About",
                 "Service"
             ],
-            "Auth": ["Log in", "Sign up"]
+            "Auth": ["Log in", "Sign up", "Log out"]
         },
 
         "welcome": {
@@ -120,6 +120,7 @@
             "CaptionPart1": "Need help changing your delivery? ",
             "CaptionPart2": "Get Help"
         },
+
         "about": {
             "Title": "About MAZ express",
             "Description": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",

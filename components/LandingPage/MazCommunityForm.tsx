@@ -70,7 +70,7 @@ const MazCommunityForm = () => {
             name="user_email"
             type="email"
             register={register("user_email")}
-            error={errors.user_email as FieldError}
+            error={errors.user_email && fieldErrors[0]}
             className="rounded-l-[4px] rounded-r-none"
           />
           <ReactHookFormInput
@@ -78,7 +78,7 @@ const MazCommunityForm = () => {
             name="user_mobileNumber"
             type="number"
             register={register("user_mobileNumber")}
-            error={errors.user_mobileNumber as FieldError}
+            error={errors.user_mobileNumber && fieldErrors[1  ]}
             className="rounded-l-[4px] rounded-r-none"
           />
           <div className={"w-full flex-type6"}>
