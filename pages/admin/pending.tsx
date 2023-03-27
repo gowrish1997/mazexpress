@@ -120,6 +120,7 @@ const PendingOrders = () => {
                                 type="pending"
                                 onSelect={selectOrderHandler}
                                 selectedOrder={selectedOrder!}
+                                mutateOrder={mutateOrders}
                             />
                         </>
                     )}

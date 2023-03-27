@@ -67,7 +67,7 @@ const Shipments = () => {
     };
 
     const selectOrderHandler = (value: string, type: string) => {
-        selectOrder(value, type, setSelectedOrder, orders?.data, selectedOrder!);
+        selectOrder(value, type, setSelectedOrder, orders?.data as Order[], selectedOrder!);
     };
 
     if (ordersIsLoading) {

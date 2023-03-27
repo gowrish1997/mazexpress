@@ -40,7 +40,7 @@ const OrdersTotalCountBar = () => {
         orderCount: atPendingOrders,
         mutateOrderCount: mutateAtPendingOrders,
         orderCountIsLoading: atPendingOrdersIsLoading,
-    } = useOrderCount({ status: ["at-warehouse"] });
+    } = useOrderCount({ status: ["pending"] });
 
     return (
         <div

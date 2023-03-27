@@ -70,7 +70,13 @@ const Intransit = () => {
 
     const selectOrderHandler = (value: string, type: string) => {
         console.log(value);
-        selectOrder(value, type, setSelectedOrder, orders?.data as Order[], selectedOrder!);
+        selectOrder(
+            value,
+            type,
+            setSelectedOrder,
+            orders?.data as Order[],
+            selectedOrder!
+        );
     };
 
     if (ordersIsLoading) {
@@ -113,6 +119,7 @@ const Intransit = () => {
                                 type="in-transit"
                                 onSelect={selectOrderHandler}
                                 selectedOrder={selectedOrder!}
+                                mutateOrder={mutateOrders}
                             />
                         </>
                     )}

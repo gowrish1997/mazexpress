@@ -24,7 +24,7 @@ interface IProp {
 
 const LiveOrderLineItem = (props: IProp) => {
     const trigger = useRef<any>();
-    console.log(props.selectedOrder);
+console.log('live order line item')
     // const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
     //   user_id: props.row.user.id as string,
     // });

@@ -6,7 +6,7 @@ import useUser from "@/lib/hooks/useUser";
 // import CustomDropDown from "@/components/common/CustomDropDown";
 import { Warehouse, WarehouseStatus } from "@/models/warehouse.model";
 import fetchJson from "@/lib/fetchServer";
-import CusotmDropdown from "@/components/LandingPage/CustomDropdown";
+import { yupResolver } from "@hookform/resolvers/yup";
 import CustomDropdown from "@/components/LandingPage/CustomDropdown";
 
 interface IProp {
@@ -15,10 +15,28 @@ interface IProp {
     update: () => Promise<any | undefined>;
 }
 
+const radioOptions = [
+    { label: "Set as active", value: "active" },
+    { label: "Set as inactive", value: "inactive" },
+    { label: "Set as closed", value: "closed" },
+];
+
 const schema = yup
     .object({
-        address_1: yup.string().required(),
-        address_2: yup.string().required(),
+        tag: yup.string().required("Tag is required field"),
+        address_1: yup.string().required("address_1 is required field"),
+        address_2: yup.string().required("address_2 is required field"),
+        city: yup.string().required("City/Town is required field"),
+        phone: yup
+            .number()
+            .test(
+                "len",
+                "Must be exactly 9 digits",
+                (val) => val?.toString().length === 9
+            )
+            .required()
+            .typeError("Mobile number is required field"),
+        status: yup.string().required(),
     })
     .required();
 
@@ -31,40 +49,21 @@ const AddNewWarehouseModal = (props: IProp) => {
         getValues,
         control,
         formState: { errors },
-    } = useForm<Warehouse & { active: "on" | "off" }>({
+    } = useForm<Warehouse>({
         defaultValues: {
-            address_1: "plaza st.",
-            address_2: "jacobscreek",
             city: "istanbul",
             country: "turkey",
-            active: "on",
-            phone: 214441792,
-            tag: "Main",
+            status: "active",
         },
-        // resolver: yupResolver(schema),
+        resolver: yupResolver(schema),
     });
-
-    const [warehouseIsActive, setWarehouseIsActive] = useState(true);
-
-    const toggleActiveHandler = () => {
-        setWarehouseIsActive((prev) => !prev);
-    };
 
     const onSubmit: SubmitHandler<
         Warehouse & { active?: "on" | "off" }
     > = async (data) => {
-        // let address: any = { ...data };
-        // delete address.default;
-        // address.user_id = user?.id_users;
-
-        // console.log(data);
+        console.log(data);
 
         let warehouse = { ...data };
-        warehouse.status =
-            data.active === "on" ? WarehouseStatus.A : WarehouseStatus.I;
-        delete warehouse.active;
-        // await warehouse.save()
-        // console.log(warehouse)
 
         try {
             const response = await fetchJson("/api/warehouses", {
@@ -91,34 +90,52 @@ const AddNewWarehouseModal = (props: IProp) => {
                         <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">
                             Add New Warehouse
                         </p>
-                        <input
-                            id="tag"
-                            type="string"
-                            {...register("tag")}
-                            className="w-full h-[46px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none"
-                            placeholder="Give first title @Home"
-                        />
+                        <div>
+                            <input
+                                id="tag"
+                                type="string"
+                                {...register("tag")}
+                                className="w-full h-[46px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none"
+                                placeholder="Give first title @Home"
+                            />
+                            {errors.tag && (
+                                <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+                                    {errors.tag.message}
+                                </p>
+                            )}
+                        </div>
+
                         <ReactHookFormInput
                             label="Address line 01"
                             name="address_1"
                             type="string"
                             register={register("address_1")}
+                            error={errors.address_1?.message}
                         />
                         <ReactHookFormInput
                             label="Address line 02"
                             name="address_2"
                             type="string"
                             register={register("address_2")}
+                            error={errors.address_2?.message}
                         />
                         <div className="flex-type2 space-x-[10px] w-full">
-                            <CustomDropdown
+                            {/* <CustomDropdown
                                 label="City/Town"
                                 name="city"
                                 value={"Istanbul"}
                                 register={register("city")}
-                                // error={errors.city}
                                 IconEnabled={true}
                                 type="text"
+                            /> */}
+                            <ReactHookFormInput
+                                label="City/Town"
+                                name="city"
+                                value={"Istanbul"}
+                                register={register("city")}
+                                // IconEnabled={true}
+                                type="text"
+                                error={errors.city?.message}
                             />
                         </div>
                         <ReactHookFormInput
@@ -126,6 +143,7 @@ const AddNewWarehouseModal = (props: IProp) => {
                             name="phone"
                             type="number"
                             register={register("phone")}
+                            error={errors.phone?.message}
                         />
                         {/* <ReactHookFormInput
               label="Email ID"
@@ -133,17 +151,19 @@ const AddNewWarehouseModal = (props: IProp) => {
               type="string"
               register={register("address_1")}
             /> */}
-                        <div className=".flex-type1 space-x-[5px]">
-                            <input
-                                type="radio"
-                                // defaultChecked={warehouseIsActive}
-                                checked={warehouseIsActive}
-                                onClick={toggleActiveHandler}
-                                {...register("active")}
-                                name="active"
-                            />
-
-                            <span>Set as Active</span>
+                        <div className="flex-type1 gap-x-[10px]">
+                            {radioOptions.map((option, index) => (
+                                <div className="" key={index}>
+                                    <label key={option.value}>
+                                        <input
+                                            type="radio"
+                                            value={option.value}
+                                            {...register("status")}
+                                        />
+                                    </label>
+                                    <span> {option.label}</span>
+                                </div>
+                            ))}
                         </div>
                         <div className="flex-type1 space-x-[10px] mt-[5px] ">
                             <button
