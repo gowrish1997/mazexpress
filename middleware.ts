@@ -45,13 +45,13 @@ export const middleware = async (req: NextRequest) => {
         }
 
         // comment to let admin on all routes
-        // if (session.user.is_admin) {
-        //     if (!req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/admin", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
+        if (session.user.is_admin) {
+            if (!req.nextUrl.pathname.startsWith("/admin")) {
+                return NextResponse.redirect(new URL("/admin", req.url), {
+                    statusText: "Unauthorized.",
+                });
+            }
+        }
     }
 
     // console.log(session.user?.[0].lang)
