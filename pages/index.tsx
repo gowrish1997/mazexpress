@@ -115,6 +115,7 @@ const Index = () => {
         const result = await fetchJson("/api/auth/logout", { method: "GET" });
         // console.log(result);
         await mutateUser();
+        setShowLogoutConfirmModal((prev) => !prev);
     };
 
     const openPackageTrackingModal = () => {
@@ -255,7 +256,7 @@ const Index = () => {
                                                 >
                                                     {t(section[4])}
                                                 </li>
-                                                <li className=""> 
+                                                <li className="">
                                                     <button
                                                         onClick={
                                                             toggleLogoutConfirmModal

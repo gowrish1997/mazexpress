@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
@@ -104,6 +104,7 @@ const SignUpContent = (props: IProp) => {
         handleSubmit,
         setValue,
         getValues,
+        control,
         formState: { errors },
     } = useForm<ISignupForm>({
         resolver: yupResolver(schema),
@@ -210,90 +211,139 @@ const SignUpContent = (props: IProp) => {
             className="flex-type6 h-full w-full gap-y-[10px] "
         >
             <div className="flex-type2 gap-x-[10px] w-full">
-                <ReactHookFormInput
-                    label={inputFieldLabel[0]}
+                <Controller
                     name="user.first_name"
-                    type="string"
-                    register={register("user.first_name")}
-                    error={errors.user?.first_name && inputFieldErrors[0]}
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                        <ReactHookFormInput
+                            label={inputFieldLabel[0]}
+                            name="user.first_name"
+                            type="string"
+                            onChange={onChange}
+                            value={value}
+                            error={
+                                errors.user?.first_name && inputFieldErrors[0]
+                            }
+                        />
+                    )}
                 />
 
-                <ReactHookFormInput
-                    label={inputFieldLabel[1]}
+                <Controller
                     name="user.last_name"
-                    type="string"
-                    register={register("user.last_name")}
-                    error={errors.user?.last_name && inputFieldErrors[1]}
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                        <ReactHookFormInput
+                            label={inputFieldLabel[1]}
+                            name="user.last_name"
+                            value={value}
+                            onChange={onChange}
+                            type="string"
+                            error={
+                                errors.user?.last_name && inputFieldErrors[1]
+                            }
+                        />
+                    )}
                 />
             </div>
             <div className="flex-type2 gap-x-[10px] w-full">
-                <ReactHookFormInput
-                    label={inputFieldLabel[2]}
+                <Controller
                     name="user.age"
-                    type="string"
-                    register={register("user.age")}
-                    error={errors.user?.age && inputFieldErrors[2]}
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                        <ReactHookFormInput
+                            label={inputFieldLabel[2]}
+                            name="user.age"
+                            value={value!}
+                            onChange={onChange}
+                            type="string"
+                            error={errors.user?.age && inputFieldErrors[2]}
+                        />
+                    )}
                 />
+
                 <CustomDropdown
                     label={inputFieldLabel[3]}
                     name="user.gender"
                     type="string"
                     IconEnabled={true}
-                    register={register("user.gender")}
-                    error={errors.user?.gender}
+                    error={errors.user?.gender?.message}
                     value={getValues("user.gender")}
                     setValue={setValue}
                     options={genderOption}
                     disabled={true}
                 />
             </div>
-
-            <ReactHookFormInput
-                label={inputFieldLabel[4]}
+            <Controller
                 name="user.email"
-                type="string"
-                register={register("user.email")}
-                error={errors.user?.email && inputFieldErrors[4]}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                    <ReactHookFormInput
+                        label={inputFieldLabel[4]}
+                        name="user.email"
+                        type="string"
+                        value={value!}
+                        onChange={onChange}
+                        error={errors.user?.email && inputFieldErrors[4]}
+                    />
+                )}
             />
-
-            <ReactHookFormInput
-                label={inputFieldLabel[5]}
+            <Controller
                 name="user.phone"
-                type="number"
-                register={register("user.phone")}
-                error={errors.user?.phone && inputFieldErrors[5]}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                    <ReactHookFormInput
+                        label={inputFieldLabel[5]}
+                        name="user.phone"
+                        type="number"
+                        value={value}
+                        onChange={onChange}
+                        error={errors.user?.phone && inputFieldErrors[5]}
+                    />
+                )}
             />
-
-            <ReactHookFormInput
-                label={inputFieldLabel[6]}
+            <Controller
                 name="user.password"
-                type={passwordType}
-                register={register("user.password")}
-                error={errors.user?.password && inputFieldErrors[6]}
-                icon={{
-                    isEnabled: true,
-                    src:
-                        passwordType === "string"
-                            ? "/eyeIconOpen.png"
-                            : "/eyeIconClose.png",
-                }}
-                onClick={togglePasswordTypeHandler}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                    <ReactHookFormInput
+                        label={inputFieldLabel[6]}
+                        name="user.password"
+                        value={value}
+                        onChange={onChange}
+                        type={passwordType}
+                        error={errors.user?.password && inputFieldErrors[6]}
+                        icon={{
+                            isEnabled: true,
+                            src:
+                                passwordType === "string"
+                                    ? "/eyeIconOpen.png"
+                                    : "/eyeIconClose.png",
+                        }}
+                        onClick={togglePasswordTypeHandler}
+                    />
+                )}
             />
-
-            <ReactHookFormInput
-                label={inputFieldLabel[7]}
+            <Controller
                 name="confirmPassword"
-                type={confirmPasswordType}
-                register={register("confirmPassword")}
-                error={errors.confirmPassword && inputFieldErrors[7]}
-                icon={{
-                    isEnabled: true,
-                    src:
-                        confirmPasswordType === "string"
-                            ? "/eyeIconOpen.png"
-                            : "/eyeIconClose.png",
-                }}
-                onClick={toggleConfirmPasswordTypeHandler}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                    <ReactHookFormInput
+                        label={inputFieldLabel[7]}
+                        value={value!}
+                        onChange={onChange}
+                        name="confirmPassword"
+                        type={confirmPasswordType}
+                        error={errors.confirmPassword && inputFieldErrors[7]}
+                        icon={{
+                            isEnabled: true,
+                            src:
+                                confirmPasswordType === "string"
+                                    ? "/eyeIconOpen.png"
+                                    : "/eyeIconClose.png",
+                        }}
+                        onClick={toggleConfirmPasswordTypeHandler}
+                    />
+                )}
             />
 
             <ReactHookFormInput
@@ -335,7 +385,7 @@ const SignUpContent = (props: IProp) => {
                     type="string"
                     IconEnabled={true}
                     register={register("addr.city")}
-                    error={errors.addr?.city}
+                    error={errors.addr?.city?.message}
                     value={getValues("addr.city")}
                     setValue={setValue}
                     options={cityOption}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import PageHeader from "@/components/common/PageHeader";
@@ -38,9 +38,12 @@ const AddNewOrder = () => {
         useState<boolean>(false);
     const { user, mutateUser } = useUser();
     const { addresses, mutateAddresses } = useAddresses({
+        type: "get_by_email",
         username: user?.email,
         status: ["active"],
     });
+
+    console.log(addresses);
 
     const router = useRouter();
     const { t } = useTranslation("common");
@@ -75,6 +78,7 @@ const AddNewOrder = () => {
         handleSubmit,
         setValue,
         getValues,
+        control,
         formState: { errors },
     } = useForm<{
         reference_id: string;
@@ -188,19 +192,33 @@ const AddNewOrder = () => {
                     </p>
                 </div>
                 <div className="flex-type1 gap-x-[10px] mt-[25px]">
-                    <ReactHookFormInput
-                        label={inputFieldLabels[0]}
+                    <Controller
                         name="reference_id"
-                        type="string"
-                        register={register("reference_id")}
-                        error={errors.reference_id}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <ReactHookFormInput
+                                label={inputFieldLabels[0]}
+                                name="reference_id"
+                                value={value}
+                                onChange={onChange}
+                                type="string"
+                                error={errors.reference_id}
+                            />
+                        )}
                     />
-                    <ReactHookFormInput
-                        label={inputFieldLabels[1]}
+                    <Controller
                         name="store_link"
-                        type="string"
-                        register={register("store_link")}
-                        error={errors.store_link}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <ReactHookFormInput
+                                value={value}
+                                onChange={onChange}
+                                label={inputFieldLabels[1]}
+                                name="store_link"
+                                type="string"
+                                error={errors.store_link}
+                            />
+                        )}
                     />
                 </div>
                 <div className="mt-[20px]">

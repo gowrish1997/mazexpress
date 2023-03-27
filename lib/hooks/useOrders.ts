@@ -8,6 +8,7 @@ import { Order } from "@/models/order.model";
 import useSWR from "swr";
 
 interface IProps {
+    type?: string;
     username?: string;
     search?: string;
     page?: number;
@@ -24,7 +25,13 @@ export default function useOrders(props: IProps) {
         mutate: mutateOrders,
         isLoading: ordersIsLoading,
         error: ordersError,
-    } = useSWR<APIResponse<Order>>(`/api/orders` + qs.stringified);
+    } = useSWR<APIResponse<Order>>(
+        props.type == "get_by_email"
+            ? props.username
+                ? `/api/orders` + qs.stringified
+                : null
+            : `/api/orders` + qs.stringified
+    );
 
     return {
         orders: orders,

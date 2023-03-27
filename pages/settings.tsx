@@ -41,14 +41,33 @@ const schema = yup
             .required()
             .typeError("Mobile number is required field"),
 
-        password: yup.string().required("Password is required field"),
+        password: yup.string(),
+        // newPassword: yup
+        //     .string()
+        //     .min(8, "Password must be 8 characters long")
+        //     .matches(/[0-9]/, "Password requires a number")
+        //     .matches(/[a-z]/, "Password requires a lowercase letter")
+        //     .matches(/[A-Z]/, "Password requires an uppercase letter")
+        //     .matches(/[^\w]/, "Password requires a symbol"),
+
         newPassword: yup
             .string()
+
             .min(8, "Password must be 8 characters long")
             .matches(/[0-9]/, "Password requires a number")
             .matches(/[a-z]/, "Password requires a lowercase letter")
             .matches(/[A-Z]/, "Password requires an uppercase letter")
             .matches(/[^\w]/, "Password requires a symbol"),
+        // .string()
+        // .matches(
+        //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        //     {
+        //         excludeEmptyString: true,
+        //         message:
+        //             "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+        //     }
+        // ),
+
         // newPassword: yup
         //     .string()
         //     .matches(
@@ -466,7 +485,7 @@ const Settings = () => {
                                 render={({ field: { onChange, value } }) => (
                                     <ReactSwitch
                                         onChange={onChange}
-                                        checked={value?value:false}
+                                        checked={value ? value : false}
                                         // defaultChecked={value as boolean}
                                         checkedIcon={false}
                                         uncheckedIcon={false}
