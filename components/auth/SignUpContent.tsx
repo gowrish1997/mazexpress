@@ -146,19 +146,20 @@ const SignUpContent = (props: IProp) => {
             console.log(userResult); // id created
 
             // add address
-            const addressResult = await fetchServer(
-                `/api/addresses/${userResult.data[0].email}`,
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        ...data.addr,
-                    }),
-                }
-            );
+            // const addressResult = await fetchServer(
+            //     `/api/addresses/${userResult.data[0].email}`,
+            //     {
+            //         method: "POST",
+            //         headers: { "Content-Type": "application/json" },
+            //         body: JSON.stringify({
+            //             ...data.addr,
+            //         }),
+            //     }
+            // );
 
-            console.log(addressResult.data);
-            if (userResult.ok === true && addressResult.ok === true) {
+            // console.log(addressResult.data);
+            // if (userResult.ok === true && addressResult.ok === true) {
+            if (userResult.ok === true) {
                 // toast
                 createToast({
                     type: "success",
@@ -180,6 +181,7 @@ const SignUpContent = (props: IProp) => {
             }
         } catch (error) {
             if (error instanceof FetchError) {
+                console.log(error)
                 setErrorMsg(error.data.message);
             } else {
                 console.error("An unexpected error happened:", error);
