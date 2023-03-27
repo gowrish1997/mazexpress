@@ -97,6 +97,7 @@ const UserbasePageHeader = (props: IProp) => {
                             }
                             toggle={toggleRemoveAdminConfirmModal}
                             disabled={!props.selectedUser?.length}
+                            users={props.allUsers}
                         />
                     </div>
                 )}

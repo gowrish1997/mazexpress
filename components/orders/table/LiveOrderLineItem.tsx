@@ -24,7 +24,7 @@ interface IProp {
 
 const LiveOrderLineItem = (props: IProp) => {
     const trigger = useRef<any>();
-
+    console.log(props.selectedOrder);
     // const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
     //   user_id: props.row.user.id as string,
     // });
@@ -99,7 +99,7 @@ const LiveOrderLineItem = (props: IProp) => {
 
     const inputCheckedStateHandler = () => {
         const data = props?.selectedOrder?.find((el) => {
-            return el == props.row;
+            return el.id == props.row.id;
         });
         if (data) {
             return true;

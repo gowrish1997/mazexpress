@@ -186,6 +186,7 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                             header="per_page"
                             onChange={props.itemPerPageHandler!}
                             className="h-[38px] px-[10px]"
+                            itemPerPage={props.itemsPerPage}
                             selection={[]}
                         />
                         <FilterOptionDropDown
@@ -197,7 +198,8 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                             option={adminOption}
                             toggle={toggleIntransitChangeStatusConfirmModal}
                             disabled={!props.selectedOrder?.length}
-                            orders={props.selectedOrder as Order[]}
+                            selectedOrders={props.selectedOrder as Order[]}
+                            orders={props.allLiveOrders as Order[]}
                             type={props.content}
                         />
                     </div>

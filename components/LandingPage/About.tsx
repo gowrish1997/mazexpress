@@ -14,7 +14,6 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
     var content: string[] = t("landingPage.about.Content", {
         returnObjects: true,
     });
-    console.log(content);
 
     return (
         <div

@@ -7,12 +7,12 @@ export const selectOrder = (
     value: any,
     type: any,
     setSelectedOrder: any,
-    filteredLiveOrders: any,
-    selectedOrder: any
+    allLiveOrders: Order[] | User[],
+    selectedOrder: Order[] | User[]
 ) => {
     if (type == "selectAllOrder") {
         if (value) {
-            const order = filteredLiveOrders?.map((el: any) => {
+            const order = allLiveOrders?.map((el: any) => {
                 if (el.id) {
                     return el;
                 } else {
@@ -24,17 +24,40 @@ export const selectOrder = (
             setSelectedOrder([]);
         }
     } else {
-        const order = selectedOrder?.find((el: any) => el == value);
+        if (value.id) {
+            const order = (selectedOrder as Order[])?.find((el: Order) => {
+                return el.id == value.id;
+            });
 
-        if (!order) {
-            setSelectedOrder((prev: any) => {
-                return [...(prev ? prev : []), value];
-            });
+            if (!order) {
+                setSelectedOrder((prev: any) => {
+                    return [...(prev ? prev : []), value];
+                });
+            } else {
+                const filteredOrder = (selectedOrder as Order[])?.filter(
+                    (el: any) => {
+                        return el.id != value.id;
+                    }
+                );
+                setSelectedOrder(filteredOrder);
+            }
         } else {
-            const filteredOrder = selectedOrder?.filter((el: any) => {
-                return el !== value;
+            const user = (selectedOrder as User[])?.find((el: any) => {
+                return el.email == value.email;
             });
-            setSelectedOrder(filteredOrder);
+
+            if (!user) {
+                setSelectedOrder((prev: any) => {
+                    return [...(prev ? prev : []), value];
+                });
+            } else {
+                const filteredUser = (selectedOrder as User[])?.filter(
+                    (el: any) => {
+                        return el.email != value.email;
+                    }
+                );
+                setSelectedOrder(filteredUser);
+            }
         }
     }
 };

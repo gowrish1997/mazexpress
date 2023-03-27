@@ -43,6 +43,7 @@ const languageHandler = (type: string, locale: string) => {
 };
 
 const CusotmDropdown = (props: IProp) => {
+    
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;

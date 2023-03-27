@@ -466,7 +466,7 @@ const Settings = () => {
                                 render={({ field: { onChange, value } }) => (
                                     <ReactSwitch
                                         onChange={onChange}
-                                        checked={value}
+                                        checked={value?value:false}
                                         // defaultChecked={value as boolean}
                                         checkedIcon={false}
                                         uncheckedIcon={false}

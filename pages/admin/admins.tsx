@@ -71,7 +71,7 @@ const AdminBase = () => {
     });
 
     const [showAddNewAdminModal, setShowAddNewAdminModal] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<string[]>();
+    const [selectedUser, setSelectedUser] = useState<User[]>();
 
     //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
     const pageCount = Math.ceil((userCount || 0) / itemsPerPage);
@@ -94,7 +94,13 @@ const AdminBase = () => {
 
     const selectUserHandler = (value: string, type: string) => {
         console.log(value);
-        selectOrder(value, type, setSelectedUser, users, selectedUser!);
+        selectOrder(
+            value,
+            type,
+            setSelectedUser,
+            users?.data as User[],
+            selectedUser as User[]
+        );
     };
 
     //   if (error) {

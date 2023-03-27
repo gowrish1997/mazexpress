@@ -70,7 +70,13 @@ const PendingOrders = () => {
     };
 
     const selectOrderHandler = (value: Order, type: string) => {
-        selectOrder(value, type, setSelectedOrder, orders, selectedOrder);
+        selectOrder(
+            value,
+            type,
+            setSelectedOrder,
+            orders?.data as Order[],
+            selectedOrder as Order[]
+        );
     };
 
     if (ordersIsLoading) {
@@ -84,7 +90,7 @@ const PendingOrders = () => {
         <>
             <div>
                 <PendingPageHeader
-                    content="Pending"
+                    content="pending"
                     allLiveOrders={orders?.data as Order[]}
                     selectedOrder={selectedOrder}
                     filterByDate={filterByCreatedDate}
