@@ -43,8 +43,6 @@ const AddNewOrder = () => {
         status: ["active"],
     });
 
-    console.log(addresses);
-
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
@@ -150,6 +148,8 @@ const AddNewOrder = () => {
                     message: "Created order successfully",
                     timeOut: 1000,
                 });
+router.push('/orders')
+
             } else {
                 createToast({
                     type: "error",
@@ -283,6 +283,7 @@ const AddNewOrder = () => {
                     show={showEditUserAddressModal}
                     close={toggleEditUserAddressModal}
                     address={editableAddress!}
+                    allAddresses={addresses}
                 />
             )}
         </>

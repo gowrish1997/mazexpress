@@ -50,7 +50,6 @@ const LiveOrders = () => {
                   ]
                 : statusFilterKey,
     });
-    console.log(orders);
 
     const { locales, locale: activeLocale } = router;
     console.log(router.pathname);

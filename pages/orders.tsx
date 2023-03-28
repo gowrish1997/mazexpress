@@ -58,7 +58,7 @@ const MyOrders = () => {
         page: currentPage,
         date: getDateInDBFormat(createdDateFilterKey as Date),
     });
-
+    console.log(orders);
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;

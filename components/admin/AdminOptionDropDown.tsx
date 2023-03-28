@@ -96,8 +96,6 @@ const AdminOptionDropDown = (props: Iprop) => {
         FileSaver.saveAs(data1, "download" + fileExtension);
     };
 
-    console.log(selectedOrdersStage);
-
     return (
         <div className="relative z-10">
             <button

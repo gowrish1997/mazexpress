@@ -5,15 +5,21 @@ import { useRouter } from "next/router";
 import { i18n } from "next-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldError } from "react-hook-form";
+import fetchJson from "@/lib/fetchServer";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 
 const schema = yup
     .object({
-        user_email: yup.string().required(),
-        user_message: yup.string().required(),
-        user_mobileNumber: yup
+        email: yup.string().required(),
+        message: yup.string().required(),
+        mobile: yup
             .number()
+            .test(
+                "len",
+                "Must be exactly 9 digits",
+                (val) => val?.toString().length === 9
+            )
             .required()
             .typeError("Mobile number is required field"),
     })
@@ -47,9 +53,16 @@ const MazCommunityForm = () => {
     const onSubmit: SubmitHandler<any> = async (data) => {
         console.log(data);
 
-        //   console.log(address);
-
-        // add address
+        try {
+            const result0 = await fetchJson(`/api/contact-form`, {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(data),
+            });
+            console.log(result0);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -66,7 +79,7 @@ const MazCommunityForm = () => {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <Controller
-                        name="user_email"
+                        name="email"
                         control={control}
                         render={({ field: { onChange, value } }) => (
                             <ReactHookFormInput
@@ -74,15 +87,13 @@ const MazCommunityForm = () => {
                                 label={inputFieldLabel[0]}
                                 type="email"
                                 value={value}
-                                error={
-                                    errors.user_email?.message && fieldErrors[0]
-                                }
+                                error={errors.email?.message && fieldErrors[0]}
                                 className="rounded-l-[4px] rounded-r-none"
                             />
                         )}
                     />
                     <Controller
-                        name="user_mobileNumber"
+                        name="mobile"
                         control={control}
                         render={({ field: { onChange, value } }) => (
                             <ReactHookFormInput
@@ -90,9 +101,7 @@ const MazCommunityForm = () => {
                                 label={inputFieldLabel[1]}
                                 type="number"
                                 value={value}
-                                error={
-                                    errors.user_mobileNumber && fieldErrors[1]
-                                }
+                                error={errors.mobile && fieldErrors[1]}
                                 className="rounded-l-[4px] rounded-r-none"
                             />
                         )}
@@ -118,11 +127,11 @@ const MazCommunityForm = () => {
                         >
                             <textarea
                                 className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] resize-none p-[5px]"
-                                {...register("user_message")}
-                                name="user_message"
+                                {...register("message")}
+                                name="message"
                             ></textarea>
                         </div>
-                        {errors.user_message?.message && (
+                        {errors.message?.message && (
                             <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
                                 {fieldErrors[2]}
                             </p>

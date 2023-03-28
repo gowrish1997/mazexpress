@@ -3,36 +3,37 @@ import { Tracking } from "./tracking.model";
 import { User } from "./user.model";
 
 export enum OrderStatus {
-  I = "in-transit",
-  D = "delivered",
-  A = "at-warehouse",
-  P = "pending",
+    I = "in-transit",
+    D = "delivered",
+    A = "at-warehouse",
+    P = "pending",
 }
 
 export interface Order {
-  id: string;
+    id: string;
 
-  maz_id: string;
+    maz_id: string;
 
-  reference_id: string;
+    reference_id: string;
 
-  shipping_amt: number;
+    shipping_amt: number;
 
-  created_on: Date;
+    created_on: Date;
 
-  shipped_on: Date;
+    shipped_on: Date;
 
-  delivered_on: Date;
+    delivered_on: Date;
+    est_delivery: Date;
 
-  received_on: Date;
+    received_on: Date;
 
-  status: string;
+    status: string;
 
-  store_link: string;
+    store_link: string;
 
-  user: User;
+    user: User;
 
-  address: Address;
+    address: Address;
 
-  tracking: Tracking[];
+    tracking: Tracking[];
 }

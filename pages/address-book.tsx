@@ -96,6 +96,7 @@ const AddressBook = () => {
                     show={showEditUserAddressModal}
                     close={toggleEditUserAddressModal}
                     address={editableAddress!}
+                    allAddresses={addresses}
                 />
             )}
         </>

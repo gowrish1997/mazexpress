@@ -31,7 +31,6 @@ import fetchJson from "@/lib/fetchSelf";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import About from "@/components/LandingPage/About";
 import Service from "@/components/LandingPage/Service";
-import Line from "../public/line.png";
 
 const Index = () => {
     const router = useRouter();
@@ -43,7 +42,7 @@ const Index = () => {
     var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
 
     const { user, mutateUser } = useUser();
-    console.log(user);
+
     const trackingSectionRef = useRef<HTMLDivElement>(null);
     const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
     const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -75,7 +74,7 @@ const Index = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ maz_id: e.target.value }),
         });
-        console.log(isValidMazId);
+
         if (isValidMazId) {
             setTrackingId((e.target as HTMLInputElement).value);
             setTrackingIdError(false);
@@ -414,11 +413,11 @@ const Index = () => {
                             </p>
                         )}
                         <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
-                            {t("landingPage.trackOrder.CaptionPart1")}{" "}
-                            <span className="text-[#35C6F4] cursor-pointer ">
+                            {t("landingPage.trackOrder.CaptionPart1")}
+                            {/* <span className="text-[#35C6F4] cursor-pointer ">
                                 {" "}
                                 {t("landingPage.trackOrder.CaptionPart2")}
-                            </span>
+                            </span> */}
                         </p>
                     </div>
                 </div>

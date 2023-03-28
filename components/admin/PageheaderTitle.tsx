@@ -99,7 +99,7 @@ const PageheaderTitle = (props: IProp) => {
                                     if (
                                         props.allLiveOrders?.find(
                                             (x: any) =>
-                                                moment(
+                                            moment(
                                                     x.created_on
                                                 ).format("DD-MM-YYYY") ===
                                                 moment(date).format(

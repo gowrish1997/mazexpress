@@ -19,6 +19,7 @@ interface IProp {
     close: () => void;
     address: Address;
     update: () => void;
+    allAddresses?: Address[];
 }
 
 const schema = yup
@@ -42,6 +43,7 @@ const schema = yup
     .required();
 
 const EditUserAddressModal = (props: IProp) => {
+    console.log(props);
     const [country, setCountry] = useState(props.address.country);
     const { user, mutateUser } = useUser();
     const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
@@ -110,6 +112,7 @@ const EditUserAddressModal = (props: IProp) => {
 
             if (addressResult) {
                 // set default if checked
+
                 if (data.default || addresses?.length == 0) {
                     const userResult = await fetchJson(
                         `/api/users/${user?.email}`,
@@ -118,6 +121,28 @@ const EditUserAddressModal = (props: IProp) => {
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
                                 default_address: props.address.id,
+                            }),
+                        }
+                    );
+                }
+
+                if (
+                    props.address.id == user.default_address &&
+                    props.allAddresses?.length! > 1
+                ) {
+                    const userResult = await fetchJson(
+                        `/api/users/${user?.email}`,
+                        {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                default_address:
+                                    props.address.id ==
+                                    (props.allAddresses?.[0] as Address).id
+                                        ? (props.allAddresses?.[1] as Address)
+                                              .id
+                                        : (props.allAddresses?.[0] as Address)
+                                              .id,
                             }),
                         }
                     );

@@ -1,23 +1,23 @@
 import { User } from "./user.model";
 
 export enum NotificationStatus {
-  DL = "deleted",
-  RD = "read",
-  UN = "unread",
+    DL = "deleted",
+    RD = "read",
+    UN = "unread",
 }
 
 export interface Notification {
-  id: string;
+    id: string;
 
-  content: string;
+    content: string;
 
-  created_on: Date;
+    created_on: Date;
 
-  status: string;
+    status: string;
 
-  read_on: string;
+    read_on: string;
 
-  title: string;
+    title: string;
 
-  users: User[];
+    users: User[];
 }

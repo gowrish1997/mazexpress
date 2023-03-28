@@ -39,7 +39,7 @@ const schema = yup
             .required()
             .typeError("Mobile number is required field"),
 
-        password: yup.string().required("Password is required field"),
+        password: yup.string(),
 
         newPassword: yup
             .string()

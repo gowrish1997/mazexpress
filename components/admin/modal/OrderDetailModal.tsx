@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as yup from "yup";
-import Card from "./Card";
+import Card from "../Card";
 import { Order } from "@/models/order.model";
 
 interface IProp {

@@ -36,7 +36,7 @@ const PackageTrackingModal = (props: IProp) => {
   return (
     <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-50 flex flex-row justify-center items-center">
       <div className="bg-[#FFFFFF] p-[40px] rounded-[10px] ">
-        <TrackingPageView packageStatus={packageStatus} />
+        <TrackingPageView packageStatus={packageStatus} trackingDetail={tracking as Tracking[]} />
         <div className="flex-type1 space-x-[10px] mt-[5px] ">
           <button
             className="box-border w-[120px] h-[42px] border-[1px] border-[#8794AD] rounded-[4px] font-[400] text-[14px] leading-[19px] text-[#030303] text-center "

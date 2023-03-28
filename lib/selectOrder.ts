@@ -157,6 +157,15 @@ export const singleOrderAction = async (
 ) => {
     let sendNotification = true;
     let rowFixed: Order = selectedOrder as Order;
+    let estimateDelivery = rowFixed?.est_delivery
+        ? new Date(rowFixed?.est_delivery)
+        : null;
+    let newDeliveryDate = new Date();
+    console.log(newDeliveryDate);
+    if (status == "at-warehouse") {
+        newDeliveryDate.setDate(newDeliveryDate.getDate() + 7);
+    }
+    console.log(estimateDelivery);
 
     if (execute) {
         try {
@@ -167,6 +176,10 @@ export const singleOrderAction = async (
                     headers: { "Content-type": "application/json" },
                     body: JSON.stringify({
                         status: status,
+                        est_delivery:
+                            status == "at-warehouse"
+                                ? newDeliveryDate
+                                : estimateDelivery,
                     }),
                 }
             );
