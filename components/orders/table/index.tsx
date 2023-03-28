@@ -17,7 +17,7 @@ interface TableProps {
     rows: Array<Order> | Array<User>;
     type: string;
     onSelect?: (e: any, type: string) => void;
-    selectedOrder?: Order[] | string[];
+    selectedOrder?: Order[] | User[];
     mutateOrder?: KeyedMutator<APIResponse<Order>>;
 }
 
@@ -41,7 +41,6 @@ const Table = (props: TableProps) => {
             return "order_table";
         }
     };
-
 
     return (
         <div className="flex-1 relative">
@@ -106,7 +105,7 @@ const Table = (props: TableProps) => {
                                             type={props.type}
                                             onSelect={props.onSelect!}
                                             selectedOrder={
-                                                props.selectedOrder as Order[]
+                                                props.selectedOrder as User[]
                                             }
                                         />
                                     );

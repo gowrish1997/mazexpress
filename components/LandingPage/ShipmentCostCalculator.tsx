@@ -18,8 +18,8 @@ const schema = yup
         city_name: yup.string().required(),
         package_weight: yup
             .number()
-            .required()
-            .typeError("Mobile number is required field"),
+            .required("Package weight is  is required field")
+            .typeError("Package weight is  is required field"),
     })
     .required();
 
@@ -104,7 +104,8 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                             IconEnabled={true}
                             register={register("warehouseAddress_address")}
                             error={
-                                errors.warehouseAddress_address as FieldError
+                                errors.warehouseAddress_address &&
+                                (fieldErrors[0] as string)
                             }
                             options={[
                                 { value: "gowrish", label: "gowrish" },
@@ -121,7 +122,9 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                             type="string"
                             IconEnabled={true}
                             register={register("city_name")}
-                            error={errors.city_name as FieldError}
+                            error={
+                                errors.city_name && (fieldErrors[1] as string)
+                            }
                             options={[
                                 { value: "gowrish", label: "gowrish" },
                                 { value: "gowrish", label: "gowrish" },
@@ -173,14 +176,25 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                             </div>
                         </div>
                         <div className="flex-type1">
-                            <ReactHookFormInput
-                                label={inputField[3].label}
+                            <Controller
                                 name="package_weight"
-                                type="number"
-                                register={register("package_weight")}
-                                error={errors.package_weight as FieldError}
-                                className="rounded-l-[4px] rounded-r-none"
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                    <ReactHookFormInput
+                                        label={inputField[3].label}
+                                        name="package_weight"
+                                        type="number"
+                                        value={value}
+                                        onChange={onChange}
+                                        error={
+                                            errors.package_weight &&
+                                            (fieldErrors[2] as string)
+                                        }
+                                        className="rounded-l-[4px] rounded-r-none"
+                                    />
+                                )}
                             />
+
                             <div
                                 className={`flex justify-center items-center h-[46px] bg-[#525D72]  px-[10px] text-[16px] text-[#FFFFFF] font-[700] leading-[22px] mt-[23px] ${
                                     locale == "en"

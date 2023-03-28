@@ -55,6 +55,7 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                             onChange={props.itemPerPageHandler!}
                             className="h-[38px] px-[10px]"
                             selection={[]}
+                            itemPerPage={props.itemsPerPage}
                         />
                         <FilterOptionDropDown
                             options={warehousesDropDownOptoin}

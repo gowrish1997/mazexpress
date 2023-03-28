@@ -104,7 +104,7 @@
                 "About",
                 "Service"
             ],
-            "Auth": ["Log in", "Sign up"]
+            "Auth": ["Log in", "Sign up", "Log out"]
         },
 
         "welcome": {
@@ -117,9 +117,10 @@
             "Placeholder": "Tracking Number",
             "Error": "Please enter valid maz tracking ID",
             "SubmitButton": "Track Now",
-            "CaptionPart1": "Need help changing your delivery? ",
+            "CaptionPart1": "Track your order using MAZ ID without login",
             "CaptionPart2": "Get Help"
         },
+
         "about": {
             "Title": "About MAZ express",
             "Description": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",
@@ -183,7 +184,7 @@
                 "InputField": ["Email", "Mobile number", "Message"],
                 "Errors": [
                     "Email is a required field",
-                    "Mobile number is a required field",
+                    "Mobile number is required field (Must be exactly 9 digits)",
                     "Message is a required field"
                 ],
 
@@ -408,7 +409,7 @@
                 "Password is required field",
                 "Email is required (Please provide valid email)",
                 "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-                "Mobile number is required field (Must be exactly 10 digits)"
+                "Mobile number is required field (Must be exactly 9 digits)"
             ],
 
             "notification": {

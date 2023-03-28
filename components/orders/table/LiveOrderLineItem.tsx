@@ -10,7 +10,8 @@ import { getDateInStringFormat } from "@/lib/helper";
 import { Tracking } from "@/models/tracking.model";
 import { Order } from "@/models/order.model";
 // import { getUserImageString } from "@/lib/utils";
-import OrderDetailModal from "@/components/admin/OrderDetailModal";
+import OrderDetailModal from "@/components/admin/modal/OrderDetailModal";
+import DeliveryDateChangeModal from "@/components/admin/modal/DeliveryDateChangeModal";
 import useUser from "@/lib/hooks/useUser";
 import { APIResponse } from "@/models/api.model";
 import { KeyedMutator } from "swr";
@@ -36,6 +37,8 @@ const LiveOrderLineItem = (props: IProp) => {
 
     const [packageStatus, setPackageStatus] = useState(0);
     const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
+    const [showdeliveryDateChangeModal, setShowDeliveryDateChangeModal] =
+        useState(false);
 
     useEffect(() => {
         // console.log(tracking);
@@ -48,6 +51,10 @@ const LiveOrderLineItem = (props: IProp) => {
 
     const toggleOrderDetailModal = () => {
         setShowOrderDetailModal((prev) => !prev);
+    };
+
+    const toggleDeliveryDateChangeModal = () => {
+        setShowDeliveryDateChangeModal((prev) => !prev);
     };
 
     const warehouseStatusHandler = () => {
@@ -99,7 +106,7 @@ const LiveOrderLineItem = (props: IProp) => {
 
     const inputCheckedStateHandler = () => {
         const data = props?.selectedOrder?.find((el) => {
-            return el == props.row;
+            return el.id == props.row.id;
         });
         if (data) {
             return true;
@@ -215,7 +222,8 @@ const LiveOrderLineItem = (props: IProp) => {
                                 handler={smartToggleGateHandler}
                                 trigger={trigger}
                                 stage={packageStatus}
-                                click={toggleOrderDetailModal}
+                                orderDetail={toggleOrderDetailModal}
+                                deliveryDetail={toggleDeliveryDateChangeModal}
                                 mutateOrder={props.mutateOrder}
                             />
                         )}
@@ -225,6 +233,12 @@ const LiveOrderLineItem = (props: IProp) => {
             {showOrderDetailModal && (
                 <OrderDetailModal
                     close={toggleOrderDetailModal}
+                    row={props.row}
+                />
+            )}
+            {showdeliveryDateChangeModal && (
+                <DeliveryDateChangeModal
+                    close={toggleDeliveryDateChangeModal}
                     row={props.row}
                 />
             )}

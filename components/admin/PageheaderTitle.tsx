@@ -47,7 +47,7 @@ const PageheaderTitle = (props: IProp) => {
 
     return (
         <div className="flex-type1">
-            <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px]">
+            <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] capitalize">
                 {props.content}
             </p>
             <div className="flex-1 flex flex-row justify-start items-center relative">
@@ -99,7 +99,7 @@ const PageheaderTitle = (props: IProp) => {
                                     if (
                                         props.allLiveOrders?.find(
                                             (x: any) =>
-                                                moment(
+                                            moment(
                                                     x.created_on
                                                 ).format("DD-MM-YYYY") ===
                                                 moment(date).format(

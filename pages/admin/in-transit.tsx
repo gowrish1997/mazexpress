@@ -70,7 +70,13 @@ const Intransit = () => {
 
     const selectOrderHandler = (value: string, type: string) => {
         console.log(value);
-        selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
+        selectOrder(
+            value,
+            type,
+            setSelectedOrder,
+            orders?.data as Order[],
+            selectedOrder!
+        );
     };
 
     if (ordersIsLoading) {
@@ -84,7 +90,7 @@ const Intransit = () => {
         <>
             <div>
                 <InTransitPageHeader
-                    content="In-transit"
+                    content="in-transit"
                     allLiveOrders={orders?.data as Order[]}
                     filterByDate={filterByCreatedDate}
                     selectedOrder={selectedOrder as Order[]}
@@ -113,6 +119,7 @@ const Intransit = () => {
                                 type="in-transit"
                                 onSelect={selectOrderHandler}
                                 selectedOrder={selectedOrder!}
+                                mutateOrder={mutateOrders}
                             />
                         </>
                     )}

@@ -22,8 +22,21 @@ interface IProp {
 
 const schema = yup
     .object({
-        address_1: yup.string().required(),
-        address_2: yup.string().required(),
+        tag: yup.string().required("Tag address is required field"),
+        address_1: yup.string().required("Address line 01 is required field"),
+        address_2: yup.string().required("Address line 02 is required field"),
+        country: yup.string().required("Country is required field"),
+        city: yup.string().required("City/Town is required field"),
+
+        phone: yup
+            .number()
+            .test(
+                "len",
+                "Must be exactly 9 digits",
+                (val) => val?.toString().length === 9
+            )
+            .required()
+            .typeError("Mobile number is required field"),
     })
     .required();
 

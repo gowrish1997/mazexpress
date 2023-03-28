@@ -67,11 +67,12 @@ const ProfilePicPop = (props: IProp) => {
       formData.append("name", fileName);
       formData.append("user", user?.id as string);
       formData.append("image", e.target.files[0], fileName);
+      console.log(formData)
 
-      // console.log(formData.entries());
-      // for (const pair of formData.entries()) {
-      //   console.log(`${pair[0]}, ${pair[1]}`);
-      // }
+      console.log(formData.entries());
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}, ${pair[1]}`);
+      }
 
       axios
         .post(
@@ -103,11 +104,11 @@ const ProfilePicPop = (props: IProp) => {
         });
 
       // send file to api to write
-      // const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
-      //   method: "POST",
-      //   body: formData,
-      // });
-      // console.log(imageUploadResult);
+      const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
+        method: "POST",
+        body: formData,
+      });
+      console.log(imageUploadResult);
     }
   };
 

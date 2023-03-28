@@ -60,9 +60,9 @@ const DeliveredOrders = () => {
         setCreatedDateFilterKey(value);
     };
 
-    const selectOrderHandler = (value: string, type: string) => {
-        selectOrder(value, type, setSelectedOrder, orders, selectedOrder!);
-    };
+    // const selectOrderHandler = (value: string, type: string) => {
+    //     selectOrder(value, type, setSelectedOrder);
+    // };
     if (ordersIsLoading) {
         return <LoadingPage />;
     }
@@ -97,7 +97,7 @@ const DeliveredOrders = () => {
                                 rows={orders?.data as Order[]}
                                 headings={tableHeaders}
                                 type="delivered"
-                                onSelect={selectOrderHandler}
+                                // onSelect={selectOrderHandler}
                             />
                         </>
                     )}

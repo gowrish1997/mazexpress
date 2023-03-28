@@ -20,8 +20,6 @@ const UserSavedAddress = (props: {
     updateDeliveryAddress?: (id: string) => void;
     selectedAddressId?: any;
 }) => {
-    console.log(props);
-
     const { user, mutateUser } = useUser();
 
     const { t } = useTranslation("common");
@@ -36,22 +34,24 @@ const UserSavedAddress = (props: {
         console.log("delete user address");
 
         if (user) {
+            let defaultaddress = user?.default_address;
+
             if (
                 props.address.id === user?.default_address &&
                 props.allAddresses.length > 1
             ) {
-                // console.log("delteing default address");
+                defaultaddress =
+                    props.address.id == (props.allAddresses?.[0] as Address).id
+                        ? (props.allAddresses?.[1] as Address).id
+                        : (props.allAddresses?.[0] as Address).id;
+
                 const updateResponse = await fetchServer(
                     `/api/users/${user?.email}`,
                     {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
-                            default_address:
-                                props.address.id ==
-                                (props.allAddresses?.[0] as Address).id
-                                    ? (props.allAddresses?.[1] as Address).id
-                                    : (props.allAddresses?.[0] as Address).id,
+                            default_address: defaultaddress,
                         }),
                     }
                 );
@@ -64,14 +64,18 @@ const UserSavedAddress = (props: {
                     method: "DELETE",
                 }
             );
-
             props.update();
-
             if (
                 props.type == "add-new-order" &&
-                props.selectedAddressId == props.address.id
+                props.selectedAddressId == props.address.id &&
+                props.allAddresses.length > 1
             ) {
-                console.log();
+                props.updateDeliveryAddress?.(defaultaddress!);
+            } else {
+                props.updateDeliveryAddress?.(props.selectedAddressId);
+            }
+
+            if (props.allAddresses.length == 1) {
                 props.updateDeliveryAddress?.("");
             }
         }

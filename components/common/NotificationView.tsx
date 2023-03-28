@@ -25,11 +25,14 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
         const { t } = useTranslation("");
         const { locale } = router;
         const { user, mutateUser } = useUser();
+        console.log(user);
         const { notifications, notificationsIsLoading, mutateNotifications } =
             useNotifications({
+                type: "get_by_email",
                 username: user?.email,
                 status: ["unread", "read"],
             });
+        console.log(notifications);
 
         const [userNotifications, setUserNotifications] =
             useState<Notification[]>();
@@ -127,7 +130,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                         </div>
                     </div>
                     <div className="space-y-[20px]">
-                        {notifications ? (
+                        {notifications?.length > 0 ? (
                             notifications?.map((data) => {
                                 return (
                                     <EachNotification
@@ -145,7 +148,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                             </div>
                         )}
                     </div>
-                    {notifications ? (
+                    {notifications?.length > 0 ? (
                         <p
                             className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
                             onClick={clearAllNotificatons}

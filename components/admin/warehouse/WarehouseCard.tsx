@@ -8,7 +8,13 @@ import GreenRadioButton from "../../../public/green_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
 
-const WarehouseCard = (props: { address: Warehouse; update: () => void }) => {
+interface IProp {
+    address: Warehouse;
+    update: () => void;
+    edit: (addressId?: string) => void;
+}
+
+const WarehouseCard = (props: IProp) => {
     const wareHouseStatusColorHandler = (status: string) => {
         switch (status) {
             case "closed":
@@ -36,7 +42,7 @@ const WarehouseCard = (props: { address: Warehouse; update: () => void }) => {
     const deleteWarehouseHandler = async () => {
         try {
             const result = await fetchJson(
-                `/api/warehouses?id=${props.address.id}`,
+                `/api/warehouses/${props.address.id}`,
                 {
                     method: "DELETE",
                 }
@@ -80,7 +86,12 @@ const WarehouseCard = (props: { address: Warehouse; update: () => void }) => {
 
             <div className="text-[12px] text-[#35C6F4] font-[500] leading-[17px] flex justify-end flex-1 grow">
                 <div className="space-x-[20px] flex items-end  ">
-                    <button className="hover:font-[600] ">Edit</button>
+                    <button
+                        className="hover:font-[600]"
+                        onClick={() => props.edit(props.address.id)}
+                    >
+                        Edit
+                    </button>
                     <button
                         className="hover:font-[600] "
                         onClick={deleteWarehouseHandler}

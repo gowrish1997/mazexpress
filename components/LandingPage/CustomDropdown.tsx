@@ -6,161 +6,172 @@ import { FieldError } from "react-hook-form";
 import ClickOutside from "../common/ClickOutside";
 
 interface IProp {
-  label: string;
-  name: string;
-  type: string;
-  register?: any;
-  value?: string;
-  IconEnabled: boolean;
-  error?: FieldError;
-  disabled?: boolean;
-  options?: { value: string; label: string }[];
-  placeHolder?: string;
-  setValue?: any;
-  className?: string;
+    label: string;
+    name: string;
+    type: string;
+    register?: any;
+    value?: string;
+    IconEnabled: boolean;
+    error?: FieldError | string;
+    disabled?: boolean;
+    options?: { value: string; label: string }[];
+    placeHolder?: string;
+    setValue?: any;
+    className?: string;
 }
 
 const genderHandler = (type: string, locale: string) => {
-  switch (type) {
-    case "m":
-      return locale == "en" ? "Male" : "ذكر";
-    case "f":
-      return locale == "en" ? "Female" : "أنثى";
-    case "u":
-      return locale == "en" ? "Unknown" : "مجهول";
-    case "o":
-      return locale == "en" ? "Other" : "آخر";
-  }
+    switch (type) {
+        case "m":
+            return locale == "en" ? "Male" : "ذكر";
+        case "f":
+            return locale == "en" ? "Female" : "أنثى";
+        case "u":
+            return locale == "en" ? "Unknown" : "مجهول";
+        case "o":
+            return locale == "en" ? "Other" : "آخر";
+    }
 };
 const languageHandler = (type: string, locale: string) => {
-  // console.log('type, locale', type, locale)
-  switch (type) {
-    case "ar":
-      return locale == "en" ? "Arabic" : "عربي";
-    case "en":
-      return locale == "en" ? "English" : "إنجليزي";
-  }
+    // console.log('type, locale', type, locale)
+    switch (type) {
+        case "ar":
+            return locale == "en" ? "Arabic" : "عربي";
+        case "en":
+            return locale == "en" ? "English" : "إنجليزي";
+    }
 };
 
 const CusotmDropdown = (props: IProp) => {
-  const router = useRouter();
-  const { t } = useTranslation("");
-  const { locale } = router;
+    
+    const router = useRouter();
+    const { t } = useTranslation("");
+    const { locale } = router;
 
-  const trigger = useRef<any>(null);
-  const [showAdminOptionCard, setShowAdminOptionCard] =
-    useState<boolean>(false);
+    const trigger = useRef<any>(null);
+    const [showAdminOptionCard, setShowAdminOptionCard] =
+        useState<boolean>(false);
 
-  const toggleAdminOptionCard = () => {
-    // console.log("dropdown");
-    setShowAdminOptionCard((prev) => !prev);
-  };
-  function smartToggleGateHandler() {
-    setShowAdminOptionCard(false);
-  }
-
-  const dropDownOnChangeHandler = (value: string) => {
-    props.setValue(props.name, value, { shouldValidate: true });
-    setShowAdminOptionCard(false);
-  };
-
-  const dropdownValueHanlder = (label: string, value: string) => {
-    // console.log('label', value);
-    switch (label) {
-      case "Gender":
-        return genderHandler(value, locale!);
-      case "جنس":
-        return genderHandler(value, locale!);
-
-      case "Language":
-        return languageHandler(value, locale!);
-      case "لغة":
-        return languageHandler(value, locale!);
-      default:
-        return value;
+    const toggleAdminOptionCard = () => {
+        // console.log("dropdown");
+        setShowAdminOptionCard((prev) => !prev);
+    };
+    function smartToggleGateHandler() {
+        setShowAdminOptionCard(false);
     }
-  };
 
-  return (
-    <div className={"w-full flex-type6 relative"}>
-      <label
-        htmlFor={props.name}
-        className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] "
-      >
-        {props.label}
-      </label>
-      <div
-        className={
-          "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] lg:h-[55px] xlg:h-[70px] "
+    const dropDownOnChangeHandler = (value: string) => {
+        props.setValue(props.name, value, { shouldValidate: true });
+        setShowAdminOptionCard(false);
+    };
+
+    const dropdownValueHanlder = (label: string, value: string) => {
+        // console.log('label', value);
+        switch (label) {
+            case "Gender":
+                return genderHandler(value, locale!);
+            case "جنس":
+                return genderHandler(value, locale!);
+
+            case "Language":
+                return languageHandler(value, locale!);
+            case "لغة":
+                return languageHandler(value, locale!);
+            default:
+                return value;
         }
-        // style={{ borderColor: props.error ? "#f02849" : "" }}
-        onClick={toggleAdminOptionCard}
-      >
-        <input
-          id={props.name}
-          type={props.type}
-          {...props.register}
-          value={dropdownValueHanlder(props.label, props.value as string)}
-          placeholder={props.placeHolder ? props.placeHolder : ""}
-          className={
-            "w-full h-full px-[5px] rounded-[5px] focus:outline-none capitalize" +
-            " " +
-            props.className
-          }
-          name={props.name}
-          disabled={props.disabled}
-        />
-        {props.IconEnabled ? (
-          <div
-            className={`absolute h-[6px] w-[8px] cursor-pointer  ${
-              locale == "en" ? "right-[8px]" : "left-[8px]"
-            } `}
-          >
-            <Image
-              src="/downwardArrow.png"
-              fill
-              alt="arrow"
-              className="cursor-pointer absolute right-[8px] "
-            />
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
-      {showAdminOptionCard && (
-        <ClickOutside handler={smartToggleGateHandler} trigger={trigger}>
-          <div className="w-full z-[10]  bg-[white] box-border absolute top-[60px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
-            {props.options &&
-              props.options.map((data, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex flex-row justify-start items-center"
-                  >
-                    <button
-                      key={index}
-                      className={
-                        " w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left " +
+    };
+
+    return (
+        <div className={"w-full flex-type6 relative"}>
+            <label
+                htmlFor={props.name}
+                className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] "
+            >
+                {props.label}
+            </label>
+            <div
+                className={
+                    "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] lg:h-[55px] xlg:h-[70px] "
+                }
+                // style={{ borderColor: props.error ? "#f02849" : "" }}
+                onClick={toggleAdminOptionCard}
+            >
+                <input
+                    id={props.name}
+                    type={props.type}
+                    {...props.register}
+                    value={dropdownValueHanlder(
+                        props.label,
+                        props.value as string
+                    )}
+                    placeholder={props.placeHolder ? props.placeHolder : ""}
+                    className={
+                        "w-full h-full px-[5px] rounded-[5px] focus:outline-none capitalize" +
                         " " +
                         props.className
-                      }
-                      onClick={() => dropDownOnChangeHandler(data.value)}
+                    }
+                    name={props.name}
+                    disabled={props.disabled}
+                />
+                {props.IconEnabled ? (
+                    <div
+                        className={`absolute h-[6px] w-[8px] cursor-pointer  ${
+                            locale == "en" ? "right-[8px]" : "left-[8px]"
+                        } `}
                     >
-                      {data.label}
-                    </button>
-                  </div>
-                );
-              })}
-          </div>
-        </ClickOutside>
-      )}
-      {props.error && (
-        <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-          {props.error.message}
-        </p>
-      )}
-    </div>
-  );
+                        <Image
+                            src="/downwardArrow.png"
+                            fill
+                            alt="arrow"
+                            className="cursor-pointer absolute right-[8px] "
+                        />
+                    </div>
+                ) : (
+                    <></>
+                )}
+            </div>
+            {showAdminOptionCard && (
+                <ClickOutside
+                    handler={smartToggleGateHandler}
+                    trigger={trigger}
+                >
+                    <div className="w-full z-[10]  bg-[white] box-border absolute top-[60px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
+                        {props.options &&
+                            props.options.map((data, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className="flex flex-row justify-start items-center"
+                                    >
+                                        <button
+                                            key={index}
+                                            className={
+                                                " w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left " +
+                                                " " +
+                                                props.className
+                                            }
+                                            onClick={() =>
+                                                dropDownOnChangeHandler(
+                                                    data.value
+                                                )
+                                            }
+                                        >
+                                            {data.label}
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                    </div>
+                </ClickOutside>
+            )}
+            {props.error && (
+                <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+                    {props.error as string}
+                </p>
+            )}
+        </div>
+    );
 };
 
 export default CusotmDropdown;
