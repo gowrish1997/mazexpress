@@ -134,7 +134,7 @@ const TotalOrders = () => {
                     </div>
                     {selectedDate && (
                         <span
-                            className="mx-2"
+                            className="mx-2 cursor-pointer "
                             onClick={() => setSelectedDate("")}
                         >
                             x

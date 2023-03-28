@@ -2,6 +2,11 @@ import { QS } from "@/components/common/QS";
 import { APIResponse } from "@/models/api.model";
 import { Notification } from "@/models/notification.model";
 import useSWR from "swr";
+// props.type == "get_by_email"
+// ? props.username
+//     ? `/api/notifications` + qs.stringified
+//     : null
+// :
 
 interface IProps {
     type?: string;
@@ -21,11 +26,7 @@ export default function useNotifications(props: IProps) {
         mutate: mutateNotifications,
         isLoading: notificationsIsLoading,
     } = useSWR<APIResponse<Notification>>(
-        props.type == "get_by_email"
-            ? props.username
-                ? `/api/notifications` + qs.stringified
-                : null
-            : `/api/notifications` + qs.stringified
+        `/api/notifications` + qs.stringified
     );
 
     return {

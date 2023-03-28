@@ -24,7 +24,6 @@ const Topbar = () => {
 
     const { notifications, notificationsIsLoading, mutateNotifications } =
         useNotifications({
-            type: "get_by_email",
             username: user?.email,
             status: ["unread"],
         });

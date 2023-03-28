@@ -28,9 +28,9 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
         console.log(user);
         const { notifications, notificationsIsLoading, mutateNotifications } =
             useNotifications({
-                type: "get_by_email",
+               
                 username: user?.email,
-                status: ["unread", "read"],
+                status: ["read"],
             });
         console.log(notifications);
 
@@ -38,7 +38,9 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             useState<Notification[]>();
 
         const deleteNotification = async (id: string) => {
+            console.log(id)
             try {
+                console.log("inside notificatons")
                 const deletedNotification = await fetchServer(
                     `/api/notifications/${id}`,
                     {

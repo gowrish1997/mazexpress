@@ -143,7 +143,7 @@ const SignUpContent = (props: IProp) => {
                 body: JSON.stringify(data.user),
             });
 
-            console.log(userResult); // id created
+        console.log(userResult); // id created
 
             // add address
             // const addressResult = await fetchServer(
