@@ -19,55 +19,55 @@ export const middleware = async (req: NextRequest) => {
   // console.log(localeCookie);
 
   const res = NextResponse.next();
-  const session = await getIronSession(req, res, sessionOptions);
+  // const session = await getIronSession(req, res, sessionOptions);
 
-  console.log("from middleware", session.user);
+  // console.log("from middleware", session.user);
 
   // console.log(session.user?.[0].lang)
   // add redirect to correct locale here...
 
   // add restrictions to user for admin routes
-  if (session.user !== undefined) {
-    // user is present do not allow login page
-    if (req.nextUrl.pathname.startsWith("/auth")) {
-      return NextResponse.redirect(new URL("/", req.url), {
-        statusText: "Unauthorized.",
-      });
-    }
+  // if (session.user !== undefined) {
+  //   // user is present do not allow login page
+  //   if (req.nextUrl.pathname.startsWith("/auth")) {
+  //     return NextResponse.redirect(new URL("/", req.url), {
+  //       statusText: "Unauthorized.",
+  //     });
+  //   }
 
-    // comment to let user on all routes
-    if (!session.user.is_admin) {
-      if (req.nextUrl.pathname.startsWith("/admin")) {
-        return NextResponse.redirect(new URL("/", req.url), {
-          statusText: "Unauthorized.",
-        });
-      }
-    }
+  //   // comment to let user on all routes
+  //   if (!session.user.is_admin) {
+  //     if (req.nextUrl.pathname.startsWith("/admin")) {
+  //       return NextResponse.redirect(new URL("/", req.url), {
+  //         statusText: "Unauthorized.",
+  //       });
+  //     }
+  //   }
 
-    // comment to let admin on all routes
-    if (session.user.is_admin) {
-      if (!req.nextUrl.pathname.startsWith("/admin")) {
-        return NextResponse.redirect(new URL("/admin", req.url), {
-          statusText: "Unauthorized.",
-        });
-      }
-    }
-  }
+  //   // comment to let admin on all routes
+  //   if (session.user.is_admin) {
+  //     if (!req.nextUrl.pathname.startsWith("/admin")) {
+  //       return NextResponse.redirect(new URL("/admin", req.url), {
+  //         statusText: "Unauthorized.",
+  //       });
+  //     }
+  //   }
+  // }
 
-  // console.log(session.user?.[0].lang)
-  // add redirect to correct locale here...
+  // // console.log(session.user?.[0].lang)
+  // // add redirect to correct locale here...
 
-  // console.log(session.user?.[0].lang)
-  // add restrictions to user for admin routes
+  // // console.log(session.user?.[0].lang)
+  // // add restrictions to user for admin routes
 
-  // demo:
-  if (!session.user) {
-    if (!req.nextUrl.pathname.startsWith("/auth/gate")) {
-      return NextResponse.redirect(new URL("/auth/gate", req.url), {
-        statusText: "Unauthorized.",
-      });
-    }
-  }
+  // // demo:
+  // if (!session.user) {
+  //   if (!req.nextUrl.pathname.startsWith("/auth/gate")) {
+  //     return NextResponse.redirect(new URL("/auth/gate", req.url), {
+  //       statusText: "Unauthorized.",
+  //     });
+  //   }
+  // }
 
   // if (req.nextUrl.locale == "ar") {
   //     if (req.url.includes("admin")) {

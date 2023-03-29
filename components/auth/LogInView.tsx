@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -13,6 +13,7 @@ import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
 import LogInWithMail from "./LogInWithMail";
 import useGoogle from "@/lib/hooks/useGoogle";
+import UserContext from "../context/user.context";
 type Inputs = {
   password: string;
   username: string;
@@ -49,6 +50,7 @@ const LogInComponent = (props: any) => {
   });
 
   const { user, mutateUser } = useUser();
+  const { setUser } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -68,26 +70,26 @@ const LogInComponent = (props: any) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      console.log(response)
+      console.log(response);
 
-      // if (response.data && response.data.length > 0) {
+      if (response.data && response.data.length > 0) {
+        setUser(response.data?.[0]);
+        await mutateUser();
 
-      //   await mutateUser(response.data?.[0], false);
-
-      //   if (response.data?.[0].is_admin) {
-      //     router.push("/admin");
-      //   } else {
-      //     //   console.log("puhsing to / page");
-      //     router.push("/");
-      //   }
-      // } else {
-      //   createToast({
-      //     type: "error",
-      //     message: response.msg,
-      //     title: "Error",
-      //     timeOut: 2000,
-      //   });
-      // }
+        if (response.data?.[0].is_admin) {
+          router.push("/admin");
+        } else {
+          //   console.log("puhsing to / page");
+          router.push("/");
+        }
+      } else {
+        createToast({
+          type: "error",
+          message: response.msg,
+          title: "Error",
+          timeOut: 2000,
+        });
+      }
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);
