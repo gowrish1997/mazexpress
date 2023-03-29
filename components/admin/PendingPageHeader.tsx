@@ -42,7 +42,8 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
                 "at-warehouse",
                 1,
                 "Order arrived at Istanbul warehouse!",
-                "has been received at our Istanbul warehouse and will be shipped soon."
+                "has been received at our Istanbul warehouse and will be shipped soon.",
+                true
             );
             console.log(status);
             if (status) {

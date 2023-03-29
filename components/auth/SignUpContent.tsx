@@ -11,6 +11,9 @@ import { User, UserGender } from "@/models/user.model";
 import fetchServer from "@/lib/fetchServer";
 import { FetchError } from "@/lib/fetchSelf";
 import { Address, City } from "@/models/address.model";
+import axios from "axios";
+import { user_registerBodyContet } from "@/lib/emailContent/bodyContent";
+import { admin_registerBodyContent } from "@/lib/emailContent/bodyContent";
 
 const schema = yup
     .object({
@@ -110,32 +113,53 @@ const SignUpContent = (props: IProp) => {
         resolver: yupResolver(schema),
         mode: "onChange",
         reValidateMode: "onChange",
-        // defaultValues: {
-        //     user: {
-        //         age: "20",
-        //         email: "connor@maz.com",
-        //         first_name: "connor",
-        //         is_admin: false,
-        //         gender: UserGender.UNKNOWN,
-        //         last_name: "ali",
-        //         password: "Test123$",
-        //         phone: 123456789,
-        //     },
-        //     addr: {
-        //         address_1: "، مصراتة",
-        //         address_2: "93FR+Q6J",
-        //         city: City.M,
-        //         country: "Libya",
-        //         phone: 123456789,
-        //         tag: "جزيرة العلم",
-        //     },
-        //     confirmPassword: "Test123$",
-        // },
+        defaultValues: {
+            user: {
+                age: "20",
+                email: "connor@maz.com",
+                first_name: "connor",
+                is_admin: false,
+                gender: UserGender.UNKNOWN,
+                last_name: "ali",
+                password: "Test123$",
+                phone: 123456789,
+            },
+            addr: {
+                address_1: "، مصراتة",
+                address_2: "93FR+Q6J",
+                city: City.M,
+                country: "Libya",
+                phone: 123456789,
+                tag: "جزيرة العلم",
+            },
+            confirmPassword: "Test123$",
+        },
     });
 
     const onSubmit: SubmitHandler<ISignupForm> = async (data) => {
-        console.log(data);
-
+        const toList = [
+            {
+                type: "register",
+                toType: "admin",
+                header: "New User joined ✨",
+                toName: "admin",
+                bodyContent: admin_registerBodyContent(),
+                userName: data.user.first_name + " " + data.user.last_name,
+                userProfile: data.user.avatar_url,
+                userContactNumber: data.user.phone,
+                userEmail: data.user.email,
+            },
+            {
+                type: "register",
+                toType: "user",
+                header: "Welcome to Maz Express",
+                toName: data.user.first_name + " " + data.user.last_name,
+                toMail: data.user.email,
+                bodyContent: user_registerBodyContet(),
+                buttonContent: "Let’s Get Started",
+                redirectLink: "",
+            },
+        ];
         try {
             const userResult = await fetchServer("/api/users", {
                 method: "POST",
@@ -167,7 +191,16 @@ const SignUpContent = (props: IProp) => {
                     message: "Please log in with your new login credentials",
                     timeOut: 3000,
                 });
-
+                axios
+                    .post("/api/emailTemplate", toList)
+                    .then((data) => {
+                        console.log(data.data.body[1].html);
+                        // console.log(data.data.body.html);
+                        // setHtmlCode(data.data.body);
+                    })
+                    .catch((error) => {
+                        console.log("error", error);
+                    });
                 // send to login page with cred
                 props.switch?.(1);
             } else {
@@ -180,12 +213,19 @@ const SignUpContent = (props: IProp) => {
                 });
             }
         } catch (error) {
-            if (error instanceof FetchError) {
-                console.log(error)
-                setErrorMsg(error.data.message);
-            } else {
-                console.error("An unexpected error happened:", error);
-            }
+            // console.log(error.message);
+            createToast({
+                type: "error",
+                title: (error as Error).message as string,
+                message: "Please try with different email",
+                timeOut: 3000,
+            });
+            // if (error instanceof FetchError) {
+            //     console.log(error.data.message);
+            //     setErrorMsg(error.data.message);
+            // } else {
+            //     console.error("An unexpected error happened:");
+            // }
         }
     };
 

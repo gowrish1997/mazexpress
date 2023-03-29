@@ -1,3 +1,4 @@
+import { data } from "@/components/admin/MazStats/StatGraph";
 import { QS } from "@/components/common/QS";
 import { APIResponse } from "@/models/api.model";
 import { User } from "@/models/user.model";

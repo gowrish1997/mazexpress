@@ -10,7 +10,7 @@ const OrderDispatched = () => {
       header: "Your order has dispatched",
       toName: "Alex",
       toMail: "kotarigowrish@gmail.com",
-      bodyContent: user_orderDispatched("1231"),
+      bodyContent: user_orderDispatched("1231",'fsd'),
       buttonContent: "Let’s Get Started",
       redirectLink: "",
     },

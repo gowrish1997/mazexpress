@@ -13,17 +13,21 @@
     
 }
  function user_orderPlaced(order_id:string) {
-    return [`Hi Angela! Thanks for ordering with us. We’ve received your order ${order_id} We will notify you when arrived at warehouse .`];
+    return [`Hi Angela! Thanks for ordering with us. We’ve received your order with reference id ${order_id} We will notify you when arrived at warehouse .`];
 }
 
- function admin_orderPlaced(order_id:string,product:string,quantity:string,amount:string,warehouse:string) {
-    return ["New order has been placed by a user and needs to be shipped to the warehouse address. ","he details of the order are as follows:",`Order Number:${order_id} Product Name: ${product} Quantity: ${quantity} Total Amount: ${amount}`,`The user has requested that the order be shipped to the following warehouse address:`,`${warehouse}`,`Please ensure that the order is shipped to the correct address and that it arrives safely and on time. If you have any questions or concerns regarding this order, please do not hesitate to contact user.`];
+//  function admin_orderPlaced(order_id:string,product:string,quantity:string,amount:string,warehouse:string) {
+//     return ["New order has been placed by a user and needs to be shipped to the warehouse address. ","he details of the order are as follows:",`Order Number:${order_id} Product Name: ${product} Quantity: ${quantity} Total Amount: ${amount}`,`The user has requested that the order be shipped to the following warehouse address:`,`${warehouse}`,`Please ensure that the order is shipped to the correct address and that it arrives safely and on time. If you have any questions or concerns regarding this order, please do not hesitate to contact user.`];
+// }
+ function admin_orderPlaced(product:string,store:string,quantity:string,warehouse:string) {
+    return ["New order has been placed by a user and needs to be shipped to the warehouse address. ","he details of the order are as follows:",` order reference ID: ${product} store link:${store} Quantity: ${quantity} `,`The user has requested that the order be shipped to the following warehouse address:`,`${warehouse}`,`Please ensure that the order is shipped to the correct address and that it arrives safely and on time. If you have any questions or concerns regarding this order, please do not hesitate to contact user.`];
 }
 
 
 
- function user_orderDispatched(order_id:string) {
-    return [`Thanks for ordering with us. We're happy to inform you that your order No. ${order_id} has been dispatched from our warehouse. You can track your order using the Maz ID provided below:`,`Maz ID: ${order_id}`];
+
+ function user_orderDispatched(order_id:string,maz_id:string) {
+    return [`Thanks for ordering with us. We're happy to inform you that your order No. ${order_id} has been dispatched from our warehouse. You can track your order using the Maz ID provided below:`,`Maz ID: ${maz_id}`];
 }
 
 function user_orderDelivered(order_id:string) {

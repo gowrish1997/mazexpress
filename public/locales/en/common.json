@@ -417,8 +417,8 @@
                 "Description": "Enable or disable notifications for your account"
             },
             "LanguageOption": [
-                { "value": "ar", "label": "Arabic" },
-                { "value": "en", "label": "English" }
+                { "value": "arabic", "label": "Arabic" },
+                { "value": "english", "label": "English" }
             ],
             "ProfilePicPopContent": ["ProfilePhoto", "Edit", "Remove"],
             "SubmitButton": "Update setttings"

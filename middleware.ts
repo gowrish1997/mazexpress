@@ -14,6 +14,7 @@ import { controllers } from "chart.js";
 import { constants } from "buffer";
 
 export const middleware = async (req: NextRequest) => {
+    console.log('aim middleware')
     // const localeCookie = req.cookies.get("NEXT_LOCALE");
     // console.log(localeCookie);
 
@@ -34,6 +35,7 @@ export const middleware = async (req: NextRequest) => {
                 statusText: "Unauthorized.",
             });
         }
+        console.log("this is middleware",session.user);
 
         // comment to let user on all routes
         if (!session.user.is_admin) {
@@ -45,13 +47,13 @@ export const middleware = async (req: NextRequest) => {
         }
 
         // comment to let admin on all routes
-        // if (session.user.is_admin) {
-        //     if (!req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/admin", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
+        if (session.user.is_admin) {
+            if (!req.nextUrl.pathname.startsWith("/admin")) {
+                return NextResponse.redirect(new URL("/admin", req.url), {
+                    statusText: "Unauthorized.",
+                });
+            }
+        }
     }
 
     // console.log(session.user?.[0].lang)

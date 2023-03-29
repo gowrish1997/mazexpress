@@ -7,6 +7,9 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
+import fetchJson from "@/lib/fetchServer";
+import { createToast } from "@/lib/toasts";
+import { FetchError } from "@/lib/fetchSelf";
 
 type Inputs = {
     password: string;
@@ -61,7 +64,58 @@ const ResetPasswordView = (props: any) => {
         returnObjects: true,
     });
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
+            const userResult = await fetchJson(`/api/users/test@testco.com`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password: data.password }),
+            });
+
+            console.log(userResult); // id created
+
+            // add address
+            // const addressResult = await fetchServer(
+            //     `/api/addresses/${userResult.data[0].email}`,
+            //     {
+            //         method: "POST",
+            //         headers: { "Content-Type": "application/json" },
+            //         body: JSON.stringify({
+            //             ...data.addr,
+            //         }),
+            //     }
+            // );
+
+            // console.log(addressResult.data);
+            // if (userResult.ok === true && addressResult.ok === true) {
+            if (userResult.ok === true) {
+                // toast
+                createToast({
+                    type: "success",
+                    title: "New user created.",
+                    message: "Please log in with your new login credentials",
+                    timeOut: 3000,
+                });
+
+                // send to login page with cred
+                props.switch?.(1);
+            } else {
+                // toast
+                createToast({
+                    type: "error",
+                    title: "Sign up failed.",
+                    message: "Please try again.",
+                    timeOut: 3000,
+                });
+            }
+        } catch (error) {
+            if (error instanceof FetchError) {
+                console.log(error);
+            } else {
+                console.error("An unexpected error happened:", error);
+            }
+        }
+    };
 
     const [passwordType, setPasswordType] = useState("password");
     const [confirmPasswordType, setConfirmPasswordType] = useState("password");
@@ -122,10 +176,10 @@ const ResetPasswordView = (props: any) => {
                         isEnabled: true,
                         src:
                             passwordType === "password"
-                                ? "/eyeIconOpen.png"
-                                : "/eyeIconClose.png",
-                        onClick: togglePasswordTypeHandler,
+                                ? "/eyeIconClose.png"
+                                : "/eyeIconOpen.png",
                     }}
+                    onClick={togglePasswordTypeHandler}
                 />
 
                 <ReactHookFormInput
@@ -133,15 +187,17 @@ const ResetPasswordView = (props: any) => {
                     name="confirmPassword"
                     type={confirmPasswordType}
                     register={register("confirmPassword")}
-                    error={errors.confirmPassword?.message && inputFieldErrors[1]}
+                    error={
+                        errors.confirmPassword?.message && inputFieldErrors[1]
+                    }
                     icon={{
                         isEnabled: true,
                         src:
-                            passwordType === "password"
-                                ? "/eyeIconOpen.png"
-                                : "/eyeIconClose.png",
-                        onClick: toggleConfirmPasswordTypeHandler,
+                            confirmPasswordType === "password"
+                                ? "/eyeIconClose.png"
+                                : "/eyeIconOpen.png",
                     }}
+                    onClick={toggleConfirmPasswordTypeHandler}
                 />
 
                 <button

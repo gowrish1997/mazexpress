@@ -55,7 +55,7 @@ const schema = yup
             .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                 {
-                    excludeEmptyString: false,
+                    excludeEmptyString: true,
                     message:
                         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
                 }
@@ -71,7 +71,7 @@ const schema = yup
         //                 "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
         //         }
         //     ),
-        avatar_url: yup.string(),
+        // avatar_url: yup.string(),
         is_notifications_enabled: yup.boolean().required(),
         lang: yup.string().required(),
     })
@@ -82,6 +82,7 @@ const Settings = () => {
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
+    console.log(user)
 
     const [passwordCheck, setPasswordCheck] = useState(false);
 
@@ -196,69 +197,72 @@ const Settings = () => {
         > & { newPassword: string }
     > = async (data) => {
         console.log("settings submission", data);
-        // try {
-        //     // console.log(result);
-        //     if (!passwordCheck && getValues("password").length > 0) {
-        //         createToast({
-        //             type: "error",
-        //             title: locale == "en" ? "An error occurred" : "حدث خطأ",
-        //             message:
-        //                 locale == "en"
-        //                     ? "Old password is wrong"
-        //                     : "كلمة المرور القديمة خاطئة",
-        //             timeOut: 3000,
-        //         });
-        //         return;
-        //     }
-        //     // update user here
-        //     let sendObj: Pick<
-        //         User,
-        //         | "first_name"
-        //         | "last_name"
-        //         | "email"
-        //         | "phone"
-        //         | "lang"
-        //         | "password"
-        //         | "avatar_url"
-        //         | "is_notifications_enabled"
-        //     > & { newPassword?: string } = {
-        //         ...data,
-        //         password: data.newPassword,
-        //     };
-        //     delete sendObj.newPassword;
+        try {
+            // console.log(result);
+            if (!passwordCheck && getValues("password").length > 0) {
+                createToast({
+                    type: "error",
+                    title: locale == "en" ? "An error occurred" : "حدث خطأ",
+                    message:
+                        locale == "en"
+                            ? "Old password is wrong"
+                            : "كلمة المرور القديمة خاطئة",
+                    timeOut: 3000,
+                });
+                return;
+            }
 
-        //     // console.log("sendObj", sendObj);
+            console.log("crossed if block");
+            // update user here
+            let sendObj: Pick<
+                User,
+                | "first_name"
+                | "last_name"
+                | "email"
+                | "phone"
+                | "lang"
+                | "password"
+                | "avatar_url"
+                | "is_notifications_enabled"
+            > & { newPassword?: string } = {
+                ...data,
+                password: data.newPassword,
+            };
+            delete sendObj.newPassword;
 
-        //     const updateRes = await fetchJson(`/api/users/${user?.email}`, {
-        //         method: "PUT",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify(sendObj),
-        //     });
-        //     // console.log(updateRes)
+            // console.log("sendObj", sendObj);
 
-        //     if (updateRes.ok === true) {
-        //         createToast({
-        //             type: "success",
-        //             title: locale == "en" ? "Success" : "نجاح",
-        //             message: locale == "en" ? "Updated user." : "مستخدم محدث.",
-        //         });
-        //     } else {
-        //         createToast({
-        //             type: "error",
-        //             title: "An error occurred",
-        //             message: "Check console for more info.",
-        //             timeOut: 3000,
-        //         });
-        //     }
-        // } catch (err) {
-        //     console.error(err);
-        //     createToast({
-        //         type: "error",
-        //         title: "An error occurred",
-        //         message: "Check console for more info.",
-        //         timeOut: 3000,
-        //     });
-        // }
+            const updateRes = await fetchJson(`/api/users/${user?.email}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(sendObj),
+            });
+            // console.log(updateRes)
+
+            if (updateRes.ok === true) {
+                createToast({
+                    type: "success",
+                    title: locale == "en" ? "Success" : "نجاح",
+                    message: locale == "en" ? "Updated user." : "مستخدم محدث.",
+                });
+                mutateUser();
+            } else {
+                createToast({
+                    type: "error",
+                    title: "An error occurred",
+                    message: "Check console for more info.",
+                    timeOut: 3000,
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            createToast({
+                type: "error",
+                title: "An error occurred",
+                message: "Check console for more info.",
+                timeOut: 3000,
+            });
+        }
     };
 
     const updatePasswordChecker = async (e: string) => {
@@ -486,7 +490,6 @@ const Settings = () => {
                                         value={value}
                                         onChange={onChange}
                                         type="number"
-                                        register={register("phone")}
                                         error={
                                             errors.phone?.message &&
                                             fieldErrors[5]

@@ -26,8 +26,6 @@ const StatLineItem = (props: IProp) => {
         username: props.row.user.email,
     });
 
-    console.log(users);
-    const { user, mutateUser } = useUser();
     const { tracking, mutateTracking, trackingIsLoading } = useTracking({
         maz_id: props.row.maz_id,
     });
@@ -84,12 +82,12 @@ const StatLineItem = (props: IProp) => {
     return (
         <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
             <td
-                className={`flex flex-row justify-start items-center capitalize`}
+                className={`flex flex-row justify-start items-center`}
             >
                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
                     <Image
                         src={
-                            (users?.data?.[0] as User)?.avatar_url ||
+                            props.row.user?.avatar_url ||
                             "/user-images/default_user.png"
                         }
                         fill
@@ -99,14 +97,14 @@ const StatLineItem = (props: IProp) => {
                 </div>
 
                 <div className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
-                    <p className=" text-[12px] text-[#18181B] font-[800] leading-[22px] ">
-                        {(users?.data?.[0] as User)?.first_name +
+                    <p className=" text-[12px] text-[#18181B] font-[800] leading-[22px] capitalize ">
+                        {props.row.user?.first_name +
                             " " +
-                            (users?.data?.[0] as User)?.last_name}
+                            props.row.user?.last_name}
                     </p>
                     <p className="text-[12px] text-[#71717A] font-[400] leading-[22px] ">
                         {" "}
-                        {(users?.data?.[0] as User)?.email}
+                        {props.row.user?.email}
                     </p>
                 </div>
             </td>

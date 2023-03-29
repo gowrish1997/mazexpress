@@ -52,7 +52,7 @@ const PageheaderTitle = (props: IProp) => {
             </p>
             <div className="flex-1 flex flex-row justify-start items-center relative">
                 <div
-                    className="flex-type1 border-[1px] border-[#BBC2CF] rounded-[4px] ml-[10px] py-[7px] px-[10px] space-x-[10px] cursor-pointer "
+                    className="flex-type1 border-[1px] border-[#BBC2CF] rounded-[4px] ml-[10px] py-[7px] px-[10px] gap-x-[10px] cursor-pointer "
                     onClick={toggleCalender}
                     ref={trigger}
                 >
