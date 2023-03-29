@@ -27,6 +27,8 @@ export interface User {
 
   created_on: Date;
 
+  updated_on: Date;
+
   first_name: string;
 
   last_name: string;
