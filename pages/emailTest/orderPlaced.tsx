@@ -9,7 +9,7 @@ const OrderPlaced = () => {
             toType: "admin",
             header: "New order placed ✨",
             toName: "admin",
-            bodyContent: admin_orderPlaced("123234","cricketbat","2","2000","istanbul"),
+            bodyContent: admin_orderPlaced("123234","2","2000","istanbul"),
             userName: "gowrish",
             userProfile: "",
             userContactNumber: "8310623228",
