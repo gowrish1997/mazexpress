@@ -165,7 +165,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 4,
                                 "Order out for delivery!",
                                 "is out for delivery and will reach you soon.",
-                                false
+                                true
                             );
 
                             if (result0_3) {

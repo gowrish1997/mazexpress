@@ -19,6 +19,11 @@ import { useRouter } from "next/router";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import {
+    user_orderPlaced,
+    admin_orderPlaced,
+} from "@/lib/emailContent/bodyContent";
+import axios from "axios";
 
 const schema = yup
     .object({
@@ -128,6 +133,35 @@ const AddNewOrder = () => {
         address_id: string | null | undefined;
     }> = async (data) => {
         console.log(data);
+        const toList = [
+            {
+                type: "ordered",
+                toType: "admin",
+                header: "New order placed ✨",
+                toName: "admin",
+                bodyContent: admin_orderPlaced(
+                    data.reference_id!,
+                    data.store_link!,
+                    "1",
+
+                    "istanbul"
+                ),
+                userName: user?.first_name + " " + user?.last_name,
+                userProfile: user?.avatar_url,
+                userContactNumber: user?.phone,
+                userEmail: user?.email,
+            },
+            {
+                type: "ordered",
+                toType: "user",
+                header: "Thank you for the order!",
+                toName: user?.first_name + " " + user?.last_name,
+                toMail: user?.email,
+                bodyContent: user_orderPlaced(data.reference_id!),
+                buttonContent: "Let’s Get Started",
+                redirectLink: "",
+            },
+        ];
         try {
             let orderObj = {
                 username: user?.email,
@@ -148,8 +182,17 @@ const AddNewOrder = () => {
                     message: "Created order successfully",
                     timeOut: 1000,
                 });
-router.push('/orders')
-
+                axios
+                    .post("/api/emailTemplate", toList)
+                    .then((data) => {
+                        console.log(data.data.body[0].html);
+                        // console.log(data.data.body.html);
+                        // setHtmlCode(data.data.body);
+                    })
+                    .catch((error) => {
+                        console.log("error", error);
+                    });
+                router.push("/orders");
             } else {
                 createToast({
                     type: "error",

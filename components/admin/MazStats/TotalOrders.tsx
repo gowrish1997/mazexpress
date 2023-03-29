@@ -28,7 +28,6 @@ const options = [
 ];
 
 const TotalOrders = () => {
-    console.log("totalorders");
     const [statusSelection, setStatusSelection] = useState<(string | number)[]>(
         []
     );

@@ -100,7 +100,7 @@ const PageHeader = (props: IProp) => {
 
             {((props.allLiveOrders && props.allLiveOrders.length > 0) ||
                 props.isFilterPresent) && (
-                <div className="flex-type1 space-x-[10px]">
+                <div className="flex-type1 gap-x-[10px]">
                     <MazStatsDropddown
                         options={perPageOptinsList()}
                         header="per_page"
@@ -109,7 +109,7 @@ const PageHeader = (props: IProp) => {
                         className="h-[38px] px-[10px]"
                         selection={[]}
                     />
-                    <div className="relative flex-type1 space-x-[10px]">
+                    <div className="relative flex-type1 gap-x-[10px]">
                         <div
                             className="flex-type1 border-[1px] border-[#BBC2CF] rounded-[4px] ml-[10px] py-[7px] px-[10px] space-x-[10px] cursor-pointer "
                             onClick={toggleCalender}

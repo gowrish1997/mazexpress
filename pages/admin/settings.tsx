@@ -43,12 +43,15 @@ const schema = yup
 
         newPassword: yup
             .string()
-            .min(8, "Password must be 8 characters long")
-            .matches(/[0-9]/, "Password requires a number")
-            .matches(/[a-z]/, "Password requires a lowercase letter")
-            .matches(/[A-Z]/, "Password requires an uppercase letter")
-            .matches(/[^\w]/, "Password requires a symbol"),
-        avatar_url: yup.string(),
+            .matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                {
+                    excludeEmptyString:true,
+                    message:
+                        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+                }
+            ),
+        // avatar_url: yup.string(),
         is_notifications_enabled: yup.boolean().required(),
         lang: yup.string().required(),
     })
@@ -149,14 +152,16 @@ const Settings = () => {
         // > & { newPassword: string } ;
         // // Object.assign(picked, data)
 
-        // console.log("picked", picked);
         try {
             // console.log(result);
-            if (!passwordCheck) {
+            if (!passwordCheck && getValues("password").length > 0) {
                 createToast({
                     type: "error",
-                    title: "An error occurred",
-                    message: "Old password is wrong",
+                    title: locale == "en" ? "An error occurred" : "حدث خطأ",
+                    message:
+                        locale == "en"
+                            ? "Old password is wrong"
+                            : "كلمة المرور القديمة خاطئة",
                     timeOut: 3000,
                 });
                 return;
@@ -212,10 +217,10 @@ const Settings = () => {
     };
 
     const updatePasswordChecker = async (
-        e: React.ChangeEvent<HTMLInputElement>
+        e: string
     ) => {
         // console.log(e.target.value);
-        const reee = await checkPassword(e.target.value, user?.email!);
+        const reee = await checkPassword(e, user?.email!);
         // console.log(reee);
         if (reee) setPasswordCheck(true);
         else setPasswordCheck(false);
@@ -334,10 +339,10 @@ const Settings = () => {
                                     isEnabled: true,
                                     src:
                                         passwordType === "password"
-                                            ? "/eyeIconOpen.png"
-                                            : "/eyeIconClose.png",
-                                    onClick: togglePasswordTypeHandler,
+                                            ? "/eyeIconClose.png"
+                                            : "/eyeIconOpen.png",
                                 }}
+                                onClick={togglePasswordTypeHandler}
                                 onChange={updatePasswordChecker}
                                 // disabled={true}
                                 // autoComplete="off"
@@ -360,7 +365,7 @@ const Settings = () => {
                                 </div>
                             )}
                         </div>
-                        <div className="flex-type1 w-full space-x-[20px]">
+                        <div className="flex flex-row justify-start items-start w-full space-x-[20px]">
                             <ReactHookFormInput
                                 label="Email"
                                 name="email"
@@ -378,11 +383,11 @@ const Settings = () => {
                                 icon={{
                                     isEnabled: true,
                                     src:
-                                        passwordType === "password"
-                                            ? "/eyeIconOpen.png"
-                                            : "/eyeIconClose.png",
-                                    onClick: toggleNewPasswordTypeHandler,
+                                        newPasswordType === "password"
+                                            ? "/eyeIconClose.png"
+                                            : "/eyeIconOpen.png",
                                 }}
+                                onClick={toggleNewPasswordTypeHandler}
                                 autoComplete="new-password"
                             />
                         </div>

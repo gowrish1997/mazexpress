@@ -356,7 +356,7 @@ const Index = () => {
                                 <LanguageSwitcher />
                             </div>
                         ) : (
-                            <div className="space-x-[20px]">
+                            <div className="flex flexx-row justify-start items-center gap-x-[20px]">
                                 <Link href={"/auth/gate?mode=0"}>
                                     {auth[1]}
                                 </Link>

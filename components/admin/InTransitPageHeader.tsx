@@ -48,7 +48,8 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                         "in-transit",
                         3,
                         "Order received at Libya warehouse!",
-                        "received at Libya warehouse!"
+                        "received at Libya warehouse!",
+                        false
                     );
                     console.log(status1);
                     if (status1) {
@@ -80,10 +81,11 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                 try {
                     const status2 = await bulkActionHandler(
                         props.selectedOrder as Order[],
-                        "in-transit",
+                        "out-for-delivery",
                         4,
                         " Order out for delivery",
-                        "has been out for delivery"
+                        "has been out for delivery",
+                        true
                     );
                     if (status2) {
                         createToast({
@@ -118,7 +120,8 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                         "delivered",
                         5,
                         "order delivered",
-                        "has delivered "
+                        "has delivered ",
+                        true
                     );
                     if (status3) {
                         createToast({

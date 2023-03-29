@@ -37,7 +37,8 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                 "in-transit",
                 2,
                 "Order left Istanbul warehouse!",
-                "has left our Istanbul warehouse and will be reach Libya soon."
+                "has left our Istanbul warehouse and will be reach Libya soon.",
+                true,
             );
             console.log(status);
             if (status) {

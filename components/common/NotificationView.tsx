@@ -25,30 +25,28 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
         const { t } = useTranslation("");
         const { locale } = router;
         const { user, mutateUser } = useUser();
-        console.log(user);
+
         const { notifications, notificationsIsLoading, mutateNotifications } =
             useNotifications({
-               
                 username: user?.email,
                 status: ["read"],
             });
-        console.log(notifications);
 
         const [userNotifications, setUserNotifications] =
             useState<Notification[]>();
 
         const deleteNotification = async (id: string) => {
-            console.log(id)
+            console.log(id);
             try {
-                console.log("inside notificatons")
+                console.log("inside notificatons");
                 const deletedNotification = await fetchServer(
-                    `/api/notifications/${id}`,
+                    `/api/notifications/id/${id}`,
                     {
-                        method: "PUT",
+                        method: "DELETE",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            status: "deleted",
-                        }),
+                        // body: JSON.stringify({
+                        //     status: "deleted",
+                        // }),
                     }
                 );
                 if (deletedNotification) {
@@ -68,13 +66,13 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             try {
                 for (let i = 0; i < notifications.length; i++) {
                     const deletedNotification = await fetchServer(
-                        `/api/notifications/${notifications[i].id}`,
+                        `/api/notifications/id/${notifications[i].id}`,
                         {
-                            method: "PUT",
+                            method: "DELETE",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                status: "deleted",
-                            }),
+                            // body: JSON.stringify({
+                            //     status: "deleted",
+                            // }),
                         }
                     );
                     if (deletedNotification) {

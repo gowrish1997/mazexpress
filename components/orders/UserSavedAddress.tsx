@@ -58,7 +58,7 @@ const UserSavedAddress = (props: {
                 mutateUser();
             }
             const result = await fetchServer(
-                `/api/addresses/${props.address.id}`,
+                `/api/addresses/id/${props.address.id}`,
 
                 {
                     method: "DELETE",
