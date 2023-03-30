@@ -3,17 +3,19 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getDateInStringFormat } from "@/lib/helper";
-import useOrders from "@/lib/hooks/useOrders";
-import { User } from "@/models/user.model";
-import { Order } from "@/models/order.model";
+
 import AdminOptionModal from "@/components/admin/modal/AdminOptionModal";
 import useUser from "@/lib/hooks/useUser";
+import { User } from "@/models/user.model";
+import { APIResponse } from "@/models/api.model";
+import { KeyedMutator } from "swr";
 
 interface IProp {
     row: User;
     type: string;
     onSelect: (e: any, type: string) => void;
     selectedOrder?: User[];
+    mutateUser?: KeyedMutator<APIResponse<User>>;
 }
 
 const AdminLineItem = (props: IProp) => {
@@ -140,6 +142,7 @@ const AdminLineItem = (props: IProp) => {
                             row={props.row}
                             handler={smartToggleGateHandler}
                             trigger={trigger}
+                            mutateUser={props.mutateUser!}
                             // stage={packageStatus}
                         />
                     )}

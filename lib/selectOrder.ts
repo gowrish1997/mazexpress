@@ -75,6 +75,15 @@ export const getUserIdList = (order: any) => {
     return userListString;
 };
 
+export const getUserEmail = (user: any) => {
+    const userEmailList = user?.map((data: any) => {
+        return data?.email;
+    });
+
+    let userEmailListString = userEmailList?.toString();
+    return userEmailListString;
+};
+
 export const bulkActionHandler = async (
     selectedOrder: Order[],
     status: string,

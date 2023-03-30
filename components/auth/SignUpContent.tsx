@@ -72,7 +72,7 @@ const SignUpContent = (props: IProp) => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
-
+    console.log(props);
     interface ISignupForm {
         user: User;
         addr: Address;
@@ -113,30 +113,20 @@ const SignUpContent = (props: IProp) => {
         resolver: yupResolver(schema),
         mode: "onChange",
         reValidateMode: "onChange",
-        defaultValues: {
-            user: {
-                age: "20",
-                email: "connor@maz.com",
-                first_name: "connor",
-                is_admin: false,
-                gender: UserGender.UNKNOWN,
-                last_name: "ali",
-                password: "Test123$",
-                phone: 123456789,
-            },
-            addr: {
-                address_1: "، مصراتة",
-                address_2: "93FR+Q6J",
-                city: City.M,
-                country: "Libya",
-                phone: 123456789,
-                tag: "جزيرة العلم",
-            },
-            confirmPassword: "Test123$",
-        },
+        // defaultValues: {
+        //     user: {
+        //         is_admin: true ? true : false,
+        //         first_name: "trikal",
+        //     },
+        // },
     });
 
     const onSubmit: SubmitHandler<ISignupForm> = async (data) => {
+        console.log(data);
+        if (props.type == "admin") {
+            data.user.is_admin = true;
+        }
+        console.log(data);
         const toList = [
             {
                 type: "register",
@@ -212,6 +202,7 @@ const SignUpContent = (props: IProp) => {
                     timeOut: 3000,
                 });
             }
+            props.close?.();
         } catch (error) {
             // console.log(error.message);
             createToast({

@@ -236,7 +236,8 @@
             "Admin Base",
             "Notification Panel",
             "Settings",
-            "Help center"
+            "Help center",
+            "Enquiry Base"
         ],
         "Logout": "Logout",
         "logoutConfirmModal": {

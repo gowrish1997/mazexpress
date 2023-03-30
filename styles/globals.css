@@ -625,6 +625,75 @@ input::-webkit-inner-spin-button {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.enquiry_base_table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    word-wrap: break-word;
+   }
+   .enquiry_base_table tr {
+    width: 100%;
+   }
+   .enquiry_base_table td,
+   .enquiry_base_table th {
+    box-sizing: border-box;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    padding-left: 5px;
+   }
+   .enquiry_base_table td {
+    font-size: 14px;
+    color: #525d72;
+   
+    font-weight: 500;
+    line-height: 21px;
+   }
+   .enquiry_base_table th {
+    font-size: 14px;
+    color: #2b2b2b;
+   
+    font-weight: 500;
+    line-height: 21px;
+   }
+   
+   .enquiry_base_table .th1,
+   .enquiry_base_table .td1 {
+    width: 22%;
+   }
+   .enquiry_base_table .th2,
+   .enquiry_base_table .td2 {
+    width: 15%;
+   }
+   .enquiry_base_table .th3,
+   .enquiry_base_table .td3 {
+    width: 13%;
+   }
+   
+   /* .enquiry_base_table .th2 {
+    width: 19%;
+   } */
+   
+   .enquiry_base_table .th4,
+   .enquiry_base_table .td4 {
+    width: 48.5%;
+   }
+   
+   .enquiry_base_table .th1,
+   .enquiry_base_table .th2,
+   .enquiry_base_table .td1,
+   .enquiry_base_table .td2,
+   .enquiry_base_table .th3,
+   .enquiry_base_table .td3,
+   .enquiry_base_table .th4,
+   .enquiry_base_table .td4 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+   }
+   
+
 .indexedStep {
     width: 30px;
     height: 30px;

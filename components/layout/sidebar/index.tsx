@@ -125,6 +125,12 @@ const adminSidebarPanel = [
         icon: "/help.png",
         path: "/admin/help-center",
     },
+    {
+        id: nanoid(),
+        title: "Enquiry Base",
+        icon: "/help.png",
+        path: "/admin/enquiry-base",
+    },
 ];
 
 const sidebarContentHandler = (admin: boolean) => {

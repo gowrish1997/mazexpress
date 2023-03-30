@@ -220,7 +220,7 @@ const AddNewOrder = () => {
                 title="Add New Order | MazExpress"
             />
             <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
+                {/* <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
                     <Image
                         src="/blueexclamatory.png"
                         alt="icon"
@@ -233,7 +233,7 @@ const AddNewOrder = () => {
                             {t("addNewOrderPage.LinkPPart2")}
                         </span>
                     </p>
-                </div>
+                </div> */}
                 <div className="flex-type1 gap-x-[10px] mt-[25px]">
                     <Controller
                         name="reference_id"

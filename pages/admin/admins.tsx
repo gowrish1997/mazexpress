@@ -89,6 +89,9 @@ const AdminBase = () => {
     };
 
     const ToggleAddNewAdminModalHandler = () => {
+        if (showAddNewAdminModal) {
+            mutateUsers();
+        }
         setShowAddNewAdminModal((prev) => !prev);
     };
 
@@ -124,6 +127,7 @@ const AdminBase = () => {
                     currentPage={currentPage}
                     createdDateFilterKey={createdDateFilterKey}
                     isFilterPresent={searchKey || createdDateFilterKey}
+                    mutateUser={mutateUsers}
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
                     {!users?.data && !searchKey && !createdDateFilterKey ? (
@@ -136,6 +140,7 @@ const AdminBase = () => {
                                 type="admin_base"
                                 onSelect={selectUserHandler}
                                 selectedOrder={selectedUser!}
+                                mutateUser={mutateUsers}
                             />
                             <AddButton
                                 onClick={ToggleAddNewAdminModalHandler}

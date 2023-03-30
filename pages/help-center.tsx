@@ -4,7 +4,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-
+import HelpCenterView from "@/components/admin/help-center/modal/HelpCenterView";
 
 const HelpCenter = () => {
     const router = useRouter();
@@ -27,13 +27,7 @@ const HelpCenter = () => {
     // }, []);
     return (
         <>
-            <PageHeader
-                content="Help Center"
-                title="Help Center | MazExpress"
-            />
-            <div className="py-10">
-                <h1>Coming soon...</h1>
-            </div>
+           <HelpCenterView/>
         </>
     );
 };

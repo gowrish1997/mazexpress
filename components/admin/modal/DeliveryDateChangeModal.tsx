@@ -51,6 +51,7 @@ const DeliveryDateChangeModal = (props: IProp) => {
                     timeOut: 2000,
                 });
             }
+            props.close();
         } catch (error) {
             console.error(error);
         }
