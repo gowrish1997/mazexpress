@@ -188,7 +188,7 @@
                     "Message is a required field"
                 ],
 
-                "SubmitButton": "يُقدِّم"
+                "SubmitButton": "Submit"
             }
         },
         "footer": {

@@ -453,10 +453,6 @@ const SignUpContent = (props: IProp) => {
             {props.type == "signUp" && (
                 <div className="text-center w-full text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[10px] ">
                     <p>
-                        {discription[0]}{" "}
-                        <span className="text-[#0057FF]">{discription[1]}</span>
-                    </p>
-                    <p>
                         {discription[2]}
                         <span
                             className="text-[#0057FF] cursor-pointer"

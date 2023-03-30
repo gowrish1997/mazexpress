@@ -7,6 +7,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import fetchJson from "@/lib/fetchSelf";
 import { useRouter } from "next/router";
 
+
 const HelpCenterView = () => {
     const router = useRouter();
 
@@ -16,6 +17,8 @@ const HelpCenterView = () => {
     const toggleEditHelpModal = () => {
         setShowEditHelpModal((prev) => !prev);
     };
+    
+   
 
     useEffect(() => {
         fetchJson("/api/help-center").then((data) => setData(data));

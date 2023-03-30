@@ -4,6 +4,8 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const HelpCenter = () => {
+    // const { enquiry } = useHelp();
+    // console.log(enquiry);
     return <HelpCenterView />;
 };
 
