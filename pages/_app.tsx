@@ -23,12 +23,14 @@ function App({ Component, pageProps }: AppProps) {
   const { status: googleStatus } = useGoogle({});
 
   const { user: sessUser, mutateUser } = useUser();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(sessUser);
 
-  console.log("called in app tsx");
 
   useEffect(() => {
     // check backend session
+    if(sessUser){
+      setUser(sessUser)
+    }
     // // Check if the user was redirected from Arabic to English
     // const redirected = document.cookie.includes("i18n_redirected=true");
     // if (redirected) {
