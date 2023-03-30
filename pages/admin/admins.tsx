@@ -21,147 +21,141 @@ import useUserCount from "@/lib/hooks/useUserCount";
 import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
-    "User",
-    "Email ID",
-    "Mobile Number",
-    "Created Date",
-    "Age",
-    "Gender",
+  "User",
+  "Email ID",
+  "Mobile Number",
+  "Created Date",
+  "Age",
+  "Gender",
 ];
 interface ISearchKeyContext {
-    searchKey: any;
+  searchKey: any;
 }
 const AdminBase = () => {
-    const router = useRouter();
+  const router = useRouter();
 
-    const { locales, locale: activeLocale } = router;
+  const { locales, locale: activeLocale } = router;
 
-    useEffect(() => {
-        let dir = router.locale == "ar" ? "rtl" : "ltr";
-        let lang = router.locale == "ar" ? "ar" : "en";
-        document.querySelector("html")?.setAttribute("dir", dir);
-        document.querySelector("html")?.setAttribute("lang", lang);
-    }, [router.locale]);
+  useEffect(() => {
+    let dir = router.locale == "ar" ? "rtl" : "ltr";
+    let lang = router.locale == "ar" ? "ar" : "en";
+    document.querySelector("html")?.setAttribute("dir", dir);
+    document.querySelector("html")?.setAttribute("lang", lang);
+  }, [router.locale]);
 
-    // useEffect(() => {
-    //     console.log("use efft");
-    //     router.push(router.asPath, router.asPath, { locale: "en" });
-    // }, []);
+  // useEffect(() => {
+  //     console.log("use efft");
+  //     router.push(router.asPath, router.asPath, { locale: "en" });
+  // }, []);
 
-    const { searchKey } = React.useContext(
-        SearchKeyContext
-    ) as ISearchKeyContext;
-    const [itemsPerPage, setItemPerPage] = useState(25);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-        Date | string
-    >("");
+  const { searchKey } = React.useContext(SearchKeyContext) as ISearchKeyContext;
+  const [itemsPerPage, setItemPerPage] = useState(25);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+    Date | string
+  >("");
 
-    const { users, mutateUsers } = useUsers({
-        search: searchKey,
-        page: currentPage,
-        per_page: itemsPerPage,
-        include_admins: true,
-        date: getDateInDBFormat(createdDateFilterKey as Date),
-    });
+  const { users, mutateUsers } = useUsers({
+    search: searchKey,
+    page: currentPage,
+    per_page: itemsPerPage,
+    include_admins: true,
+    date: getDateInDBFormat(createdDateFilterKey as Date),
+  });
 
-    const { userCount } = useUserCount({
-        include_admins: true,
-        include_users: true,
-    });
+  const { userCount } = useUserCount({
+    include_admins: true,
+    include_users: true,
+  });
 
-    const [showAddNewAdminModal, setShowAddNewAdminModal] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<User[]>();
+  const [showAddNewAdminModal, setShowAddNewAdminModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User[]>();
 
-    //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil((userCount || 0) / itemsPerPage);
+  //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil((userCount || 0) / itemsPerPage);
 
-    const currentPageHandler = (value: number) => {
-        setCurrentPage(value);
-    };
-    const itemPerPageHandler = useCallback((value: string | number) => {
-        setCurrentPage(0);
-        setItemPerPage(value as number);
-    }, []);
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
+  };
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
+    setItemPerPage(value as number);
+  }, []);
 
-    const filterByCreatedDate = (value: Date | string) => {
-        setCreatedDateFilterKey(value);
-    };
+  const filterByCreatedDate = (value: Date | string) => {
+    setCreatedDateFilterKey(value);
+  };
 
-    const ToggleAddNewAdminModalHandler = () => {
-        setShowAddNewAdminModal((prev) => !prev);
-    };
+  const ToggleAddNewAdminModalHandler = () => {
+    setShowAddNewAdminModal((prev) => !prev);
+  };
 
-    const selectUserHandler = (value: string, type: string) => {
-        console.log(value);
-        selectOrder(
-            value,
-            type,
-            setSelectedUser,
-            users?.data as User[],
-            selectedUser as User[]
-        );
-    };
-
-    //   if (error) {
-    //     return <div>some error happened</div>;
-    //   }
-    return (
-        <>
-            <div>
-                <UserbasePageHeader
-                    content="Admin Base"
-                    selectedUser={selectedUser}
-                    allUsers={users?.data as User[]}
-                    filterByDate={filterByCreatedDate}
-                    title="Admin Base | MazExpress Admin"
-                    pageCount={Math.ceil(
-                        (users?.count as number) / itemsPerPage
-                    )}
-                    currentPageHandler={currentPageHandler}
-                    itemPerPageHandler={itemPerPageHandler!}
-                    itemsPerPage={itemsPerPage}
-                    currentPage={currentPage}
-                    createdDateFilterKey={createdDateFilterKey}
-                    isFilterPresent={searchKey || createdDateFilterKey}
-                />
-                <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!users?.data && !searchKey && !createdDateFilterKey ? (
-                        <BlankPage />
-                    ) : (
-                        <>
-                            <Table
-                                rows={users?.data as User[]}
-                                headings={tableHeaders}
-                                type="admin_base"
-                                onSelect={selectUserHandler}
-                                selectedOrder={selectedUser!}
-                            />
-                            <AddButton
-                                onClick={ToggleAddNewAdminModalHandler}
-                            />
-                        </>
-                    )}
-                </div>
-                {selectedUser?.length! > 0 && (
-                    <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedUser?.length} orders are selected`}</div>
-                )}
-            </div>
-            {showAddNewAdminModal && (
-                <AddNewAdminModal close={ToggleAddNewAdminModalHandler} />
-            )}
-        </>
+  const selectUserHandler = (value: string, type: string) => {
+    console.log(value);
+    selectOrder(
+      value,
+      type,
+      setSelectedUser,
+      users?.data as User[],
+      selectedUser as User[]
     );
+  };
+
+  //   if (error) {
+  //     return <div>some error happened</div>;
+  //   }
+  return (
+    <>
+      <div>
+        <UserbasePageHeader
+          content="Admin Base"
+          selectedUser={selectedUser}
+          allUsers={users?.data as User[]}
+          filterByDate={filterByCreatedDate}
+          title="Admin Base | MazExpress Admin"
+          pageCount={Math.ceil((users?.count as number) / itemsPerPage)}
+          currentPageHandler={currentPageHandler}
+          itemPerPageHandler={itemPerPageHandler!}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          createdDateFilterKey={createdDateFilterKey}
+          isFilterPresent={searchKey || createdDateFilterKey}
+        />
+        <div className="flex flex-col justify-between relative flex-1 h-full">
+          {!users?.data && !searchKey && !createdDateFilterKey ? (
+            <BlankPage />
+          ) : (
+            <>
+              <Table
+                rows={users?.data as User[]}
+                headings={tableHeaders}
+                type="admin_base"
+                onSelect={selectUserHandler}
+                selectedOrder={selectedUser!}
+              />
+              <AddButton onClick={ToggleAddNewAdminModalHandler} />
+            </>
+          )}
+        </div>
+        {selectedUser?.length! > 0 && (
+          <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedUser?.length} orders are selected`}</div>
+        )}
+      </div>
+      {showAddNewAdminModal && (
+        <AddNewAdminModal close={ToggleAddNewAdminModalHandler} />
+      )}
+    </>
+  );
 };
 
 export default AdminBase;
 export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }

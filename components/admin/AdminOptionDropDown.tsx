@@ -38,7 +38,7 @@ const AdminOptionDropDown = (props: Iprop) => {
                                 headers: { "Content-type": "application/json" },
                             }
                         );
-                        console.log(result);
+                        // console.log(result);
                         result.data.sort(
                             (a: any, b: any) => a?.stage - b?.stage
                         );
@@ -48,7 +48,7 @@ const AdminOptionDropDown = (props: Iprop) => {
                         console.log(error.message);
                     }
                 }
-                console.log(allSelectedOrderStatus);
+                // console.log(allSelectedOrderStatus);
 
                 const allEqual = () => {
                     return allSelectedOrderStatus.every(
