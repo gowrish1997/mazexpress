@@ -82,7 +82,6 @@ const Settings = () => {
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
-    console.log(user)
 
     const [passwordCheck, setPasswordCheck] = useState(false);
 
@@ -266,7 +265,6 @@ const Settings = () => {
     };
 
     const updatePasswordChecker = async (e: string) => {
-        console.log(e);
         setValue("password", e as string);
         const reee = await checkPassword(e, user?.email!);
         // console.log(reee);

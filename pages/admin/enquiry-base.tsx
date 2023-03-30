@@ -3,6 +3,8 @@ import React from "react";
 import { i18n } from "next-i18next";
 import Table from "@/components/orders/table/index";
 import EnquiryBasePageHeader from "@/components/admin/EnquiryBasePageHeader";
+import BlankPage from "@/components/admin/BlankPage";
+import useEnquiry, { IEnquiry } from "@/lib/hooks/useEnquiry";
 const tableHeaders = ["Customer Email ID", "Mobile numbers", "Date", "Message"];
 
 const enquiryList = [
@@ -15,6 +17,10 @@ const enquiryList = [
 ];
 
 const EnquiryBase = () => {
+    const { enquiry, mutateEnquiry, enquiryIsLoading, enquiryError } =
+        useEnquiry({});
+    console.log(enquiry?.data);
+
     return (
         <>
             <div>
@@ -24,17 +30,17 @@ const EnquiryBase = () => {
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {/* {!orders?.data && !searchKey && !createdDateFilterKey ? (
-                        <BlankPage />
+                    {enquiry?.data && enquiry?.data.length > 0 ? (
+                        <>
+                            <Table
+                                rows={enquiry?.data as IEnquiry[]}
+                                headings={tableHeaders}
+                                type="enquiry_base"
+                            />
+                        </>
                     ) : (
-                        <> */}
-                    <Table
-                        rows={enquiryList}
-                        headings={tableHeaders}
-                        type="enquiry_base"
-                    />
-                    {/* </>
-                )} */}
+                        <BlankPage />
+                    )}
                 </div>
             </div>
         </>

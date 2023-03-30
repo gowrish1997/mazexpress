@@ -13,7 +13,7 @@ import useOrders from "@/lib/hooks/useOrders";
 import { Order } from "@/models/order.model";
 import { bulkActionHandler } from "@/lib/selectOrder";
 import { createToast } from "@/lib/toasts";
-import { getUserIdList } from "@/lib/selectOrder";
+import { getOrderIdList } from "@/lib/selectOrder";
 
 const adminOption = [
     "Received in Libya",
@@ -52,23 +52,16 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                         false
                     );
                     console.log(status1);
-                    if (status1) {
-                        createToast({
-                            type: "success",
-                            title: "Notified User",
-                            message: `Sent order received in Libya warehouse notification to userID ${getUserIdList(
-                                props.selectedOrder
-                            )}`,
-                            timeOut: 2000,
-                        });
-                    } else {
-                        createToast({
-                            type: "error",
-                            title: "Failed creating notification",
-                            message: `check console for more info`,
-                            timeOut: 2000,
-                        });
-                    }
+
+                    createToast({
+                        type: "success",
+                        title: "Notified User",
+                        message: `status changed successfully for orders with ID ${getOrderIdList(
+                            props.selectedOrder
+                        )}`,
+                        timeOut: 2000,
+                    });
+
                     props.mutateOrder?.();
                     props.setSelectedOrder?.([]);
                 } catch (error) {
@@ -87,23 +80,16 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                         "has been out for delivery",
                         true
                     );
-                    if (status2) {
-                        createToast({
-                            type: "success",
-                            title: "Notified User",
-                            message: `Sent order out for delivery notification to userID ${getUserIdList(
-                                props.selectedOrder
-                            )}`,
-                            timeOut: 2000,
-                        });
-                    } else {
-                        createToast({
-                            type: "error",
-                            title: "Failed creating notification",
-                            message: `check console for more info`,
-                            timeOut: 2000,
-                        });
-                    }
+
+                    createToast({
+                        type: "success",
+                        title: "Notified User",
+                        message: `status changed successfully for orders with ID ${getOrderIdList(
+                            props.selectedOrder
+                        )}`,
+                        timeOut: 2000,
+                    });
+
                     props.mutateOrder?.();
                     props.setSelectedOrder?.([]);
                 } catch (error) {
@@ -123,23 +109,16 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                         "has delivered ",
                         true
                     );
-                    if (status3) {
-                        createToast({
-                            type: "success",
-                            title: "Notified User",
-                            message: `Sent order delivered notification to userID ${getUserIdList(
-                                props.selectedOrder
-                            )}`,
-                            timeOut: 2000,
-                        });
-                    } else {
-                        createToast({
-                            type: "error",
-                            title: "Failed creating notification",
-                            message: `check console for more info`,
-                            timeOut: 2000,
-                        });
-                    }
+
+                    createToast({
+                        type: "success",
+                        title: "Notified User",
+                        message: `status changed successfully for orders with ID ${getOrderIdList(
+                            props.selectedOrder
+                        )}`,
+                        timeOut: 2000,
+                    });
+
                     props.mutateOrder?.();
                     props.setSelectedOrder?.([]);
                 } catch (error) {
@@ -148,13 +127,13 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
         }
     };
 
-    const addCommentHandler = (comment: string) => {
-        console.log(props.selectedOrder, comment);
-    };
+    // const addCommentHandler = (comment: string) => {
+    //     console.log(props.selectedOrder, comment);
+    // };
 
-    const closeAddCommentModal = () => {
-        setShowAddCommentModal(false);
-    };
+    // const closeAddCommentModal = () => {
+    //     setShowAddCommentModal(false);
+    // };
 
     return (
         <>

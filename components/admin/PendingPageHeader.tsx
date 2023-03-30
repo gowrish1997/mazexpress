@@ -17,7 +17,7 @@ import { APIResponse } from "@/models/api.model";
 import useUser from "@/lib/hooks/useUser";
 import { useRouter } from "next/router";
 import { perPageOptinsList } from "@/lib/helper";
-import { getUserIdList } from "@/lib/selectOrder";
+import { getOrderIdList } from "@/lib/selectOrder";
 import { bulkActionHandler } from "@/lib/selectOrder";
 
 const adminOption = ["Move to Shipments"];
@@ -45,24 +45,15 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
                 "has been received at our Istanbul warehouse and will be shipped soon.",
                 true
             );
-            console.log(status);
-            if (status) {
-                createToast({
-                    type: "success",
-                    title: "Notified User",
-                    message: `Sent order received notification to userID ${getUserIdList(
-                        props.selectedOrder
-                    )}`,
-                    timeOut: 2000,
-                });
-            } else {
-                createToast({
-                    type: "error",
-                    title: "Failed creating notification",
-                    message: `check console for more info`,
-                    timeOut: 2000,
-                });
-            }
+
+            createToast({
+                type: "success",
+                title: "Notified User",
+                message: `status changed successfully for orders with ID ${getOrderIdList(
+                    props.selectedOrder
+                )}`,
+                timeOut: 2000,
+            });
 
             props.mutateOrder?.();
             props.setSelectedOrder?.([]);

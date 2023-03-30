@@ -24,7 +24,7 @@ import {
     admin_orderPlaced,
 } from "@/lib/emailContent/bodyContent";
 import axios from "axios";
-
+import { sentMail } from "@/lib/sentMail";
 const schema = yup
     .object({
         address_id: yup
@@ -182,17 +182,16 @@ const AddNewOrder = () => {
                     message: "Created order successfully",
                     timeOut: 1000,
                 });
-                axios
-                    .post("/api/emailTemplate", toList)
-                    .then((data) => {
-                        console.log(data.data.body[0].html);
-                        // console.log(data.data.body.html);
-                        // setHtmlCode(data.data.body);
-                    })
-                    .catch((error) => {
-                        console.log("error", error);
-                    });
+
+                /** sending mail after placing order   */
+                try {
+                    sentMail(toList);
+                } catch (error) {
+                    console.error(error);
+                }
+
                 router.push("/orders");
+                
             } else {
                 createToast({
                     type: "error",

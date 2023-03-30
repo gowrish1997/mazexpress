@@ -14,6 +14,7 @@ import { Address, City } from "@/models/address.model";
 import axios from "axios";
 import { user_registerBodyContet } from "@/lib/emailContent/bodyContent";
 import { admin_registerBodyContent } from "@/lib/emailContent/bodyContent";
+import { sentMail } from "@/lib/sentMail";
 
 const schema = yup
     .object({
@@ -181,16 +182,15 @@ const SignUpContent = (props: IProp) => {
                     message: "Please log in with your new login credentials",
                     timeOut: 3000,
                 });
-                axios
-                    .post("/api/emailTemplate", toList)
-                    .then((data) => {
-                        console.log(data.data.body[1].html);
-                        // console.log(data.data.body.html);
-                        // setHtmlCode(data.data.body);
-                    })
-                    .catch((error) => {
-                        console.log("error", error);
-                    });
+
+                /**    sending mail after signup  */
+
+                try {
+                    sentMail(toList);
+                } catch (error) {
+                    console.log(error);
+                }
+
                 // send to login page with cred
                 props.switch?.(1);
             } else {

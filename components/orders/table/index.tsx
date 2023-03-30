@@ -12,10 +12,11 @@ import { APIResponse } from "@/models/api.model";
 import { KeyedMutator } from "swr";
 import moment from "moment";
 import EnquiryLineItem from "./EnquiryLineItem";
+import { IEnquiry } from "@/lib/hooks/useEnquiry";
 
 interface TableProps {
     headings: Array<string>;
-    rows: Array<Order> | Array<User>;
+    rows: Array<Order> | Array<User> | Array<IEnquiry>;
     type: string;
     onSelect?: (e: any, type: string) => void;
     selectedOrder?: Order[] | User[];
@@ -118,7 +119,7 @@ const Table = (props: TableProps) => {
                                     return (
                                         <EnquiryLineItem
                                             key={nanoid()}
-                                            row={data as User}
+                                            row={data as IEnquiry}
                                             type={props.type}
                                         />
                                     );

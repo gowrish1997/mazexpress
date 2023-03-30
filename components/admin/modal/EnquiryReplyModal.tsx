@@ -2,12 +2,15 @@ import React from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { IEnquiry } from "@/lib/hooks/useEnquiry";
+import useUser from "@/lib/hooks/useUser";
+import { user_enquiry_reply } from "@/lib/emailContent/bodyContent";
+import { sentMail } from "@/lib/sentMail";
+import { createToast } from "@/lib/toasts";
 
 interface IProp {
- 
- row:any,
- close:()=>void
-
+    row: IEnquiry;
+    close: () => void;
 }
 
 const schema = yup
@@ -16,7 +19,9 @@ const schema = yup
         message: yup.string().required("message 01 is required field"),
     })
     .required();
-const EnquiryReplyModal = (props:IProp) => {
+const EnquiryReplyModal = (props: IProp) => {
+    const { user, mutateUser } = useUser();
+
     const {
         register,
         handleSubmit,
@@ -28,7 +33,30 @@ const EnquiryReplyModal = (props:IProp) => {
         resolver: yupResolver(schema),
     });
     const onSubmit: SubmitHandler<any> = async (data) => {
-        console.log(data);
+        const toList = [
+            {
+                type: "enquiry",
+                toType: "user",
+                header: "Thank you for yout enquiry!",
+                toName: "",
+                toMail: props.row.email,
+                bodyContent: user_enquiry_reply(data.message),
+                buttonContent: "Let’s Get Started",
+                redirectLink: "",
+            },
+        ];
+        createToast({
+            type: "success",
+            title: "",
+            message: `You replied to user enquiry`,
+            timeOut: 2000,
+        });
+        try {
+            sentMail(toList);
+            props.close();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -39,9 +67,7 @@ const EnquiryReplyModal = (props:IProp) => {
                         User enquiry
                     </p>
                     <div className="border-[1px] border-[#BBC2CF] p-[15px] rounded-[4px] text-[14px] text-[#2B2B2B] font-[600] leading-[20px] mt-[15px] ">
-                        hi i have some qursion please reply to this hi i have
-                        some qursion please reply to this hi i have some qursion
-                        please reply to this
+                        {props.row.message}
                     </div>
                 </div>
                 <p className="text-[18px] text-[#2B2B2B] font-[600] leading-[19px] mt-[15px]  ">
@@ -60,7 +86,9 @@ const EnquiryReplyModal = (props:IProp) => {
                             placeholder="Email Subject"
                         />
                         {errors.subject?.message && (
-                            <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">sdf</p>
+                            <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+                                sdf
+                            </p>
                         )}
                     </div>
 
@@ -84,14 +112,24 @@ const EnquiryReplyModal = (props:IProp) => {
                             ></textarea>
                         </div>
                         {errors.message?.message && (
-                            <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">asd</p>
+                            <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+                                asd
+                            </p>
                         )}
                     </div>
                     <div className="mt-[10px] space-x-[5px] ">
-                        <button className="border-[1px] bg-[#35c6f4] py-[10px] px-[15px] rounded-[6px] text-[14px] text-[#FFFFFF] font-[600] " type="submit">
+                        <button
+                            className="border-[1px] bg-[#35c6f4] py-[10px] px-[15px] rounded-[6px] text-[14px] text-[#FFFFFF] font-[600] "
+                            type="submit"
+                        >
                             Submit
                         </button>
-                        <button className="border-[1px] border-[#BBC2CF] py-[10px] px-[15px] rounded-[6px]" onClick={props.close}>Cancel</button>
+                        <button
+                            className="border-[1px] border-[#BBC2CF] py-[10px] px-[15px] rounded-[6px]"
+                            onClick={props.close}
+                        >
+                            Cancel
+                        </button>
                     </div>
                 </form>
             </div>

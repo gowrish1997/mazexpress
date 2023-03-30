@@ -8,7 +8,7 @@ import { User } from "@/models/user.model";
 
 import { APIResponse } from "@/models/api.model";
 import { KeyedMutator } from "swr";
-import { getUserIdList } from "@/lib/selectOrder";
+
 interface IProps {
     ref: React.RefObject<HTMLDivElement>;
     handler: () => void;

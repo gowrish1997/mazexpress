@@ -8,6 +8,9 @@ import { FieldError } from "react-hook-form";
 import fetchJson from "@/lib/fetchServer";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
+import { createToast } from "@/lib/toasts";
+import { user_enquiry } from "@/lib/emailContent/bodyContent";
+import { sentMail } from "@/lib/sentMail";
 
 const schema = yup
     .object({
@@ -51,7 +54,19 @@ const MazCommunityForm = () => {
     });
 
     const onSubmit: SubmitHandler<any> = async (data) => {
-        console.log(data);
+        const toList = [
+            {
+                type: "enquiry",
+                toType: "admin",
+                header: "New enquiry ✨",
+                toName: "admin",
+                bodyContent: user_enquiry(),
+                userName: "",
+                userProfile: "",
+                userContactNumber: data.mobile,
+                userEmail: data?.email,
+            },
+        ];
 
         try {
             const result0 = await fetchJson(`/api/contact-form`, {
@@ -60,6 +75,18 @@ const MazCommunityForm = () => {
                 body: JSON.stringify(data),
             });
             console.log(result0);
+
+            createToast({
+                type: "success",
+                title: "",
+                message: `Enquiry submitted successfully`,
+                timeOut: 2000,
+            });
+            try {
+                sentMail(toList);
+            } catch (error) {
+                console.error(error);
+            }
         } catch (error) {
             console.error(error);
         }
