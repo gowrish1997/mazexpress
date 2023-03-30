@@ -20,7 +20,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(req.body),
     });
-    console.log('valid user', validUser) // validUser.data => object[]
+    // console.log('valid user', validUser)
 
     // console.log('session from login', req.session.user)
     if (req.session.user) {
@@ -32,7 +32,6 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       responseObj.msg = "please logout first";
       responseObj.count = 0;
       res.status(500).json(responseObj);
-
     } else if (validUser.data && !req.session.user) {
       // no user logged in continue
       // store user in session
@@ -45,7 +44,6 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       responseObj.msg = validUser.msg;
       responseObj.count = 1;
       res.status(200).json(responseObj);
-
     } else {
       // not valid user
       responseObj.data = null;
@@ -53,10 +51,8 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       responseObj.msg = "not valid user";
       responseObj.count = 0;
       res.status(200).json(responseObj);
-
     }
   } catch (error) {
-
     responseObj.data = null;
     responseObj.ok = false;
     responseObj.msg = (error as Error).message;
