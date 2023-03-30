@@ -2,8 +2,11 @@
 //     written by: raunak
 //==========================
 
+import { APIResponse } from "@/models/api.model";
+import { User } from "@/models/user.model";
+import { NextRequest } from "next/server";
 import fetchJson from "./fetchServer";
-
+import fetchSelf from "./fetchSelf";
 
 async function checkPassword(password: string, user_email: string) {
   const result: boolean = await fetchJson(`/api/auth/validate-password`, {
@@ -14,7 +17,7 @@ async function checkPassword(password: string, user_email: string) {
       email: user_email,
     }),
   });
-  return result
+  return result;
 }
 
 function getDateInDBFormat(date: Date) {
@@ -36,4 +39,20 @@ function getDateInDBFormat(date: Date) {
   }
 }
 
-export { checkPassword, getDateInDBFormat };
+async function isAuthenticated(req: NextRequest): Promise<boolean[]> {
+  try {
+    const sess: APIResponse<User> = await fetchJson(`/api/auth`);
+    if (sess.data && sess.data.length > 0) {
+      // user exists
+      return [true, (sess.data as User[])[0].is_admin];
+    } else {
+      return [false];
+    }
+  } catch (err) {
+    if (err) {
+      return [false];
+    }
+  }
+}
+
+export { checkPassword, getDateInDBFormat, isAuthenticated };

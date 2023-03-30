@@ -18,13 +18,10 @@ import useUser from "@/lib/hooks/useUser";
 
 config.autoAddCss = false;
 
-function App({
-  Component,
-  // pageProps: { session, ...pageProps },
-  pageProps,
-}: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const { status: googleStatus } = useGoogle({});
+
   const { user: sessUser, mutateUser } = useUser();
   const [user, setUser] = useState<User | null>(null);
 
