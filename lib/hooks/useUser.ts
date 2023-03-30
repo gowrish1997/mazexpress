@@ -10,16 +10,25 @@ import fetchSelf from "../fetchSelf";
 import { User } from "@/models/user.model";
 import { APIResponse } from "@/models/api.model";
 import { useRouter } from "next/router";
+import fetchJson from "../fetchServer";
 
 // use the current user profile from sessions
 
 export default function useUser() {
   const user: User | null = useContext(UserContext)["user"];
   const { setUser } = useContext(UserContext);
+
   const router = useRouter();
-  function retrieve(input: string) {
+  async function retrieve(input: RequestInfo, init?: RequestInit) {
     // console.log(input);
-    return user;
+    // check backend
+    const sess = await fetchJson(`/api/auth/`, init);
+    if (sess && sess.data) {
+      setUser(sess.data[0])
+      return sess.data[0];
+    } else {
+      return user;
+    }
   }
   const { data, mutate } = useSWR("user", retrieve);
 
@@ -34,22 +43,22 @@ export default function useUser() {
   }
 
   useEffect(() => {
-    if (user === null && !router.pathname.startsWith("/auth/gate")) {
-      router.replace("/auth/gate", "/auth/gate?please_log_in...");
-    } else {
-      // user present
-      // check admin
-      if (user?.is_admin && !router.pathname.startsWith("/admin")) {
-        router.replace("/admin", "/admin?please_dont_go_to_client_side");
-      }
-      if (!user?.is_admin && router.pathname.startsWith("/admin")) {
-        router.replace("/", "/?unauthorized");
-      }
-    }
+    // if (user === null && !router.pathname.startsWith("/auth/gate")) {
+    //   router.replace("/auth/gate", "/auth/gate?please_log_in...");
+    // } else {
+    //   // user present
+    //   // check admin
+    //   if (user?.is_admin && !router.pathname.startsWith("/admin")) {
+    //     router.replace("/admin", "/admin?please_dont_go_to_client_side");
+    //   }
+    //   if (!user?.is_admin && router.pathname.startsWith("/admin")) {
+    //     router.replace("/", "/?unauthorized");
+    //   }
+    // }
   }, [router.pathname]);
 
   return {
-    user,
+    user: data,
     mutateUser: ii_mutate,
   };
 }

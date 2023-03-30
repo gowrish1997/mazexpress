@@ -14,6 +14,7 @@ import { appWithTranslation } from "next-i18next";
 import useGoogle from "@/lib/hooks/useGoogle";
 import UserContext from "@/components/context/user.context";
 import { User } from "@/models/user.model";
+import useUser from "@/lib/hooks/useUser";
 
 config.autoAddCss = false;
 
@@ -24,9 +25,11 @@ function App({
 }: AppProps) {
   const router = useRouter();
   const { status: googleStatus } = useGoogle({});
+  const { user: sessUser, mutateUser } = useUser();
   const [user, setUser] = useState<User | null>(null);
 
   console.log("called in app tsx");
+
   useEffect(() => {
     // check backend session
     // // Check if the user was redirected from Arabic to English
@@ -106,4 +109,3 @@ function App({
 }
 
 export default appWithTranslation(App);
-

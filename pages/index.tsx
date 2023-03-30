@@ -3,7 +3,13 @@
 //     co-author: raunak
 //==========================
 
-import React, { useState, useRef, useEffect, ChangeEvent } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+  useContext,
+} from "react";
 import Image from "next/image";
 import newlogoBlue from "../public/new_logo_blue.png";
 import ShipmentCostCalculator from "@/components/LandingPage/ShipmentCostCalculator";
@@ -25,6 +31,7 @@ import fetchJson from "@/lib/fetchSelf";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import About from "@/components/LandingPage/About";
 import Service from "@/components/LandingPage/Service";
+import UserContext from "@/components/context/user.context";
 
 const Index = () => {
   const router = useRouter();
@@ -36,6 +43,7 @@ const Index = () => {
   var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
 
   const { user, mutateUser } = useUser();
+  const { setUser } = useContext(UserContext);
 
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
@@ -102,9 +110,8 @@ const Index = () => {
   };
 
   const logoutHandler = async () => {
-    // console.log("handle logout");
-    const result = await fetchJson("/api/auth/logout", { method: "GET" });
-    // console.log(result);
+    await fetchServer("/api/auth/logout", { method: "GET" });
+    setUser(null);
     await mutateUser();
     setShowLogoutConfirmModal((prev) => !prev);
   };
