@@ -21,11 +21,11 @@ const schema = yup
   .required();
 
 interface IHelpForm {
-  num1_warehouse: number;
-  num2_warehouse: number;
-  num3_warehouse: number;
-  email_warehouse: string;
-  name_warehouse: string;
+  num1: number;
+  num2: number;
+  num3: number;
+  email: string;
+  name: string;
 }
 
 const EditHelpModal = (props: IProp) => {
@@ -40,11 +40,11 @@ const EditHelpModal = (props: IProp) => {
     formState: { errors },
   } = useForm<IHelpForm>({
     defaultValues: {
-      name_warehouse: props.data.name,
-      email_warehouse: props.data.email,
-      num1_warehouse: parseInt(props.data.num1),
-      num2_warehouse: parseInt(props.data.num2),
-      num3_warehouse: parseInt(props.data.num3),
+      name: props.data.name,
+      email: props.data.email,
+      num1: parseInt(props.data.num1),
+      num2: parseInt(props.data.num2),
+      num3: parseInt(props.data.num3),
     },
     // resolver: yupResolver(schema),
   });
@@ -99,36 +99,36 @@ const EditHelpModal = (props: IProp) => {
               Edit Contact Details
             </p>
             <input
-              id="name_warehouse"
+              id="name"
               type="string"
-              {...register("name_warehouse")}
+              {...register("name")}
               className="w-full h-[46px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none"
               placeholder="Give first title @Home"
             />
             <ReactHookFormInput
               label="Mobile Number 1"
-              name="num1_warehouse"
+              name="num1"
               type="number"
-              register={register("num1_warehouse")}
+              register={register("num1")}
             />
             <ReactHookFormInput
               label="Mobile Number 2"
-              name="num2_warehouse"
+              name="num2"
               type="number"
-              register={register("num2_warehouse")}
+              register={register("num2")}
             />
             <ReactHookFormInput
               label="Mobile Number 3"
-              name="num3_warehouse"
+              name="num3"
               type="number"
-              register={register("num3_warehouse")}
+              register={register("num3")}
             />
 
             <ReactHookFormInput
               label="Email ID"
-              name="email_warehouse"
+              name="email"
               type="string"
-              register={register("email_warehouse")}
+              register={register("email")}
             />
 
             <div className="flex-type1 space-x-[10px] mt-[5px] ">

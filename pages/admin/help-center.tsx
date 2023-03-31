@@ -4,7 +4,8 @@ import Image from "next/image";
 import EditHelpModal from "@/components/admin/help-center/modal/EditHelpModal";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import fetchJson from "@/lib/fetchSelf";
+// import fetchJson from "@/lib/fetchSelf";
+import fetchJson from "@/lib/fetchServer";
 
 const HelpCenter = () => {
   const [showEditHelpModal, setShowEditHelpModal] = useState(false);
@@ -15,7 +16,11 @@ const HelpCenter = () => {
   };
 
   useEffect(() => {
-    fetchJson("/api/help-center").then((data) => setData(data));
+    fetchJson("/api/help-center").then((data) => {
+      console.log(data)
+      // setData(data.data)
+    });
+
   }, []);
 
   return (

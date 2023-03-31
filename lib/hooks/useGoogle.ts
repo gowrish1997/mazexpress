@@ -33,7 +33,7 @@ export default function useGoogle({}: IProps) {
     });
     if (payload) {
       // console.log(typeof payload);
-      // console.log(payload);
+      console.log(payload);
 
       // set up user from payload
       fetchSelf(`/api/auth/callback/google`, {
@@ -42,6 +42,7 @@ export default function useGoogle({}: IProps) {
         body: JSON.stringify({ ...payload }),
       })
         .then(async (response) => {
+          console.log(response)
           if (response.ok) {
             // set context to use this user
 
@@ -55,7 +56,7 @@ export default function useGoogle({}: IProps) {
               timeOut: 1000,
             });
             setTimeout(() => {
-              if (response.user.is_admin === true) {
+              if (response.data[0].is_admin === true) {
                 router.push("/admin");
               } else {
                 router.push("/");

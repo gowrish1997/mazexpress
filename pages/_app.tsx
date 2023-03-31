@@ -48,7 +48,7 @@ function App({ Component, pageProps }: AppProps) {
     // }
   }, []);
 
-  if (router.pathname.startsWith("/auth/gate")) {
+  if (router.pathname.startsWith("/auth")) {
     // no frame
     return (
       <UserContext.Provider
