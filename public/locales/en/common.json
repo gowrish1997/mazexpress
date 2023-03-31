@@ -79,7 +79,7 @@
         "Title": "Reset Password",
         "MobileViewTitle": "Get More Done With Our MAZ Services",
         "form": {
-            "InputField": ["Password", "Confirm password"],
+            "InputField": ["Email", "Confirm password"],
 
             "Errors": [
                 "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",

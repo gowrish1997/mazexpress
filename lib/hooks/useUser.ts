@@ -24,7 +24,7 @@ export default function useUser() {
     // check backend
     const sess = await fetchJson(`/api/auth/`, init);
     if (sess && sess.data) {
-      setUser(sess.data[0])
+      setUser(sess.data[0]);
       return sess.data[0];
     } else {
       return user;
@@ -37,25 +37,9 @@ export default function useUser() {
       setUser(obj);
       await mutate(obj, options);
     } else {
-      // get current context and set
       await mutate(user, false);
     }
   }
-
-  useEffect(() => {
-    // if (user === null && !router.pathname.startsWith("/auth/gate")) {
-    //   router.replace("/auth/gate", "/auth/gate?please_log_in...");
-    // } else {
-    //   // user present
-    //   // check admin
-    //   if (user?.is_admin && !router.pathname.startsWith("/admin")) {
-    //     router.replace("/admin", "/admin?please_dont_go_to_client_side");
-    //   }
-    //   if (!user?.is_admin && router.pathname.startsWith("/admin")) {
-    //     router.replace("/", "/?unauthorized");
-    //   }
-    // }
-  }, [router.pathname]);
 
   return {
     user: data,

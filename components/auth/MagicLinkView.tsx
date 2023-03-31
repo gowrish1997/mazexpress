@@ -7,34 +7,28 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
+import { createToast } from "@/lib/toasts";
+import fetchJson from "@/lib/fetchServer";
 
 type Inputs = {
-  password: string;
-  confirmPassword: string;
+  email: string;
 };
 
 const schema = yup
   .object({
-    password: yup
-      .string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        {
-          excludeEmptyString: true,
-          message:
-            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        }
-      ),
-
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password")], "Passwords must match")
-      .required()
-      .typeError("Confirm Password is required field"),
+    email: yup.string(),
+    //   .matches(
+    //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    //     {
+    //       excludeEmptyString: true,
+    //       message:
+    //         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+    //     }
+    //   ),
   })
   .required();
 
-const ResetPasswordView = (props: any) => {
+const MagicLinkView = (props: any) => {
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
@@ -61,23 +55,33 @@ const ResetPasswordView = (props: any) => {
     returnObjects: true,
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    // send magic link
+    try {
+      // request for magic link creation
+      const magicLink = await fetchJson(`/api/magic-links/${data.email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
 
-  const [passwordType, setPasswordType] = useState("password");
-  const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-
-  const togglePasswordTypeHandler = () => {
-    if (passwordType == "string") {
-      setPasswordType("password");
-    } else {
-      setPasswordType("string");
-    }
-  };
-  const toggleConfirmPasswordTypeHandler = () => {
-    if (confirmPasswordType == "string") {
-      setConfirmPasswordType("password");
-    } else {
-      setConfirmPasswordType("string");
+      if (magicLink && magicLink.msg === "success") {
+        createToast({
+          type: "success",
+          message: "please check your email for magic link.",
+          title: "Magic link created.",
+          timeOut: 2000,
+        });
+      }
+      //
+    } catch (err) {
+      if (err) {
+        createToast({
+          type: "error",
+          message: "password reset action failed...",
+          title: "Error",
+          timeOut: 2000,
+        });
+      }
     }
   };
 
@@ -114,34 +118,11 @@ const ResetPasswordView = (props: any) => {
       >
         <ReactHookFormInput
           label={inputFieldLabel[0]}
-          name="password"
-          type={passwordType}
-          register={register("password")}
-          error={errors.password?.message && inputFieldErrors[0]}
-          icon={{
-            isEnabled: true,
-            src:
-              passwordType === "password"
-                ? "/eyeIconOpen.png"
-                : "/eyeIconClose.png",
-            onClick: togglePasswordTypeHandler,
-          }}
-        />
-
-        <ReactHookFormInput
-          label={inputFieldLabel[1]}
-          name="confirmPassword"
-          type={confirmPasswordType}
-          register={register("confirmPassword")}
-          error={errors.confirmPassword?.message && inputFieldErrors[1]}
-          icon={{
-            isEnabled: true,
-            src:
-              passwordType === "password"
-                ? "/eyeIconOpen.png"
-                : "/eyeIconClose.png",
-            onClick: toggleConfirmPasswordTypeHandler,
-          }}
+          name="Email ID"
+          type={"string"}
+          register={register("email")}
+          error={errors.email?.message && inputFieldErrors[0]}
+          onClick={() => {}}
         />
 
         <button
@@ -172,4 +153,4 @@ const ResetPasswordView = (props: any) => {
   );
 };
 
-export default ResetPasswordView;
+export default MagicLinkView;

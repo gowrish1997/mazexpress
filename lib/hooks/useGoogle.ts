@@ -2,12 +2,14 @@
 //     written by: raunak
 //==========================
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import fetchSelf from "../fetchSelf";
 import useScript from "./useScript";
 import jwt from "jsonwebtoken";
 import { createToast } from "../toasts";
 import { useRouter } from "next/router";
+import UserContext from "@/components/context/user.context";
+import useUser from "./useUser";
 
 interface IProps {}
 
@@ -18,6 +20,9 @@ export default function useGoogle({}: IProps) {
   });
 
   const [googleStatus, setGoogleStatus] = useState<any>();
+  const user = useContext(UserContext)["user"];
+  const { setUser } = useContext(UserContext);
+  const { user: sessUser, mutateUser } = useUser();
 
   async function handleCredentialResponse(
     response: google.accounts.id.CredentialResponse
@@ -28,14 +33,22 @@ export default function useGoogle({}: IProps) {
     });
     if (payload) {
       // console.log(typeof payload);
+      console.log(payload);
+
+      // set up user from payload
       fetchSelf(`/api/auth/callback/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...payload }),
       })
-        .then((response) => {
-          // console.log("response at cred handler", response);
+        .then(async (response) => {
+          console.log(response)
           if (response.ok) {
+            // set context to use this user
+
+            setUser(response.data[0]);
+            await mutateUser(response.data[0], false);
+            // create toast
             createToast({
               type: "success",
               message: "you are now logged in",
@@ -43,7 +56,7 @@ export default function useGoogle({}: IProps) {
               timeOut: 1000,
             });
             setTimeout(() => {
-              if (response.user.is_admin === true) {
+              if (response.data[0].is_admin === true) {
                 router.push("/admin");
               } else {
                 router.push("/");
