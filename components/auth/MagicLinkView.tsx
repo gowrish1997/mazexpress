@@ -57,6 +57,7 @@ const MagicLinkView = (props: any) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // send magic link
+    // console.log(data)
     try {
       // request for magic link creation
       const magicLink = await fetchJson(`/api/magic-links/${data.email}`, {
@@ -118,7 +119,7 @@ const MagicLinkView = (props: any) => {
       >
         <ReactHookFormInput
           label={inputFieldLabel[0]}
-          name="Email ID"
+          name="email"
           type={"string"}
           register={register("email")}
           error={errors.email?.message && inputFieldErrors[0]}
