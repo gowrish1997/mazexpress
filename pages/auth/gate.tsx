@@ -8,6 +8,7 @@ import useUser from "@/lib/hooks/useUser";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
+import MagicLinkView from "@/components/auth/MagicLinkView";
 
 const Gate = () => {
     
@@ -32,7 +33,7 @@ const Gate = () => {
       <AuthLayout>
         {mode === 0 && <SignUpView switch={toggleMode} />}
         {mode === 1 && <LogInView switch={toggleMode} />}
-        {mode === 2 && <ResetPasswordView switch={toggleMode} />}
+        {mode === 2 && <MagicLinkView switch={toggleMode} />}
       </AuthLayout>
     </div>
   );
