@@ -191,7 +191,6 @@ const AddNewOrder = () => {
                 }
 
                 router.push("/orders");
-                
             } else {
                 createToast({
                     type: "error",
@@ -312,13 +311,15 @@ const AddNewOrder = () => {
                     {t("addNewOrderPage.SubmitButton")}
                 </button>
             </form>
+            {showAddNewAddressModal && (
+                <AddNewAddressModal
+                    show={showAddNewAddressModal}
+                    close={toggleAddNewAddressModal}
+                    update={mutateAddresses}
+                    updateuser={mutateUser}
+                />
+            )}
 
-            <AddNewAddressModal
-                show={showAddNewAddressModal}
-                close={toggleAddNewAddressModal}
-                update={mutateAddresses}
-                updateuser={mutateUser}
-            />
             {showEditUserAddressModal && (
                 <EditUserAddressModal
                     update={mutateAddresses}

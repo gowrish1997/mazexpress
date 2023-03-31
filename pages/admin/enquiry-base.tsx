@@ -6,20 +6,16 @@ import EnquiryBasePageHeader from "@/components/admin/EnquiryBasePageHeader";
 import BlankPage from "@/components/admin/BlankPage";
 import useEnquiry, { IEnquiry } from "@/lib/hooks/useEnquiry";
 const tableHeaders = ["Customer Email ID", "Mobile numbers", "Date", "Message"];
-
-const enquiryList = [
-    {
-        email: "alksnfdakdf",
-        phone: "234123",
-        created: "32423",
-        message: "fnasd",
-    },
-];
+import LoadingPage from "@/components/common/LoadingPage";
 
 const EnquiryBase = () => {
     const { enquiry, mutateEnquiry, enquiryIsLoading, enquiryError } =
         useEnquiry({});
     console.log(enquiry?.data);
+
+    if (enquiryIsLoading) {
+        <LoadingPage />;
+    }
 
     return (
         <>

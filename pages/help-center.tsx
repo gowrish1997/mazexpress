@@ -5,6 +5,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import HelpCenterView from "@/components/admin/help-center/modal/HelpCenterView";
+import LoadingPage from "@/components/common/LoadingPage";
+import useHelpCenter from "@/lib/hooks/useHelpCenter";
+import { IHelpCenter } from "@/lib/hooks/useHelpCenter";
 
 const HelpCenter = () => {
     const router = useRouter();
@@ -14,6 +17,9 @@ const HelpCenter = () => {
     const { t } = useTranslation("common");
     const { locale } = router;
 
+    const { helpCenters } = useHelpCenter();
+    console.log(helpCenters);
+
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";
         let lang = router.locale == "ar" ? "ar" : "en";
@@ -21,13 +27,11 @@ const HelpCenter = () => {
         document.querySelector("html")?.setAttribute("lang", lang);
     }, [router.locale]);
 
-    // useEffect(() => {
-    //     console.log("use efft");
-    //     router.push(router.asPath, router.asPath, { locale: "en" });
-    // }, []);
     return (
         <>
-           <HelpCenterView/>
+            {helpCenters?.data.length > 0 && (
+                <HelpCenterView data={helpCenters?.data} />
+            )}
         </>
     );
 };

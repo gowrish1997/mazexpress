@@ -14,7 +14,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import LoadingPage from "@/components/common/LoadingPage";
 import { SearchKeyContext } from "@/components/common/Frame";
 import { getDateInDBFormat } from "@/lib/utils";
-import ordersCount from "@/lib/hooks/useOrderCount";
 
 const tableHeaders = [
     "MAZ Tracking ID",
@@ -46,18 +45,7 @@ const MyOrders = () => {
         page: currentPage,
         date: getDateInDBFormat(createdDateFilterKey as Date),
     });
-    const {
-        orderCount,
-        mutateOrderCount,
-        orderCountIsLoading,
-        orderCountError,
-    } = ordersCount({
-        search: searchKey,
-        username: user?.email as string,
-        per_page: itemsPerPage,
-        page: currentPage,
-        date: getDateInDBFormat(createdDateFilterKey as Date),
-    });
+
     // console.log(orders);
     const router = useRouter();
     const { t } = useTranslation("common");

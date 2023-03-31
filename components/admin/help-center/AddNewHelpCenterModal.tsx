@@ -11,9 +11,7 @@ import { KeyedMutator } from "swr";
 import { AxiosResponse } from "axios";
 
 interface IProp {
-    show?: boolean;
-    close: (id?: string) => void;
-    data: IHelpCenter;
+    close: () => void;
     mutateHelpCenter?: KeyedMutator<AxiosResponse<IHelpCenter[], any>>;
 }
 interface IForm {
@@ -38,8 +36,7 @@ const schema = yup
     })
     .required();
 
-const EditHelpModal = (props: IProp) => {
-    console.log(props.data);
+const AddNewHelpCenterModal = (props: IProp) => {
     // const [data, setData] = useState(props.data);
 
     const {
@@ -49,16 +46,6 @@ const EditHelpModal = (props: IProp) => {
         control,
         formState: { errors },
     } = useForm<IForm>({
-        defaultValues: {
-            address_1: props.data.address_1,
-            address_2: props.data.address_2,
-            city: props.data.city,
-            country: props.data.country,
-            email: props.data.email,
-
-            mobile: props.data.mobile,
-            name: props.data.name,
-        },
         resolver: yupResolver(schema),
     });
 
@@ -66,15 +53,12 @@ const EditHelpModal = (props: IProp) => {
         console.log(data);
 
         try {
-            const helpUpdateResult = await fetchJson(
-                `/api/help-center/id/${props.data.id}`,
-                {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data),
-                }
-            );
-            
+            const helpUpdateResult = await fetchJson(`/api/help-center`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
             createToast({
                 type: "success",
                 title: "Success",
@@ -116,7 +100,7 @@ const EditHelpModal = (props: IProp) => {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">
-                        Edit Contact Details
+                       Add Contact Details
                     </p>
                     {/* <input
                             id="name_warehouse"
@@ -185,7 +169,7 @@ const EditHelpModal = (props: IProp) => {
                             className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
                             type="submit"
                         >
-                            Save edit
+                            Submit
                         </button>
 
                         <button
@@ -201,4 +185,4 @@ const EditHelpModal = (props: IProp) => {
     );
 };
 
-export default EditHelpModal;
+export default AddNewHelpCenterModal;

@@ -27,7 +27,12 @@ export default function useEnquiry(props: IProps) {
         mutate: mutateEnquiry,
         isLoading: enquiryIsLoading,
         error: enquiryError,
-    } = useSWR<APIResponse<IEnquiry>>(`/api/contact-form` + qs.stringified);
+    } = useSWR<APIResponse<IEnquiry>>(`/api/contact-form` + qs.stringified, {
+        revalidateOnFocus: false,
+        revalidateOnReconnect: true,
+        revalidateIfStale: true,
+        revalidateOnMount: true,
+    });
 
     return {
         enquiry,

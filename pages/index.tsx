@@ -185,7 +185,7 @@ const Index = () => {
                       // ref={ref}
                     >
                       <ul className=" w-full text-[#121212] text-[14px] font-[400] leading-[39px]  ">
-                        <li
+                        {/* <li
                           className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
                           onClick={() =>
                             trackingSectionRef?.current?.scrollIntoView({
@@ -194,7 +194,7 @@ const Index = () => {
                           }
                         >
                           {t(section[0])}
-                        </li>
+                        </li> */}
                         <li
                           className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
                           onClick={() =>
@@ -252,7 +252,7 @@ const Index = () => {
               </div>
 
               <ul className="flex-type3 gap-x-[20px] hidden min-[850px]:flex">
-                <li
+                {/* <li
                   className="cursor-pointer"
                   onClick={() =>
                     trackingSectionRef?.current?.scrollIntoView({
@@ -261,7 +261,7 @@ const Index = () => {
                   }
                 >
                   {t(section[0])}
-                </li>
+                </li> */}
                 <li
                   className="cursor-pointer"
                   onClick={() =>

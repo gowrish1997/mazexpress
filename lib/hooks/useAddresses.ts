@@ -25,7 +25,13 @@ export default function useAddresses(props: IProps) {
             ? props.username
                 ? `/api/addresses` + qs.stringified
                 : null
-            : `/api/addresses` + qs.stringified
+            : `/api/addresses` + qs.stringified,
+        {
+            revalidateOnFocus: false,
+            revalidateOnReconnect: true,
+            revalidateIfStale: true,
+            revalidateOnMount: true,
+        }
     );
 
     return {

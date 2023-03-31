@@ -32,6 +32,8 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                 status: ["read"],
             });
 
+        console.log(notifications);
+
         const [userNotifications, setUserNotifications] =
             useState<Notification[]>();
 
@@ -131,17 +133,23 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                     </div>
                     <div className="space-y-[20px]">
                         {notifications?.length > 0 ? (
-                            notifications?.map((data) => {
-                                return (
-                                    <EachNotification
-                                        id={data.id!}
-                                        data={data}
-                                        key={data.id}
-                                        delete={deleteNotification}
-                                        update={mutateNotifications}
-                                    />
-                                );
-                            })
+                            notifications
+                                ?.sort(
+                                    (a, b) =>
+                                        new Date(b.created_on).getTime() -
+                                        new Date(a.created_on).getTime()
+                                )
+                                .map((data) => {
+                                    return (
+                                        <EachNotification
+                                            id={data.id!}
+                                            data={data}
+                                            key={data.id}
+                                            delete={deleteNotification}
+                                            update={mutateNotifications}
+                                        />
+                                    );
+                                })
                         ) : (
                             <div className="text-[11px]">
                                 No notifications yet...

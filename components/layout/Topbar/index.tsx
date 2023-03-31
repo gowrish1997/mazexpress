@@ -121,14 +121,15 @@ const Topbar = () => {
                     />
                 </div>
             </div>
-
-            <NotificationView
-                close={toggleNotificationsHandler}
-                show={showNotifications}
-                trigger={trigger}
-                handler={smartToggleNotificationsHandler}
-                update={mutateNotifications}
-            />
+        {showNotifications && (
+                <NotificationView
+                    close={toggleNotificationsHandler}
+                    show={showNotifications}
+                    trigger={trigger}
+                    handler={smartToggleNotificationsHandler}
+                    update={mutateNotifications}
+                />
+            )}
         </>
     );
 };

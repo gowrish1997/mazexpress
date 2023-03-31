@@ -25,7 +25,7 @@ const tableHeaders = [
     "Store Link",
     "Reference ID",
     "Created Date",
-    // "Warehouse",
+    "Estimate delivery",
     "Status",
 ];
 
@@ -80,7 +80,7 @@ const PendingOrders = () => {
     };
 
     if (ordersIsLoading) {
-        // return <LoadingPage />;
+        return <LoadingPage />;
     }
     if (ordersError) {
         return <div>some error happened</div>;

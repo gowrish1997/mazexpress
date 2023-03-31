@@ -61,8 +61,8 @@ const Table = (props: TableProps) => {
                         {props.rows
                             .sort(
                                 (a, b) =>
-                                    new Date(a.created_on).getTime() -
-                                    new Date(b.created_on).getTime()
+                                    new Date(b.created_on).getTime() -
+                                    new Date(a.created_on).getTime()
                             )
                             .map((data, index) => {
                                 if (

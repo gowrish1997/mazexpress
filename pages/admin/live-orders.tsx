@@ -17,7 +17,8 @@ const tableHeaders = [
     "Store Link",
     "Reference ID",
     "Created Date",
-    //   "Warehouse",
+    "Estimate delivery",
+
     "Status",
 ];
 

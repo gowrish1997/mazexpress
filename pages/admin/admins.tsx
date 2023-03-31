@@ -17,7 +17,6 @@ import useUsers from "@/lib/hooks/useUsers";
 
 import { User } from "@/models/user.model";
 
-import useUserCount from "@/lib/hooks/useUserCount";
 import { getDateInDBFormat } from "@/lib/utils";
 
 const tableHeaders = [
@@ -65,16 +64,10 @@ const AdminBase = () => {
         date: getDateInDBFormat(createdDateFilterKey as Date),
     });
 
-    const { userCount } = useUserCount({
-        include_admins: true,
-        include_users: true,
-    });
-
     const [showAddNewAdminModal, setShowAddNewAdminModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User[]>();
 
     //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil((userCount || 0) / itemsPerPage);
 
     const currentPageHandler = (value: number) => {
         setCurrentPage(value);

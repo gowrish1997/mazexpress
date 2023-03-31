@@ -7,15 +7,13 @@ import BlankPage from "@/components/admin/BlankPage";
 import useUsers from "@/lib/hooks/useUsers";
 import useUsersCount from "@/lib/hooks/useUserCount";
 import { User } from "@/models/user.model";
-import ReactPaginateComponent from "@/components/admin/ReactPaginate";
+
 // import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";
 import LoadingPage from "@/components/common/LoadingPage";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getDateInDBFormat } from "@/lib/utils";
-
-import user from "../api/user";
 
 interface ISearchKeyContext {
     searchKey: any;
@@ -67,7 +65,6 @@ const UserBase = () => {
     // console.log(allUser);
 
     //   const currentUsers = filteredUsers?.slice(itemOffset, endOffset);
-  
 
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);

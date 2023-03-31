@@ -88,18 +88,24 @@ const TrackOrder = (props: any) => {
                             {t("trackingView.listOfTrackingId.Title")}
                         </div>
                         <div className="space-y-[10px]">
-                            {(orders?.data as Order[])?.map((data) => {
-                                return (
-                                    <Link
-                                        href={`/track/${data.maz_id}`}
-                                        key={data.id}
-                                    >
-                                        <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
-                                            {data.maz_id}
-                                        </p>
-                                    </Link>
-                                );
-                            })}
+                            {(orders?.data as Order[])
+                                ?.sort(
+                                    (a, b) =>
+                                        new Date(b.created_on).getTime() -
+                                        new Date(a.created_on).getTime()
+                                )
+                                .map((data) => {
+                                    return (
+                                        <Link
+                                            href={`/track/${data.maz_id}`}
+                                            key={data.id}
+                                        >
+                                            <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
+                                                {data.maz_id}
+                                            </p>
+                                        </Link>
+                                    );
+                                })}
                         </div>
                     </div>
                 </div>
