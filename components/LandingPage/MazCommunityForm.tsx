@@ -54,13 +54,14 @@ const MazCommunityForm = () => {
     });
 
     const onSubmit: SubmitHandler<any> = async (data) => {
+        console.log(data)
         const toList = [
             {
                 type: "enquiry",
                 toType: "admin",
                 header: "New enquiry ✨",
                 toName: "admin",
-                bodyContent: user_enquiry(),
+                bodyContent: user_enquiry(data.message),
                 userName: "",
                 userProfile: "",
                 userContactNumber: data.mobile,

@@ -37,8 +37,8 @@ const EnquiryReplyModal = (props: IProp) => {
             {
                 type: "enquiry",
                 toType: "user",
-                header: "Thank you for yout enquiry!",
-                toName: "",
+                header: "Thank you for your enquiry!",
+                toName: props.row.email,
                 toMail: props.row.email,
                 bodyContent: user_enquiry_reply(data.message),
                 buttonContent: "Let’s Get Started",

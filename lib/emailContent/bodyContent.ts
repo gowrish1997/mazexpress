@@ -59,13 +59,13 @@ function user_orderDelivered(order_id: string) {
         `Thank you for ordering with us. We are happy to inform you that your order No. ${order_id} has been delivered to you successfully. If you have any queries or concerns regarding your order, please feel free to contact us. We are always here to assist you.`,
     ];
 }
-function user_enquiry_reply(order_id: string) {
+function user_enquiry_reply(content: string) {
     return [
-        `Thank you for enquiry with us. we tried out best to answer your query, please feel free to contact us. We are always here to assist you.`,
+        `Thank you for enquiry with us. we tried out best to answer your query, please feel free to contact us. We are always here to assist you.`,`Answer for you enquiry: ${content}`
     ];
 }
-function user_enquiry() {
-    return [`You got new enquiry from user`];
+function user_enquiry(content: string) {
+    return [`You got new enquiry from user`, `User enquiry:${content } `];
 }
 
 export {

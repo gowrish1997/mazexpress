@@ -14,8 +14,9 @@ export const middleware = async (req: NextRequest) => {
     const truth_values = await isAuthenticated(req);
     const is_auth = truth_values[0];
     const is_admin = truth_values[1];
+    const is_English = truth_values[2];
 
-    // console.log(truth_values)
+    console.log(truth_values);
 
     if (is_auth) {
         // user is present do not allow login page
@@ -51,11 +52,28 @@ export const middleware = async (req: NextRequest) => {
         );
     }
 
-    if (req.nextUrl.locale == "ar" && req.url.includes("admin")) {
+    if (req.nextUrl.locale == "ar" && is_admin) {
         return NextResponse.redirect(
             new URL(`/en${req.nextUrl.pathname}`, req.url)
         );
     }
+
+    console.log( (req.nextUrl.locale == "en" ? "english" : "arabic"),(is_English ? "english" : "arabic"))
+
+    // if (
+    //     !is_admin &&
+    //     (req.nextUrl.locale == "en" ? "english" : "arabic") !=
+    //         (is_English ? "english" : "arabic")
+    // ) {
+    //     console.log("lasr");
+    //     return NextResponse.redirect(
+    //         new URL(
+    //             `/${is_English ? "en" : "ar"}${req.nextUrl.pathname}`,
+    //             req.url
+    //         )
+    //     );
+    // }
+
     return res;
 };
 
