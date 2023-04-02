@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,6 +7,15 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
+import { GetServerSidePropsContext } from "next";
+import { i18n } from "next-i18next";
+import { APIResponse } from "@/models/api.model";
+import { User } from "@/models/user.model";
+import fetchJson from "@/lib/fetchServer";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import useUser from "@/lib/hooks/useUser";
+import UserContext from "../context/user.context";
+import { createToast } from "@/lib/toasts";
 
 type Inputs = {
   password: string;
@@ -15,16 +24,15 @@ type Inputs = {
 
 const schema = yup
   .object({
-    password: yup
-      .string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        {
-          excludeEmptyString: true,
-          message:
-            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        }
-      ),
+    password: yup.string(),
+    //   .matches(
+    //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    //     {
+    //       excludeEmptyString: true,
+    //       message:
+    //         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+    //     }
+    //   ),
 
     confirmPassword: yup
       .string()
@@ -38,6 +46,8 @@ const ResetPasswordView = (props: any) => {
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
+  const { user, mutateUser } = useUser();
+  const { setUser } = useContext(UserContext);
 
   const {
     register,
@@ -61,7 +71,51 @@ const ResetPasswordView = (props: any) => {
     returnObjects: true,
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
+    console.log(props.user);
+
+    try {
+      const updateUserRes: APIResponse<User> = await fetchJson(
+        `/api/users/${props.user.email}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password: data.confirmPassword }),
+        }
+      );
+      console.log(updateUserRes);
+      if (updateUserRes.msg === "success") {
+        // done
+
+        // destroy link
+        const destroy = await fetchJson(`/api/magic-links/${props.user.email}`, {
+          method: "DELETE",
+        });
+        console.log(destroy)
+        if(destroy)
+
+        createToast({
+          type: "success",
+          message: "Changed password please log in.",
+          timeOut: 2000,
+          title: "Password updated.",
+        });
+      } else {
+        // failed
+        createToast({
+          type: "error",
+          message: "Password change failed contact dev.",
+          timeOut: 2000,
+          title: "Password update failed.",
+        });
+      }
+      router.push("/auth/gate");
+    } catch (error) {
+      // errored
+      console.log(error);
+    }
+  };
 
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
