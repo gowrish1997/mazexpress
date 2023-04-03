@@ -16,8 +16,6 @@ export const middleware = async (req: NextRequest) => {
     const is_admin = truth_values[1];
     const is_English = truth_values[2];
 
-    console.log(truth_values);
-
     if (is_auth) {
         // user is present do not allow login page
         if (req.nextUrl.pathname.startsWith("/auth")) {
@@ -36,13 +34,13 @@ export const middleware = async (req: NextRequest) => {
         }
 
         // comment to let admin on all routes
-        if (is_admin) {
-            if (!req.nextUrl.pathname.startsWith("/admin")) {
-                return NextResponse.redirect(new URL("/admin", req.url), {
-                    statusText: "Unauthorized.",
-                });
-            }
-        }
+        // if (is_admin) {
+        //     if (!req.nextUrl.pathname.startsWith("/admin")) {
+        //         return NextResponse.redirect(new URL("/admin", req.url), {
+        //             statusText: "Unauthorized.",
+        //         });
+        //     }
+        // }
     } else {
         return NextResponse.redirect(
             new URL("/auth/gate?please-log-in", req.url),
@@ -58,21 +56,26 @@ export const middleware = async (req: NextRequest) => {
         );
     }
 
-    console.log( (req.nextUrl.locale == "en" ? "english" : "arabic"),(is_English ? "english" : "arabic"))
+    console.log(
+        req.nextUrl.locale == "en" ? "english" : "arabic",
+        is_English ? "english" : "arabic"
+    );
 
-    // if (
-    //     !is_admin &&
-    //     (req.nextUrl.locale == "en" ? "english" : "arabic") !=
-    //         (is_English ? "english" : "arabic")
-    // ) {
-    //     console.log("lasr");
-    //     return NextResponse.redirect(
-    //         new URL(
-    //             `/${is_English ? "en" : "ar"}${req.nextUrl.pathname}`,
-    //             req.url
-    //         )
-    //     );
-    // }
+    if (
+        !is_admin &&
+        (req.nextUrl.locale == "en" ? "english" : "arabic") !=
+            (is_English ? "english" : "arabic")
+    ) {
+        if (is_English) {
+            return NextResponse.redirect(
+                new URL(`/en${req.nextUrl.pathname}`, req.url)
+            );
+        } else {
+            return NextResponse.redirect(
+                new URL(`/ar${req.nextUrl.pathname}`, req.url)
+            );
+        }
+    }
 
     return res;
 };

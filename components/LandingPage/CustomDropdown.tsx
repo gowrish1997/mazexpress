@@ -35,9 +35,9 @@ const genderHandler = (type: string, locale: string) => {
 const languageHandler = (type: string, locale: string) => {
     // console.log('type, locale', type, locale)
     switch (type) {
-        case "ar":
+        case "arabic":
             return locale == "en" ? "Arabic" : "عربي";
-        case "en":
+        case "english":
             return locale == "en" ? "English" : "إنجليزي";
     }
 };

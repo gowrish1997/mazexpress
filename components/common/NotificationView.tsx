@@ -16,7 +16,6 @@ interface IProp {
     show: boolean;
     trigger: RefObject<HTMLDivElement>;
     handler: () => void;
-    update: () => void;
 }
 
 const NotificationView = forwardRef<HTMLDivElement, IProp>(
@@ -29,16 +28,12 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
         const { notifications, notificationsIsLoading, mutateNotifications } =
             useNotifications({
                 username: user?.email,
-                status: ["read"],
+                status: ["unread"],
+                per_page: 5,
+                page: 1,
             });
 
-        console.log(notifications);
-
-        const [userNotifications, setUserNotifications] =
-            useState<Notification[]>();
-
         const deleteNotification = async (id: string) => {
-            console.log(id);
             try {
                 console.log("inside notificatons");
                 const deletedNotification = await fetchServer(
@@ -52,8 +47,6 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                     }
                 );
                 if (deletedNotification) {
-                    console.log("done delete");
-                    props.update();
                     mutateNotifications();
                 } else {
                     console.log("delete failed");
@@ -79,7 +72,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                     );
                     if (deletedNotification) {
                         console.log("done delete");
-                        props.update();
+
                         mutateNotifications();
                     } else {
                         console.log("delete failed");
@@ -91,11 +84,11 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             }
         };
 
-        useEffect(() => {
-            if (notifications !== undefined) {
-                setUserNotifications(notifications);
-            }
-        }, [notificationsIsLoading, notifications]);
+        // useEffect(() => {
+        //     if (notifications !== undefined) {
+        //         setUserNotifications(notifications);
+        //     }
+        // }, [notificationsIsLoading, notifications]);
 
         // useEffect(() => {
         //     console.log(userNotifications);

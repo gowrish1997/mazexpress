@@ -21,7 +21,7 @@ const UserSavedAddress = (props: {
     selectedAddressId?: any;
 }) => {
     const { user, mutateUser } = useUser();
-
+    console.log(user);
     const { t } = useTranslation("common");
     const content: string[] = t(
         "addressBookPage.userSavedAddressCard.Content",
@@ -82,6 +82,8 @@ const UserSavedAddress = (props: {
     };
 
     const updateUser = async (id: string) => {
+        console.log("update user");
+
         if (user) {
             if (props.type == "address-book") {
                 const updateResponse = await fetchServer(
@@ -93,7 +95,7 @@ const UserSavedAddress = (props: {
                     }
                 );
                 mutateUser();
-
+                console.log(updateResponse);
                 // props.update();
             } else {
                 props.updateDeliveryAddress?.(id);
