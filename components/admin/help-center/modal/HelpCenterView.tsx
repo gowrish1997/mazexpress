@@ -4,13 +4,14 @@ import Image from "next/image";
 import EditHelpModal from "@/components/admin/help-center/modal/EditHelpModal";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import fetchJson from "@/lib/fetchSelf";
+import fetchJson from "@/lib/fetchServer";
 import { useRouter } from "next/router";
 import { IHelpCenter } from "@/lib/hooks/useHelpCenter";
 import ContactLogo from "@/public/admin.png";
 import CallLogo from "@/public/mobile.png";
 import { KeyedMutator } from "swr";
 import { AxiosResponse } from "axios";
+import { createToast } from "@/lib/toasts";
 
 interface IProp {
     data: IHelpCenter[];
@@ -39,7 +40,23 @@ const HelpCenterView = (props: IProp) => {
         }
     };
 
-    const removeHelpCenter = (id: string) => {};
+    const removeHelpCenter = async (id: string) => {
+        try {
+            const result = await fetchJson(`/api/help-center/id/${id}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "applicaton/json" },
+            });
+            createToast({
+                type: "success",
+                title: "Success",
+                message: "Successfully removed help center",
+                timeOut: 3000,
+            });
+            props.mutateHelpCenter();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
@@ -47,14 +64,14 @@ const HelpCenterView = (props: IProp) => {
                 content="Help Center"
                 title="Help Center | MazExpress Admin"
             />
-            {props.data &&
-                props.data.map((data, index) => {
-                    return (
-                        <div
-                            key={index}
-                            className="grid grid-cols-3 gap-3 py-5"
-                        >
-                            <div className="min-w-[32%] min-h-[180px] bg-[#EDF5F9] rounded-[4px] p-[25px] ">
+            <div className="grid grid-cols-3 gap-3 py-5">
+                {props.data &&
+                    props.data.map((data, index) => {
+                        return (
+                            <div
+                                key={index}
+                                className=" border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] "
+                            >
                                 {/* <div className="flex-type3 space-x-[10px]">
                                     <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
                                         {data.comments}
@@ -123,10 +140,9 @@ const HelpCenterView = (props: IProp) => {
                                     </div>
                                 )}
                             </div>
-                        </div>
-                    );
-                })}
-
+                        );
+                    })}
+            </div>
             {showEditHelpModal && (
                 <EditHelpModal
                     close={toggleEditHelpModal}

@@ -148,7 +148,7 @@ const SignUpContent = (props: IProp) => {
                 toMail: data.user.email,
                 bodyContent: user_registerBodyContet(),
                 buttonContent: "Let’s Get Started",
-                redirectLink: "",
+                redirectLink: "http://localhost:3000/auth/gate?mode=1",
             },
         ];
         try {

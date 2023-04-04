@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import fetchServer from "@/lib/fetchServer";
@@ -9,6 +9,7 @@ import { capitalizeFirstLetter } from "@/lib/helper";
 import { Address } from "@/models/address.model";
 import useAddresses from "@/lib/hooks/useAddresses";
 import { constants } from "buffer";
+import UserContext from "../context/user.context";
 
 const UserSavedAddress = (props: {
     type: string;
@@ -20,8 +21,9 @@ const UserSavedAddress = (props: {
     updateDeliveryAddress?: (id: string) => void;
     selectedAddressId?: any;
 }) => {
-    const { user, mutateUser } = useUser();
-    console.log(user);
+    const { mutateUser } = useUser();
+    const { user } = useContext(UserContext);
+
     const { t } = useTranslation("common");
     const content: string[] = t(
         "addressBookPage.userSavedAddressCard.Content",
@@ -82,8 +84,6 @@ const UserSavedAddress = (props: {
     };
 
     const updateUser = async (id: string) => {
-        console.log("update user");
-
         if (user) {
             if (props.type == "address-book") {
                 const updateResponse = await fetchServer(
@@ -94,7 +94,7 @@ const UserSavedAddress = (props: {
                         body: JSON.stringify({ default_address: id }),
                     }
                 );
-                mutateUser();
+                mutateUser({ ...user, default_address: id }, true);
                 console.log(updateResponse);
                 // props.update();
             } else {

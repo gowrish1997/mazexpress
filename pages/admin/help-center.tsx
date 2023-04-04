@@ -25,7 +25,7 @@ const HelpCenter = () => {
     }
     return (
         <>
-            <div>
+            <div >
                 {helpCenters?.data.length > 0 && (
                     <HelpCenterView
                         data={helpCenters?.data}

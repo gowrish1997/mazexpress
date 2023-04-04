@@ -29,6 +29,8 @@ const AddressBook = () => {
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
+
+    console.log(user);
     console.log(addresses);
 
     useEffect(() => {

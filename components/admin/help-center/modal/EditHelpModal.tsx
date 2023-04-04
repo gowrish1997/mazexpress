@@ -23,7 +23,7 @@ interface IForm {
     country: string;
     email: string;
     mobile: string;
-    name: string;
+    name: string;se
 }
 
 const schema = yup
@@ -74,7 +74,7 @@ const EditHelpModal = (props: IProp) => {
                     body: JSON.stringify(data),
                 }
             );
-            
+
             createToast({
                 type: "success",
                 title: "Success",
@@ -86,26 +86,6 @@ const EditHelpModal = (props: IProp) => {
         } catch (error) {
             console.log(error);
         }
-
-        // props.update()
-
-        // console.log(addressResult)
-        // if (data.default_addresses === "on") {
-        //   const userResult = fetchJson(`/api/users?id=${user?.id_users}`, {
-        //     method: "PUT",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({ default_address_users: addressResult }),
-        //   });
-        //   if (user?.is_logged_in_users) {
-        //     // update user default
-        //     let newUserData = { ...user, default_address_user: addressResult };
-        //     mutateUser(newUserData, false);
-        //   }
-        // }
-
-        // console.log(result);
-        // props.close();
-        // props.update();
     };
 
     return (
@@ -126,58 +106,105 @@ const EditHelpModal = (props: IProp) => {
                             placeholder="Give first title @Home"
                         /> */}
                     <div className="w-full flex flex-row justify-start items-start gap-x-[10px]">
-                        <ReactHookFormInput
-                            label="Address 1"
+                        <Controller
                             name="address_1"
-                            type="string"
-                            register={register("address_1")}
-                            error={errors.address_1?.message}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label="Address 1"
+                                    name="address_1"
+                                    type="string"
+                                    onChange={onChange}
+                                    value={value}
+                                    error={errors.address_1?.message}
+                                />
+                            )}
                         />
-                        <ReactHookFormInput
-                            label="Address 2"
+                        <Controller
                             name="address_2"
-                            type="string"
-                            register={register("address_2")}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label="Address 2"
+                                    name="address_2"
+                                    type="string"
+                                    onChange={onChange}
+                                    value={value}
+                                />
+                            )}
                         />
                     </div>
                     <div className="w-full flex flex-row justify-start items-start gap-x-[10px]">
-                        <ReactHookFormInput
-                            label="City"
+                        <Controller
                             name="city"
-                            type="string"
-                            register={register("city")}
-                            error={errors.city?.message}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label="City"
+                                    name="city"
+                                    type="string"
+                                    value={value}
+                                    onChange={onChange}
+                                    error={errors.city?.message}
+                                />
+                            )}
                         />
-                        <ReactHookFormInput
-                            label="Country"
+                        <Controller
                             name="country"
-                            type="string"
-                            register={register("country")}
-                            error={errors.country?.message}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label="Country"
+                                    name="country"
+                                    type="string"
+                                    onChange={onChange}
+                                    value={value}
+                                    error={errors.country?.message}
+                                />
+                            )}
                         />
                     </div>
-
-                    <ReactHookFormInput
-                        label="Email"
+                    <Controller
                         name="email"
-                        type="string"
-                        register={register("email")}
-                        error={errors.email?.message}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <ReactHookFormInput
+                                label="Email"
+                                name="email"
+                                type="string"
+                                onChange={onChange}
+                                value={value}
+                                error={errors.email?.message}
+                            />
+                        )}
                     />
-                    <ReactHookFormInput
-                        label="Contact name"
+                    <Controller
                         name="name"
-                        type="string"
-                        register={register("name")}
-                        error={errors.name?.message}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <ReactHookFormInput
+                                label="Contact name"
+                                name="name"
+                                type="string"
+                                onChange={onChange}
+                                value={value}
+                                error={errors.name?.message}
+                            />
+                        )}
                     />
-
-                    <ReactHookFormInput
-                        label="Contact number"
+                    <Controller
                         name="mobile"
-                        type="string"
-                        register={register("mobile")}
-                        error={errors.mobile?.message}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <ReactHookFormInput
+                                label="Contact number"
+                                name="mobile"
+                                type="string"
+                                onChange={onChange}
+                                value={value}
+                                error={errors.mobile?.message}
+                            />
+                        )}
                     />
 
                     <div className="flex-type1 space-x-[10px] mt-[5px] ">

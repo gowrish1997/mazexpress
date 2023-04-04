@@ -61,6 +61,7 @@ body {
     color: #bbc2cf;
     letter-spacing: -0.011em;
     padding-left: 0px;
+    text-transform: capitalize;
 }
 
 input::-webkit-outer-spin-button,

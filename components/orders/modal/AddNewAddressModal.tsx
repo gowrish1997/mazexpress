@@ -107,6 +107,7 @@ const AddNewAddressModal = (props: IProp) => {
                 console.log(addressResult);
                 if (data.default || addresses?.length == 0) {
                     const userResult = await fetchJson(
+                        
                         `/api/users/${user?.email}`,
                         {
                             method: "PUT",

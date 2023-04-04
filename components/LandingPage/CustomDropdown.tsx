@@ -131,7 +131,7 @@ const CusotmDropdown = (props: IProp) => {
                     <></>
                 )}
             </div>
-            {showAdminOptionCard && (
+            {showAdminOptionCard && !props.disabled && (
                 <ClickOutside
                     handler={smartToggleGateHandler}
                     trigger={trigger}

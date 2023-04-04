@@ -20,7 +20,6 @@ interface IProps {
 
 export default function useNotifications(props: IProps) {
     let qs = new QS(props);
-    console.log(props);
 
     const {
         data: notifications,

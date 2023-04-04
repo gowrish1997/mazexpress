@@ -70,6 +70,8 @@ const adminIcon = (id: number) => {
             return <Helpcenter />;
         case 12:
             return <Enquiry />;
+        case 13:
+            return <Enquiry />;
         default:
             return "";
     }

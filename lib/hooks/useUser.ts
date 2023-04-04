@@ -15,34 +15,37 @@ import fetchJson from "../fetchServer";
 // use the current user profile from sessions
 
 export default function useUser() {
-  const user: User | null = useContext(UserContext)["user"];
-  const { setUser } = useContext(UserContext);
+    const user: User | null = useContext(UserContext)["user"];
+    const { setUser } = useContext(UserContext);
 
-  const router = useRouter();
-  async function retrieve(input: RequestInfo, init?: RequestInit) {
-    // console.log(input);
-    // check backend
-    const sess = await fetchJson(`/api/auth/`, init);
-    if (sess && sess.data) {
-      setUser(sess.data[0]);
-      return sess.data[0];
-    } else {
-      return user;
+    const router = useRouter();
+    async function retrieve(input: RequestInfo, init?: RequestInit) {
+        // console.log(input);
+        // check backend
+        const sess = await fetchJson(`/api/auth/`, init);
+        if (sess && sess.data) {
+            console.log(sess);
+            setUser(sess.data[0]);
+            return sess.data[0];
+        } else {
+            return user;
+        }
     }
-  }
-  const { data, mutate } = useSWR("user", retrieve);
+    const { data, mutate } = useSWR("user", retrieve);
 
-  async function ii_mutate(obj?: User | null, options?: boolean | unknown) {
-    if (options && obj) {
-      setUser(obj);
-      await mutate(obj, options);
-    } else {
-      await mutate(user, false);
+    async function ii_mutate(obj?: User | null, options?: boolean | unknown) {
+        if (options && obj) {
+            setUser(obj);
+            // await mutate(obj, options);
+            // await mutate();
+        } else {
+            // await mutate(user, false);
+            // await mutate();
+        }
     }
-  }
 
-  return {
-    user: data,
-    mutateUser: ii_mutate,
-  };
+    return {
+        user: data,
+        mutateUser: ii_mutate,
+    };
 }
