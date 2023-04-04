@@ -11,71 +11,71 @@ export const middleware = async (req: NextRequest) => {
     // add redirect to correct locale here...
 
     // add restrictions to user for admin routes
-    const truth_values = await isAuthenticated(req);
-    const is_auth = truth_values[0];
-    const is_admin = truth_values[1];
-    const is_English = truth_values[2];
+    // const truth_values = await isAuthenticated(req);
+    // const is_auth = truth_values[0];
+    // const is_admin = truth_values[1];
+    // const is_English = truth_values[2];
 
-    if (is_auth) {
-        // user is present do not allow login page
-        if (req.nextUrl.pathname.startsWith("/auth")) {
-            return NextResponse.redirect(new URL("/", req.url), {
-                statusText: "Unauthorized.",
-            });
-        }
+    // if (is_auth) {
+    //     // user is present do not allow login page
+    //     if (req.nextUrl.pathname.startsWith("/auth")) {
+    //         return NextResponse.redirect(new URL("/", req.url), {
+    //             statusText: "Unauthorized.",
+    //         });
+    //     }
 
-        // comment to let user on all routes
-        // if (!is_admin) {
-        //     if (req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
+    //     // comment to let user on all routes
+    //     // if (!is_admin) {
+    //     //     if (req.nextUrl.pathname.startsWith("/admin")) {
+    //     //         return NextResponse.redirect(new URL("/", req.url), {
+    //     //             statusText: "Unauthorized.",
+    //     //         });
+    //     //     }
+    //     // }
 
-        // comment to let admin on all routes
-        // if (is_admin) {
-        //     if (!req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/admin", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
-    } else {
-        return NextResponse.redirect(
-            new URL("/auth/gate?please-log-in", req.url),
-            {
-                statusText: "Unauthorized.",
-            }
-        );
-    }
+    //     // comment to let admin on all routes
+    //     // if (is_admin) {
+    //     //     if (!req.nextUrl.pathname.startsWith("/admin")) {
+    //     //         return NextResponse.redirect(new URL("/admin", req.url), {
+    //     //             statusText: "Unauthorized.",
+    //     //         });
+    //     //     }
+    //     // }
+    // } else {
+    //     return NextResponse.redirect(
+    //         new URL("/auth/gate?please-log-in", req.url),
+    //         {
+    //             statusText: "Unauthorized.",
+    //         }
+    //     );
+    // }
 
-    if (req.nextUrl.locale == "ar" && is_admin) {
-        return NextResponse.redirect(
-            new URL(`/en${req.nextUrl.pathname}`, req.url)
-        );
-    }
+    // if (req.nextUrl.locale == "ar" && is_admin) {
+    //     return NextResponse.redirect(
+    //         new URL(`/en${req.nextUrl.pathname}`, req.url)
+    //     );
+    // }
 
-    console.log(
-        req.nextUrl.locale == "en" ? "english" : "arabic",
-        is_English ? "english" : "arabic"
-    );
+    // console.log(
+    //     req.nextUrl.locale == "en" ? "english" : "arabic",
+    //     is_English ? "english" : "arabic"
+    // );
 
-    if (
-        !is_admin &&
-        (req.nextUrl.locale == "en" ? "english" : "arabic") !=
-            (is_English ? "english" : "arabic")
-    ) {
-        if (is_English) {
-            return NextResponse.redirect(
-                new URL(`/en${req.nextUrl.pathname}`, req.url)
-            );
-        } else {
-            return NextResponse.redirect(
-                new URL(`/ar${req.nextUrl.pathname}`, req.url)
-            );
-        }
-    }
+    // if (
+    //     !is_admin &&
+    //     (req.nextUrl.locale == "en" ? "english" : "arabic") !=
+    //         (is_English ? "english" : "arabic")
+    // ) {
+    //     if (is_English) {
+    //         return NextResponse.redirect(
+    //             new URL(`/en${req.nextUrl.pathname}`, req.url)
+    //         );
+    //     } else {
+    //         return NextResponse.redirect(
+    //             new URL(`/ar${req.nextUrl.pathname}`, req.url)
+    //         );
+    //     }
+    // }
 
     return res;
 };

@@ -20,17 +20,17 @@ config.autoAddCss = false;
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const { status: googleStatus } = useGoogle({});
-
-  const { user: sessUser, mutateUser } = useUser();
-  const [user, setUser] = useState<User | null>(sessUser);
+  
+  // const { status: googleStatus } = useGoogle({});
+  // const { user: sessUser, mutateUser } = useUser();
+  // const [user, setUser] = useState<User | null>(sessUser);
 
 
   useEffect(() => {
     // check backend session
-    if(sessUser){
-      setUser(sessUser)
-    }
+    // if(sessUser){
+    //   setUser(sessUser)
+    // }
     // // Check if the user was redirected from Arabic to English
     // const redirected = document.cookie.includes("i18n_redirected=true");
     // if (redirected) {
@@ -48,63 +48,95 @@ function App({ Component, pageProps }: AppProps) {
     // }
   }, []);
 
-  if (router.pathname.startsWith("/auth")) {
+
+  if (router.pathname.startsWith("/tstt")) {
     // no frame
     return (
-      <UserContext.Provider
-        value={{
-          user,
-          setUser,
-        }}
-      >
-        <SWRConfig
-          value={{
-            fetcher: fetchJson,
-            onError: (err: FetchError) => {
-              createToast({
-                type: "error",
-                title: err.name,
-                message: err.message,
-                timeOut: 3000,
-              });
-              // console.error(err);
-            },
-          }}
-        >
+      // <UserContext.Provider
+      //   value={{
+      //     user,
+      //     setUser,
+      //   }}
+      // >
+      //   <SWRConfig
+      //     value={{
+      //       fetcher: fetchJson,
+      //       onError: (err: FetchError) => {
+      //         createToast({
+      //           type: "error",
+      //           title: err.name,
+      //           message: err.message,
+      //           timeOut: 3000,
+      //         });
+      //         // console.error(err);
+      //       },
+      //     }}
+      //   >
           <Component {...pageProps} />
-          <NotificationContainer />
-        </SWRConfig>
-      </UserContext.Provider>
+      //     <NotificationContainer />
+      //   </SWRConfig>
+      // </UserContext.Provider>
     );
   }
-  return (
-    <UserContext.Provider
-      value={{
-        user,
-        setUser,
-      }}
-    >
-      <SWRConfig
-        value={{
-          fetcher: fetchJson,
-          onError: (err) => {
-            createToast({
-              type: "error",
-              title: err.name,
-              message: err.message,
-              timeOut: 3000,
-            });
-            // console.error(err);
-          },
-        }}
-      >
-        <Frame>
-          <Component {...pageProps} />
-          <NotificationContainer />
-        </Frame>
-      </SWRConfig>
-    </UserContext.Provider>
-  );
+
+
+  // if (router.pathname.startsWith("/auth")) {
+  //   // no frame
+  //   return (
+  //     <UserContext.Provider
+  //       value={{
+  //         user,
+  //         setUser,
+  //       }}
+  //     >
+  //       <SWRConfig
+  //         value={{
+  //           fetcher: fetchJson,
+  //           onError: (err: FetchError) => {
+  //             createToast({
+  //               type: "error",
+  //               title: err.name,
+  //               message: err.message,
+  //               timeOut: 3000,
+  //             });
+  //             // console.error(err);
+  //           },
+  //         }}
+  //       >
+  //         <Component {...pageProps} />
+  //         <NotificationContainer />
+  //       </SWRConfig>
+  //     </UserContext.Provider>
+  //   );
+  // }
+  // return (
+  //   <UserContext.Provider
+  //     value={{
+  //       user,
+  //       setUser,
+  //     }}
+  //   >
+  //     <SWRConfig
+  //       value={{
+  //         fetcher: fetchJson,
+  //         onError: (err) => {
+  //           createToast({
+  //             type: "error",
+  //             title: err.name,
+  //             message: err.message,
+  //             timeOut: 3000,
+  //           });
+  //           // console.error(err);
+  //         },
+  //       }}
+  //     >
+  //       <Frame>
+  //         <Component {...pageProps} />
+  //         <NotificationContainer />
+  //       </Frame>
+  //     </SWRConfig>
+  //   </UserContext.Provider>
+  // );
 }
 
 export default appWithTranslation(App);
