@@ -7,6 +7,8 @@ import {
 } from "@/lib/emailContent/bodyContent";
 import { User } from "@/models/user.model";
 import axios from "axios";
+import { sentMail } from "./sentMail";
+
 export const selectOrder = (
     value: any,
     type: any,
@@ -66,13 +68,22 @@ export const selectOrder = (
     }
 };
 
-export const getUserIdList = (order: any) => {
+export const getOrderIdList = (order: any) => {
     const userIdList = order?.map((data: any) => {
-        return (data as Order).user?.id;
+        return (data as Order)?.id;
     });
 
     let userListString = userIdList?.toString();
     return userListString;
+};
+
+export const getUserEmail = (user: any) => {
+    const userEmailList = user?.map((data: any) => {
+        return data?.email;
+    });
+
+    let userEmailListString = userEmailList?.toString();
+    return userEmailListString;
 };
 
 export const bulkActionHandler = async (
@@ -85,10 +96,10 @@ export const bulkActionHandler = async (
 ) => {
     let sendNotification = true;
 
-    for (let i = 0; i < selectedOrder?.length!; i++) {
-        let rowFixed: Order = selectedOrder?.[i] as Order;
-        if (execute) {
-            try {
+    try {
+        for (let i = 0; i < selectedOrder?.length!; i++) {
+            let rowFixed: Order = selectedOrder?.[i] as Order;
+            if (execute) {
                 const result0 = await fetchServer(
                     `/api/orders/${rowFixed.maz_id}`,
                     {
@@ -97,73 +108,55 @@ export const bulkActionHandler = async (
                         body: JSON.stringify({ status: status }),
                     }
                 );
-            } catch (error) {
-                console.log(error);
             }
-        }
 
-        if (status == "out-for-delivery") {
-            const toList = [
-                {
-                    type: "dispatched",
-                    toType: "user",
-                    header: "Your order has dispatched",
-                    toName:
-                        selectedOrder[i].user.first_name +
-                        " " +
-                        selectedOrder[i].user.last_name,
-                    toMail: selectedOrder[i].user.email,
-                    bodyContent: user_orderDispatched(
-                        selectedOrder[i].id,
-                        selectedOrder[i].maz_id
-                    ),
-                    buttonContent: "Let’s Get Started",
-                    redirectLink: "",
-                },
-            ];
+            if (status == "out-for-delivery") {
+                const toList = [
+                    {
+                        type: "dispatched",
+                        toType: "user",
+                        header: "Your order has dispatched",
+                        toName:
+                            selectedOrder[i].user.first_name +
+                            " " +
+                            selectedOrder[i].user.last_name,
+                        toMail: selectedOrder[i].user.email,
+                        bodyContent: user_orderDispatched(
+                            selectedOrder[i].id,
+                            selectedOrder[i].maz_id
+                        ),
+                        buttonContent: "Let’s Get Started",
+                        redirectLink: "",
+                    },
+                ];
 
-            axios
-                .post("/api/emailTemplate", toList)
-                .then((data) => {
-                    console.log(data.data.body[0].html);
-                    // console.log(data.data.body.html);
-                    // setHtmlCode(data.data.body);
-                })
-                .catch((error) => {
-                    console.log("error", error);
-                });
-        }
+                /**sending mail */
 
-        if (status == "delivered") {
-            const toList = [
-                {
-                    type: "delivered",
-                    toType: "user",
-                    header: "Your order has delivered",
-                    toName:
-                        selectedOrder[i].user.first_name +
-                        " " +
-                        selectedOrder[i].user.last_name,
-                    toMail: selectedOrder[i].user.email,
-                    bodyContent: user_orderDelivered(selectedOrder[i].id),
-                    buttonContent: "Let’s Get Started",
-                    redirectLink: "",
-                },
-            ];
+                sentMail(toList);
+            }
 
-            axios
-                .post("/api/emailTemplate", toList)
-                .then((data) => {
-                    console.log(data.data.body[0].html);
-                    // console.log(data.data.body.html);
-                    // setHtmlCode(data.data.body);
-                })
-                .catch((error) => {
-                    console.log("error", error);
-                });
-        }
+            if (status == "delivered") {
+                const toList = [
+                    {
+                        type: "delivered",
+                        toType: "user",
+                        header: "Your order has delivered",
+                        toName:
+                            selectedOrder[i].user.first_name +
+                            " " +
+                            selectedOrder[i].user.last_name,
+                        toMail: selectedOrder[i].user.email,
+                        bodyContent: user_orderDelivered(selectedOrder[i].id),
+                        buttonContent: "Let’s Get Started",
+                        redirectLink: "",
+                    },
+                ];
 
-        try {
+                /**sending mail */
+
+                sentMail(toList);
+            }
+
             const result0_2 = await fetchServer(
                 `/api/tracking/${rowFixed.maz_id}`,
                 {
@@ -174,15 +167,11 @@ export const bulkActionHandler = async (
                     }),
                 }
             );
-        } catch (error) {
-            console.error(error);
-        }
 
-        if (rowFixed.user?.is_notifications_enabled) {
-            // get admin notification on backend
-            // send notification post
+            if (rowFixed.user?.is_notifications_enabled) {
+                // get admin notification on backend
+                // send notification post
 
-            try {
                 const deliveredMessage = {
                     title: title,
                     content: `Your order number ${rowFixed.id} ${content}`,
@@ -206,12 +195,11 @@ export const bulkActionHandler = async (
                 } else {
                     sendNotification = false;
                 }
-            } catch (error) {
-                console.error(error);
             }
         }
+    } catch (error) {
+        throw Error(error);
     }
-    return sendNotification;
 };
 
 export const singleOrderAction = async (
@@ -274,16 +262,13 @@ export const singleOrderAction = async (
             },
         ];
 
-        axios
-            .post("/api/emailTemplate", toList)
-            .then((data) => {
-                console.log(data.data.body[0].html);
-                // console.log(data.data.body.html);
-                // setHtmlCode(data.data.body);
-            })
-            .catch((error) => {
-                console.log("error", error);
-            });
+        /**sending mail */
+
+        try {
+            sentMail(toList);
+        } catch (error) {
+            console.log(error);
+        }
     }
     if (status == "delivered") {
         const toList = [
@@ -302,16 +287,13 @@ export const singleOrderAction = async (
             },
         ];
 
-        axios
-            .post("/api/emailTemplate", toList)
-            .then((data) => {
-                console.log(data.data.body[0].html);
-                // console.log(data.data.body.html);
-                // setHtmlCode(data.data.body);
-            })
-            .catch((error) => {
-                console.log("error", error);
-            });
+        /**sending mail */
+
+        try {
+            sentMail(toList);
+        } catch (error) {
+            console.log(error);
+        }
     }
     try {
         const result0_2 = await fetchServer(

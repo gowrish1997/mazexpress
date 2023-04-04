@@ -82,7 +82,6 @@ const Settings = () => {
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
-    console.log(user)
 
     const [passwordCheck, setPasswordCheck] = useState(false);
 
@@ -196,7 +195,7 @@ const Settings = () => {
             | "is_notifications_enabled"
         > & { newPassword: string }
     > = async (data) => {
-        console.log("settings submission", data);
+        console.log(data);
         try {
             // console.log(result);
             if (!passwordCheck && getValues("password").length > 0) {
@@ -212,7 +211,6 @@ const Settings = () => {
                 return;
             }
 
-            console.log("crossed if block");
             // update user here
             let sendObj: Pick<
                 User,
@@ -226,18 +224,24 @@ const Settings = () => {
                 | "is_notifications_enabled"
             > & { newPassword?: string } = {
                 ...data,
-                password: data.newPassword,
             };
-            delete sendObj.newPassword;
 
-            // console.log("sendObj", sendObj);
+            if (data.newPassword && data.newPassword.length > 0) {
+                console.log("if block");
+                sendObj.password = data.newPassword;
+                delete sendObj.newPassword;
+            } else {
+                console.log("else block");
+                delete sendObj.newPassword;
+                delete sendObj.password;
+            }
 
             const updateRes = await fetchJson(`/api/users/${user?.email}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(sendObj),
             });
-            // console.log(updateRes)
+            console.log(updateRes);
 
             if (updateRes.ok === true) {
                 createToast({
@@ -266,7 +270,6 @@ const Settings = () => {
     };
 
     const updatePasswordChecker = async (e: string) => {
-        console.log(e);
         setValue("password", e as string);
         const reee = await checkPassword(e, user?.email!);
         // console.log(reee);
@@ -425,7 +428,11 @@ const Settings = () => {
                                     />
                                 </div>
                             ) : (
-                                <div className="border border-green-600 rounded-full absolute -right-7 bottom-[14px] flex items-center justify-center h-5 w-5">
+                                <div
+                                    className={`border border-green-600 rounded-full absolute ${
+                                        locale == "en" ? "-right-7" : "-left-7"
+                                    }  bottom-[14px] flex items-center justify-center h-5 w-5`}
+                                >
                                     <FontAwesomeIcon
                                         icon={faCheck}
                                         size="xs"

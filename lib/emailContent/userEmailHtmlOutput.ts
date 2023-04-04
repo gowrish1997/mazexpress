@@ -1,9 +1,24 @@
 import mjml2html from "mjml";
-{/**
+import fetchJson from "../fetchServer";
+{
+    /**
 image handler can be used to control the image based to emailType wheterh it is register confirmed or delivered or dispatched according to that we can send image url
-*/}
-const imageHanlder = (type: string) => {};
-export const userMailBody = (type: string, header: string, toName: string, bodyContent: string[], button: string,linkToRedirect:string) => {
+*/
+}
+const imageHanlder =async () => {
+    console.log("image handler")
+    const data = await fetchJson(`/assets/maz_logo.png`);
+    console.log(data);
+    return data
+};
+export const userMailBody = (
+    type: string,
+    header: string,
+    toName: string,
+    bodyContent: string[],
+    button: string,
+    linkToRedirect: string
+) => {
     const userHtmlOutput = mjml2html(`
         <mjml>
         <mj-head>
@@ -38,7 +53,13 @@ export const userMailBody = (type: string, header: string, toName: string, bodyC
     <mj-section background-color="#FFFFFF" padding="10px"  >
     <mj-column>
 
-    ${(type=='register' || type=='ordered' || type=="dispatched" || type=="delivered") && `<mj-image align="left" width="433px" height="282px" src="/email_logo.png"></mj-image>`}
+    ${
+        (type == "register" ||
+            type == "ordered" ||
+            type == "dispatched" ||
+            type == "delivered") &&
+        `<mj-image align="left" width="433px" height="282px" src=${imageHanlder()}></mj-image>`
+    }
 
     <mj-text  align="left" color="#121A26" font-size="20px" line-height="30px"  >
     ${header}
@@ -53,7 +74,12 @@ export const userMailBody = (type: string, header: string, toName: string, bodyC
     ${data}
     </mj-text>`;
     })}
-    ${(type=='register' || type=='password_changed' || type=="forgot_password") && `  <mj-button  padding-left="0px" padding-bittom="0px" padding-left="0px" align="left font-family="manRope" background-color="#35C6F4" >${button}</mj-button>`}
+    ${
+        (type == "register" ||
+            type == "password_changed" ||
+            type == "forgot_password") &&
+        `  <mj-button href=${linkToRedirect}  padding-left="0px" padding-bittom="0px" padding-left="0px" align="left font-family="manRope" background-color="#35C6F4" >${button}</mj-button>`
+    }
 
     <mj-text  align="left" mj-class="content_text" padding-top="20px">
     Thanks

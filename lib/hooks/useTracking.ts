@@ -32,9 +32,10 @@ export default function useTracking(props: IProps) {
     props.maz_id ? `/api/tracking/${props.maz_id}` + qs.stringified : null,
     {
       revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      revalidateIfStale: false,
-    }
+      revalidateOnReconnect: true,
+      revalidateIfStale: true,
+      revalidateOnMount: true,
+  }
   );
 
   return { tracking: tracking?.data, mutateTracking, trackingIsLoading };

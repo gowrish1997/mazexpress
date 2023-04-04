@@ -17,7 +17,8 @@ const tableHeaders = [
     "Store Link",
     "Reference ID",
     "Created Date",
-    //   "Warehouse",
+    "Estimate delivery",
+
     "Status",
 ];
 
@@ -52,7 +53,6 @@ const LiveOrders = () => {
     });
 
     const { locales, locale: activeLocale } = router;
-    console.log(router.pathname);
 
     // useEffect(() => {
     //     // console.log("use efft");
@@ -141,13 +141,24 @@ const LiveOrders = () => {
 };
 
 export default LiveOrders;
-export async function getStaticProps({ locale }: { locale: any }) {
+export async function getStaticProps(context: any) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
     }
+    const { locale } = context;
+    const { params, pathname } = context;
+
+    console.log(params);
+
     return {
         props: {
             ...(await serverSideTranslations(locale, ["common"])),
         },
+        // redirect: {
+        //     destination:
+        //         locale == "ar"
+        //             ? `/en/admin/live-orders`
+        //             : "/en/admin/live-orders",
+        // },
     };
 }

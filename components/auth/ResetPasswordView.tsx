@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,9 +7,17 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
+import { GetServerSidePropsContext } from "next";
+import { i18n } from "next-i18next";
+import { APIResponse } from "@/models/api.model";
+import { User } from "@/models/user.model";
 import fetchJson from "@/lib/fetchServer";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import useUser from "@/lib/hooks/useUser";
+import UserContext from "../context/user.context";
 import { createToast } from "@/lib/toasts";
-import { FetchError } from "@/lib/fetchSelf";
+import { user_passwordChangedContent } from "@/lib/emailContent/bodyContent";
+import { sentMail } from "@/lib/sentMail";
 
 type Inputs = {
     password: string;
@@ -18,16 +26,15 @@ type Inputs = {
 
 const schema = yup
     .object({
-        password: yup
-            .string()
-            .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                {
-                    excludeEmptyString: true,
-                    message:
-                        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-                }
-            ),
+        password: yup.string(),
+        //   .matches(
+        //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        //     {
+        //       excludeEmptyString: true,
+        //       message:
+        //         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+        //     }
+        //   ),
 
         confirmPassword: yup
             .string()
@@ -41,6 +48,8 @@ const ResetPasswordView = (props: any) => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
+    const { user, mutateUser } = useUser();
+    const { setUser } = useContext(UserContext);
 
     const {
         register,
@@ -65,55 +74,67 @@ const ResetPasswordView = (props: any) => {
     });
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        console.log(data);
+        console.log(props.user);
+
         try {
-            const userResult = await fetchJson(`/api/users/test@testco.com`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ password: data.password }),
-            });
+            const updateUserRes: APIResponse<User> = await fetchJson(
+                `/api/users/${props.user.email}`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ password: data.confirmPassword }),
+                }
+            );
 
-            console.log(userResult); // id created
+            if (updateUserRes.msg === "success") {
+                const toList = [
+                    {
+                        type: "password_changed",
+                        toType: "user",
+                        header: "Your Maz Express Password has been changed successfully ✨",
+                        toName: props.user.first_name,
+                        toMail: props.user.email,
+                        bodyContent: user_passwordChangedContent(),
+                        buttonContent: "Login now",
+                        redirectLink: "http://localhost:3000/auth/gate?mode=1",
+                    },
+                ];
+                try {
+                    sentMail(toList);
+                } catch (error) {
+                    console.log(error);
+                }
+                // done
 
-            // add address
-            // const addressResult = await fetchServer(
-            //     `/api/addresses/${userResult.data[0].email}`,
-            //     {
-            //         method: "POST",
-            //         headers: { "Content-Type": "application/json" },
-            //         body: JSON.stringify({
-            //             ...data.addr,
-            //         }),
-            //     }
-            // );
+                // destroy link
+                const destroy = await fetchJson(
+                    `/api/magic-links/${props.user.email}`,
+                    {
+                        method: "DELETE",
+                    }
+                );
 
-            // console.log(addressResult.data);
-            // if (userResult.ok === true && addressResult.ok === true) {
-            if (userResult.ok === true) {
-                // toast
-                createToast({
-                    type: "success",
-                    title: "New user created.",
-                    message: "Please log in with your new login credentials",
-                    timeOut: 3000,
-                });
-
-                // send to login page with cred
-                props.switch?.(1);
+                if (destroy)
+                    createToast({
+                        type: "success",
+                        message: "Changed password please log in.",
+                        timeOut: 2000,
+                        title: "Password updated.",
+                    });
             } else {
-                // toast
+                // failed
                 createToast({
                     type: "error",
-                    title: "Sign up failed.",
-                    message: "Please try again.",
-                    timeOut: 3000,
+                    message: "Password change failed contact dev.",
+                    timeOut: 2000,
+                    title: "Password update failed.",
                 });
             }
+            router.push("/auth/gate");
         } catch (error) {
-            if (error instanceof FetchError) {
-                console.log(error);
-            } else {
-                console.error("An unexpected error happened:", error);
-            }
+            // errored
+            console.log(error);
         }
     };
 
@@ -207,10 +228,10 @@ const ResetPasswordView = (props: any) => {
                     {submitButtons[0]}
                 </button>
                 <div className="text-center w-full text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[10px] ">
-                    <p>
-                        {discription[0]}{" "}
-                        <span className="text-[#0057FF]">{discription[1]}</span>
-                    </p>
+                    {/* <p>
+            {discription[0]}{" "}
+            <span className="text-[#0057FF]">{discription[1]}</span>
+          </p> */}
                     <p>
                         {discription[2]}
                         <span

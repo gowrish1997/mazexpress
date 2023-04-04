@@ -9,9 +9,12 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { getDateInStringFormat } from "@/lib/helper";
 import Calendar from "react-calendar";
 import { createToast } from "@/lib/toasts";
+import { KeyedMutator } from "swr";
+import { APIResponse } from "@/models/api.model";
 interface IProp {
     row: Order;
     close: () => void;
+    mutateOrder: KeyedMutator<APIResponse<Order>>;
 }
 const DeliveryDateChangeModal = (props: IProp) => {
     const [filterDate, setFilterDate] = useState<Date | string>("");
@@ -43,6 +46,7 @@ const DeliveryDateChangeModal = (props: IProp) => {
                     }`,
                     timeOut: 2000,
                 });
+                props.mutateOrder();
             } else {
                 createToast({
                     type: "error",
@@ -51,6 +55,7 @@ const DeliveryDateChangeModal = (props: IProp) => {
                     timeOut: 2000,
                 });
             }
+            props.close();
         } catch (error) {
             console.error(error);
         }

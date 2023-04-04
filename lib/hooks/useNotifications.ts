@@ -9,31 +9,35 @@ import useSWR from "swr";
 // :
 
 interface IProps {
-  type?: string;
-  //   id?: string;
-  username?: string;
-  search?: string;
-  page?: number;
-  per_page?: number;
-  status?: string[];
+    type?: string;
+    //   id?: string;
+    username?: string;
+    search?: string;
+    page?: number;
+    per_page?: number;
+    status?: string[];
 }
 
 export default function useNotifications(props: IProps) {
-  let qs = new QS(props);
+    let qs = new QS(props);
 
-  const {
-    data: notifications,
-    mutate: mutateNotifications,
-    isLoading: notificationsIsLoading,
-  } = useSWR<APIResponse<Notification>>(`/api/notifications` + qs.stringified, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    revalidateIfStale: false,
-  });
+    const {
+        data: notifications,
+        mutate: mutateNotifications,
+        isLoading: notificationsIsLoading,
+    } = useSWR<APIResponse<Notification>>(
+        `/api/notifications` + qs.stringified,
+        {
+            revalidateOnFocus: false,
+            revalidateOnReconnect: true,
+            revalidateIfStale: true,
+            revalidateOnMount: true,
+        }
+    );
 
-  return {
-    notifications: notifications?.data as Notification[],
-    mutateNotifications,
-    notificationsIsLoading,
-  };
+    return {
+        notifications: notifications?.data as Notification[],
+        mutateNotifications,
+        notificationsIsLoading,
+    };
 }
