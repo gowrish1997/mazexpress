@@ -46,12 +46,13 @@ const EnquiryLineItem = (props: IProp) => {
 
                     <td
                         className=""
+                        ref={trigger}
                         // onClick={(e) => optionModalHandler(e, index)}
                     >
                         <div className="w-full h-full ">
                             <div
                                 onClick={toggleGateHandler}
-                                ref={trigger}
+                               
                                 className="cursor-pointer relative"
                             >
                                 <Image

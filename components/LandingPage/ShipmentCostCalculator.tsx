@@ -71,18 +71,20 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
         });
 
         const onSubmit: SubmitHandler<any> = async (data) => {
-            console.log(data);
             try {
                 const result = await fetchJson(`/api/shipping`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data),
                 });
+
                 if (result.data) {
-                    // setMessage("");
+                    setMessage("");
                     setCost(result.data[0].cost);
                 } else {
-                    setCost(result.message);
+                    setCost(0);
+                    console.log(result.msg);
+                    setMessage(result.msg);
                 }
             } catch (error) {
                 console.log(error);
@@ -164,11 +166,8 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                                 <div className="flex-type2">
                                     {dimensions.map((data, index) => {
                                         return (
-                                            <div>
-                                                <div
-                                                    key={index}
-                                                    className="flex-type1"
-                                                >
+                                            <div key={index}>
+                                                <div className="flex-type1">
                                                     <div
                                                         className={
                                                             "w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[46px] relative"
@@ -253,6 +252,8 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                                 className="w-full text-center text-[14px] text-[#35C6F4] font-[500] leading-[19px] cursor-pointer "
                                 onClick={() => {
                                     reset();
+                                    setMessage("");
+                                    setCost(0);
                                 }}
                             >
                                 {t(
@@ -264,9 +265,13 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                             <p className="text-[24px] text-[#121212] font-[700] leading-[50px] mb-[5px] mt-[20px] ">
                                 Shipment cost:
                                 {cost ? (
-                                    <span>{Math.ceil(cost)} $</span>
+                                    <span className="text-[#35C6F4] ml-[5px] ">
+                                        {Math.ceil(cost)} $
+                                    </span>
                                 ) : (
-                                    <span>{message}</span>
+                                    <span className="capitalize ml-[5px] text-[14px] text-[#f02849] mb-[-10px] leading-[16px]">
+                                        {message}
+                                    </span>
                                 )}
                             </p>
                         </div>

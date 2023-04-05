@@ -85,7 +85,7 @@ const LineItem = (props: IProp) => {
             <td className={`td4`}>
                 {props.row.est_delivery
                     ? getDateInStringFormat(props.row.est_delivery)
-                    : <span>...</span>}
+                    : <span>{"..."}</span>}
             </td>
             <td className={`td5 `} style={{}}>
                 <div className="flex flex-row items-center">

@@ -16,7 +16,7 @@ interface IProp {
 const schema = yup
     .object({
         subject: yup.string().required("subject is required field"),
-        message: yup.string().required("message 01 is required field"),
+        message: yup.string().required("message is required field"),
     })
     .required();
 const EnquiryReplyModal = (props: IProp) => {
@@ -87,7 +87,7 @@ const EnquiryReplyModal = (props: IProp) => {
                         />
                         {errors.subject?.message && (
                             <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                                sdf
+                                {errors.subject?.message as string}
                             </p>
                         )}
                     </div>
@@ -113,7 +113,7 @@ const EnquiryReplyModal = (props: IProp) => {
                         </div>
                         {errors.message?.message && (
                             <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                                asd
+                                {errors.message?.message as string}
                             </p>
                         )}
                     </div>

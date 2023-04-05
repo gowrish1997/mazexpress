@@ -53,7 +53,8 @@ const Topbar = () => {
                         id="searchbar"
                         type="text"
                         placeholder={
-                            router.pathname.includes("users")
+                            router.pathname.includes("users") ||
+                            router.pathname.includes("admins")
                                 ? placeholder[0]
                                 : placeholder[1]
                         }
