@@ -16,7 +16,7 @@ const ClickOutside = (props: IProp) => {
       className={
         props.className !== undefined
           ? props.className + "" + ""
-          : "absolute top-0 left-0 w-full"
+          : "absolute w-full"
       }
     >
       {props.children}

@@ -224,7 +224,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             <ClickOutside
                 handler={props.handler}
                 trigger={props.trigger}
-                className="z-50 absolute top-0 left-0 w-full"
+                className="z-20 absolute top-0 left-0 w-full"
             >
                 <div
                     className="absolute top-[40px] right-[15px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] flex flex-col justify-between items-start p-[10px]"

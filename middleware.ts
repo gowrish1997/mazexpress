@@ -16,39 +16,39 @@ export const middleware = async (req: NextRequest) => {
     const is_admin = truth_values[1];
     const is_English = truth_values[2];
 
-    if (is_auth) {
-        // user is present do not allow login page
-        if (req.nextUrl.pathname.startsWith("/auth")) {
-            return NextResponse.redirect(new URL("/", req.url), {
-                statusText: "Unauthorized.",
-            });
-        }
+    // if (is_auth) {
+    //     // user is present do not allow login page
+    //     if (req.nextUrl.pathname.startsWith("/auth")) {
+    //         return NextResponse.redirect(new URL("/", req.url), {
+    //             statusText: "Unauthorized.",
+    //         });
+    //     }
 
-        // comment to let user on all routes
-        // if (!is_admin) {
-        //     if (req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
+    // comment to let user on all routes
+    // if (!is_admin) {
+    //     if (req.nextUrl.pathname.startsWith("/admin")) {
+    //         return NextResponse.redirect(new URL("/", req.url), {
+    //             statusText: "Unauthorized.",
+    //         });
+    //     }
+    // }
 
-        // comment to let admin on all routes
-        // if (is_admin) {
-        //     if (!req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/admin", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
-    } else {
-        return NextResponse.redirect(
-            new URL("/auth/gate?please-log-in", req.url),
-            {
-                statusText: "Unauthorized.",
-            }
-        );
-    }
+    // comment to let admin on all routes
+    // if (is_admin) {
+    //     if (!req.nextUrl.pathname.startsWith("/admin")) {
+    //         return NextResponse.redirect(new URL("/admin", req.url), {
+    //             statusText: "Unauthorized.",
+    //         });
+    //     }
+    // }
+    // } else {
+    //     return NextResponse.redirect(
+    //         new URL("/auth/gate?please-log-in", req.url),
+    //         {
+    //             statusText: "Unauthorized.",
+    //         }
+    //     );
+    // }
 
     if (req.nextUrl.locale == "ar" && is_admin) {
         return NextResponse.redirect(
@@ -93,10 +93,10 @@ export const config = {
 
         // deploy
         // match all except these links
-        "/((?!api|_next/static|_next/image|favicon.ico|image|auth|$).*)",
+        // "/((?!api|_next/static|_next/image|favicon.ico|image|auth|$).*)",
 
         // dev
         // match none
-        // "/((?!.*).*)",
+        "/((?!.*).*)",
     ],
 };
