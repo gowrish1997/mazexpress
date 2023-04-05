@@ -196,19 +196,12 @@ const Settings = () => {
                 body: JSON.stringify(sendObj),
             });
             // console.log(updateRes)
-            if (updateRes.ok === true) {
-                createToast({
-                    type: "success",
-                    title: "Success",
-                    message: "Updated user.",
-                });
-            } else {
-                createToast({
-                    type: "error",
-                    title: "Error in user update, contact dev",
-                    message: "Update user failed.",
-                });
-            }
+
+            createToast({
+                type: "success",
+                title: "success",
+                message: "Updated user.",
+            });
         } catch (err) {
             console.error(err);
             createToast({

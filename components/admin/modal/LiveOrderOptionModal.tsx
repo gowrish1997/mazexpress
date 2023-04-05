@@ -26,8 +26,6 @@ export type Ref = HTMLDivElement;
 
 const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
     (props, ref) => {
-        const { user, mutateUser } = useUser();
-
         const optionHandler = () => {
             switch (props.type) {
                 case "pending":
@@ -52,25 +50,22 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                             true
                         );
 
-                        if (result0_3) {
-                            createToast({
-                                type: "success",
-                                title: "Notified User",
-                                message: `Sent order received notification to userID ${
-                                    (props.row as Order).user.id
-                                }`,
-                                timeOut: 2000,
-                            });
-                        } else {
-                            createToast({
-                                type: "error",
-                                title: "Failed creating notification",
-                                message: `check console for more info`,
-                                timeOut: 2000,
-                            });
-                        }
+                        createToast({
+                            type: "success",
+                            title: "success",
+                            message: `order with maz ID ${
+                                (props.row as Order).maz_id
+                            } successfully updated`,
+                            timeOut: 2000,
+                        });
                     } catch (error) {
                         console.error(error);
+                        createToast({
+                            type: "error",
+                            title: "Failed",
+                            message: `check console for more info`,
+                            timeOut: 2000,
+                        });
                     }
 
                     props.mutateOrder?.();
@@ -88,25 +83,22 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                             true
                         );
 
-                        if (result0_3) {
-                            createToast({
-                                type: "success",
-                                title: "Notified User",
-                                message: `Sent order left Istanbul warehouse notification to userID ${
-                                    (props.row as Order).user.id
-                                }`,
-                                timeOut: 2000,
-                            });
-                        } else {
-                            createToast({
-                                type: "error",
-                                title: "Failed creating notification",
-                                message: `check console for more info`,
-                                timeOut: 2000,
-                            });
-                        }
+                        createToast({
+                            type: "success",
+                            title: "success",
+                            message: `order with maz ID ${
+                                (props.row as Order).maz_id
+                            } successfully updated`,
+                            timeOut: 2000,
+                        });
                     } catch (error) {
                         console.error(error);
+                        createToast({
+                            type: "error",
+                            title: "Failed",
+                            message: `check console for more info`,
+                            timeOut: 2000,
+                        });
                     }
 
                     // console.log(result1);
@@ -131,25 +123,22 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 false
                             );
 
-                            if (result0_3) {
-                                createToast({
-                                    type: "success",
-                                    title: "Notified User",
-                                    message: `Sent order received in Libya warehouse notification to userID ${
-                                        (props.row as Order).user.id
-                                    }`,
-                                    timeOut: 2000,
-                                });
-                            } else {
-                                createToast({
-                                    type: "error",
-                                    title: "Failed creating notification",
-                                    message: `check console for more info`,
-                                    timeOut: 2000,
-                                });
-                            }
+                            createToast({
+                                type: "success",
+                                title: "success",
+                                message:  `order with maz ID ${
+                                    (props.row as Order).maz_id
+                                } successfully updated`,
+                                timeOut: 2000,
+                            });
                         } catch (error) {
                             console.error(error);
+                            createToast({
+                                type: "error",
+                                title: "Failed creating notification",
+                                message: `check console for more info`,
+                                timeOut: 2000,
+                            });
                         }
 
                         // check notifications for user and send notification
@@ -168,25 +157,22 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 true
                             );
 
-                            if (result0_3) {
-                                createToast({
-                                    type: "success",
-                                    title: "Notified User",
-                                    message: `Sent order out for delivery notification to userID ${
-                                        (props.row as Order).user.id
-                                    }`,
-                                    timeOut: 2000,
-                                });
-                            } else {
-                                createToast({
-                                    type: "error",
-                                    title: "Failed creating notification",
-                                    message: `check console for more info`,
-                                    timeOut: 2000,
-                                });
-                            }
+                            createToast({
+                                type: "success",
+                                title: "success",
+                                message: `order with maz ID ${
+                                    (props.row as Order).maz_id
+                                } successfully updated`,
+                                timeOut: 2000,
+                            });
                         } catch (error) {
                             console.error(error);
+                            createToast({
+                                type: "error",
+                                title: "Failed creating notification",
+                                message: `check console for more info`,
+                                timeOut: 2000,
+                            });
                         }
 
                         props.mutateOrder?.();
@@ -202,25 +188,22 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 true
                             );
 
-                            if (result0_3) {
-                                createToast({
-                                    type: "success",
-                                    title: "Notified User",
-                                    message: `Sent order delivered notification to userID ${
-                                        (props.row as Order).user.id
-                                    }`,
-                                    timeOut: 2000,
-                                });
-                            } else {
-                                createToast({
-                                    type: "error",
-                                    title: "Failed creating notification",
-                                    message: `check console for more info`,
-                                    timeOut: 2000,
-                                });
-                            }
+                            createToast({
+                                type: "success",
+                                title: "success",
+                                message: `order with maz ID ${
+                                    (props.row as Order).maz_id
+                                } successfully updated`,
+                                timeOut: 2000,
+                            });
                         } catch (error) {
                             console.error(error);
+                            createToast({
+                                type: "error",
+                                title: "Failed creating notification",
+                                message: `check console for more info`,
+                                timeOut: 2000,
+                            });
                         }
 
                         // check notifications for user and send notification

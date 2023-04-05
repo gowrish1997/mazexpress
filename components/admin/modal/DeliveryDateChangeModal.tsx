@@ -37,27 +37,26 @@ const DeliveryDateChangeModal = (props: IProp) => {
                     est_delivery: filterDate ? filterDate : null,
                 }),
             });
-            if (result0) {
-                createToast({
-                    type: "success",
-                    title: "Notified User",
-                    message: `Sent order received notification to userID ${
-                        (props.row as Order).user.id
-                    }`,
-                    timeOut: 2000,
-                });
-                props.mutateOrder();
-            } else {
-                createToast({
-                    type: "error",
-                    title: "Failed creating notification",
-                    message: `check console for more info`,
-                    timeOut: 2000,
-                });
-            }
+
+            createToast({
+                type: "success",
+                title: "success",
+                message: `Delivery date successfully changed for order with maz id${
+                    (props.row as Order).maz_id
+                }`,
+                timeOut: 2000,
+            });
+            props.mutateOrder();
+
             props.close();
         } catch (error) {
             console.error(error);
+            createToast({
+                type: "error",
+                title: "Failed",
+                message: `check console for more info`,
+                timeOut: 2000,
+            });
         }
     };
     return (

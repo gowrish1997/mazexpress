@@ -178,7 +178,7 @@ const AddNewOrder = () => {
             if (result.ok) {
                 createToast({
                     type: "success",
-                    title: "Success",
+                    title: "success",
                     message: "Created order successfully",
                     timeOut: 1000,
                 });

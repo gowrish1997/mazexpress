@@ -54,7 +54,7 @@ const MazCommunityForm = () => {
     });
 
     const onSubmit: SubmitHandler<any> = async (data) => {
-        console.log(data)
+        console.log(data);
         const toList = [
             {
                 type: "enquiry",
@@ -75,11 +75,10 @@ const MazCommunityForm = () => {
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify(data),
             });
-            console.log(result0);
 
             createToast({
                 type: "success",
-                title: "",
+                title: "success",
                 message: `Enquiry submitted successfully`,
                 timeOut: 2000,
             });

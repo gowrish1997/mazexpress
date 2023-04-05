@@ -35,18 +35,17 @@ const UserSavedAddress = (props: {
     const deleteAddressHandler = async () => {
         console.log("delete user address");
 
-        if (user) {
-            let defaultaddress = user?.default_address;
+        let defaultaddress = user?.default_address;
 
-            if (
-                props.address.id === user?.default_address &&
-                props.allAddresses.length > 1
-            ) {
-                defaultaddress =
-                    props.address.id == (props.allAddresses?.[0] as Address).id
-                        ? (props.allAddresses?.[1] as Address).id
-                        : (props.allAddresses?.[0] as Address).id;
-
+        if (
+            props.address.id === user?.default_address &&
+            props.allAddresses.length > 1
+        ) {
+            defaultaddress =
+                props.address.id == (props.allAddresses?.[0] as Address).id
+                    ? (props.allAddresses?.[1] as Address).id
+                    : (props.allAddresses?.[0] as Address).id;
+            try {
                 const updateResponse = await fetchServer(
                     `/api/users/${user?.email}`,
                     {
@@ -58,7 +57,11 @@ const UserSavedAddress = (props: {
                     }
                 );
                 mutateUser();
+            } catch (error) {
+                console.log(error);
             }
+        }
+        try {
             const result = await fetchServer(
                 `/api/addresses/id/${props.address.id}`,
 
@@ -67,25 +70,28 @@ const UserSavedAddress = (props: {
                 }
             );
             props.update();
-            if (
-                props.type == "add-new-order" &&
-                props.selectedAddressId == props.address.id &&
-                props.allAddresses.length > 1
-            ) {
-                props.updateDeliveryAddress?.(defaultaddress!);
-            } else {
-                props.updateDeliveryAddress?.(props.selectedAddressId);
-            }
+        } catch (error) {
+            console.error(error);
+        }
 
-            if (props.allAddresses.length == 1) {
-                props.updateDeliveryAddress?.("");
-            }
+        if (
+            props.type == "add-new-order" &&
+            props.selectedAddressId == props.address.id &&
+            props.allAddresses.length > 1
+        ) {
+            props.updateDeliveryAddress?.(defaultaddress!);
+        } else {
+            props.updateDeliveryAddress?.(props.selectedAddressId);
+        }
+
+        if (props.allAddresses.length == 1) {
+            props.updateDeliveryAddress?.("");
         }
     };
 
     const updateUser = async (id: string) => {
-        if (user) {
-            if (props.type == "address-book") {
+        if (props.type == "address-book") {
+            try {
                 const updateResponse = await fetchServer(
                     `/api/users/${user?.email}`,
                     {
@@ -95,11 +101,13 @@ const UserSavedAddress = (props: {
                     }
                 );
                 mutateUser({ ...user, default_address: id }, true);
-                console.log(updateResponse);
-                // props.update();
-            } else {
-                props.updateDeliveryAddress?.(id);
+            } catch (error) {
+                console.error(error.message);
             }
+
+            // props.update();
+        } else {
+            props.updateDeliveryAddress?.(id);
         }
     };
 

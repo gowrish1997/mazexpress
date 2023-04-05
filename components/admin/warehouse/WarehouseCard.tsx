@@ -47,9 +47,9 @@ const WarehouseCard = (props: IProp) => {
                     method: "DELETE",
                 }
             );
-            if (result.ok)
-                // console.log(result)
-                props.update();
+
+            // console.log(result)
+            props.update();
         } catch (error) {
             console.error(error);
         }

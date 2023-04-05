@@ -82,6 +82,7 @@ const Settings = () => {
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
+    console.log(user);
 
     const [passwordCheck, setPasswordCheck] = useState(false);
 
@@ -241,23 +242,13 @@ const Settings = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(sendObj),
             });
-            console.log(updateRes);
 
-            if (updateRes.ok === true) {
-                createToast({
-                    type: "success",
-                    title: locale == "en" ? "Success" : "نجاح",
-                    message: locale == "en" ? "Updated user." : "مستخدم محدث.",
-                });
-                mutateUser();
-            } else {
-                createToast({
-                    type: "error",
-                    title: "An error occurred",
-                    message: "Check console for more info.",
-                    timeOut: 3000,
-                });
-            }
+            createToast({
+                type: "success",
+                title: locale == "en" ? "success" : "نجاح",
+                message: locale == "en" ? "Updated user." : "مستخدم محدث.",
+            });
+            mutateUser();
         } catch (err) {
             console.error(err);
             createToast({

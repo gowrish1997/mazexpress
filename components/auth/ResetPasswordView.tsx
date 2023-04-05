@@ -97,7 +97,11 @@ const ResetPasswordView = (props: any) => {
                         toMail: props.user.email,
                         bodyContent: user_passwordChangedContent(),
                         buttonContent: "Login now",
-                        redirectLink: "http://localhost:3000/auth/gate?mode=1",
+                        redirectLink:  `${
+                            process.env.NODE_ENV !== "production"
+                                ? "http://localhost:3000/auth/gate?mode=1"
+                                : "https://mazexpress.easydesk.work/auth/gate?mode=1"
+                        }`,
                     },
                 ];
                 try {
@@ -120,7 +124,7 @@ const ResetPasswordView = (props: any) => {
                         type: "success",
                         message: "Changed password please log in.",
                         timeOut: 2000,
-                        title: "Password updated.",
+                        title: "success",
                     });
             } else {
                 // failed

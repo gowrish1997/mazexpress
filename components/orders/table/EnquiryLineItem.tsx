@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import OrderOptionModal from "../modal/OrderOptionModal";
-import EnquiryBaseOptionModal from "@/components/admin/modal/EnquiryBaseOptionModa";
+import EnquiryBaseOptionModal from "@/components/admin/modal/EnquiryBaseOptionModal";
 import { Order } from "@/models/order.model";
 import EnquiryReplyModal from "@/components/admin/modal/EnquiryReplyModal";
 import { getDateInStringFormat } from "@/lib/helper";

@@ -77,7 +77,7 @@ const AddNewHelpCenterModal = (props: IProp) => {
             createToast({
                 type: "success",
                 title: "Success",
-                message: "Successfully updated help center info",
+                message: "Successfully added new help center info",
                 timeOut: 3000,
             });
             props.close();

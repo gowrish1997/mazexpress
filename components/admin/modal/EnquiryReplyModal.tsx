@@ -47,7 +47,7 @@ const EnquiryReplyModal = (props: IProp) => {
         ];
         createToast({
             type: "success",
-            title: "",
+            title: "success",
             message: `You replied to user enquiry`,
             timeOut: 2000,
         });
