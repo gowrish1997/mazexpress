@@ -116,6 +116,7 @@ const Topbar = () => {
                         color="#525D72"
                     />
                 </div>
+                <p>gowrish is good boy</p>
             </div>
             {showNotifications && (
                 <NotificationView

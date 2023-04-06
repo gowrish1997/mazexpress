@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Profile from "../../public/image.png";
-import Line from "../../public/line.png";
+import HomePageWrapper from "../common/HomePageWrapper";
 import Icon from "../../public/Icon.png";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";

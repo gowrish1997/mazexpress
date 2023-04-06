@@ -30,6 +30,6 @@
     "types/**/*.ts",
     "types/**/*.tsx",
     "next-i18next.config.js"
-  ],
+, "__mocks__/next-i18next.ts"  ],
   "exclude": ["node_modules"]
 }

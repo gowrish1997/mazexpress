@@ -68,6 +68,9 @@ export const selectOrder = (
     }
 };
 
+
+
+
 export const getOrderIdList = (order: any) => {
     const userIdList = order?.map((data: any) => {
         return (data as Order)?.maz_id;

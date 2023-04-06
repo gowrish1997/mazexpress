@@ -99,11 +99,12 @@
         "Header": "Plan your eCommerce shipments in an instant. Estimate courier charges using our quick courier charges.",
         "navBar": {
             "Section": [
-                "Track Order",
+                "Home",
                 "Shipment Calculator",
                 "Support",
                 "About",
-                "Service"
+                "Service",
+                "Enquiry Form"
             ],
             "Auth": ["Log in", "Sign up", "Log out"]
         },
