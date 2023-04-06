@@ -44,7 +44,7 @@ const Tstt = () => {
         .then((response) => {
           console.log("from login action: ", response);
           // setToken(respons);
-          setUser(response.data.data[0])
+          setUser(response.data.data[0]);
         })
         .catch((err) => {
           if (err) throw err;
@@ -63,8 +63,7 @@ const Tstt = () => {
         })
         .then((response) => {
           console.log("from logout: ", response);
-          setUser(null)
-
+          setUser(null);
         })
         .catch((err) => {
           if (err) throw err;
@@ -81,8 +80,19 @@ const Tstt = () => {
     if (user) {
       console.log("calling refresh token");
       // check for update
+
+      // fetch("http://localhost:5000/api/auth")
+      //   .then(async (response) => {
+      //     console.log("raw response", response);
+      //     return await response.json();
+      //   })
+      //   .then((data) => {
+      //     console.log("processed", data);
+      //   });
       axios
         .get(`http://localhost:5000/api/auth`, {
+          withCredentials: true,
+          
         })
         .then((response) => {
           if (response.data) {
