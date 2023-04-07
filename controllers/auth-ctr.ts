@@ -56,7 +56,10 @@ export class AuthManager {
         const new_list = this.white_list_users.map(async (el) => {
           if (el.whitelist_id === id) {
             axios
-              .put(`http://localhost:5000/api/users/${el.email}`, obj)
+              .put(
+                `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${el.email}`,
+                obj
+              )
               .then((response) => {
                 return Object.assign(el, obj);
               })
@@ -79,7 +82,9 @@ export class AuthManager {
       // return first el
       axios
         .put(
-          `http://localhost:5000/api/users/${this.white_list_users[0].email}`,
+          process.env.NODE_ENV === "development"
+            ? `http://localhost:5000/api/auth/login/password`
+            : `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${this.white_list_users[0].email}`,
           obj
         )
         .then((response) => {
@@ -106,7 +111,9 @@ export class AuthManager {
     try {
       axios
         .post(
-          `http://localhost:5000/api/auth/login/password`,
+          process.env.NODE_ENV === "development"
+            ? `http://localhost:5000/api/auth/login/password`
+            : `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/login/password`,
           {
             username: username,
             password: password,
@@ -154,7 +161,12 @@ export class AuthManager {
         this.white_list_users.pop();
       }
       axios
-        .get(`http://localhost:5000/api/auth/logout`, { withCredentials: true })
+        .get(
+          process.env.NODE_ENV === "development"
+            ? `http://localhost:5000/api/auth/logout`
+            : `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/logout`,
+          { withCredentials: true }
+        )
         .then((response) => {
           this.white_list_users = this.white_list_users.filter(
             (el) => el.whitelist_id !== id
