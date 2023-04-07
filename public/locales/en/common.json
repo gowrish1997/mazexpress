@@ -158,7 +158,7 @@
 
         "shipmentCostCalculator": {
             "Title": "Shipment Cost Calculator",
-            "Description": "Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it. Drop off and pick up packages from a location that’s open when you need it",
+            "Description": "Drop off and pick up packages from a location that’s open when you need it.",
             "form": {
                 "InputField": [
                     {

@@ -3,7 +3,13 @@
 //     co-author: raunak
 //==========================
 
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, {
+    useState,
+    useRef,
+    useEffect,
+    useContext,
+    ReactNode,
+} from "react";
 import Image from "next/image";
 
 import newlogoBlue from "../../public/new_logo_blue.png";
@@ -19,7 +25,17 @@ import LogoutConfirmModal from "./LogoutConfirmModal";
 import fetchServer from "@/lib/fetchServer";
 import UserContext from "../context/user.context";
 
-const HomePageWrapper = (props) => {
+interface IProp {
+    type: string;
+    activeSection?: string;
+    render: (
+        shipmentCalculatorSectionRef?: React.MutableRefObject<HTMLDivElement>,
+        enquirySectionRef?: React.MutableRefObject<HTMLDivElement>,
+        supportSectionRef?: React.MutableRefObject<HTMLDivElement>
+    ) => ReactNode;
+}
+
+const HomePageWrapper = (props: IProp) => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;

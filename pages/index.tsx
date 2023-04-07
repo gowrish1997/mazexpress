@@ -23,7 +23,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import HomePageWrapper from "@/components/common/HomePageWrapper";
 import { useScrollspy } from "@/lib/hooks/useScrollSpy";
 
-const Index = (props) => {
+const Index = () => {
     const router = useRouter();
     const { t } = useTranslation("");
     const activeSection = useScrollspy([
@@ -86,9 +86,9 @@ const Index = (props) => {
                 type="home"
                 activeSection={activeSection}
                 render={(
-                    shipmentCalculatorSectionRef,
-                    enquirySectionRef,
-                    supportSectionRef
+                    shipmentCalculatorSectionRef: React.MutableRefObject<HTMLDivElement>,
+                    enquirySectionRef: React.MutableRefObject<HTMLDivElement>,
+                    supportSectionRef: React.MutableRefObject<HTMLDivElement>
                 ) => {
                     return (
                         <div className="w-full">
