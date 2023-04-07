@@ -4,7 +4,7 @@ import type { IronSessionOptions } from "iron-session";
 export const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_COOKIE_PASSWORD as string,
   // password: '2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8',
-  cookieName: "Maz app cookie",
+  cookieName: "mazCLIENT",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production" ? true : false,
   },

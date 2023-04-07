@@ -111,14 +111,17 @@ export class AuthManager {
             username: username,
             password: password,
           },
-          { withCredentials: true, headers: { Accept: "" } }
+          { withCredentials: true }
         )
         .then((response) => {
           // add user to whitelist
-          // console.log(response);
+          console.log(response);
           if (response.data.data.length > 0) {
             this.add_white_list_user(response.data.data[0]);
-
+            localStorage.setItem(
+              "active_user",
+              JSON.stringify(response.data.data[0])
+            );
             // check cookie here
 
             cb(null, response.data.data[0]);
@@ -156,6 +159,7 @@ export class AuthManager {
           this.white_list_users = this.white_list_users.filter(
             (el) => el.whitelist_id !== id
           );
+          localStorage.removeItem("active_user");
           cb(null, true);
           return;
         })

@@ -78,9 +78,21 @@ const LogInComponent = (props: any) => {
         } else {
           // console.log("from login view:", user);
           if ((user as IWhiteListedUser).is_admin) {
-            router.push("/admin");
+            // bind is_admin true to session
+            fetchSelf("/api/auth/bind_data", {
+              method: "POST",
+              body: JSON.stringify({ is_admin: true }),
+            }).then((data) => {
+              router.push("/admin");
+            });
           } else {
-            router.push("/");
+            // bind is_admin false to session
+            fetchSelf("/api/auth/bind_data", {
+              method: "POST",
+              body: JSON.stringify({ is_admin: false }),
+            }).then((data) => {
+              router.push("/");
+            });
           }
           set_active_user(user as IWhiteListedUser);
         }

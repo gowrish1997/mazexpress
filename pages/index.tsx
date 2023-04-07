@@ -25,13 +25,11 @@ import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
 import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import useUser from "@/lib/hooks/useUser";
 import Link from "next/link";
-import fetchJson from "@/lib/fetchSelf";
+import fetchSelf from "@/lib/fetchSelf";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import About from "@/components/LandingPage/About";
 import Service from "@/components/LandingPage/Service";
-import UserContext from "@/components/context/user.context";
 import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import AuthCTX from "@/components/context/auth.ctx";
 
@@ -46,8 +44,6 @@ const Index = () => {
   const jet: AuthManager = useContext(AuthCTX)["jet"];
   const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   const { set_active_user } = useContext(AuthCTX);
-  //   const { user, mutateUser } = useUser();
-  //   const { setUser } = useContext(UserContext);
 
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
@@ -96,13 +92,16 @@ const Index = () => {
 
   const logoutHandler = () => {
     try {
-      const user_whitelist_id = jet.getUser().whitelist_id;
+      const user_whitelist_id = user.whitelist_id;
       jet.logout(user_whitelist_id, (err, done) => {
         if (err) throw err;
         if (done) {
-          console.log("logged out");
-          set_active_user(null);
-          setShowLogoutConfirmModal(false);
+          //   console.log("logged out");
+          fetchSelf("/api/auth/unbind_data").then((data) => {
+            router.push("/");
+            setShowLogoutConfirmModal(false);
+            set_active_user(null);
+          });
         }
       });
     } catch (err) {
@@ -133,11 +132,6 @@ const Index = () => {
   };
 
   //   console.log(user);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <>
       <div className="w-full">

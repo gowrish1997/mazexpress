@@ -6,14 +6,13 @@ import { useContext, useEffect, useState } from "react";
 import { createToast } from "../toasts";
 import { useRouter } from "next/router";
 
-// 
+//
 import fetchSelf from "../fetchSelf";
 import useScript from "./useScript";
 import UserContext from "@/components/context/user.context";
 import jwt from "jsonwebtoken";
 import useUser from "./useUser";
-
-
+import AuthCTX from "@/components/context/auth.ctx";
 
 interface IProps {}
 
@@ -24,9 +23,9 @@ export default function useGoogle({}: IProps) {
   });
 
   const [googleStatus, setGoogleStatus] = useState<any>();
-  const user = useContext(UserContext)["user"];
-  const { setUser } = useContext(UserContext);
-  const { user: sessUser, mutateUser } = useUser();
+  const user = useContext(AuthCTX)["active_user"];
+  const { set_active_user } = useContext(AuthCTX);
+  // const { user: sessUser, mutateUser } = useUser();
 
   async function handleCredentialResponse(
     response: google.accounts.id.CredentialResponse
@@ -46,12 +45,12 @@ export default function useGoogle({}: IProps) {
         body: JSON.stringify({ ...payload }),
       })
         .then(async (response) => {
-          console.log(response)
+          console.log(response);
           if (response.ok) {
             // set context to use this user
-
-            setUser(response.data[0]);
-            await mutateUser(response.data[0], false);
+            set_active_user(response.data[0]);
+            // setUser(response.data[0]);
+            // await mutateUser(response.data[0], false);
             // create toast
             createToast({
               type: "success",
