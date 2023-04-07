@@ -65,7 +65,7 @@ const LogInComponent = (props: any) => {
 
     try {
       // console.log(data);
-      const response = await fetchServer("/api/auth/login", {
+      const response = await fetchServer("/api/auth/login/password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -79,7 +79,6 @@ const LogInComponent = (props: any) => {
         if (response.data?.[0].is_admin) {
           router.push("/admin");
         } else {
-          //   console.log("puhsing to / page");
           router.push("/");
         }
       } else {

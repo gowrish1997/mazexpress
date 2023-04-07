@@ -3,33 +3,41 @@ import React, { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Frame from "@/components/common/Frame";
 import { useRouter } from "next/router";
-import { SWRConfig } from "swr";
-import fetchJson, { FetchError } from "@/lib/fetchServer";
+// import { SWRConfig } from "swr";
+// import fetchJson, { FetchError } from "@/lib/fetchServer";
 import "react-notifications/lib/notifications.css";
-import { createToast } from "@/lib/toasts";
+// import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { NotificationContainer } from "react-notifications";
 
 import { appWithTranslation } from "next-i18next";
-import useGoogle from "@/lib/hooks/useGoogle";
-import UserContext from "@/components/context/user.context";
-import { User } from "@/models/user.model";
-import useUser from "@/lib/hooks/useUser";
+// import useGoogle from "@/lib/hooks/useGoogle";
+// import UserContext from "@/components/context/user.context";
+// import { User } from "@/models/user.model";
+// import useUser from "@/lib/hooks/useUser";
+import { AuthManager } from "@/controllers/auth-ctr";
+import AuthCTX from "@/components/context/auth.ctx";
 
 config.autoAddCss = false;
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const { status: googleStatus } = useGoogle({});
+  // const { status: googleStatus } = useGoogle({});
 
-  const { user: sessUser, mutateUser } = useUser();
-  const [user, setUser] = useState<User | null>(sessUser);
+  // call auth manager for authentication management
+  // init
+  // update with local storage object
+  const jetpass = new AuthManager();
+
+  // const { user: sessUser, mutateUser } = useUser();
+  // const [user, setUser] = useState<User | null>(sessUser);
+  const [jet, setJet] = useState<AuthManager | null>(jetpass);
 
   useEffect(() => {
     // check backend session
-    if (sessUser) {
-      setUser(sessUser);
-    }
+    // if (sessUser) {
+    //   setUser(sessUser);
+    // }
     // // Check if the user was redirected from Arabic to English
     // const redirected = document.cookie.includes("i18n_redirected=true");
     // if (redirected) {
@@ -50,13 +58,19 @@ function App({ Component, pageProps }: AppProps) {
   if (router.pathname.startsWith("/auth")) {
     // no frame
     return (
-      <UserContext.Provider
+      // <UserContext.Provider
+      //   value={{
+      //     user,
+      //     setUser,
+      //   }}
+      // >
+      <AuthCTX.Provider
         value={{
-          user,
-          setUser,
+          jet,
+          setJet,
         }}
       >
-        <SWRConfig
+        {/* <SWRConfig
           value={{
             fetcher: fetchJson,
             onError: (err: FetchError) => {
@@ -69,23 +83,24 @@ function App({ Component, pageProps }: AppProps) {
               // console.error(err);
             },
           }}
-        >
-          <Component {...pageProps} />
-          <NotificationContainer />
-        </SWRConfig>
-      </UserContext.Provider>
+        > */}
+        <Component {...pageProps} />
+        <NotificationContainer />
+        {/* </SWRConfig> */}
+      </AuthCTX.Provider>
+      // </UserContext.Provider>
     );
   }
   if (router.pathname.startsWith("/tstt")) {
     // no frame
     return (
-      <UserContext.Provider
+      <AuthCTX.Provider
         value={{
-          user,
-          setUser,
+          jet,
+          setJet,
         }}
       >
-        <SWRConfig
+        {/* <SWRConfig
           value={{
             fetcher: fetchJson,
             onError: (err: FetchError) => {
@@ -98,21 +113,27 @@ function App({ Component, pageProps }: AppProps) {
               // console.error(err);
             },
           }}
-        >
-          <Component {...pageProps} />
-          <NotificationContainer />
-        </SWRConfig>
-      </UserContext.Provider>
+        > */}
+        <Component {...pageProps} />
+        <NotificationContainer />
+        {/* </SWRConfig> */}
+      </AuthCTX.Provider>
     );
   }
   return (
-    <UserContext.Provider
+    // <UserContext.Provider
+    //   value={{
+    //     user,
+    //     setUser,
+    //   }}
+    // >
+    <AuthCTX.Provider
       value={{
-        user,
-        setUser,
+        jet,
+        setJet,
       }}
     >
-      <SWRConfig
+      {/* <SWRConfig
         value={{
           fetcher: fetchJson,
           onError: (err) => {
@@ -125,13 +146,14 @@ function App({ Component, pageProps }: AppProps) {
             // console.error(err);
           },
         }}
-      >
-        <Frame>
-          <Component {...pageProps} />
-          <NotificationContainer />
-        </Frame>
-      </SWRConfig>
-    </UserContext.Provider>
+      > */}
+      <Frame>
+        <Component {...pageProps} />
+        <NotificationContainer />
+      </Frame>
+      {/* </SWRConfig> */}
+    </AuthCTX.Provider>
+    // </UserContext.Provider>
   );
 }
 
