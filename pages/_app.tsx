@@ -15,8 +15,11 @@ import { appWithTranslation } from "next-i18next";
 // import UserContext from "@/components/context/user.context";
 // import { User } from "@/models/user.model";
 // import useUser from "@/lib/hooks/useUser";
-import { AuthManager } from "@/controllers/auth-ctr";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import AuthCTX from "@/components/context/auth.ctx";
+import { SWRConfig } from "swr";
+import { createToast } from "@/lib/toasts";
+import { FetchError } from "@/lib/fetchServer";
 
 config.autoAddCss = false;
 
@@ -30,8 +33,10 @@ function App({ Component, pageProps }: AppProps) {
   const jetpass = new AuthManager();
 
   // const { user: sessUser, mutateUser } = useUser();
-  // const [user, setUser] = useState<User | null>(sessUser);
-  const [jet, setJet] = useState<AuthManager | null>(jetpass);
+  const [jet, set_jet] = useState<AuthManager | null>(jetpass);
+  const [active_user, set_active_user] = useState<IWhiteListedUser | null>(
+    jetpass.getUser()
+  );
 
   useEffect(() => {
     // check backend session
@@ -53,7 +58,7 @@ function App({ Component, pageProps }: AppProps) {
     //         router.push(`/${router.locale}`);
     //     }
     // }
-  }, []);
+  }, [active_user]);
 
   if (router.pathname.startsWith("/auth")) {
     // no frame
@@ -67,7 +72,9 @@ function App({ Component, pageProps }: AppProps) {
       <AuthCTX.Provider
         value={{
           jet,
-          setJet,
+          set_jet,
+          active_user,
+          set_active_user,
         }}
       >
         {/* <SWRConfig
@@ -97,12 +104,14 @@ function App({ Component, pageProps }: AppProps) {
       <AuthCTX.Provider
         value={{
           jet,
-          setJet,
+          set_jet,
+          active_user,
+          set_active_user,
         }}
       >
-        {/* <SWRConfig
+        <SWRConfig
           value={{
-            fetcher: fetchJson,
+            // fetcher: fetchJson,
             onError: (err: FetchError) => {
               createToast({
                 type: "error",
@@ -113,10 +122,10 @@ function App({ Component, pageProps }: AppProps) {
               // console.error(err);
             },
           }}
-        > */}
-        <Component {...pageProps} />
-        <NotificationContainer />
-        {/* </SWRConfig> */}
+        >
+          <Component {...pageProps} />
+          <NotificationContainer />
+        </SWRConfig>
       </AuthCTX.Provider>
     );
   }
@@ -130,12 +139,14 @@ function App({ Component, pageProps }: AppProps) {
     <AuthCTX.Provider
       value={{
         jet,
-        setJet,
+        set_jet,
+        active_user,
+        set_active_user,
       }}
     >
-      {/* <SWRConfig
+      <SWRConfig
         value={{
-          fetcher: fetchJson,
+          // fetcher: fetchJson,
           onError: (err) => {
             createToast({
               type: "error",
@@ -146,12 +157,12 @@ function App({ Component, pageProps }: AppProps) {
             // console.error(err);
           },
         }}
-      > */}
-      <Frame>
-        <Component {...pageProps} />
-        <NotificationContainer />
-      </Frame>
-      {/* </SWRConfig> */}
+      >
+        <Frame>
+          <Component {...pageProps} />
+          <NotificationContainer />
+        </Frame>
+      </SWRConfig>
     </AuthCTX.Provider>
     // </UserContext.Provider>
   );

@@ -101,7 +101,7 @@ export class AuthManager {
   login(
     username: string,
     password: string,
-    cb?: (err: any, done: boolean) => void
+    cb?: (err: any, done: boolean | IWhiteListedUser) => void
   ) {
     try {
       axios
@@ -111,11 +111,11 @@ export class AuthManager {
             username: username,
             password: password,
           },
-          { withCredentials: true, headers: {"Accept": ""} }
+          { withCredentials: true, headers: { Accept: "" } }
         )
         .then((response) => {
           // add user to whitelist
-          console.log(response);
+          // console.log(response);
           if (response.data.data.length > 0) {
             this.add_white_list_user(response.data.data[0]);
 

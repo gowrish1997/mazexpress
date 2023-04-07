@@ -4,11 +4,11 @@
 //==========================
 
 import React, {
-    useState,
-    useRef,
-    useEffect,
-    ChangeEvent,
-    useContext,
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+  useContext,
 } from "react";
 import Image from "next/image";
 import newlogoBlue from "../public/new_logo_blue.png";
@@ -32,145 +32,163 @@ import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import About from "@/components/LandingPage/About";
 import Service from "@/components/LandingPage/Service";
 import UserContext from "@/components/context/user.context";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
+import AuthCTX from "@/components/context/auth.ctx";
 
 const Index = () => {
-    const router = useRouter();
-    const { t } = useTranslation("");
-    const { locale } = router;
-    var section: string[] = t("landingPage.navBar.Section", {
-        returnObjects: true,
+  const router = useRouter();
+  const { t } = useTranslation("");
+  const { locale } = router;
+  var section: string[] = t("landingPage.navBar.Section", {
+    returnObjects: true,
+  });
+  var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
+  const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
+  const { set_active_user } = useContext(AuthCTX);
+  //   const { user, mutateUser } = useUser();
+  //   const { setUser } = useContext(UserContext);
+
+  const trackingSectionRef = useRef<HTMLDivElement>(null);
+  const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
+  const supportSectionRef = useRef<HTMLDivElement>(null);
+  const AboutSectionRef = useRef<HTMLDivElement>(null);
+  const ServicetSectionRef = useRef<HTMLDivElement>(null);
+  const [showOptionModal, setShowOptionModal] = useState(false);
+  const [trackingId, setTrackingId] = useState<string>("");
+  const [trackingIdError, setTrackingIdError] = useState<boolean>(false);
+  const [showPackageTrackingModal, setShowPackageTrackingModal] =
+    useState(false);
+
+  const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
+
+  useEffect(() => {
+    document.cookie = `NEXT_LOCALE=${router.locale};path=/`;
+    let dir = router.locale == "ar" ? "rtl" : "ltr";
+    let lang = router.locale == "ar" ? "ar" : "en";
+    document.querySelector("html")?.setAttribute("dir", dir);
+    document.querySelector("html")?.setAttribute("lang", lang);
+  }, [router.locale]);
+
+  const toggleOptionModalHandler = () => {
+    setShowOptionModal((prev) => !prev);
+  };
+
+  const trackingIdInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const isValidMazId = await fetchServer(`/api/orders/validate-maz-id`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ maz_id: e.target.value }),
     });
-    var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
 
-    const { user, mutateUser } = useUser();
-    const { setUser } = useContext(UserContext);
+    if (isValidMazId) {
+      setTrackingId((e.target as HTMLInputElement).value);
+      setTrackingIdError(false);
+    } else {
+      setTrackingId("");
+      setTrackingIdError(true);
+    }
+  };
 
-    const trackingSectionRef = useRef<HTMLDivElement>(null);
-    const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
-    const supportSectionRef = useRef<HTMLDivElement>(null);
-    const AboutSectionRef = useRef<HTMLDivElement>(null);
-    const ServicetSectionRef = useRef<HTMLDivElement>(null);
-    const [showOptionModal, setShowOptionModal] = useState(false);
-    const [trackingId, setTrackingId] = useState<string>("");
-    const [trackingIdError, setTrackingIdError] = useState<boolean>(false);
-    const [showPackageTrackingModal, setShowPackageTrackingModal] =
-        useState(false);
+  const toggleLogoutConfirmModal = () => {
+    setShowLogoutConfirmModal((prev) => !prev);
+  };
 
-    const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
-
-    useEffect(() => {
-        document.cookie = `NEXT_LOCALE=${router.locale};path=/`;
-        let dir = router.locale == "ar" ? "rtl" : "ltr";
-        let lang = router.locale == "ar" ? "ar" : "en";
-        document.querySelector("html")?.setAttribute("dir", dir);
-        document.querySelector("html")?.setAttribute("lang", lang);
-    }, [router.locale]);
-
-    const toggleOptionModalHandler = () => {
-        setShowOptionModal((prev) => !prev);
-    };
-
-    const trackingIdInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-        const isValidMazId = await fetchServer(`/api/orders/validate-maz-id`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ maz_id: e.target.value }),
-        });
-
-        if (isValidMazId) {
-            setTrackingId((e.target as HTMLInputElement).value);
-            setTrackingIdError(false);
-        } else {
-            setTrackingId("");
-            setTrackingIdError(true);
+  const logoutHandler = () => {
+    try {
+      const user_whitelist_id = jet.getUser().whitelist_id;
+      jet.logout(user_whitelist_id, (err, done) => {
+        if (err) throw err;
+        if (done) {
+          console.log("logged out");
+          set_active_user(null);
+          setShowLogoutConfirmModal(false);
         }
-    };
+      });
+    } catch (err) {
+      if (err) console.error(err);
+    }
 
-    const toggleLogoutConfirmModal = () => {
-        setShowLogoutConfirmModal((prev) => !prev);
-    };
+    // await fetchServer("/api/auth/logout", { method: "GET" });
+    // setUser(null);
+    // await mutateUser();
+    // setShowLogoutConfirmModal((prev) => !prev);
+  };
 
-    const logoutHandler = async () => {
-        await fetchServer("/api/auth/logout", { method: "GET" });
-        setUser(null);
-        await mutateUser();
-        setShowLogoutConfirmModal((prev) => !prev);
-    };
+  const openPackageTrackingModal = () => {
+    if (trackingId) {
+      router.push({
+        query: { id: trackingId },
+      });
+      setShowPackageTrackingModal(true);
+      setTrackingIdError(false);
+    } else {
+      setTrackingIdError(true);
+    }
+  };
 
-    const openPackageTrackingModal = () => {
-        if (trackingId) {
-            router.push({
-                query: { id: trackingId },
-            });
-            setShowPackageTrackingModal(true);
-            setTrackingIdError(false);
-        } else {
-            setTrackingIdError(true);
-        }
-    };
+  const closePackageTrackingModal = () => {
+    router.back();
+    setShowPackageTrackingModal(false);
+  };
 
-    const closePackageTrackingModal = () => {
-        router.back();
-        setShowPackageTrackingModal(false);
-    };
+  //   console.log(user);
 
-    //   console.log(user);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
-    return (
-        <>
-            <div className="w-full">
-                <div className="box-border w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[12px] md:text-[14px] text-[#FFFFFF] font-[500] leading-[24px] p-[15px] ">
-                    {t("landingPage.Header")}
-                </div>
+  return (
+    <>
+      <div className="w-full">
+        <div className="box-border w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[12px] md:text-[14px] text-[#FFFFFF] font-[500] leading-[24px] p-[15px] ">
+          {t("landingPage.Header")}
+        </div>
 
-                <div className="px-[30px] xmd:px-[150px]  ">
-                    <div className="w-full flex flex-row justify-between items-end h-[80px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
-                        <div className="flex flex-row justify-between items-end gap-x-[20px] ">
-                            <div className="relative h-[47px] w-[60px] ">
-                                <Image src={newlogoBlue} fill alt="logo" />
-                            </div>
+        <div className="px-[30px] xmd:px-[150px]  ">
+          <div className="w-full flex flex-row justify-between items-end h-[80px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
+            <div className="flex flex-row justify-between items-end gap-x-[20px] ">
+              <div className="relative h-[47px] w-[60px] ">
+                <Image src={newlogoBlue} fill alt="logo" />
+              </div>
 
-                            <div className="min-[850px]:hidden relative ">
-                                <div
-                                    className="flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]"
-                                    style={
-                                        showOptionModal
-                                            ? {
-                                                  backgroundColor: "#35C6F4",
-                                                  color: "#FFFFFF",
-                                              }
-                                            : {}
-                                    }
-                                    onClick={toggleOptionModalHandler}
-                                >
-                                    <div
-                                        className="h-[15px] w-[15px] cursor-pointer flex flex-row items-center justify-center  "
-                                        style={{
-                                            boxShadow:
-                                                "0px 10px 20px rgba(0, 0, 0, 0.1)",
-                                        }}
-                                    >
-                                        {showOptionModal ? (
-                                            <FontAwesomeIcon icon={faXmark} />
-                                        ) : (
-                                            <FontAwesomeIcon icon={faBars} />
-                                        )}
-                                    </div>
-                                    {showOptionModal && (
-                                        <div
-                                            className={`absolute top-[0px] ${
-                                                locale == "en"
-                                                    ? "left-[36px]"
-                                                    : "right-[36px]"
-                                            }  w-[200px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-10 flex flex-col justify-between items-start p-[5px]`}
-                                            style={{
-                                                boxShadow:
-                                                    "0px 10px 20px rgba(0, 0, 0, 0.1)",
-                                            }}
-                                            // ref={ref}
-                                        >
-                                            <ul className=" w-full text-[#121212] text-[14px] font-[400] leading-[39px]  ">
-                                                {/* <li
+              <div className="min-[850px]:hidden relative ">
+                <div
+                  className="flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]"
+                  style={
+                    showOptionModal
+                      ? {
+                          backgroundColor: "#35C6F4",
+                          color: "#FFFFFF",
+                        }
+                      : {}
+                  }
+                  onClick={toggleOptionModalHandler}
+                >
+                  <div
+                    className="h-[15px] w-[15px] cursor-pointer flex flex-row items-center justify-center  "
+                    style={{
+                      boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    {showOptionModal ? (
+                      <FontAwesomeIcon icon={faXmark} />
+                    ) : (
+                      <FontAwesomeIcon icon={faBars} />
+                    )}
+                  </div>
+                  {showOptionModal && (
+                    <div
+                      className={`absolute top-[0px] ${
+                        locale == "en" ? "left-[36px]" : "right-[36px]"
+                      }  w-[200px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-10 flex flex-col justify-between items-start p-[5px]`}
+                      style={{
+                        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
+                      }}
+                      // ref={ref}
+                    >
+                      <ul className=" w-full text-[#121212] text-[14px] font-[400] leading-[39px]  ">
+                        {/* <li
                           className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
                           onClick={() =>
                             trackingSectionRef?.current?.scrollIntoView({
@@ -180,76 +198,64 @@ const Index = () => {
                         >
                           {t(section[0])}
                         </li> */}
-                                                <li
-                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                                                    onClick={() =>
-                                                        shipmentCalculatorSectionRef?.current?.scrollIntoView(
-                                                            {
-                                                                behavior:
-                                                                    "smooth",
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    {t(section[1])}
-                                                </li>
-                                                <li
-                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                                                    onClick={() =>
-                                                        supportSectionRef?.current?.scrollIntoView(
-                                                            {
-                                                                behavior:
-                                                                    "smooth",
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    {t(section[2])}
-                                                </li>
-                                                <li
-                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                                                    onClick={() =>
-                                                        AboutSectionRef?.current?.scrollIntoView(
-                                                            {
-                                                                behavior:
-                                                                    "smooth",
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    {t(section[3])}
-                                                </li>
-                                                <li
-                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                                                    onClick={() =>
-                                                        ServicetSectionRef?.current?.scrollIntoView(
-                                                            {
-                                                                behavior:
-                                                                    "smooth",
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    {t(section[4])}
-                                                </li>
-                                                <li className="">
-                                                    <button
-                                                        onClick={
-                                                            toggleLogoutConfirmModal
-                                                        }
-                                                        className="w-full bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] text-left "
-                                                    >
-                                                        {auth[2]}
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
+                        <li
+                          className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                          onClick={() =>
+                            shipmentCalculatorSectionRef?.current?.scrollIntoView(
+                              {
+                                behavior: "smooth",
+                              }
+                            )
+                          }
+                        >
+                          {t(section[1])}
+                        </li>
+                        <li
+                          className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                          onClick={() =>
+                            supportSectionRef?.current?.scrollIntoView({
+                              behavior: "smooth",
+                            })
+                          }
+                        >
+                          {t(section[2])}
+                        </li>
+                        <li
+                          className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                          onClick={() =>
+                            AboutSectionRef?.current?.scrollIntoView({
+                              behavior: "smooth",
+                            })
+                          }
+                        >
+                          {t(section[3])}
+                        </li>
+                        <li
+                          className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                          onClick={() =>
+                            ServicetSectionRef?.current?.scrollIntoView({
+                              behavior: "smooth",
+                            })
+                          }
+                        >
+                          {t(section[4])}
+                        </li>
+                        <li className="">
+                          <button
+                            onClick={toggleLogoutConfirmModal}
+                            className="w-full bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] text-left "
+                          >
+                            {auth[2]}
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-                            <ul className="flex-type3 gap-x-[20px] hidden min-[850px]:flex">
-                                {/* <li
+              <ul className="flex-type3 gap-x-[20px] hidden min-[850px]:flex">
+                {/* <li
                   className="cursor-pointer"
                   onClick={() =>
                     trackingSectionRef?.current?.scrollIntoView({
@@ -259,172 +265,158 @@ const Index = () => {
                 >
                   {t(section[0])}
                 </li> */}
-                                <li
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                        shipmentCalculatorSectionRef?.current?.scrollIntoView(
-                                            {
-                                                behavior: "smooth",
-                                            }
-                                        )
-                                    }
-                                >
-                                    {t(section[1])}
-                                </li>
-                                <li
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                        supportSectionRef?.current?.scrollIntoView(
-                                            {
-                                                behavior: "smooth",
-                                            }
-                                        )
-                                    }
-                                >
-                                    {t(section[2])}
-                                </li>
-                                <li
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                        AboutSectionRef?.current?.scrollIntoView(
-                                            {
-                                                behavior: "smooth",
-                                            }
-                                        )
-                                    }
-                                >
-                                    {t(section[3])}
-                                </li>
-                                <li
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                        ServicetSectionRef?.current?.scrollIntoView(
-                                            {
-                                                behavior: "smooth",
-                                            }
-                                        )
-                                    }
-                                >
-                                    {t(section[4])}
-                                </li>
-                            </ul>
-                        </div>
+                <li
+                  className="cursor-pointer"
+                  onClick={() =>
+                    shipmentCalculatorSectionRef?.current?.scrollIntoView({
+                      behavior: "smooth",
+                    })
+                  }
+                >
+                  {t(section[1])}
+                </li>
+                <li
+                  className="cursor-pointer"
+                  onClick={() =>
+                    supportSectionRef?.current?.scrollIntoView({
+                      behavior: "smooth",
+                    })
+                  }
+                >
+                  {t(section[2])}
+                </li>
+                <li
+                  className="cursor-pointer"
+                  onClick={() =>
+                    AboutSectionRef?.current?.scrollIntoView({
+                      behavior: "smooth",
+                    })
+                  }
+                >
+                  {t(section[3])}
+                </li>
+                <li
+                  className="cursor-pointer"
+                  onClick={() =>
+                    ServicetSectionRef?.current?.scrollIntoView({
+                      behavior: "smooth",
+                    })
+                  }
+                >
+                  {t(section[4])}
+                </li>
+              </ul>
+            </div>
 
-                        {user !== null && user !== undefined ? (
-                            <div className="flex items-center gap-x-[15px]">
-                                <div className="flex items-center gap-x-[10px]">
-                                    <p>{user.email}</p>
-                                    {user.is_admin ? (
-                                        <Link href={"/admin"}>Dashboard</Link>
-                                    ) : (
-                                        <Link href={"/orders"}>My orders</Link>
-                                    )}
-                                </div>
-                                <div className="hidden min-[850px]:block">
-                                    <button
-                                        onClick={toggleLogoutConfirmModal}
-                                        className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
-                                    >
-                                        {auth[2]}
-                                    </button>
-                                </div>
-                                <LanguageSwitcher />
-                            </div>
-                        ) : (
-                            <div className="flex flexx-row justify-start items-center gap-x-[20px]">
-                                <Link href={"/auth/gate?mode=0"}>
-                                    {auth[1]}
-                                </Link>
-                                <Link
-                                    href={"/auth/gate?mode=1"}
-                                    className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px]"
-                                >
-                                    {auth[0]}
-                                </Link>
+            {user !== null && user !== undefined ? (
+              <div className="flex items-center gap-x-[15px]">
+                <div className="flex items-center gap-x-[10px]">
+                  <p>{user.email}</p>
+                  {user.is_admin ? (
+                    <Link href={"/admin"}>Dashboard</Link>
+                  ) : (
+                    <Link href={"/orders"}>My orders</Link>
+                  )}
+                </div>
+                <div className="hidden min-[850px]:block">
+                  <button
+                    onClick={toggleLogoutConfirmModal}
+                    className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
+                  >
+                    {auth[2]}
+                  </button>
+                </div>
+                <LanguageSwitcher />
+              </div>
+            ) : (
+              <div className="flex flexx-row justify-start items-center gap-x-[20px]">
+                <Link href={"/auth/gate?mode=0"}>{auth[1]}</Link>
+                <Link
+                  href={"/auth/gate?mode=1"}
+                  className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px]"
+                >
+                  {auth[0]}
+                </Link>
 
-                                <LanguageSwitcher />
-                            </div>
-                        )}
-                    </div>
-                    <div className="w-[100%] flex flex-row justify-center ">
-                        <div className="w-[75%] mt-[30px] ">
-                            <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[36px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
-                                {t("landingPage.welcome.Title")}
-                            </h1>
-                            <p className="text-center text-[16px] md:text-[18px] xmd:text-[20px] text-[#121212] font-[500] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[15px] ">
-                                {t("landingPage.welcome.Caption")}
-                            </p>
-                            <p className="text-center text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#525D72] font-[500] leading-[15px] md:leading-[20px] xmd:leading-[25px] ">
-                                {t("landingPage.welcome.Description")}
-                            </p>
-                        </div>
-                    </div>
+                <LanguageSwitcher />
+              </div>
+            )}
+          </div>
+          <div className="w-[100%] flex flex-row justify-center ">
+            <div className="w-[75%] mt-[30px] ">
+              <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[36px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
+                {t("landingPage.welcome.Title")}
+              </h1>
+              <p className="text-center text-[16px] md:text-[18px] xmd:text-[20px] text-[#121212] font-[500] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[15px] ">
+                {t("landingPage.welcome.Caption")}
+              </p>
+              <p className="text-center text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#525D72] font-[500] leading-[15px] md:leading-[20px] xmd:leading-[25px] ">
+                {t("landingPage.welcome.Description")}
+              </p>
+            </div>
+          </div>
 
-                    <div
-                        className="flex-type5 mt-[70px] w-[100%]"
-                        ref={trackingSectionRef}
-                    >
-                        <div className="w-[100%] md:w-[65%] flex flex-row justify-center gap-x-[20px]">
-                            <input
-                                className="flex-1 border-[1px] border-[#8794AD] h-[40px] md:h-[56px] px-[10px] rounded-[4px]"
-                                placeholder={
-                                    t(
-                                        "landingPage.trackOrder.Placeholder"
-                                    ) as string
-                                }
-                                onChange={trackingIdInputHandler}
-                            />
-                            <button
-                                className="h-[40px] md:h-[56px] bg-[#35C6F4] w-[120px] rounded-[4px] px-[20px] text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
-                                onClick={openPackageTrackingModal}
-                            >
-                                {t("landingPage.trackOrder.SubmitButton")}
-                            </button>
-                        </div>
-                        {trackingIdError && (
-                            <p className="mt-[5px] text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                                {" "}
-                                {t("landingPage.trackOrder.Error")}
-                            </p>
-                        )}
-                        <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
-                            {t("landingPage.trackOrder.CaptionPart1")}
-                            {/* <span className="text-[#35C6F4] cursor-pointer ">
+          <div
+            className="flex-type5 mt-[70px] w-[100%]"
+            ref={trackingSectionRef}
+          >
+            <div className="w-[100%] md:w-[65%] flex flex-row justify-center gap-x-[20px]">
+              <input
+                className="flex-1 border-[1px] border-[#8794AD] h-[40px] md:h-[56px] px-[10px] rounded-[4px]"
+                placeholder={t("landingPage.trackOrder.Placeholder") as string}
+                onChange={trackingIdInputHandler}
+              />
+              <button
+                className="h-[40px] md:h-[56px] bg-[#35C6F4] w-[120px] rounded-[4px] px-[20px] text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
+                onClick={openPackageTrackingModal}
+              >
+                {t("landingPage.trackOrder.SubmitButton")}
+              </button>
+            </div>
+            {trackingIdError && (
+              <p className="mt-[5px] text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+                {" "}
+                {t("landingPage.trackOrder.Error")}
+              </p>
+            )}
+            <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
+              {t("landingPage.trackOrder.CaptionPart1")}
+              {/* <span className="text-[#35C6F4] cursor-pointer ">
                                 {" "}
                                 {t("landingPage.trackOrder.CaptionPart2")}
                             </span> */}
-                        </p>
-                    </div>
-                </div>
-                <About ref={AboutSectionRef} />
-                <Service ref={ServicetSectionRef} />
-                <ShipmentCostCalculator ref={shipmentCalculatorSectionRef} />
-                <MazCommunityForm />
-                <Footer ref={supportSectionRef} />
-            </div>
-            {showPackageTrackingModal && (
-                <PackageTrackingModal close={closePackageTrackingModal} />
-            )}
-            {showLogoutConfirmModal && (
-                <LogoutConfirmModal
-                    logout={logoutHandler}
-                    close={toggleLogoutConfirmModal}
-                />
-            )}
-        </>
-    );
+            </p>
+          </div>
+        </div>
+        <About ref={AboutSectionRef} />
+        <Service ref={ServicetSectionRef} />
+        <ShipmentCostCalculator ref={shipmentCalculatorSectionRef} />
+        <MazCommunityForm />
+        <Footer ref={supportSectionRef} />
+      </div>
+      {showPackageTrackingModal && (
+        <PackageTrackingModal close={closePackageTrackingModal} />
+      )}
+      {showLogoutConfirmModal && (
+        <LogoutConfirmModal
+          logout={logoutHandler}
+          close={toggleLogoutConfirmModal}
+        />
+      )}
+    </>
+  );
 };
 
 export default Index;
 
 export async function getStaticProps({ locale }: { locale: any }) {
-    // console.log(process.env);
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
+  // console.log(process.env);
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }
