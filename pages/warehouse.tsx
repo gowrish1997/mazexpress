@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Warehouse } from "@/models/warehouse.model";
+import LoadingPage from "@/components/common/LoadingPage";
 
 const WarehousePage = () => {
   const { warehouses, mutateWarehouses, warehousesIsLoading } = useWarehouses();
@@ -21,6 +22,11 @@ const WarehousePage = () => {
         document.querySelector("html")?.setAttribute("dir", dir);
         document.querySelector("html")?.setAttribute("lang", lang);
     }, [router.locale]);
+
+    if(warehousesIsLoading){
+        return <LoadingPage/>
+    }
+
     return (
         <>
             <PageHeader content={t("warehousePage.pageHeader.Title")} title="Our Warehouses | MazExpress" />

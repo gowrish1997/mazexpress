@@ -9,9 +9,12 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { getDateInStringFormat } from "@/lib/helper";
 import Calendar from "react-calendar";
 import { createToast } from "@/lib/toasts";
+import { KeyedMutator } from "swr";
+import { APIResponse } from "@/models/api.model";
 interface IProp {
     row: Order;
     close: () => void;
+    mutateOrder: KeyedMutator<APIResponse<Order>>;
 }
 const DeliveryDateChangeModal = (props: IProp) => {
     const [filterDate, setFilterDate] = useState<Date | string>("");
@@ -34,25 +37,26 @@ const DeliveryDateChangeModal = (props: IProp) => {
                     est_delivery: filterDate ? filterDate : null,
                 }),
             });
-            if (result0) {
-                createToast({
-                    type: "success",
-                    title: "Notified User",
-                    message: `Sent order received notification to userID ${
-                        (props.row as Order).user.id
-                    }`,
-                    timeOut: 2000,
-                });
-            } else {
-                createToast({
-                    type: "error",
-                    title: "Failed creating notification",
-                    message: `check console for more info`,
-                    timeOut: 2000,
-                });
-            }
+
+            createToast({
+                type: "success",
+                title: "success",
+                message: `Delivery date successfully changed for order with maz id${
+                    (props.row as Order).maz_id
+                }`,
+                timeOut: 2000,
+            });
+            props.mutateOrder();
+
+            props.close();
         } catch (error) {
             console.error(error);
+            createToast({
+                type: "error",
+                title: "Failed",
+                message: `check console for more info`,
+                timeOut: 2000,
+            });
         }
     };
     return (

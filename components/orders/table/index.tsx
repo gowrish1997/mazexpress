@@ -11,17 +11,21 @@ import { User } from "@/models/user.model";
 import { APIResponse } from "@/models/api.model";
 import { KeyedMutator } from "swr";
 import moment from "moment";
+import EnquiryLineItem from "./EnquiryLineItem";
+import { IEnquiry } from "@/lib/hooks/useEnquiry";
 
 interface TableProps {
     headings: Array<string>;
-    rows: Array<Order> | Array<User>;
+    rows: Array<Order> | Array<User> | Array<IEnquiry>;
     type: string;
     onSelect?: (e: any, type: string) => void;
     selectedOrder?: Order[] | User[];
     mutateOrder?: KeyedMutator<APIResponse<Order>>;
+    mutateUser?: KeyedMutator<APIResponse<User>>;
 }
 
 const Table = (props: TableProps) => {
+    console.log('table')
     const tableClassNameHandler = () => {
         if (
             props.type == "live_order" ||
@@ -37,6 +41,8 @@ const Table = (props: TableProps) => {
             return "admin_table";
         } else if (props.type == "stat_table") {
             return "stat_table";
+        } else if (props.type == "enquiry_base") {
+            return "enquiry_base_table";
         } else {
             return "order_table";
         }
@@ -56,8 +62,8 @@ const Table = (props: TableProps) => {
                         {props.rows
                             .sort(
                                 (a, b) =>
-                                    new Date(a.created_on).getTime() -
-                                    new Date(b.created_on).getTime()
+                                    new Date(b.created_on).getTime() -
+                                    new Date(a.created_on).getTime()
                             )
                             .map((data, index) => {
                                 if (
@@ -107,6 +113,15 @@ const Table = (props: TableProps) => {
                                             selectedOrder={
                                                 props.selectedOrder as User[]
                                             }
+                                            mutateUser={props.mutateUser}
+                                        />
+                                    );
+                                } else if (props.type == "enquiry_base") {
+                                    return (
+                                        <EnquiryLineItem
+                                            key={nanoid()}
+                                            row={data as IEnquiry}
+                                            type={props.type}
                                         />
                                     );
                                 } else {

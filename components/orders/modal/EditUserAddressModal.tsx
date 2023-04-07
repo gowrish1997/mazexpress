@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import fetchJson from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
 import useAddresses from "@/lib/hooks/useAddresses";
+import { APIResponse } from "@/models/api.model";
 
 interface IProp {
     show: boolean;
@@ -43,7 +44,6 @@ const schema = yup
     .required();
 
 const EditUserAddressModal = (props: IProp) => {
-    console.log(props);
     const [country, setCountry] = useState(props.address.country);
     const { user, mutateUser } = useUser();
     const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
@@ -93,15 +93,12 @@ const EditUserAddressModal = (props: IProp) => {
     const onSubmit: SubmitHandler<
         Address & { default?: "on" | "off" }
     > = async (data) => {
-        if (user) {
-            let address = { ...data };
-            delete address.default;
+        let address = { ...data };
+        delete address.default;
 
-            // console.log(address);
-            // console.log(data);
-
-            // update address
-            const addressResult = await fetchJson<Address>(
+        // update address
+        try {
+            const addressResult = await fetchJson<APIResponse<Address>>(
                 `/api/addresses/${props.address.id}`,
                 {
                     method: "PUT",
@@ -109,15 +106,16 @@ const EditUserAddressModal = (props: IProp) => {
                     body: JSON.stringify(address),
                 }
             );
+            console.log(addressResult);
 
-            if (addressResult) {
+            if (addressResult.ok) {
                 // set default if checked
 
                 if (data.default || addresses?.length == 0) {
                     const userResult = await fetchJson(
                         `/api/users/${user?.email}`,
                         {
-                            method: "PUT",
+                            method: "PUT",  
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
                                 default_address: props.address.id,
@@ -157,15 +155,14 @@ const EditUserAddressModal = (props: IProp) => {
                 props.update();
                 props.close();
                 props.update();
-            } else {
-                createToast({
-                    type: "error",
-                    message:
-                        "Your address edit failed. contact admin for help.",
-                    title: "Error",
-                    timeOut: 1000,
-                });
             }
+        } catch (error) {
+            createToast({
+                type: "error",
+                message: "Your address edit failed. contact admin for help.",
+                title: "Error",
+                timeOut: 1000,
+            });
         }
     };
 

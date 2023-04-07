@@ -13,15 +13,23 @@ interface IProp {
 }
 
 const MazStatsDropddown = (props: IProp) => {
-    const [showDropdown, setShowDropdown] = useState(false);
+    // const [showDropdown, setShowDropdown] = useState(false);
 
-    const toggleDropdownHandler = () => {
-        setShowDropdown((prev) => !prev);
-    };
-
+    // const toggleDropdownHandler = () => {
+    //     setShowDropdown((prev) => !prev);
+    // };
+    const trigger = useRef<any>();
     const dropDownOnChangeHandler = (value: string | number) => {
         props.onChange?.(value);
     };
+    const [gate, setGate] = useState(false);
+
+    function smartToggleGateHandler() {
+        setGate(false);
+    }
+    function toggleGateHandler() {
+        setGate((prev) => !prev);
+    }
 
     return (
         <div className="relative min-w-[120px]  ">
@@ -32,11 +40,10 @@ const MazStatsDropddown = (props: IProp) => {
                     props.className
                 }
                 style={
-                    showDropdown
-                        ? { backgroundColor: "#35C6F4", color: "#FFFFFF" }
-                        : {}
+                    gate ? { backgroundColor: "#35C6F4", color: "#FFFFFF" } : {}
                 }
-                onClick={toggleDropdownHandler}
+                onClick={toggleGateHandler}
+                ref={trigger}
             >
                 <span className="capitalize">{props.header}</span>
 
@@ -49,38 +56,43 @@ const MazStatsDropddown = (props: IProp) => {
                     />
                 </div>
             </div>
-            {showDropdown && (
-                <div className="w-full bg-[white] box-border absolute  border-[1px] border-[#ccc] rounded-[4px] p-[5px] space-y-[4px] z-20 ">
-                    {props.options.map((data, index) => {
-                        return (
-                            <div
-                                className="flex flex-row justify-start items-center"
-                                key={index}
-                            >
-                                <button
-                                    className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                    onClick={() =>
-                                        dropDownOnChangeHandler(
-                                            data.value as string
-                                        )
-                                    }
+            {gate && (
+                <ClickOutside
+                    handler={smartToggleGateHandler}
+                    trigger={trigger}
+                >
+                    <div className="w-full bg-[white] box-border absolute  border-[1px] border-[#ccc] rounded-[4px] p-[5px] space-y-[4px] z-20  ">
+                        {props.options.map((data, index) => {
+                            return (
+                                <div
+                                    className="flex flex-row justify-start items-center"
+                                    key={index}
                                 >
-                                    {data.label}
-                                </button>
-                                {props.selection?.includes(data.value) ? (
-                                    <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#35C6F4] " />
-                                ) : (
-                                    <></>
-                                )}
-                                {props.itemPerPage == data.value? (
-                                    <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#35C6F4] " />
-                                ) : (
-                                    <></>
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
+                                    <button
+                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                        onClick={() =>
+                                            dropDownOnChangeHandler(
+                                                data.value as string
+                                            )
+                                        }
+                                    >
+                                        {data.label}
+                                    </button>
+                                    {props.selection?.includes(data.value) ? (
+                                        <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#35C6F4] " />
+                                    ) : (
+                                        <></>
+                                    )}
+                                    {props.itemPerPage == data.value ? (
+                                        <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#35C6F4] " />
+                                    ) : (
+                                        <></>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </ClickOutside>
             )}
         </div>
     );

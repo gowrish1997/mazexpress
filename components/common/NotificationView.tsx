@@ -16,7 +16,6 @@ interface IProp {
     show: boolean;
     trigger: RefObject<HTMLDivElement>;
     handler: () => void;
-    update: () => void;
 }
 
 const NotificationView = forwardRef<HTMLDivElement, IProp>(
@@ -29,14 +28,12 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
         const { notifications, notificationsIsLoading, mutateNotifications } =
             useNotifications({
                 username: user?.email,
-                status: ["read"],
+                status: ["unread"],
+                per_page: 5,
+                page: 1,
             });
 
-        const [userNotifications, setUserNotifications] =
-            useState<Notification[]>();
-
         const deleteNotification = async (id: string) => {
-            console.log(id);
             try {
                 console.log("inside notificatons");
                 const deletedNotification = await fetchServer(
@@ -50,8 +47,6 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                     }
                 );
                 if (deletedNotification) {
-                    console.log("done delete");
-                    props.update();
                     mutateNotifications();
                 } else {
                     console.log("delete failed");
@@ -77,7 +72,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                     );
                     if (deletedNotification) {
                         console.log("done delete");
-                        props.update();
+
                         mutateNotifications();
                     } else {
                         console.log("delete failed");
@@ -89,11 +84,11 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             }
         };
 
-        useEffect(() => {
-            if (notifications !== undefined) {
-                setUserNotifications(notifications);
-            }
-        }, [notificationsIsLoading, notifications]);
+        // useEffect(() => {
+        //     if (notifications !== undefined) {
+        //         setUserNotifications(notifications);
+        //     }
+        // }, [notificationsIsLoading, notifications]);
 
         // useEffect(() => {
         //     console.log(userNotifications);
@@ -131,17 +126,23 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                     </div>
                     <div className="space-y-[20px]">
                         {notifications?.length > 0 ? (
-                            notifications?.map((data) => {
-                                return (
-                                    <EachNotification
-                                        id={data.id!}
-                                        data={data}
-                                        key={data.id}
-                                        delete={deleteNotification}
-                                        update={mutateNotifications}
-                                    />
-                                );
-                            })
+                            notifications
+                                ?.sort(
+                                    (a, b) =>
+                                        new Date(b.created_on).getTime() -
+                                        new Date(a.created_on).getTime()
+                                )
+                                .map((data) => {
+                                    return (
+                                        <EachNotification
+                                            id={data.id!}
+                                            data={data}
+                                            key={data.id}
+                                            delete={deleteNotification}
+                                            update={mutateNotifications}
+                                        />
+                                    );
+                                })
                         ) : (
                             <div className="text-[11px]">
                                 No notifications yet...

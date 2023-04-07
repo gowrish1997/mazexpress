@@ -18,13 +18,21 @@ interface IBody {
   userEmail?: string;
 }
 
+// var transporter = nodemailer.createTransport({
+//   host: "sandbox.smtp.mailtrap.io",
+//   port: 2525,
+//   auth: {
+//     user: "7c17d8572d05a4",
+//     pass: "b010674af9d540",
+//   },
+// });
 var transporter = nodemailer.createTransport({
   host: "sandbox.smtp.mailtrap.io",
   port: 2525,
   auth: {
-    user: "7c17d8572d05a4",
-    pass: "b010674af9d540",
-  },
+    user: "a0d7c18828e1f8",
+    pass: "3231a471538991"
+  }
 });
 
 export default async function handler(

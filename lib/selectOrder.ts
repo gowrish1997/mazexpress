@@ -7,6 +7,8 @@ import {
 } from "@/lib/emailContent/bodyContent";
 import { User } from "@/models/user.model";
 import axios from "axios";
+import { sentMail } from "./sentMail";
+
 export const selectOrder = (
     value: any,
     type: any,
@@ -66,13 +68,22 @@ export const selectOrder = (
     }
 };
 
-export const getUserIdList = (order: any) => {
+export const getOrderIdList = (order: any) => {
     const userIdList = order?.map((data: any) => {
-        return (data as Order).user?.id;
+        return (data as Order)?.maz_id;
     });
 
     let userListString = userIdList?.toString();
     return userListString;
+};
+
+export const getUserEmail = (user: any) => {
+    const userEmailList = user?.map((data: any) => {
+        return data?.email;
+    });
+
+    let userEmailListString = userEmailList?.toString();
+    return userEmailListString;
 };
 
 export const bulkActionHandler = async (
@@ -83,23 +94,17 @@ export const bulkActionHandler = async (
     content: string,
     execute?: boolean
 ) => {
-    let sendNotification = true;
-
     for (let i = 0; i < selectedOrder?.length!; i++) {
         let rowFixed: Order = selectedOrder?.[i] as Order;
         if (execute) {
-            try {
-                const result0 = await fetchServer(
-                    `/api/orders/${rowFixed.maz_id}`,
-                    {
-                        method: "PUT",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({ status: status }),
-                    }
-                );
-            } catch (error) {
-                console.log(error);
-            }
+            const result0 = await fetchServer(
+                `/api/orders/${rowFixed.maz_id}`,
+                {
+                    method: "PUT",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({ status: status }),
+                }
+            );
         }
 
         if (status == "out-for-delivery") {
@@ -122,16 +127,9 @@ export const bulkActionHandler = async (
                 },
             ];
 
-            axios
-                .post("/api/emailTemplate", toList)
-                .then((data) => {
-                    console.log(data.data.body[0].html);
-                    // console.log(data.data.body.html);
-                    // setHtmlCode(data.data.body);
-                })
-                .catch((error) => {
-                    console.log("error", error);
-                });
+            /**sending mail */
+
+            sentMail(toList);
         }
 
         if (status == "delivered") {
@@ -151,67 +149,51 @@ export const bulkActionHandler = async (
                 },
             ];
 
-            axios
-                .post("/api/emailTemplate", toList)
-                .then((data) => {
-                    console.log(data.data.body[0].html);
-                    // console.log(data.data.body.html);
-                    // setHtmlCode(data.data.body);
-                })
-                .catch((error) => {
-                    console.log("error", error);
-                });
+            /**sending mail */
+
+            sentMail(toList);
         }
 
-        try {
-            const result0_2 = await fetchServer(
-                `/api/tracking/${rowFixed.maz_id}`,
-                {
-                    method: "POST",
-                    headers: { "Content-type": "application/json" },
-                    body: JSON.stringify({
-                        stage: trckingStatus,
-                    }),
-                }
-            );
-        } catch (error) {
-            console.error(error);
-        }
+        const result0_2 = await fetchServer(
+            `/api/tracking/${rowFixed.maz_id}`,
+            {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    stage: trckingStatus,
+                }),
+            }
+        );
 
         if (rowFixed.user?.is_notifications_enabled) {
             // get admin notification on backend
             // send notification post
 
-            try {
-                const deliveredMessage = {
-                    title: title,
-                    content: `Your order number ${rowFixed.id} ${content}`,
-                };
-                const result0_3: APIResponse<Notification> = await fetchServer(
-                    "/api/notifications",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            data: deliveredMessage,
-                            // files: [],
-                            users: [rowFixed.user.email],
-                            // notification_config: 1,
-                        }),
-                    }
-                );
-
-                if (result0_3?.count && result0_3?.count > 0) {
-                    sendNotification = true;
-                } else {
-                    sendNotification = false;
+            const deliveredMessage = {
+                title: title,
+                content: `Your order number ${rowFixed.id} ${content}`,
+            };
+            const result0_3: APIResponse<Notification> = await fetchServer(
+                "/api/notifications",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        data: deliveredMessage,
+                        // files: [],
+                        users: [rowFixed.user.email],
+                        // notification_config: 1,
+                    }),
                 }
-            } catch (error) {
-                console.error(error);
-            }
+            );
+
+            // if (result0_3?.count && result0_3?.count > 0) {
+            //     sendNotification = true;
+            // } else {
+            //     sendNotification = false;
+            // }
         }
     }
-    return sendNotification;
 };
 
 export const singleOrderAction = async (
@@ -222,7 +204,6 @@ export const singleOrderAction = async (
     content: string,
     execute: boolean
 ) => {
-    let sendNotification = true;
     let rowFixed: Order = selectedOrder as Order;
     let estimateDelivery = rowFixed?.est_delivery
         ? new Date(rowFixed?.est_delivery)
@@ -233,25 +214,18 @@ export const singleOrderAction = async (
         newDeliveryDate.setDate(newDeliveryDate.getDate() + 7);
     }
     if (execute) {
-        try {
-            const result0 = await fetchServer(
-                `/api/orders/${rowFixed.maz_id}`,
-                {
-                    method: "PUT",
-                    headers: { "Content-type": "application/json" },
-                    body: JSON.stringify({
-                        status: status,
-                        est_delivery:
-                            status == "at-warehouse"
-                                ? newDeliveryDate
-                                : estimateDelivery,
-                    }),
-                }
-            );
-            console.log(result0);
-        } catch (error) {
-            console.error(error);
-        }
+        const result0 = await fetchServer(`/api/orders/${rowFixed.maz_id}`, {
+            method: "PUT",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                status: status,
+                est_delivery:
+                    status == "at-warehouse"
+                        ? newDeliveryDate
+                        : estimateDelivery,
+            }),
+        });
+        console.log(result0);
     }
 
     if (status == "out-for-delivery") {
@@ -274,16 +248,13 @@ export const singleOrderAction = async (
             },
         ];
 
-        axios
-            .post("/api/emailTemplate", toList)
-            .then((data) => {
-                console.log(data.data.body[0].html);
-                // console.log(data.data.body.html);
-                // setHtmlCode(data.data.body);
-            })
-            .catch((error) => {
-                console.log("error", error);
-            });
+        /**sending mail */
+
+        try {
+            sentMail(toList);
+        } catch (error) {
+            console.log(error);
+        }
     }
     if (status == "delivered") {
         const toList = [
@@ -302,63 +273,45 @@ export const singleOrderAction = async (
             },
         ];
 
-        axios
-            .post("/api/emailTemplate", toList)
-            .then((data) => {
-                console.log(data.data.body[0].html);
-                // console.log(data.data.body.html);
-                // setHtmlCode(data.data.body);
-            })
-            .catch((error) => {
-                console.log("error", error);
-            });
+        /**sending mail */
+
+        try {
+            sentMail(toList);
+        } catch (error) {
+            console.log(error);
+        }
     }
-    try {
-        const result0_2 = await fetchServer(
-            `/api/tracking/${rowFixed.maz_id}`,
-            {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({
-                    stage: trckingStatus,
-                }),
-            }
-        );
-    } catch (error) {
-        console.error(error);
-    }
+
+    const result0_2 = await fetchServer(`/api/tracking/${rowFixed.maz_id}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+            stage: trckingStatus,
+        }),
+    });
+
     if ((rowFixed as Order).user.is_notifications_enabled) {
         const deliveredMessage = {
             title: title,
             content: `Your order number ${rowFixed.id} ${content}`,
         };
-        try {
-            let result0_3: APIResponse<Notification> = await fetchServer(
-                `/api/notifications`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        data: deliveredMessage,
-                        // files: [],
-                        users: [(rowFixed as Order).user.email],
-                        // notification_config: 1,
-                    }),
-                }
-            );
-            console.log(result0_3);
-            if (result0_3?.count && result0_3?.count > 0) {
-                sendNotification = true;
-            } else {
-                sendNotification = false;
-            }
 
-            // console.log(result0_3);
-        } catch (error) {
-            console.error(error);
-        }
+        let result0_3: APIResponse<Notification> = await fetchServer(
+            `/api/notifications`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    data: deliveredMessage,
+                    // files: [],
+                    users: [(rowFixed as Order).user.email],
+                    // notification_config: 1,
+                }),
+            }
+        );
+
+        // console.log(result0_3);
     }
-    return sendNotification;
 };

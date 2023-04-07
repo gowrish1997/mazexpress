@@ -44,10 +44,6 @@ const Topbar = () => {
         setSearchKey((e.target as HTMLInputElement).value);
     };
 
-    useEffect(() => {
-        console.log("update");
-    }, [notifications]);
-
     return (
         <>
             <div className="flex w-full min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-30">
@@ -57,7 +53,8 @@ const Topbar = () => {
                         id="searchbar"
                         type="text"
                         placeholder={
-                            router.pathname.includes("users")
+                            router.pathname.includes("users") ||
+                            router.pathname.includes("admins")
                                 ? placeholder[0]
                                 : placeholder[1]
                         }
@@ -121,14 +118,14 @@ const Topbar = () => {
                     />
                 </div>
             </div>
-
-            <NotificationView
-                close={toggleNotificationsHandler}
-                show={showNotifications}
-                trigger={trigger}
-                handler={smartToggleNotificationsHandler}
-                update={mutateNotifications}
-            />
+            {showNotifications && (
+                <NotificationView
+                    close={toggleNotificationsHandler}
+                    show={showNotifications}
+                    trigger={trigger}
+                    handler={smartToggleNotificationsHandler}
+                />
+            )}
         </>
     );
 };

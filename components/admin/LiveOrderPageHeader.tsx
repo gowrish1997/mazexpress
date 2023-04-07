@@ -7,8 +7,6 @@ import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import { perPageOptinsList } from "@/lib/helper";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
-import useOrders from "@/lib/hooks/useOrders";
-import useOrderCount from "@/lib/hooks/useOrderCount";
 
 const warehouse = ["istanbul"];
 

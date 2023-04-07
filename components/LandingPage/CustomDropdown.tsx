@@ -35,15 +35,14 @@ const genderHandler = (type: string, locale: string) => {
 const languageHandler = (type: string, locale: string) => {
     // console.log('type, locale', type, locale)
     switch (type) {
-        case "ar":
+        case "arabic":
             return locale == "en" ? "Arabic" : "عربي";
-        case "en":
+        case "english":
             return locale == "en" ? "English" : "إنجليزي";
     }
 };
 
 const CusotmDropdown = (props: IProp) => {
-    
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
@@ -96,6 +95,7 @@ const CusotmDropdown = (props: IProp) => {
                 }
                 // style={{ borderColor: props.error ? "#f02849" : "" }}
                 onClick={toggleAdminOptionCard}
+                ref={trigger}
             >
                 <input
                     id={props.name}

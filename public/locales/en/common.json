@@ -79,13 +79,14 @@
         "Title": "Reset Password",
         "MobileViewTitle": "Get More Done With Our MAZ Services",
         "form": {
-            "InputField": ["Password", "Confirm password"],
+            "InputField": ["Password", "Confirm password", "Email"],
 
             "Errors": [
                 "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-                "Confirm password is required field(Passwords must match) "
+                "Confirm password is required field(Passwords must match) ",
+                "Email is required (Please provide valid email)"
             ],
-            "SubmitButton": ["Reset Password"],
+            "SubmitButton": ["Reset Password", "Send mail"],
             "Description": [
                 "By signing up, you agree to our",
                 "Terms of Service.",
@@ -164,7 +165,7 @@
                         "label": "Pick - Up Warehouse address"
                     },
                     { "placeholder": "City", "label": "Delivery City" },
-                    { "placeholder": "", "label": "Dimensions ( Optional )" },
+                    { "placeholder": "", "label": "Dimensions" },
                     { "placeholder": "", "label": "Weight*" }
                 ],
                 "Errors": [
@@ -172,7 +173,7 @@
                     "Delivery City is a required field",
                     "Weight is a required field"
                 ],
-                "Dimensions": ["Length", "Width", "Height"],
+                "Dimensions": ["length", "width", "height"],
                 "SubmitButton": "Calculate Cost",
                 "ResetButton": "Reset"
             }
@@ -188,7 +189,7 @@
                     "Message is a required field"
                 ],
 
-                "SubmitButton": "Get started now"
+                "SubmitButton": "Submit"
             }
         },
         "footer": {
@@ -236,7 +237,9 @@
             "Admin Base",
             "Notification Panel",
             "Settings",
-            "Help center"
+            "Help center",
+            "Enquiry Base",
+            "Settings (Shipping cost)"
         ],
         "Logout": "Logout",
         "logoutConfirmModal": {

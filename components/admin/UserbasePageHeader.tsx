@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
-import FilterOptionDropDown from "./FilterOptionDropDown";
-import SearchUserInputField from "./SearchUserInputField";
-import SendNotificatonConfirmModal from "./modal/SendNotificatonConfirmModal";
 import RemoveAdminConfirmModal from "./modal/RemoveAdminConfirmModal";
 import PageheaderTitle from "./PageheaderTitle";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import { User } from "@/models/user.model";
+import { createToast } from "@/lib/toasts";
+import fetchJson from "@/lib/fetchServer";
+import { getUserEmail } from "@/lib/selectOrder";
+import { KeyedMutator } from "swr";
+import { APIResponse } from "@/models/api.model";
 interface IProp {
     content: string;
     title?: string;
@@ -25,6 +27,7 @@ interface IProp {
     isFilterPresent?: boolean;
     createdDateFilterKey?: string | Date;
     // filterByUser:(value:string)=>void
+    mutateUser?: KeyedMutator<APIResponse<User>>;
 }
 
 const UserbasePageHeader = (props: IProp) => {
@@ -41,17 +44,42 @@ const UserbasePageHeader = (props: IProp) => {
         setShowRemoveConfirmModal((prev) => !prev);
     };
 
-    const removeAdmins = () => {
-        console.log("remvoe admins");
+    const removeAdmins = async () => {
+        let sendSuccessNotification = true;
+        console.log(getUserEmail(props.selectedUser));
+        for (let i = 0; i < props.selectedUser?.length; i++) {
+            try {
+                const updateRes = await fetchJson(
+                    `/api/users/${(props.selectedUser[i] as User).email}`,
+                    {
+                        method: "DELETE",
+                        headers: { "Content-Type": "application/json" },
+                    }
+                );
+            } catch (error) {
+                sendSuccessNotification = false;
+                console.error(error);
+            }
+        }
+        if (sendSuccessNotification) {
+            props.mutateUser?.();
+            createToast({
+                type: "success",
+                title: "success",
+                message: `Admins with email ${getUserEmail(
+                    props.selectedUser
+                )} removed successfully`,
+                timeOut: 2000,
+            });
+        } else {
+            createToast({
+                type: "error",
+                title: "Some error happened",
+                message: `check console for more info`,
+                timeOut: 2000,
+            });
+        }
     };
-
-    // const toggleSendNotificatoinConfirmModal = () => {
-    //     setShowSendNotificatoinConfirmModal((prev) => !prev);
-    // };
-
-    // const sendNotificatoinHanlder = () => {
-    //     console.log();
-    // };
 
     return (
         <>

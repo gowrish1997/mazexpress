@@ -8,18 +8,8 @@ import { perPageOptinsList } from "@/lib/helper";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { Order } from "@/models/order.model";
-import useOrders from "@/lib/hooks/useOrders";
-import useOrderCount from "@/lib/hooks/useOrderCount";
 
 const DeliveredPageHeader = (props: IPageHeaderProp) => {
-    const {
-        orderCount,
-        mutateOrderCount,
-        orderCountIsLoading,
-        orderCountError,
-    } = useOrderCount({
-        status: ["delivered"],
-    });
     const warehousesDropDownOptoin = ["istanbul"];
 
     return (

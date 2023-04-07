@@ -3,11 +3,9 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import useUser from "@/lib/hooks/useUser";
-// import CustomDropDown from "@/components/common/CustomDropDown";
 import { Warehouse, WarehouseStatus } from "@/models/warehouse.model";
 import fetchJson from "@/lib/fetchServer";
 import { yupResolver } from "@hookform/resolvers/yup";
-import CustomDropdown from "@/components/LandingPage/CustomDropdown";
 
 interface IProp {
     close: () => void;

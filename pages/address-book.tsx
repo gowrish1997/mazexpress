@@ -11,6 +11,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
+import LoadingPage from "@/components/common/LoadingPage";
 
 const AddressBook = () => {
     const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -28,6 +29,8 @@ const AddressBook = () => {
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
+
+    console.log(user);
     console.log(addresses);
 
     useEffect(() => {
@@ -52,6 +55,9 @@ const AddressBook = () => {
             setEditableAddress(address);
         }
     };
+    if (addressesIsLoading) {
+        return <LoadingPage />;
+    }
 
     return (
         <>
@@ -84,12 +90,14 @@ const AddressBook = () => {
                     {t("addressBookPage.AddNewButton")}
                 </button>
             </div>
+            {showAddNewAddressModal && (
+                <AddNewAddressModal
+                    show={showAddNewAddressModal}
+                    close={toggleAddNewAddressModal}
+                    update={mutateAddresses}
+                />
+            )}
 
-            <AddNewAddressModal
-                show={showAddNewAddressModal}
-                close={toggleAddNewAddressModal}
-                update={mutateAddresses}
-            />
             {showEditUserAddressModal && (
                 <EditUserAddressModal
                     update={mutateAddresses}

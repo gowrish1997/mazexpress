@@ -14,7 +14,7 @@ import { APIResponse } from "@/models/api.model";
 import { createToast } from "@/lib/toasts";
 import { useRouter } from "next/router";
 import { perPageOptinsList } from "@/lib/helper";
-import { getUserIdList } from "@/lib/selectOrder";
+import { getOrderIdList } from "@/lib/selectOrder";
 import { bulkActionHandler } from "@/lib/selectOrder";
 
 const adminOption = ["Moved out"];
@@ -38,26 +38,17 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                 2,
                 "Order left Istanbul warehouse!",
                 "has left our Istanbul warehouse and will be reach Libya soon.",
-                true,
+                true
             );
-            console.log(status);
-            if (status) {
-                createToast({
-                    type: "success",
-                    title: "Notified User",
-                    message: `Sent order left Istanbul warehouse notification to userID ${getUserIdList(
-                        props.selectedOrder
-                    )}`,
-                    timeOut: 2000,
-                });
-            } else {
-                createToast({
-                    type: "error",
-                    title: "Failed creating notification",
-                    message: `check console for more info`,
-                    timeOut: 2000,
-                });
-            }
+
+            createToast({
+                type: "success",
+                title: "success",
+                message: `orders with ID ${getOrderIdList(
+                    props.selectedOrder
+                )} successfully updated `,
+                timeOut: 2000,
+            });
 
             props.mutateOrder?.();
             props.setSelectedOrder?.([]);

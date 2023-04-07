@@ -79,6 +79,7 @@ const LogInComponent = (props: any) => {
         if (response.data?.[0].is_admin) {
           router.push("/admin");
         } else {
+          //   console.log("puhsing to / page");
           router.push("/");
         }
       } else {
@@ -204,10 +205,6 @@ const LogInComponent = (props: any) => {
           <LogInWithMail />
         </div>
         <div className="w-full text-center text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[16px] ">
-          <p>
-            {description[0]}{" "}
-            <span className="text-[#0057FF]">{description[1]}</span>
-          </p>
           <p className="">
             {description[2]}
             <span
