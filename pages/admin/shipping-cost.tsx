@@ -1,6 +1,7 @@
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
+import { GetServerSidePropsContext } from "next";
 
 const ShippingCost = () => {
     return (
@@ -38,13 +39,22 @@ const ShippingCost = () => {
 };
 
 export default ShippingCost;
-export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  // console.log("redders", ctx.req.cookies);
+  if (ctx.req.cookies.is_admin !== "true") {
     return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
     };
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
+    },
+  };
 }

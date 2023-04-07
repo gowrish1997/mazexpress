@@ -155,13 +155,22 @@ const HelpCenterView = (props: IProp) => {
 };
 
 export default HelpCenterView;
-export async function getStaticProps({ locale }: { locale: any }) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
+      await i18n?.reloadResources();
+    }
+    // console.log("redders", ctx.req.cookies);
+    if (ctx.req.cookies.is_admin !== "true") {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
     }
     return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
+      props: {
+        ...(await serverSideTranslations(ctx.locale, ["common"])),
+      },
     };
-}
+  }

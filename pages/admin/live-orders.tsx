@@ -10,6 +10,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchKeyContext } from "@/components/common/Frame";
 import { getDateInDBFormat } from "@/lib/utils";
+import { GetServerSidePropsContext } from "next";
 
 const tableHeaders = [
     "Customer",
@@ -141,24 +142,44 @@ const LiveOrders = () => {
 };
 
 export default LiveOrders;
-export async function getStaticProps(context: any) {
+// export async function getStaticProps(context: any) {
+//     if (process.env.NODE_ENV === "development") {
+//         await i18n?.reloadResources();
+//     }
+//     const { locale } = context;
+//     const { params, pathname } = context;
+
+//     console.log(params);
+
+//     return {
+//         props: {
+//             ...(await serverSideTranslations(locale, ["common"])),
+//         },
+//         // redirect: {
+//         //     destination:
+//         //         locale == "ar"
+//         //             ? `/en/admin/live-orders`
+//         //             : "/en/admin/live-orders",
+//         // },
+//     };
+// }
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
+      await i18n?.reloadResources();
     }
-    const { locale } = context;
-    const { params, pathname } = context;
-
-    console.log(params);
-
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
+    // console.log("redders", ctx.req.cookies);
+    if (ctx.req.cookies.is_admin !== "true") {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
         },
-        // redirect: {
-        //     destination:
-        //         locale == "ar"
-        //             ? `/en/admin/live-orders`
-        //             : "/en/admin/live-orders",
-        // },
+      };
+    }
+    return {
+      props: {
+        ...(await serverSideTranslations(ctx.locale, ["common"])),
+      },
     };
-}
+  }

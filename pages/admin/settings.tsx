@@ -23,6 +23,7 @@ import { useTranslation } from "next-i18next";
 import fetchJson from "@/lib/fetchServer";
 import AuthCTX from "@/components/context/auth.ctx";
 import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import { GetServerSidePropsContext } from "next";
 const schema = yup
   .object({
     first_name: yup.string().required("First name is required"),
@@ -444,13 +445,22 @@ const Settings = () => {
 };
 
 export default Settings;
-export async function getStaticProps({ locale }: { locale: any }) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }
+  // console.log("redders", ctx.req.cookies);
+  if (ctx.req.cookies.is_admin !== "true") {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
     },
   };
 }

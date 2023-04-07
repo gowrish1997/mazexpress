@@ -16,6 +16,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchKeyContext } from "@/components/common/Frame";
 import { getDateInDBFormat } from "@/lib/utils";
+import { GetServerSidePropsContext } from "next";
 
 const tableHeaders = [
     "Customer",
@@ -133,13 +134,4 @@ const Intransit = () => {
 };
 
 export default Intransit;
-export async function getStaticProps({ locale }: { locale: any }) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
-    };
-}
+

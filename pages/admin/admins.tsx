@@ -18,6 +18,8 @@ import useUsers from "@/lib/hooks/useUsers";
 import { User } from "@/models/user.model";
 
 import { getDateInDBFormat } from "@/lib/utils";
+import { GetServerSidePropsContext } from "next";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const tableHeaders = [
   "User",
@@ -34,6 +36,7 @@ const AdminBase = () => {
   const router = useRouter();
 
   const { locales, locale: activeLocale } = router;
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
 
   useEffect(() => {
     let dir = router.locale == "ar" ? "rtl" : "ltr";
@@ -100,6 +103,14 @@ const AdminBase = () => {
   //   if (error) {
   //     return <div>some error happened</div>;
   //   }
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "admin") {
+    return <div>401 - Unauthorized</div>;
+  }
+
   return (
     <>
       <div>
@@ -147,13 +158,33 @@ const AdminBase = () => {
 };
 
 export default AdminBase;
-export async function getStaticProps({ locale }: { locale: any }) {
+// export async function getStaticProps({ locale }: { locale: any }) {
+//   if (process.env.NODE_ENV === "development") {
+//     await i18n?.reloadResources();
+//   }
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ["common"])),
+//     },
+//   };
+// }
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }
+  // console.log("redders", ctx.req.cookies);
+  if (ctx.req.cookies.is_admin !== "true") {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
     },
   };
 }

@@ -80,6 +80,7 @@ const LogInComponent = (props: any) => {
               method: "POST",
               body: JSON.stringify({ is_admin: true }),
             }).then((data) => {
+              // console.log(data)
               router.push("/admin");
               set_active_user(user as IWhiteListedUser);
             });
@@ -89,7 +90,8 @@ const LogInComponent = (props: any) => {
               method: "POST",
               body: JSON.stringify({ is_admin: false }),
             }).then((data) => {
-              router.push("/");
+              // console.log(data)
+              router.push("/orders");
               set_active_user(user as IWhiteListedUser);
             });
           }

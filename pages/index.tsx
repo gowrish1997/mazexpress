@@ -98,7 +98,7 @@ const Index = () => {
         if (done) {
           console.log("logged out");
           const data = await fetchSelf("/api/auth/unbind_data");
-          router.push("/");
+          // router.push("/");
           setShowLogoutConfirmModal(false);
           set_active_user(null);
         }

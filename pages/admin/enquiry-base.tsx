@@ -7,6 +7,7 @@ import BlankPage from "@/components/admin/BlankPage";
 import useEnquiry, { IEnquiry } from "@/lib/hooks/useEnquiry";
 const tableHeaders = ["Customer Email ID", "Mobile numbers", "Date", "Message"];
 import LoadingPage from "@/components/common/LoadingPage";
+import { GetServerSidePropsContext } from "next";
 
 const EnquiryBase = () => {
     const { enquiry, mutateEnquiry, enquiryIsLoading, enquiryError } =
@@ -44,13 +45,33 @@ const EnquiryBase = () => {
 };
 
 export default EnquiryBase;
-export async function getStaticProps({ locale }: { locale: any }) {
+// export async function getStaticProps({ locale }: { locale: any }) {
+//     if (process.env.NODE_ENV === "development") {
+//         await i18n?.reloadResources();
+//     }
+//     return {
+//         props: {
+//             ...(await serverSideTranslations(locale, ["common"])),
+//         },
+//     };
+// }
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
+      await i18n?.reloadResources();
+    }
+    // console.log("redders", ctx.req.cookies);
+    if (ctx.req.cookies.is_admin !== "true") {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
     }
     return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
+      props: {
+        ...(await serverSideTranslations(ctx.locale, ["common"])),
+      },
     };
-}
+  }

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSidePropsContext } from "next";
 
 const NotificationPanel = () => {
   const router = useRouter();

@@ -8,6 +8,7 @@ import HelpCenterView from "@/components/admin/help-center/modal/HelpCenterView"
 import LoadingPage from "@/components/common/LoadingPage";
 import useHelpCenter from "@/lib/hooks/useHelpCenter";
 import { IHelpCenter } from "@/lib/hooks/useHelpCenter";
+import { GetServerSidePropsContext } from "next";
 
 const HelpCenter = () => {
     const router = useRouter();
@@ -37,13 +38,22 @@ const HelpCenter = () => {
 };
 
 export default HelpCenter;
-export async function getStaticProps({ locale }: { locale: any }) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
+      await i18n?.reloadResources();
+    }
+    // console.log("redders", ctx.req.cookies);
+    if (ctx.req.cookies.is_admin !== "true") {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
     }
     return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
+      props: {
+        ...(await serverSideTranslations(ctx.locale, ["common"])),
+      },
     };
-}
+  }

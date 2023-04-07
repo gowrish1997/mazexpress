@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import useHelpCenter from "@/lib/hooks/useHelpCenter";
 import LoadingPage from "@/components/common/LoadingPage";
 import AddNewHelpCenterModal from "@/components/admin/help-center/AddNewHelpCenterModal";
+import { GetServerSidePropsContext } from "next";
 
 const HelpCenter = () => {
     const {
@@ -50,13 +51,33 @@ const HelpCenter = () => {
 };
 
 export default HelpCenter;
-export async function getStaticProps({ locale }: { locale: any }) {
+// export async function getStaticProps({ locale }: { locale: any }) {
+//     if (process.env.NODE_ENV === "development") {
+//         await i18n?.reloadResources();
+//     }
+//     return {
+//         props: {
+//             ...(await serverSideTranslations(locale, ["common"])),
+//         },
+//     };
+// }
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
+      await i18n?.reloadResources();
+    }
+    // console.log("redders", ctx.req.cookies);
+    if (ctx.req.cookies.is_admin !== "true") {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
     }
     return {
-        props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-        },
+      props: {
+        ...(await serverSideTranslations(ctx.locale, ["common"])),
+      },
     };
-}
+  }

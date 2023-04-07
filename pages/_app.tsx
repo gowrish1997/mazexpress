@@ -13,6 +13,7 @@ import { SWRConfig } from "swr";
 import { createToast } from "@/lib/toasts";
 import fetchServer, { FetchError } from "@/lib/fetchServer";
 import fetchSelf from "@/lib/fetchSelf";
+import useScript from "@/lib/hooks/useScript";
 
 // import useGoogle from "@/lib/hooks/useGoogle";
 // import { User } from "@/models/user.model";
@@ -27,21 +28,21 @@ function App({ Component, pageProps }: AppProps) {
   const [active_user, set_active_user] = useState<IWhiteListedUser | null>(
     jetpass.getUser()
   );
-
+  // const dev_tools_status = useScript({ src: "http://localhost:8097" });
   useEffect(() => {
     // check local storage
-    const user = JSON.parse(localStorage.getItem("active_user"));
-    if (user && !active_user) {
-      set_active_user(user);
-      fetchSelf("/api/auth/bind_data", {
-        method: "POST",
-        body: JSON.stringify({ is_admin: user.is_admin }),
-      }).then((data) => {
-        router.push("/");
-      });
-    }
+    // console.log(rank);
+    // const user = JSON.parse(localStorage.getItem("active_user"));
+    // if (user && !active_user) {
+    //   set_active_user(user);
+    //   fetchSelf("/api/auth/bind_data", {
+    //     method: "POST",
+    //     body: JSON.stringify({ is_admin: user.is_admin }),
+    //   }).then((data) => {
+    //     router.push("/");
+    //   });
+    // }
   }, [active_user]);
-
 
   if (router.pathname.startsWith("/tstt")) {
     // no frame
@@ -74,7 +75,7 @@ function App({ Component, pageProps }: AppProps) {
       </AuthCTX.Provider>
     );
   }
-  if (router.pathname.startsWith("/tstt")) {
+  if (router.pathname.startsWith("/auth")) {
     // no frame
     return (
       <AuthCTX.Provider
