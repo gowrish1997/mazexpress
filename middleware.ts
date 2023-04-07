@@ -19,10 +19,7 @@ export const middleware = async (req: NextRequest) => {
 
   const session = await getIronSession(req, res, sessionOptions);
   const auth_cookie = req.cookies.get("mazAPI");
-  // const parsed = parseCookies(req);
-  // let cookie = req.cookies.get("mazAPI")?.value;
-  // let header = req.headers.get("is_admin")
-  console.log("from middleware: ", session.is_admin);
+//   console.log("from middleware: ", session.is_admin);
   // const payload = jwt.verify(
   //   auth_cookie.value,
   //   process.env.SECRET_COOKIE_PASSWORD

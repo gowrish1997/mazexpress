@@ -81,6 +81,7 @@ const LogInComponent = (props: any) => {
               body: JSON.stringify({ is_admin: true }),
             }).then((data) => {
               router.push("/admin");
+              set_active_user(user as IWhiteListedUser);
             });
           } else {
             // bind is_admin false to session
@@ -89,9 +90,10 @@ const LogInComponent = (props: any) => {
               body: JSON.stringify({ is_admin: false }),
             }).then((data) => {
               router.push("/");
+              set_active_user(user as IWhiteListedUser);
             });
           }
-          set_active_user(user as IWhiteListedUser);
+          
         }
       });
     } catch (err) {

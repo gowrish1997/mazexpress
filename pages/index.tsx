@@ -93,15 +93,14 @@ const Index = () => {
   const logoutHandler = () => {
     try {
       const user_whitelist_id = user.whitelist_id;
-      jet.logout(user_whitelist_id, (err, done) => {
+      jet.logout(user_whitelist_id, async (err, done) => {
         if (err) throw err;
         if (done) {
-          //   console.log("logged out");
-          fetchSelf("/api/auth/unbind_data").then((data) => {
-            router.push("/");
-            setShowLogoutConfirmModal(false);
-            set_active_user(null);
-          });
+          console.log("logged out");
+          const data = await fetchSelf("/api/auth/unbind_data");
+          router.push("/");
+          setShowLogoutConfirmModal(false);
+          set_active_user(null);
         }
       });
     } catch (err) {
