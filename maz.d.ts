@@ -9,7 +9,7 @@ export {};
 // This is where we specify the typings of req.session.*
 declare module "iron-session" {
   interface IronSessionData {
-    user?: Partial<User>;
+    is_admin: boolean;
   }
 }
 
@@ -18,7 +18,6 @@ declare global {
     google: any;
   }
 }
-
 
 declare module "jsonwebtoken" {
   interface JwtPayload {
@@ -43,8 +42,6 @@ window.google = window.google || {};
 // for server sign in
 namespace NodeJS {
   interface ProcessEnv {
-
-
     GOOGLE_ID: string;
     GOOGLE_SECRET: string;
 
@@ -52,7 +49,7 @@ namespace NodeJS {
 
     readonly NEXT_PUBLIC_SERVER_HOST: string;
     readonly NEXT_PUBLIC_SERVER_PORT: string;
-    
+
     readonly NEXT_PUBLIC_C4: string;
   }
 }

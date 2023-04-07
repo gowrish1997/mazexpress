@@ -76,7 +76,7 @@ const PageheaderTitle = (props: IProp) => {
                         handler={smartToggleGateHandler}
                         trigger={trigger}
                     >
-                        <div className="absolute top-[40px] left-[10px] bg-white rounded shadow z-[50] border-[1px] p-3 ">
+                        <div className="absolute top-[20px] left-[10px] bg-white rounded shadow z-[50] border-[1px] p-3 ">
                             <Calendar
                                 onChange={calendarChangeHandler}
                                 // value={calendarValue}

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { FieldError } from "react-hook-form";
+import { locale } from "moment";
+import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 interface IProp {
     label: string;
@@ -22,6 +25,9 @@ interface IProp {
 }
 
 const ReactHookFormInput = (props: IProp) => {
+    const router = useRouter();
+    const { t } = useTranslation("common");
+    const { locale } = router;
     return (
         <div className={"w-full flex-type6"}>
             <label
@@ -30,6 +36,7 @@ const ReactHookFormInput = (props: IProp) => {
             >
                 {props.label}
             </label>
+
             <div
                 className={
                     "flex-type1 w-full h-[46px] lg:h-[55px] xlg:h-[70px] border-[1px] border-[#BBC2CF] rounded-[4px] box-border  relative" +
@@ -62,7 +69,9 @@ const ReactHookFormInput = (props: IProp) => {
                         alt="eyeIcon"
                         height={18}
                         width={18}
-                        className="cursor-pointer absolute right-[8px] "
+                        className={`cursor-pointer absolute ${
+                            locale == "en" ? "right-[8px]" : "left-[8px]"
+                        }  `}
                         onClick={() => props.onClick?.()}
                     />
                 ) : null}

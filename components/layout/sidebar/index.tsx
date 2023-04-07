@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Header from "./Header";
 import NavLink from "./NavLink";
@@ -7,13 +7,14 @@ import { useRouter } from "next/router";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import logoutImage from "@/public/logout.png";
 import useUser from "@/lib/hooks/useUser";
-import fetchServer from '@/lib/fetchServer'
+import fetchSelf from "@/lib/fetchSelf";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import { useTranslation } from "next-i18next";
-import UserContext from "@/components/context/user.context";
+import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import AuthCTX from "@/components/context/auth.ctx";
 
 const userSidebarPanel = [
   {
@@ -126,6 +127,18 @@ const adminSidebarPanel = [
     icon: "/help.png",
     path: "/admin/help-center",
   },
+  {
+    id: nanoid(),
+    title: "Enquiry Base",
+    icon: "/help.png",
+    path: "/admin/enquiry-base",
+  },
+  {
+    id: nanoid(),
+    title: "Settings (Shipping cost)",
+    icon: "/help.png",
+    path: "/admin/shipping-cost",
+  },
 ];
 
 const sidebarContentHandler = (admin: boolean) => {
@@ -137,8 +150,11 @@ const sidebarContentHandler = (admin: boolean) => {
 };
 
 const Sidebar = () => {
-  const { user, mutateUser } = useUser();
-  const { setUser } = useContext(UserContext);
+  // const { user, mutateUser } = useUser();
+  // const { setUser } = useContext(UserContext);
+  const jet = useContext(AuthCTX)["jet"];
+  const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
+  const { set_active_user } = useContext(AuthCTX);
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
@@ -169,17 +185,37 @@ const Sidebar = () => {
 
   const logoutHandler = async () => {
     try {
-      await fetchServer("/api/auth/logout", { method: "GET" });
-      // set state to null
-      setUser(null);
-      await mutateUser();
-      router.push("/");
-    } catch (error) {
-      console.error(error);
+      const user_whitelist_id = user.whitelist_id;
+      jet.logout(user_whitelist_id, (err, done) => {
+        if (err) throw err;
+        if (done) {
+          //   console.log("logged out");
+          fetchSelf("/api/auth/unbind_data").then((data) => {
+            setShowLogoutConfirmModal(false);
+            router.push("/");
+            set_active_user(null);
+          });
+        }
+      });
+    } catch (err) {
+      if (err) console.error(err);
     }
+    // try {
+    //   await fetchServer("/api/auth/logout", { method: "GET" });
+    //   // set state to null
+    //   setUser(null);
+    //   await mutateUser();
+    //   router.push("/");
+    // } catch (error) {
+    //   console.error(error);
+    // }
 
     // router.reload()
   };
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <>

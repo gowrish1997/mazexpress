@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import useUser from "@/lib/hooks/useUser";
 import fetchServer from "@/lib/fetchServer";
@@ -9,6 +9,7 @@ import { capitalizeFirstLetter } from "@/lib/helper";
 import { Address } from "@/models/address.model";
 import useAddresses from "@/lib/hooks/useAddresses";
 import { constants } from "buffer";
+import UserContext from "../context/user.context";
 
 const UserSavedAddress = (props: {
     type: string;
@@ -20,7 +21,8 @@ const UserSavedAddress = (props: {
     updateDeliveryAddress?: (id: string) => void;
     selectedAddressId?: any;
 }) => {
-    const { user, mutateUser } = useUser();
+    const { mutateUser } = useUser();
+    const { user } = useContext(UserContext);
 
     const { t } = useTranslation("common");
     const content: string[] = t(
@@ -33,18 +35,17 @@ const UserSavedAddress = (props: {
     const deleteAddressHandler = async () => {
         console.log("delete user address");
 
-        if (user) {
-            let defaultaddress = user?.default_address;
+        let defaultaddress = user?.default_address;
 
-            if (
-                props.address.id === user?.default_address &&
-                props.allAddresses.length > 1
-            ) {
-                defaultaddress =
-                    props.address.id == (props.allAddresses?.[0] as Address).id
-                        ? (props.allAddresses?.[1] as Address).id
-                        : (props.allAddresses?.[0] as Address).id;
-
+        if (
+            props.address.id === user?.default_address &&
+            props.allAddresses.length > 1
+        ) {
+            defaultaddress =
+                props.address.id == (props.allAddresses?.[0] as Address).id
+                    ? (props.allAddresses?.[1] as Address).id
+                    : (props.allAddresses?.[0] as Address).id;
+            try {
                 const updateResponse = await fetchServer(
                     `/api/users/${user?.email}`,
                     {
@@ -56,7 +57,11 @@ const UserSavedAddress = (props: {
                     }
                 );
                 mutateUser();
+            } catch (error) {
+                console.log(error);
             }
+        }
+        try {
             const result = await fetchServer(
                 `/api/addresses/id/${props.address.id}`,
 
@@ -65,25 +70,28 @@ const UserSavedAddress = (props: {
                 }
             );
             props.update();
-            if (
-                props.type == "add-new-order" &&
-                props.selectedAddressId == props.address.id &&
-                props.allAddresses.length > 1
-            ) {
-                props.updateDeliveryAddress?.(defaultaddress!);
-            } else {
-                props.updateDeliveryAddress?.(props.selectedAddressId);
-            }
+        } catch (error) {
+            console.error(error);
+        }
 
-            if (props.allAddresses.length == 1) {
-                props.updateDeliveryAddress?.("");
-            }
+        if (
+            props.type == "add-new-order" &&
+            props.selectedAddressId == props.address.id &&
+            props.allAddresses.length > 1
+        ) {
+            props.updateDeliveryAddress?.(defaultaddress!);
+        } else {
+            props.updateDeliveryAddress?.(props.selectedAddressId);
+        }
+
+        if (props.allAddresses.length == 1) {
+            props.updateDeliveryAddress?.("");
         }
     };
 
     const updateUser = async (id: string) => {
-        if (user) {
-            if (props.type == "address-book") {
+        if (props.type == "address-book") {
+            try {
                 const updateResponse = await fetchServer(
                     `/api/users/${user?.email}`,
                     {
@@ -92,12 +100,14 @@ const UserSavedAddress = (props: {
                         body: JSON.stringify({ default_address: id }),
                     }
                 );
-                mutateUser();
-
-                // props.update();
-            } else {
-                props.updateDeliveryAddress?.(id);
+                mutateUser({ ...user, default_address: id }, true);
+            } catch (error) {
+                console.error(error.message);
             }
+
+            // props.update();
+        } else {
+            props.updateDeliveryAddress?.(id);
         }
     };
 

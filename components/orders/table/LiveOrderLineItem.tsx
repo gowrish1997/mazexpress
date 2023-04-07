@@ -25,7 +25,7 @@ interface IProp {
 
 const LiveOrderLineItem = (props: IProp) => {
     const trigger = useRef<any>();
-
+console.log('live order line tem')
     // const { allUser, mutateAllUser, allUserIsLoading } = useAllUser({
     //   user_id: props.row.user.id as string,
     // });
@@ -41,7 +41,6 @@ const LiveOrderLineItem = (props: IProp) => {
         useState(false);
 
     useEffect(() => {
-        // console.log(tracking);
         if (tracking !== undefined && tracking !== null) {
             let sorted = [...tracking];
             sorted.sort((a: any, b: any) => a?.stage - b?.stage);
@@ -178,6 +177,9 @@ const LiveOrderLineItem = (props: IProp) => {
                 <td className={`td5`}>
                     {getDateInStringFormat(props.row.created_on)}
                 </td>
+                <td className={`td6`}>
+                    {getDateInStringFormat(props.row.est_delivery)}
+                </td>
 
                 {/* <td className={`td6 capitalize `}>{warehoueStatusHanlder()}</td> */}
                 <td className={`td7`}>
@@ -240,6 +242,7 @@ const LiveOrderLineItem = (props: IProp) => {
                 <DeliveryDateChangeModal
                     close={toggleDeliveryDateChangeModal}
                     row={props.row}
+                    mutateOrder={props.mutateOrder}
                 />
             )}
         </>

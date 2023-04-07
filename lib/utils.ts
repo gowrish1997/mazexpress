@@ -42,9 +42,14 @@ function getDateInDBFormat(date: Date) {
 async function isAuthenticated(req: NextRequest): Promise<boolean[]> {
   try {
     const sess: APIResponse<User> = await fetchJson(`/api/auth`);
+
     if (sess.data && sess.data.length > 0) {
       // user exists
-      return [true, (sess.data as User[])[0].is_admin];
+      return [
+        true,
+        (sess.data as User[])[0].is_admin,
+        (sess.data as User[])[0].lang == "english" ? true : false,
+      ];
     } else {
       return [false];
     }

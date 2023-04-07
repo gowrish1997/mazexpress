@@ -1,32 +1,26 @@
+import AuthCTX from "@/components/context/auth.ctx";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import { User } from "@/models/user.model";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const Tstt = () => {
-  // const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
+  const [user, setUser] = useState<IWhiteListedUser | null>(jet.getUser());
   const [update_on_backend, set_update_counter] = useState<number>(0);
 
   const reset_action = async (e: any) => {
-    console.log("calling reset action");
     try {
-      axios
-        .put(
-          `http://localhost:5000/api/users/${user.email}`,
-          {
-            // first_name: "bolt",
-            first_name: user.first_name === "bolt" ? "fluffy" : "bolt",
-          }
-          // { withCredentials: true }
-        )
-        .then((response) => {
-          console.log(response.data);
-          set_update_counter((prev) => prev + 1);
-          setUser((response.data.data as User[])[0] as User);
-        })
-        .catch((err) => {
+      await jet.mutateUser(
+        null,
+        { first_name: user && user.first_name === "timmy" ? "bolt" : "timmy" },
+        (err, done) => {
           if (err) throw err;
-        });
+          if (done) {
+            console.log("mutated");
+          }
+        }
+      );
     } catch (err) {
       console.error(err);
     } finally {
@@ -36,39 +30,29 @@ const Tstt = () => {
 
   const login_action = async (e: any) => {
     try {
-      axios
-        .post(`http://localhost:5000/api/auth/login/password`, {
-          username: "test@testco.com",
-          password: "Test123$",
-        })
-        .then((response) => {
-          console.log("from login action: ", response);
-          // setToken(respons);
-          setUser(response.data.data[0])
-        })
-        .catch((err) => {
-          if (err) throw err;
-        });
+      jet.login("test@testco.com", "Test123$", (err, done) => {
+        if (err) throw err;
+        if (done) {
+          setUser(jet.getUser());
+          console.log("logged in");
+        }
+      });
     } catch (err) {
       if (err) console.error(err);
     } finally {
       set_update_counter((prev) => prev + 1);
     }
   };
+
   const logout_action = async (e: any) => {
     try {
-      axios
-        .post(`http://localhost:5000/api/auth/logout`, {
-          // withCredentials: true,
-        })
-        .then((response) => {
-          console.log("from logout: ", response);
-          setUser(null)
-
-        })
-        .catch((err) => {
-          if (err) throw err;
-        });
+      jet.logout(null, (err, done) => {
+        if (err) throw err;
+        if (done) {
+          console.log("logged out");
+          setUser(jet.getUser());
+        }
+      });
     } catch (err) {
       if (err) console.error(err);
     } finally {
@@ -77,12 +61,21 @@ const Tstt = () => {
   };
 
   useEffect(() => {
-    console.log("inside refresh token");
     if (user) {
       console.log("calling refresh token");
       // check for update
+
+      // fetch("http://localhost:5000/api/auth")
+      //   .then(async (response) => {
+      //     console.log("raw response", response);
+      //     return await response.json();
+      //   })
+      //   .then((data) => {
+      //     console.log("processed", data);
+      //   });
       axios
         .get(`http://localhost:5000/api/auth`, {
+          withCredentials: true,
         })
         .then((response) => {
           if (response.data) {

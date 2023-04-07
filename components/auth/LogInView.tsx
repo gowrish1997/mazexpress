@@ -14,6 +14,9 @@ import logo from "../../public/new_logo_blue.png";
 import LogInWithMail from "./LogInWithMail";
 import useGoogle from "@/lib/hooks/useGoogle";
 import UserContext from "../context/user.context";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
+import { response } from "express";
+import AuthCTX from "../context/auth.ctx";
 type Inputs = {
   password: string;
   username: string;
@@ -33,7 +36,7 @@ const LogInComponent = (props: any) => {
   const { t } = useTranslation("");
   const { locale } = router;
   const [errorMsg, setErrorMsg] = useState("");
-
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
   const { status: googleStatus } = useGoogle({});
 
   const inputFieldLabel: string[] = t("loginView.form.InputField", {
@@ -49,8 +52,8 @@ const LogInComponent = (props: any) => {
     returnObjects: true,
   });
 
-  const { user, mutateUser } = useUser();
-  const { setUser } = useContext(UserContext);
+  // const user: IWhiteListedUser  = useContext(AuthCTX)["active_user"];
+  const { set_active_user } = useContext(AuthCTX);
   const {
     register,
     handleSubmit,
@@ -62,45 +65,47 @@ const LogInComponent = (props: any) => {
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // console.log(data);
-
     try {
-      // console.log(data);
-      const response = await fetchServer("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      console.log(response);
-
-      if (response.data && response.data.length > 0) {
-        setUser(response.data?.[0]);
-        await mutateUser();
-
-        if (response.data?.[0].is_admin) {
-          router.push("/admin");
+      jet.login("test@testco.com", "Test123$", (err, user) => {
+        if (err) throw err;
+        if (!user) {
+          createToast({
+            type: "error",
+            message: "login failed",
+            title: "Error",
+            timeOut: 2000,
+          });
         } else {
-          //   console.log("puhsing to / page");
-          router.push("/");
+          // console.log("from login view:", user);
+          if ((user as IWhiteListedUser).is_admin) {
+            // bind is_admin true to session
+            fetchSelf("/api/auth/bind_data", {
+              method: "POST",
+              body: JSON.stringify({ is_admin: true }),
+            }).then((data) => {
+              router.push("/admin");
+            });
+          } else {
+            // bind is_admin false to session
+            fetchSelf("/api/auth/bind_data", {
+              method: "POST",
+              body: JSON.stringify({ is_admin: false }),
+            }).then((data) => {
+              router.push("/");
+            });
+          }
+          set_active_user(user as IWhiteListedUser);
         }
-      } else {
+      });
+    } catch (err) {
+      if (err) {
+        console.error(err);
         createToast({
           type: "error",
-          message: response.msg,
+          message: (err as Error).message,
           title: "Error",
           timeOut: 2000,
         });
-      }
-    } catch (error) {
-      if (error instanceof FetchError) {
-        setErrorMsg(error.data.message);
-        createToast({
-          type: "error",
-          message: "fetch failed",
-          title: "Login failed",
-          timeOut: 2000,
-        });
-      } else {
-        console.error("An unexpected error happened:", error);
       }
     }
   };
@@ -205,10 +210,6 @@ const LogInComponent = (props: any) => {
           <LogInWithMail />
         </div>
         <div className="w-full text-center text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[16px] ">
-          <p>
-            {description[0]}{" "}
-            <span className="text-[#0057FF]">{description[1]}</span>
-          </p>
           <p className="">
             {description[2]}
             <span

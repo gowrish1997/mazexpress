@@ -46,7 +46,7 @@ const schema = yup
             .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                 {
-                    excludeEmptyString:true,
+                    excludeEmptyString: true,
                     message:
                         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
                 }
@@ -180,11 +180,15 @@ const Settings = () => {
                 | "is_notifications_enabled"
             > & { newPassword?: string } = {
                 ...data,
-                password: data.newPassword,
             };
-            delete sendObj.newPassword;
 
-            // console.log("sendObj", sendObj);
+            if (data.newPassword && data.newPassword.length > 0) {
+                sendObj.password = data.newPassword;
+                delete sendObj.newPassword;
+            } else {
+                delete sendObj.newPassword;
+                delete sendObj.password;
+            }
 
             const updateRes = await fetchJson(`/api/users/${user?.email}`, {
                 method: "PUT",
@@ -192,19 +196,12 @@ const Settings = () => {
                 body: JSON.stringify(sendObj),
             });
             // console.log(updateRes)
-            if (updateRes.ok === true) {
-                createToast({
-                    type: "success",
-                    title: "Success",
-                    message: "Updated user.",
-                });
-            } else {
-                createToast({
-                    type: "error",
-                    title: "Error in user update, contact dev",
-                    message: "Update user failed.",
-                });
-            }
+
+            createToast({
+                type: "success",
+                title: "success",
+                message: "Updated user.",
+            });
         } catch (err) {
             console.error(err);
             createToast({
@@ -216,9 +213,7 @@ const Settings = () => {
         }
     };
 
-    const updatePasswordChecker = async (
-        e: string
-    ) => {
+    const updatePasswordChecker = async (e: string) => {
         // console.log(e.target.value);
         const reee = await checkPassword(e, user?.email!);
         // console.log(reee);
