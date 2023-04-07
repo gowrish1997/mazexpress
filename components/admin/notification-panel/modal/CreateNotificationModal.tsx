@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import useUser from "@/lib/hooks/useUser";
 import attachLogo from "@/public/pin_icon.png";
 import uploadIcon from "@/public/upload_icon.png";
 import Image from "next/image";
@@ -14,6 +13,8 @@ import fetchServer from "@/lib/fetchServer";
 import { APIResponse } from "@/models/api.model";
 import { NotificationConfig } from "@/models/notification-config.model";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
+import AuthCTX from "@/components/context/auth.ctx";
+import { IWhiteListedUser } from "@/controllers/auth-ctr";
 
 interface IProp {
   show: boolean;
@@ -29,7 +30,7 @@ interface IProp {
 //   .required();
 
 const CreateNotificationModal = (props: IProp) => {
-  const { user, mutateUser } = useUser();
+  const user: IWhiteListedUser = useContext(AuthCTX)['active_user']
   const [showFileInputModal, setShowFileInputModal] = useState<boolean>(false);
   const [files, setFiles] = useState<any>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);

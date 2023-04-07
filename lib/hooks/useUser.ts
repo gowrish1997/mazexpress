@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 import fetchJson from "../fetchServer";
 import AuthCTX from "@/components/context/auth.ctx";
 import { AuthManager } from "@/controllers/auth-ctr";
-import user from "@/pages/api/user";
 
 // use the current user profile from sessions
 /**

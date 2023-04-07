@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useUser from "@/lib/hooks/useUser";
+
 import Order from "@/public/order_svg.svg";
 import Location from "@/public/location_svg.svg";
 import Warehosue from "@/public/warehouse_svg.svg";
@@ -19,6 +19,8 @@ import Admin from "../../../public/admin_svg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "next-i18next";
+import AuthCTX from "@/components/context/auth.ctx";
+import { IWhiteListedUser } from "@/controllers/auth-ctr";
 
 const userIcon = (id: number) => {
     switch (id) {
@@ -89,7 +91,7 @@ interface IProp {
 }
 
 const NavLink = (props: IProp) => {
-    const { user, mutateUser } = useUser();
+    const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
 import { IHelpCenter } from "@/lib/hooks/useHelpCenter";
