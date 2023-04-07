@@ -65,7 +65,7 @@ const UserbasePageHeader = (props: IProp) => {
             props.mutateUser?.();
             createToast({
                 type: "success",
-                title: "",
+                title: "success",
                 message: `Admins with email ${getUserEmail(
                     props.selectedUser
                 )} removed successfully`,

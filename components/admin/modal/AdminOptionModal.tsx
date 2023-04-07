@@ -28,26 +28,25 @@ const AdminOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
                     headers: { "Content-Type": "application/json" },
                 }
             );
-            if (updateRes) {
-                createToast({
-                    type: "success",
-                    title: "",
-                    message: `Admin with email ${
-                        (props.row as User).email
-                    } removed successfully`,
-                    timeOut: 2000,
-                });
-            } else {
-                createToast({
-                    type: "error",
-                    title: "Some error happened",
-                    message: `check console for more info`,
-                    timeOut: 2000,
-                });
-            }
+
+            createToast({
+                type: "success",
+                title: "success",
+                message: `Admin with email ${
+                    (props.row as User).email
+                } removed successfully`,
+                timeOut: 2000,
+            });
+
             props.mutateUser?.();
         } catch (error) {
             console.error(error);
+            createToast({
+                type: "error",
+                title: "Some error happened",
+                message: `check console for more info`,
+                timeOut: 2000,
+            });
         }
     };
     console.log(props);

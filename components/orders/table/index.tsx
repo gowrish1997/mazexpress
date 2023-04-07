@@ -25,6 +25,7 @@ interface TableProps {
 }
 
 const Table = (props: TableProps) => {
+    console.log('table')
     const tableClassNameHandler = () => {
         if (
             props.type == "live_order" ||

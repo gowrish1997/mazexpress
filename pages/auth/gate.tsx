@@ -4,14 +4,13 @@ import AuthLayout from "@/components/auth/AuthLayout";
 import LogInView from "@/components/auth/LogInView";
 import ResetPasswordView from "@/components/auth/ResetPasswordView";
 import SignUpView from "@/components/auth/SignUpView";
-import useUser from "@/lib/hooks/useUser";
+
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import MagicLinkView from "@/components/auth/MagicLinkView";
 
 const Gate = () => {
-    
   const [mode, setMode] = useState<number>(1);
   const router = useRouter();
 

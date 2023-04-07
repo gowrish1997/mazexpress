@@ -55,10 +55,10 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
 
                     createToast({
                         type: "success",
-                        title: "Notified User",
-                        message: `status changed successfully for orders with ID ${getOrderIdList(
+                        title: "success",
+                        message: `orders with ID ${getOrderIdList(
                             props.selectedOrder
-                        )}`,
+                        )} successfully updated `,
                         timeOut: 2000,
                     });
 
@@ -83,10 +83,10 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
 
                     createToast({
                         type: "success",
-                        title: "Notified User",
-                        message: `status changed successfully for orders with ID ${getOrderIdList(
+                        title: "success",
+                        message:`orders with ID ${getOrderIdList(
                             props.selectedOrder
-                        )}`,
+                        )} successfully updated `,
                         timeOut: 2000,
                     });
 
@@ -112,10 +112,10 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
 
                     createToast({
                         type: "success",
-                        title: "Notified User",
-                        message: `status changed successfully for orders with ID ${getOrderIdList(
+                        title: "success",
+                        message:`orders with ID ${getOrderIdList(
                             props.selectedOrder
-                        )}`,
+                        )} successfully updated `,
                         timeOut: 2000,
                     });
 

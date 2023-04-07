@@ -25,13 +25,13 @@ import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
 import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import useUser from "@/lib/hooks/useUser";
 import Link from "next/link";
-import fetchJson from "@/lib/fetchSelf";
+import fetchSelf from "@/lib/fetchSelf";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import About from "@/components/LandingPage/About";
 import Service from "@/components/LandingPage/Service";
-import UserContext from "@/components/context/user.context";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
+import AuthCTX from "@/components/context/auth.ctx";
 
 const Index = () => {
   const router = useRouter();
@@ -41,9 +41,9 @@ const Index = () => {
     returnObjects: true,
   });
   var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
-
-  const { user, mutateUser } = useUser();
-  const { setUser } = useContext(UserContext);
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
+  const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
+  const { set_active_user } = useContext(AuthCTX);
 
   const trackingSectionRef = useRef<HTMLDivElement>(null);
   const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
@@ -86,34 +86,31 @@ const Index = () => {
     }
   };
 
-  const trackingHandler = async () => {
-    if (trackingId) {
-      // console.log(trackingId);
-      // check if id exists
-      const isValidId = await fetchServer(`/api/orders?maz_id=${trackingId}`);
-
-      if (isValidId.data !== null) {
-        router.push(`/track/${trackingId}`);
-        setTrackingIdError(false);
-        return;
-      }
-      setTrackingIdError(true);
-      return;
-    } else {
-      setTrackingIdError(true);
-      return;
-    }
-  };
-
   const toggleLogoutConfirmModal = () => {
     setShowLogoutConfirmModal((prev) => !prev);
   };
 
-  const logoutHandler = async () => {
-    await fetchServer("/api/auth/logout", { method: "GET" });
-    setUser(null);
-    await mutateUser();
-    setShowLogoutConfirmModal((prev) => !prev);
+  const logoutHandler = () => {
+    try {
+      const user_whitelist_id = user.whitelist_id;
+      jet.logout(user_whitelist_id, async (err, done) => {
+        if (err) throw err;
+        if (done) {
+          console.log("logged out");
+          const data = await fetchSelf("/api/auth/unbind_data");
+          router.push("/");
+          setShowLogoutConfirmModal(false);
+          set_active_user(null);
+        }
+      });
+    } catch (err) {
+      if (err) console.error(err);
+    }
+
+    // await fetchServer("/api/auth/logout", { method: "GET" });
+    // setUser(null);
+    // await mutateUser();
+    // setShowLogoutConfirmModal((prev) => !prev);
   };
 
   const openPackageTrackingModal = () => {
@@ -134,7 +131,6 @@ const Index = () => {
   };
 
   //   console.log(user);
-
   return (
     <>
       <div className="w-full">

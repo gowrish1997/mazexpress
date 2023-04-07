@@ -70,7 +70,7 @@ export const selectOrder = (
 
 export const getOrderIdList = (order: any) => {
     const userIdList = order?.map((data: any) => {
-        return (data as Order)?.id;
+        return (data as Order)?.maz_id;
     });
 
     let userListString = userIdList?.toString();
@@ -94,111 +94,105 @@ export const bulkActionHandler = async (
     content: string,
     execute?: boolean
 ) => {
-    let sendNotification = true;
+    for (let i = 0; i < selectedOrder?.length!; i++) {
+        let rowFixed: Order = selectedOrder?.[i] as Order;
+        if (execute) {
+            const result0 = await fetchServer(
+                `/api/orders/${rowFixed.maz_id}`,
+                {
+                    method: "PUT",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({ status: status }),
+                }
+            );
+        }
 
-    try {
-        for (let i = 0; i < selectedOrder?.length!; i++) {
-            let rowFixed: Order = selectedOrder?.[i] as Order;
-            if (execute) {
-                const result0 = await fetchServer(
-                    `/api/orders/${rowFixed.maz_id}`,
-                    {
-                        method: "PUT",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({ status: status }),
-                    }
-                );
+        if (status == "out-for-delivery") {
+            const toList = [
+                {
+                    type: "dispatched",
+                    toType: "user",
+                    header: "Your order has dispatched",
+                    toName:
+                        selectedOrder[i].user.first_name +
+                        " " +
+                        selectedOrder[i].user.last_name,
+                    toMail: selectedOrder[i].user.email,
+                    bodyContent: user_orderDispatched(
+                        selectedOrder[i].id,
+                        selectedOrder[i].maz_id
+                    ),
+                    buttonContent: "Let’s Get Started",
+                    redirectLink: "",
+                },
+            ];
+
+            /**sending mail */
+
+            sentMail(toList);
+        }
+
+        if (status == "delivered") {
+            const toList = [
+                {
+                    type: "delivered",
+                    toType: "user",
+                    header: "Your order has delivered",
+                    toName:
+                        selectedOrder[i].user.first_name +
+                        " " +
+                        selectedOrder[i].user.last_name,
+                    toMail: selectedOrder[i].user.email,
+                    bodyContent: user_orderDelivered(selectedOrder[i].id),
+                    buttonContent: "Let’s Get Started",
+                    redirectLink: "",
+                },
+            ];
+
+            /**sending mail */
+
+            sentMail(toList);
+        }
+
+        const result0_2 = await fetchServer(
+            `/api/tracking/${rowFixed.maz_id}`,
+            {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    stage: trckingStatus,
+                }),
             }
+        );
 
-            if (status == "out-for-delivery") {
-                const toList = [
-                    {
-                        type: "dispatched",
-                        toType: "user",
-                        header: "Your order has dispatched",
-                        toName:
-                            selectedOrder[i].user.first_name +
-                            " " +
-                            selectedOrder[i].user.last_name,
-                        toMail: selectedOrder[i].user.email,
-                        bodyContent: user_orderDispatched(
-                            selectedOrder[i].id,
-                            selectedOrder[i].maz_id
-                        ),
-                        buttonContent: "Let’s Get Started",
-                        redirectLink: "",
-                    },
-                ];
+        if (rowFixed.user?.is_notifications_enabled) {
+            // get admin notification on backend
+            // send notification post
 
-                /**sending mail */
-
-                sentMail(toList);
-            }
-
-            if (status == "delivered") {
-                const toList = [
-                    {
-                        type: "delivered",
-                        toType: "user",
-                        header: "Your order has delivered",
-                        toName:
-                            selectedOrder[i].user.first_name +
-                            " " +
-                            selectedOrder[i].user.last_name,
-                        toMail: selectedOrder[i].user.email,
-                        bodyContent: user_orderDelivered(selectedOrder[i].id),
-                        buttonContent: "Let’s Get Started",
-                        redirectLink: "",
-                    },
-                ];
-
-                /**sending mail */
-
-                sentMail(toList);
-            }
-
-            const result0_2 = await fetchServer(
-                `/api/tracking/${rowFixed.maz_id}`,
+            const deliveredMessage = {
+                title: title,
+                content: `Your order number ${rowFixed.id} ${content}`,
+            };
+            const result0_3: APIResponse<Notification> = await fetchServer(
+                "/api/notifications",
                 {
                     method: "POST",
-                    headers: { "Content-type": "application/json" },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        stage: trckingStatus,
+                        data: deliveredMessage,
+                        // files: [],
+                        users: [rowFixed.user.email],
+                        // notification_config: 1,
                     }),
                 }
             );
 
-            if (rowFixed.user?.is_notifications_enabled) {
-                // get admin notification on backend
-                // send notification post
-
-                const deliveredMessage = {
-                    title: title,
-                    content: `Your order number ${rowFixed.id} ${content}`,
-                };
-                const result0_3: APIResponse<Notification> = await fetchServer(
-                    "/api/notifications",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            data: deliveredMessage,
-                            // files: [],
-                            users: [rowFixed.user.email],
-                            // notification_config: 1,
-                        }),
-                    }
-                );
-
-                if (result0_3?.count && result0_3?.count > 0) {
-                    sendNotification = true;
-                } else {
-                    sendNotification = false;
-                }
-            }
+            // if (result0_3?.count && result0_3?.count > 0) {
+            //     sendNotification = true;
+            // } else {
+            //     sendNotification = false;
+            // }
         }
-    } catch (error) {
-        throw Error(error);
     }
 };
 
@@ -210,7 +204,6 @@ export const singleOrderAction = async (
     content: string,
     execute: boolean
 ) => {
-    let sendNotification = true;
     let rowFixed: Order = selectedOrder as Order;
     let estimateDelivery = rowFixed?.est_delivery
         ? new Date(rowFixed?.est_delivery)
@@ -221,25 +214,18 @@ export const singleOrderAction = async (
         newDeliveryDate.setDate(newDeliveryDate.getDate() + 7);
     }
     if (execute) {
-        try {
-            const result0 = await fetchServer(
-                `/api/orders/${rowFixed.maz_id}`,
-                {
-                    method: "PUT",
-                    headers: { "Content-type": "application/json" },
-                    body: JSON.stringify({
-                        status: status,
-                        est_delivery:
-                            status == "at-warehouse"
-                                ? newDeliveryDate
-                                : estimateDelivery,
-                    }),
-                }
-            );
-            console.log(result0);
-        } catch (error) {
-            console.error(error);
-        }
+        const result0 = await fetchServer(`/api/orders/${rowFixed.maz_id}`, {
+            method: "PUT",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                status: status,
+                est_delivery:
+                    status == "at-warehouse"
+                        ? newDeliveryDate
+                        : estimateDelivery,
+            }),
+        });
+        console.log(result0);
     }
 
     if (status == "out-for-delivery") {
@@ -295,52 +281,37 @@ export const singleOrderAction = async (
             console.log(error);
         }
     }
-    try {
-        const result0_2 = await fetchServer(
-            `/api/tracking/${rowFixed.maz_id}`,
-            {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({
-                    stage: trckingStatus,
-                }),
-            }
-        );
-    } catch (error) {
-        console.error(error);
-    }
+
+    const result0_2 = await fetchServer(`/api/tracking/${rowFixed.maz_id}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+            stage: trckingStatus,
+        }),
+    });
+
     if ((rowFixed as Order).user.is_notifications_enabled) {
         const deliveredMessage = {
             title: title,
             content: `Your order number ${rowFixed.id} ${content}`,
         };
-        try {
-            let result0_3: APIResponse<Notification> = await fetchServer(
-                `/api/notifications`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        data: deliveredMessage,
-                        // files: [],
-                        users: [(rowFixed as Order).user.email],
-                        // notification_config: 1,
-                    }),
-                }
-            );
-            console.log(result0_3);
-            if (result0_3?.count && result0_3?.count > 0) {
-                sendNotification = true;
-            } else {
-                sendNotification = false;
-            }
 
-            // console.log(result0_3);
-        } catch (error) {
-            console.error(error);
-        }
+        let result0_3: APIResponse<Notification> = await fetchServer(
+            `/api/notifications`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    data: deliveredMessage,
+                    // files: [],
+                    users: [(rowFixed as Order).user.email],
+                    // notification_config: 1,
+                }),
+            }
+        );
+
+        // console.log(result0_3);
     }
-    return sendNotification;
 };

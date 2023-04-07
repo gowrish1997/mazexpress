@@ -145,7 +145,7 @@ const TotalOrders = () => {
                             handler={smartToggleGateHandler}
                             trigger={trigger}
                         >
-                            <div className="absolute top-[30px] right-[0px] bg-white rounded shadow z-[50] border-[1px] p-3 ">
+                            <div className="absolute right-[0px] top-[15px] bg-white rounded shadow z-[50] border-[1px] p-3 ">
                                 <Calendar
                                     onChange={calendarChangeHandler}
                                     // value={calendarValue}

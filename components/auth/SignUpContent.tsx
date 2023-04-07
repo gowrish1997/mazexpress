@@ -148,7 +148,11 @@ const SignUpContent = (props: IProp) => {
                 toMail: data.user.email,
                 bodyContent: user_registerBodyContet(),
                 buttonContent: "Let’s Get Started",
-                redirectLink: "http://localhost:3000/auth/gate?mode=1",
+                redirectLink: `${
+                    process.env.NODE_ENV !== "production"
+                        ? "http://localhost:3000/auth/gate?mode=1"
+                        : "https://mazexpress.easydesk.work/auth/gate?mode=1"
+                }`,
             },
         ];
         try {

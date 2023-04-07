@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import TotalOrders from "@/components/admin/MazStats/TotalOrders";
 import TotalCustomer from "@/components/admin/MazStats/TotalCustomer";
@@ -7,15 +7,17 @@ import StatGraph from "@/components/admin/MazStats/StatGraph";
 import OrdersTotalCountBar from "@/components/admin/MazStats/OrdersTotalCountBar";
 import StatLiveOrdres from "@/components/admin/MazStats/StatLiveOrdres";
 import RecentCustomers from "@/components/admin/MazStats/RecentCustomers";
-import useUser from "@/lib/hooks/useUser";
+
 
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import AuthCTX from "@/components/context/auth.ctx";
+import { IWhiteListedUser } from "@/controllers/auth-ctr";
 const AdminHome = () => {
   const router = useRouter();
   const { locales, locale: activeLocale } = router;
   console.log(activeLocale);
-  const { user, mutateUser } = useUser();
+  const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   useEffect(() => {
     // console.log("use efft");
     router.push(router.asPath, router.asPath, { locale: "en" });

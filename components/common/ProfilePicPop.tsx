@@ -2,9 +2,9 @@
 //     written by: raunak
 //==========================
 
-import React, { ChangeEvent, useRef } from "react";
+import React, { ChangeEvent, useContext, useRef } from "react";
 import Image from "next/image";
-import useUser from "@/lib/hooks/useUser";
+
 import { useTranslation } from "next-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,8 @@ import { nanoid } from "nanoid";
 import fetchServer from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
 import axios from "axios";
+import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import AuthCTX from "../context/auth.ctx";
 
 interface IProp {
   show: boolean;
@@ -20,7 +22,7 @@ interface IProp {
 }
 
 const ProfilePicPop = (props: IProp) => {
-  const { user, mutateUser } = useUser();
+  const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const { t } = useTranslation("common");
@@ -31,22 +33,25 @@ const ProfilePicPop = (props: IProp) => {
 
   const deleteImage = async (e: any) => {
     // set back to default image
-
-    const imageUpdateResult = await fetchServer(`/api/users/${user?.email}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ avatar_url: null }),
-    });
-    console.log(imageUpdateResult);
-    if (imageUpdateResult.ok === true) {
-      createToast({
-        type: "success",
-        message: "Image uploaded",
-        title: "Success",
-        timeOut: 1000,
+    try {
+      const imageUpdateResult = await fetchServer(`/api/users/${user?.email}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ avatar_url: null }),
       });
-      props.update();
-      props.close(e);
+
+      if (imageUpdateResult.ok === true) {
+        createToast({
+          type: "success",
+          message: "Profile picture deleted",
+          title: "success",
+          timeOut: 1000,
+        });
+        props.update();
+        props.close(e);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -67,7 +72,7 @@ const ProfilePicPop = (props: IProp) => {
       formData.append("name", fileName);
       formData.append("user", user?.id as string);
       formData.append("image", e.target.files[0], fileName);
-      console.log(formData)
+      console.log(formData);
 
       console.log(formData.entries());
       for (const pair of formData.entries()) {
@@ -90,7 +95,7 @@ const ProfilePicPop = (props: IProp) => {
             createToast({
               type: "success",
               message: "Image uploaded",
-              title: "Success",
+              title: "success",
               timeOut: 1000,
             });
             props.update();
@@ -104,11 +109,15 @@ const ProfilePicPop = (props: IProp) => {
         });
 
       // send file to api to write
-      const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
-        method: "POST",
-        body: formData,
-      });
-      console.log(imageUploadResult);
+      try {
+        const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
+          method: "POST",
+          body: formData,
+        });
+        console.log(imageUploadResult);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 

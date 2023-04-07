@@ -11,7 +11,6 @@ interface Iprop {
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
-
     //   console.log("filter optindropdown");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
@@ -84,7 +83,6 @@ const FilterOptionDropDown = (props: Iprop) => {
         console.log("smart togglere");
         setShowAdminOptionCard(false);
     };
-    
 
     return (
         <div className="relative z-20">
@@ -95,6 +93,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                         ? { backgroundColor: "#35C6F4", color: "#FFFFFF" }
                         : {}
                 }
+                ref={trigger}
                 onClick={toggleAdminOptionCard}
             >
                 <span className="capitalize">{`${
@@ -120,7 +119,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                     trigger={trigger}
                     handler={smartToggleGateHandler}
                 >
-                    <div className="w-full  bg-[white] box-border absolute top-[30px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
+                    <div className="w-full  bg-[white] box-border absolute  border-[1px] border-[#ccc] rounded-[4px]  p-[5px] space-y-[4px]">
                         {props.options &&
                             props.options.map((data, index) => {
                                 return (
