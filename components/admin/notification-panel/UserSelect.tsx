@@ -1,13 +1,14 @@
 import ClickOutside from "@/components/common/ClickOutside";
+import AuthCTX from "@/components/context/auth.ctx";
+import { IWhiteListedUser } from "@/controllers/auth-ctr";
 import fetchJson from "@/lib/fetchServer";
 import { capitalizeFirstLetter } from "@/lib/helper";
-import useUser from "@/lib/hooks/useUser";
 import useUsers from "@/lib/hooks/useUsers";
 import { User } from "@/models/user.model";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 interface IProp {
     update: (list: string[]) => void;
@@ -19,8 +20,7 @@ const UserSelect = (props: any) => {
     const [markAll, setMarkAll] = useState<boolean>(false);
 
     const { users, mutateUsers } = useUsers({});
-    const { user, mutateUser } = useUser();
-
+    const user: IWhiteListedUser = useContext(AuthCTX)['active_user']
     const inputRef = useRef<HTMLInputElement>(null);
     const triggerRef = useRef(null);
 

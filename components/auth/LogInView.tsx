@@ -6,14 +6,11 @@ import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import { useRouter } from "next/router";
 import { createToast } from "@/lib/toasts";
 import Image from "next/dist/client/image";
-import useUser from "@/lib/hooks/useUser";
 import fetchSelf, { FetchError } from "@/lib/fetchSelf";
-import fetchServer from "@/lib/fetchServer";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
 import LogInWithMail from "./LogInWithMail";
 import useGoogle from "@/lib/hooks/useGoogle";
-import UserContext from "../context/user.context";
 import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import { response } from "express";
 import AuthCTX from "../context/auth.ctx";
@@ -52,7 +49,7 @@ const LogInComponent = (props: any) => {
     returnObjects: true,
   });
 
-  // const user: IWhiteListedUser  = useContext(AuthCTX)["active_user"];
+  const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   const { set_active_user } = useContext(AuthCTX);
   const {
     register,

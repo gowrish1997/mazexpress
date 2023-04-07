@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import Calendar from "react-calendar";
 import MazStatsDropddown from "../admin/MazStats/MazStatsDropddown";
 import { perPageOptinsList } from "@/lib/helper";
@@ -17,10 +17,12 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import ClickOutside from "@/components/common/ClickOutside";
-import useUser from "@/lib/hooks/useUser";
+
 import useTracking from "@/lib/hooks/useTracking";
 import { Order } from "@/models/order.model";
 import { getDateInStringFormat } from "@/lib/helper";
+import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import AuthCTX from "../context/auth.ctx";
 interface IProp {
   content: string;
   className?: string;
@@ -38,7 +40,7 @@ interface IProp {
   createdDateFilterKey?: string | Date;
 }
 const PageHeader = (props: IProp) => {
-  const { user, mutateUser } = useUser();
+  const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
 
   let trigger = useRef(null);
   const router = useRouter();

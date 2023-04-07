@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import logoutImage from "@/public/logout.png";
-import useUser from "@/lib/hooks/useUser";
+
 import fetchSelf from "@/lib/fetchSelf";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -150,8 +150,6 @@ const sidebarContentHandler = (admin: boolean) => {
 };
 
 const Sidebar = () => {
-  // const { user, mutateUser } = useUser();
-  // const { setUser } = useContext(UserContext);
   const jet = useContext(AuthCTX)["jet"];
   const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   const { set_active_user } = useContext(AuthCTX);
