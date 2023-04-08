@@ -100,7 +100,7 @@ export class AuthManager {
     }
   }
 
-  login(
+  async login(
     username: string,
     password: string,
     cb?: (err: any, done: boolean | IWhiteListedUser) => void
