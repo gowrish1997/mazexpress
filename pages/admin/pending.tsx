@@ -14,6 +14,7 @@ import LoadingPage from "@/components/common/LoadingPage";
 import { Order } from "@/models/order.model";
 import { i18n } from "next-i18next";
 import { SearchKeyContext } from "@/components/common/Frame";
+import { GetServerSidePropsContext } from "next";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getDateInStringFormat } from "@/lib/helper";

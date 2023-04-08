@@ -12,6 +12,7 @@ import CallLogo from "@/public/mobile.png";
 import { KeyedMutator } from "swr";
 import { AxiosResponse } from "axios";
 import { createToast } from "@/lib/toasts";
+import { GetServerSidePropsContext } from "next";
 
 interface IProp {
     data: IHelpCenter[];

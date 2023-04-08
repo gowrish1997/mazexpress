@@ -32,7 +32,6 @@ const MyOrders = (props) => {
   console.log(props.test);
   const { searchKey } = React.useContext(SearchKeyContext) as any;
   // console.log(searchKey);
-  
 
   const [itemsPerPage, setItemPerPage] = useState<number>(25);
 
@@ -87,7 +86,6 @@ const MyOrders = (props) => {
     setCreatedDateFilterKey(value);
   }, []);
 
-  
   if (ordersIsLoading) {
     return <LoadingPage />;
   }
@@ -162,5 +160,3 @@ export async function getStaticProps({ locale }: { locale: any }) {
     },
   };
 }
-
-

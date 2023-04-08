@@ -7,6 +7,7 @@ import BlankPage from "@/components/admin/BlankPage";
 import useUsers from "@/lib/hooks/useUsers";
 import useUsersCount from "@/lib/hooks/useUserCount";
 import { User } from "@/models/user.model";
+import { GetServerSidePropsContext } from "next";
 
 // import { ISearchKeyContext } from "@/models/SearchContextInterface";
 import { SearchKeyContext } from "@/components/common/Frame";

@@ -16,6 +16,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchKeyContext } from "@/components/common/Frame";
 import { getDateInDBFormat } from "@/lib/utils";
+import { GetServerSidePropsContext } from "next";
 
 const tableHeaders = [
     "Customer",

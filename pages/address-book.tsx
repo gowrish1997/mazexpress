@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
-import useAddresses from "@/lib/hooks/useAddresses";
-
-import { createToast } from "@/lib/toasts";
 import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import { Address } from "@/models/address.model";
 import { useTranslation } from "next-i18next";
@@ -11,9 +8,12 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
-import LoadingPage from "@/components/common/LoadingPage";
 import AuthCTX from "@/components/context/auth.ctx";
 import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import { GetServerSidePropsContext } from "next";
+import { QS } from "@/components/common/QS";
+import useAddresses from "@/lib/hooks/useAddresses";
+import LoadingPage from "@/components/common/LoadingPage";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -32,8 +32,8 @@ const AddressBook = () => {
   const { t } = useTranslation("common");
   const { locale } = router;
 
-  console.log(user);
-  console.log(addresses);
+  // console.log(user);
+  // console.log(addresses);
 
   useEffect(() => {
     let dir = router.locale == "ar" ? "rtl" : "ltr";
@@ -80,6 +80,7 @@ const AddressBook = () => {
                   address={data}
                   edit={toggleEditUserAddressModal}
                   update={mutateAddresses}
+                  // update={() => {}}
                 />
               );
             })}
@@ -97,12 +98,14 @@ const AddressBook = () => {
           show={showAddNewAddressModal}
           close={toggleAddNewAddressModal}
           update={mutateAddresses}
+          // update={() => {}}
         />
       )}
 
       {showEditUserAddressModal && (
         <EditUserAddressModal
           update={mutateAddresses}
+          // update={() => {}}
           show={showEditUserAddressModal}
           close={toggleEditUserAddressModal}
           address={editableAddress!}
@@ -114,13 +117,29 @@ const AddressBook = () => {
 };
 
 export default AddressBook;
-export async function getStaticProps({ locale }: { locale: any }) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }
+  // get addresses for this user
+  // const cookies = ctx.req.cookies;
+  // // console.log(cookies.s_email);
+  // const qs = new QS({ username: cookies.s_email, status: ["active"] });
+  // // console.log(qs.stringified);
+  // const response = await (
+  //   await fetch(
+  //     process.env.NODE_ENV === "development"
+  //       ? `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/addresses` +
+  //           qs.stringified
+  //       : `http://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/addresses` +
+  //           qs.stringified
+  //   )
+  // ).json();
+  // const addresses = response.data;
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
+      // addresses,
     },
   };
 }
