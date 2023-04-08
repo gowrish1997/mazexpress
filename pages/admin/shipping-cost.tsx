@@ -10,7 +10,7 @@ const ShippingCost = () => {
     return <div>content authorization in progress..</div>;
   }
 
-  if (!rank_is_loading && rank !== "true") {
+  if (!rank_is_loading && rank !== "admin") {
     return <div>401 - Unauthorized</div>;
   }
   return (

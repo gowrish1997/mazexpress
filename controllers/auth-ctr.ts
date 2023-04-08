@@ -120,6 +120,7 @@ export class AuthManager {
         .then((response) => {
           // add user to whitelist
           console.log(response);
+
           if (response.data.data.length > 0) {
             const whitelist_id = nanoid();
             this.add_white_list_user({
@@ -132,7 +133,10 @@ export class AuthManager {
             );
             // check cookie here
 
-            cb(null, response.data.data[0]);
+            cb(null, {
+              ...response.data.data[0],
+              whitelist_id: whitelist_id,
+            });
           } else {
             cb(null, false);
           }
@@ -148,7 +152,7 @@ export class AuthManager {
     }
   }
 
-  logout(id: string | null, cb?: (err: any, done: boolean) => void) {
+  async logout(id: string | null, cb?: (err: any, done: boolean) => void) {
     try {
       // call reset active user after logout somehow
       // and mutate screen
@@ -163,24 +167,48 @@ export class AuthManager {
       }
 
       if (this.white_list_users.length === 1) {
-        this.white_list_users.pop();
-        cb(null, true);
+        const to_be_logged_out = this.white_list_users.pop();
+        axios
+          .post(
+            process.env.NODE_ENV === "development"
+              ? `http://localhost:5000/api/auth/logout`
+              : `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/logout`,
+            {},
+            { withCredentials: true }
+          )
+          .then((response) => {
+            // removes from global whitelist
+            // console.log(response);
+            // this.white_list_users = this.white_list_users.filter(
+            //   (el) => el.whitelist_id !== id
+            // );
+            localStorage.removeItem("active_user");
+            // document.cookie = "is_admin" + "=; Path=/;";
+            cb(null, true);
+            return;
+          })
+          .catch((err) => {
+            if (err) throw err;
+          });
+
         return;
       }
       axios
-        .get(
+        .post(
           process.env.NODE_ENV === "development"
             ? `http://localhost:5000/api/auth/logout`
             : `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/logout`,
+          {},
           { withCredentials: true }
         )
         .then((response) => {
           // removes from global whitelist
-
+          console.log(response);
           this.white_list_users = this.white_list_users.filter(
             (el) => el.whitelist_id !== id
           );
           localStorage.removeItem("active_user");
+          // document.cookie = "is_admin" + "=; Path=/;";
           cb(null, true);
           return;
         })

@@ -14,12 +14,13 @@ import { GetServerSidePropsContext } from "next";
 import { QS } from "@/components/common/QS";
 import useAddresses from "@/lib/hooks/useAddresses";
 import LoadingPage from "@/components/common/LoadingPage";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const AddressBook = () => {
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
     useState<boolean>(false);
   const [editableAddress, setEditableAddress] = useState<Address>();
-
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
   const [showAddNewAddressModal, setShowAddNewAddressModal] = useState(false);
   const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
@@ -57,6 +58,15 @@ const AddressBook = () => {
       setEditableAddress(address);
     }
   };
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "user") {
+    return <div>401 - Unauthorized</div>;
+  }
+
   if (addressesIsLoading) {
     return <LoadingPage />;
   }

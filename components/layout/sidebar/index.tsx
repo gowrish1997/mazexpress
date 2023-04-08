@@ -13,7 +13,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import { useTranslation } from "next-i18next";
-import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import AuthCTX from "@/components/context/auth.ctx";
 
 const userSidebarPanel = [
@@ -150,7 +150,7 @@ const sidebarContentHandler = (admin: boolean) => {
 };
 
 const Sidebar = () => {
-  const jet = useContext(AuthCTX)["jet"];
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
   const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   const { set_active_user } = useContext(AuthCTX);
   const router = useRouter();
@@ -184,18 +184,20 @@ const Sidebar = () => {
 
   const logoutHandler = async () => {
     try {
-      console.log(user);
+      console.log("logout user called ", user);
       const user_whitelist_id = user.whitelist_id;
-      console.log(user_whitelist_id);
-      jet.logout(user_whitelist_id, (err, done) => {
+      // console.log(user_whitelist_id);
+      await jet.logout(user_whitelist_id, (err, done) => {
         if (err) throw err;
+        console.log(done)
         if (done) {
-          console.log("logged out");
+          // console.log("logged out");
           // fetchSelf("/api/auth/unbind_data").then((data) => {
           // });
           set_active_user(null);
           localStorage.removeItem("active_user");
           setShowLogoutConfirmModal(false);
+          // document.cookie;
           router.push("/");
         }
       });
