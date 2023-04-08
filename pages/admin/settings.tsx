@@ -24,6 +24,7 @@ import fetchJson from "@/lib/fetchServer";
 import AuthCTX from "@/components/context/auth.ctx";
 import { IWhiteListedUser } from "@/controllers/auth-ctr";
 import { GetServerSidePropsContext } from "next";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 const schema = yup
   .object({
     first_name: yup.string().required("First name is required"),
@@ -67,7 +68,8 @@ const Settings = () => {
   const [newPasswordType, setNewPasswordType] = useState("password");
   const [showProfilePicPop, setShowProfilePicPop] = useState<boolean>(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
-
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
+  
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
@@ -241,6 +243,14 @@ const Settings = () => {
     });
     setPasswordCheck(false);
   }, [user, reset]);
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "true") {
+    return <div>401 - Unauthorized</div>;
+  }
 
   return (
     <>
@@ -450,14 +460,14 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     await i18n?.reloadResources();
   }
   // console.log("redders", ctx.req.cookies);
-  if (ctx.req.cookies.is_admin !== "true") {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  // if (ctx.req.cookies.is_admin !== "true") {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale, ["common"])),

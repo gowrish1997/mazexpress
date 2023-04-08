@@ -5,15 +5,15 @@
 // /middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getIronSession } from "iron-session/edge";
-import { sessionOptions } from "lib/session";
+// import { getIronSession } from "iron-session/edge";
+// import { sessionOptions } from "lib/session";
 export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
 
-  const session = await getIronSession(req, res, sessionOptions);
-  const { is_admin } = session;
+  // const session = await getIronSession(req, res, sessionOptions);
+  // const { is_admin } = session;
   const auth_cookie = req.cookies.get("mazAPI");
-  console.log("mw - s: ", is_admin);
+  // console.log("mw - s: ", is_admin);
   console.log("mw - c: ", auth_cookie);
   if (auth_cookie !== undefined) {
     // user is present do not allow login page

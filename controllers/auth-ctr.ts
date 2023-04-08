@@ -16,10 +16,7 @@ export class AuthManager {
   }
 
   add_white_list_user(user: Partial<User>) {
-    const whitelisted_user: IWhiteListedUser = {
-      ...user,
-      whitelist_id: nanoid(),
-    };
+    const whitelisted_user: IWhiteListedUser = user;
     if (this.white_list_users && this.white_list_users.length >= 0) {
       // add a user to whitelisted list
       this.white_list_users.push(whitelisted_user);
@@ -124,10 +121,14 @@ export class AuthManager {
           // add user to whitelist
           console.log(response);
           if (response.data.data.length > 0) {
-            this.add_white_list_user(response.data.data[0]);
+            const whitelist_id = nanoid();
+            this.add_white_list_user({
+              ...response.data.data[0],
+              whitelist_id: whitelist_id,
+            });
             localStorage.setItem(
               "active_user",
-              JSON.stringify(response.data.data[0])
+              JSON.stringify(this.getUser(whitelist_id))
             );
             // check cookie here
 
@@ -149,16 +150,22 @@ export class AuthManager {
 
   logout(id: string | null, cb?: (err: any, done: boolean) => void) {
     try {
-      if (!(this.white_list_users.length === 1) && !id) {
-        cb(null, false);
-        return;
-      }
+      // call reset active user after logout somehow
+      // and mutate screen
+
       if (this.white_list_users.length === 0) {
         cb(null, false);
         return;
       }
+      if (!(this.white_list_users.length === 1) && !id) {
+        cb(null, false);
+        return;
+      }
+
       if (this.white_list_users.length === 1) {
         this.white_list_users.pop();
+        cb(null, true);
+        return;
       }
       axios
         .get(
@@ -168,6 +175,8 @@ export class AuthManager {
           { withCredentials: true }
         )
         .then((response) => {
+          // removes from global whitelist
+
           this.white_list_users = this.white_list_users.filter(
             (el) => el.whitelist_id !== id
           );
@@ -180,6 +189,13 @@ export class AuthManager {
         });
     } catch (err) {
       if (err) console.error(err);
+    } finally {
+      if (this.white_list_users.length === 0) {
+        // set status
+        this.status = "no one here";
+      } else {
+        this.status = "populated";
+      }
     }
   }
 }

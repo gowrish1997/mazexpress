@@ -63,7 +63,7 @@ const LogInComponent = (props: any) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // console.log(data);
     try {
-      jet.login("test@testco.com", "Test123$", (err, user) => {
+      jet.login(data.username, data.password, (err, user) => {
         if (err) throw err;
         if (!user) {
           createToast({
@@ -76,26 +76,33 @@ const LogInComponent = (props: any) => {
           // console.log("from login view:", user);
           if ((user as IWhiteListedUser).is_admin) {
             // bind is_admin true to session
-            fetchSelf("/api/auth/bind_data", {
-              method: "POST",
-              body: JSON.stringify({ is_admin: true }),
-            }).then((data) => {
-              // console.log(data)
-              router.push("/admin");
-              set_active_user(user as IWhiteListedUser);
-            });
+
+            // optimization via custom header
+
+            // fetchSelf("/api/auth/bind_data", {
+            //   method: "POST",
+            //   body: JSON.stringify({ is_admin: true }),
+            // }).then((data) => {
+            //   // console.log(data)
+            //   router.push("/admin");
+            //   set_active_user(user as IWhiteListedUser);
+            // });
+            router.push("/admin");
+            set_active_user(user as IWhiteListedUser);
           } else {
             // bind is_admin false to session
-            fetchSelf("/api/auth/bind_data", {
-              method: "POST",
-              body: JSON.stringify({ is_admin: false }),
-            }).then((data) => {
-              // console.log(data)
-              router.push("/orders");
-              set_active_user(user as IWhiteListedUser);
-            });
+            // optimization via custom header
+            // fetchSelf("/api/auth/bind_data", {
+            //   method: "POST",
+            //   body: JSON.stringify({ is_admin: false }),
+            // }).then((data) => {
+            //   // console.log(data)
+            //   router.push("/orders");
+            //   set_active_user(user as IWhiteListedUser);
+            // });
+            router.push("/orders");
+            set_active_user(user as IWhiteListedUser);
           }
-          
         }
       });
     } catch (err) {
