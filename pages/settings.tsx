@@ -30,6 +30,7 @@ import fetchJson from "@/lib/fetchServer";
 import { isElementAccessExpression } from "typescript";
 import AuthCTX from "@/components/context/auth.ctx";
 import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const schema = yup
   .object({
@@ -90,8 +91,8 @@ const Settings = () => {
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
-  console.log(user);
-
+  // console.log(user);
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
   const [passwordCheck, setPasswordCheck] = useState(false);
 
   const inputFieldLabels: string[] = t(
@@ -275,6 +276,15 @@ const Settings = () => {
     if (reee) setPasswordCheck(true);
     else setPasswordCheck(false);
   };
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "user") {
+    return <div>401 - Unauthorized</div>;
+  }
+
 
   return (
     <>

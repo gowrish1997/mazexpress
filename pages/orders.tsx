@@ -62,6 +62,8 @@ const MyOrders = (props) => {
     returnObjects: true,
   });
 
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
+
   useEffect(() => {
     let dir = router.locale == "ar" ? "rtl" : "ltr";
     let lang = router.locale == "ar" ? "ar" : "en";
@@ -85,12 +87,24 @@ const MyOrders = (props) => {
     // console.log(value);
     setCreatedDateFilterKey(value);
   }, []);
+  // useEffect(() => {
+  //   console.log("rank from orders: ", rank);
+  // }, [rank_is_loading]);
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "user") {
+    return <div>401 - Unauthorized</div>;
+  }
 
   if (ordersIsLoading) {
     return <LoadingPage />;
   }
 
   if (ordersError) throw ordersError;
+
   return (
     <>
       <PageHeader
@@ -150,13 +164,13 @@ const MyOrders = (props) => {
 };
 
 export default MyOrders;
-export async function getStaticProps({ locale }: { locale: any }) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
     },
   };
 }

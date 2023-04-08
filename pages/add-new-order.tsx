@@ -27,6 +27,7 @@ import axios from "axios";
 import { sentMail } from "@/lib/sentMail";
 import AuthCTX from "@/components/context/auth.ctx";
 import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 const schema = yup
   .object({
     address_id: yup
@@ -39,6 +40,7 @@ const schema = yup
   .required();
 
 const AddNewOrder = () => {
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
   //   const [userSavedAddresses, setUserSavedAddresses] = useState(addresses);
   const [editableAddress, setEditableAddress] = useState<Address>();
   const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -98,12 +100,12 @@ const AddNewOrder = () => {
 
   useEffect(() => {
     if (addresses?.length == 1) {
-      console.log("runnnign inside useEffect");
+      // console.log("runnnign inside useEffect");
       // const address = (addresses as Address[])?.find(
       //     (el) => el.id === user?.default_address
       // );
       // console.log(address);
-      console.log(addresses[0]?.id);
+      // console.log(addresses[0]?.id);
       setValue("address_id", addresses[0]?.id!, { shouldValidate: true });
     }
   }, [addresses]);
@@ -211,6 +213,15 @@ const AddNewOrder = () => {
       });
     }
   };
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "user") {
+    return <div>401 - Unauthorized</div>;
+  }
+
 
   return (
     <>

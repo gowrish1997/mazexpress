@@ -8,10 +8,11 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import LoadingPage from "@/components/common/LoadingPage";
 import { GetServerSidePropsContext } from "next";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const WarehousePage = () => {
   const { warehouses, mutateWarehouses, warehousesIsLoading } = useWarehouses();
-
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
@@ -22,6 +23,14 @@ const WarehousePage = () => {
     document.querySelector("html")?.setAttribute("dir", dir);
     document.querySelector("html")?.setAttribute("lang", lang);
   }, [router.locale]);
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "user") {
+    return <div>401 - Unauthorized</div>;
+  }
 
   if (warehousesIsLoading) {
     return <LoadingPage />;

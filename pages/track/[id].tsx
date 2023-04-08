@@ -15,6 +15,7 @@ import { Tracking } from "@/models/tracking.model";
 import { Order } from "@/models/order.model";
 import AuthCTX from "@/components/context/auth.ctx";
 import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const TrackOrder = (props: any) => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const TrackOrder = (props: any) => {
   const { tracking, mutateTracking, trackingIsLoading } = useTracking({
     maz_id: router.query.id as string,
   });
-  console.log(tracking);
+  // console.log(tracking);
   const { t } = useTranslation("common");
   const { locale } = router;
 
@@ -36,7 +37,7 @@ const TrackOrder = (props: any) => {
     document.querySelector("html")?.setAttribute("dir", dir);
     document.querySelector("html")?.setAttribute("lang", lang);
   }, [router.locale]);
-
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
   const [packageStatus, setPackageStatus] = useState(0);
 
   useEffect(() => {
@@ -47,6 +48,14 @@ const TrackOrder = (props: any) => {
       setPackageStatus(sorted.pop()?.stage!);
     }
   }, [tracking]);
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "user") {
+    return <div>401 - Unauthorized</div>;
+  }
 
   if (trackingIsLoading) return <div>loading tracking</div>;
   return (
