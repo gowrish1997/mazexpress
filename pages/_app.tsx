@@ -31,14 +31,13 @@ function App({ Component, pageProps }: AppProps) {
   // const dev_tools_status = useScript({ src: "http://localhost:8097" });
 
   useEffect(() => {
-    // check local storage and set recovered user at the beginning
     const rec_user_string = localStorage.getItem("active_user");
     if (rec_user_string !== undefined) {
-      // user exists
       const user = JSON.parse(rec_user_string);
       if (user && !active_user) {
         set_active_user(user);
-        // router.push("/");
+        jet.white_list_users = [user];
+        jet.status = "populated";
       }
     }
   }, []);
