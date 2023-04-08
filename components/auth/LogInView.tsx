@@ -63,7 +63,7 @@ const LogInComponent = (props: any) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // console.log(data);
     try {
-      jet.login(data.username, data.password, (err, user) => {
+      await jet.login(data.username, data.password, (err, user) => {
         if (err) throw err;
         if (!user) {
           createToast({
