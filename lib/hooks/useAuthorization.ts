@@ -9,28 +9,28 @@ const useAuthorization = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const first = document.cookie;
-
+    const first = localStorage.getItem("is_admin");
+    console.log("from useAuth", first);
     if (first) {
       // if any cookie is set
-      const authorization = first
-        .split("; ")
-        .map((pair) => {
-          const sides = pair.split("=");
-          const key = sides[0];
-          const val = sides[1];
-          return { key, val };
-        })
-        .find((cooki) => cooki.key === "is_admin");
-      if (!authorization) {
+      const authorization = first;
+      //   .split("; ")
+      //   .map((pair) => {
+      //     const sides = pair.split("=");
+      //     const key = sides[0];
+      //     const val = sides[1];
+      //     return { key, val };
+      //   })
+      //   .find((cooki) => cooki.key === "is_admin");
+      if (authorization == undefined || authorization == null) {
         // return no rights
         set_is_loading(false);
         set_status(null);
       } else {
         set_is_loading(false);
 
-        console.log(authorization);
-        if (authorization.val === "true") {
+        // console.log(authorization);
+        if (authorization === "true") {
           set_status("admin");
         } else {
           set_status("user");
