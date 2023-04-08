@@ -131,7 +131,11 @@ export class AuthManager {
               "active_user",
               JSON.stringify(this.getUser(whitelist_id))
             );
-            // check cookie here
+            if (response.data.data[0].is_admin) {
+              localStorage.setItem("is_admin", "true");
+            } else {
+              localStorage.setItem("is_admin", "false");
+            }
 
             cb(null, {
               ...response.data.data[0],
@@ -183,6 +187,7 @@ export class AuthManager {
             //   (el) => el.whitelist_id !== id
             // );
             localStorage.removeItem("active_user");
+            localStorage.removeItem("is_admin");
             // document.cookie = "is_admin" + "=; Path=/;";
             cb(null, true);
             return;

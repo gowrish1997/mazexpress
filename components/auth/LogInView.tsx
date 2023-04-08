@@ -73,33 +73,11 @@ const LogInComponent = (props: any) => {
             timeOut: 2000,
           });
         } else {
-          // console.log("from login view:", user);
           if ((user as IWhiteListedUser).is_admin) {
-            // bind is_admin true to session
-
-            // optimization via custom header
-
-            // fetchSelf("/api/auth/bind_data", {
-            //   method: "POST",
-            //   body: JSON.stringify({ is_admin: true }),
-            // }).then((data) => {
-            //   // console.log(data)
-            //   router.push("/admin");
-            //   set_active_user(user as IWhiteListedUser);
-            // });
+            
             router.push("/admin");
             set_active_user(user as IWhiteListedUser);
           } else {
-            // bind is_admin false to session
-            // optimization via custom header
-            // fetchSelf("/api/auth/bind_data", {
-            //   method: "POST",
-            //   body: JSON.stringify({ is_admin: false }),
-            // }).then((data) => {
-            //   // console.log(data)
-            //   router.push("/orders");
-            //   set_active_user(user as IWhiteListedUser);
-            // });
             router.push("/orders");
             set_active_user(user as IWhiteListedUser);
           }
