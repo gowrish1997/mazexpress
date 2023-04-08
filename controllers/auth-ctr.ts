@@ -15,7 +15,7 @@ export class AuthManager {
     this.status = "no one here";
   }
 
-  add_white_list_user(user: Partial<User>) {
+  add_white_list_user(user: IWhiteListedUser) {
     const whitelisted_user: IWhiteListedUser = user;
     if (this.white_list_users && this.white_list_users.length >= 0) {
       // add a user to whitelisted list
