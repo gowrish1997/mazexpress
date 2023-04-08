@@ -1,8 +1,3 @@
-//==========================
-//     co-author: gowrish
-//     co-author: raunak
-//==========================
-
 import React, {
   useState,
   useRef,

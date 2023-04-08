@@ -9,12 +9,13 @@ import React, { useEffect, useState } from "react";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetServerSidePropsContext } from "next";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const NotificationPanel = () => {
   const router = useRouter();
   const [showCreateNotificationModal, setShowCreateNotificationModal] =
     useState<boolean>(false);
-
+    const { status: rank, is_loading: rank_is_loading } = useAuthorization();
   const {
     notificationSettings,
     mutateNotificationSettings,
@@ -64,6 +65,14 @@ const NotificationPanel = () => {
   useEffect(() => {
     // console.log(notificationSettings);
   }, [notificationSettings]);
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "true") {
+    return <div>401 - Unauthorized</div>;
+  }
 
   if (notificationSettingsIsLoading) {
     return <div>Loading</div>;

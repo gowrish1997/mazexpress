@@ -9,6 +9,7 @@ const useAuthorization = () => {
   useEffect(() => {
     const first = document.cookie;
     if (first) {
+      // if any cookie is set
       const authorization = first
         .split("; ")
         .map((pair) => {

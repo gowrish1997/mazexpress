@@ -164,6 +164,7 @@ const Sidebar = () => {
   });
 
   const transalateSidebarContentHandler = () => {
+    // console.log(user?.is_admin);
     if (user?.is_admin) {
       return adminSidebarContent;
     } else {
@@ -183,16 +184,19 @@ const Sidebar = () => {
 
   const logoutHandler = async () => {
     try {
+      console.log(user);
       const user_whitelist_id = user.whitelist_id;
+      console.log(user_whitelist_id);
       jet.logout(user_whitelist_id, (err, done) => {
         if (err) throw err;
         if (done) {
-          //   console.log("logged out");
-          fetchSelf("/api/auth/unbind_data").then((data) => {
-            setShowLogoutConfirmModal(false);
-            router.push("/");
-            set_active_user(null);
-          });
+          console.log("logged out");
+          // fetchSelf("/api/auth/unbind_data").then((data) => {
+          // });
+          set_active_user(null);
+          localStorage.removeItem("active_user");
+          setShowLogoutConfirmModal(false);
+          router.push("/");
         }
       });
     } catch (err) {
@@ -212,7 +216,7 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    console.log(user);
+    console.log("from sidebar user", user);
   }, [user]);
 
   return (

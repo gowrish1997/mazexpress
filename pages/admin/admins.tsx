@@ -107,7 +107,7 @@ const AdminBase = () => {
     return <div>content authorization in progress..</div>;
   }
 
-  if (!rank_is_loading && rank !== "admin") {
+  if (!rank_is_loading && rank !== "true") {
     return <div>401 - Unauthorized</div>;
   }
 
@@ -174,14 +174,14 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     await i18n?.reloadResources();
   }
   // console.log("redders", ctx.req.cookies);
-  if (ctx.req.cookies.is_admin !== "true") {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  // if (ctx.req.cookies.is_admin !== "true") {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale, ["common"])),

@@ -29,19 +29,27 @@ function App({ Component, pageProps }: AppProps) {
     jetpass.getUser()
   );
   // const dev_tools_status = useScript({ src: "http://localhost:8097" });
+
   useEffect(() => {
-    // check local storage
-    // console.log(rank);
-    // const user = JSON.parse(localStorage.getItem("active_user"));
-    // if (user && !active_user) {
-    //   set_active_user(user);
-    //   fetchSelf("/api/auth/bind_data", {
-    //     method: "POST",
-    //     body: JSON.stringify({ is_admin: user.is_admin }),
-    //   }).then((data) => {
-    //     router.push("/");
-    //   });
-    // }
+    // check local storage and set recovered user at the beginning
+    const rec_user_string = localStorage.getItem("active_user");
+    if (rec_user_string !== undefined) {
+      // user exists
+      const user = JSON.parse(rec_user_string);
+      if (user && !active_user) {
+        set_active_user(user);
+        // router.push("/");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // on active user switch track in local storage
+    if (active_user) {
+      localStorage.setItem("active_user", JSON.stringify(active_user));
+    } else {
+      localStorage.removeItem("active_user");
+    }
   }, [active_user]);
 
   if (router.pathname.startsWith("/tstt")) {

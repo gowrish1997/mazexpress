@@ -2,8 +2,17 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
 import { GetServerSidePropsContext } from "next";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const ShippingCost = () => {
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "true") {
+    return <div>401 - Unauthorized</div>;
+  }
   return (
     <div>
       <p className="box-border text-[18px] text-[#2B2B2B] font-[700] leading-[25px] border-b-[1px] border-[#e3e3e3] pb-[15px] ">
@@ -44,14 +53,14 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     await i18n?.reloadResources();
   }
   // console.log("redders", ctx.req.cookies);
-  if (ctx.req.cookies.is_admin !== "true") {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  // if (ctx.req.cookies.is_admin !== "true") {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale, ["common"])),
