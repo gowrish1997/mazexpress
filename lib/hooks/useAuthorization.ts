@@ -10,7 +10,7 @@ const useAuthorization = () => {
 
   useEffect(() => {
     const first = document.cookie;
-
+    console.log("from useAuth", document.cookie)
     if (first) {
       // if any cookie is set
       const authorization = first
