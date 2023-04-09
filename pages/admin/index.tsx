@@ -22,7 +22,7 @@ const AdminHome = () => {
   const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   useEffect(() => {
     // console.log("use efft");
-    console.log(rank)
+    console.log(rank);
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
 
@@ -60,30 +60,10 @@ const AdminHome = () => {
 };
 
 export default AdminHome;
-// export async function getStaticProps({ locale }: { locale: any }) {
-//   if (process.env.NODE_ENV === "development") {
-//     await i18n?.reloadResources();
-//   }
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ["common"])),
-//     },
-//   };
-// }
-
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }
-  // console.log("redders", ctx.req.cookies);
-  // if (ctx.req.cookies.is_admin !== "true") {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale, ["common"])),
