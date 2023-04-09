@@ -92,18 +92,13 @@ const AddNewAddressModal = (props: IProp) => {
       let address = { ...data };
       delete address.default;
 
-      // console.log(address);
-      // console.log(data);
-
       // add address
-
       try {
         const addressResult = await fetchJson(`/api/addresses/${user?.email}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(address),
         });
-        // console.log(addressResult);
         if (data.default || addresses?.length == 0) {
           const userResult = await fetchJson(`/api/users/${user?.email}`, {
             method: "PUT",

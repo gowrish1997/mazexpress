@@ -49,10 +49,6 @@ const ProfilePicPop = (props: IProp) => {
           timeOut: 1000,
         });
         await jet.mutateUser();
-        console.log("done mutate here");
-
-        console.log(jet.getUser(jet.active));
-        // cl
         set_active_user(jet.getUser(jet.active));
         props.close(e);
       }
@@ -67,7 +63,6 @@ const ProfilePicPop = (props: IProp) => {
 
   const updateUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
     // e.preventDefault();
-    // console.log(e.target.files);
     if (e.target.files) {
       let formData = new FormData();
 
@@ -78,12 +73,6 @@ const ProfilePicPop = (props: IProp) => {
       formData.append("name", fileName);
       formData.append("user", user?.id as string);
       formData.append("image", e.target.files[0], fileName);
-      // console.log(formData);
-
-      // console.log(formData.entries());
-      // for (const pair of formData.entries()) {
-      //   console.log(`${pair[0]}, ${pair[1]}`);
-      // }
 
       axios
         .post(
@@ -106,32 +95,17 @@ const ProfilePicPop = (props: IProp) => {
             });
             // props.manager.mutateUser();
             await jet.mutateUser();
-            console.log("did mutate here");
-
             set_active_user(jet.getUser(jet.active));
             props.close(e);
           }
-          // console.log(response);
         })
         .catch((err) => {
           if (err) throw err;
           console.error(err);
         });
-
-      // send file to api to write
-      // try {
-      //   const imageUploadResult = await fetchServer(`/api/upload-user-image`, {
-      //     method: "POST",
-      //     body: formData,
-      //   });
-      //   console.log(imageUploadResult);
-      // } catch (error) {
-      //   console.error(error);
-      // }
     }
   };
 
-  // console.log(user?.avatar_url);
   return (
     <>
       {props.show && (

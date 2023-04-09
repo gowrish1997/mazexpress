@@ -30,7 +30,6 @@ const UserSavedAddress = (props: {
   });
 
   const deleteAddressHandler = async () => {
-    console.log("delete user address");
 
     let defaultaddress = user?.default_address;
 
@@ -52,7 +51,7 @@ const UserSavedAddress = (props: {
         });
         // mutateUser();
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     try {

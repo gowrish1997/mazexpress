@@ -23,6 +23,7 @@ export default function useGoogle({}: IProps) {
   });
 
   const [googleStatus, setGoogleStatus] = useState<any>();
+
   const user = useContext(AuthCTX)["active_user"];
   const { set_active_user } = useContext(AuthCTX);
   const jet: AuthManager = useContext(AuthCTX)["jet"];
@@ -85,6 +86,10 @@ export default function useGoogle({}: IProps) {
     }
   }
 
+  const call_prompt = () => {
+    google.accounts.id.prompt();
+  };
+
   // initialize google client id
   useEffect(() => {
     if (gsiStatus === "ready") {
@@ -100,5 +105,5 @@ export default function useGoogle({}: IProps) {
     };
   }, [gsiStatus]);
 
-  return { status: googleStatus };
+  return { status: googleStatus, resolver: call_prompt };
 }

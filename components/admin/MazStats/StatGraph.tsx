@@ -217,15 +217,11 @@ const StatGraph = () => {
     ],
   };
   useEffect(() => {
-    // console.log("get stat data");
-    //
     const year = 2023;
     fetchJson(`/api/users/stats/${year}`).then((userscount) => {
-      // console.log(userscount);
       set_user_data(userscount.data);
     });
     fetchJson(`/api/orders/stats/${year}`).then((orderscount) => {
-      // console.log(userscount);
       set_order_data(orderscount.data);
     });
   }, []);

@@ -23,7 +23,6 @@ const WarehouseOrders = () => {
     });
 
   const wareHouseChangeHanlder = (value: string | number) => {
-    // console.log(value);
     if (value === "all") {
       // set all
       if (citySelection.length === 3) {
@@ -42,11 +41,6 @@ const WarehouseOrders = () => {
       });
     }
   };
-
-  useEffect(() => {
-    console.log(orderCount)
-  }, [orderCount])
-
   return (
     <StatCard>
       <div className="w-full flex-type3">

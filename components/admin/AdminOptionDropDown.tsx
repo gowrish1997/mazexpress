@@ -38,17 +38,15 @@ const AdminOptionDropDown = (props: Iprop) => {
                                 headers: { "Content-type": "application/json" },
                             }
                         );
-                        // console.log(result);
                         result.data.sort(
                             (a: any, b: any) => a?.stage - b?.stage
                         );
 
                         allSelectedOrderStatus.push(result.data.pop()?.stage!);
                     } catch (error: any) {
-                        console.log(error.message);
+                        console.error(error.message);
                     }
                 }
-                // console.log(allSelectedOrderStatus);
 
                 const allEqual = () => {
                     return allSelectedOrderStatus.every(
@@ -81,7 +79,6 @@ const AdminOptionDropDown = (props: Iprop) => {
     const fileExtension = ".xlsx";
 
     const exportToCSV = () => {
-        // console.log("downloading");
         let ws = null;
         if (props.orders) {
             ws = XLSX.utils.json_to_sheet(props.orders!);

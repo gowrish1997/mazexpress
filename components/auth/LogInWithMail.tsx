@@ -8,22 +8,22 @@ const LogInWithMail = () => {
   const submitButtons: string[] = t("signUpView.form.SubmitButton", {
     returnObjects: true,
   });
-  const { status: googleStatus } = useGoogle({});
+  const { status: googleStatus, resolver } = useGoogle({});
 
   const router = useRouter();
 
   useEffect(() => {
-    // console.log(googleStatus);
     if (googleStatus === "initialized") {
-      let container = document.getElementById("g_signin");
-      let conf: google.accounts.id.GsiButtonConfiguration = {
-        type: "standard",
-        theme: "filled_black",
-        width: "250",
-      };
-      if (container) {
-        google.accounts.id.renderButton(container, conf);
-      }
+      resolver();
+      // let container = document.getElementById("g_signin");
+      // let conf: google.accounts.id.GsiButtonConfiguration = {
+      //   type: "standard",
+      //   theme: "filled_black",
+      //   width: "250",
+      // };
+      // if (container) {
+      //   google.accounts.id.renderButton(container, conf);
+      // }
     }
   }, [googleStatus]);
 

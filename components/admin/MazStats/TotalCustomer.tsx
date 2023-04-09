@@ -36,7 +36,6 @@ const TotalCustomer = () => {
   });
 
   const ageChangeHandler = (value: number | string) => {
-    // console.log(value);
     setAgeSelection((prev) => {
       if (prev.includes(value)) {
         return prev.filter((el) => el !== value);
@@ -47,7 +46,6 @@ const TotalCustomer = () => {
   };
 
   const genderChangeHandler = (value: string | number) => {
-    // console.log(value);
     setGenderSelection((prev) => {
       if (prev.includes(value)) {
         return prev.filter((el) => el !== value);
@@ -56,10 +54,6 @@ const TotalCustomer = () => {
       }
     });
   };
-
-  // useEffect(() => {
-  //     console.log(userCount);
-  // }, [ageSelection, genderSelection]);
 
   return (
     <StatCard>

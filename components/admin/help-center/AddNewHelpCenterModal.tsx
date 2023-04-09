@@ -64,7 +64,6 @@ const AddNewHelpCenterModal = (props: IProp) => {
     });
 
     const onSubmit: SubmitHandler<IForm> = async (data) => {
-        console.log(data);
 
         try {
             const helpUpdateResult = await fetchJson(`/api/help-center`, {
@@ -72,7 +71,6 @@ const AddNewHelpCenterModal = (props: IProp) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
             });
-            console.log(helpUpdateResult);
             createToast({
                 type: "success",
                 title: "Success",
@@ -82,7 +80,7 @@ const AddNewHelpCenterModal = (props: IProp) => {
             props.close();
             props.mutateHelpCenter();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 

@@ -12,18 +12,11 @@ import AuthCTX from "@/components/context/auth.ctx";
 import { SWRConfig } from "swr";
 import { createToast } from "@/lib/toasts";
 import fetchServer, { FetchError } from "@/lib/fetchServer";
-import fetchSelf from "@/lib/fetchSelf";
-import useScript from "@/lib/hooks/useScript";
 import axios from "axios";
-
-// import useGoogle from "@/lib/hooks/useGoogle";
-// import { User } from "@/models/user.model";
-
 config.autoAddCss = false;
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  // const { status: googleStatus } = useGoogle({});
   const jetpass = new AuthManager();
   const [jet, set_jet] = useState<AuthManager | null>(jetpass);
   const [active_user, set_active_user] = useState<IWhiteListedUser | null>(
@@ -64,37 +57,6 @@ function App({ Component, pageProps }: AppProps) {
     set_active_user(current_active);
   }, [jet.active]);
 
-  if (router.pathname.startsWith("/tstt")) {
-    // no frame
-    return (
-      <AuthCTX.Provider
-        value={{
-          jet,
-          set_jet,
-          active_user,
-          set_active_user,
-        }}
-      >
-        <SWRConfig
-          value={{
-            fetcher: fetchServer,
-            onError: (err: FetchError) => {
-              createToast({
-                type: "error",
-                title: err.name,
-                message: err.message,
-                timeOut: 3000,
-              });
-              // console.error(err);
-            },
-          }}
-        >
-          <Component {...pageProps} />
-          <NotificationContainer />
-        </SWRConfig>
-      </AuthCTX.Provider>
-    );
-  }
   if (router.pathname.startsWith("/auth")) {
     // no frame
     return (

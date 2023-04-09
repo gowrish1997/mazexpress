@@ -39,9 +39,6 @@ const schema = yup
   .required();
 
 const EditHelpModal = (props: IProp) => {
-  console.log(props.data);
-  // const [data, setData] = useState(props.data);
-
   const {
     register,
     handleSubmit,
@@ -63,8 +60,6 @@ const EditHelpModal = (props: IProp) => {
   });
 
   const onSubmit: SubmitHandler<IForm> = async (data) => {
-    console.log(data);
-
     try {
       const helpUpdateResult = await fetchJson(
         `/api/help-center/id/${props.data.id}`,
@@ -84,7 +79,7 @@ const EditHelpModal = (props: IProp) => {
       props.close();
       props.mutateHelpCenter();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

@@ -75,9 +75,6 @@ const ResetPasswordView = (props: any) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-    console.log(props.user);
-
     try {
       const updateUserRes: APIResponse<User> = await fetchJson(
         `/api/users/${props.user.email}`,
@@ -109,7 +106,7 @@ const ResetPasswordView = (props: any) => {
         try {
           sentMail(toList);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
         // done
 
@@ -140,7 +137,7 @@ const ResetPasswordView = (props: any) => {
       router.push("/auth/gate");
     } catch (error) {
       // errored
-      console.log(error);
+      console.error(error);
     }
   };
 

@@ -67,7 +67,6 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
 
           props.mutateOrder?.();
 
-          // console.log(result0_2);
           break;
         case "shipments":
           try {
@@ -98,14 +97,12 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
             });
           }
 
-          // console.log(result1);
 
           props.mutateOrder?.();
           break;
         case "in-transit":
           // increment stage for
           let rowFixed3: Order = props.row as Order;
-          //   console.log(rowFixed3.id_orders, stage);
 
           if (props.stage === 2) {
             // received in libya action

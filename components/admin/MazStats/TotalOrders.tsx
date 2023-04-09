@@ -48,16 +48,6 @@ const TotalOrders = () => {
             : undefined,
     });
 
-    // const statusChangeHandler = (value: string | number) => {
-    //     // console.log(value);
-    //     setStatusSelection((prev) => {
-    //         if (prev.includes(value)) {
-    //             return prev.filter((el) => el !== value);
-    //         } else {
-    //             return [...prev, value];
-    //         }
-    //     });
-    // };
 
     const trigger = useRef<any>(null);
 
@@ -73,10 +63,6 @@ const TotalOrders = () => {
         // props.filterByDate(value);
         setSelectedDate(value);
     };
-
-    useEffect(() => {
-        console.log(orderCount);
-    }, [selectedDate]);
 
     return (
         // <StatCard>

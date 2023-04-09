@@ -61,7 +61,6 @@ const LogInComponent = (props: any) => {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // console.log(data);
     try {
       await jet.login(data.username, data.password, (err, user) => {
         if (err) throw err;
@@ -105,10 +104,6 @@ const LogInComponent = (props: any) => {
       setPasswordType("string");
     }
   };
-
-  // useEffect(() => {
-  //   console.log(googleStatus);
-  // }, [googleStatus]);
 
   return (
     <div
