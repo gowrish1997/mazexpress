@@ -103,6 +103,35 @@ export class AuthManager {
     });
   }
 
+  google_login(
+    user: User,
+    cb?: (err: any, done: boolean | IWhiteListedUser) => void
+  ) {
+    //
+
+    const whitelist_id = nanoid();
+    this.add_white_list_user({
+      ...user,
+      whitelist_id: whitelist_id,
+    });
+    localStorage.setItem(
+      "active_user",
+      JSON.stringify(this.getUser(whitelist_id))
+    );
+    if (user.is_admin) {
+      localStorage.setItem("is_admin", "true");
+    } else {
+      localStorage.setItem("is_admin", "false");
+    }
+
+    // set active: id
+    this.active = whitelist_id;
+    cb(null, {
+      ...user,
+      whitelist_id: whitelist_id,
+    });
+  }
+
   async login(
     username: string,
     password: string,

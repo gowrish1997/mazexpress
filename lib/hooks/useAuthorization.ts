@@ -10,7 +10,7 @@ const useAuthorization = () => {
 
   useEffect(() => {
     const first = localStorage.getItem("is_admin");
-    console.log("from useAuth", first);
+    // console.log("from useAuth", first);
     if (first) {
       // if any cookie is set
       const authorization = first;
