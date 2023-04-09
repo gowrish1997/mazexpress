@@ -18,6 +18,7 @@ interface IProps {
 export default function useUsers(props: IProps) {
   const qs = new QS(props);
 
+  console.log(qs.stringified)
   const {
     data: users,
     mutate: mutateUsers,

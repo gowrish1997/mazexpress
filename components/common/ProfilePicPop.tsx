@@ -12,19 +12,20 @@ import { nanoid } from "nanoid";
 import fetchServer from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
 import axios from "axios";
-import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import AuthCTX from "../context/auth.ctx";
 
 interface IProp {
   show: boolean;
   close: (e: any) => void;
-  update: () => void;
+  // manager: AuthManager;
 }
 
 const ProfilePicPop = (props: IProp) => {
   const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
+  const { set_active_user } = useContext(AuthCTX);
   const imageInputRef = useRef<HTMLInputElement>(null);
-
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
   const { t } = useTranslation("common");
   const profilePicPopContent: string[] = t(
     "settingsPage.profileForm.ProfilePicPopContent",
@@ -47,7 +48,12 @@ const ProfilePicPop = (props: IProp) => {
           title: "success",
           timeOut: 1000,
         });
-        props.update();
+        await jet.mutateUser();
+        console.log("done mutate here");
+
+        console.log(jet.getUser(jet.active));
+        // cl
+        set_active_user(jet.getUser(jet.active));
         props.close(e);
       }
     } catch (error) {
@@ -98,10 +104,14 @@ const ProfilePicPop = (props: IProp) => {
               title: "success",
               timeOut: 1000,
             });
-            props.update();
+            // props.manager.mutateUser();
+            await jet.mutateUser();
+            console.log("did mutate here");
+
+            set_active_user(jet.getUser(jet.active));
             props.close(e);
           }
-          console.log(response);
+          // console.log(response);
         })
         .catch((err) => {
           if (err) throw err;

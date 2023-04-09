@@ -22,9 +22,10 @@ import { checkPassword } from "@/lib/utils";
 import { useTranslation } from "next-i18next";
 import fetchJson from "@/lib/fetchServer";
 import AuthCTX from "@/components/context/auth.ctx";
-import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import { GetServerSidePropsContext } from "next";
 import useAuthorization from "@/lib/hooks/useAuthorization";
+import { mutate } from "swr";
 const schema = yup
   .object({
     first_name: yup.string().required("First name is required"),
@@ -69,7 +70,8 @@ const Settings = () => {
   const [showProfilePicPop, setShowProfilePicPop] = useState<boolean>(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
   const { status: rank, is_loading: rank_is_loading } = useAuthorization();
-  
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
+
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
@@ -262,7 +264,6 @@ const Settings = () => {
       <ProfilePicPop
         show={showProfilePicPop}
         close={toggleProfilePicPop}
-        update={() => {}}
       />
       <Layout>
         <div className="w-full space-y-[30px] ">
