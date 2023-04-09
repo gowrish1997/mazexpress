@@ -18,7 +18,7 @@ import AuthCTX from "../context/auth.ctx";
 interface IProp {
   show: boolean;
   close: (e: any) => void;
-  manager: AuthManager;
+  // manager: AuthManager;
 }
 
 const ProfilePicPop = (props: IProp) => {

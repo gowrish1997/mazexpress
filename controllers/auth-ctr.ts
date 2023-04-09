@@ -45,33 +45,32 @@ export class AuthManager {
 
   async mutateUser(obj?: Partial<IWhiteListedUser>) {
     return new Promise<void>(async (resolve, reject) => {
-      // try {
-      // if (obj) {
-      //   // use obj
-      //   const new_list = this.white_list_users.map(
-      //     async (el: IWhiteListedUser) => {
-      //       if (el.whitelist_id === obj.whitelist_id) {
-      //         await axios
-      //           .put(
-      //             `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${el.email}`,
-      //             obj
-      //           )
-      //           // _prefix = not using
-      //           .then((_response) => {
-      //             return Object.assign(el, obj);
-      //           })
-      //           .catch((err) => {
-      //             if (err) throw err;
-      //           });
-      //       }
-      //       return el;
-      //     }
-      //   );
-      //   this.white_list_users = await Promise.all(new_list);
-      //   // done(null, true);
-      //   resolve();
-      //   return;
-      // }
+      if (obj) {
+        // use obj
+        const new_list = this.white_list_users.map(
+          async (el: IWhiteListedUser) => {
+            if (el.whitelist_id === obj.whitelist_id) {
+              await axios
+                .put(
+                  `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${el.email}`,
+                  obj
+                )
+                // _prefix = not using
+                .then((_response) => {
+                  return Object.assign(el, obj);
+                })
+                .catch((err) => {
+                  if (err) throw err;
+                });
+            }
+            return el;
+          }
+        );
+        this.white_list_users = await Promise.all(new_list);
+        // done(null, true);
+        resolve();
+        return;
+      }
 
       const active_user = this.white_list_users.find(
         (el: IWhiteListedUser) => el.whitelist_id === this.active

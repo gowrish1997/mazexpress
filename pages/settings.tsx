@@ -295,7 +295,7 @@ const Settings = () => {
       <ProfilePicPop
         show={showProfilePicPop}
         close={toggleProfilePicPop}
-        manager={jet}
+        // manager={jet}
       />
       <Layout>
         <div className="w-full space-y-[30px] ">
