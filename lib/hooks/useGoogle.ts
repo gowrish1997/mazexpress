@@ -5,14 +5,14 @@
 import { useContext, useEffect, useState } from "react";
 import { createToast } from "../toasts";
 import { useRouter } from "next/router";
-
-//
-import fetchSelf from "../fetchSelf";
 import useScript from "./useScript";
-import UserContext from "@/components/context/user.context";
 import jwt from "jsonwebtoken";
-import useUser from "./useUser";
 import AuthCTX from "@/components/context/auth.ctx";
+import fetchJson from "../fetchServer";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
+import { APIResponse } from "@/models/api.model";
+import { User } from "@/models/user.model";
+import { AxiosResponse } from "axios";
 
 interface IProps {}
 
@@ -25,6 +25,7 @@ export default function useGoogle({}: IProps) {
   const [googleStatus, setGoogleStatus] = useState<any>();
   const user = useContext(AuthCTX)["active_user"];
   const { set_active_user } = useContext(AuthCTX);
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
   // const { user: sessUser, mutateUser } = useUser();
 
   async function handleCredentialResponse(
@@ -39,47 +40,42 @@ export default function useGoogle({}: IProps) {
       console.log(payload);
 
       // set up user from payload
-      fetchSelf(`/api/auth/callback/google`, {
+      // forward payload to backend
+      await fetchJson(`/api/auth/provider/google`, {
         method: "POST",
+        body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...payload }),
       })
-        .then(async (response) => {
-          console.log(response);
-          if (response.ok) {
-            // set context to use this user
-            set_active_user(response.data[0]);
-            // setUser(response.data[0]);
-            // await mutateUser(response.data[0], false);
-            // create toast
-            createToast({
-              type: "success",
-              message: "you are now logged in",
-              title: "login success",
-              timeOut: 1000,
-            });
-            setTimeout(() => {
-              if (response.data[0].is_admin === true) {
+        .then(async (response: AxiosResponse<APIResponse<User>>) => {
+          console.log(response.data);
+
+          // login
+          jet.google_login(response.data[0], async (err, user) => {
+            if (err) {
+              console.error(err);
+              createToast({
+                type: "error",
+                message: "unknown error",
+                title: "login failed",
+                timeOut: 1000,
+              });
+              return;
+            }
+            if (user) {
+              if ((user as IWhiteListedUser).is_admin) {
                 router.push("/admin");
+                set_active_user(user as IWhiteListedUser);
               } else {
-                router.push("/");
+                router.push("/orders");
+                set_active_user(user as IWhiteListedUser);
               }
-            }, 1000);
-          }
+            }
+          });
         })
         .catch((err) => {
-          if (err) throw err;
-          console.log("cred err", err);
-          createToast({
-            type: "error",
-            message: "some error",
-            title: "login failed",
-            timeOut: 1000,
-          });
+          console.log(err);
         });
-      // console.log("cred result", credResult);
     } else {
-      // console.log(payload);
       createToast({
         type: "error",
         message: "invalid credentials",
