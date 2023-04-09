@@ -9,6 +9,7 @@ export interface IWhiteListedUser extends Partial<User> {
 export class AuthManager {
   white_list_users: IWhiteListedUser[];
   status: string;
+  active: string;
 
   constructor() {
     this.white_list_users = [];
@@ -42,62 +43,75 @@ export class AuthManager {
     }
   }
 
-  async mutateUser(
-    id: string,
-    obj: Partial<User>,
-    done: (err: Error, done: boolean) => void
-  ) {
-    try {
-      // set user to updated value on both backend and frontend
-      if (id) {
-        const new_list = this.white_list_users.map(async (el) => {
-          if (el.whitelist_id === id) {
-            axios
-              .put(
-                `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${el.email}`,
-                obj
-              )
-              .then((response) => {
-                return Object.assign(el, obj);
-              })
-              .catch((err) => {
-                if (err) throw err;
-              });
-          }
-          return el;
-        });
-        this.white_list_users = await Promise.all(new_list);
-        done(null, true);
-        return;
-      }
+  async mutateUser(obj?: Partial<IWhiteListedUser>): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        // set user to updated value on both backend and frontend
+        console.log(this.white_list_users);
+        if (obj) {
+          // use obj
+          const new_list = this.white_list_users.map(
+            async (el: IWhiteListedUser) => {
+              if (el.whitelist_id === obj.whitelist_id) {
+                await axios
+                  .put(
+                    `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${el.email}`,
+                    obj
+                  )
+                  // _prefix = not using
+                  .then((_response) => {
+                    return Object.assign(el, obj);
+                  })
+                  .catch((err) => {
+                    if (err) throw err;
+                  });
+              }
+              return el;
+            }
+          );
+          this.white_list_users = await Promise.all(new_list);
+          // done(null, true);
+          resolve();
+          return;
+        }
 
-      if (!(this.white_list_users.length > 0)) {
-        done(null, false);
-        return;
+        const ac =
+          // blank means get latest user
+          await axios
+            .get(
+              process.env.NODE_ENV === "development"
+                ? `http://localhost:5000/api/users/${
+                    this.white_list_users.find(
+                      (el: IWhiteListedUser) => el.whitelist_id === this.active
+                    ).email
+                  }`
+                : `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${
+                    this.white_list_users.find(
+                      (el: IWhiteListedUser) => el.whitelist_id === this.active
+                    ).email
+                  }
+                `
+            )
+            .then((response) => {
+              Object.assign(
+                this.white_list_users.find(
+                  (el: IWhiteListedUser) => el.whitelist_id === this.active
+                ),
+                response.data[0]
+              );
+              resolve();
+            })
+            .catch((err) => {
+              if (err) throw err;
+            });
+        reject("end of story");
+      } catch (err) {
+        if (err) {
+          console.error(err);
+          reject("error in mutate auth controller");
+        }
       }
-
-      // return first el
-      axios
-        .put(
-          process.env.NODE_ENV === "development"
-            ? `http://localhost:5000/api/auth/login/password`
-            : `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${this.white_list_users[0].email}`,
-          obj
-        )
-        .then((response) => {
-          return Object.assign(this.white_list_users[0], obj);
-        })
-        .catch((err) => {
-          if (err) throw err;
-        });
-      Object.assign(this.white_list_users[0], obj);
-      done(null, true);
-    } catch (err) {
-      if (err) {
-        console.error(err);
-        done(err, false);
-      }
-    }
+    });
   }
 
   async login(
@@ -137,6 +151,8 @@ export class AuthManager {
               localStorage.setItem("is_admin", "false");
             }
 
+            // set active: id
+            this.active = whitelist_id;
             cb(null, {
               ...response.data.data[0],
               whitelist_id: whitelist_id,

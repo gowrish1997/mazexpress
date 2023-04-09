@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import moment from "moment";
 import UserbasePageHeader from "@/components/admin/UserbasePageHeader";
 import { useRouter } from "next/router";
 import Table from "@/components/orders/table";

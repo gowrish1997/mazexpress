@@ -29,7 +29,7 @@ import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import fetchJson from "@/lib/fetchServer";
 import { isElementAccessExpression } from "typescript";
 import AuthCTX from "@/components/context/auth.ctx";
-import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const schema = yup
@@ -94,7 +94,7 @@ const Settings = () => {
   // console.log(user);
   const { status: rank, is_loading: rank_is_loading } = useAuthorization();
   const [passwordCheck, setPasswordCheck] = useState(false);
-
+  const jet: AuthManager = useContext(AuthCTX)["jet"];
   const inputFieldLabels: string[] = t(
     "settingsPage.profileForm.InputFieldLabel",
     { returnObjects: true }
@@ -257,7 +257,7 @@ const Settings = () => {
         title: locale == "en" ? "success" : "نجاح",
         message: locale == "en" ? "Updated user." : "مستخدم محدث.",
       });
-      //   mutateUser();
+      jet.mutateUser();
     } catch (err) {
       console.error(err);
       createToast({
@@ -285,7 +285,6 @@ const Settings = () => {
     return <div>401 - Unauthorized</div>;
   }
 
-
   return (
     <>
       <PageHeader
@@ -296,7 +295,7 @@ const Settings = () => {
       <ProfilePicPop
         show={showProfilePicPop}
         close={toggleProfilePicPop}
-        update={() => {}}
+        update={() => jet.mutateUser()}
       />
       <Layout>
         <div className="w-full space-y-[30px] ">
