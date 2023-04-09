@@ -91,10 +91,10 @@ const Settings = () => {
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
-  // console.log(user);
   const { status: rank, is_loading: rank_is_loading } = useAuthorization();
-  const [passwordCheck, setPasswordCheck] = useState(false);
   const jet: AuthManager = useContext(AuthCTX)["jet"];
+
+  const [passwordCheck, setPasswordCheck] = useState(false);
   const inputFieldLabels: string[] = t(
     "settingsPage.profileForm.InputFieldLabel",
     { returnObjects: true }
@@ -295,7 +295,7 @@ const Settings = () => {
       <ProfilePicPop
         show={showProfilePicPop}
         close={toggleProfilePicPop}
-        update={() => jet.mutateUser()}
+        manager={jet}
       />
       <Layout>
         <div className="w-full space-y-[30px] ">

@@ -14,6 +14,7 @@ import { createToast } from "@/lib/toasts";
 import fetchServer, { FetchError } from "@/lib/fetchServer";
 import fetchSelf from "@/lib/fetchSelf";
 import useScript from "@/lib/hooks/useScript";
+import axios from "axios";
 
 // import useGoogle from "@/lib/hooks/useGoogle";
 // import { User } from "@/models/user.model";
@@ -35,6 +36,12 @@ function App({ Component, pageProps }: AppProps) {
     if (rec_user_string !== undefined) {
       const user = JSON.parse(rec_user_string);
       if (user && !active_user) {
+        // update user with session
+        axios.get(
+          process.env.NODE_ENV === "production"
+            ? `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth`
+            : `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/auth`
+        );
         set_active_user(user);
         jet.white_list_users = [user];
         jet.status = "populated";
@@ -50,6 +57,12 @@ function App({ Component, pageProps }: AppProps) {
       localStorage.removeItem("active_user");
     }
   }, [active_user]);
+
+  useEffect(() => {
+    // get active user and set to active_user
+    const current_active = jet.getUser(jet.active);
+    set_active_user(current_active);
+  }, [jet.active]);
 
   if (router.pathname.startsWith("/tstt")) {
     // no frame
