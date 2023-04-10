@@ -52,7 +52,6 @@ const UserBase = () => {
     date: getDateInDBFormat(createdDateFilterKey as Date),
   });
 
-  console.log(users);
   // const { userCount, mutateUserCount, userCountIsLoading, userCountError } =
   //     useUsersCount({
   //         search: searchKey,
@@ -136,15 +135,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }
-  // console.log("redders", ctx.req.cookies);
-  // if (ctx.req.cookies.is_admin !== "true") {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale, ["common"])),

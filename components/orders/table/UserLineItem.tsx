@@ -20,7 +20,6 @@ const UserLineItem = (props: IProp) => {
     username: props.row.email,
   });
 
-  console.log(props.row);
 
   const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
 

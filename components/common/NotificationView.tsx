@@ -32,18 +32,14 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
     const { t } = useTranslation("");
     const { locale } = router;
     const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
-
     const { notifications, notificationsIsLoading, mutateNotifications } =
       useNotifications({
         username: user?.email,
         status: ["unread"],
-        per_page: 5,
-        page: 1,
       });
 
     const deleteNotification = async (id: string) => {
       try {
-        console.log("inside notificatons");
         const deletedNotification = await fetchServer(
           `/api/notifications/id/${id}`,
           {
@@ -92,15 +88,10 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
       }
     };
 
-    // useEffect(() => {
-    //     if (notifications !== undefined) {
-    //         setUserNotifications(notifications);
-    //     }
-    // }, [notificationsIsLoading, notifications]);
-
-    // useEffect(() => {
-    //     console.log(userNotifications);
-    // }, [userNotifications]);
+    useEffect(() => {
+      console.log(notifications);
+      console.log(user);
+    }, [notificationsIsLoading]);
 
     return (
       <ClickOutside trigger={props.trigger} handler={props.handler}>
@@ -132,23 +123,17 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
           </div>
           <div className="space-y-[20px]">
             {notifications?.length > 0 ? (
-              notifications
-                ?.sort(
-                  (a, b) =>
-                    new Date(b.created_on).getTime() -
-                    new Date(a.created_on).getTime()
-                )
-                .map((data) => {
-                  return (
-                    <EachNotification
-                      id={data.id!}
-                      data={data}
-                      key={data.id}
-                      delete={deleteNotification}
-                      update={mutateNotifications}
-                    />
-                  );
-                })
+              notifications.map((data) => {
+                return (
+                  <EachNotification
+                    id={data.id!}
+                    data={data}
+                    key={data.id}
+                    delete={deleteNotification}
+                    update={mutateNotifications}
+                  />
+                );
+              })
             ) : (
               <div className="text-[11px]">No notifications yet...</div>
             )}
