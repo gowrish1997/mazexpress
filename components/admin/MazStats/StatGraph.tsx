@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,6 +13,8 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import MazStatsDropddown from "./MazStatsDropddown";
+import axios from "axios";
+import fetchJson from "@/lib/fetchServer";
 
 ChartJS.register(
   CategoryScale,
@@ -139,7 +141,8 @@ export const data = {
   datasets: [
     {
       label: "Customers",
-      data: [1000, 53, 200, 41,100, 65, 40, 33, 53, 85, 41, 44, 65],
+      // data: [1000, 53, 200, 41, 100, 65, 40, 33, 53, 85, 41, 44],
+      data: [1000, 53, 200, 41, 100, 65, 40, 33, 53, 85, 41, 44],
       borderColor: "#FF0000",
 
       lineTension: 0.3,
@@ -157,7 +160,7 @@ export const data = {
     {
       label: "Orders",
       lineTension: 0.3,
-      data: [33, 25, 35, 51, 3000, 76, 40, 33, 25, 35, 51, 54, 76],
+      data: [33, 25, 35, 51, 3000, 76, 40, 33, 25, 35, 51, 54],
       borderColor: "#35C6F4",
       fill: {
         target: "origin",
@@ -172,9 +175,59 @@ export const data = {
 };
 
 const StatGraph = () => {
+  const [user_data, set_user_data] = useState();
+  const [order_data, set_order_data] = useState();
+
+  const stat_data = {
+    labels,
+    datasets: [
+      {
+        label: "Customers",
+        // data: [1000, 53, 200, 41, 100, 65, 40, 33, 53, 85, 41, 44],
+        data: user_data,
+        borderColor: "#FF0000",
+
+        lineTension: 0.3,
+        fill: {
+          target: "origin",
+          above: "rgba(255,242,242,0.3)",
+          opacity: 0.3,
+          // Area will be red above the origin
+          // And blue below the origin
+        },
+        backgroundColor: "#FF0000",
+        yAxisID: "y",
+        xAxisID: "x",
+      },
+      {
+        label: "Orders",
+        lineTension: 0.3,
+        // data: [33, 25, 35, 51, 3000, 76, 40, 33, 25, 35, 51, 54],
+        data: order_data,
+        borderColor: "#35C6F4",
+        fill: {
+          target: "origin",
+          above: "#DFE7FF80", // Area will be red above the origin
+          // And blue below the origin
+        },
+        backgroundColor: "#35C6F4",
+        yAxisID: "y1",
+        xAxisID: "x1",
+      },
+    ],
+  };
+  useEffect(() => {
+    const year = 2023;
+    fetchJson(`/api/users/stats/${year}`).then((userscount) => {
+      set_user_data(userscount.data);
+    });
+    fetchJson(`/api/orders/stats/${year}`).then((orderscount) => {
+      set_order_data(orderscount.data);
+    });
+  }, []);
   return (
     <div className="w-2/3 flex-1 p-[10px] pt-[20px] mr-[1px] border-[1px] border-[#BBC2CF] rounded-[4px] h-full relative ">
-      <Line options={options} data={data} />
+      <Line options={options} data={stat_data} />
       <div className="absolute top-[10px] right-[10px] ">
         <MazStatsDropddown
           options={[

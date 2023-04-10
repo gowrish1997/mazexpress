@@ -73,7 +73,6 @@ const SignUpContent = (props: IProp) => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
-    console.log(props);
     interface ISignupForm {
         user: User;
         addr: Address;
@@ -101,8 +100,6 @@ const SignUpContent = (props: IProp) => {
         { returnObjects: true }
     );
 
-    //   console.log(cityOption);
-
     const {
         register,
         handleSubmit,
@@ -123,11 +120,9 @@ const SignUpContent = (props: IProp) => {
     });
 
     const onSubmit: SubmitHandler<ISignupForm> = async (data) => {
-        console.log(data);
         if (props.type == "admin") {
             data.user.is_admin = true;
         }
-        console.log(data);
         const toList = [
             {
                 type: "register",
@@ -162,8 +157,6 @@ const SignUpContent = (props: IProp) => {
                 body: JSON.stringify(data.user),
             });
 
-            console.log(userResult); // id created
-
             // add address
             // const addressResult = await fetchServer(
             //     `/api/addresses/${userResult.data[0].email}`,
@@ -176,7 +169,6 @@ const SignUpContent = (props: IProp) => {
             //     }
             // );
 
-            // console.log(addressResult.data);
             // if (userResult.ok === true && addressResult.ok === true) {
             if (userResult.ok === true) {
                 // toast
@@ -192,7 +184,7 @@ const SignUpContent = (props: IProp) => {
                 try {
                     sentMail(toList);
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
 
                 // send to login page with cred
@@ -208,7 +200,7 @@ const SignUpContent = (props: IProp) => {
             }
             props.close?.();
         } catch (error) {
-            // console.log(error.message);
+            // console.error(error.message);
             createToast({
                 type: "error",
                 title: (error as Error).message as string,
@@ -216,7 +208,7 @@ const SignUpContent = (props: IProp) => {
                 timeOut: 3000,
             });
             // if (error instanceof FetchError) {
-            //     console.log(error.data.message);
+            //     console.error(error.data.message);
             //     setErrorMsg(error.data.message);
             // } else {
             //     console.error("An unexpected error happened:");

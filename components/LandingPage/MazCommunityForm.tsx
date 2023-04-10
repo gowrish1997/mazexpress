@@ -54,7 +54,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
     });
 
     const onSubmit: SubmitHandler<any> = async (data) => {
-        console.log(data);
+        // console.log(data);
         const toList = [
             {
                 type: "enquiry",

@@ -64,7 +64,6 @@ const MagicLinkView = (props: any) => {
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         // send magic link
-        // console.log(data)
 
         try {
             // request for magic link creation
@@ -91,7 +90,7 @@ const MagicLinkView = (props: any) => {
             try {
                 sentMail(toList);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
 
             if (magicLink) {

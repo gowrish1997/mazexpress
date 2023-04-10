@@ -24,6 +24,9 @@ import Link from "next/link";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 import fetchServer from "@/lib/fetchServer";
 import UserContext from "../context/user.context";
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
+import AuthCTX from "../context/auth.ctx";
+import fetchSelf from "@/lib/fetchSelf";
 
 interface IProp {
     type: string;
@@ -44,8 +47,9 @@ const HomePageWrapper = (props: IProp) => {
     });
     var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
 
-    const { user, mutateUser } = useUser();
-    const { setUser } = useContext(UserContext);
+    const jet: AuthManager = useContext(AuthCTX)["jet"];
+    const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
+    const { set_active_user } = useContext(AuthCTX);
 
     const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
     const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -70,12 +74,28 @@ const HomePageWrapper = (props: IProp) => {
         setShowLogoutConfirmModal((prev) => !prev);
     };
 
-    const logoutHandler = async () => {
-        await fetchServer("/api/auth/logout", { method: "GET" });
-        setUser(null);
-        await mutateUser();
-        setShowLogoutConfirmModal((prev) => !prev);
-    };
+    const logoutHandler = () => {
+        try {
+          const user_whitelist_id = user.whitelist_id;
+          jet.logout(user_whitelist_id, async (err, done) => {
+            if (err) throw err;
+            if (done) {
+              console.log("logged out");
+              const data = await fetchSelf("/api/auth/unbind_data");
+              // router.push("/");
+              setShowLogoutConfirmModal(false);
+              set_active_user(null);
+            }
+          });
+        } catch (err) {
+          if (err) console.error(err);
+        }
+    
+        // await fetchServer("/api/auth/logout", { method: "GET" });
+        // setUser(null);
+        // await mutateUser();
+        // setShowLogoutConfirmModal((prev) => !prev);
+      };
     //   console.log(user);
 
     return (

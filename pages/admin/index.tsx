@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import TotalOrders from "@/components/admin/MazStats/TotalOrders";
 import TotalCustomer from "@/components/admin/MazStats/TotalCustomer";
@@ -7,19 +7,32 @@ import StatGraph from "@/components/admin/MazStats/StatGraph";
 import OrdersTotalCountBar from "@/components/admin/MazStats/OrdersTotalCountBar";
 import StatLiveOrdres from "@/components/admin/MazStats/StatLiveOrdres";
 import RecentCustomers from "@/components/admin/MazStats/RecentCustomers";
-import useUser from "@/lib/hooks/useUser";
 
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import AuthCTX from "@/components/context/auth.ctx";
+import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import { GetServerSidePropsContext } from "next";
+import useAuthorization from "@/lib/hooks/useAuthorization";
 const AdminHome = () => {
   const router = useRouter();
   const { locales, locale: activeLocale } = router;
-  console.log(activeLocale);
-  const { user, mutateUser } = useUser();
+  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
+  // console.log(activeLocale);
+  const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   useEffect(() => {
     // console.log("use efft");
+    console.log(rank);
     router.push(router.asPath, router.asPath, { locale: "en" });
   }, []);
+
+  if (rank_is_loading) {
+    return <div>content authorization in progress..</div>;
+  }
+
+  if (!rank_is_loading && rank !== "admin") {
+    return <div>401 - Unauthorized</div>;
+  }
 
   return (
     <div className="space-y-[15px]">
@@ -47,13 +60,13 @@ const AdminHome = () => {
 };
 
 export default AdminHome;
-export async function getStaticProps({ locale }: { locale: any }) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
     },
   };
 }

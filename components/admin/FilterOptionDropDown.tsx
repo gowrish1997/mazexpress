@@ -11,7 +11,6 @@ interface Iprop {
 }
 
 const FilterOptionDropDown = (props: Iprop) => {
-    //   console.log("filter optindropdown");
     const trigger = useRef<any>(null);
     const [showAdminOptionCard, setShowAdminOptionCard] = useState(false);
     const [currentValue, setCurrentValue] = useState<Array<string>>([]);
@@ -80,7 +79,6 @@ const FilterOptionDropDown = (props: Iprop) => {
         setShowAdminOptionCard((prev) => !prev);
     };
     const smartToggleGateHandler = () => {
-        console.log("smart togglere");
         setShowAdminOptionCard(false);
     };
 

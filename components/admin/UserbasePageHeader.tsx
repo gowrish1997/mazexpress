@@ -31,7 +31,6 @@ interface IProp {
 }
 
 const UserbasePageHeader = (props: IProp) => {
-    console.log(props);
     const perPageOptions = perPageOptinsList();
     const [
         showSendNotificatoinConfirmModal,
@@ -46,7 +45,6 @@ const UserbasePageHeader = (props: IProp) => {
 
     const removeAdmins = async () => {
         let sendSuccessNotification = true;
-        console.log(getUserEmail(props.selectedUser));
         for (let i = 0; i < props.selectedUser?.length; i++) {
             try {
                 const updateRes = await fetchJson(

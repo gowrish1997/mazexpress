@@ -3,63 +3,74 @@ import React, { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Frame from "@/components/common/Frame";
 import { useRouter } from "next/router";
-import { SWRConfig } from "swr";
-import fetchJson, { FetchError } from "@/lib/fetchServer";
 import "react-notifications/lib/notifications.css";
-import { createToast } from "@/lib/toasts";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { NotificationContainer } from "react-notifications";
-
 import { appWithTranslation } from "next-i18next";
-import useGoogle from "@/lib/hooks/useGoogle";
-import UserContext from "@/components/context/user.context";
-import { User } from "@/models/user.model";
-import useUser from "@/lib/hooks/useUser";
-
+import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
+import AuthCTX from "@/components/context/auth.ctx";
+import { SWRConfig } from "swr";
+import { createToast } from "@/lib/toasts";
+import fetchServer, { FetchError } from "@/lib/fetchServer";
+import axios from "axios";
 config.autoAddCss = false;
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const { status: googleStatus } = useGoogle({});
-
-  const { user: sessUser, mutateUser } = useUser();
-  const [user, setUser] = useState<User | null>(sessUser);
-
+  const jetpass = new AuthManager();
+  const [jet, set_jet] = useState<AuthManager | null>(jetpass);
+  const [active_user, set_active_user] = useState<IWhiteListedUser | null>(
+    jetpass.getUser()
+  );
+  // const dev_tools_status = useScript({ src: "http://localhost:8097" });
 
   useEffect(() => {
-    // check backend session
-    if(sessUser){
-      setUser(sessUser)
+    const rec_user_string = localStorage.getItem("active_user");
+    if (rec_user_string !== undefined) {
+      const user = JSON.parse(rec_user_string);
+      if (user && !active_user) {
+        // update user with session
+        axios.get(
+          process.env.NODE_ENV === "production"
+            ? `https://${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth`
+            : `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/auth`
+        );
+        set_active_user(user);
+        jet.white_list_users = [user];
+        jet.status = "populated";
+      }
     }
-    // // Check if the user was redirected from Arabic to English
-    // const redirected = document.cookie.includes("i18n_redirected=true");
-    // if (redirected) {
-    //   console.log("redirected")
-    //     // Remove the cookie
-    //     document.cookie = "i18n_redirected=;max-age=0";
-    //     // Redirect to the English version of the website
-    //     if (router.pathname.includes("admin")) {
-    //       console.log("_appp admin")
-    //         router.push(`/en`);
-    //     } else {
-    //       console.log('app usr')
-    //         router.push(`/${router.locale}`);
-    //     }
-    // }
   }, []);
+
+  useEffect(() => {
+    // on active user switch track in local storage
+    if (active_user) {
+      localStorage.setItem("active_user", JSON.stringify(active_user));
+    } else {
+      localStorage.removeItem("active_user");
+    }
+  }, [active_user]);
+
+  useEffect(() => {
+    // get active user and set to active_user
+    const current_active = jet.getUser(jet.active);
+    set_active_user(current_active);
+  }, [jet.active]);
 
   if (router.pathname.startsWith("/auth")) {
     // no frame
     return (
-      <UserContext.Provider
+      <AuthCTX.Provider
         value={{
-          user,
-          setUser,
+          jet,
+          set_jet,
+          active_user,
+          set_active_user,
         }}
       >
         <SWRConfig
           value={{
-            fetcher: fetchJson,
+            fetcher: fetchServer,
             onError: (err: FetchError) => {
               createToast({
                 type: "error",
@@ -67,26 +78,27 @@ function App({ Component, pageProps }: AppProps) {
                 message: err.message,
                 timeOut: 3000,
               });
-              // console.error(err);
             },
           }}
         >
           <Component {...pageProps} />
           <NotificationContainer />
         </SWRConfig>
-      </UserContext.Provider>
+      </AuthCTX.Provider>
     );
   }
   return (
-    <UserContext.Provider
+    <AuthCTX.Provider
       value={{
-        user,
-        setUser,
+        jet,
+        set_jet,
+        active_user,
+        set_active_user,
       }}
     >
       <SWRConfig
         value={{
-          fetcher: fetchJson,
+          fetcher: fetchServer,
           onError: (err) => {
             createToast({
               type: "error",
@@ -94,7 +106,6 @@ function App({ Component, pageProps }: AppProps) {
               message: err.message,
               timeOut: 3000,
             });
-            // console.error(err);
           },
         }}
       >
@@ -103,7 +114,7 @@ function App({ Component, pageProps }: AppProps) {
           <NotificationContainer />
         </Frame>
       </SWRConfig>
-    </UserContext.Provider>
+    </AuthCTX.Provider>
   );
 }
 

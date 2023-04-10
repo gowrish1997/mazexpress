@@ -49,7 +49,6 @@ const AdminOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
             });
         }
     };
-    console.log(props);
     return (
         <ClickOutside
             handler={props.handler}

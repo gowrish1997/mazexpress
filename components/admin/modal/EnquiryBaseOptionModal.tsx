@@ -37,9 +37,13 @@ const EnquiryBaseOptionModal = forwardRef<HTMLDivElement, IProps>(
             }
         };
         return (
-            <ClickOutside handler={props.handler} trigger={props.trigger}>
+            <ClickOutside
+                handler={props.handler}
+                trigger={props.trigger}
+                className="z-20 absolute -top-[10px] -left-[5px] w-full"
+            >
                 <div
-                    className="absolute top-[25px] right-[8px] w-[150px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-10 flex flex-col justify-between items-start p-[5px]"
+                    className="absolute top-[40px] right-[15px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-10 flex flex-col justify-between items-start p-[10px]"
                     style={{ boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)" }}
                     // ref={ref}
                 >

@@ -6,7 +6,7 @@ export class QS {
   public page?: number;
   public per_page?: number;
   public offset?: number;
-
+  public username?: string;
   public stringified: string = "";
 
   constructor(obj?: any) {

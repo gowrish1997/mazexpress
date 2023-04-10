@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import useUser from "@/lib/hooks/useUser";
 import fetchJson from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
 import { IHelpCenter } from "@/lib/hooks/useHelpCenter";
@@ -65,7 +64,6 @@ const AddNewHelpCenterModal = (props: IProp) => {
     });
 
     const onSubmit: SubmitHandler<IForm> = async (data) => {
-        console.log(data);
 
         try {
             const helpUpdateResult = await fetchJson(`/api/help-center`, {
@@ -73,7 +71,6 @@ const AddNewHelpCenterModal = (props: IProp) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
             });
-            console.log(helpUpdateResult);
             createToast({
                 type: "success",
                 title: "Success",
@@ -83,7 +80,7 @@ const AddNewHelpCenterModal = (props: IProp) => {
             props.close();
             props.mutateHelpCenter();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 

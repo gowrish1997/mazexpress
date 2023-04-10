@@ -41,7 +41,6 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
     const inTransitChangeStatusHandler = async () => {
         switch (inTrasitCurrentStatus) {
             case "Received in Libya":
-                console.log("Received in Libya");
                 try {
                     const status1 = await bulkActionHandler(
                         props.selectedOrder as Order[],
@@ -51,7 +50,6 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                         "received at Libya warehouse!",
                         false
                     );
-                    console.log(status1);
 
                     createToast({
                         type: "success",
@@ -70,7 +68,6 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
 
                 break;
             case "Out for delivery":
-                console.log("out for Delivery");
                 try {
                     const status2 = await bulkActionHandler(
                         props.selectedOrder as Order[],
@@ -98,8 +95,6 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
 
                 break;
             case "Mark as delivered":
-                console.log("mark as delivered");
-
                 try {
                     const status3 = await bulkActionHandler(
                         props.selectedOrder as Order[],
@@ -126,14 +121,6 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                 }
         }
     };
-
-    // const addCommentHandler = (comment: string) => {
-    //     console.log(props.selectedOrder, comment);
-    // };
-
-    // const closeAddCommentModal = () => {
-    //     setShowAddCommentModal(false);
-    // };
 
     return (
         <>
