@@ -4,39 +4,39 @@ import { APIResponse } from "@/models/api.model";
 import useSWR from "swr";
 
 interface IProps {
-    //
-    username?: string;
-    status?: string[];
-    per_page?: number;
-    page?: number;
-    include?: any[];
-    type?: string;
+  //
+  username?: string;
+  status?: string[];
+  per_page?: number;
+  page?: number;
+  include?: any[];
+  type?: string;
 }
 
 export default function useAddresses(props: IProps) {
-    const qs = new QS(props);
+  const qs = new QS(props);
 
-    const {
-        data: addresses,
-        mutate: mutateAddresses,
-        isLoading: addressesIsLoading,
-    } = useSWR<APIResponse<Address>>(
-        props.type == "get_by_email"
-            ? props.username
-                ? `/api/addresses` + qs.stringified
-                : null
-            : `/api/addresses` + qs.stringified,
-        {
-            revalidateOnFocus: false,
-            revalidateOnReconnect: true,
-            revalidateIfStale: true,
-            revalidateOnMount: true,
-        }
-    );
+  const {
+    data: addresses,
+    mutate: mutateAddresses,
+    isLoading: addressesIsLoading,
+  } = useSWR<APIResponse<Address>>(
+    props.type == "get_by_email"
+      ? props.username
+        ? `/api/addresses` + qs.stringified
+        : null
+      : `/api/addresses` + qs.stringified,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      revalidateIfStale: true,
+      revalidateOnMount: true,
+    }
+  );
 
-    return {
-        addresses: addresses?.data as Address[],
-        mutateAddresses,
-        addressesIsLoading,
-    };
+  return {
+    addresses: addresses?.data as Address[],
+    mutateAddresses,
+    addressesIsLoading,
+  };
 }

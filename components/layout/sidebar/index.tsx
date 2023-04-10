@@ -217,10 +217,6 @@ const Sidebar = () => {
     // router.reload()
   };
 
-  useEffect(() => {
-    console.log("from sidebar user", user);
-  }, [user]);
-
   return (
     <>
       <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] relative w-full">

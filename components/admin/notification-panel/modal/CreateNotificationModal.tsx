@@ -56,7 +56,7 @@ const CreateNotificationModal = (props: IProp) => {
   };
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    // console.log("send", data);
+    console.log("send", data);
     // console.log("to", selectedUsers);
 
     // multiparty here

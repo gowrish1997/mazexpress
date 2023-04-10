@@ -98,8 +98,8 @@ const ResetPasswordView = (props: any) => {
             buttonContent: "Login now",
             redirectLink: `${
               process.env.NODE_ENV !== "production"
-                ? "http://localhost:3000/auth/gate?mode=1"
-                : "https://mazexpress.easydesk.work/auth/gate?mode=1"
+                ? `http://localhost:3000/auth/gate?mode=1`
+                : `https://${process.env.NEXT_PUBLIC_HOST}/auth/gate?mode=1`
             }`,
           },
         ];
@@ -244,8 +244,6 @@ const ResetPasswordView = (props: any) => {
           </p>
         </div>
       </form>
-
-      {/* <LogInWithMail /> */}
     </div>
   );
 };
