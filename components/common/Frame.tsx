@@ -29,20 +29,12 @@ const Frame = (props: IFrameProps) => {
     return (
         <SearchKeyContext.Provider value={{ searchKey, setSearchKey }}>
             <div className="flex bg-[#FFFFFF] relative min-h-screen w-full">
-                {!(
-                    router.pathname == "/" ||
-                    router.pathname == "/about" ||
-                    router.pathname == "/services"
-                ) && (
+                {!(router.pathname == "/") && (
                     <div className="w-[80px] sm:w-[180px] md:w-[250px] lg:w-[400px] xlg:w-[500px] fixed h-screen z-40">
                         <Sidebar />
                     </div>
                 )}
-                {!(
-                    router.pathname == "/" ||
-                    router.pathname == "/about" ||
-                    router.pathname == "/services"
-                ) ? (
+                {!(router.pathname == "/") ? (
                     <div
                         className={`box-border flex-1   ${
                             locale == "en"
@@ -54,7 +46,7 @@ const Frame = (props: IFrameProps) => {
                         {props.children}
                     </div>
                 ) : (
-                    <div className={`box-border flex-1 pb-5 flex flex-col`}>
+                    <div className={`box-border flex-1 pb-0 flex flex-col`}>
                         {props.children}
                     </div>
                 )}

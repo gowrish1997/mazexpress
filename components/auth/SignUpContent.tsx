@@ -29,6 +29,7 @@ const schema = yup
                 .email("Please provide valid email"),
             phone: yup
                 .number()
+                .min(0, "Number must be greater than zero")
                 .test(
                     "len",
                     "Must be exactly 9 digits",
