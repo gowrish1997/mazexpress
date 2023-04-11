@@ -29,7 +29,6 @@ const tableHeaders = [
 ];
 
 const MyOrders = (props) => {
-  console.log(props.test);
   const { searchKey } = React.useContext(SearchKeyContext) as any;
   // console.log(searchKey);
 
@@ -87,9 +86,7 @@ const MyOrders = (props) => {
     // console.log(value);
     setCreatedDateFilterKey(value);
   }, []);
-  // useEffect(() => {
-  //   console.log("rank from orders: ", rank);
-  // }, [rank_is_loading]);
+
 
   if (rank_is_loading) {
     return <div>content authorization in progress..</div>;

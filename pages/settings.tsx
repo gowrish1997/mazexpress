@@ -205,7 +205,6 @@ const Settings = () => {
       | "is_notifications_enabled"
     > & { newPassword: string }
   > = async (data) => {
-    console.log(data);
     try {
       // console.log(result);
       if (!passwordCheck && getValues("password").length > 0) {
@@ -237,11 +236,9 @@ const Settings = () => {
       };
 
       if (data.newPassword && data.newPassword.length > 0) {
-        console.log("if block");
         sendObj.password = data.newPassword;
         delete sendObj.newPassword;
       } else {
-        console.log("else block");
         delete sendObj.newPassword;
         delete sendObj.password;
       }
@@ -292,10 +289,7 @@ const Settings = () => {
         className="border-none pb-[10px]"
         title="My Settings | MazExpress"
       />
-      <ProfilePicPop
-        show={showProfilePicPop}
-        close={toggleProfilePicPop}
-      />
+      <ProfilePicPop show={showProfilePicPop} close={toggleProfilePicPop} />
       <Layout>
         <div className="w-full space-y-[30px] ">
           <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">

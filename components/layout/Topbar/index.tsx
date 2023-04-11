@@ -20,7 +20,6 @@ import { IWhiteListedUser } from "@/controllers/auth-ctr";
 import AuthCTX from "@/components/context/auth.ctx";
 
 const Topbar = () => {
-  //   const { user } = useUser();
   const router = useRouter();
   const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
   const { set_active_user } = useContext(AuthCTX);
@@ -29,13 +28,15 @@ const Topbar = () => {
   const placeholder: string[] = t("topbar.inputField.Placeholder", {
     returnObjects: true,
   });
-
+  // console.log(user)
   const { setSearchKey } = React.useContext(SearchKeyContext) as any;
 
   const { notifications, notificationsIsLoading, mutateNotifications } =
     useNotifications({
       username: user?.email,
       status: ["unread"],
+      page: 1,
+      per_page: 25,
     });
 
   const [showNotifications, setShowNotifications] = useState(false);
@@ -53,6 +54,14 @@ const Topbar = () => {
   const searchKeyOnchangeHandler = (e: SyntheticEvent) => {
     setSearchKey((e.target as HTMLInputElement).value);
   };
+
+  // useEffect(() => {
+  //   console.log("user", user);
+  //   console.log("notifications", notifications);
+
+  // }, [user, notificationsIsLoading]);
+
+  // if(!notifications) return <div>notifications loading</div>
 
   return (
     <>

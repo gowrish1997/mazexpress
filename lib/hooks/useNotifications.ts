@@ -2,42 +2,41 @@ import { QS } from "@/components/common/QS";
 import { APIResponse } from "@/models/api.model";
 import { Notification } from "@/models/notification.model";
 import useSWR from "swr";
-// props.type == "get_by_email"
-// ? props.username
-//     ? `/api/notifications` + qs.stringified
-//     : null
-// :
 
 interface IProps {
-    type?: string;
-    //   id?: string;
-    username?: string;
-    search?: string;
-    page?: number;
-    per_page?: number;
-    status?: string[];
+  type?: string;
+  //   id?: string;
+  username?: string;
+  search?: string;
+  page?: number;
+  per_page?: number;
+  status?: string[];
 }
 
 export default function useNotifications(props: IProps) {
-    let qs = new QS(props);
+  // const sanitized_props: Partial<IProps> = props;
+  // delete sanitized_props.username;
+  // let qs = new QS(sanitized_props);
+  let qs = new QS(props);
 
-    const {
-        data: notifications,
-        mutate: mutateNotifications,
-        isLoading: notificationsIsLoading,
-    } = useSWR<APIResponse<Notification>>(
-        `/api/notifications` + qs.stringified,
-        {
-            revalidateOnFocus: false,
-            revalidateOnReconnect: true,
-            revalidateIfStale: true,
-            revalidateOnMount: true,
-        }
-    );
+  const {
+    data: notifications,
+    mutate: mutateNotifications,
+    isLoading: notificationsIsLoading,
+  } = useSWR<APIResponse<Notification>>(
+    () => `/api/notifications` + qs.stringified,
 
-    return {
-        notifications: notifications?.data as Notification[],
-        mutateNotifications,
-        notificationsIsLoading,
-    };
+  );
+
+  // const {
+  //   data: notifications,
+  //   mutate: mutateNotifications,
+  //   isLoading: notificationsIsLoading,
+  // } = useSWR<APIResponse<Notification>>(`/api/notifications` + qs.stringified);
+  // console.log(notifications);
+  return {
+    notifications: notifications?.data as Notification[],
+    mutateNotifications,
+    notificationsIsLoading,
+  };
 }

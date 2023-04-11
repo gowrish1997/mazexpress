@@ -38,7 +38,7 @@ export default function useGoogle({}: IProps) {
     });
     if (payload) {
       // console.log(typeof payload);
-      console.log(payload);
+      // console.log(payload);
 
       // set up user from payload
       // forward payload to backend
@@ -48,7 +48,7 @@ export default function useGoogle({}: IProps) {
         headers: { "Content-Type": "application/json" },
       })
         .then(async (response: AxiosResponse<APIResponse<User>>) => {
-          console.log(response.data);
+          // console.log(response.data);
 
           // login
           jet.google_login(response.data[0], async (err, user) => {
