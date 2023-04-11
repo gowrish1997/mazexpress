@@ -220,7 +220,7 @@ export const singleOrderAction = async (
         const result0 = await fetchServer(`/api/orders/${rowFixed.maz_id}`, {
             method: "PUT",
             headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
+            body: JSON.stringify({  
                 status: status,
                 est_delivery:
                     status == "at-warehouse"

@@ -45,7 +45,7 @@ const MyOrders = (props) => {
   const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
     type: "get_by_email",
     search: searchKey,
-    username: user?.email as string,
+  username: user?.email as string,
     per_page: itemsPerPage,
     page: currentPage,
     date: getDateInDBFormat(createdDateFilterKey as Date),

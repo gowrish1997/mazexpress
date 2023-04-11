@@ -19,6 +19,7 @@ interface IProps {
 }
 export default function useOrders(props: IProps) {
     const qs = new QS(props);
+    console.log(qs)
 
     const {
         data: orders,

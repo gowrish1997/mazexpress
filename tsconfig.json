@@ -30,6 +30,6 @@
     "types/**/*.ts",
     "types/**/*.tsx",
     "next-i18next.config.js"
-, "__mocks__/next-i18next.ts"  ],
+, "__mocks__/next-i18next.ts", "pages/api/auth/[...nextauth].js"  ],
   "exclude": ["node_modules"]
 }
