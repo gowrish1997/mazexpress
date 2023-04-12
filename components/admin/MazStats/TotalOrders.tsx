@@ -1,20 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import StatCard from "./StatCard";
-import MazStatsDropddown from "./MazStatsDropddown";
-import useOrders from "@/lib/hooks/useOrders";
-import Image from "next/image";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import downwardImage from "../../../public/downwardArrow.png";
-import {
-    faAngleDown,
-    faAngleLeft,
-    faAngleRight,
-} from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
-
+import Image from "next/image";
+import { useRef, useState } from "react";
+import downwardImage from "../../../public/downwardArrow.png";
+import StatCard from "./StatCard";
 import { getDateInStringFormat } from "@/lib/helper";
 import Calendar from "react-calendar";
-
 import ClickOutside from "@/components/common/ClickOutside";
 import useOrderCount from "@/lib/hooks/useOrderCount";
 import { getDateInDBFormat } from "@/lib/utils";
@@ -48,7 +40,6 @@ const TotalOrders = () => {
             : undefined,
     });
 
-
     const trigger = useRef<any>(null);
 
     const toggleCalendar = () => {
@@ -65,22 +56,6 @@ const TotalOrders = () => {
     };
 
     return (
-        // <StatCard>
-        //   <div className="w-full flex-type3">
-        //     <p className="text-[12px] text-[#8794AD] font-[600] leading-[18px] ">
-        //       Total Orders
-        //     </p>
-        //     <MazStatsDropddown
-        //       options={options}
-        //       header="status"
-        //       onChange={statusChangeHandler}
-        //       selection={statusSelection}
-        //     />
-        //   </div>
-        //   <p className="text-[24px] text-[#18181B] font-[700] leading-[32px] ">
-        //     {totalOrders as number}
-        //   </p>
-        // </StatCard>
         <StatCard>
             <div className="w-full flex-type3">
                 <p className="flex-1 text-[12px] text-[#8794AD] font-[600] leading-[18px] ">

@@ -1,8 +1,5 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { use } from "react";
 
 export default NextAuth({
     // Configure one or more authentication providers
@@ -11,7 +8,7 @@ export default NextAuth({
             name: "Credentials",
             async authorize(credentials, req) {
                 const res = await fetch(
-                    "https://jsonplaceholder.typicode.com/posts/1",
+                    `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}/api/users/${credentials.username}`,
                     {
                         method: "GET",
                         headers: {
@@ -21,9 +18,12 @@ export default NextAuth({
                 );
 
                 const user = await res.json();
-
-                if (credentials.first == "gowrish") {
-                    return user;
+                console.log(user);
+                if (user.data) {
+                    return user.data[0];
+                } else {
+                    console.log("throwing new eriir");
+                    throw new Error("couldnt find user");
                 }
             },
         }),
@@ -71,15 +71,11 @@ export default NextAuth({
     // },
     callbacks: {
         async session({ session, token }) {
-            console.log("inside session", session, token);
             session.user = token.user;
             return session;
         },
         async jwt({ token, user, trigger, session }) {
-            console.log("inside jwt", user, session);
-
             if (trigger == "update") {
-                console.log("inside update", session, token);
                 token.user = session;
             }
             if (user) {

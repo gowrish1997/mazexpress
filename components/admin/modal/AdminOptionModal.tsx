@@ -1,11 +1,9 @@
 import React, { forwardRef, RefObject } from "react";
 import ClickOutside from "@/components/common/ClickOutside";
 import fetchServer from "@/lib/fetchServer";
-
 import { createToast } from "@/lib/toasts";
 import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
-
 import { APIResponse } from "@/models/api.model";
 import { KeyedMutator } from "swr";
 

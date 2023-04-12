@@ -1,11 +1,10 @@
-import React, { forwardRef, RefObject } from "react";
 import ClickOutside from "@/components/common/ClickOutside";
-import axios from "axios";
+import { singleOrderAction } from "@/lib/selectOrder";
 import { createToast } from "@/lib/toasts";
+import { APIResponse } from "@/models/api.model";
 import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
-import { APIResponse } from "@/models/api.model";
-import { singleOrderAction } from "@/lib/selectOrder";
+import React, { forwardRef, RefObject } from "react";
 
 import { KeyedMutator } from "swr";
 interface IProps {

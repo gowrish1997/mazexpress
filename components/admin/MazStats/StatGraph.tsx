@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import fetchJson from "@/lib/fetchServer";
 import {
-  Chart as ChartJS,
   CategoryScale,
+  Chart as ChartJS,
+  Colors,
+  Filler,
+  Legend,
+  LineElement,
   LinearScale,
   PointElement,
-  LineElement,
   Title,
   Tooltip,
-  Legend,
-  Filler,
-  Colors,
 } from "chart.js";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import MazStatsDropddown from "./MazStatsDropddown";
-import axios from "axios";
-import fetchJson from "@/lib/fetchServer";
 
 ChartJS.register(
   CategoryScale,

@@ -20,9 +20,7 @@
             ],
             "GenderOptions": [
                 { "value": "m", "label": "Male" },
-                { "value": "f", "label": "Female" },
-                { "value": "u", "label": "Unknown" },
-                { "value": "o", "label": "Other" }
+                { "value": "f", "label": "Female" }
             ],
 
             "Errors": [

@@ -13,7 +13,7 @@ const TimeCard = (props: IProp) => {
         const findStage = props.trackingDetail?.find((data) => {
             return data.stage == props.stage;
         });
-        console.log(findStage);
+
         if (findStage) {
             setIsStageExist(true);
         } else {

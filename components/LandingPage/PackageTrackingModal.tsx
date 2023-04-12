@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import TrackingPageView from "../ordertracking/TrackingPageView";
-import { useRouter } from "next/router";
 import useTracking from "@/lib/hooks/useTracking";
 import { Tracking } from "@/models/tracking.model";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import TrackingPageView from "../ordertracking/TrackingPageView";
 interface IProp {
     close: () => void;
     // confirm: (value: string) => void;
@@ -17,7 +17,6 @@ const PackageTrackingModal = (props: IProp) => {
     const { tracking, trackingIsLoading } = useTracking({
         maz_id: router.query.id as string,
     });
-    console.log(tracking);
 
     const [packageStatus, setPackageStatus] = useState(0);
 

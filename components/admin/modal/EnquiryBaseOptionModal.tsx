@@ -1,5 +1,4 @@
 import React, { forwardRef, RefObject } from "react";
-
 import ClickOutside from "@/components/common/ClickOutside";
 import useEnquiry, { IEnquiry } from "@/lib/hooks/useEnquiry";
 import fetchJson from "@/lib/fetchServer";

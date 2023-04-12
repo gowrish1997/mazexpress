@@ -1,13 +1,19 @@
-import fetchServer from "./fetchServer";
-import { APIResponse } from "@/models/api.model";
-import { Order } from "@/models/order.model";
 import {
     user_orderDelivered,
     user_orderDispatched,
 } from "@/lib/emailContent/bodyContent";
+import { APIResponse } from "@/models/api.model";
+import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
-import axios from "axios";
+import fetchServer from "./fetchServer";
 import { sentMail } from "./sentMail";
+import { getToken } from "next-auth/jwt";
+
+export const getSession = async (req) => {
+    const session = await getToken({ req });
+  return session
+};
+
 
 export const selectOrder = (
     value: any,
@@ -67,9 +73,6 @@ export const selectOrder = (
         }
     }
 };
-
-
-
 
 export const getOrderIdList = (order: any) => {
     const userIdList = order?.map((data: any) => {
@@ -220,7 +223,7 @@ export const singleOrderAction = async (
         const result0 = await fetchServer(`/api/orders/${rowFixed.maz_id}`, {
             method: "PUT",
             headers: { "Content-type": "application/json" },
-            body: JSON.stringify({  
+            body: JSON.stringify({
                 status: status,
                 est_delivery:
                     status == "at-warehouse"

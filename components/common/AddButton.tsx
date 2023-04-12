@@ -1,10 +1,7 @@
-import React from "react";
-import Image from "next/image";
-import Add from "../../public/add.png";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import Add from "../../public/add.png";
 
 const AddButton = (props: { onClick: () => void }) => {
     const router = useRouter();

@@ -12,7 +12,7 @@ interface IProp {
   };
   error?: FieldError;
   onChange: any;
-  setCountry: React.Dispatch<React.SetStateAction<string>>;
+  setCountry?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const CountrySelector = (props: IProp) => {

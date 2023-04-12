@@ -4,24 +4,23 @@
 //==========================
 
 import React, {
-    useState,
-    useRef,
-    useEffect,
     ChangeEvent,
-    useContext,
+    useEffect,
+    useRef,
+    useState
 } from "react";
 
-import ShipmentCostCalculator from "@/components/LandingPage/ShipmentCostCalculator";
 import Footer from "@/components/LandingPage/Footer";
-import fetchServer from "@/lib/fetchServer";
-import PackageTrackingModal from "@/components/LandingPage/PackageTrackingModal";
-import { useRouter } from "next/router";
 import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
-import { useTranslation } from "next-i18next";
-import { i18n } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import PackageTrackingModal from "@/components/LandingPage/PackageTrackingModal";
+import ShipmentCostCalculator from "@/components/LandingPage/ShipmentCostCalculator";
 import HomePageWrapper from "@/components/common/HomePageWrapper";
+import fetchServer from "@/lib/fetchServer";
 import { useScrollspy } from "@/lib/hooks/useScrollSpy";
+import { i18n, useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
+
 
 const Index = () => {
     const router = useRouter();
@@ -31,7 +30,7 @@ const Index = () => {
         "enquirySection",
         "supportSection",
     ]);
-    console.log(activeSection);
+
     const trackingSectionRef = useRef<HTMLDivElement>(null);
 
     const [trackingId, setTrackingId] = useState<string>("");

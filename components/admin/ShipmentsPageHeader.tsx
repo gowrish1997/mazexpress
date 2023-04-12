@@ -1,21 +1,17 @@
-import React, { useState, useMemo } from "react";
-import Head from "next/head";
-import MazStatsDropddown from "./MazStats/MazStatsDropddown";
-import FilterOptionDropDown from "./FilterOptionDropDown";
-import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
-import PageheaderTitle from "./PageheaderTitle";
-import AdminOptionDropDown from "./AdminOptionDropDown";
-import ReactPaginateComponent from "./ReactPaginate";
-import { IPageHeaderProp } from "@/models/pageHeader.interface";
-import useOrders from "@/lib/hooks/useOrders";
-import { Order } from "@/models/order.model";
-import fetchJson from "@/lib/fetchServer";
-import { APIResponse } from "@/models/api.model";
-import { createToast } from "@/lib/toasts";
-import { useRouter } from "next/router";
 import { perPageOptinsList } from "@/lib/helper";
-import { getOrderIdList } from "@/lib/selectOrder";
-import { bulkActionHandler } from "@/lib/selectOrder";
+import { bulkActionHandler, getOrderIdList } from "@/lib/selectOrder";
+import { createToast } from "@/lib/toasts";
+import { Order } from "@/models/order.model";
+import { IPageHeaderProp } from "@/models/pageHeader.interface";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import AdminOptionDropDown from "./AdminOptionDropDown";
+import FilterOptionDropDown from "./FilterOptionDropDown";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
+import PageheaderTitle from "./PageheaderTitle";
+import ReactPaginateComponent from "./ReactPaginate";
+import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
 
 const adminOption = ["Moved out"];
 
@@ -82,8 +78,6 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                 {((props.allLiveOrders && props.allLiveOrders.length > 0) ||
                     props.isFilterPresent) && (
                     <div className="flex-type1 space-x-[10px]  ">
-                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
-                        {/* <ReactDropdown options={warehousesDropDownOptoin} /> */}
                         <MazStatsDropddown
                             options={perPageOptions}
                             header="per_page"
@@ -95,25 +89,7 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                             options={warehousesDropDownOptoin}
                             type="warehouse"
                         />
-                        {/* <button
-                            className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px] mt-[5px] text-[14px] font-[700] text-[#525D72] leading-[19px] tracking-wider hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50"
-                            disabled={!props.selectedOrder?.length}
-                            onClick={toggleScheduleShipmentModal}
-                            style={showSheduleShipmentModal ? { backgroundColor: "#35C6F4", color: "#FFFFFF" } : {}}
-                        >
-                            Schedule Deliver
-                        </button> */}
-                        {/* <button className="box-border border-[1px] border-[#BBC2CF] h-[37.5px] px-[10px] rounded-[4px]  text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] disabled:opacity-50 flex flex-row justify-start items-center space-x-[5px] mt-[4px] ">
-                            <Image src={download} height={13} width={13} alt="download" />
-                            <span>download</span>
-                        </button>
-                        <button
-                            className="box-border border-[1px] border-[#BBC2CF] h-[38.6px] px-[10px] rounded-[4px] mt-[5px] text-[14px] font-[700] text-[#525D72] leading-[19px] hover:bg-[#BBC2CF] tracking-wider hover:text-[#FFFFFF] disabled:opacity-50 "
-                            onClick={toggleMarkAsDeliveredConfirmModal}
-                            disabled={!props.selectedOrder?.length}
-                        >
-                            Mark as Delivered
-                        </button> */}
+
                         <AdminOptionDropDown
                             option={adminOption}
                             toggle={toggleMovedOutConfirmModal}
@@ -123,12 +99,7 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                     </div>
                 )}
             </div>
-            {/* <ScheduleShipmentModal
-                close={toggleScheduleShipmentModal}
-                show={showSheduleShipmentModal}
-                setShipmentSelectedDate={setShipmentSelectedDate}
-                confirm={scheduleSelectedShipmentsHandler}
-            /> */}
+
             <MovedOutConfirmModal
                 close={toggleMovedOutConfirmModal}
                 show={showMovedOutConfirmModal}

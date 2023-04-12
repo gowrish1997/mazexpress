@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import download from "../../public/download.png";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
-import ClickOutside from "../common/ClickOutside";
-import axios from "axios";
-import { Order } from "@/models/order.model";
 import fetchJson from "@/lib/fetchServer";
+import { Order } from "@/models/order.model";
 import { User } from "@/models/user.model";
+import * as FileSaver from "file-saver";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import * as XLSX from "xlsx";
+import download from "../../public/download.png";
+import ClickOutside from "../common/ClickOutside";
 interface Iprop {
     option?: string[];
     toggle?: (value?: string) => void;
@@ -119,6 +118,7 @@ const AdminOptionDropDown = (props: Iprop) => {
                 <ClickOutside
                     trigger={trigger}
                     handler={smartToggleGateHandler}
+                    className="w-full"
                 >
                     <div className="w-full bg-[white] box-border absolute  border-[1px] border-[#ccc] rounded-[4px]  p-[5px]">
                         <button

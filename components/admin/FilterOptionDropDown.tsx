@@ -116,6 +116,7 @@ const FilterOptionDropDown = (props: Iprop) => {
                 <ClickOutside
                     trigger={trigger}
                     handler={smartToggleGateHandler}
+                    className="w-full"
                 >
                     <div className="w-full  bg-[white] box-border absolute  border-[1px] border-[#ccc] rounded-[4px]  p-[5px] space-y-[4px]">
                         {props.options &&

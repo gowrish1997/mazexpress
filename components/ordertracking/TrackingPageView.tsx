@@ -1,12 +1,9 @@
-import React from "react";
-import PackageTrackingView from "./PackageTrackingView";
-import WarehouseTracking from "./WarehouseTracking";
-import { useRouter } from "next/router";
-import { i18n } from "next-i18next";
-import { useTranslation } from "next-i18next";
 import { Tracking } from "@/models/tracking.model";
-import TimeTracking from "./TimeTracking";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import PackageTrackingView from "./PackageTrackingView";
 import TimeCard from "./TimeCard";
+import WarehouseTracking from "./WarehouseTracking";
 
 interface IProp {
     packageStatus: number;

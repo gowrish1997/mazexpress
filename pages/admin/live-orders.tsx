@@ -11,142 +11,127 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchKeyContext } from "@/components/common/Frame";
 import { getDateInDBFormat } from "@/lib/utils";
 import { GetServerSidePropsContext } from "next";
-import useAuthorization from "@/lib/hooks/useAuthorization";
 
 const tableHeaders = [
-  "Customer",
-  "MAZ Tracking ID",
-  "Store Link",
-  "Reference ID",
-  "Created Date",
-  "Estimate delivery",
+    "Customer",
+    "MAZ Tracking ID",
+    "Store Link",
+    "Reference ID",
+    "Created Date",
+    "Estimate delivery",
 
-  "Status",
+    "Status",
 ];
 
 const LiveOrders = () => {
-  const router = useRouter();
-  const { searchKey } = React.useContext(SearchKeyContext) as any;
-  // console.log(searchKey);
-  const [itemsPerPage, setItemPerPage] = useState<number>(25);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
-    "all status",
-  ]);
-  const { status: rank, is_loading: rank_is_loading } = useAuthorization();
-  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-    Date | string
-  >("");
+    const router = useRouter();
+    const { searchKey } = React.useContext(SearchKeyContext) as any;
+    // console.log(searchKey);
+    const [itemsPerPage, setItemPerPage] = useState<number>(25);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
+        "all status",
+    ]);
 
-  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-    search: searchKey,
-    per_page: itemsPerPage,
-    page: currentPage,
-    date: getDateInDBFormat(createdDateFilterKey as Date),
-    status:
-      statusFilterKey.length == 0 || statusFilterKey[0] == "all status"
-        ? [
-            "pending",
-            "in-transit",
-            "at-warehouse",
-            "out-for-delivery",
-            "delivered",
-          ]
-        : statusFilterKey,
-  });
+    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+        Date | string
+    >("");
 
-  const { locales, locale: activeLocale } = router;
+    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+        search: searchKey,
+        per_page: itemsPerPage,
+        page: currentPage,
+        date: getDateInDBFormat(createdDateFilterKey as Date),
+        status:
+            statusFilterKey.length == 0 || statusFilterKey[0] == "all status"
+                ? [
+                      "pending",
+                      "in-transit",
+                      "at-warehouse",
+                      "out-for-delivery",
+                      "delivered",
+                  ]
+                : statusFilterKey,
+    });
 
-  // useEffect(() => {
-  //     // console.log("use efft");
-  //     router.push(router.asPath, router.asPath, { locale: "en" });
-  // }, []);
-  useEffect(() => {
-    document.cookie = `NEXT_LOCALE=en;path=/`;
-    let dir = router.locale == "ar" ? "rtl" : "ltr";
-    let lang = router.locale == "ar" ? "ar" : "en";
-    document.querySelector("html")?.setAttribute("dir", "ltr");
-    document.querySelector("html")?.setAttribute("lang", "en");
-  }, [router.locale]);
+    const { locales, locale: activeLocale } = router;
 
-  const currentPageHandler = useCallback((value: number) => {
-    setCurrentPage(value);
-  }, []);
-  const itemPerPageHandler = useCallback((value: string | number) => {
-    setCurrentPage(0);
-    setItemPerPage(value as number);
-  }, []);
-  // const filterByStatusHandler = (value: string[]) => {
-  //     console.log('status changeing is calling')
-  //     setStatusFilterKey(value);
-  // };
+    useEffect(() => {
+        document.cookie = `NEXT_LOCALE=en;path=/`;
+        let dir = router.locale == "ar" ? "rtl" : "ltr";
+        let lang = router.locale == "ar" ? "ar" : "en";
+        document.querySelector("html")?.setAttribute("dir", "ltr");
+        document.querySelector("html")?.setAttribute("lang", "en");
+    }, [router.locale]);
 
-  const filterByStatusHandler = useCallback((value: string[]) => {
-    setStatusFilterKey(value);
-    setCurrentPage(0);
-  }, []);
+    const currentPageHandler = useCallback((value: number) => {
+        setCurrentPage(value);
+    }, []);
+    const itemPerPageHandler = useCallback((value: string | number) => {
+        setCurrentPage(0);
+        setItemPerPage(value as number);
+    }, []);
 
-  const filterByCreatedDate = useCallback((value: Date | string) => {
-    setCreatedDateFilterKey(value);
-  }, []);
+    const filterByStatusHandler = useCallback((value: string[]) => {
+        setStatusFilterKey(value);
+        setCurrentPage(0);
+    }, []);
 
-  if (rank_is_loading) {
-    return <div>content authorization in progress..</div>;
-  }
+    const filterByCreatedDate = useCallback((value: Date | string) => {
+        setCreatedDateFilterKey(value);
+    }, []);
 
-  if (!rank_is_loading && rank !== "admin") {
-    return <div>401 - Unauthorized</div>;
-  }
+    if (ordersIsLoading) {
+        return <LoadingPage />;
+    }
+    if (ordersError) {
+        return <div>some error happened</div>;
+    }
+    console.log(orders || !statusFilterKey.includes("all status"));
 
-  if (ordersIsLoading) {
-    return <LoadingPage />;
-  }
-  if (ordersError) {
-    return <div>some error happened</div>;
-  }
-  console.log(orders || !statusFilterKey.includes("all status"));
-
-  return (
-    <>
-      <div>
-        <LiveOrderPageHeader
-          content="Live Orders"
-          allLiveOrders={orders?.data as Order[]}
-          onChangeStatus={filterByStatusHandler}
-          itemPerPageHandler={itemPerPageHandler!}
-          filterByDate={filterByCreatedDate}
-          title="Live Orders | MazExpress Admin"
-          currentPageHandler={currentPageHandler}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          createdDateFilterKey={createdDateFilterKey}
-          statusFilterKey={statusFilterKey}
-          pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
-          isFilterPresent={
-            searchKey ||
-            createdDateFilterKey ||
-            !statusFilterKey.includes("all status")
-          }
-        />
-        <div className="flex flex-col justify-between relative flex-1 h-full">
-          {!orders?.data &&
-          statusFilterKey.includes("all status") &&
-          !searchKey &&
-          !createdDateFilterKey ? (
-            <BlankPage />
-          ) : (
-            <>
-              <Table
-                rows={orders?.data as Order[]}
-                headings={tableHeaders}
-                type="live_order"
-              />
-            </>
-          )}
-        </div>
-      </div>
-    </>
-  );
+    return (
+        <>
+            <div>
+                <LiveOrderPageHeader
+                    content="Live Orders"
+                    allLiveOrders={orders?.data as Order[]}
+                    onChangeStatus={filterByStatusHandler}
+                    itemPerPageHandler={itemPerPageHandler!}
+                    filterByDate={filterByCreatedDate}
+                    title="Live Orders | MazExpress Admin"
+                    currentPageHandler={currentPageHandler}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
+                    createdDateFilterKey={createdDateFilterKey}
+                    statusFilterKey={statusFilterKey}
+                    pageCount={Math.ceil(
+                        (orders?.count as number) / itemsPerPage
+                    )}
+                    isFilterPresent={
+                        searchKey ||
+                        createdDateFilterKey ||
+                        !statusFilterKey.includes("all status")
+                    }
+                />
+                <div className="flex flex-col justify-between relative flex-1 h-full">
+                    {!orders?.data &&
+                    statusFilterKey.includes("all status") &&
+                    !searchKey &&
+                    !createdDateFilterKey ? (
+                        <BlankPage />
+                    ) : (
+                        <>
+                            <Table
+                                rows={orders?.data as Order[]}
+                                headings={tableHeaders}
+                                type="live_order"
+                            />
+                        </>
+                    )}
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default LiveOrders;
@@ -173,21 +158,13 @@ export default LiveOrders;
 // }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  if (process.env.NODE_ENV === "development") {
-    await i18n?.reloadResources();
-  }
-  // console.log("redders", ctx.req.cookies);
-  // if (ctx.req.cookies.is_admin !== "true") {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-  return {
-    props: {
-      ...(await serverSideTranslations(ctx.locale, ["common"])),
-    },
-  };
+    if (process.env.NODE_ENV === "development") {
+        await i18n?.reloadResources();
+    }
+
+    return {
+        props: {
+            ...(await serverSideTranslations(ctx.locale, ["common"])),
+        },
+    };
 }

@@ -1,13 +1,11 @@
-import React from "react";
-import Head from "next/head";
-import FilterOptionDropDown from "./FilterOptionDropDown";
-import PageheaderTitle from "./PageheaderTitle";
-import AdminOptionDropDown from "./AdminOptionDropDown";
-import ReactPaginateComponent from "./ReactPaginate";
 import { perPageOptinsList } from "@/lib/helper";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
+import Head from "next/head";
+import AdminOptionDropDown from "./AdminOptionDropDown";
+import FilterOptionDropDown from "./FilterOptionDropDown";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
-import { Order } from "@/models/order.model";
+import PageheaderTitle from "./PageheaderTitle";
+import ReactPaginateComponent from "./ReactPaginate";
 
 const DeliveredPageHeader = (props: IPageHeaderProp) => {
     const warehousesDropDownOptoin = ["istanbul"];
@@ -37,8 +35,6 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                 {((props.allLiveOrders && props.allLiveOrders.length > 0) ||
                     props.isFilterPresent) && (
                     <div className="flex-type1 space-x-[10px]  ">
-                        {/* <ReactDropdown /> */}
-                        {/* <SearchMazTrackingIdInputField filterById={props.filterById} /> */}
                         <MazStatsDropddown
                             options={perPageOptinsList()}
                             header="per_page"

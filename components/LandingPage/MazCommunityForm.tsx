@@ -1,16 +1,14 @@
-import React from "react";
-import ReactHookFormInput from "../common/ReactHookFormInput";
+import { user_enquiry } from "@/lib/emailContent/bodyContent";
+import fetchJson from "@/lib/fetchServer";
+import { sentMail } from "@/lib/sentMail";
+import { createToast } from "@/lib/toasts";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { i18n } from "next-i18next";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FieldError } from "react-hook-form";
-import fetchJson from "@/lib/fetchServer";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import React from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { createToast } from "@/lib/toasts";
-import { user_enquiry } from "@/lib/emailContent/bodyContent";
-import { sentMail } from "@/lib/sentMail";
+import ReactHookFormInput from "../common/ReactHookFormInput";
 
 const schema = yup
     .object({

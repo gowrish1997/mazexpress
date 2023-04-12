@@ -1,17 +1,14 @@
-import React from "react";
-import Image from "next/image";
-import copy from "copy-to-clipboard";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { Warehouse } from "@/models/warehouse.model";
-import { useRouter } from "next/router";
+import copy from "copy-to-clipboard";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
 import GreenRadioButton from "../../public/green_svg.svg";
 import RedRadioButton from "../../public/red_svg.svg";
 import YellowRadioButton from "../../public/yellow_svg.svg";
 
 const WarehouseCard = (props: { address: Warehouse }) => {
     const { t } = useTranslation("common");
-    console.log(props.address);
 
     const wareHouseStatusColorHandler = (status: string) => {
         switch (status) {

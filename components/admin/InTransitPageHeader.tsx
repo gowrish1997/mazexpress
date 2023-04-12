@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import Head from "next/head";
-import FilterOptionDropDown from "./FilterOptionDropDown";
-import PageheaderTitle from "./PageheaderTitle";
-import AdminOptionDropDown from "./AdminOptionDropDown";
-import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
-import CommentModal from "./modal/AddCommentModal";
-import ReactPaginateComponent from "./ReactPaginate";
-import { IPageHeaderProp } from "@/models/pageHeader.interface";
-import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import { perPageOptinsList } from "@/lib/helper";
-import useOrders from "@/lib/hooks/useOrders";
-import { Order } from "@/models/order.model";
-import { bulkActionHandler } from "@/lib/selectOrder";
+import { bulkActionHandler, getOrderIdList } from "@/lib/selectOrder";
 import { createToast } from "@/lib/toasts";
-import { getOrderIdList } from "@/lib/selectOrder";
+import { Order } from "@/models/order.model";
+import { IPageHeaderProp } from "@/models/pageHeader.interface";
+import Head from "next/head";
+import { useState } from "react";
+import AdminOptionDropDown from "./AdminOptionDropDown";
+import FilterOptionDropDown from "./FilterOptionDropDown";
+import MazStatsDropddown from "./MazStats/MazStatsDropddown";
+import PageheaderTitle from "./PageheaderTitle";
+import ReactPaginateComponent from "./ReactPaginate";
+import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
 
 const adminOption = [
     "Received in Libya",

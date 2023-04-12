@@ -1,26 +1,22 @@
-import React, { useContext } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
-import Order from "@/public/order_svg.svg";
-import Location from "@/public/location_svg.svg";
-import Warehosue from "@/public/warehouse_svg.svg";
 import Address from "@/public/address_svg.svg";
-import Settings from "@/public/settings_svg.svg";
-import Helpcenter from "@/public/help_svg.svg";
+import Notification from "@/public/bell_svg.svg";
 import Dashboard from "@/public/dashboard_svg.svg";
+import Enquiry from "@/public/enquiry_svg.svg";
+import Helpcenter from "@/public/help_svg.svg";
 import LiveOrder from "@/public/liveorder_svg.svg";
+import Location from "@/public/location_svg.svg";
+import Order from "@/public/order_svg.svg";
+import Settings from "@/public/settings_svg.svg";
 import TodayShip from "@/public/todayship_svg.svg";
 import User from "@/public/user_svg.svg";
-import Enquiry from "@/public/enquiry_svg.svg";
-import Notification from "@/public/bell_svg.svg";
-import Admin from "../../../public/admin_svg.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Warehosue from "@/public/warehouse_svg.svg";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "next-i18next";
-import AuthCTX from "@/components/context/auth.ctx";
-import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import Admin from "../../../public/admin_svg.svg";
+import { useSession } from "next-auth/react";
 
 const userIcon = (id: number) => {
     switch (id) {
@@ -91,11 +87,10 @@ interface IProp {
 }
 
 const NavLink = (props: IProp) => {
-    const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
-
+    const { data: session, update }: { data: any; update: any } = useSession();
     const isActivePath = (obj: any): boolean => {
         if (router.pathname === "/" && obj.path === "/") return true;
         if (router.pathname === "/admin" && obj.path === "/admin") return true;
@@ -141,7 +136,7 @@ const NavLink = (props: IProp) => {
                                     : "sidebar_icon"
                             } relative`}
                         >
-                            {user?.is_admin
+                            {session?.user?.is_admin
                                 ? adminIcon(props.id)
                                 : userIcon(props.id)}
                             {props.content.title === "Delivered Order" ? (
@@ -210,7 +205,7 @@ const NavLink = (props: IProp) => {
                                 : "sidebar_icon"
                         } relative`}
                     >
-                        {user?.is_admin
+                        {session?.user?.is_admin
                             ? adminIcon(props.id)
                             : userIcon(props.id)}
                         {props.content.title === "Delivered Order" ? (

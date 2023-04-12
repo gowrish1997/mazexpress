@@ -1,20 +1,17 @@
-import React, { useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { createToast } from "@/lib/toasts";
-import { useRouter } from "next/router";
-import CustomDropdown from "../LandingPage/CustomDropdown";
-import { useTranslation } from "next-i18next";
-import { User, UserGender } from "@/models/user.model";
+import { admin_registerBodyContent, user_registerBodyContet } from "@/lib/emailContent/bodyContent";
 import fetchServer from "@/lib/fetchServer";
-import { FetchError } from "@/lib/fetchSelf";
-import { Address, City } from "@/models/address.model";
-import axios from "axios";
-import { user_registerBodyContet } from "@/lib/emailContent/bodyContent";
-import { admin_registerBodyContent } from "@/lib/emailContent/bodyContent";
 import { sentMail } from "@/lib/sentMail";
+import { createToast } from "@/lib/toasts";
+import { Address } from "@/models/address.model";
+import { User } from "@/models/user.model";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import * as yup from "yup";
+import CustomDropdown from "../LandingPage/CustomDropdown";
 
 const schema = yup
     .object({

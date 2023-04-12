@@ -135,6 +135,7 @@ const CusotmDropdown = (props: IProp) => {
                 <ClickOutside
                     handler={smartToggleGateHandler}
                     trigger={trigger}
+                    className="w-full"
                 >
                     <div className="w-full z-[10]  bg-[white] box-border absolute top-[60px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
                         {props.options &&
@@ -142,7 +143,7 @@ const CusotmDropdown = (props: IProp) => {
                                 return (
                                     <div
                                         key={index}
-                                        className="flex flex-row justify-start items-center"
+                                        className="w-full flex flex-row justify-start items-center"
                                     >
                                         <button
                                             key={index}

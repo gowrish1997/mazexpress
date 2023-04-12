@@ -1,7 +1,4 @@
 import useOrderCount from "@/lib/hooks/useOrderCount";
-import useOrders from "@/lib/hooks/useOrders";
-import React from "react";
-
 import ProgressBar1 from "./ProgressBar";
 const OrdersTotalCountBar = () => {
     const {

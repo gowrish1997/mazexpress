@@ -1,17 +1,13 @@
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { isAuthenticated } from "./lib/utils";
+import { NextResponse } from "next/server";
+import { getSession } from "./lib/selectOrder";
+
+// import { isAuthenticated } from "./lib/utils";
 export const middleware = async (req: NextRequest) => {
     const res = NextResponse.next();
-    // add redirect to correct locale here...
+    const session = await getSession(req);
 
-    // add restrictions to user for admin routes
-    // const truth_values = await isAuthenticated(req);
-    // const is_auth = truth_values[0];
-    // const is_admin = truth_values[1];
-    // const is_English = truth_values[2];
-
-    // if (is_auth) {
+    // if (session) {
     //     // user is present do not allow login page
     //     if (req.nextUrl.pathname.startsWith("/auth")) {
     //         return NextResponse.redirect(new URL("/", req.url), {
@@ -19,23 +15,23 @@ export const middleware = async (req: NextRequest) => {
     //         });
     //     }
 
-    //     // comment to let user on all routes
-    //     // if (!is_admin) {
-    //     //     if (req.nextUrl.pathname.startsWith("/admin")) {
-    //     //         return NextResponse.redirect(new URL("/", req.url), {
-    //     //             statusText: "Unauthorized.",
-    //     //         });
-    //     //     }
-    //     // }
+        // comment to let user on all routes
+        // if (!(session?.user as any).is_admin) {
+        //     if (req.nextUrl.pathname.startsWith("/admin")) {
+        //         return NextResponse.redirect(new URL("/", req.url), {
+        //             statusText: "Unauthorized.",
+        //         });
+        //     }
+        // }
 
-    //     // comment to let admin on all routes
-    //     // if (is_admin) {
-    //     //     if (!req.nextUrl.pathname.startsWith("/admin")) {
-    //     //         return NextResponse.redirect(new URL("/admin", req.url), {
-    //     //             statusText: "Unauthorized.",
-    //     //         });
-    //     //     }
-    //     // }
+        // comment to let admin on all routes
+        // if ((session?.user as any).is_admin) {
+        //     if (!req.nextUrl.pathname.startsWith("/admin")) {
+        //         return NextResponse.redirect(new URL("/admin", req.url), {
+        //             statusText: "Unauthorized.",
+        //         });
+        //     }
+        // }
     // } else {
     //     return NextResponse.redirect(
     //         new URL("/auth/gate?please-log-in", req.url),
@@ -45,23 +41,18 @@ export const middleware = async (req: NextRequest) => {
     //     );
     // }
 
-    // if (req.nextUrl.locale == "ar" && is_admin) {
+    // if (req.nextUrl.locale == "ar" && (session?.user as any).is_admin) {
     //     return NextResponse.redirect(
     //         new URL(`/en${req.nextUrl.pathname}`, req.url)
     //     );
     // }
 
-    // console.log(
-    //     req.nextUrl.locale == "en" ? "english" : "arabic",
-    //     is_English ? "english" : "arabic"
-    // );
-
     // if (
-    //     !is_admin &&
+    //     !(session?.user as any).is_admin &&
     //     (req.nextUrl.locale == "en" ? "english" : "arabic") !=
-    //         (is_English ? "english" : "arabic")
+    //         (session?.user as any).lang
     // ) {
-    //     if (is_English) {
+    //     if ((session?.user as any).lang == "english") {
     //         return NextResponse.redirect(
     //             new URL(`/en${req.nextUrl.pathname}`, req.url)
     //         );

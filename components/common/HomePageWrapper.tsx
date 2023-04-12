@@ -3,30 +3,23 @@
 //     co-author: raunak
 //==========================
 
-import React, {
-    useState,
-    useRef,
-    useEffect,
-    useContext,
-    ReactNode,
-} from "react";
 import Image from "next/image";
+import React, {
+    ReactNode,
+    useEffect,
+    useRef,
+    useState
+} from "react";
 
-import newlogoBlue from "../../public/new_logo_blue.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/router";
 import LanguageSwitcher from "@/components/LandingPage/LanguageSwitcher";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { signOut, useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
-import useUser from "@/lib/hooks/useUser";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import newlogoBlue from "../../public/new_logo_blue.png";
 import LogoutConfirmModal from "./LogoutConfirmModal";
-import fetchServer from "@/lib/fetchServer";
-import UserContext from "../context/user.context";
-import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
-import AuthCTX from "../context/auth.ctx";
-import fetchSelf from "@/lib/fetchSelf";
 
 interface IProp {
     type: string;
@@ -42,14 +35,12 @@ const HomePageWrapper = (props: IProp) => {
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
+    const { data: session, update }: { data: any; update: any } = useSession();
+
     var section: string[] = t("landingPage.navBar.Section", {
         returnObjects: true,
     });
     var auth: string[] = t("landingPage.navBar.Auth", { returnObjects: true });
-
-    const jet: AuthManager = useContext(AuthCTX)["jet"];
-    const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
-    const { set_active_user } = useContext(AuthCTX);
 
     const shipmentCalculatorSectionRef = useRef<HTMLDivElement>(null);
     const supportSectionRef = useRef<HTMLDivElement>(null);
@@ -76,27 +67,11 @@ const HomePageWrapper = (props: IProp) => {
 
     const logoutHandler = () => {
         try {
-          const user_whitelist_id = user.whitelist_id;
-          jet.logout(user_whitelist_id, async (err, done) => {
-            if (err) throw err;
-            if (done) {
-              console.log("logged out");
-              const data = await fetchSelf("/api/auth/unbind_data");
-              // router.push("/");
-              setShowLogoutConfirmModal(false);
-              set_active_user(null);
-            }
-          });
+            signOut();
         } catch (err) {
-          if (err) console.error(err);
+            if (err) console.error(err);
         }
-    
-        // await fetchServer("/api/auth/logout", { method: "GET" });
-        // setUser(null);
-        // await mutateUser();
-        // setShowLogoutConfirmModal((prev) => !prev);
-      };
-    //   console.log(user);
+    };
 
     return (
         <>
@@ -334,11 +309,11 @@ const HomePageWrapper = (props: IProp) => {
                             </ul>
                         </div>
 
-                        {user !== null && user !== undefined ? (
+                        {session?.user ? (
                             <div className="flex items-center gap-x-[15px]">
                                 <div className="flex items-center gap-x-[10px]">
-                                    <p>{user.email}</p>
-                                    {user.is_admin ? (
+                                    <p>{session.user.email}</p>
+                                    {session.user.is_admin ? (
                                         <Link href={"/admin"}>Dashboard</Link>
                                     ) : (
                                         <Link href={"/orders"}>My orders</Link>

@@ -1,16 +1,16 @@
-import React, { useContext, useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import CustomDropdown from "@/components/LandingPage/CustomDropdown";
+import CountrySelector from "@/components/common/CountrySelector";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import fetchJson from "@/lib/fetchServer";
+import useAddresses from "@/lib/hooks/useAddresses";
 import { Address } from "@/models/address.model";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import CustomDropdown from "@/components/LandingPage/CustomDropdown";
-import useAddresses from "@/lib/hooks/useAddresses";
-import AuthCTX from "@/components/context/auth.ctx";
-import { IWhiteListedUser } from "@/controllers/auth-ctr";
+import { useState } from "react";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import * as yup from "yup";
 
 interface IProp {
     show: boolean;
@@ -41,14 +41,12 @@ const schema = yup
     .required();
 
 const AddNewAddressModal = (props: IProp) => {
-    const user: IWhiteListedUser = useContext(AuthCTX)["active_user"];
+    const { data: session, update }: { data: any; update: any } = useSession();
     const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
-        username: user?.email,
+        username: session?.user.email,
         status: ["active"],
     });
 
-    const [country, setCountry] = useState("LY");
-    const [addressIsDefault, setAddressIsDefault] = useState(false);
     const router = useRouter();
     const { t } = useTranslation("common");
     const { locale } = router;
@@ -70,30 +68,32 @@ const AddNewAddressModal = (props: IProp) => {
         setValue,
         control,
         formState: { errors },
-    } = useForm<Address & { default: "on" | "off" }>({
+    } = useForm<Address & { default: boolean }>({
         defaultValues: {
             address_1: "Gold fields",
             address_2: "Sheik street St",
             city: "Tripoli",
             country: "Libya",
-            default: "on",
+            default: true,
             phone: 214441792,
             tag: "Al Mshket Hotel",
         },
         resolver: yupResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<
-        Address & { default?: "on" | "off" }
-    > = async (data) => {
-        if (user) {
+    const onSubmit: SubmitHandler<Address & { default?: boolean }> = async (
+        data
+    ) => {
+        if (session.user) {
+            console.log(data);
             let address = { ...data };
+
             delete address.default;
 
             // add address
             try {
                 const addressResult = await fetchJson(
-                    `/api/addresses/${user?.email}`,
+                    `/api/addresses/${session?.user.email}`,
                     {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -102,7 +102,7 @@ const AddNewAddressModal = (props: IProp) => {
                 );
                 if (data.default || addresses?.length == 0) {
                     const userResult = await fetchJson(
-                        `/api/users/${user?.email}`,
+                        `/api/users/${session?.user.email}`,
                         {
                             method: "PUT",
                             headers: { "Content-Type": "application/json" },
@@ -111,9 +111,12 @@ const AddNewAddressModal = (props: IProp) => {
                             }),
                         }
                     );
+                    await update({
+                        ...session.user,
+                        default_address: addressResult.data?.[0].id,
+                    });
                 }
                 props.update();
-                props.updateuser?.();
                 props.close();
             } catch (error) {
                 console.log(error);
@@ -123,9 +126,9 @@ const AddNewAddressModal = (props: IProp) => {
         }
     };
 
-    const toggleDefaultAddressHandler = () => {
-        setAddressIsDefault((prev) => !prev);
-    };
+    // const toggleDefaultAddressHandler = () => {
+    //     setAddressIsDefault((prev) => !prev);
+    // };
 
     return (
         <>
@@ -152,40 +155,59 @@ const AddNewAddressModal = (props: IProp) => {
                                 </p>
                             )}
                         </div>
-
-                        <ReactHookFormInput
-                            label={inputFieldLabels[1]}
+                        <Controller
                             name="address_1"
-                            type="string"
-                            register={register("address_1")}
-                            // error={errors.address_1 ? fieldErrors[1] : ""}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label={inputFieldLabels[1]}
+                                    name="address_1"
+                                    type="string"
+                                    value={value}
+                                    onChange={onChange}
+                                    error={
+                                        errors.address_1 ? fieldErrors[1] : ""
+                                    }
+                                />
+                            )}
                         />
-                        <ReactHookFormInput
-                            label={inputFieldLabels[2]}
+                        <Controller
                             name="address_2"
-                            type="string"
-                            register={register("address_2")}
-                            // error={errors.address_2 ? fieldErrors[2] : ""}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label={inputFieldLabels[2]}
+                                    name="address_2"
+                                    type="string"
+                                    value={value}
+                                    onChange={onChange}
+                                    error={
+                                        errors.address_2 ? fieldErrors[2] : ""
+                                    }
+                                />
+                            )}
                         />
+
                         <div className="flex-type2 gap-x-[10px] w-full">
-                            {/* <Controller
-                name="country"
-                control={control}
-                defaultValue="Libya"
-                render={({ field: { onChange, value, ref } }) => (
-                  <CountrySelector
-                    label={inputFieldLabels[3]}
-                    value={value}
-                    onChange={onChange}
-                    setCountry={setCountry}
-                    error={errors.country}
-                    dropDownIcon={{
-                      iconIsEnabled: true,
-                      iconSrc: "/lock.png",
-                    }}
-                  />
-                )}
-              /> */}
+                            <Controller
+                                name="country"
+                                control={control}
+                                defaultValue="Libya"
+                                render={({
+                                    field: { onChange, value, ref },
+                                }) => (
+                                    <CountrySelector
+                                        label={inputFieldLabels[3]}
+                                        value={value}
+                                        onChange={onChange}
+                                        error={errors.country}
+                                        dropDownIcon={{
+                                            iconIsEnabled: true,
+                                            iconSrc: "/lock.png",
+                                        }}
+                                    />
+                                )}
+                            />
 
                             <CustomDropdown
                                 label={inputFieldLabels[4]}
@@ -202,18 +224,26 @@ const AddNewAddressModal = (props: IProp) => {
                             />
                         </div>
                         <div className="flex-type2 space-x-[10px] w-full"></div>
-                        <ReactHookFormInput
-                            label={inputFieldLabels[5]}
+                        <Controller
                             name="phone"
-                            type="number"
-                            register={register("phone")}
-                            // error={errors.phone ? fieldErrors[5] : ""}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label={inputFieldLabels[5]}
+                                    name="phone"
+                                    type="number"
+                                    value={value}
+                                    onChange={onChange}
+                                    error={errors.phone ? fieldErrors[5] : ""}
+                                />
+                            )}
                         />
+
                         <div className="flex-type1 gap-x-[5px]">
                             <input
                                 type="checkbox"
-                                checked={addressIsDefault}
-                                onClick={toggleDefaultAddressHandler}
+                                // checked={addressIsDefault}
+                                // onClick={toggleDefaultAddressHandler}
                                 {...register("default")}
                                 name="default"
                             />

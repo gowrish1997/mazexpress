@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import StatCard from "./StatCard";
-import MazStatsDropddown from "./MazStatsDropddown";
 import useUsers from "@/lib/hooks/useUsers";
-import useUserCount from "@/lib/hooks/useUserCount";
+import { useState } from "react";
+import MazStatsDropddown from "./MazStatsDropddown";
+import StatCard from "./StatCard";
 
 const ageOptions = [
   { value: 0, label: "10-20" },
