@@ -173,7 +173,14 @@ const LiveOrderLineItem = (props: IProp) => {
                     {getDateInStringFormat(props.row.created_on)}
                 </td>
                 <td className={`td6`}>
-                    {getDateInStringFormat(props.row.est_delivery)}
+                    {!(props.type == "delivered")
+                        ? getDateInStringFormat(props.row.est_delivery)
+                        : getDateInStringFormat(
+                              (tracking as Tracking[])?.find(
+                                  (data, index) => data.stage == packageStatus
+                              )?.created_on!
+                          )}
+                    {}
                 </td>
 
                 {/* <td className={`td6 capitalize `}>{warehoueStatusHanlder()}</td> */}

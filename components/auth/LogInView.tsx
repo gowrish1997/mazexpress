@@ -28,7 +28,7 @@ const schema = yup
 const LogInComponent = (props: any) => {
     const router = useRouter();
     const { t } = useTranslation("");
-    const { locale } = router;
+const { locale } = router;
     const [errorMsg, setErrorMsg] = useState("");
     // const jet: AuthManager = useContext(AuthCTX)["jet"];
     // const { status: googleStatus } = useGoogle({});
@@ -66,8 +66,13 @@ const LogInComponent = (props: any) => {
                 callbackUrl: "http://localhost:3000",
                 redirect: false,
             });
-            console.log(returnDate);
-            router.push(returnDate.url);
+            if (returnDate.ok) {
+                router.push(returnDate.url);
+            } else {
+                console.log(returnDate);
+                throw new Error(returnDate.error);
+            }
+
             // await jet.login(data.username, data.password, (err, user) => {
             //   if (err) throw err;
             //   if (!user) {
@@ -89,16 +94,13 @@ const LogInComponent = (props: any) => {
             //   }
             // });
         } catch (error) {
-            console.log(error)
-            // if (err) {
-            //     console.error(err);
-            //     createToast({
-            //         type: "error",
-            //         message: (err as Error).message,
-            //         title: "Error",
-            //         timeOut: 2000,
-            //     });
-            // }
+            console.log(error);
+            createToast({
+                type: "error",
+                message: (error as Error).message,
+                title: "Error",
+                timeOut: 2000,
+            });
         }
     };
 

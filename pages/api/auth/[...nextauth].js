@@ -8,9 +8,10 @@ export default NextAuth({
             name: "Credentials",
             async authorize(credentials, req) {
                 const res = await fetch(
-                    `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}/api/users/${credentials.username}`,
+                    `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}/api/auth/login`,
                     {
-                        method: "GET",
+                        method: "POST",
+                        body: JSON.stringify(credentials),
                         headers: {
                             "Content-Type": "application/json",
                         },
@@ -22,8 +23,7 @@ export default NextAuth({
                 if (user.data) {
                     return user.data[0];
                 } else {
-                    console.log("throwing new eriir");
-                    throw new Error("couldnt find user");
+                    throw new Error(user.msg);
                 }
             },
         }),

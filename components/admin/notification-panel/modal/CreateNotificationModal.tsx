@@ -60,87 +60,87 @@ const CreateNotificationModal = (props: IProp) => {
     // console.log("to", selectedUsers);
 
     // multiparty here
-    let notificationData = {
-      title: data.title,
-      content: data.content,
-    };
+    // let notificationData = {
+    //   title: data.title,
+    //   content: data.content,
+    // };
 
-    if (data.reusable === true) {
-      try {
-        // store config for reuse
-        const createResult: APIResponse<NotificationConfig> = await fetchServer(
-          `/api/notification-settings`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              title: data.config_title,
-              desc: data.config_desc,
-              is_enabled: true,
-              is_custom: true,
-              is_reusable: true,
-            }),
-          }
-        );
-        if (createResult.ok) {
-          props.close();
-          createToast({
-            type: "success",
-            title: "Success!",
-            message: "Notification sent successfully",
-            timeOut: 1000,
-          });
-        } else {
-          createToast({
-            type: "error",
-            title: "Failed!",
-            message: "Notification was not sent contact dev",
-            timeOut: 1000,
-          });
-        }
-      } catch(err) {
-        console.error(err)
-        createToast({
-          type: "error",
-          title: "check console!",
-          message: "Notification was not sent contact dev",
-          timeOut: 1000,
-        });
-      }
-    }
-    // send notification normally
-    try {
-      const createResult: APIResponse<Notification> = await fetchServer(
-        `/api/notifications`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            data: notificationData,
-            users: selectedUsers,
-          }),
-        }
-      );
+    // if (data.reusable === true) {
+    //   try {
+    //     // store config for reuse
+    //     const createResult: APIResponse<NotificationConfig> = await fetchServer(
+    //       `/api/notification-settings`,
+    //       {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({
+    //           title: data.config_title,
+    //           desc: data.config_desc,
+    //           is_enabled: true,
+    //           is_custom: true,
+    //           is_reusable: true,
+    //         }),
+    //       }
+    //     );
+    //     if (createResult.ok) {
+    //       props.close();
+    //       createToast({
+    //         type: "success",
+    //         title: "Success!",
+    //         message: "Notification sent successfully",
+    //         timeOut: 1000,
+    //       });
+    //     } else {
+    //       createToast({
+    //         type: "error",
+    //         title: "Failed!",
+    //         message: "Notification was not sent contact dev",
+    //         timeOut: 1000,
+    //       });
+    //     }
+    //   } catch(err) {
+    //     console.error(err)
+    //     createToast({
+    //       type: "error",
+    //       title: "check console!",
+    //       message: "Notification was not sent contact dev",
+    //       timeOut: 1000,
+    //     });
+    //   }
+    // }
+    // // send notification normally
+    // try {
+    //   const createResult: APIResponse<Notification> = await fetchServer(
+    //     `/api/notifications`,
+    //     {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify({
+    //         data: notificationData,
+    //         users: selectedUsers,
+    //       }),
+    //     }
+    //   );
 
-      // console.log(createResult);
-      if (createResult.ok) {
-        props.close();
-        createToast({
-          type: "success",
-          title: "Success!",
-          message: "Notification sent successfully",
-          timeOut: 1000,
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      createToast({
-        type: "error",
-        title: "check console!",
-        message: "Notification was not sent contact dev",
-        timeOut: 1000,
-      });
-    }
+    //   // console.log(createResult);
+    //   if (createResult.ok) {
+    //     props.close();
+    //     createToast({
+    //       type: "success",
+    //       title: "Success!",
+    //       message: "Notification sent successfully",
+    //       timeOut: 1000,
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   createToast({
+    //     type: "error",
+    //     title: "check console!",
+    //     message: "Notification was not sent contact dev",
+    //     timeOut: 1000,
+    //   });
+    // }
   };
 
   const uploadFilesHandler: any = (e: any) => {

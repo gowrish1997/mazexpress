@@ -41,13 +41,7 @@ const schema = yup
         password: yup.string(),
 
         newPassword: yup
-            // .string()
 
-            // .min(8, "Password must be 8 characters long")
-            // .matches(/[0-9]/, "Password requires a number")
-            // .matches(/[a-z]/, "Password requires a lowercase letter")
-            // .matches(/[A-Z]/, "Password requires an uppercase letter")
-            // .matches(/[^\w]/, "Password requires a symbol"),
             .string()
             .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -58,16 +52,6 @@ const schema = yup
                 }
             ),
 
-        // newPassword: yup
-        //     .string()
-        //     .matches(
-        //         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        //         {
-        //             excludeEmptyString: true,
-        //             message:
-        //                 "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        //         }
-        //     ),
         // avatar_url: yup.string(),
         is_notifications_enabled: yup.boolean().required(),
         lang: yup.string().required(),
@@ -122,23 +106,23 @@ const Settings = () => {
         defaultValues: { ...session?.user, password: "" },
     });
 
-    // useEffect(() => {
-    //     // console.log(user);
-    //     reset({
-    //         ...(session?.user as unknown as Pick<
-    //             User,
-    //             | "first_name"
-    //             | "last_name"
-    //             | "email"
-    //             | "phone"
-    //             | "lang"
-    //             | "password"
-    //             | "avatar_url"
-    //             | "is_notifications_enabled"
-    //         > & { newPassword: string }),
-    //     });
-    //     setPasswordCheck(false);
-    // }, [session?.user, reset]);
+    useEffect(() => {
+        // console.log(user);
+        reset({
+            ...(session?.user as unknown as Pick<
+                User,
+                | "first_name"
+                | "last_name"
+                | "email"
+                | "phone"
+                | "lang"
+                | "password"
+                | "avatar_url"
+                | "is_notifications_enabled"
+            > & { newPassword: string }),
+        });
+        setPasswordCheck(false);
+    }, [session?.user, reset]);
 
     const languageOption: { value: string; label: string }[] = t(
         "settingsPage.profileForm.LanguageOption",
@@ -193,7 +177,7 @@ const Settings = () => {
     > = async (data) => {
         try {
             // console.log(result);
-            if (!passwordCheck && getValues("password").length > 0) {
+            if (!passwordCheck && data.password?.length > 0) {
                 createToast({
                     type: "error",
                     title: locale == "en" ? "An error occurred" : "حدث خطأ",
@@ -201,6 +185,18 @@ const Settings = () => {
                         locale == "en"
                             ? "Old password is wrong"
                             : "كلمة المرور القديمة خاطئة",
+                    timeOut: 3000,
+                });
+                return;
+            }
+            if (!passwordCheck && data.newPassword?.length > 0) {
+                createToast({
+                    type: "error",
+                    title: locale == "en" ? "An error occurred" : "حدث خطأ",
+                    message:
+                        locale == "en"
+                            ? "Please confirm old password"
+                            : "الرجاء تأكيد كلمة المرور القديمة",
                     timeOut: 3000,
                 });
                 return;
@@ -221,7 +217,7 @@ const Settings = () => {
                 ...data,
             };
 
-            if (data.newPassword && data.newPassword.length > 0) {
+            if (data.newPassword && data.newPassword?.length > 0) {
                 sendObj.password = data.newPassword;
                 delete sendObj.newPassword;
             } else {
@@ -238,13 +234,27 @@ const Settings = () => {
                 }
             );
 
+            // have to delete old password and new password before storing into the session
+            if (sendObj.password) {
+                delete sendObj.password;
+            }
+            if (sendObj.newPassword) {
+                delete sendObj.newPassword;
+            }
+
+            // updating the session
+            await update({
+                ...session.user,
+                ...sendObj,
+            });
+
             createToast({
                 type: "success",
                 title: locale == "en" ? "success" : "نجاح",
                 message: locale == "en" ? "Updated user." : "مستخدم محدث.",
             });
         } catch (err) {
-            console.error(err);
+            console.log(err);
             createToast({
                 type: "error",
                 title: "An error occurred",
@@ -275,15 +285,6 @@ const Settings = () => {
             />
             <Layout>
                 <div className="w-full space-y-[30px] ">
-                    {/* <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
-            <Image src={blueExclamatory} alt="icon" width={16} height={16} />
-            <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-              {t("settingsPage.LinkPPart1")}{" "}
-              <span className="text-[#35C6F4]">
-                {t("settingsPage.LinkPPart2")}{" "}
-              </span>
-            </p>
-          </div> */}
                     <div>
                         <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">
                             {t("settingsPage.Title")}
@@ -353,14 +354,14 @@ const Settings = () => {
                                         field: { onChange, value },
                                     }) => (
                                         <ReactHookFormInput
-                                            label={inputFieldLabels[0]}
+                                            label={inputFieldLabels[1]}
                                             name="last_name"
                                             value={value}
                                             onChange={onChange}
                                             type="string"
                                             error={
                                                 errors.last_name?.message &&
-                                                fieldErrors[0]
+                                                fieldErrors[1]
                                             }
                                         />
                                     )}

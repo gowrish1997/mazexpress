@@ -4,6 +4,7 @@ import { getSession } from "./lib/selectOrder";
 
 // import { isAuthenticated } from "./lib/utils";
 export const middleware = async (req: NextRequest) => {
+    console.log(req.headers)
     const res = NextResponse.next();
     const session = await getSession(req);
 
@@ -15,23 +16,23 @@ export const middleware = async (req: NextRequest) => {
     //         });
     //     }
 
-        // comment to let user on all routes
-        // if (!(session?.user as any).is_admin) {
-        //     if (req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
+    // comment to let user on all routes
+    // if (!(session?.user as any).is_admin) {
+    //     if (req.nextUrl.pathname.startsWith("/admin")) {
+    //         return NextResponse.redirect(new URL("/", req.url), {
+    //             statusText: "Unauthorized.",
+    //         });
+    //     }
+    // }
 
-        // comment to let admin on all routes
-        // if ((session?.user as any).is_admin) {
-        //     if (!req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/admin", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
+    // comment to let admin on all routes
+    // if ((session?.user as any).is_admin) {
+    //     if (!req.nextUrl.pathname.startsWith("/admin")) {
+    //         return NextResponse.redirect(new URL("/admin", req.url), {
+    //             statusText: "Unauthorized.",
+    //         });
+    //     }
+    // }
     // } else {
     //     return NextResponse.redirect(
     //         new URL("/auth/gate?please-log-in", req.url),

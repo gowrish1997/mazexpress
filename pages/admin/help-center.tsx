@@ -27,7 +27,7 @@ const HelpCenter = () => {
     return (
         <>
             <div>
-                {helpCenters?.data.length > 0 && (
+                {helpCenters?.data?.length > 0 && (
                     <HelpCenterView
                         data={helpCenters?.data}
                         mutateHelpCenter={mutateHelpCenter}

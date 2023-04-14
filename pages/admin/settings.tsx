@@ -21,10 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { checkPassword } from "@/lib/utils";
 import { useTranslation } from "next-i18next";
 import fetchJson from "@/lib/fetchServer";
-
 import { GetServerSidePropsContext } from "next";
-
-import { mutate } from "swr";
 import { useSession } from "next-auth/react";
 const schema = yup
     .object({
@@ -144,28 +141,40 @@ const Settings = () => {
         > & { newPassword: string }
     > = async (data) => {
         console.log("settings submission", data);
-        // let picked: Pick<
-        //   User,
-        //   | "first_name"
-        //   | "last_name"
-        //   | "email"
-        //   | "phone"
-        //   | "lang"
-        //   | "password"
-        //   | "avatar_url"
-        //   | "is_notifications_enabled"
-        // > & { newPassword: string } ;
-        // // Object.assign(picked, data)
+        let picked: Pick<
+            User,
+            | "first_name"
+            | "last_name"
+            | "email"
+            | "phone"
+            | "lang"
+            | "password"
+            | "avatar_url"
+            | "is_notifications_enabled"
+        > & { newPassword: string };
+        // Object.assign(picked, data)
 
         try {
             // console.log(result);
-            if (!passwordCheck && getValues("password").length > 0) {
+            if (!passwordCheck && data.password?.length > 0) {
                 createToast({
                     type: "error",
                     title: locale == "en" ? "An error occurred" : "حدث خطأ",
                     message:
                         locale == "en"
                             ? "Old password is wrong"
+                            : "كلمة المرور القديمة خاطئة",
+                    timeOut: 3000,
+                });
+                return;
+            }
+            if (!passwordCheck && data.newPassword?.length > 0) {
+                createToast({
+                    type: "error",
+                    title: locale == "en" ? "An error occurred" : "حدث خطأ",
+                    message:
+                        locale == "en"
+                            ? "Please confirm old password"
                             : "كلمة المرور القديمة خاطئة",
                     timeOut: 3000,
                 });
@@ -187,7 +196,7 @@ const Settings = () => {
                 ...data,
             };
 
-            if (data.newPassword && data.newPassword.length > 0) {
+            if (data.newPassword && data.newPassword?.length > 0) {
                 sendObj.password = data.newPassword;
                 delete sendObj.newPassword;
             } else {
@@ -203,15 +212,24 @@ const Settings = () => {
                     body: JSON.stringify(sendObj),
                 }
             );
-            // console.log(updateRes)
-
+            // have to delete old password and new password before storing into the session
+            if (sendObj.password) {
+                delete sendObj.password;
+            }
+            if (sendObj.newPassword) {
+                delete sendObj.newPassword;
+            }
+            // updating the session
+            await update({
+                ...session.user,
+                ...sendObj,
+            });
             createToast({
                 type: "success",
                 title: "success",
                 message: "Updated user.",
             });
         } catch (err) {
-            console.error(err);
             createToast({
                 type: "error",
                 title: "An error occurred",
@@ -222,7 +240,7 @@ const Settings = () => {
     };
 
     const updatePasswordChecker = async (e: string) => {
-        // console.log(e.target.value);
+        setValue("password", e as string);
         const reee = await checkPassword(e, session?.user?.email!);
         // console.log(reee);
         if (reee) setPasswordCheck(true);
@@ -260,19 +278,6 @@ const Settings = () => {
             />
             <Layout>
                 <div className="w-full space-y-[30px] ">
-                    <div className="flex-type1 space-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px] ">
-                        <Image
-                            src={blueExclamatory}
-                            alt="icon"
-                            width={16}
-                            height={16}
-                        />
-                        <p className="text-[14px] text-[#606060] font-[500] leading-[19.6px] ">
-                            Here is a link to some fake information that
-                            contains crucial information,{" "}
-                            <span className="text-[#35C6F4]">Link here →</span>
-                        </p>
-                    </div>
                     <div>
                         <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">
                             Account
@@ -315,41 +320,64 @@ const Settings = () => {
                         </div>
                         <div className="flex w-full gap-x-[20px] items-center relative">
                             <div className="flex-type2 space-x-[10px] w-full">
-                                <ReactHookFormInput
-                                    label="First name"
+                                <Controller
                                     name="first_name"
-                                    type="string"
-                                    register={register("first_name")}
-                                    error={errors.first_name}
+                                    control={control}
+                                    render={({
+                                        field: { onChange, value },
+                                    }) => (
+                                        <ReactHookFormInput
+                                            label="First name"
+                                            name="first_name"
+                                            type="string"
+                                            value={value}
+                                            onChange={onChange}
+                                            error={errors.first_name?.message}
+                                        />
+                                    )}
                                 />
-
-                                <ReactHookFormInput
-                                    label="Last name"
-                                    name=" last_name"
-                                    type="string"
-                                    register={register("last_name")}
-                                    error={errors.last_name}
+                                <Controller
+                                    name="last_name"
+                                    control={control}
+                                    render={({
+                                        field: { onChange, value },
+                                    }) => (
+                                        <ReactHookFormInput
+                                            label="Last name"
+                                            name="last_name"
+                                            value={value}
+                                            onChange={onChange}
+                                            type="string"
+                                            error={errors.last_name?.message}
+                                        />
+                                    )}
                                 />
                             </div>
-
-                            <ReactHookFormInput
-                                label="Password"
+                            <Controller
                                 name="password"
-                                type={passwordType}
-                                register={register("password")}
-                                error={errors.password}
-                                icon={{
-                                    isEnabled: true,
-                                    src:
-                                        passwordType === "password"
-                                            ? "/eyeIconClose.png"
-                                            : "/eyeIconOpen.png",
-                                }}
-                                onClick={togglePasswordTypeHandler}
-                                onChange={updatePasswordChecker}
-                                // disabled={true}
-                                // autoComplete="off"
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                    <ReactHookFormInput
+                                        label="Password"
+                                        name="password"
+                                        type={passwordType}
+                                        value={value}
+                                        error={errors.password?.message}
+                                        icon={{
+                                            isEnabled: true,
+                                            src:
+                                                passwordType === "string"
+                                                    ? "/eyeIconOpen.png"
+                                                    : "/eyeIconClose.png",
+                                        }}
+                                        onClick={togglePasswordTypeHandler}
+                                        onChange={updatePasswordChecker}
+                                        // disabled={true}
+                                        // autoComplete="off"
+                                    />
+                                )}
                             />
+
                             {!passwordCheck ? (
                                 <div className="border border-red-600 block rounded-full absolute -right-7 top-[35px] flex items-center justify-center h-5 w-5">
                                     <FontAwesomeIcon
@@ -369,38 +397,58 @@ const Settings = () => {
                             )}
                         </div>
                         <div className="flex flex-row justify-start items-start w-full space-x-[20px]">
-                            <ReactHookFormInput
-                                label="Email"
+                            <Controller
                                 name="email"
-                                type="string"
-                                register={register("email")}
-                                error={errors.email}
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                    <ReactHookFormInput
+                                        label="Email"
+                                        name="email"
+                                        value={value}
+                                        onChange={onChange}
+                                        type="string"
+                                        error={errors.email?.message}
+                                    />
+                                )}
                             />
-
-                            <ReactHookFormInput
-                                label="New Password"
+                            <Controller
                                 name="newPassword"
-                                type={newPasswordType}
-                                register={register("newPassword")}
-                                error={errors.newPassword}
-                                icon={{
-                                    isEnabled: true,
-                                    src:
-                                        newPasswordType === "password"
-                                            ? "/eyeIconClose.png"
-                                            : "/eyeIconOpen.png",
-                                }}
-                                onClick={toggleNewPasswordTypeHandler}
-                                autoComplete="new-password"
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                    <ReactHookFormInput
+                                        label="New Password"
+                                        name="newPassword"
+                                        type={newPasswordType}
+                                        value={value}
+                                        onChange={onChange}
+                                        error={errors.newPassword?.message}
+                                        icon={{
+                                            isEnabled: true,
+                                            src:
+                                                newPasswordType === "string"
+                                                    ? "/eyeIconOpen.png"
+                                                    : "/eyeIconClose.png",
+                                        }}
+                                        onClick={toggleNewPasswordTypeHandler}
+                                        autoComplete="new-password"
+                                    />
+                                )}
                             />
                         </div>
                         <div className="flex-type1 w-full space-x-[20px]">
-                            <ReactHookFormInput
-                                label="Mobile number"
+                            <Controller
                                 name="phone"
-                                type="number"
-                                register={register("phone")}
-                                error={errors.phone}
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                    <ReactHookFormInput
+                                        label="Mobile number"
+                                        name="phone"
+                                        value={value}
+                                        onChange={onChange}
+                                        type="number"
+                                        error={errors.phone?.message}
+                                    />
+                                )}
                             />
 
                             <CustomDropdown

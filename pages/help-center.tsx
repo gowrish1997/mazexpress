@@ -14,6 +14,7 @@ const HelpCenter = () => {
     const { locale } = router;
 
     const { helpCenters } = useHelpCenter();
+    console.log(helpCenters);
 
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";
@@ -24,7 +25,7 @@ const HelpCenter = () => {
 
     return (
         <div>
-            {helpCenters?.data.length > 0 && (
+            {helpCenters?.data?.length > 0 && (
                 <HelpCenterView data={helpCenters?.data} />
             )}
         </div>
