@@ -140,16 +140,16 @@
                     "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
                 },
                 {
-                    "Title": "Warehousing:",
-                    "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
+                    "Title": "Shipping:",
+                    "Content": " We offer a wide range of shipping containers to ensure that we can accommodate any shipping need."
                 },
                 {
-                    "Title": "Warehousing:",
-                    "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
+                    "Title": "Sea shipping:",
+                    "Content": " Our sea shipping service is reliable and efficient, with regular departures and arrivals to and from Libya. We handle all the necessary logistics, including customs clearance and documentation."
                 },
                 {
-                    "Title": "Warehousing:",
-                    "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
+                    "Title": "Online tracking:",
+                    "Content": " Our online tracking system allows clients to monitor the status of their shipment from pickup to delivery, providing real-time updates and peace of mind."
                 }
             ]
         },
@@ -161,9 +161,12 @@
                 "InputField": [
                     {
                         "placeholder": "Warehouse Address",
-                        "label": "Pick - Up Warehouse address"
+                        "label": "Pick - Up Warehouse address (optional)"
                     },
-                    { "placeholder": "City", "label": "Delivery City" },
+                    {
+                        "placeholder": "City",
+                        "label": "Delivery City (optional)"
+                    },
                     { "placeholder": "", "label": "Dimensions" },
                     { "placeholder": "", "label": "Weight*" }
                 ],

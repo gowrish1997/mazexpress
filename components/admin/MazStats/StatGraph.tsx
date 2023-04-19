@@ -13,8 +13,7 @@ import {
 } from "chart.js";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import MazStatsDropddown from "./MazStatsDropddown";
-
+import SelectYear from "./SelectYear";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -92,6 +91,10 @@ export const options = {
             type: "linear" as const,
             display: true,
             position: "left" as const,
+            ticks: {
+                suggestedMax: 100,
+                suggestedMin:0
+              },
             grid: {
                 drawOnChartArea: true,
                 display: true,
@@ -138,6 +141,13 @@ const labels = [
 const StatGraph = () => {
     const [user_data, set_user_data] = useState();
     const [order_data, set_order_data] = useState();
+    const [selectedYear, setSelectedYear] = useState<number>(
+        new Date().getFullYear()
+    );
+
+    const setYearHandler = (value: number) => {
+        setSelectedYear(value);
+    };
 
     const stat_data = {
         labels,
@@ -178,26 +188,19 @@ const StatGraph = () => {
         ],
     };
     useEffect(() => {
-        const year = 2023;
-        fetchJson(`/api/users/stats/${year}`).then((userscount) => {
+        console.log(selectedYear);
+        fetchJson(`/api/users/stats/${selectedYear}`).then((userscount) => {
             set_user_data(userscount.data);
         });
-        fetchJson(`/api/orders/stats/${year}`).then((orderscount) => {
+        fetchJson(`/api/orders/stats/${selectedYear}`).then((orderscount) => {
             set_order_data(orderscount.data);
         });
-    }, []);
+    }, [selectedYear]);
     return (
         <div className="w-2/3 flex-1 p-[10px] pt-[20px] mr-[1px] border-[1px] border-[#BBC2CF] rounded-[4px] h-full relative ">
             <Line options={options} data={stat_data} />
             <div className="absolute top-[10px] right-[10px] ">
-                <MazStatsDropddown
-                    options={[
-                        { label: "one year", value: "1" },
-                        { label: "two year", value: "2" },
-                    ]}
-                    header="year"
-                    selection={[]}
-                />
+                <SelectYear onChange={setYearHandler} value={selectedYear} />
             </div>
         </div>
     );

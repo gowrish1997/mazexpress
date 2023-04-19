@@ -94,11 +94,14 @@ const NotificationPanel = () => {
                     Create notification
                 </button>
             </div>
-            <CreateNotificationModal
-                show={showCreateNotificationModal}
-                close={toggleShowCreateNotificationModal}
-                // update={() => new Promise((resolve, reject) => {})}
-            />
+            {showCreateNotificationModal && (
+                <CreateNotificationModal
+                    type="notification"
+                    show={showCreateNotificationModal}
+                    close={toggleShowCreateNotificationModal}
+                    // update={() => new Promise((resolve, reject) => {})}
+                />
+            )}
         </>
     );
 };

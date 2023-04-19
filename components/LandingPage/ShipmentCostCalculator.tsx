@@ -128,10 +128,10 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                                     errors.warehouseAddress_address &&
                                     (fieldErrors[0] as string)
                                 }
-                                options={[
-                                    { value: "gowrish", label: "gowrish" },
-                                    { value: "gowrish", label: "gowrish" },
-                                ]}
+                                // options={[
+                                //     { value: "gowrish", label: "gowrish" },
+                                //     { value: "gowrish", label: "gowrish" },
+                                // ]}
                                 placeHolder={inputField[0].placeholder}
                                 disabled={true}
                                 value={getValues("warehouseAddress_address")}
@@ -147,10 +147,10 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                                     errors.city_name &&
                                     (fieldErrors[1] as string)
                                 }
-                                options={[
-                                    { value: "gowrish", label: "gowrish" },
-                                    { value: "gowrish", label: "gowrish" },
-                                ]}
+                                // options={[
+                                //     { value: "gowrish", label: "gowrish" },
+                                //     { value: "gowrish", label: "gowrish" },
+                                // ]}
                                 placeHolder={inputField[1].placeholder}
                                 disabled={true}
                                 value={getValues("city_name")}

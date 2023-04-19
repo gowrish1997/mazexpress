@@ -4,9 +4,10 @@ import UserSavedAddress from "@/components/orders/UserSavedAddress";
 import AddNewAddressModal from "@/components/orders/modal/AddNewAddressModal";
 import EditUserAddressModal from "@/components/orders/modal/EditUserAddressModal";
 import {
-  admin_orderPlaced,
-  user_orderPlaced,
+    admin_orderPlaced,
+    user_orderPlaced,
 } from "@/lib/emailContent/bodyContent";
+import fetchServer from "@/lib/fetchServer";
 import fetchJson from "@/lib/fetchServer";
 import useAddresses from "@/lib/hooks/useAddresses";
 import { sentMail } from "@/lib/sentMail";
@@ -182,6 +183,25 @@ const AddNewOrder = () => {
                     timeOut: 1000,
                 });
 
+                //sending notificatoin after successfull
+                const deliveredMessage = {
+                    title: "New order placed",
+                    content: `You have placed new order, details:order reference ID ${orderObj.reference_id}, store link ${orderObj.store_link}`,
+                };
+                const result0_3: APIResponse<Notification> = await fetchServer(
+                    "/api/notifications",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            data: deliveredMessage,
+                            // files: [],
+                            users: [session?.user?.email],
+                            // notification_config: 1,
+                        }),
+                    }
+                );
+
                 /** sending mail after placing order   */
                 try {
                     sentMail(toList);
@@ -199,6 +219,7 @@ const AddNewOrder = () => {
                 });
             }
         } catch (err) {
+            console.log(err);
             console.log(err);
             createToast({
                 type: "error",

@@ -33,9 +33,11 @@ const genderHandler = (type: string, locale: string) => {
     }
 };
 const languageHandler = (type: string, locale: string) => {
+    console.log(locale, type);
     // console.log('type, locale', type, locale)
     switch (type) {
         case "arabic":
+            console.log(locale == "en" ? "Arabic" : "عربي");
             return locale == "en" ? "Arabic" : "عربي";
         case "english":
             return locale == "en" ? "English" : "إنجليزي";
@@ -137,9 +139,9 @@ const CusotmDropdown = (props: IProp) => {
                     trigger={trigger}
                     className="w-full"
                 >
-                    <div className="w-full z-[10]  bg-[white] box-border absolute top-[60px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
-                        {props.options &&
-                            props.options.map((data, index) => {
+                    {props.options && (
+                        <div className="w-full z-[10]  bg-[white] box-border absolute top-[60px] border-[1px] border-[#ccc] rounded-[4px] mt-[10px] p-[5px] space-y-[4px]">
+                            {props.options.map((data, index) => {
                                 return (
                                     <div
                                         key={index}
@@ -163,7 +165,8 @@ const CusotmDropdown = (props: IProp) => {
                                     </div>
                                 );
                             })}
-                    </div>
+                        </div>
+                    )}
                 </ClickOutside>
             )}
             {props.error && (

@@ -29,14 +29,14 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
             ref={ref}
         >
             <div className="w-[80%] flex flex-row justify-between items-start  gap-x-[50px]">
-                <div className="hidden min-[1300px]:block relative w-[526px] h-[661px] ">
+                <div className="hidden min-[1300px]:block relative w-[526px] h-[580px] ">
                     <Image src={Truck} fill alt="truck" />
                 </div>
                 <div className="flex-1">
                     <p className="text-[30px] text-[#121212] font-[500] leading-[50px] ">
                         {t("landingPage.service.Title")}
                     </p>
-                    <div className="mt-[20px] flex flex-col justify-start items-start  gap-y-[40px]">
+                    <div className="mt-[20px] flex flex-col justify-start items-start  gap-y-[50px]">
                         {content.map((data, index) => {
                             return (
                                 <div
@@ -53,9 +53,9 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
 
                                     <p className="flex-1 -mt-[5px] text-[16px] text-[ #18181B] font-[400] leading-[28px]  ">
                                         <span className="text-[18px] text-[#090914] font-[600] leading-[28px]">
-                                            {content[0].Title}
+                                            {data.Title}
                                         </span>
-                                        {content[0].Content}
+                                        {data.Content}
                                     </p>
                                 </div>
                             );

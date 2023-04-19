@@ -11,9 +11,8 @@ import { getToken } from "next-auth/jwt";
 
 export const getSession = async (req) => {
     const session = await getToken({ req });
-  return session
+    return session;
 };
-
 
 export const selectOrder = (
     value: any,
@@ -177,7 +176,7 @@ export const bulkActionHandler = async (
 
             const deliveredMessage = {
                 title: title,
-                content: `Your order number ${rowFixed.id} ${content}`,
+                content: `order with maz ID ${rowFixed.maz_id} ${content}`,
             };
             const result0_3: APIResponse<Notification> = await fetchServer(
                 "/api/notifications",
@@ -299,7 +298,7 @@ export const singleOrderAction = async (
     if ((rowFixed as Order).user.is_notifications_enabled) {
         const deliveredMessage = {
             title: title,
-            content: `Your order number ${rowFixed.id} ${content}`,
+            content: `order with maz ID ${rowFixed.maz_id} ${content}`,
         };
 
         let result0_3: APIResponse<Notification> = await fetchServer(

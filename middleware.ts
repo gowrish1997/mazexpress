@@ -4,65 +4,67 @@ import { getSession } from "./lib/selectOrder";
 
 // import { isAuthenticated } from "./lib/utils";
 export const middleware = async (req: NextRequest) => {
-    console.log(req.headers)
     const res = NextResponse.next();
     const session = await getSession(req);
 
-    // if (session) {
-    //     // user is present do not allow login page
-    //     if (req.nextUrl.pathname.startsWith("/auth")) {
-    //         return NextResponse.redirect(new URL("/", req.url), {
-    //             statusText: "Unauthorized.",
-    //         });
-    //     }
+    if (session) {
+        // user is present do not allow login page
+        if (req.nextUrl.pathname.startsWith("/auth")) {
+            return NextResponse.redirect(new URL("/", req.url), {
+                statusText: "Unauthorized.",
+            });
+        }
 
-    // comment to let user on all routes
-    // if (!(session?.user as any).is_admin) {
-    //     if (req.nextUrl.pathname.startsWith("/admin")) {
-    //         return NextResponse.redirect(new URL("/", req.url), {
-    //             statusText: "Unauthorized.",
-    //         });
-    //     }
-    // }
+        // comment to let user on all routes
+        // if (!(session?.user as any).is_admin) {
+        //     if (req.nextUrl.pathname.startsWith("/admin")) {
+        //         return NextResponse.redirect(new URL("/", req.url), {
+        //             statusText: "Unauthorized.",
+        //         });
+        //     }
+        // }
 
-    // comment to let admin on all routes
-    // if ((session?.user as any).is_admin) {
-    //     if (!req.nextUrl.pathname.startsWith("/admin")) {
-    //         return NextResponse.redirect(new URL("/admin", req.url), {
-    //             statusText: "Unauthorized.",
-    //         });
-    //     }
-    // }
-    // } else {
-    //     return NextResponse.redirect(
-    //         new URL("/auth/gate?please-log-in", req.url),
-    //         {
-    //             statusText: "Unauthorized.",
-    //         }
-    //     );
-    // }
+        // comment to let admin on all routes
+        if ((session?.user as any).is_admin) {
+            if (!req.nextUrl.pathname.startsWith("/admin")) {
+                return NextResponse.redirect(new URL("/admin", req.url), {
+                    statusText: "Unauthorized.",
+                });
+            }
+        }
 
-    // if (req.nextUrl.locale == "ar" && (session?.user as any).is_admin) {
-    //     return NextResponse.redirect(
-    //         new URL(`/en${req.nextUrl.pathname}`, req.url)
-    //     );
-    // }
+        if (req.nextUrl.locale == "ar" && (session?.user as any).is_admin) {
+            return NextResponse.redirect(
+                new URL(`/en${req.nextUrl.pathname}`, req.url)
+            );
+        }
 
-    // if (
-    //     !(session?.user as any).is_admin &&
-    //     (req.nextUrl.locale == "en" ? "english" : "arabic") !=
-    //         (session?.user as any).lang
-    // ) {
-    //     if ((session?.user as any).lang == "english") {
-    //         return NextResponse.redirect(
-    //             new URL(`/en${req.nextUrl.pathname}`, req.url)
-    //         );
-    //     } else {
-    //         return NextResponse.redirect(
-    //             new URL(`/ar${req.nextUrl.pathname}`, req.url)
-    //         );
-    //     }
-    // }
+        if (
+            !(session?.user as any).is_admin &&
+            (req.nextUrl.locale == "en" ? "english" : "arabic") !=
+                (session?.user as any).lang
+        ) {
+            if ((session?.user as any).lang == "arabic") {
+                console.log("arabic bkick");
+                return NextResponse.redirect(
+                    new URL(`/ar${req.nextUrl.pathname}`, req.url)
+                );
+            } else {
+                console.log("englisn block");
+                console.log(req.nextUrl.pathname);
+                return NextResponse.redirect(
+                    new URL(`${req.nextUrl.pathname}`, req.url)
+                );
+            }
+        }
+    } else {
+        return NextResponse.redirect(
+            new URL("/auth/gate?please-log-in", req.url),
+            {
+                statusText: "Unauthorized.",
+            }
+        );
+    }
 
     return res;
 };

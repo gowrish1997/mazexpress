@@ -5,11 +5,11 @@ import StatLiveOrdres from "@/components/admin/MazStats/StatLiveOrdres";
 import TotalCustomer from "@/components/admin/MazStats/TotalCustomer";
 import TotalOrders from "@/components/admin/MazStats/TotalOrders";
 import WarehouseOrders from "@/components/admin/MazStats/WarehouseOrders";
-import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
 const AdminHome = () => {
     const router = useRouter();
     const { locales, locale: activeLocale } = router;
@@ -23,6 +23,7 @@ const AdminHome = () => {
                     here’s what’s happening at your warehouse
                 </span>
             </p>
+
             <div className="flex-type3 gap-x-[10px] z-20 ">
                 <TotalOrders />
                 <TotalCustomer />

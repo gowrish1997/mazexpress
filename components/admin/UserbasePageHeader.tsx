@@ -27,6 +27,7 @@ interface IProp {
     createdDateFilterKey?: string | Date;
     // filterByUser:(value:string)=>void
     mutateUser?: KeyedMutator<APIResponse<User>>;
+    setSelectedUser?: React.Dispatch<React.SetStateAction<User[]>>;
 }
 
 const UserbasePageHeader = (props: IProp) => {
@@ -47,7 +48,7 @@ const UserbasePageHeader = (props: IProp) => {
         for (let i = 0; i < props.selectedUser?.length; i++) {
             try {
                 const updateRes = await fetchJson(
-                    `/api/users/${(props.selectedUser[i] as User).email}`,
+                    `/api/admin/${(props.selectedUser[i] as User).email}`,
                     {
                         method: "DELETE",
                         headers: { "Content-Type": "application/json" },
@@ -59,6 +60,7 @@ const UserbasePageHeader = (props: IProp) => {
             }
         }
         if (sendSuccessNotification) {
+            props.setSelectedUser?.([]);
             props.mutateUser?.();
             createToast({
                 type: "success",

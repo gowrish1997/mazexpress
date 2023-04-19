@@ -63,7 +63,7 @@ const Settings = () => {
     const { t } = useTranslation("common");
     const { locale } = router;
     const { data: session, update }: { data: any; update: any } = useSession();
-    console.log(session);
+
     const [passwordCheck, setPasswordCheck] = useState(false);
     const inputFieldLabels: string[] = t(
         "settingsPage.profileForm.InputFieldLabel",
@@ -251,8 +251,14 @@ const Settings = () => {
             createToast({
                 type: "success",
                 title: locale == "en" ? "success" : "نجاح",
-                message: locale == "en" ? "Updated user." : "مستخدم محدث.",
+                message:
+                    locale == "en"
+                        ? "User information updated"
+                        : "تم تحديث معلومات المستخدم",
             });
+            if (session.user.lang != sendObj.lang) {
+                router.reload();
+            }
         } catch (err) {
             console.log(err);
             createToast({
@@ -500,7 +506,7 @@ const Settings = () => {
                                 className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
                             />
                         </div>
-                        <div className="flex-type3 w-full space-x-[20px] mt-[10px] ">
+                        <div className="flex-type3 w-1/2 mt-[10px] ">
                             <div className="font-[500]">
                                 <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">
                                     {t(

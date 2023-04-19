@@ -122,6 +122,7 @@ const AdminBase = () => {
                     createdDateFilterKey={createdDateFilterKey}
                     isFilterPresent={searchKey || createdDateFilterKey}
                     mutateUser={mutateUsers}
+                    setSelectedUser={setSelectedUser}
                 />
                 <div className="flex flex-col justify-between relative flex-1 h-full">
                     {!users?.data && !searchKey && !createdDateFilterKey ? (

@@ -37,7 +37,7 @@ const MyOrders = () => {
         page: currentPage,
         date: getDateInDBFormat(createdDateFilterKey as Date),
     });
-    console.log(orders);
+
     const { orderCount, mutateOrderCount } = useOrderCount({
         // status: statusSelection as string[],
         status: [

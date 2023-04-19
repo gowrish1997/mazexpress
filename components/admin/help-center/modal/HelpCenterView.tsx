@@ -74,11 +74,11 @@ const HelpCenterView = (props: IProp) => {
                                         {data.comments}
                                     </p>
                                 </div> */}
-                <p className="text-[14px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
+                <p className="text-[14px] text-[#35c6f4] font-[500] leading-[17px] mt-[7px] ">
                   Address:
                   <span className="font-[700] text-[#2B2B2B]">{` ${data.address_1}, ${data.address_2}, ${data.city}, ${data.country}`}</span>
                 </p>
-                <p className="text-[14px] text-[#8794AD] font-[500] leading-[17px] mt-[7px] ">
+                <p className="text-[14px] text-[#35c6f4] font-[500] leading-[17px] mt-[7px] ">
                   Write us on:
                   <span className="font-[700] text-[#2B2B2B]">
                     {` ${data.email}`}

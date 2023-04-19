@@ -1,22 +1,25 @@
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FieldError } from "react-hook-form";
 import { GetServerSidePropsContext } from "next";
-import useAuthorization from "@/lib/hooks/useAuthorization";
+
 import fetchJson from "@/lib/fetchServer";
 import { APIResponse } from "@/models/api.model";
+import { constants } from "buffer";
+import { createToast } from "@/lib/toasts";
 
 interface IProp {
+    id?: string;
     per_kg: number;
     factor: number;
     name: string;
     status: string;
 }
-
+    
 const schema = yup
     .object({
         per_kg: yup
@@ -33,27 +36,21 @@ const schema = yup
     .required();
 
 const ShippingCost = () => {
-    const { status: rank, is_loading: rank_is_loading } = useAuthorization();
+    const [config, setConfig] = useState({});
     const {
         register,
         handleSubmit,
         setValue,
         getValues,
         control,
+        reset,
         formState: { errors },
     } = useForm<IProp>({
         resolver: yupResolver(schema),
-
-        defaultValues: {
-            per_kg: 3,
-            factor: 5000,
-            name: "christmas config",
-            status: "active",
-        },
+        defaultValues: config,
     });
 
     useEffect(() => {
-        console.log("useEffect");
         const getShippingConfig = async () => {
             const response: APIResponse<unknown> = await fetchJson(
                 `/api/shipping/configs`,
@@ -61,10 +58,11 @@ const ShippingCost = () => {
                     method: "GET",
                 }
             );
-            console.log(response.data);
+
+            reset(response.data[0]);
         };
         getShippingConfig();
-    }, []);
+    }, [reset]);
 
     const submitHandler = async (data: IProp) => {
         console.log(data);
@@ -81,28 +79,35 @@ const ShippingCost = () => {
          *
          * sample call
          */
-
-        const response: APIResponse<unknown> = await fetchJson(
-            `/api/shipping/set`,
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    per_kg: data.per_kg,
-                    factor: data.factor,
-                    name: data.name,
-                    status: data.status,
-                }),
+        try {
+            const response: APIResponse<unknown> = await fetchJson(
+                `/api/shipping/set`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        data: {
+                            per_kg: data.per_kg,
+                            factor: data.factor,
+                            name: data.name,
+                            status: "active",
+                        },
+                        id: data.id,
+                    }),
+                }
+            );
+            if (response.ok) {
+                createToast({
+                    type: "success",
+                    message: "Shipping cost configuration edit successful",
+                    title: "Success",
+                    timeOut: 1000,
+                });
             }
-        );
-        console.log(response.data);
+        } catch (error) {
+            console.error(error.message);
+        }
     };
-    // if (rank_is_loading) {
-    //     return <div>content authorization in progress..</div>;
-    // }
-
-    // if (!rank_is_loading && rank !== "admin") {
-    //     return <div>401 - Unauthorized</div>;
-    // }
 
     return (
         <div>

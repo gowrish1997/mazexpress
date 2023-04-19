@@ -20,7 +20,7 @@ const AdminOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
     const actionHandler = async () => {
         try {
             const updateRes = await fetchServer(
-                `/api/users/${(props.row as User).email}`,
+                `/api/admin/${(props.row as User).email}`,
                 {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },

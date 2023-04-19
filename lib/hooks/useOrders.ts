@@ -19,7 +19,6 @@ interface IProps {
 }
 export default function useOrders(props: IProps) {
     const qs = new QS(props);
-    console.log(qs)
 
     const {
         data: orders,
@@ -35,7 +34,7 @@ export default function useOrders(props: IProps) {
         {
             revalidateOnFocus: false,
             revalidateOnReconnect: true,
-            revalidateIfStale:true,
+            revalidateIfStale: true,
             revalidateOnMount: true,
         }
     );

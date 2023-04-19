@@ -35,7 +35,7 @@ export default function useNotifications(props: IProps) {
   // } = useSWR<APIResponse<Notification>>(`/api/notifications` + qs.stringified);
   // console.log(notifications);
   return {
-    notifications: notifications?.data as Notification[],
+    notifications: notifications,
     mutateNotifications,
     notificationsIsLoading,
   };

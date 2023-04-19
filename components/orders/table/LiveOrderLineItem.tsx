@@ -9,10 +9,9 @@ import GreenRadioButton from "../../../public/green_svg.svg";
 import GreyRadioButton from "../../../public/grey_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
-// import { getUserImageString } from "@/lib/utils";
 import DeliveryDateChangeModal from "@/components/admin/modal/DeliveryDateChangeModal";
 import OrderDetailModal from "@/components/admin/modal/OrderDetailModal";
-
+import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import { APIResponse } from "@/models/api.model";
 import { KeyedMutator } from "swr";
 interface IProp {
@@ -34,6 +33,7 @@ const LiveOrderLineItem = (props: IProp) => {
     const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
     const [showdeliveryDateChangeModal, setShowDeliveryDateChangeModal] =
         useState(false);
+    const [showBillUpdateModal, setShowBillUpdateModal] = useState(false);
 
     useEffect(() => {
         if (tracking !== undefined && tracking !== null) {
@@ -49,6 +49,9 @@ const LiveOrderLineItem = (props: IProp) => {
 
     const toggleDeliveryDateChangeModal = () => {
         setShowDeliveryDateChangeModal((prev) => !prev);
+    };
+    const toggleBillUpdateModal = () => {
+        setShowBillUpdateModal((prev) => !prev);
     };
 
     const warehouseStatusHandler = () => {
@@ -228,6 +231,7 @@ const LiveOrderLineItem = (props: IProp) => {
                                 stage={packageStatus}
                                 orderDetail={toggleOrderDetailModal}
                                 deliveryDetail={toggleDeliveryDateChangeModal}
+                                billDetail={toggleBillUpdateModal}
                                 mutateOrder={props.mutateOrder}
                             />
                         )}
@@ -245,6 +249,13 @@ const LiveOrderLineItem = (props: IProp) => {
                     close={toggleDeliveryDateChangeModal}
                     row={props.row}
                     mutateOrder={props.mutateOrder}
+                />
+            )}
+            {showBillUpdateModal && (
+                <CreateNotificationModal
+                    type="bill update"
+                    close={toggleBillUpdateModal}
+                    order={props.row}
                 />
             )}
         </>

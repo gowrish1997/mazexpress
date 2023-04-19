@@ -1,28 +1,25 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import CustomDropdown from "@/components/LandingPage/CustomDropdown";
 import PageHeader from "@/components/common/PageHeader";
-import ReactSwitch from "react-switch";
-import Image from "next/image";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import ProfilePicPop from "@/components/common/ProfilePicPop";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
 import Layout from "@/components/layout";
-import CustomDropdown from "@/components/LandingPage/CustomDropdown";
-
-import { useRouter } from "next/router";
-import { createToast } from "@/lib/toasts";
-import ProfilePicPop from "@/components/common/ProfilePicPop";
-import blueExclamatory from "@/public/blueExclamatory.png";
-import { User } from "@/models/user.model";
-import { i18n } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { checkPassword } from "@/lib/utils";
-import { useTranslation } from "next-i18next";
 import fetchJson from "@/lib/fetchServer";
+import { createToast } from "@/lib/toasts";
+import { checkPassword } from "@/lib/utils";
+import { User } from "@/models/user.model";
+import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
+import { i18n, useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import ReactSwitch from "react-switch";
+import * as yup from "yup";
 const schema = yup
     .object({
         first_name: yup.string().required("First name is required"),
@@ -435,7 +432,7 @@ const Settings = () => {
                                 )}
                             />
                         </div>
-                        <div className="flex-type1 w-full space-x-[20px]">
+                        <div className="flex-type1 w-1/2 space-x-[20px]">
                             <Controller
                                 name="phone"
                                 control={control}
@@ -451,7 +448,7 @@ const Settings = () => {
                                 )}
                             />
 
-                            <CustomDropdown
+                            {/* <CustomDropdown
                                 label={inputFieldLabels[6]}
                                 name="lang"
                                 type="string"
@@ -463,9 +460,9 @@ const Settings = () => {
                                 setValue={setValue}
                                 disabled={true}
                                 className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
-                            />
+                            /> */}
                         </div>
-                        <div className="flex-type3 w-full space-x-[20px] mt-[10px] ">
+                        <div className="flex-type3 w-1/2  mt-[10px] ">
                             <div className="font-[500]">
                                 <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">
                                     Notifications
@@ -482,7 +479,7 @@ const Settings = () => {
                                 render={({ field: { onChange, value } }) => (
                                     <ReactSwitch
                                         onChange={onChange}
-                                        checked={value as boolean}
+                                        checked={value ? value : false}
                                         checkedIcon={false}
                                         uncheckedIcon={false}
                                         width={36}

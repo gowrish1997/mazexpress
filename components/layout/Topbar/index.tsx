@@ -3,7 +3,6 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import React, { SyntheticEvent, useRef, useState } from "react";
-
 import { SearchKeyContext } from "@/components/common/Frame";
 import NotificationView from "@/components/common/NotificationView";
 import useNotifications from "@/lib/hooks/useNotifications";
@@ -29,9 +28,8 @@ const Topbar = () => {
             username: session?.user?.email,
             status: ["unread"],
             page: 1,
-            per_page: 25,
+            per_page: 1,
         });
-    console.log(notifications);
 
     const [showNotifications, setShowNotifications] = useState(false);
 
@@ -95,9 +93,10 @@ const Topbar = () => {
                         onClick={toggleNotificationsHandler}
                         ref={trigger}
                     >
-                        {notifications && notifications?.length > 0 && (
-                            <span className="rounded-full block top-[3px] h-[7px] w-[7px] right-[34.5px] bg-[#FF2323] absolute"></span>
-                        )}
+                        {notifications?.data &&
+                            notifications?.data?.length > 0 && (
+                                <span className="rounded-full block top-[3px] h-[7px] w-[7px] right-[34.5px] bg-[#FF2323] absolute"></span>
+                            )}
                         <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
                             <Bell className="bell_svg" />
                         </div>
