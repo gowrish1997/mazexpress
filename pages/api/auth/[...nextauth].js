@@ -19,7 +19,7 @@ export default NextAuth({
                 );
 
                 const user = await res.json();
-                console.log(user);
+
                 if (user.data) {
                     return user.data[0];
                 } else {
