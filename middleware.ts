@@ -8,7 +8,7 @@ export const middleware = async (req: NextRequest) => {
     const res = NextResponse.next();
     const session = await getSession(req);
     // const currentLocale = i18n
-    console.log("middleware",i18n);
+    console.log("middleware", i18n);
 
     if (session) {
         console.log("Iam inside session");
@@ -20,13 +20,13 @@ export const middleware = async (req: NextRequest) => {
         }
 
         // comment to let user on all routes
-        // if (!(session?.user as any).is_admin) {
-        //     if (req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
+        if (!(session?.user as any).is_admin) {
+            if (req.nextUrl.pathname.startsWith("/admin")) {
+                return NextResponse.redirect(new URL("/", req.url), {
+                    statusText: "Unauthorized.",
+                });
+            }
+        }
 
         // comment to let admin on all routes
         if ((session?.user as any).is_admin) {
