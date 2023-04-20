@@ -5,9 +5,9 @@ import { i18n } from "next-i18next";
 
 // import { isAuthenticated } from "./lib/utils";
 export const middleware = async (req: NextRequest) => {
+    console.log("running middleware");
     const res = NextResponse.next();
     const session = await getSession(req);
-    console.log(session);
 
     if (session) {
         // user is present do not allow login page
@@ -18,13 +18,13 @@ export const middleware = async (req: NextRequest) => {
         }
 
         // comment to let user on all routes
-        // if (!(session?.user as any).is_admin) {
-        //     if (req.nextUrl.pathname.startsWith("/admin")) {
-        //         return NextResponse.redirect(new URL("/", req.url), {
-        //             statusText: "Unauthorized.",
-        //         });
-        //     }
-        // }
+        if (!(session?.user as any).is_admin) {
+            if (req.nextUrl.pathname.startsWith("/admin")) {
+                return NextResponse.redirect(new URL("/", req.url), {
+                    statusText: "Unauthorized.",
+                });
+            }
+        }
 
         // comment to let admin on all routes
         if ((session?.user as any).is_admin) {

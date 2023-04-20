@@ -15,6 +15,7 @@ import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
 import { i18n, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { getSession } from "@/lib/selectOrder";
 
 const MyOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as any;
@@ -156,6 +157,23 @@ export default MyOrders;
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
+    }
+    const session = await getSession(ctx.req);
+    // const { pathname } = ctx.req.url;
+
+    if (
+        (ctx.locale == "en" ? "english" : "arabic") !=
+        (session?.user as any).lang
+    ) {
+        return {
+            redirect: {
+                destination:
+                    (session?.user as any).lang === "english"
+                        ? `${ctx.resolvedUrl}`
+                        : `/ar${ctx.resolvedUrl}`,
+                permanent: false,
+            },
+        };
     }
     return {
         props: {
