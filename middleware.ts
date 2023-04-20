@@ -18,13 +18,13 @@ export const middleware = async (req: NextRequest) => {
         }
 
         // comment to let user on all routes
-        if (!(session?.user as any).is_admin) {
-            if (req.nextUrl.pathname.startsWith("/admin")) {
-                return NextResponse.redirect(new URL("/", req.url), {
-                    statusText: "Unauthorized.",
-                });
-            }
-        }
+        // if (!(session?.user as any).is_admin) {
+        //     if (req.nextUrl.pathname.startsWith("/admin")) {
+        //         return NextResponse.redirect(new URL("/", req.url), {
+        //             statusText: "Unauthorized.",
+        //         });
+        //     }
+        // }
 
         // comment to let admin on all routes
         if ((session?.user as any).is_admin) {

@@ -169,12 +169,6 @@ const LogInComponent = (props: any) => {
                     )}
                 />
 
-                <button
-                    className="text-[14px] text-[#35C6F4] font-[500] leading-[13px] cursor-pointer"
-                    onClick={() => props.switch(2)}
-                >
-                    {inputFieldLabel[2]}
-                </button>
                 <div className="flex flex-col items-center w-full space-x-[10px]">
                     <button
                         type="submit"
@@ -182,8 +176,14 @@ const LogInComponent = (props: any) => {
                     >
                         {submitButtons[0]}
                     </button>
-                    <LogInWithMail />
+                    {/* <LogInWithMail /> */}
                 </div>
+                <button
+                    className="text-[14px] text-[#35C6F4] font-[500] leading-[13px] cursor-pointer"
+                    onClick={() => props.switch(2)}
+                >
+                    {inputFieldLabel[2]}
+                </button>
                 <div className="w-full text-center text-[14px] text-[#8794AD] font-[500] leading-[13px] space-y-[16px] ">
                     <p className="">
                         {description[2]}

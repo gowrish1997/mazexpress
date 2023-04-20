@@ -175,8 +175,8 @@ const SignUpContent = (props: IProp) => {
                 // toast
                 createToast({
                     type: "success",
-                    title: "New user created.",
-                    message: "Please log in with your new login credentials",
+                    title: "your registration has been successfully completed",
+                    message: "Please log in with your login credentials",
                     timeOut: 3000,
                 });
 
