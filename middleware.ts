@@ -11,6 +11,7 @@ export const middleware = async (req: NextRequest) => {
     console.log("middleware",i18n);
 
     if (session) {
+        console.log("Iam inside session");
         // user is present do not allow login page
         if (req.nextUrl.pathname.startsWith("/auth")) {
             return NextResponse.redirect(new URL("/", req.url), {

@@ -21,7 +21,6 @@ const MyOrders = () => {
     // console.log(searchKey);
 
     const [itemsPerPage, setItemPerPage] = useState<number>(25);
-      console.log(i18n)
 
     const [currentPage, setCurrentPage] = useState(0);
 
