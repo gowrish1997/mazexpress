@@ -28,7 +28,7 @@ const schema = yup
 const LogInComponent = (props: any) => {
     const router = useRouter();
     const { t } = useTranslation("");
-const { locale } = router;
+    const { locale } = router;
     const [errorMsg, setErrorMsg] = useState("");
     // const jet: AuthManager = useContext(AuthCTX)["jet"];
     // const { status: googleStatus } = useGoogle({});
@@ -63,7 +63,11 @@ const { locale } = router;
                 username: data.username,
                 password: data.password,
 
-                callbackUrl: "http://localhost:3000",
+                callbackUrl: `${
+                    process.env.NODE_ENV !== "production"
+                        ? `http://localhost:3000/`
+                        : `https://${process.env.NEXT_PUBLIC_HOST}/`
+                }`,
                 redirect: false,
             });
             if (returnDate.ok) {
@@ -72,27 +76,6 @@ const { locale } = router;
                 console.log(returnDate);
                 throw new Error(returnDate.error);
             }
-
-            // await jet.login(data.username, data.password, (err, user) => {
-            //   if (err) throw err;
-            //   if (!user) {
-            //     createToast({
-            //       type: "error",
-            //       message: "login failed",
-            //       title: "Error",
-            //       timeOut: 2000,
-            //     });
-            //   } else {
-            //     if ((user as IWhiteListedUser).is_admin) {
-
-            //       router.push("/admin");
-            //       set_active_user(user as IWhiteListedUser);
-            //     } else {
-            //       router.push("/orders");
-            //       set_active_user(user as IWhiteListedUser);
-            //     }
-            //   }
-            // });
         } catch (error) {
             console.log(error);
             createToast({

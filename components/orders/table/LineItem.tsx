@@ -1,15 +1,15 @@
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import OrderOptionModal from "../modal/OrderOptionModal";
 import { getDateInStringFormat } from "@/lib/helper";
 import useTracking from "@/lib/hooks/useTracking";
 import { Order } from "@/models/order.model";
 import { Tracking } from "@/models/tracking.model";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import GreenRadioButton from "../../../public/green_svg.svg";
 import GreyRadioButton from "../../../public/grey_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
+import OrderOptionModal from "../modal/OrderOptionModal";
 
 interface IProp {
     row: Order;
@@ -18,6 +18,7 @@ interface IProp {
 
 const LineItem = (props: IProp) => {
     //   console.log(props.row);
+ 
     const trigger = useRef<any>();
 
     //   console.log(addresses);
@@ -87,7 +88,7 @@ const LineItem = (props: IProp) => {
                 )}
             </td>
             <td className={`td5 `} style={{}}>
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row items-center gap-x-[5px]">
                     <span className="address_td capitalize ">
                         {props.row.address.city}
                     </span>
@@ -100,7 +101,7 @@ const LineItem = (props: IProp) => {
                 </div>
             </td>
             <td className={`td6 `}>
-                <div className="h-full flex flex-ropw justify-start items-center ">
+                <div className="h-full flex flex-row justify-start items-center gap-x-[5px] ">
                     <div className="pending__icon">
                         {orderStatusColorHandler(props.row.status)}
                     </div>

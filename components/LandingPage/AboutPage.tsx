@@ -1,10 +1,9 @@
-import React from "react";
-import Image from "next/image";
-import Profile from "../../public/image.png";
-import HomePageWrapper from "../common/HomePageWrapper";
-import Icon from "../../public/Icon.png";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React from "react";
+import Icon from "../../public/Icon.png";
+import Profile from "../../public/image.png";
 
 const About = React.forwardRef<HTMLDivElement>((props, ref) => {
     const router = useRouter();
@@ -17,7 +16,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
 
     return (
         <div
-            className="w-full flex flex-col  justify-start items-center"
+            className="w-full flex flex-col  justify-start items-center pb-[70px]"
             ref={ref}
         >
             <div className="bg-[#35C6F4] w-full mt-[60px] flex flex-row justify-center ">
@@ -42,23 +41,24 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
                     <Image src={Line} fill alt="line" />
                 </div>
             </div> */}
-
-            <div className="w-[80%] mt-[70px] flex flex-row justify-start items-start flex-wrap  gap-x-[120px]">
-                {content.map((data, index) => {
-                    return (
-                        <div
-                            key={index}
-                            className="w-[100%] xmd:w-[43%]  mt-[40px] flex flex-row justify-start items-start gap-x-[5px] "
-                        >
-                            <div className="relative h-[22px] w-[22px] ">
-                                <Image src={Icon} fill alt="imag" />
+            <div className="w-full bg-[#F9FDFF] flex flex-row justify-center ">
+                <div className="w-[80%] mt-[70px] flex flex-row justify-start items-start flex-wrap  gap-x-[120px] ">
+                    {content.map((data, index) => {
+                        return (
+                            <div
+                                key={index}
+                                className="w-[100%] xmd:w-[43%]  mt-[40px] flex flex-row justify-start items-start gap-x-[5px] "
+                            >
+                                <div className="relative h-[22px] w-[22px] ">
+                                    <Image src={Icon} fill alt="imag" />
+                                </div>
+                                <p className="flex-1 text-[18px] text-[#090914] leading-[27px] font-[500] -mt-[5px] font-manRope">
+                                    {data}
+                                </p>
                             </div>
-                            <p className="flex-1 text-[18px] text-[#090914] leading-[27px] font-[500] -mt-[5px] font-manRope">
-                                {data}
-                            </p>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

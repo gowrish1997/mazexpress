@@ -4,11 +4,9 @@ import { NotificationConfig } from "@/models/notification-config.model";
 import {
   faPen,
   faRocket,
-  faTrash,
-  faTrashAlt,
+  faTrash
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
 import ReactSwitch from "react-switch";
 
 interface IProp {

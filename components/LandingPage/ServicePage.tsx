@@ -1,13 +1,12 @@
-import React from "react";
-import Image from "next/image";
-import Truck from "../../public/truck.png";
-import Cloud from "../../public/cloud.png";
-import Ship from "../../public/ship.png";
-import Location from "../../public/blue_location.png";
-import Warehouse from "../../public/blue_warehouse.png";
-import Vehicle from "../../public/blue_vehicle.png";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React from "react";
+import Location from "../../public/blue_location.png";
+import Vehicle from "../../public/blue_vehicle.png";
+import Warehouse from "../../public/blue_warehouse.png";
+import Ship from "../../public/ship.png";
+import Truck from "../../public/truck.png";
 
 const pngImages = [Warehouse, Vehicle, Location, Ship];
 
@@ -25,7 +24,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
 
     return (
         <div
-            className="w-full bg-[#F9FDFF] mt-[30px] flex flex-col  justify-start items-center  py-[70px] "
+            className="w-full bg-[#F9FDFF] mt-[30px] flex flex-col  justify-start items-center py-[70px] "
             ref={ref}
         >
             <div className="w-[80%] flex flex-row justify-between items-start  gap-x-[50px]">

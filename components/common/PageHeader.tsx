@@ -103,7 +103,7 @@ const PageHeader = (props: IProp) => {
                     />
                     <div className="relative flex-type1 gap-x-[10px]">
                         <div
-                            className="flex-type1 border-[1px] border-[#BBC2CF] rounded-[4px] ml-[10px] py-[7px] px-[10px] space-x-[10px] cursor-pointer "
+                            className="flex-type1 border-[1px] border-[#BBC2CF] rounded-[4px] ml-[10px] py-[7px] px-[10px] gap-x-[10px] cursor-pointer "
                             onClick={toggleCalender}
                             ref={trigger}
                         >
@@ -125,14 +125,11 @@ const PageHeader = (props: IProp) => {
                             <ClickOutside
                                 trigger={trigger}
                                 handler={toggleCalender}
+                                className={`absolute top-[50px] ${
+                                    locale == "en" ? "right-[0px]" : "left-0"
+                                } z-40 `}
                             >
-                                <div
-                                    className={`absolute top-[50px] ${
-                                        locale == "en"
-                                            ? "right-0"
-                                            : " mr-[250px]"
-                                    }  bg-white rounded shadow z-40 p-5`}
-                                >
+                                <div className={`bg-white rounded shadow p-5`}>
                                     <Calendar
                                         onChange={calendarChange}
                                         // value={calendarValue}

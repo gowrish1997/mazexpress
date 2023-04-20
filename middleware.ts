@@ -1,11 +1,14 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getSession } from "./lib/selectOrder";
+import { i18n } from "next-i18next";
 
 // import { isAuthenticated } from "./lib/utils";
 export const middleware = async (req: NextRequest) => {
     const res = NextResponse.next();
     const session = await getSession(req);
+    // const currentLocale = i18n
+    console.log("middleware",i18n);
 
     if (session) {
         // user is present do not allow login page
@@ -39,24 +42,25 @@ export const middleware = async (req: NextRequest) => {
             );
         }
 
-        if (
-            !(session?.user as any).is_admin &&
-            (req.nextUrl.locale == "en" ? "english" : "arabic") !=
-                (session?.user as any).lang
-        ) {
-            if ((session?.user as any).lang == "arabic") {
-                console.log("arabic bkick");
-                return NextResponse.redirect(
-                    new URL(`/ar${req.nextUrl.pathname}`, req.url)
-                );
-            } else {
-                console.log("englisn block");
-                console.log(req.nextUrl.pathname);
-                return NextResponse.redirect(
-                    new URL(`${req.nextUrl.pathname}`, req.url)
-                );
-            }
-        }
+        // if (
+        //     !(session?.user as any).is_admin &&
+        //     (req.nextUrl.locale == "en" ? "english" : "arabic") !=
+        //         (session?.user as any).lang
+        // ) {
+        //     const currentLocale = i18n.language;
+        //     console.log(currentLocale);
+        // if ((session?.user as any).lang == "arabic") {
+        //     return NextResponse.redirect(
+        //         new URL(`/ar${req.nextUrl.pathname}`, req.url)
+        //     );
+        // } else {
+        //     console.log(req.nextUrl.locale,(session?.user as any).lang);
+        //     console.log(req.nextUrl.pathname);
+        //     return NextResponse.redirect(
+        //         new URL(`${req.nextUrl.pathname}`, req.url)
+        //     );
+        // }
+        // }
     } else {
         return NextResponse.redirect(
             new URL("/auth/gate?please-log-in", req.url),

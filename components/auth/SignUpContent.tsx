@@ -1,5 +1,8 @@
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { admin_registerBodyContent, user_registerBodyContet } from "@/lib/emailContent/bodyContent";
+import {
+    admin_registerBodyContent,
+    user_registerBodyContet,
+} from "@/lib/emailContent/bodyContent";
 import fetchServer from "@/lib/fetchServer";
 import { sentMail } from "@/lib/sentMail";
 import { createToast } from "@/lib/toasts";
@@ -328,6 +331,18 @@ const SignUpContent = (props: IProp) => {
                     />
                 )}
             />
+            <CustomDropdown
+                label={inputFieldLabel[12]}
+                name="addr.city"
+                type="string"
+                IconEnabled={true}
+                register={register("addr.city")}
+                error={errors.addr?.city?.message}
+                value={getValues("addr.city")}
+                setValue={setValue}
+                options={cityOption}
+                // disabled={true}
+            />
             <Controller
                 name="user.password"
                 control={control}
@@ -373,13 +388,13 @@ const SignUpContent = (props: IProp) => {
                 )}
             />
 
-            <ReactHookFormInput
+            {/* <ReactHookFormInput
                 label={inputFieldLabel[8]}
                 name="addr.tag"
                 type="string"
                 register={register("addr.tag")}
                 error={errors.addr?.tag}
-            />
+            /> */}
 
             <div className="flex-type2 gap-x-[10px] w-full">
                 <ReactHookFormInput
@@ -390,34 +405,22 @@ const SignUpContent = (props: IProp) => {
                     error={errors.addr?.address_1}
                 />
 
-                <ReactHookFormInput
+                {/* <ReactHookFormInput
                     label={inputFieldLabel[10]}
                     name="addr.address_2"
                     type="string"
                     register={register("addr.address_2")}
                     error={errors.addr?.address_2}
-                />
+                /> */}
             </div>
             <div className="flex-type2 gap-x-[10px] w-full">
-                <ReactHookFormInput
+                {/* <ReactHookFormInput
                     label={inputFieldLabel[11]}
                     name="addr.phone"
                     type="string"
                     register={register("addr.phone")}
                     error={errors.addr?.phone}
-                />
-                <CustomDropdown
-                    label={inputFieldLabel[12]}
-                    name="addr.city"
-                    type="string"
-                    IconEnabled={true}
-                    register={register("addr.city")}
-                    error={errors.addr?.city?.message}
-                    value={getValues("addr.city")}
-                    setValue={setValue}
-                    options={cityOption}
-                    // disabled={true}
-                />
+                /> */}
             </div>
             {props.type == "signUp" ? (
                 <button

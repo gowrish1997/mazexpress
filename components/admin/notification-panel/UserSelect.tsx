@@ -14,7 +14,8 @@ interface IProp {
 }
 
 const UserSelect = (props: IProp) => {
-    const { users, mutateUsers } = useUsers({});
+    const [searchKey, setSearchKey] = useState("");
+    const { users, mutateUsers } = useUsers({ search: searchKey });
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
     const [filteredUsers, setFilteredUsers] = useState<User[]>();
     const [markAll, setMarkAll] = useState<boolean>(false);
@@ -35,13 +36,14 @@ const UserSelect = (props: IProp) => {
         setShowDropdown(false);
     };
 
-    const filteredUsersHandler = (e) => {
-        const data = (users.data as User[])?.filter((data) => {
-            return data.email
-                .toLowerCase()
-                .includes(e.target.value.toLowerCase());
-        });
-        setFilteredUsers(data);
+    const filteredUsersHandler = (e: any) => {
+        // const data = (users.data as User[])?.filter((data) => {
+        //     return data.email
+        //         .toLowerCase()
+        //         .includes(e.target.value.toLowerCase());
+        // });
+        // setFilteredUsers(data);
+        setSearchKey(e.target.value);
     };
 
     const updateSelectedUsers = (e: any, id: string) => {
@@ -157,7 +159,8 @@ const UserSelect = (props: IProp) => {
                             </p>
                             {props.selectedUsers?.length > 1 ? (
                                 <p className="text-[#35C6F4] text-[14px]">
-                                    + {props.selectedUsers?.length - 1} customers
+                                    + {props.selectedUsers?.length - 1}{" "}
+                                    customers
                                 </p>
                             ) : null}
                         </div>

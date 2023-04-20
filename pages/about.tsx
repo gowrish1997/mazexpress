@@ -3,11 +3,10 @@
 //     co-author: raunak
 //==========================
 
-import React, { useState, useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { useRouter } from "next/router";
 
-import { useTranslation } from "next-i18next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
