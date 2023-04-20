@@ -7,8 +7,6 @@ import { i18n } from "next-i18next";
 export const middleware = async (req: NextRequest) => {
     const res = NextResponse.next();
     const session = await getSession(req);
-    // const currentLocale = i18n
-    console.log("middleware", i18n);
 
     if (session) {
         console.log("Iam inside session");
@@ -63,6 +61,7 @@ export const middleware = async (req: NextRequest) => {
         // }
         // }
     } else {
+        console.log("outside else condition");
         return NextResponse.redirect(
             new URL("/auth/gate?please-log-in", req.url),
             {
