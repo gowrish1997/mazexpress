@@ -4,12 +4,7 @@
 //==========================
 
 import Image from "next/image";
-import React, {
-    ReactNode,
-    useEffect,
-    useRef,
-    useState
-} from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 import LanguageSwitcher from "@/components/LandingPage/LanguageSwitcher";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
