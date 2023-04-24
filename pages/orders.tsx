@@ -71,6 +71,18 @@ const MyOrders = () => {
         document.querySelector("html")?.setAttribute("dir", dir);
         document.querySelector("html")?.setAttribute("lang", lang);
     }, [router.locale]);
+    useEffect(() => {
+        if (!session) {
+            router.push("/auth/gate");
+        }
+        // if (
+        //     (ctx.locale == "en" ? "english" : "arabic") !=
+        //     (session?.user as any).lang
+        // ) {
+        // }
+        // if ((session?.user as any).is_admin) {
+        // }
+    }, []);
 
     const addNewOrderHandler = () => {
         router.push(`/add-new-order`);
@@ -158,39 +170,39 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
     }
-    const session = await getSession(ctx.req);
-    // const { pathname } = ctx.req.url;
-    if (!session) {
-        return {
-            redirect: {
-                destination: `/auth/gate?mode=1`,
-                permanent: false,
-            },
-        };
-    }
+    // const session = await getSession(ctx.req);
+    // // const { pathname } = ctx.req.url;
+    // if (!session) {
+    //     return {
+    //         redirect: {
+    //             destination: `/auth/gate?mode=1`,
+    //             permanent: false,
+    //         },
+    //     };
+    // }
 
-    if (
-        (ctx.locale == "en" ? "english" : "arabic") !=
-        (session?.user as any).lang
-    ) {
-        return {
-            redirect: {
-                destination:
-                    (session?.user as any).lang === "english"
-                        ? `${ctx.resolvedUrl}`
-                        : `/ar${ctx.resolvedUrl}`,
-                permanent: false,
-            },
-        };
-    }
-    if ((session?.user as any).is_admin) {
-        return {
-            redirect: {
-                destination: `/`,
-                permanent: false,
-            },
-        };
-    }
+    // if (
+    //     (ctx.locale == "en" ? "english" : "arabic") !=
+    //     (session?.user as any).lang
+    // ) {
+    //     return {
+    //         redirect: {
+    //             destination:
+    //                 (session?.user as any).lang === "english"
+    //                     ? `${ctx.resolvedUrl}`
+    //                     : `/ar${ctx.resolvedUrl}`,
+    //             permanent: false,
+    //         },
+    //     };
+    // }
+    // if ((session?.user as any).is_admin) {
+    //     return {
+    //         redirect: {
+    //             destination: `/`,
+    //             permanent: false,
+    //         },
+    //     };
+    // }
     return {
         props: {
             ...(await serverSideTranslations(ctx.locale, ["common"])),
