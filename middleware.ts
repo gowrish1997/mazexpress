@@ -8,7 +8,7 @@ export const middleware = async (req: NextRequest) => {
     const res = NextResponse.next();
     const session = await getSession(req);
 
-    if (true) {
+    if (session) {
         // user is present do not allow login page
         if (req.nextUrl.pathname.startsWith("/auth")) {
             return NextResponse.redirect(new URL("/", req.url), {
