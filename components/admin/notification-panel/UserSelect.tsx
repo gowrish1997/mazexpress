@@ -129,11 +129,17 @@ const UserSelect = (props: IProp) => {
                             <div className="w-7 h-7 rounded-full relative overflow-hidden">
                                 <Image
                                     src={
-                                        (users?.data as User[])?.find(
-                                            (el) =>
-                                                el.email ===
-                                                props.selectedUsers[0]
-                                        )?.avatar_url ||
+                                        `https://mazbackend.easydesk.work/user_uploads/` +
+                                            (users?.data as User[])
+                                                ?.find(
+                                                    (el) =>
+                                                        el.email ===
+                                                        props.selectedUsers[0]
+                                                )
+                                                ?.avatar_url?.replace(
+                                                    /['"]+/g,
+                                                    ""
+                                                ) ||
                                         "/user-images/default_user.png"
                                     }
                                     fill
@@ -239,7 +245,11 @@ const UserSelect = (props: IProp) => {
                                         <div className="w-10 h-10 rounded-full relative overflow-hidden">
                                             <Image
                                                 src={
-                                                    el.avatar_url ||
+                                                    `https://mazbackend.easydesk.work/user_uploads/` +
+                                                        el.avatar_url?.replace(
+                                                            /['"]+/g,
+                                                            ""
+                                                        ) ||
                                                     "/user-images/default_user.png"
                                                 }
                                                 fill

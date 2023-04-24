@@ -34,7 +34,9 @@ const RecentCustomers = () => {
                                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
                                     <Image
                                         src={
-                                            data?.avatar_url ||
+                                            `https://mazbackend.easydesk.work/user_uploads/` +
+                                                data?.avatar_url?.replace(
+                                                    /['"]+/g, "") ||
                                             "/user-images/default_user.png"
                                         }
                                         fill

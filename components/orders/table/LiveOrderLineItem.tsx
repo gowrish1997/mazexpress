@@ -145,8 +145,11 @@ const LiveOrderLineItem = (props: IProp) => {
                     <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
                         <Image
                             src={
-                                props.row.user?.avatar_url ||
-                                "/user-images/default_user.png"
+                                `https://mazbackend.easydesk.work/user_uploads/` +
+                                    props.row.user.avatar_url?.replace(
+                                        /['"]+/g,
+                                        ""
+                                    ) || "/user-images/default_user.png"
                             }
                             fill
                             style={{ objectFit: "cover" }}

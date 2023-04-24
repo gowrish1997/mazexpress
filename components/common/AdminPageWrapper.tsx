@@ -8,6 +8,7 @@ const AdminPageWrapper = (props) => {
 
     useEffect(() => {
         // const { pathname } = ctx.req.url;
+
         if (!session) {
             router.push(`/auth/gate?mode=1`);
         }

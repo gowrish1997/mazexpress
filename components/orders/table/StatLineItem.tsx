@@ -12,7 +12,6 @@ import { Tracking } from "@/models/tracking.model";
 import { User } from "@/models/user.model";
 import useUsers from "@/lib/hooks/useUsers";
 
-
 interface IProp {
     row: Order;
     type: string;
@@ -81,14 +80,15 @@ const StatLineItem = (props: IProp) => {
 
     return (
         <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
-            <td
-                className={`flex flex-row justify-start items-center`}
-            >
+            <td className={`flex flex-row justify-start items-center`}>
                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
                     <Image
                         src={
-                            props.row.user?.avatar_url ||
-                            "/user-images/default_user.png"
+                            `https://mazbackend.easydesk.work/user_uploads/` +
+                                props.row.user?.avatar_url?.replace(
+                                    /['"]+/g,
+                                    ""
+                                ) || "/user-images/default_user.png"
                         }
                         fill
                         style={{ objectFit: "cover" }}

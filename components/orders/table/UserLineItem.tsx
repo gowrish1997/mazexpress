@@ -17,7 +17,7 @@ const UserLineItem = (props: IProp) => {
     const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
         username: props.row.email,
     });
-
+    
     const genderHanlder = (gender: string) => {
         switch (gender) {
             case "m":
@@ -44,8 +44,11 @@ const UserLineItem = (props: IProp) => {
                         )}
                         <Image
                             src={
-                                (props.row as User).avatar_url ||
-                                "/user-images/default_user.png"
+                                `https://mazbackend.easydesk.work/user_uploads/` +
+                                    (props.row as User).avatar_url?.replace(
+                                        /['"]+/g,
+                                        ""
+                                    ) || "/user-images/default_user.png"
                             }
                             fill
                             style={{ objectFit: "cover" }}
