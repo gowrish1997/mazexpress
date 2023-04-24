@@ -5,11 +5,10 @@ import { i18n } from "next-i18next";
 
 // import { isAuthenticated } from "./lib/utils";
 export const middleware = async (req: NextRequest) => {
-    console.log("running middleware");
     const res = NextResponse.next();
     const session = await getSession(req);
 
-    if (session) {
+    if (true) {
         // user is present do not allow login page
         if (req.nextUrl.pathname.startsWith("/auth")) {
             return NextResponse.redirect(new URL("/", req.url), {

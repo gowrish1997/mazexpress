@@ -161,20 +161,20 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     const session = await getSession(ctx.req);
     // const { pathname } = ctx.req.url;
 
-    if (
-        (ctx.locale == "en" ? "english" : "arabic") !=
-        (session?.user as any).lang
-    ) {
-        return {
-            redirect: {
-                destination:
-                    (session?.user as any).lang === "english"
-                        ? `${ctx.resolvedUrl}`
-                        : `/ar${ctx.resolvedUrl}`,
-                permanent: false,
-            },
-        };
-    }
+    // if (
+    //     (ctx.locale == "en" ? "english" : "arabic") !=
+    //     (session?.user as any).lang
+    // ) {
+    //     return {
+    //         redirect: {
+    //             destination:
+    //                 (session?.user as any).lang === "english"
+    //                     ? `${ctx.resolvedUrl}`
+    //                     : `/ar${ctx.resolvedUrl}`,
+    //             permanent: false,
+    //         },
+    //     };
+    // }
     return {
         props: {
             ...(await serverSideTranslations(ctx.locale, ["common"])),
