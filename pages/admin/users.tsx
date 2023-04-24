@@ -11,6 +11,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 interface ISearchKeyContext {
     searchKey: any;
@@ -79,7 +80,7 @@ const UserBase = () => {
         return <div>some error happened</div>;
     }
     return (
-        <>
+        <AdminPageWrapper>
             <div>
                 <UserbasePageHeader
                     content="User Base"
@@ -110,7 +111,7 @@ const UserBase = () => {
                     )}
                 </div>
             </div>
-        </>
+        </AdminPageWrapper>
     );
 };
 

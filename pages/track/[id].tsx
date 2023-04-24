@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import LoadingPage from "@/components/common/LoadingPage";
 import { useSession } from "next-auth/react";
+import UserPageWrapper from "@/components/common/UserPageWrapper";
 
 const TrackOrder = (props: any) => {
     const router = useRouter();
@@ -50,7 +51,7 @@ const TrackOrder = (props: any) => {
 
     if (trackingIsLoading) return <LoadingPage />;
     return (
-        <>
+        <UserPageWrapper>
             <PageHeader
                 content={t("trackingView.pageHeader.Title")}
                 className="border-none pb-[10px]"
@@ -112,7 +113,7 @@ const TrackOrder = (props: any) => {
                     </div>
                 </div>
             </Layout>
-        </>
+        </UserPageWrapper>
     );
 };
 

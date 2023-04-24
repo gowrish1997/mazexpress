@@ -1,16 +1,14 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { GetServerSidePropsContext } from "next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { FieldError } from "react-hook-form";
-import { GetServerSidePropsContext } from "next";
-
 import fetchJson from "@/lib/fetchServer";
-import { APIResponse } from "@/models/api.model";
-import { constants } from "buffer";
 import { createToast } from "@/lib/toasts";
+import { APIResponse } from "@/models/api.model";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 interface IProp {
     id?: string;
@@ -19,7 +17,7 @@ interface IProp {
     name: string;
     status: string;
 }
-    
+
 const schema = yup
     .object({
         per_kg: yup
@@ -110,54 +108,56 @@ const ShippingCost = () => {
     };
 
     return (
-        <div>
-            <p className="box-border text-[18px] text-[#2B2B2B] font-[700] leading-[25px] border-b-[1px] border-[#e3e3e3] pb-[15px] ">
-                Shipping cost
-            </p>
-            <form onSubmit={handleSubmit(submitHandler)}>
-                <div className="flex flex-row justify-start items-end mt-[50px] ">
-                    <p className="box-border text-[22px] text-[#2B2B2B] font-[700] leading-[25px]  ">
-                        Shipping cost:
-                    </p>
+        <AdminPageWrapper>
+            <div>
+                <p className="box-border text-[18px] text-[#2B2B2B] font-[700] leading-[25px] border-b-[1px] border-[#e3e3e3] pb-[15px] ">
+                    Shipping cost
+                </p>
+                <form onSubmit={handleSubmit(submitHandler)}>
+                    <div className="flex flex-row justify-start items-end mt-[50px] ">
+                        <p className="box-border text-[22px] text-[#2B2B2B] font-[700] leading-[25px]  ">
+                            Shipping cost:
+                        </p>
 
-                    <input
-                        type="number"
-                        name="per_kg"
-                        {...register("per_kg")}
-                        placeholder="cost per KG"
-                        className="focus:outline-none border-b-[1px]  border-[#e3e3e3] ml-[10px] text-center "
-                    />
-                    <span>$</span>
-                </div>
-                {errors.per_kg && (
-                    <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px] mt-[10px] ">
-                        {"cost per kG is required field"}
-                    </p>
-                )}
-                <div className="flex flex-row justify-start items-end mt-[50px] ">
-                    <p className="box-border text-[22px] text-[#2B2B2B] font-[700] leading-[25px]  ">
-                        Factor:
-                    </p>
-                    <input
-                        name="factor"
-                        {...register("factor")}
-                        type="number"
-                        className="focus:outline-none border-b-[1px]  border-[#e3e3e3] ml-[10px] text-center "
-                    />
-                </div>
-                {errors.factor && (
-                    <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px] mt-[10px] ">
-                        {errors.factor.message}
-                    </p>
-                )}
-                <button
-                    className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] px-[20px] mt-[50px] "
-                    type="submit"
-                >
-                    {"Submit"}
-                </button>
-            </form>
-        </div>
+                        <input
+                            type="number"
+                            name="per_kg"
+                            {...register("per_kg")}
+                            placeholder="cost per KG"
+                            className="focus:outline-none border-b-[1px]  border-[#e3e3e3] ml-[10px] text-center "
+                        />
+                        <span>$</span>
+                    </div>
+                    {errors.per_kg && (
+                        <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px] mt-[10px] ">
+                            {"cost per kG is required field"}
+                        </p>
+                    )}
+                    <div className="flex flex-row justify-start items-end mt-[50px] ">
+                        <p className="box-border text-[22px] text-[#2B2B2B] font-[700] leading-[25px]  ">
+                            Factor:
+                        </p>
+                        <input
+                            name="factor"
+                            {...register("factor")}
+                            type="number"
+                            className="focus:outline-none border-b-[1px]  border-[#e3e3e3] ml-[10px] text-center "
+                        />
+                    </div>
+                    {errors.factor && (
+                        <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px] mt-[10px] ">
+                            {errors.factor.message}
+                        </p>
+                    )}
+                    <button
+                        className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] px-[20px] mt-[50px] "
+                        type="submit"
+                    >
+                        {"Submit"}
+                    </button>
+                </form>
+            </div>
+        </AdminPageWrapper>
     );
 };
 

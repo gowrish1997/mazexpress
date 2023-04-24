@@ -19,6 +19,7 @@ import { User } from "@/models/user.model";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSession } from "next-auth/react";
+import UserPageWrapper from "@/components/common/UserPageWrapper";
 
 const schema = yup
     .object({
@@ -279,7 +280,7 @@ const Settings = () => {
     };
 
     return (
-        <>
+        <UserPageWrapper>
             <PageHeader
                 content={t("settingsPage.pageHeader.Title")}
                 className="border-none pb-[10px]"
@@ -551,7 +552,7 @@ const Settings = () => {
                     </form>
                 </div>
             </Layout>
-        </>
+        </UserPageWrapper>
     );
 };
 

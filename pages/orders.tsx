@@ -19,6 +19,7 @@ import UserPageWrapper from "@/components/common/UserPageWrapper";
 import { getSession } from "@/lib/selectOrder";
 
 const MyOrders = () => {
+ 
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     // console.log(searchKey);
 
@@ -65,7 +66,7 @@ const MyOrders = () => {
     const tableHeaders: string[] = t("indexPage.orderTable.TableHeader", {
         returnObjects: true,
     });
-
+console.log(router)
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";
         let lang = router.locale == "ar" ? "ar" : "en";

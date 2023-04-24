@@ -14,6 +14,7 @@ import useUsers from "@/lib/hooks/useUsers";
 import { getDateInDBFormat } from "@/lib/utils";
 import { User } from "@/models/user.model";
 import { GetServerSidePropsContext } from "next";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 const tableHeaders = [
     "User",
@@ -104,7 +105,7 @@ const AdminBase = () => {
     }
 
     return (
-        <>
+        <AdminPageWrapper>
             <div>
                 <UserbasePageHeader
                     content="Admin Base"
@@ -150,7 +151,7 @@ const AdminBase = () => {
             {showAddNewAdminModal && (
                 <AddNewAdminModal close={ToggleAddNewAdminModalHandler} />
             )}
-        </>
+        </AdminPageWrapper>
     );
 };
 

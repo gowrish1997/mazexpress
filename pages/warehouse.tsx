@@ -7,6 +7,7 @@ import { i18n, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import UserPageWrapper from "@/components/common/UserPageWrapper";
 
 const WarehousePage = () => {
     const { warehouses, mutateWarehouses, warehousesIsLoading } =
@@ -28,7 +29,7 @@ const WarehousePage = () => {
     }
 
     return (
-        <>
+        <UserPageWrapper>
             <PageHeader
                 content={t("warehousePage.pageHeader.Title")}
                 title="Our Warehouses | MazExpress"
@@ -38,7 +39,7 @@ const WarehousePage = () => {
                     return <WarehouseCard key={data.id} address={data} />;
                 })}
             </div>
-        </>
+        </UserPageWrapper>
     );
 };
 export default WarehousePage;
@@ -46,7 +47,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
     }
-  
+
     return {
         props: {
             ...(await serverSideTranslations(ctx.locale, ["common"])),

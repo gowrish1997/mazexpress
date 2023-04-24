@@ -11,6 +11,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchKeyContext } from "@/components/common/Frame";
 import { getDateInDBFormat } from "@/lib/utils";
 import { GetServerSidePropsContext } from "next";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 const tableHeaders = [
     "Customer",
@@ -90,7 +91,7 @@ const LiveOrders = () => {
     console.log(orders || !statusFilterKey.includes("all status"));
 
     return (
-        <>
+        <AdminPageWrapper>
             <div>
                 <LiveOrderPageHeader
                     content="Live Orders"
@@ -130,7 +131,7 @@ const LiveOrders = () => {
                     )}
                 </div>
             </div>
-        </>
+        </AdminPageWrapper>
     );
 };
 

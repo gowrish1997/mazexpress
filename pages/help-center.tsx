@@ -5,6 +5,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import UserPageWrapper from "@/components/common/UserPageWrapper";
 
 const HelpCenter = () => {
     const router = useRouter();
@@ -24,11 +25,13 @@ const HelpCenter = () => {
     }, [router.locale]);
 
     return (
-        <div>
-            {helpCenters?.data?.length > 0 && (
-                <HelpCenterView data={helpCenters?.data} />
-            )}
-        </div>
+        <UserPageWrapper>
+            <div>
+                {helpCenters?.data?.length > 0 && (
+                    <HelpCenterView data={helpCenters?.data} />
+                )}
+            </div>
+        </UserPageWrapper>
     );
 };
 

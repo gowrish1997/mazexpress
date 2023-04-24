@@ -11,6 +11,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 const tableHeaders = [
     "Customer",
@@ -71,7 +72,7 @@ const DeliveredOrders = () => {
         return <div>some error happened</div>;
     }
     return (
-        <>
+        <AdminPageWrapper>
             <div>
                 <DeliveredPageHeader
                     content="Delivered"
@@ -107,7 +108,7 @@ const DeliveredOrders = () => {
                     <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedOrder?.length} orders are selected`}</div>
                 )}
             </div>
-        </>
+        </AdminPageWrapper>
     );
 };
 

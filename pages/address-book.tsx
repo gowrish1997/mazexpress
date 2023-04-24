@@ -11,6 +11,7 @@ import { i18n, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import UserPageWrapper from "@/components/common/UserPageWrapper";
 
 const AddressBook = () => {
     const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -59,7 +60,7 @@ const AddressBook = () => {
     }
 
     return (
-        <>
+        <UserPageWrapper>
             <PageHeader
                 content={t("addressBookPage.pageHeader.Title")}
                 title="Address Book | MazExpress"
@@ -109,7 +110,7 @@ const AddressBook = () => {
                     allAddresses={addresses}
                 />
             )}
-        </>
+        </UserPageWrapper>
     );
 };
 

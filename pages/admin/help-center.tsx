@@ -6,6 +6,7 @@ import { GetServerSidePropsContext } from "next";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useState } from "react";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 const HelpCenter = () => {
     const {
@@ -25,7 +26,7 @@ const HelpCenter = () => {
         return <LoadingPage />;
     }
     return (
-        <>
+        <AdminPageWrapper>
             <div>
                 {helpCenters?.data?.length > 0 && (
                     <HelpCenterView
@@ -46,7 +47,7 @@ const HelpCenter = () => {
                     mutateHelpCenter={mutateHelpCenter}
                 />
             )}
-        </>
+        </AdminPageWrapper>
     );
 };
 

@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetServerSidePropsContext } from "next";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 const NotificationPanel = () => {
     const router = useRouter();
@@ -72,7 +72,7 @@ const NotificationPanel = () => {
     }
 
     return (
-        <>
+        <AdminPageWrapper>
             <PageHeader
                 content="Notification Panel"
                 title="Notification Panel | MazExpress Admin"
@@ -102,7 +102,7 @@ const NotificationPanel = () => {
                     // update={() => new Promise((resolve, reject) => {})}
                 />
             )}
-        </>
+        </AdminPageWrapper>
     );
 };
 

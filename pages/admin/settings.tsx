@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import ReactSwitch from "react-switch";
 import * as yup from "yup";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 const schema = yup
     .object({
         first_name: yup.string().required("First name is required"),
@@ -263,7 +264,7 @@ const Settings = () => {
     }, [session?.user, reset]);
 
     return (
-        <>
+        <AdminPageWrapper>
             <PageHeader
                 content="Settings"
                 className="border-none pb-[10px]"
@@ -500,7 +501,7 @@ const Settings = () => {
                     </form>
                 </div>
             </Layout>
-        </>
+        </AdminPageWrapper>
     );
 };
 

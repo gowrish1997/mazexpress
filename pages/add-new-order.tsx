@@ -22,6 +22,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import UserPageWrapper from "@/components/common/UserPageWrapper";
 import * as yup from "yup";
 const schema = yup
     .object({
@@ -231,7 +232,7 @@ const AddNewOrder = () => {
     };
 
     return (
-        <>
+        <UserPageWrapper>
             <PageHeader
                 content={t("addNewOrderPage.pageHeader.Title")}
                 showCalender={false}
@@ -335,7 +336,7 @@ const AddNewOrder = () => {
                     allAddresses={addresses}
                 />
             )}
-        </>
+        </UserPageWrapper>
     );
 };
 

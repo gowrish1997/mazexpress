@@ -9,6 +9,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 const WarehousePage = () => {
     const router = useRouter();
@@ -37,7 +38,7 @@ const WarehousePage = () => {
     };
 
     return (
-        <>
+        <AdminPageWrapper>
             <PageHeader
                 content="Warehouses"
                 title="Warehouses | MazExpress Admin"
@@ -76,7 +77,7 @@ const WarehousePage = () => {
                     update={mutateWarehouses}
                 />
             )}
-        </>
+        </AdminPageWrapper>
     );
 };
 

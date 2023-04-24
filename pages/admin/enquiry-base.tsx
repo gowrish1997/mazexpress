@@ -8,6 +8,7 @@ import useEnquiry, { IEnquiry } from "@/lib/hooks/useEnquiry";
 const tableHeaders = ["Customer Email ID", "Mobile numbers", "Date", "Message"];
 import LoadingPage from "@/components/common/LoadingPage";
 import { GetServerSidePropsContext } from "next";
+import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 
 const EnquiryBase = () => {
     const { enquiry, mutateEnquiry, enquiryIsLoading, enquiryError } =
@@ -18,7 +19,7 @@ const EnquiryBase = () => {
     }
 
     return (
-        <>
+        <AdminPageWrapper>
             <div>
                 <EnquiryBasePageHeader
                     content="enquiry base"
@@ -39,7 +40,7 @@ const EnquiryBase = () => {
                     )}
                 </div>
             </div>
-        </>
+        </AdminPageWrapper>
     );
 };
 
