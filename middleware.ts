@@ -3,7 +3,19 @@ import { NextResponse } from "next/server";
 import { getSession } from "./lib/selectOrder";
 import { i18n } from "next-i18next";
 import { getToken } from "next-auth/jwt";
-export { default } from "next-auth/middleware";
+// export { default } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
+export default withAuth(
+    // `withAuth` augments your `Request` with the user's token.
+    function middleware(req) {
+        console.log(req.nextauth.token);
+    }
+    // {
+    //     callbacks: {
+    //         authorized: ({ token }) => token?.role === "admin",
+    //     },
+    // }
+);
 
 // import { isAuthenticated } from "./lib/utils";
 // export const middleware = async (req: NextRequest) => {
