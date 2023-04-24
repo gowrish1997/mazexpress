@@ -2,11 +2,14 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getSession } from "./lib/selectOrder";
 import { i18n } from "next-i18next";
+import { getToken } from "next-auth/jwt";
 
 // import { isAuthenticated } from "./lib/utils";
 export const middleware = async (req: NextRequest) => {
     const res = NextResponse.next();
-    const session = await getSession(req);
+    // const session = await getSession(req);
+    const session = await getToken({ req });
+    console.log(session);
 
     if (session) {
         // user is present do not allow login page
