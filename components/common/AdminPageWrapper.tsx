@@ -14,7 +14,7 @@ const AdminPageWrapper = (props) => {
         }
         if (session) {
             if (router.locale == "ar" && (session?.user as any).is_admin) {
-                router.push(`${router.pathname}`);
+                router.push(router.asPath, router.asPath, { locale: "en" });
             }
             if (!(session?.user as any).is_admin) {
                 router.push(`/`);

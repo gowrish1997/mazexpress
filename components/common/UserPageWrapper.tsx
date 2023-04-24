@@ -1,3 +1,4 @@
+import { getSession } from "@/lib/selectOrder";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -12,19 +13,16 @@ const UserPageWrapper = (props) => {
                 (router.locale == "en" ? "english" : "arabic") !=
                 (session?.user as any).lang
             ) {
-                console.log('inside if confroin')
-                console.log(router.pathname)
-                router.push(
-                    (session?.user as any).lang === "english"
-                        ? `/en${router.pathname}`
-                        : `/ar${router.pathname}`
-                );
+                if ((session?.user as any).lang === "english") {
+                    router.push(router.asPath, router.asPath, { locale: "en" });
+                } else {
+                    router.push(router.asPath, router.asPath, { locale: "ar" });
+                }
             }
             if ((session?.user as any).is_admin) {
                 router.push(`/`);
             }
-        }
-        if (!session) {
+        } else {
             router.push(`/auth/gate?mode=1`);
         }
     }, [session]);
