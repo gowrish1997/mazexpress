@@ -50,34 +50,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
     }
-    const session = await getSession(ctx.req);
-    // const { pathname } = ctx.req.url;
-    if (!session) {
-        return {
-            redirect: {
-                destination: `/auth/gate?mode=1`,
-                permanent: false,
-            },
-        };
-    }
-    if ((session?.user as any).is_admin && ctx.locale == "ar") {
-        return {
-            redirect: {
-                destination: `${ctx.resolvedUrl}`,
 
-                permanent: false,
-            },
-        };
-    }
-
-    if (!(session?.user as any).is_admin) {
-        return {
-            redirect: {
-                destination: `/`,
-                permanent: false,
-            },
-        };
-    }
     return {
         props: {
             ...(await serverSideTranslations(ctx.locale, ["common"])),
