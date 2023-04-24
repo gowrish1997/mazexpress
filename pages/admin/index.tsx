@@ -12,6 +12,8 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import AdminPageWrapper from "@/components/common/AdminPageWrapper";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
 const AdminHome = () => {
     const router = useRouter();
     const { locales, locale: activeLocale } = router;
@@ -50,7 +52,34 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
     }
+    const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
+    // const { pathname } = ctx.req.url;
+    console.log(session);
+    if (!session) {
+        return {
+            redirect: {
+                destination: `/auth/gate?mode=1`,
+                permanent: false,
+            },
+        };
+    }
 
+    if (ctx.locale == "ar" && ((session as any)?.user as any).is_admin) {
+        return {
+            redirect: {
+                destination: `${ctx.resolvedUrl}`,
+                permanent: false,
+            },
+        };
+    }
+    if (!((session as any)?.user as any).is_admin) {
+        return {
+            redirect: {
+                destination: `/`,
+                permanent: false,
+            },
+        };
+    }
     return {
         props: {
             ...(await serverSideTranslations(ctx.locale, ["common"])),

@@ -20,6 +20,9 @@ import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSession } from "next-auth/react";
 import UserPageWrapper from "@/components/common/UserPageWrapper";
+import { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 const schema = yup
     .object({
@@ -557,13 +560,52 @@ const Settings = () => {
 };
 
 export default Settings;
-export async function getStaticProps({ locale }: { locale: any }) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
     }
+    const session = await getServerSession(
+        ctx.req as any,
+        ctx.res as any,
+        authOptions as any
+    );
+    // const { pathname } = ctx.req.url;
+    console.log(session);
+    if (!session) {
+        return {
+            redirect: {
+                destination: `/auth/gate?mode=1`,
+                permanent: false,
+            },
+        };
+    }
+
+    if (
+        (ctx.locale == "en" ? "english" : "arabic") !=
+        ((session as any)?.user as any).lang
+    ) {
+        return {
+            redirect: {
+                destination:
+                    ((session as any)?.user as any).lang === "english"
+                        ? `${ctx.resolvedUrl}`
+                        : `/ar${ctx.resolvedUrl}`,
+                permanent: false,
+            },
+        };
+    }
+    if (((session as any)?.user as any).is_admin) {
+        return {
+            redirect: {
+                destination: `/`,
+                permanent: false,
+            },
+        };
+    }
+
     return {
         props: {
-            ...(await serverSideTranslations(locale, ["common"])),
+            ...(await serverSideTranslations(ctx.locale, ["common"])),
         },
     };
 }

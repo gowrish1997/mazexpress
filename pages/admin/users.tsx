@@ -12,6 +12,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
 import AdminPageWrapper from "@/components/common/AdminPageWrapper";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 interface ISearchKeyContext {
     searchKey: any;
@@ -119,6 +121,34 @@ export default UserBase;
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
+    }
+    const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
+    // const { pathname } = ctx.req.url;
+    console.log(session);
+    if (!session) {
+        return {
+            redirect: {
+                destination: `/auth/gate?mode=1`,
+                permanent: false,
+            },
+        };
+    }
+
+    if (ctx.locale == "ar" && ((session as any)?.user as any).is_admin) {
+        return {
+            redirect: {
+                destination: `${ctx.resolvedUrl}`,
+                permanent: false,
+            },
+        };
+    }
+    if (!((session as any)?.user as any).is_admin) {
+        return {
+            redirect: {
+                destination: `/`,
+                permanent: false,
+            },
+        };
     }
     return {
         props: {

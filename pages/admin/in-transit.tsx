@@ -18,6 +18,8 @@ import { SearchKeyContext } from "@/components/common/Frame";
 import { getDateInDBFormat } from "@/lib/utils";
 import { GetServerSidePropsContext } from "next";
 import AdminPageWrapper from "@/components/common/AdminPageWrapper";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const tableHeaders = [
     "Customer",
@@ -138,15 +140,34 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
     }
-    // console.log("redders", ctx.req.cookies);
-    // if (ctx.req.cookies.is_admin !== "true") {
-    //   return {
-    //     redirect: {
-    //       destination: "/",
-    //       permanent: false,
-    //     },
-    //   };
-    // }
+    const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
+    // const { pathname } = ctx.req.url;
+    console.log(session);
+    if (!session) {
+        return {
+            redirect: {
+                destination: `/auth/gate?mode=1`,
+                permanent: false,
+            },
+        };
+    }
+
+    if (ctx.locale == "ar" && ((session as any)?.user as any).is_admin) {
+        return {
+            redirect: {
+                destination: `${ctx.resolvedUrl}`,
+                permanent: false,
+            },
+        };
+    }
+    if (!((session as any)?.user as any).is_admin) {
+        return {
+            redirect: {
+                destination: `/`,
+                permanent: false,
+            },
+        };
+    }
     return {
         props: {
             ...(await serverSideTranslations(ctx.locale, ["common"])),

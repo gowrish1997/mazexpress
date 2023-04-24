@@ -17,9 +17,10 @@ import { i18n, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import UserPageWrapper from "@/components/common/UserPageWrapper";
 import { getSession } from "@/lib/selectOrder";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 const MyOrders = () => {
- 
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     // console.log(searchKey);
 
@@ -66,7 +67,7 @@ const MyOrders = () => {
     const tableHeaders: string[] = t("indexPage.orderTable.TableHeader", {
         returnObjects: true,
     });
-console.log(router)
+    console.log(router);
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";
         let lang = router.locale == "ar" ? "ar" : "en";
@@ -159,6 +160,44 @@ export default MyOrders;
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (process.env.NODE_ENV === "development") {
         await i18n?.reloadResources();
+    }
+    const session = await getServerSession(
+        ctx.req as any,
+        ctx.res as any,
+        authOptions as any
+    );
+    // const { pathname } = ctx.req.url;
+    console.log(session);
+    if (!session) {
+        return {
+            redirect: {
+                destination: `/auth/gate?mode=1`,
+                permanent: false,
+            },
+        };
+    }
+
+    if (
+        (ctx.locale == "en" ? "english" : "arabic") !=
+        ((session as any)?.user as any).lang
+    ) {
+        return {
+            redirect: {
+                destination:
+                    ((session as any)?.user as any).lang === "english"
+                        ? `${ctx.resolvedUrl}`
+                        : `/ar${ctx.resolvedUrl}`,
+                permanent: false,
+            },
+        };
+    }
+    if (((session as any)?.user as any).is_admin) {
+        return {
+            redirect: {
+                destination: `/`,
+                permanent: false,
+            },
+        };
     }
 
     return {

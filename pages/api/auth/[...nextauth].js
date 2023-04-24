@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export default NextAuth({
+export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     // Configure one or more authentication providers
     providers: [
@@ -117,4 +117,5 @@ export default NextAuth({
         // verifyRequest: "/auth/verify-request", // (used for check email message)
         // newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
     },
-});
+};
+export default NextAuth(authOptions);
