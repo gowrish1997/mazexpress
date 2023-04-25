@@ -22,14 +22,14 @@ export const authOptions = {
                 const user = await res.json();
 
                 if (user.data) {
-                    if (user.data[0].avatar_url) {
-                        let avatar = user.data[0].avatar_url;
-                        avatar.replace(/['"]+/g, "");
-                        avatar =
-                            `https://mazbackend.easydesk.work/user_uploads/` +
-                            avatar;
-                        user.data[0].avatar_url = avatar;
-                    }
+                    // if (user.data[0].avatar_url) {
+                    //     let avatar = user.data[0].avatar_url;
+                    //     avatar.replace(/['"]+/g, "");
+                    //     avatar =
+                    //         `https://mazbackend.easydesk.work/user_uploads/` +
+                    //         avatar;
+                    //     user.data[0].avatar_url = avatar;
+                    // }
                     return user.data[0];
                 } else {
                     throw new Error(user.msg);

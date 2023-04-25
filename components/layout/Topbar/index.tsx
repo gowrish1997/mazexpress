@@ -106,7 +106,8 @@ const Topbar = () => {
                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
                     <Image
                         src={
-                            session?.user?.avatar_url ||
+                            `https://mazbackend.easydesk.work/user_uploads/` +
+                                session?.user?.avatar_url ||
                             "/user-images/default_user.png"
                         }
                         fill
