@@ -3,18 +3,13 @@ import logoutImage from "@/public/logout.png";
 import { nanoid } from "nanoid";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Header from "./Header";
 import NavLink from "./NavLink";
-
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import AuthCTX from "@/components/context/auth.ctx";
-import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
-import { useTranslation } from "next-i18next";
 import { signOut, useSession } from "next-auth/react";
-import useOrders from "@/lib/hooks/useOrders";
+import { useTranslation } from "next-i18next";
 
 const userSidebarPanel = [
     {

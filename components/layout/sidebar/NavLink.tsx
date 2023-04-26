@@ -1,24 +1,25 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
+import fetchJson from "@/lib/fetchServer";
 import Address from "@/public/address_svg.svg";
 import Notification from "@/public/bell_svg.svg";
 import Dashboard from "@/public/dashboard_svg.svg";
 import Enquiry from "@/public/enquiry_svg.svg";
 import Helpcenter from "@/public/help_svg.svg";
-import LiveOrder from "@/public/liveorder_svg.svg";
 import Location from "@/public/location_svg.svg";
 import Order from "@/public/order_svg.svg";
 import Settings from "@/public/settings_svg.svg";
 import TodayShip from "@/public/todayship_svg.svg";
 import User from "@/public/user_svg.svg";
 import Warehosue from "@/public/warehouse_svg.svg";
+import LiveOrder from "@/public/new_orders_svg.svg";
+import ShipmentSetting from "@/public/shipment_svg.svg";
+import Pending from "@/public/pending_svg.svg";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useTranslation } from "next-i18next";
-import Admin from "../../../public/admin_svg.svg";
 import { useSession } from "next-auth/react";
-import useOrders from "@/lib/hooks/useOrders";
-import fetchJson from "@/lib/fetchServer";
+import { useTranslation } from "next-i18next";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import Admin from "../../../public/admin_svg.svg";
 
 const userIcon = (id: number) => {
     switch (id) {
@@ -47,7 +48,7 @@ const adminIcon = (id: number) => {
         case 1:
             return <LiveOrder />;
         case 2:
-            return <LiveOrder />;
+            return <Pending />;
         case 3:
             return <TodayShip />;
         case 4:
@@ -71,7 +72,7 @@ const adminIcon = (id: number) => {
         case 12:
             return <Enquiry />;
         case 13:
-            return <Enquiry />;
+            return <ShipmentSetting />;
         default:
             return "";
     }
