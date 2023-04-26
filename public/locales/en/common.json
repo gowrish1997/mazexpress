@@ -63,7 +63,7 @@
                 "By signing up, you agree to our",
                 "Terms of Service.",
                 "New to MAZ Express?",
-                "Sign up."
+                " Sign up."
             ],
 
             "SubmitButton": [
@@ -89,7 +89,7 @@
                 "By signing up, you agree to our",
                 "Terms of Service.",
                 "Already have an account?",
-                "Log in."
+                " Log in."
             ]
         }
     },
