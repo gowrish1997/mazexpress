@@ -18,6 +18,7 @@ import { useTranslation } from "next-i18next";
 import Admin from "../../../public/admin_svg.svg";
 import { useSession } from "next-auth/react";
 import useOrders from "@/lib/hooks/useOrders";
+import fetchJson from "@/lib/fetchServer";
 
 const userIcon = (id: number) => {
     switch (id) {
@@ -93,6 +94,27 @@ const NavLink = (props: IProp) => {
     const { locale } = router;
     const { data: session, update }: { data: any; update: any } = useSession();
 
+    const trackPageRoutingHandler = async () => {
+        const orders = await fetchJson(
+            `/api/orders?username=${
+                session?.user.email
+            }&page=${0}&per_page=${1}`,
+            {
+                method: "GET",
+            }
+        );
+
+        if (orders.data) {
+            router.push(`/track/${orders.data[0].maz_id}`);
+        } else {
+            if (router.locale == "en") {
+                window.alert("Currently you do not have any order track");
+            } else {
+                window.alert("حاليا ليس لديك أي طلب لتعقبه");
+            }
+        }
+    };
+
     const isActivePath = (obj: any): boolean => {
         if (router.pathname === "/" && obj.path === "/") return true;
         if (router.pathname === "/admin" && obj.path === "/admin") return true;
@@ -109,7 +131,7 @@ const NavLink = (props: IProp) => {
 
     if (props.content.path === "/track") {
         return (
-            <Link href={`/track/qr3245234`}>
+            <div onClick={trackPageRoutingHandler}>
                 <div
                     className=" box-border w-full flex flex-row justify-between items-center relative cursor-pointer px-[10px] rounded-[4px] py-[5px]   hover:bg-[#EDF5F9]"
                     style={{
@@ -168,7 +190,7 @@ const NavLink = (props: IProp) => {
                         </div>
                     </div>
                 </div>
-            </Link>
+            </div>
         );
     }
 

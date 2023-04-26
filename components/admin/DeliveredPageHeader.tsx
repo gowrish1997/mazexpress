@@ -50,7 +50,10 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                         />
 
                         <AdminOptionDropDown orders={props.allLiveOrders} />
-                        <SortOptionDropDown />
+                        <SortOptionDropDown
+                            sorting={props.sorting}
+                            sortValue={props.sortValue}
+                        />
                     </div>
                 )}
             </div>

@@ -32,7 +32,7 @@ const Shipments = () => {
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
         string | Date
     >("");
-
+    const [sort, setSort] = useState("desc");
     const [itemsPerPage, setItemPerPage] = useState(25);
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -42,6 +42,7 @@ const Shipments = () => {
         page: currentPage,
         date: getDateInDBFormat(createdDateFilterKey as Date),
         status: ["at-warehouse"],
+        sort:sort
     });
 
     const { locales, locale: activeLocale } = router;
@@ -64,7 +65,9 @@ const Shipments = () => {
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
     };
-
+    const sortHandler = (value) => {
+        setSort(value);
+    };
     const selectOrderHandler = (value: string, type: string) => {
         selectOrder(
             value,
@@ -101,6 +104,8 @@ const Shipments = () => {
                     mutateOrder={mutateOrders}
                     setSelectedOrder={setSelectedOrder}
                     isFilterPresent={searchKey || createdDateFilterKey}
+                    sorting={sortHandler}
+                    sortValue={sort}
                     // filterById={filterByMazTrackingId}
                 />
 

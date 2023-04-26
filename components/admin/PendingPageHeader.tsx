@@ -99,7 +99,10 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
                             disabled={!props.selectedOrder?.length}
                             orders={props.allLiveOrders}
                         />
-                        <SortOptionDropDown />
+                        <SortOptionDropDown
+                            sorting={props.sorting}
+                            sortValue={props.sortValue}
+                        />
                     </div>
                 )}
             </div>

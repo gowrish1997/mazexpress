@@ -1,17 +1,22 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import ClickOutside from "../common/ClickOutside";
+
 const option = [
     { value: "asc", label: "ascending" },
     { value: "desc", label: "descending" },
 ];
+interface IProp {
+    sorting?: (value: string) => void;
+    sortValue: string;
+}
 // interface Iprop {
 
 //     toggle?: (value?: string) => void;
 
 // }
 
-const SortOptionDropDown = () => {
+const SortOptionDropDown = (props: IProp) => {
     const trigger = useRef<any>(null);
 
     const [showSortOptionCard, setShowSortOptionCard] = useState(false);
@@ -56,13 +61,24 @@ const SortOptionDropDown = () => {
                         {option &&
                             option.map((data, index) => {
                                 return (
-                                    <button
+                                    <div
+                                        className="flex flex-row justify-start items-center"
                                         key={index}
-                                        className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
-                                        // onClick={() => props.toggle?.(data)}
                                     >
-                                        {data.label}
-                                    </button>
+                                        <button
+                                            className=" w-full p-[5px] py-[8px] hover:bg-[#f2f9fc] text-[14px] text-[#333] rounded-[4px] font-[500] cursor-pointer leading-[21px] capitalize disabled:opacity-50 text-left "
+                                            onClick={() =>
+                                                props.sorting?.(data.value)
+                                            }
+                                        >
+                                            {data.label}
+                                        </button>
+                                        {props.sortValue == data.value ? (
+                                            <div className="h-[6px] w-[6px] absolute right-[10px]  rounded-full bg-[#35C6F4] " />
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </div>
                                 );
                             })}
                     </div>

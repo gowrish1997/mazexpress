@@ -16,6 +16,7 @@ interface IProps {
     status?: string[];
     date?: string;
     maz_id?: string;
+    sort?: string;
 }
 export default function useOrders(props: IProps) {
     const qs = new QS(props);

@@ -160,6 +160,7 @@ const Sidebar = () => {
         returnObjects: true,
     });
     const { data: session, update }: { data: any; update: any } = useSession();
+    console.log('sidebar')
 
     const transalateSidebarContentHandler = () => {
         // console.log(user?.is_admin);

@@ -32,9 +32,11 @@ const tableHeaders = [
 ];
 
 const Intransit = () => {
+    console.log("callign intranist");
     const router = useRouter();
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     const [itemsPerPage, setItemPerPage] = useState(25);
+    const [sort, setSort] = useState("desc");
     const [currentPage, setCurrentPage] = useState(0);
 
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
@@ -46,6 +48,7 @@ const Intransit = () => {
         page: currentPage,
         status: ["in-transit", "out-for-delivery"],
         date: getDateInDBFormat(createdDateFilterKey as Date),
+        sort: sort,
     });
 
     const { locales, locale: activeLocale } = router;
@@ -70,7 +73,9 @@ const Intransit = () => {
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
     };
-
+    const sortHandler = (value) => {
+        setSort(value);
+    };
     const selectOrderHandler = (value: string, type: string) => {
         console.log(value);
         selectOrder(
@@ -109,6 +114,8 @@ const Intransit = () => {
                     setSelectedOrder={setSelectedOrder}
                     createdDateFilterKey={createdDateFilterKey}
                     isFilterPresent={searchKey || createdDateFilterKey}
+                    sorting={sortHandler}
+                    sortValue={sort}
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">

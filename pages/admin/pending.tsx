@@ -37,6 +37,7 @@ const PendingOrders = () => {
     const { locales, locale: activeLocale } = router;
 
     const [itemsPerPage, setItemPerPage] = useState(25);
+    const [sort, setSort] = useState("desc");
     const [currentPage, setCurrentPage] = useState(0);
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
         string | Date
@@ -48,6 +49,7 @@ const PendingOrders = () => {
         page: currentPage,
         date: getDateInDBFormat(createdDateFilterKey as Date),
         status: ["pending"],
+        sort: sort,
     });
 
     const [selectedOrder, setSelectedOrder] = useState<Order[]>();
@@ -62,6 +64,10 @@ const PendingOrders = () => {
 
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
+    };
+
+    const sortHandler = (value) => {
+        setSort(value);
     };
 
     const selectOrderHandler = (value: Order, type: string) => {
@@ -101,6 +107,8 @@ const PendingOrders = () => {
                     mutateOrder={mutateOrders}
                     setSelectedOrder={setSelectedOrder}
                     isFilterPresent={searchKey || createdDateFilterKey}
+                    sorting={sortHandler}
+                    sortValue={sort}
                     //   filterById={filterByMazTrackingId}
                 />
 

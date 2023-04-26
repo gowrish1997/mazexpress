@@ -123,6 +123,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 } successfully updated`,
                                 timeOut: 2000,
                             });
+                            props.mutateOrder?.();
                         } catch (error) {
                             console.error(error);
                             createToast({
@@ -135,8 +136,6 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
 
                         // check notifications for user and send notification
                         // get notification for user
-
-                        props.mutateOrder?.();
                     }
                     if (props.stage === 3) {
                         try {

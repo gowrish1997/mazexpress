@@ -246,11 +246,9 @@ const UserSelect = (props: IProp) => {
                                             <Image
                                                 src={
                                                     el.avatar_url
-                                                        ? process.env
-                                                              .PROFILE_SRC +
+                                                        ? `https://mazbackend.easydesk.work/user_uploads/` +
                                                           el.avatar_url
-                                                        : process.env
-                                                              .DEFAULT_PIC
+                                                        : "/user-images/default_user.png"
                                                 }
                                                 fill
                                                 style={{ objectFit: "cover" }}

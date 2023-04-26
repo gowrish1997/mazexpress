@@ -35,7 +35,7 @@ const LiveOrders = () => {
     const [statusFilterKey, setStatusFilterKey] = useState<string[]>([
         "all status",
     ]);
-
+    const [sort, setSort] = useState("desc");
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
         Date | string
     >("");
@@ -45,6 +45,7 @@ const LiveOrders = () => {
         per_page: itemsPerPage,
         page: currentPage,
         date: getDateInDBFormat(createdDateFilterKey as Date),
+        sort: sort,
         status:
             statusFilterKey.length == 0 || statusFilterKey[0] == "all status"
                 ? [
@@ -80,6 +81,9 @@ const LiveOrders = () => {
         setCurrentPage(0);
     }, []);
 
+    const sortHandler = (value) => {
+        setSort(value);
+    };
     const filterByCreatedDate = useCallback((value: Date | string) => {
         setCreatedDateFilterKey(value);
     }, []);
@@ -107,6 +111,8 @@ const LiveOrders = () => {
                     currentPage={currentPage}
                     createdDateFilterKey={createdDateFilterKey}
                     statusFilterKey={statusFilterKey}
+                    sorting={sortHandler}
+                    sortValue={sort}
                     pageCount={Math.ceil(
                         (orders?.count as number) / itemsPerPage
                     )}

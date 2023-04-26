@@ -30,7 +30,7 @@ const DeliveredOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     const [itemsPerPage, setItemPerPage] = useState(25);
     const [currentPage, setCurrentPage] = useState(0);
-
+    const [sort, setSort] = useState("desc");
     const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
         Date | string
     >("");
@@ -40,6 +40,7 @@ const DeliveredOrders = () => {
         page: currentPage,
         date: getDateInDBFormat(createdDateFilterKey as Date),
         status: ["delivered"],
+        sort: sort,
     });
 
     const { locales, locale: activeLocale } = router;
@@ -62,7 +63,9 @@ const DeliveredOrders = () => {
     const filterByCreatedDate = (value: Date | string) => {
         setCreatedDateFilterKey(value);
     };
-
+    const sortHandler = (value) => {
+        setSort(value);
+    };
     // const selectOrderHandler = (value: string, type: string) => {
     //     selectOrder(value, type, setSelectedOrder);
     // };
@@ -90,6 +93,8 @@ const DeliveredOrders = () => {
                     currentPage={currentPage}
                     itemPerPageHandler={itemPerPageHandler!}
                     isFilterPresent={searchKey || createdDateFilterKey}
+                    sorting={sortHandler}
+                    sortValue={sort}
                 />
 
                 <div className="flex flex-col justify-between relative flex-1 h-full">

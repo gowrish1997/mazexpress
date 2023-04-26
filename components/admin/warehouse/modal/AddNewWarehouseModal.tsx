@@ -1,5 +1,5 @@
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import fetchJson from "@/lib/fetchServer";
 import { Warehouse } from "@/models/warehouse.model";
@@ -106,12 +106,19 @@ const AddNewWarehouseModal = (props: IProp) => {
                             register={register("address_1")}
                             error={errors.address_1?.message}
                         />
-                        <ReactHookFormInput
-                            label="Address line 02"
+                        <Controller
                             name="address_2"
-                            type="string"
-                            register={register("address_2")}
-                            error={errors.address_2?.message}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label="Address line 02"
+                                    name="address_2"
+                                    type="string"
+                                    onChange={onChange}
+                                    value={value}
+                                    error={errors.address_2?.message}
+                                />
+                            )}
                         />
                         <div className="flex-type2 space-x-[10px] w-full">
                             {/* <CustomDropdown

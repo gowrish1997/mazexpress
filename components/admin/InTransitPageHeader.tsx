@@ -169,7 +169,10 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                             orders={props.allLiveOrders as Order[]}
                             type={props.content}
                         />
-                        <SortOptionDropDown />
+                        <SortOptionDropDown
+                            sorting={props.sorting}
+                            sortValue={props.sortValue}
+                        />
                     </div>
                 )}
             </div>

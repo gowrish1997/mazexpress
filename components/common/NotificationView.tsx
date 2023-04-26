@@ -76,8 +76,11 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             if (!response?.count) {
                 createToast({
                     type: "success",
-                    message: "No more notifications to load",
-                    title: "Success",
+                    message:
+                        router.locale == "en"
+                            ? "No more notifications to load"
+                            : "لا مزيد من الإخطارات للتحميل",
+                    title: router.locale == "en" ? "Success" : "نجاح",
                     timeOut: 1000,
                 });
                 setShowLoadMore(false);
@@ -180,7 +183,9 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                                 })
                             ) : (
                                 <div className="text-[11px]">
-                                    No notifications yet...
+                                    {router.locale == "en"
+                                        ? "No notifications yet..."
+                                        : "لا توجد إشعارات حتى الآن ..."}
                                 </div>
                             )}
                         </div>
@@ -190,7 +195,9 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                                     className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
                                     onClick={loadMoreNotificationHandler}
                                 >
-                                    load more...
+                                    {router.locale == "en"
+                                        ? " load more..."
+                                        : "تحميل المزيد"}
                                 </p>
                             ) : (
                                 ""
@@ -201,7 +208,9 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                                     className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
                                     onClick={clearAllNotificatons}
                                 >
-                                    Clear all Notifications...
+                                    {router.locale == "en"
+                                        ? "Clear all Notifications..."
+                                        : "مسح كافة الإخطارات ..."}
                                 </p>
                             ) : (
                                 ""

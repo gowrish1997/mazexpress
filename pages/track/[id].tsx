@@ -126,7 +126,9 @@ const TrackOrder = (props: any) => {
                                 className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
                                 onClick={loadMoreNotificationHandler}
                             >
-                                load more...
+                                {router.locale == "en"
+                                    ? " load more..."
+                                    : "تحميل المزيد"}
                             </p>
                         )}
                     </div>
