@@ -101,13 +101,27 @@ export const bulkActionHandler = async (
 ) => {
     for (let i = 0; i < selectedOrder?.length!; i++) {
         let rowFixed: Order = selectedOrder?.[i] as Order;
+        let estimateDelivery = rowFixed?.est_delivery
+            ? new Date(rowFixed?.est_delivery)
+            : null;
+        let newDeliveryDate = new Date();
+        console.log(newDeliveryDate);
+        if (status == "at-warehouse") {
+            newDeliveryDate.setDate(newDeliveryDate.getDate() + 7);
+        }
         if (execute) {
             const result0 = await fetchServer(
                 `/api/orders/${rowFixed.maz_id}`,
                 {
                     method: "PUT",
                     headers: { "Content-type": "application/json" },
-                    body: JSON.stringify({ status: status }),
+                    body: JSON.stringify({
+                        status: status,
+                        est_delivery:
+                            status == "at-warehouse"
+                                ? newDeliveryDate
+                                : estimateDelivery,
+                    }),
                 }
             );
         }

@@ -83,11 +83,10 @@ const AdminLineItem = (props: IProp) => {
                         )}
                         <Image
                             src={
-                                `https://mazbackend.easydesk.work/user_uploads/` +
-                                    (props.row as User).avatar_url?.replace(
-                                        /['"]+/g,
-                                        ""
-                                    ) || "/user-images/default_user.png"
+                                (props.row as User).avatar_url
+                                    ? "https://mazbackend.easydesk.work/user_uploads/" +
+                                      (props.row as User).avatar_url
+                                    : "/user-images/default_user.png"
                             }
                             fill
                             style={{ objectFit: "cover" }}

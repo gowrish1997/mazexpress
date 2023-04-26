@@ -12,6 +12,7 @@ import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import PageheaderTitle from "./PageheaderTitle";
 import ReactPaginateComponent from "./ReactPaginate";
 import MovedOutConfirmModal from "./modal/MovedOutConfirmModal";
+import SortOptionDropDown from "./SortOptionDropDown";
 
 const adminOption = ["Moved out"];
 
@@ -96,6 +97,7 @@ const ShipmentsPageHeader = (props: IPageHeaderProp) => {
                             disabled={!props.selectedOrder?.length}
                             orders={props.allLiveOrders}
                         />
+                        <SortOptionDropDown />
                     </div>
                 )}
             </div>

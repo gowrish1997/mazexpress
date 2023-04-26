@@ -7,6 +7,7 @@ import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import AdminOptionDropDown from "./AdminOptionDropDown";
 import { perPageOptinsList } from "@/lib/helper";
 import { IPageHeaderProp } from "@/models/pageHeader.interface";
+import SortOptionDropDown from "./SortOptionDropDown";
 
 const warehouse = ["istanbul"];
 
@@ -80,6 +81,7 @@ const LiveOrderPageHeader = (props: IPageHeaderProp) => {
                             disabled={!props.selectedOrder?.length}
                             orders={props.allLiveOrders}
                         />
+                        <SortOptionDropDown />
                     </div>
                 )}
             </div>

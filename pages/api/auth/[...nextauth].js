@@ -88,7 +88,6 @@ export const authOptions = {
                 token.user = session;
             }
             if (user) {
-                console.log(user);
                 token.user = user;
             }
             return token;

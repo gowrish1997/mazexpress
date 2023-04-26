@@ -14,6 +14,7 @@ import OrderDetailModal from "@/components/admin/modal/OrderDetailModal";
 import CreateNotificationModal from "@/components/admin/notification-panel/modal/CreateNotificationModal";
 import { APIResponse } from "@/models/api.model";
 import { KeyedMutator } from "swr";
+import Link from "next/link";
 interface IProp {
     row: Order;
     type: string;
@@ -145,11 +146,10 @@ const LiveOrderLineItem = (props: IProp) => {
                     <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
                         <Image
                             src={
-                                `https://mazbackend.easydesk.work/user_uploads/` +
-                                    props.row.user.avatar_url?.replace(
-                                        /['"]+/g,
-                                        ""
-                                    ) || "/user-images/default_user.png"
+                                props.row.user.avatar_url
+                                    ?"https://mazbackend.easydesk.work/user_uploads/" +
+                                      props.row.user.avatar_url
+                                    :"/user-images/default_user.png"
                             }
                             fill
                             style={{ objectFit: "cover" }}
@@ -173,7 +173,16 @@ const LiveOrderLineItem = (props: IProp) => {
                 >
                     {props.row.maz_id}
                 </td>
-                <td className={`td3 text-[#3672DF]`}>{props.row.store_link}</td>
+                <td className={`td3 text-[#35C6F4]`}>
+                    <Link
+                        href={props.row.store_link}
+                        target="_blank"
+                        className="text-[#35C6F4]"
+                    >
+                        {props.row.store_link}
+                    </Link>
+                </td>
+
                 <td className={`td4`}>{props.row.reference_id}</td>
                 <td className={`td5`}>
                     {getDateInStringFormat(props.row.created_on)}

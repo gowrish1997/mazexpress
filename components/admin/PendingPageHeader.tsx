@@ -12,8 +12,9 @@ import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import PageheaderTitle from "./PageheaderTitle";
 import ReactPaginateComponent from "./ReactPaginate";
 import MoveToShipmentConfirmModal from "./modal/MoveToShipmentConfirmModal";
+import SortOptionDropDown from "./SortOptionDropDown";
 
-const adminOption = ["Move to Shipments"];
+const adminOption = ["Move to Shipments", "S"];
 
 const PendingPageHeader = (props: IPageHeaderProp) => {
     const perPageOptions = perPageOptinsList();
@@ -98,6 +99,7 @@ const PendingPageHeader = (props: IPageHeaderProp) => {
                             disabled={!props.selectedOrder?.length}
                             orders={props.allLiveOrders}
                         />
+                        <SortOptionDropDown />
                     </div>
                 )}
             </div>

@@ -245,12 +245,12 @@ const UserSelect = (props: IProp) => {
                                         <div className="w-10 h-10 rounded-full relative overflow-hidden">
                                             <Image
                                                 src={
-                                                    `https://mazbackend.easydesk.work/user_uploads/` +
-                                                        el.avatar_url?.replace(
-                                                            /['"]+/g,
-                                                            ""
-                                                        ) ||
-                                                    "/user-images/default_user.png"
+                                                    el.avatar_url
+                                                        ? process.env
+                                                              .PROFILE_SRC +
+                                                          el.avatar_url
+                                                        : process.env
+                                                              .DEFAULT_PIC
                                                 }
                                                 fill
                                                 style={{ objectFit: "cover" }}

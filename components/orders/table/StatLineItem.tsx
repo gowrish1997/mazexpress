@@ -84,17 +84,16 @@ const StatLineItem = (props: IProp) => {
                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden ">
                     <Image
                         src={
-                            `https://mazbackend.easydesk.work/user_uploads/` +
-                                props.row.user?.avatar_url?.replace(
-                                    /['"]+/g,
-                                    ""
-                                ) || "/user-images/default_user.png"
+                            props.row.user.avatar_url
+                                ?"https://mazbackend.easydesk.work/user_uploads/" +
+                                  props.row.user.avatar_url
+                                :"/user-images/default_user.png"
                         }
                         fill
                         style={{ objectFit: "cover" }}
                         alt="profileImage"
                     />
-                </div>
+            </div>
 
                 <div className="ml-[5px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
                     <p className=" text-[12px] text-[#18181B] font-[800] leading-[22px] capitalize ">

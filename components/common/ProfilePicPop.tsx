@@ -130,9 +130,10 @@ const ProfilePicPop = (props: IProp) => {
                         <div className="w-[300px] h-[300px] relative rounded-full overflow-hidden self-center">
                             <Image
                                 src={
-                                    `https://mazbackend.easydesk.work/user_uploads/` +
-                                        session.user?.avatar_url ||
-                                    "/user-images/default_user.png"
+                                    session?.user?.avatar_url
+                                        ?"https://mazbackend.easydesk.work/user_uploads/" +
+                                          session?.user?.avatar_url
+                                        :"/user-images/default_user.png"
                                 }
                                 alt="profile"
                                 fill

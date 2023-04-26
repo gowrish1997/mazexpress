@@ -14,6 +14,7 @@ import AuthCTX from "@/components/context/auth.ctx";
 import { AuthManager, IWhiteListedUser } from "@/controllers/auth-ctr";
 import { useTranslation } from "next-i18next";
 import { signOut, useSession } from "next-auth/react";
+import useOrders from "@/lib/hooks/useOrders";
 
 const userSidebarPanel = [
     {
@@ -159,6 +160,7 @@ const Sidebar = () => {
         returnObjects: true,
     });
     const { data: session, update }: { data: any; update: any } = useSession();
+
     const transalateSidebarContentHandler = () => {
         // console.log(user?.is_admin);
         if (session?.user?.is_admin) {

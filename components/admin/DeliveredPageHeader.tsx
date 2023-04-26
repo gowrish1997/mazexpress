@@ -6,6 +6,7 @@ import FilterOptionDropDown from "./FilterOptionDropDown";
 import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import PageheaderTitle from "./PageheaderTitle";
 import ReactPaginateComponent from "./ReactPaginate";
+import SortOptionDropDown from "./SortOptionDropDown";
 
 const DeliveredPageHeader = (props: IPageHeaderProp) => {
     const warehousesDropDownOptoin = ["istanbul"];
@@ -49,6 +50,7 @@ const DeliveredPageHeader = (props: IPageHeaderProp) => {
                         />
 
                         <AdminOptionDropDown orders={props.allLiveOrders} />
+                        <SortOptionDropDown />
                     </div>
                 )}
             </div>

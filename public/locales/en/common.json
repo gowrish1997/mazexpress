@@ -229,9 +229,9 @@
         ],
         "AdminSidebarContent": [
             "Dashboard",
-            "Live Orders",
+            "Orders",
             "Pending Orders",
-            "Today Shipments",
+            "Shipments",
             "Out From Warehouse",
             "Delivered Order",
             "Warehouse",

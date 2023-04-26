@@ -53,6 +53,7 @@ const TotalOrders = () => {
         //   props.filterByDate(value);
         // props.filterByDate(value);
         setSelectedDate(value);
+        setShowCalendar(false);
     };
 
     return (

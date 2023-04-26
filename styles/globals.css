@@ -1073,7 +1073,7 @@ option {
     border-radius: 100%;
 }
 .react-calendar__tile--now {
-    background: #35c6f4;
+    background: #9ebece;
     border-radius: 100%;
     color: #ffffff;
 }
@@ -1123,7 +1123,7 @@ abbr:where([title]) {
 .highlight {
     color: black;
     font-size: 12px;
-    background-color: #9ebece;
+    background-color: #35c6f4;
     width: 90%;
     height: 90%;
     border-radius: 50%;

@@ -185,7 +185,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                                                         index ==
                                                         dimensions.length - 1
                                                     ) && (
-                                                        <div className="relative h-[5px] w-[10px] mx-[5px] ">
+                                                        <div className="relative h-[5px] w-[6px] mx-[5px] ">
                                                             <Image
                                                                 src={Multiply}
                                                                 fill

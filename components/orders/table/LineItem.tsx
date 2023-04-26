@@ -10,6 +10,7 @@ import GreyRadioButton from "../../../public/grey_svg.svg";
 import RedRadioButton from "../../../public/red_svg.svg";
 import YellowRadioButton from "../../../public/yellow_svg.svg";
 import OrderOptionModal from "../modal/OrderOptionModal";
+import Link from "next/link";
 
 interface IProp {
     row: Order;
@@ -18,7 +19,7 @@ interface IProp {
 
 const LineItem = (props: IProp) => {
     //   console.log(props.row);
- 
+
     const trigger = useRef<any>();
 
     //   console.log(addresses);
@@ -78,7 +79,9 @@ const LineItem = (props: IProp) => {
     return (
         <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
             <td className={`td1`}>{props.row.maz_id}</td>
-            <td className={`td2 text-[#35C6F4]`}>{props.row.store_link}</td>
+            <td className={`td2 text-[#35C6F4]`}>
+                <Link href={props.row.store_link} target="_blank" className="text-[#35C6F4]">{props.row.store_link}</Link>
+            </td>
             <td className={`td3`}>{props.row.reference_id}</td>
             <td className={`td4`}>
                 {props.row.est_delivery ? (
@@ -90,7 +93,7 @@ const LineItem = (props: IProp) => {
             <td className={`td5 `} style={{}}>
                 <div className="flex flex-row items-center gap-x-[5px]">
                     <span className="address_td capitalize ">
-                        {props.row.address.city}
+                        {props.row.address.tag}
                     </span>
 
                     {session.user?.default_address === props.row.address.id && (

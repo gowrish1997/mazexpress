@@ -1,15 +1,14 @@
-import Bell from "@/public/bell_svg.svg";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Image from "next/image";
-import React, { SyntheticEvent, useRef, useState } from "react";
 import { SearchKeyContext } from "@/components/common/Frame";
 import NotificationView from "@/components/common/NotificationView";
 import useNotifications from "@/lib/hooks/useNotifications";
+import Bell from "@/public/bell_svg.svg";
 import searchIcon from "@/public/search.png";
+import debounce from "lodash.debounce";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import React, { SyntheticEvent, useCallback, useRef, useState } from "react";
 
 const Topbar = () => {
     const router = useRouter();
@@ -19,6 +18,7 @@ const Topbar = () => {
     const placeholder: string[] = t("topbar.inputField.Placeholder", {
         returnObjects: true,
     });
+    const inputRef = useRef<HTMLInputElement>();
     // console.log(user)
     const { setSearchKey } = React.useContext(SearchKeyContext) as any;
     const { data: session, update }: { data: any; update: any } = useSession();
@@ -42,9 +42,15 @@ const Topbar = () => {
     };
 
     let trigger = useRef(null);
-
-    const searchKeyOnchangeHandler = (e: SyntheticEvent) => {
-        setSearchKey((e.target as HTMLInputElement).value);
+    const debouncedFilter = useCallback(
+        debounce((e) => {
+            console.log(e);
+            setSearchKey(e);
+        }, 1000),
+        []
+    );
+    const searchKeyOnchangeHandler = (e) => {
+        debouncedFilter(e.target.value);
     };
 
     // useEffect(() => {
@@ -63,13 +69,14 @@ const Topbar = () => {
                         className="h-full w-full bg-transparent focus:outline-none searchbar"
                         id="searchbar"
                         type="text"
+                        ref={inputRef}
                         placeholder={
                             router.pathname.includes("users") ||
                             router.pathname.includes("admins")
                                 ? placeholder[0]
                                 : placeholder[1]
                         }
-                        onChange={searchKeyOnchangeHandler}
+                        onChange={(e) => searchKeyOnchangeHandler(e)}
                     />
                     <div
                         className={`absolute w-[16px] h-[16px] ${
@@ -81,6 +88,7 @@ const Topbar = () => {
                             fill
                             style={{ objectFit: "contain" }}
                             alt="search"
+                            onClick={searchKeyOnchangeHandler}
                             sizes="(max-width: 768px) 100vw,
                   (max-width: 1200px) 100vw,
                   100vw"
@@ -106,9 +114,10 @@ const Topbar = () => {
                 <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
                     <Image
                         src={
-                            `https://mazbackend.easydesk.work/user_uploads/` +
-                                session?.user?.avatar_url ||
-                            "/user-images/default_user.png"
+                            session?.user?.avatar_url
+                                ?"https://mazbackend.easydesk.work/user_uploads/" +
+                                  session?.user?.avatar_url
+                                :"/user-images/default_user.png"
                         }
                         fill
                         style={{ objectFit: "cover" }}
@@ -124,13 +133,6 @@ const Topbar = () => {
                 <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
                     {session?.user?.first_name} {session?.user?.last_name}
                 </p>
-                <div className="w-3 h-3 flex items-center">
-                    <FontAwesomeIcon
-                        icon={faAngleDown}
-                        size="xs"
-                        color="#525D72"
-                    />
-                </div>
             </div>
             {showNotifications && (
                 <NotificationView

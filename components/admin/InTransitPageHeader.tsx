@@ -11,6 +11,7 @@ import MazStatsDropddown from "./MazStats/MazStatsDropddown";
 import PageheaderTitle from "./PageheaderTitle";
 import ReactPaginateComponent from "./ReactPaginate";
 import MarkAsDeliveredConfirmModal from "./modal/MarkAsDeliveredConfirmModal";
+import SortOptionDropDown from "./SortOptionDropDown";
 
 const adminOption = [
     "Received in Libya",
@@ -78,7 +79,7 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                     createToast({
                         type: "success",
                         title: "success",
-                        message:`orders with ID ${getOrderIdList(
+                        message: `orders with ID ${getOrderIdList(
                             props.selectedOrder
                         )} successfully updated `,
                         timeOut: 2000,
@@ -105,7 +106,7 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                     createToast({
                         type: "success",
                         title: "success",
-                        message:`orders with ID ${getOrderIdList(
+                        message: `orders with ID ${getOrderIdList(
                             props.selectedOrder
                         )} successfully updated `,
                         timeOut: 2000,
@@ -168,6 +169,7 @@ const InTransitPageHeader = (props: IPageHeaderProp) => {
                             orders={props.allLiveOrders as Order[]}
                             type={props.content}
                         />
+                        <SortOptionDropDown />
                     </div>
                 )}
             </div>

@@ -19,12 +19,16 @@ import UserPageWrapper from "@/components/common/UserPageWrapper";
 import { getServerSession } from "next-auth/next";
 import { GetServerSidePropsContext } from "next";
 import { authOptions } from "../api/auth/[...nextauth]";
+import { APIResponse } from "@/models/api.model";
+import fetchServer from "@/lib/fetchServer";
 
 const TrackOrder = (props: any) => {
     const router = useRouter();
     const { data: session, update }: { data: any; update: any } = useSession();
+    const [per_page, setPer_page] = useState(10);
     const { orders, ordersIsLoading } = useOrders({
         username: session?.user?.email as string,
+        per_page: per_page,
     });
 
     const { tracking, mutateTracking, trackingIsLoading } = useTracking({
@@ -51,6 +55,10 @@ const TrackOrder = (props: any) => {
             setPackageStatus(sorted.pop()?.stage!);
         }
     }, [tracking]);
+
+    const loadMoreNotificationHandler = async () => {
+        setPer_page((data) => data + 5);
+    };
 
     if (trackingIsLoading) return <LoadingPage />;
     return (
@@ -94,25 +102,33 @@ const TrackOrder = (props: any) => {
                             {t("trackingView.listOfTrackingId.Title")}
                         </div>
                         <div className="space-y-[10px]">
-                            {(orders?.data as Order[])
-                                ?.sort(
-                                    (a, b) =>
-                                        new Date(b.created_on).getTime() -
-                                        new Date(a.created_on).getTime()
-                                )
-                                .map((data) => {
-                                    return (
-                                        <Link
-                                            href={`/track/${data.maz_id}`}
-                                            key={data.id}
+                            {(orders?.data as Order[])?.map((data) => {
+                                return (
+                                    <Link
+                                        href={`/track/${data.maz_id}`}
+                                        key={data.id}
+                                    >
+                                        <p
+                                            className={`text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ${
+                                                data.maz_id == router.query.id
+                                                    ? "bg-[#EDF5F9] text-[black]"
+                                                    : ""
+                                            }`}
                                         >
-                                            <p className="text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ">
-                                                {data.maz_id}
-                                            </p>
-                                        </Link>
-                                    );
-                                })}
+                                            {data.maz_id}
+                                        </p>
+                                    </Link>
+                                );
+                            })}
                         </div>
+                        {orders?.count > per_page && (
+                            <p
+                                className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
+                                onClick={loadMoreNotificationHandler}
+                            >
+                                load more...
+                            </p>
+                        )}
                     </div>
                 </div>
             </Layout>
@@ -130,8 +146,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         ctx.res as any,
         authOptions as any
     );
+
     // const { pathname } = ctx.req.url;
-    console.log(session);
+
     if (!session) {
         return {
             redirect: {

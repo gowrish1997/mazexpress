@@ -167,7 +167,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         authOptions as any
     );
     // const { pathname } = ctx.req.url;
-    console.log(session);
+    
     if (!session) {
         return {
             redirect: {
