@@ -130,7 +130,7 @@ const Topbar = () => {
                         }
                     />
                 </div>
-                <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
+                <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2"> 
                     {session?.user?.first_name} {session?.user?.last_name}
                 </p>
             </div>
