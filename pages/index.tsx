@@ -3,12 +3,7 @@
 //     co-author: raunak
 //==========================
 
-import React, {
-    ChangeEvent,
-    useEffect,
-    useRef,
-    useState
-} from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import Footer from "@/components/LandingPage/Footer";
 import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
@@ -20,7 +15,7 @@ import { useScrollspy } from "@/lib/hooks/useScrollSpy";
 import { i18n, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
-
+import MaxExpressFlowDiagram from "@/components/LandingPage/MaxExpressFlowDiagram";
 
 const Index = () => {
     const router = useRouter();
@@ -97,7 +92,7 @@ const Index = () => {
                                         <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[36px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
                                             {t("landingPage.welcome.Title")}
                                         </h1>
-                                        <p className="text-center text-[16px] md:text-[18px] xmd:text-[20px] text-[#121212] font-[500] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[15px] ">
+                                        <p className="text-center text-[16px] md:text-[18px] xmd:text-[20px] text-[#121212] font-[600] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[15px] ">
                                             {t("landingPage.welcome.Caption")}
                                         </p>
                                         <p className="text-center text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#525D72] font-[500] leading-[15px] md:leading-[20px] xmd:leading-[25px] ">
@@ -108,6 +103,7 @@ const Index = () => {
                                     </div>
                                 </div>
 
+                                <MaxExpressFlowDiagram />
                                 <div
                                     className="flex-type5 mt-[70px] w-[100%]"
                                     ref={trackingSectionRef}

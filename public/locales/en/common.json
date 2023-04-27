@@ -153,6 +153,14 @@
                 }
             ]
         },
+        "flowDiagram": {
+            "Text": [
+                "Register for free to get your own Turkish address instantly",
+                "Shop at any turkish retail website",
+                "Ship your purchase to your turkish address with Mazexpress",
+                "Mazexpress will combine and ship your order to you"
+            ]
+        },
 
         "shipmentCostCalculator": {
             "Title": "Shipment Cost Calculator",

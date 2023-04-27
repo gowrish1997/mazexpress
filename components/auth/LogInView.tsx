@@ -98,11 +98,7 @@ const LogInComponent = (props: any) => {
     };
 
     return (
-        <div
-            className={`w-[45%] space-y-[20px] flex flex-col justify-start items-center md:items-start ${
-                locale == "en" ? "md:-ml-[20%]" : "md:-mr-[20%]"
-            } `}
-        >
+        <>
             <h1
                 className={`hidden md:block text-[26px] text-[#000000] font-[600] leading-[36px]  `}
             >
@@ -196,7 +192,7 @@ const LogInComponent = (props: any) => {
                     </p>
                 </div>
             </form>
-        </div>
+        </>
     );
 };
 

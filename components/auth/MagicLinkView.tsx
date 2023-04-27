@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
-import logo from "../../public/new_logo_blue.png";
-import { createToast } from "@/lib/toasts";
-import fetchJson from "@/lib/fetchServer";
 import { user_forgotPasswordContent } from "@/lib/emailContent/bodyContent";
-import axios from "axios";
+import fetchJson from "@/lib/fetchServer";
 import { sentMail } from "@/lib/sentMail";
+import { createToast } from "@/lib/toasts";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslation } from "next-i18next";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import * as yup from "yup";
+import logo from "../../public/new_logo_blue.png";
 
 type Inputs = {
     email: string;
@@ -115,11 +113,7 @@ const MagicLinkView = (props: any) => {
     };
 
     return (
-        <div
-            className={`w-[300px] sm:w-[60%] xmd:w-[47%] space-y-[20px] flex flex-col justify-start items-center md:items-start  ${
-                locale == "en" ? "md:-ml-[20%]" : "md:-mr-[20%]"
-            }`}
-        >
+        <>
             <h1
                 className={`hidden md:block text-[26px] text-[#000000] font-[600] leading-[36px]  `}
             >
@@ -185,7 +179,7 @@ const MagicLinkView = (props: any) => {
             </form>
 
             {/* <LogInWithMail /> */}
-        </div>
+        </>
     );
 };
 
