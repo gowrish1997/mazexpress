@@ -11,7 +11,7 @@ const ageOptions = [
 ];
 
 const genderOptions = [
-    { value: "", label: "all" },
+    // { value: "", label: "all" },
     { value: "m", label: "Male" },
     { value: "f", label: "Female" },
     // { value: "u", label: "Unknown" },

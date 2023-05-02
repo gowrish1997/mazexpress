@@ -6,6 +6,7 @@ import Enquiry from "@/public/enquiry_svg.svg";
 import Helpcenter from "@/public/help_svg.svg";
 import Location from "@/public/location_svg.svg";
 import Order from "@/public/order_svg.svg";
+import AddOrder from "@/public/add-new-order_svg.svg";
 import Settings from "@/public/settings_svg.svg";
 import TodayShip from "@/public/todayship_svg.svg";
 import User from "@/public/user_svg.svg";
@@ -24,17 +25,19 @@ import Admin from "../../../public/admin_svg.svg";
 const userIcon = (id: number) => {
     switch (id) {
         case 0:
-            return <Order />;
+            return <AddOrder />;
         case 1:
-            return <Location />;
+            return <Order />;
         case 2:
-            return <Warehosue />;
+            return <Location />;
         case 3:
-            return <Address />;
+            return <Warehosue />;
         case 4:
+            return <Address />;
+        case 5:
             return <Settings />;
 
-        case 5:
+        case 6:
             return <Helpcenter />;
 
         default:

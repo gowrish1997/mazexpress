@@ -89,17 +89,17 @@ const Index = () => {
                             <div className="px-[30px] xmd:px-[150px]  ">
                                 <div className="w-[100%] flex flex-row justify-center ">
                                     <div className="w-[75%] mt-[30px] ">
-                                        <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[36px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
+                                        <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[40px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
                                             {t("landingPage.welcome.Title")}
                                         </h1>
-                                        <p className="text-center text-[16px] md:text-[18px] xmd:text-[20px] text-[#121212] font-[600] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[15px] ">
+                                        <p className="text-center text-[10px] md:text-[11px] xmd:text-[12px] text-[#121212] font-[700] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[5px] ">
                                             {t("landingPage.welcome.Caption")}
                                         </p>
-                                        <p className="text-center text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#525D72] font-[500] leading-[15px] md:leading-[20px] xmd:leading-[25px] ">
+                                        {/* <p className="text-center text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#525D72] font-[500] leading-[15px] md:leading-[20px] xmd:leading-[25px] ">
                                             {t(
                                                 "landingPage.welcome.Description"
                                             )}
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </div>
 

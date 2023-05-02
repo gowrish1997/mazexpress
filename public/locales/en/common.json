@@ -34,7 +34,7 @@
                 "Confirm password is required field(Passwords must match) "
             ],
             "Discription": [
-                "By signing up, you agree to our",
+                "Agree with maz express ",
                 "Terms of Service.",
                 "Already have an account?",
                 "Log in."
@@ -228,6 +228,7 @@
     },
     "sidebar": {
         "UserSidebarContent": [
+            "Add New Order",
             "My Orders",
             "Order Tracking",
             "Warehouse",
@@ -293,10 +294,11 @@
         "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
         "LinkPPart2": "Link here →",
         "ordersForm": {
-            "Labels": ["Reference ID", "Store Link"],
+            "Labels": ["Reference ID", "Store Link", "Weight in KG"],
             "Errors": [
                 "Reference ID is required field",
-                "Store Link is required field"
+                "Store Link is required field",
+                "Weight is required field"
             ]
         },
         "addressBook": {

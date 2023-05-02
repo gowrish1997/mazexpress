@@ -14,6 +14,12 @@ import { useTranslation } from "next-i18next";
 const userSidebarPanel = [
     {
         id: nanoid(),
+        title: "Add New Order",
+        icon: "/orders.png",
+        path: "/add-new-order",
+    },
+    {
+        id: nanoid(),
         title: "My Orders",
         icon: "/orders.png",
         path: "/orders",
@@ -155,7 +161,7 @@ const Sidebar = () => {
         returnObjects: true,
     });
     const { data: session, update }: { data: any; update: any } = useSession();
-    console.log('sidebar')
+    console.log("sidebar");
 
     const transalateSidebarContentHandler = () => {
         // console.log(user?.is_admin);
@@ -188,7 +194,7 @@ const Sidebar = () => {
         <>
             <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] relative w-full">
                 <Header />
-                <div className="flex flex-col justify-between items-start px-6 pb-6 h-[89vh] overflow-y-auto box-border overflow-x-hidden slimScrollBar">
+                <div className="flex flex-col justify-between items-start px-6 pb-[60px] h-[89vh] overflow-y-auto box-border overflow-x-hidden slimScrollBar">
                     <div className=" w-full box-border  flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
                         <div
                             className="sm:hidden flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]"

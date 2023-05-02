@@ -70,7 +70,6 @@ interface IProp {
 }
 
 const SignUpContent = (props: IProp) => {
-    const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
@@ -101,6 +100,20 @@ const SignUpContent = (props: IProp) => {
         { returnObjects: true }
     );
 
+    const [errorMsg, setErrorMsg] = useState("");
+    const [terms, setTerms] = useState(true);
+
+    const termsAndConditionHandler = (e) => {
+        setTerms((prev) => {
+            if (prev) {
+                return false;
+            } else {
+                setErrorMsg("");
+                return true;
+            }
+        });
+    };
+
     const {
         register,
         handleSubmit,
@@ -121,6 +134,12 @@ const SignUpContent = (props: IProp) => {
     });
 
     const onSubmit: SubmitHandler<ISignupForm> = async (data) => {
+        if (props.type == "signUp" && !terms) {
+            console.log("inside loop");
+            setErrorMsg("Please accept terms and condition");
+            return;
+        }
+
         if (props.type == "admin") {
             data.user.is_admin = true;
         }
@@ -173,12 +192,21 @@ const SignUpContent = (props: IProp) => {
             // if (userResult.ok === true && addressResult.ok === true) {
             if (userResult.ok === true) {
                 // toast
-                createToast({
-                    type: "success",
-                    title: "your registration has been successfully completed",
-                    message: "Please log in with your login credentials",
-                    timeOut: 3000,
-                });
+                if (props.type == "admin") {
+                    createToast({
+                        type: "success",
+                        title: "Success",
+                        message: "New admin added successfully",
+                        timeOut: 3000,
+                    });
+                } else {
+                    createToast({
+                        type: "success",
+                        title: "your registration has been successfully completed",
+                        message: "Please log in with your login credentials",
+                        timeOut: 3000,
+                    });
+                }
 
                 /**    sending mail after signup  */
 
@@ -422,6 +450,30 @@ const SignUpContent = (props: IProp) => {
                     error={errors.addr?.phone}
                 /> */}
             </div>
+            {props.type == "signUp" ? (
+                <>
+                    {" "}
+                    <div className="flex flex-row justify-center items-center gap-x-[5px] ">
+                        <input
+                            type="radio"
+                            checked={terms}
+                            onClick={termsAndConditionHandler}
+                        />
+
+                        <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[13px]">
+                            {discription[0]}{" "}
+                            <span className="text-[#0057FF] cursor-pointer">
+                                {discription[1]}
+                            </span>
+                        </p>
+                    </div>
+                    <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+                        {errorMsg}
+                    </p>
+                </>
+            ) : (
+                <></>
+            )}
             {props.type == "signUp" ? (
                 <button
                     type="submit"

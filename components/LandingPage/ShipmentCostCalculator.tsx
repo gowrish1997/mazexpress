@@ -118,7 +118,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                             className="flex-1 h-full space-y-[20px] "
                             onSubmit={handleSubmit(onSubmit)}
                         >
-                            <CusotmDropdown
+                            {/* <CusotmDropdown
                                 label={inputField[0].label}
                                 name="warehouseAddress_address"
                                 type="string"
@@ -155,7 +155,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                                 disabled={true}
                                 value={getValues("city_name")}
                                 setValue={setValue}
-                            />
+                            /> */}
                             <div className={"w-full flex-type6"}>
                                 <label
                                     htmlFor="Dimensions ( Optional )"

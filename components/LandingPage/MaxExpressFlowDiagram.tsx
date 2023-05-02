@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import Document from "@/public/document.png";
-import House from "@/public/house.png";
-import Shoppingbag from "@/public/shopping-bag.png";
-import Plane from "@/public/plane.png";
-import Flowarrow from "@/public/flow_arrow.png";
+import Document from "@/public/new_register.png";
+import House from "@/public/new_home.png";
+import Shoppingbag from "@/public/new_shop.png";
+import Plane from "@/public/new_plain.png";
+import Flowarrow from "@/public/new_arrow.png";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 const MaxExpressFlowDiagram = () => {
@@ -34,7 +34,7 @@ const MaxExpressFlowDiagram = () => {
                 </div>
                 <div className="mt-[20px]">
                     <div
-                        className={`h-[17px] w-[8px] relative ${
+                        className={`h-[17px] w-[83px] relative ${
                             locale == "ar" && "rotate-180"
                         }  `}
                     >
@@ -61,7 +61,7 @@ const MaxExpressFlowDiagram = () => {
                 </div>
                 <div className="mt-[20px]">
                     <div
-                        className={`h-[17px] w-[8px] relative ${
+                        className={`h-[17px] w-[83px] relative ${
                             locale == "ar" && "rotate-180"
                         }  `}
                     >
@@ -87,9 +87,11 @@ const MaxExpressFlowDiagram = () => {
                     </p>
                 </div>
                 <div className="mt-[20px]">
-                    <div className={`h-[17px] w-[8px] relative ${
+                    <div
+                        className={`h-[17px] w-[83px] relative ${
                             locale == "ar" && "rotate-180"
-                        }  `}>
+                        }  `}
+                    >
                         <Image
                             src={Flowarrow}
                             fill

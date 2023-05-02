@@ -149,6 +149,78 @@ const HomePageWrapper = (props: IProp) => {
                                                 >
                                                     {t(section[4])}
                                                 </li>
+                                                {!(
+                                                    router.pathname ==
+                                                        "/about" ||
+                                                    router.pathname ==
+                                                        "/services"
+                                                ) ? (
+                                                    <>
+                                                        <li
+                                                            className={`cursor-pointer ${
+                                                                props.activeSection ==
+                                                                "shipmentCalculatorSection"
+                                                                    ? "border-b-[2px] border-b-[#35C6F4] pb-[2px]"
+                                                                    : ""
+                                                            }  `}
+                                                            onClick={() =>
+                                                                shipmentCalculatorSectionRef?.current?.scrollIntoView(
+                                                                    {
+                                                                        behavior:
+                                                                            "smooth",
+                                                                    }
+                                                                )
+                                                            }
+                                                        >
+                                                            {t(section[1])}
+                                                        </li>
+                                                        <li
+                                                            className={`cursor-pointer ${
+                                                                props.activeSection ==
+                                                                "enquirySection"
+                                                                    ? "border-b-[2px] border-b-[#35C6F4] pb-[2px]"
+                                                                    : ""
+                                                            }`}
+                                                            onClick={() =>
+                                                                enquirySectionRef?.current?.scrollIntoView(
+                                                                    {
+                                                                        behavior:
+                                                                            "smooth",
+                                                                    }
+                                                                )
+                                                            }
+                                                        >
+                                                            {t(section[5])}
+                                                        </li>
+                                                        <li
+                                                            className={`cursor-pointer ${
+                                                                props.activeSection ==
+                                                                "supportSection"
+                                                                    ? "border-b-[2px] border-b-[#35C6F4] pb-[2px]"
+                                                                    : ""
+                                                            }`}
+                                                            onClick={() =>
+                                                                supportSectionRef?.current?.scrollIntoView(
+                                                                    {
+                                                                        behavior:
+                                                                            "smooth",
+                                                                    }
+                                                                )
+                                                            }
+                                                        >
+                                                            {t(section[2])}
+                                                        </li>
+                                                    </>
+                                                ) : (
+                                                    <li
+                                                        className="cursor-pointer"
+                                                        onClick={() =>
+                                                            router.push("/")
+                                                        }
+                                                    >
+                                                        {t(section[0])}
+                                                    </li>
+                                                )}
                                                 <li className="">
                                                     <button
                                                         onClick={
@@ -158,45 +230,6 @@ const HomePageWrapper = (props: IProp) => {
                                                     >
                                                         {auth[2]}
                                                     </button>
-                                                </li>
-                                                <li
-                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                                                    onClick={() =>
-                                                        shipmentCalculatorSectionRef?.current?.scrollIntoView(
-                                                            {
-                                                                behavior:
-                                                                    "smooth",
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    {t(section[1])}
-                                                </li>
-                                                <li
-                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                                                    onClick={() =>
-                                                        enquirySectionRef?.current?.scrollIntoView(
-                                                            {
-                                                                behavior:
-                                                                    "smooth",
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    {t(section[5])}
-                                                </li>
-                                                <li
-                                                    className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                                                    onClick={() =>
-                                                        supportSectionRef?.current?.scrollIntoView(
-                                                            {
-                                                                behavior:
-                                                                    "smooth",
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    {t(section[2])}
                                                 </li>
                                             </ul>
                                         </div>
@@ -309,9 +342,17 @@ const HomePageWrapper = (props: IProp) => {
                                 <div className="flex items-center gap-x-[10px]">
                                     <p>{session.user.email}</p>
                                     {session.user.is_admin ? (
-                                        <Link href={"/admin"}>Dashboard</Link>
+                                        <Link href={"/admin"}>
+                                            {locale == "en"
+                                                ? "Dashboard"
+                                                : "لوحة القيادة"}
+                                        </Link>
                                     ) : (
-                                        <Link href={"/orders"}>My orders</Link>
+                                        <Link href={"/add-new-order"}>
+                                            {locale == "en"
+                                                ? "Place order"
+                                                : "مكان الامر"}
+                                        </Link>
                                     )}
                                 </div>
                                 <div className="hidden min-[850px]:block">

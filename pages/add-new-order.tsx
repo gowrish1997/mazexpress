@@ -35,6 +35,7 @@ const schema = yup
             .typeError("Adress is required field"),
         reference_id: yup.string().required("Reference ID is required field"),
         store_link: yup.string().required("Store Link is required field"),
+        weight: yup.number().required("Weight is required field"),
     })
     .required();
 
@@ -89,6 +90,7 @@ const AddNewOrder = () => {
         reference_id: string;
         store_link: string;
         address_id: string;
+        weight: number;
     }>({
         defaultValues: {
             address_id: "",
@@ -133,6 +135,7 @@ const AddNewOrder = () => {
         reference_id: string | null | undefined;
         store_link: string | null | undefined;
         address_id: string | null | undefined;
+        weight: number | null | undefined;
     }> = async (data) => {
         console.log(data);
         const toList = [
@@ -172,6 +175,7 @@ const AddNewOrder = () => {
                 address_id: data.address_id,
                 reference_id: data.reference_id,
                 store_link: data.store_link,
+                weight: data.weight,
             };
             const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
                 method: "POST",
@@ -268,6 +272,20 @@ const AddNewOrder = () => {
                                 name="store_link"
                                 type="string"
                                 error={errors.store_link && fieldErrors[1]}
+                            />
+                        )}
+                    />
+                    <Controller
+                        name="weight"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <ReactHookFormInput
+                                value={value}
+                                onChange={onChange}
+                                label={inputFieldLabels[2]}
+                                name="weight"
+                                type="number"
+                                error={errors.weight && fieldErrors[2]}
                             />
                         )}
                     />
