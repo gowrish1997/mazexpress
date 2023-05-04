@@ -87,7 +87,7 @@ const LogInComponent = (props: any) => {
         }
     };
 
-    const [passwordType, setPasswordType] = useState("string");
+    const [passwordType, setPasswordType] = useState("password");
 
     const togglePasswordTypeHandler = () => {
         if (passwordType === "string") {
@@ -154,8 +154,8 @@ const LogInComponent = (props: any) => {
                                 isEnabled: true,
                                 src:
                                     passwordType === "password"
-                                        ? "/eyeIconOpen.png"
-                                        : "/eyeIconClose.png",
+                                        ? "/eyeIconClose.png"
+                                        : "/eyeIconOpen.png",
                             }}
                             onClick={togglePasswordTypeHandler}
                             error={
