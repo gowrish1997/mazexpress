@@ -462,7 +462,7 @@ const SignUpContent = (props: IProp) => {
 
                         <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[13px]">
                             {discription[0]}{" "}
-                            <span className="text-[#0057FF] cursor-pointer">
+                            <span className="text-[#0057FF] cursor-pointer" onClick={()=>router.push('/TermsAndCondition')}>
                                 {discription[1]}
                             </span>
                         </p>

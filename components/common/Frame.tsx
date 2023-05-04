@@ -33,7 +33,8 @@ const Frame = (props: IFrameProps) => {
                     router.pathname == "/" ||
                     router.pathname == "/about" ||
                     router.pathname == "/services" ||
-                    router.pathname == "/404"
+                    router.pathname == "/404" ||
+                    router.pathname == "/TermsAndCondition"
                 ) && (
                     <div className="w-[80px] sm:w-[180px] md:w-[250px] lg:w-[400px] xlg:w-[500px] fixed h-screen z-40">
                         <Sidebar />
@@ -43,7 +44,8 @@ const Frame = (props: IFrameProps) => {
                     router.pathname == "/" ||
                     router.pathname == "/about" ||
                     router.pathname == "/services" ||
-                    router.pathname == "/404"
+                    router.pathname == "/404" ||
+                    router.pathname == "/TermsAndCondition"
                 ) ? (
                     <div
                         className={`box-border flex-1   ${
