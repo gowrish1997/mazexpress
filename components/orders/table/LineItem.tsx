@@ -80,17 +80,24 @@ const LineItem = (props: IProp) => {
         <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
             <td className={`td1`}>{props.row.maz_id}</td>
             <td className={`td2 text-[#35C6F4]`}>
-                <Link href={props.row.store_link} target="_blank" className="text-[#35C6F4]">{props.row.store_link}</Link>
+                <Link
+                    href={props.row.store_link}
+                    target="_blank"
+                    className="text-[#35C6F4]"
+                >
+                    {props.row.store_link}
+                </Link>
             </td>
             <td className={`td3`}>{props.row.reference_id}</td>
-            <td className={`td4`}>
+            <td className={`td4`}>{props.row.order_weight}</td>
+            <td className={`td5`}>
                 {props.row.est_delivery ? (
                     getDateInStringFormat(props.row.est_delivery)
                 ) : (
                     <span>{"..."}</span>
                 )}
             </td>
-            <td className={`td5 `} style={{}}>
+            <td className={`td6 `} style={{}}>
                 <div className="flex flex-row items-center gap-x-[5px]">
                     <span className="address_td capitalize ">
                         {props.row.address.tag}
@@ -103,7 +110,7 @@ const LineItem = (props: IProp) => {
                     )}
                 </div>
             </td>
-            <td className={`td6 `}>
+            <td className={`td7 `}>
                 <div className="h-full flex flex-row justify-start items-center gap-x-[5px] ">
                     <div className="pending__icon">
                         {orderStatusColorHandler(props.row.status)}

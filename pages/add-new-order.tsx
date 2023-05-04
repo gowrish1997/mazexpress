@@ -35,7 +35,7 @@ const schema = yup
             .typeError("Adress is required field"),
         reference_id: yup.string().required("Reference ID is required field"),
         store_link: yup.string().required("Store Link is required field"),
-        weight: yup.number().required("Weight is required field"),
+        order_weight: yup.number().required("Weight is required field"),
     })
     .required();
 
@@ -90,7 +90,7 @@ const AddNewOrder = () => {
         reference_id: string;
         store_link: string;
         address_id: string;
-        weight: number;
+        order_weight: number;
     }>({
         defaultValues: {
             address_id: "",
@@ -135,7 +135,7 @@ const AddNewOrder = () => {
         reference_id: string | null | undefined;
         store_link: string | null | undefined;
         address_id: string | null | undefined;
-        weight: number | null | undefined;
+        order_weight: number | null | undefined;
     }> = async (data) => {
         console.log(data);
         const toList = [
@@ -175,7 +175,7 @@ const AddNewOrder = () => {
                 address_id: data.address_id,
                 reference_id: data.reference_id,
                 store_link: data.store_link,
-                weight: data.weight,
+                order_weight: data.order_weight,
             };
             const result: APIResponse<Order> = await fetchJson(`/api/orders`, {
                 method: "POST",
@@ -246,49 +246,60 @@ const AddNewOrder = () => {
                 title="Add New Order | MazExpress"
             />
             <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex-type1 gap-x-[10px] mt-[25px]">
-                    <Controller
-                        name="reference_id"
-                        control={control}
-                        render={({ field: { onChange, value } }) => (
-                            <ReactHookFormInput
-                                label={inputFieldLabels[0]}
-                                name="reference_id"
-                                value={value}
-                                onChange={onChange}
-                                type="string"
-                                error={errors.reference_id && fieldErrors[0]}
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="store_link"
-                        control={control}
-                        render={({ field: { onChange, value } }) => (
-                            <ReactHookFormInput
-                                value={value}
-                                onChange={onChange}
-                                label={inputFieldLabels[1]}
-                                name="store_link"
-                                type="string"
-                                error={errors.store_link && fieldErrors[1]}
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="weight"
-                        control={control}
-                        render={({ field: { onChange, value } }) => (
-                            <ReactHookFormInput
-                                value={value}
-                                onChange={onChange}
-                                label={inputFieldLabels[2]}
-                                name="weight"
-                                type="number"
-                                error={errors.weight && fieldErrors[2]}
-                            />
-                        )}
-                    />
+                <div className="flex-type1 gap-x-[10px] gap-y-[10px] mt-[25px] flex-wrap">
+                    <div className="w-[49%]">
+                        <Controller
+                            name="reference_id"
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    label={inputFieldLabels[0]}
+                                    name="reference_id"
+                                    value={value}
+                                    onChange={onChange}
+                                    type="string"
+                                    error={
+                                        errors.reference_id && fieldErrors[0]
+                                    }
+                                />
+                            )}
+                        />
+                    </div>
+                    <div className="w-[49%]">
+                        <Controller
+                            name="store_link"
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    value={value}
+                                    onChange={onChange}
+                                    label={inputFieldLabels[1]}
+                                    name="store_link"
+                                    type="string"
+                                    error={errors.store_link && fieldErrors[1]}
+                                />
+                            )}
+                        />
+                    </div>
+                    <div className="w-[49%]">
+                        {" "}
+                        <Controller
+                            name="order_weight"
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactHookFormInput
+                                    value={value}
+                                    onChange={onChange}
+                                    label={inputFieldLabels[2]}
+                                    name="order_weight"
+                                    type="number"
+                                    error={
+                                        errors.order_weight && fieldErrors[2]
+                                    }
+                                />
+                            )}
+                        />
+                    </div>
                 </div>
                 <div className="mt-[20px]">
                     <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[21px]">

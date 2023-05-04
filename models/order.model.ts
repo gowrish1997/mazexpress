@@ -17,6 +17,7 @@ export interface Order {
     reference_id: string;
 
     shipping_amt: number;
+    order_weight: number;
 
     created_on: Date;
 

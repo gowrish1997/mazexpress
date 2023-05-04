@@ -262,7 +262,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                             </div>
                         </form>
                         <div>
-                            <p className="text-[24px] text-[#121212] font-[700] leading-[50px] mb-[5px] mt-[20px] ">
+                            <p className="text-[20px] text-[#121212] font-[700] leading-[50px] mb-[5px] mt-[20px] ">
                                 Shipment cost:
                                 {cost ? (
                                     <span className="text-[#35C6F4] ml-[5px] ">
