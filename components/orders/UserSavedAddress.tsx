@@ -113,7 +113,7 @@ const UserSavedAddress = (props: {
     };
 
     return (
-        <div className="transition duration-300 flex flex-col items-start border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] pb-[15px] h-full">
+        <div className="w-full transition duration-300 flex flex-col items-start border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] pb-[15px] h-full">
             <div className="flex flex-row justify-start items-start gap-x-[5px] w-full h-full ">
                 {props.type == "address-book" ? (
                     <input

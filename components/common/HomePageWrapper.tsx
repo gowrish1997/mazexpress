@@ -271,7 +271,8 @@ const HomePageWrapper = (props: IProp) => {
                                 </li>
                                 {!(
                                     router.pathname == "/about" ||
-                                    router.pathname == "/services"
+                                    router.pathname == "/services" ||
+                                    router.pathname == "/TermsAndCondition"
                                 ) ? (
                                     <>
                                         <li
@@ -340,7 +341,7 @@ const HomePageWrapper = (props: IProp) => {
                         {session?.user ? (
                             <div className="flex items-center gap-x-[15px]">
                                 <div className="flex items-center gap-x-[10px]">
-                                    <p>{session.user.email}</p>
+                                    {/* <p>{session.user.email}</p> */}
                                     {session.user.is_admin ? (
                                         <Link href={"/admin"}>
                                             {locale == "en"
@@ -358,7 +359,7 @@ const HomePageWrapper = (props: IProp) => {
                                 <div className="hidden min-[850px]:block">
                                     <button
                                         onClick={toggleLogoutConfirmModal}
-                                        className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] "
+                                        className="bg-[#35C6F4] text-[#FFFFFF] rounded-[15px] px-[15px] py-[5px] "
                                     >
                                         {auth[2]}
                                     </button>
@@ -372,7 +373,7 @@ const HomePageWrapper = (props: IProp) => {
                                 </Link>
                                 <Link
                                     href={"/auth/gate?mode=1"}
-                                    className="bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px]"
+                                    className="bg-[#35C6F4] text-[#FFFFFF] rounded-[15px] px-[15px] py-[5px]"
                                 >
                                     {auth[0]}
                                 </Link>

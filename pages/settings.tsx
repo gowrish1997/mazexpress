@@ -305,7 +305,7 @@ const Settings = () => {
                     </div>
 
                     <form
-                        className="flex-type6 w-3/4 gap-y-[10px] "
+                        className="flex-type6 xmd:w-3/4 pr-[30px] xmd:pr-0 gap-y-[10px] "
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <div className="flex items-center gap-x-[20px] mb-[20px] ">
@@ -317,9 +317,9 @@ const Settings = () => {
                                     <Image
                                         src={
                                             session?.user?.avatar_url
-                                                ?"https://mazbackend.easydesk.work/user_uploads/" +
+                                                ? "https://mazbackend.easydesk.work/user_uploads/" +
                                                   session?.user?.avatar_url
-                                                :"/user-images/default_user.png"
+                                                : "/user-images/default_user.png"
                                         }
                                         alt="profile"
                                         fill
@@ -338,7 +338,7 @@ const Settings = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex w-full gap-x-[20px] items-center relative">
+                        <div className="flex flex-col set_md:flex-row w-full max-[750px]:gap-y-[10px] gap-x-[20px] items-center relative">
                             <div className="flex-type2 gap-x-[10px] w-full items-center">
                                 <Controller
                                     name="first_name"
@@ -434,7 +434,7 @@ const Settings = () => {
                                 </div>
                             )}
                         </div>
-                        <div className="flex-type2 w-full gap-x-[20px]">
+                        <div className="flex flex-col set_md:flex-row justify-start items-center w-full max-[750px]:gap-y-[10px] gap-x-[20px]">
                             <Controller
                                 name="email"
                                 control={control}
@@ -479,7 +479,7 @@ const Settings = () => {
                                 )}
                             />
                         </div>
-                        <div className="flex-type2 w-full gap-x-[20px]">
+                        <div className="flex flex-col set_md:flex-row justify-start items-center  w-full max-[750px]:gap-y-[10px] gap-x-[20px]">
                             <Controller
                                 name="phone"
                                 control={control}
@@ -512,7 +512,7 @@ const Settings = () => {
                                 className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
                             />
                         </div>
-                        <div className="flex-type3 w-1/2 mt-[10px] ">
+                        <div className="flex-type3 w-full mt-[10px] ">
                             <div className="font-[500]">
                                 <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">
                                     {t(
@@ -550,7 +550,7 @@ const Settings = () => {
 
                         <button
                             type="submit"
-                            className="w-1/2 h-[46px] border-[1px] bg-[#35C6F4] rounded-[4px] text-[#FFFFFF] mt-[10px] "
+                            className="w-1/2 px-[5px] py-[10px] border-[1px] bg-[#35C6F4] rounded-[4px] text-[12px] set_md:text-[16px] text-[#FFFFFF] mt-[10px] "
                         >
                             {t("settingsPage.profileForm.SubmitButton")}
                         </button>

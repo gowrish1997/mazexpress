@@ -9,7 +9,7 @@ const Header = () => {
     <div className="px-6 py-6">
       <div className="flex items-center">
         <Link href={"/"} passHref>
-          <div className="flex items-center cursor-pointer pl-[10px]">
+          <div className="flex items-center cursor-pointer ">
             <div className="relative w-[60px] h-[60px]  ">
               <Image
                 priority={true}

@@ -89,10 +89,10 @@ const Index = () => {
                             <div className="px-[30px] xmd:px-[150px]  ">
                                 <div className="w-[100%] flex flex-row justify-center ">
                                     <div className="w-[75%] mt-[30px] ">
-                                        <h1 className="text-center text-[26px] md:text-[32px] xmd:text-[40px] text-[#121212] font-[600] leading-[30px] md:leading-[40px] xmd:leading-[50px] mt-[25px] md:mt-[40px] ">
+                                        <h1 className="text-center text-[36px]  text-[#000000] font-[900] leading-[40px]  mt-[25px] md:mt-[40px] ">
                                             {t("landingPage.welcome.Title")}
                                         </h1>
-                                        <p className="text-center text-[10px] md:text-[11px] xmd:text-[12px] text-[#121212] font-[700] leading-[20px] md:leading-[20px] xmd:leading-[25px] mt-[5px] ">
+                                        <p className="text-center text-[18px]  text-[#121212] font-[700] leading-[25px]  mt-[15px] ">
                                             {t("landingPage.welcome.Caption")}
                                         </p>
                                         {/* <p className="text-center text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#525D72] font-[500] leading-[15px] md:leading-[20px] xmd:leading-[25px] ">
@@ -108,9 +108,9 @@ const Index = () => {
                                     className="flex-type5 mt-[70px] w-[100%]"
                                     ref={trackingSectionRef}
                                 >
-                                    <div className="w-[100%] md:w-[65%] flex flex-row justify-center gap-x-[20px]">
+                                    <div className="w-full md:w-[65%] flex flex-col  sm:flex-row justify-center max-[500px]:items-center max-[500px]:gap-y-[10px] gap-x-[20px]">
                                         <input
-                                            className="flex-1 border-[1px] border-[#8794AD] h-[40px] md:h-[56px] px-[10px] rounded-[4px]"
+                                            className="w-full border-[1px] border-[#8794AD] h-[40px] md:h-[56px] px-[10px] rounded-[25px]"
                                             placeholder={
                                                 t(
                                                     "landingPage.trackOrder.Placeholder"
@@ -119,7 +119,7 @@ const Index = () => {
                                             onChange={trackingIdInputHandler}
                                         />
                                         <button
-                                            className="h-[40px] md:h-[56px] bg-[#35C6F4] w-[120px] rounded-[4px] px-[20px] text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
+                                            className=" h-[40px] md:h-[56px] bg-[#35C6F4] w-[140px] rounded-[30px] px-[10px] text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
                                             onClick={openPackageTrackingModal}
                                         >
                                             {t(
@@ -133,7 +133,7 @@ const Index = () => {
                                             {t("landingPage.trackOrder.Error")}
                                         </p>
                                     )}
-                                    <p className="text-center text-[16px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
+                                    <p className="text-center text-[14px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
                                         {t(
                                             "landingPage.trackOrder.CaptionPart1"
                                         )}

@@ -63,8 +63,8 @@ const Topbar = () => {
 
     return (
         <>
-            <div className="flex w-full min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-30">
-                <div className="flex-1 h-[46px] border-[0.5px] boder-[#8794AD] rounded-[6px] p-[5px] pl-[15px] relative px-[5px]">
+            <div className="flex flex-col-reverse md:flex-row w-full  min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-30">
+                <div className="w-full flex-1 h-[46px] border-[0.5px] boder-[#8794AD] rounded-[6px] p-[5px] pl-[15px] relative px-[5px]">
                     <input
                         className="h-full w-full bg-transparent focus:outline-none searchbar"
                         id="searchbar"
@@ -95,45 +95,48 @@ const Topbar = () => {
                         />
                     </div>
                 </div>
-                <div className="flex min-h-[65px] items-center justify-end">
-                    <span
-                        className="relative top-0.5 px-7 cursor-pointer"
-                        onClick={toggleNotificationsHandler}
-                        ref={trigger}
-                    >
-                        {notifications?.data &&
-                            notifications?.data?.length > 0 && (
-                                <span className="rounded-full block top-[3px] h-[7px] w-[7px] right-[34.5px] bg-[#FF2323] absolute"></span>
-                            )}
-                        <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
-                            <Bell className="bell_svg" />
-                        </div>
-                    </span>
-                </div>
-
-                <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
-                    <Image
-                        src={
-                            session?.user?.avatar_url
-                                ?"https://mazbackend.easydesk.work/user_uploads/" +
-                                  session?.user?.avatar_url
-                                :"/user-images/default_user.png"
-                        }
-                        fill
-                        style={{ objectFit: "cover" }}
-                        alt="profileImage"
-                        sizes="(max-width: 768px) 100vw,
+                <div className="w-full md:flex-1 flex flex-row-reverse justify-start items-center ">
+                    {" "}
+                    <div className="flex min-h-[65px] items-center justify-end">
+                        <span
+                            className="relative top-0.5 px-2 cursor-pointer"
+                            onClick={toggleNotificationsHandler}
+                            ref={trigger}
+                        >
+                            {notifications?.data &&
+                                notifications?.data?.length > 0 && (
+                                    <span className="rounded-full block top-[3px] h-[7px] w-[7px] left-[24px] bg-[#FF2323] absolute"></span>
+                                )}
+                            <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
+                                <Bell className="bell_svg" />
+                            </div>
+                        </span>
+                    </div>
+                    <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
+                        <Image
+                            src={
+                                session?.user?.avatar_url
+                                    ? "https://mazbackend.easydesk.work/user_uploads/" +
+                                      session?.user?.avatar_url
+                                    : "/user-images/default_user.png"
+                            }
+                            fill
+                            style={{ objectFit: "cover" }}
+                            alt="profileImage"
+                            sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 100vw,
                 100vw"
-                        onError={(e: SyntheticEvent) =>
-                            console.log("error at user image", e)
-                        }
-                    />
+                            onError={(e: SyntheticEvent) =>
+                                console.log("error at user image", e)
+                            }
+                        />
+                    </div>
+                    <p className="hidden md:block font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
+                        {session?.user?.first_name} {session?.user?.last_name}
+                    </p>
                 </div>
-                <p className="font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2"> 
-                    {session?.user?.first_name} {session?.user?.last_name}
-                </p>
             </div>
+
             {showNotifications && (
                 <NotificationView
                     close={toggleNotificationsHandler}

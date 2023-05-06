@@ -29,12 +29,14 @@ const schema = yup
     .object({
         title: yup.string().required(),
         content: yup.string().required(),
+        // order_bill: yup.mixed().required("Bill is required"),
     })
     .required();
 
 const CreateNotificationModal = (props: IProp) => {
     const [showFileInputModal, setShowFileInputModal] =
         useState<boolean>(false);
+    const [err_msg, setErr_msg] = useState("");
     const [files, setFiles] = useState<any>([]);
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
@@ -67,8 +69,42 @@ const CreateNotificationModal = (props: IProp) => {
     }, []);
 
     const onSubmit: SubmitHandler<any> = async (data) => {
+        if (files.length == 0) {
+            setErr_msg("Bill is required field");
+            return;
+        }
         console.log("send", data);
-        console.log(selectedUsers);
+        let formData = new FormData();
+
+        formData.append("maz_id", props.order.maz_id);
+        formData.append("bill_file", data.order_bill);
+        console.log(formData);
+
+        axios
+            .post(
+                "https://mazbackend.easydesk.work/api/upload-bill-image",
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            )
+            .then(async (response) => {
+                console.log(response.data.data);
+                if (response.data.ok === true) {
+                    createToast({
+                        type: "success",
+                        message: "Bill updated",
+                        title: "success",
+                        timeOut: 1000,
+                    });
+
+                    // props.close(e);
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+
         // console.log("to", selectedUsers);
 
         // multiparty here
@@ -162,7 +198,10 @@ const CreateNotificationModal = (props: IProp) => {
 
     const fileInputChangeHandler = (e: any) => {
         // console.log(e.target.files[0]);
+        console.log(e.target.files[0]);
+        setErr_msg("");
         setFiles(Array.from(e.target.files));
+        setValue("order_bill", e.target.files[0]);
     };
 
     const toggleFileInputHandler = (e: any) => {
@@ -173,6 +212,8 @@ const CreateNotificationModal = (props: IProp) => {
 
     const deleteFileHandler = (idx: number) => {
         // delete file
+        setValue("order_bill", "");
+        setFiles([]);
     };
 
     return (
@@ -274,6 +315,8 @@ const CreateNotificationModal = (props: IProp) => {
                                             </p>
                                         </div>
                                         <input
+                                            {...register("order_bill")}
+                                            name="order_bill"
                                             type={"file"}
                                             style={{ display: "none" }}
                                             ref={fileInputRef}
@@ -317,6 +360,11 @@ const CreateNotificationModal = (props: IProp) => {
                                 );
                             })}
                         </div>
+                    )}
+                    {err_msg && (
+                        <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+                            {err_msg as string}
+                        </p>
                     )}
                     {/* <div className="flex-type1 space-x-[5px]">
                             <input

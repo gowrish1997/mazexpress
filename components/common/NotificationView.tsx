@@ -11,6 +11,7 @@ import { Notification } from "@/models/notification.model";
 import NotificatoinDetailModal from "../admin/modal/NotificatoinDetailModal";
 import fetchJson from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
+import axios from "axios";
 
 interface IProp {
     close: () => void;
@@ -45,6 +46,19 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             useState<Notification[]>();
 
         useEffect(() => {
+            axios
+                .get("https://mazbackend.easydesk.work/api/upload-user-image", {
+                    params: {
+                        email: "shreyan@gmail.com   ",
+                    },
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                })
+                .then((response) => {
+                    console.log(response);
+                });
+
             const getAllNotificatoin = async () => {
                 const response = await fetchJson(
                     `/api/notifications?username=${session?.user?.email}&per_page=${per_page}&page=${page}`
@@ -141,7 +155,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                     <div
                         className={`z-40 fixed ${
                             locale == "en" ? "right-0" : "left-0"
-                        }  h-[100vh] overflow-y-auto  box-border  border-[1px] border-[#BBC2CF] pt-[30px] pb-[20px] px-[20px] translate-x-[0%] bg-[#FFFFFF] w-[413px]  rounded-[4px] transition ease-in-out duration-150 space-y-[30px] `}
+                        }  h-[100vh] overflow-y-auto  box-border  border-[1px] border-[#BBC2CF] pt-[30px] pb-[20px] px-[20px] translate-x-[0%] bg-[#FFFFFF] w-[320px] sm:w-[413px]  rounded-[4px] transition ease-in-out duration-150 space-y-[30px] `}
                         style={
                             !props.show
                                 ? {

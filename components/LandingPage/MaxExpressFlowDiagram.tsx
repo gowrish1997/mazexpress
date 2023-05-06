@@ -18,8 +18,8 @@ const MaxExpressFlowDiagram = () => {
 
     return (
         <div className="w-full flex flex-row justify-center items-start mt-[50px] ">
-            <div className="w-[80%] flex flex-row justify-between items-start">
-                <div className="flex-1 flex flex-col justify-start items-center gap-y-[20px] ">
+            <div className="w-[80%] flex flex-col sm:flex-row justify-between items-center  sm:items-start">
+                <div className="flex-1 flex flex-row sm:flex-col justify-start items-center gap-y-[20px] ">
                     <div className="h-[56px] w-[56px] relative">
                         <Image
                             src={Document}
@@ -28,13 +28,13 @@ const MaxExpressFlowDiagram = () => {
                             alt="document"
                         />
                     </div>
-                    <p className="box-border text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-center px-[20px] ">
+                    <p className="box-border text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-left sm:text-center px-[20px] ">
                         {flowText[0]}
                     </p>
                 </div>
-                <div className="mt-[20px]">
+                <div className="sm:mt-[20px]">
                     <div
-                        className={`h-[17px] w-[83px] relative ${
+                        className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[17px] w-[83px] relative  ${
                             locale == "ar" && "rotate-180"
                         }  `}
                     >
@@ -46,7 +46,7 @@ const MaxExpressFlowDiagram = () => {
                         />
                     </div>
                 </div>
-                <div className="flex-1 flex flex-col justify-start items-center gap-y-[20px] ">
+                <div className="flex-1 flex flex-row sm:flex-col justify-start items-center gap-y-[20px] ">
                     <div className="h-[56px] w-[56px] relative">
                         <Image
                             src={Shoppingbag}
@@ -55,13 +55,13 @@ const MaxExpressFlowDiagram = () => {
                             alt="document"
                         />
                     </div>
-                    <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-center px-[20px] ">
+                    <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-left sm:text-center px-[20px] ">
                         {flowText[1]}
                     </p>
                 </div>
-                <div className="mt-[20px]">
+                <div className="sm:mt-[20px]">
                     <div
-                        className={`h-[17px] w-[83px] relative ${
+                        className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[17px] w-[83px] relative ${
                             locale == "ar" && "rotate-180"
                         }  `}
                     >
@@ -73,7 +73,7 @@ const MaxExpressFlowDiagram = () => {
                         />
                     </div>
                 </div>
-                <div className="flex-1 flex flex-col justify-start items-center gap-y-[20px] ">
+                <div className="flex-1 flex flex-row sm:flex-col justify-start items-center gap-y-[20px] ">
                     <div className="h-[56px] w-[56px] relative">
                         <Image
                             src={Plane}
@@ -82,13 +82,13 @@ const MaxExpressFlowDiagram = () => {
                             alt="document"
                         />
                     </div>
-                    <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-center px-[20px] ">
+                    <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-left sm:text-center px-[20px] ">
                         {flowText[2]}
                     </p>
                 </div>
-                <div className="mt-[20px]">
+                <div className="sm:mt-[20px]">
                     <div
-                        className={`h-[17px] w-[83px] relative ${
+                        className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[17px] w-[83px] relative ${
                             locale == "ar" && "rotate-180"
                         }  `}
                     >
@@ -100,7 +100,7 @@ const MaxExpressFlowDiagram = () => {
                         />
                     </div>
                 </div>
-                <div className="flex-1 flex flex-col justify-start items-center gap-y-[20px] ">
+                <div className="flex-1 flex flex-row sm:flex-col justify-start items-center  gap-y-[20px] ">
                     <div className="h-[56px] w-[56px] relative">
                         <Image
                             src={House}
@@ -109,7 +109,7 @@ const MaxExpressFlowDiagram = () => {
                             alt="document"
                         />
                     </div>
-                    <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-center px-[10px] ">
+                    <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-left sm:text-center px-[10px] ">
                         {flowText[3]}
                     </p>
                 </div>

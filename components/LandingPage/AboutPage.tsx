@@ -20,12 +20,12 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
             ref={ref}
         >
             <div className="bg-[#35C6F4] w-full mt-[60px] flex flex-row justify-center ">
-                <div className="w-[80%] flex flex-row justify-between items-center  gap-x-[15px] relative">
-                    <div className="box-border flex flex-col justify-start w-[65%] py-[60px] ">
+                <div className="box-border w-[80%] flex flex-col-reverse add_sm:flex-row justify-between items-center  gap-x-[15px] relative px-[10px] py-[25px] ">
+                    <div className="box-border flex flex-col justify-start add_sm:w-[65%] add_sm:py-[60px] ">
                         <p className="text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#000000] font-[500] leading-[25.5px]">
                             {t("landingPage.about.Title")}
                         </p>
-                        <p className="text-[20px] md:text-[30px] xmd:text-[38px] text-[#FFFFFF]  font-[500] md:font-[600] xmd:font-[700] leading-[23.5px] md:leading-[34px] xmd:leading-[45px] ">
+                        <p className="text-[20px] md:text-[30px] xmd:text-[38px] text-[#2B2B2B]  font-[600] md:font-[600] xmd:font-[700] text-left leading-[23.5px] md:leading-[34px] xmd:leading-[45px] ">
                             {t("landingPage.about.Description")}
                         </p>
                     </div>

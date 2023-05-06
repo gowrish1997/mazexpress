@@ -67,7 +67,7 @@ const AddressBook = () => {
                 content={t("addressBookPage.pageHeader.Title")}
                 title="Address Book | MazExpress"
             />
-            <div className="grid grid-cols-3 gap-3 py-5">
+            <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap-3 py-5">
                 {addresses &&
                     (addresses as Address[])
                         ?.filter((el) => el.status === "active")

@@ -247,7 +247,7 @@ const AddNewOrder = () => {
             />
             <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex-type1 gap-x-[10px] gap-y-[10px] mt-[25px] flex-wrap">
-                    <div className="w-[49%]">
+                    <div className="w-full md:w-[49%]">
                         <Controller
                             name="reference_id"
                             control={control}
@@ -265,7 +265,7 @@ const AddNewOrder = () => {
                             )}
                         />
                     </div>
-                    <div className="w-[49%]">
+                    <div className="w-full md:w-[49%]">
                         <Controller
                             name="store_link"
                             control={control}
@@ -281,7 +281,7 @@ const AddNewOrder = () => {
                             )}
                         />
                     </div>
-                    <div className="w-[49%]">
+                    <div className="w-full md:w-[49%]">
                         {" "}
                         <Controller
                             name="order_weight"
@@ -318,7 +318,7 @@ const AddNewOrder = () => {
                     </p>
                 )}
                 {addresses && addresses.length > 0 && (
-                    <div className="grid grid-cols-3 gap-3 py-5">
+                    <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap-3 py-5">
                         {addresses &&
                             addresses !== null &&
                             (addresses as Address[]).map((data: Address) => {

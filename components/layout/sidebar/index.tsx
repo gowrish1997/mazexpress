@@ -192,12 +192,12 @@ const Sidebar = () => {
 
     return (
         <>
-            <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] relative w-full">
+            <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] relative w-full ">
                 <Header />
                 <div className="flex flex-col justify-between items-start px-6 pb-[60px] h-[89vh] overflow-y-auto box-border overflow-x-hidden slimScrollBar">
                     <div className=" w-full box-border  flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
                         <div
-                            className="sm:hidden flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]"
+                            className="md:hidden flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]"
                             style={
                                 showOptionModal
                                     ? {
@@ -277,7 +277,7 @@ const Sidebar = () => {
                                 </div>
                             )}
                         </div>
-                        <ul className="hidden sm:flex w-full box-border  flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
+                        <ul className="hidden md:flex w-full box-border  flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">
                             {sidebarContentHandler(
                                 session?.user?.is_admin!
                             ).map((content, index) => {
@@ -298,7 +298,7 @@ const Sidebar = () => {
                     </div>
 
                     <div
-                        className="hidden sm:flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#35C6F4] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
+                        className="hidden md:flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#35C6F4] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
                         //   onClick={toggleLogoutConfirmModal}
                         onClick={toggleLogoutConfirmModal}
                     >

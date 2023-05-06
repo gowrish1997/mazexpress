@@ -36,7 +36,7 @@ const Frame = (props: IFrameProps) => {
                     router.pathname == "/404" ||
                     router.pathname == "/TermsAndCondition"
                 ) && (
-                    <div className="w-[80px] sm:w-[180px] md:w-[250px] lg:w-[400px] xlg:w-[500px] fixed h-screen z-40">
+                    <div className="w-[100px]  md:w-[250px] lg:w-[400px] xlg:w-[500px] fixed h-screen z-40">
                         <Sidebar />
                     </div>
                 )}
@@ -50,7 +50,7 @@ const Frame = (props: IFrameProps) => {
                     <div
                         className={`box-border flex-1   ${
                             locale == "en"
-                                ? "ml-[80px] sm:ml-[180px] md:ml-[250px] lg:ml-[400px] xlg:ml-[500px]"
+                                ? "ml-[100px] md:ml-[250px] lg:ml-[400px] xlg:ml-[500px]"
                                 : "mr-[80px] sm:mr-[180px] md:mr-[250px] lg:mr-[400px] xlg:mr-[500px]"
                         } p-5 pt-0 flex flex-col relative `}
                     >

@@ -287,7 +287,7 @@ const Settings = () => {
                         </p>
                     </div>
                     <form
-                        className="flex-type6 w-3/4 gap-y-[10px] "
+                        className="flex-type6 xmd:w-3/4 pr-[30px] xmd:pr-0 gap-y-[10px] "
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <div className="flex items-center gap-x-[20px] mb-[20px] ">
@@ -320,8 +320,8 @@ const Settings = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex w-full gap-x-[20px] items-center relative">
-                            <div className="flex-type2 space-x-[10px] w-full">
+                        <div className="flex flex-col set_md:flex-row  w-full gap-x-[20px] max-[750px]:gap-y-[10px] items-center relative">
+                            <div className="flex-type2 gap-x-[10px] w-full items-center">
                                 <Controller
                                     name="first_name"
                                     control={control}
@@ -398,7 +398,7 @@ const Settings = () => {
                                 </div>
                             )}
                         </div>
-                        <div className="flex flex-row justify-start items-start w-full space-x-[20px]">
+                        <div className="flex flex-col set_md:flex-row justify-start items-center w-full max-[750px]:gap-y-[10px] gap-x-[20px]">
                             <Controller
                                 name="email"
                                 control={control}
@@ -437,7 +437,7 @@ const Settings = () => {
                                 )}
                             />
                         </div>
-                        <div className="flex-type1 w-1/2 space-x-[20px]">
+                        <div className="flex flex-col set_md:flex-row justify-start items-center w-full set_md:w-1/2 max-[750px]:gap-y-[10px] gap-x-[20px]">
                             <Controller
                                 name="phone"
                                 control={control}
@@ -467,7 +467,7 @@ const Settings = () => {
                                 className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
                             /> */}
                         </div>
-                        <div className="flex-type3 w-1/2  mt-[10px] ">
+                        <div className="flex-type3 w-full  mt-[10px] ">
                             <div className="font-[500]">
                                 <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">
                                     Notifications

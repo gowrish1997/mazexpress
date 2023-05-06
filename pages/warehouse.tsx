@@ -36,7 +36,7 @@ const WarehousePage = () => {
                 content={t("warehousePage.pageHeader.Title")}
                 title="Our Warehouses | MazExpress"
             />
-            <div className="grid grid-cols-3 gap-3 py-5">
+            <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap-3 py-5">
                 {warehouses?.map((data) => {
                     return <WarehouseCard key={data.id} address={data} />;
                 })}
