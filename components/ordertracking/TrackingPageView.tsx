@@ -190,13 +190,15 @@ const TrackingPageView = (props: IProp) => {
                     </div>
                 </div>
                 {/* <TimeTracking trackingDetail={props.trackingDetail} /> */}
-                {showWarehouseTrackingModal && (
-                    <WarehouseTrackingModal
-                        packageStatus={props.packageStatus}
-                        trackingDetail={props.trackingDetail}
-                        close={toggleWarehouseTrackingModal}
-                    />
-                )}
+                {showWarehouseTrackingModal &&
+                
+                    (
+                        <WarehouseTrackingModal
+                            packageStatus={props.packageStatus}
+                            trackingDetail={props.trackingDetail}
+                            close={toggleWarehouseTrackingModal}
+                        />
+                    )}
             </div>
         </>
     );
