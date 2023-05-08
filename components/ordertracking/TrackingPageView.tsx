@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import PackageTrackingView from "./PackageTrackingView";
 import TimeCard from "./TimeCard";
 import WarehouseTracking from "./WarehouseTracking";
+import { useState } from "react";
+import WarehouseTrackingModal from "./modal/WarehouseTrackingModal";
 
 interface IProp {
     packageStatus: number;
@@ -30,6 +32,13 @@ const TrackingPageView = (props: IProp) => {
         "trackingView.view.packageStatus.stageFour.Status",
         { returnObjects: true }
     );
+
+    const [showWarehouseTrackingModal, setShowWarehouseTrackingModal] =
+        useState(false);
+
+    const toggleWarehouseTrackingModal = () => {
+        setShowWarehouseTrackingModal((prev) => !prev);
+    };
 
     return (
         <>
@@ -72,7 +81,7 @@ const TrackingPageView = (props: IProp) => {
                                 : stageFirstStatus[1]}
                         </button>
                     </div>
-                    <div className="flex-type6 gap-y-[5px] mt-[55px] ">
+                    <div className="flex-type6 gap-y-[5px] mt-[35px] sm:mt-[55px] ">
                         <p
                             className={`${
                                 props.packageStatus >= 1
@@ -104,12 +113,22 @@ const TrackingPageView = (props: IProp) => {
                                     : stageSecondStatus[1]
                                 : stageSecondStatus[2]}
                         </button>
-                        <WarehouseTracking
-                            packageStatus={props.packageStatus}
-                            trackingDetail={props.trackingDetail}
-                        />
+                        <div className="hidden sm:block">
+                            <WarehouseTracking
+                                packageStatus={props.packageStatus}
+                                trackingDetail={props.trackingDetail}
+                            />
+                        </div>
+
+                        <button
+                            className="sm:hidden text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
+                            type="submit"
+                            onClick={toggleWarehouseTrackingModal}
+                        >
+                            Click here
+                        </button>
                     </div>
-                    <div className="flex-type6 gap-y-[5px] mt-[25px] ">
+                    <div className="flex-type6 gap-y-[5px] mt-[80px] sm:mt-[25px] ">
                         <p
                             className={`${
                                 props.packageStatus >= 4
@@ -171,6 +190,13 @@ const TrackingPageView = (props: IProp) => {
                     </div>
                 </div>
                 {/* <TimeTracking trackingDetail={props.trackingDetail} /> */}
+                {showWarehouseTrackingModal && (
+                    <WarehouseTrackingModal
+                        packageStatus={props.packageStatus}
+                        trackingDetail={props.trackingDetail}
+                        close={toggleWarehouseTrackingModal}
+                    />
+                )}
             </div>
         </>
     );

@@ -19,7 +19,7 @@ const WarehouseTracking = (props: {
     const [packageStatus, setPackageStatus] = useState(props.packageStatus);
 
     return (
-        <div className="flex-type6 wareHouseProgressbar ">
+        <div className=" flex-type6 wareHouseProgressbar  ">
             <div className="flex-type2">
                 <div className="flex-type5">
                     <div
@@ -31,11 +31,11 @@ const WarehouseTracking = (props: {
                         }
                     />
                     <div
-                        className={`border-[1px] border-[#BBC2CF]  h-[25px] w-[0px] my-[5px] relative`}
+                        className={`border-[1px] border-[#BBC2CF] h-[50px] sm:h-[25px] w-[0px] my-[5px] relative`}
                     />
                 </div>
 
-                <p className="flex-1 mx-[10px] -mt-[4px] ">
+                <p className=" flex-1 mx-[10px] -mt-[4px] ">
                     {warehouseStatus[0]}{" "}
                     <TimeCard stage={2} trackingDetail={props.trackingDetail} />
                 </p>
@@ -52,7 +52,7 @@ const WarehouseTracking = (props: {
                         }
                     />
                     <div
-                        className={`border-[1px] border-[#BBC2CF]  h-[25px] w-[0px] my-[5px] relative `}
+                        className={`border-[1px] border-[#BBC2CF] h-[50px] sm:h-[25px] w-[0px] my-[5px] relative `}
                     />
                 </div>
 
