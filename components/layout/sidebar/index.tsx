@@ -252,7 +252,7 @@ const Sidebar = () => {
                                             );
                                         })}
                                         <div
-                                            className="flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#3672DF] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
+                                            className="flex w-[100%] box-border rounded self-center  flex-row items-center justify-start bg-[#35C6F4] py-[10px] px-[15px]  cursor-pointer gap-x-[10px] "
                                             //   onClick={toggleLogoutConfirmModal}
                                             onClick={logoutHandler}
                                         >

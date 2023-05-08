@@ -12,6 +12,7 @@ import { useState } from "react";
 import AdminPageWrapper from "@/components/common/AdminPageWrapper";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
+import Layout from "@/components/layout";
 
 const WarehousePage = () => {
     const router = useRouter();
@@ -45,26 +46,30 @@ const WarehousePage = () => {
                 content="Warehouses"
                 title="Warehouses | MazExpress Admin"
             />
-            <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap-3 py-5">
-                {(warehouses as Warehouse[])?.map((data) => {
-                    return (
-                        <WarehouseCard
-                            key={data.id}
-                            address={data}
-                            update={mutateWarehouses}
-                            edit={toggleEditNewWarehouseModal}
-                        />
-                    );
-                })}
-            </div>
-            <div>
-                <button
-                    className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
-                    onClick={toggleAddNewWarehouseModal}
-                >
-                    + Add New
-                </button>
-            </div>
+            <Layout>
+                {" "}
+                <div className="w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap">
+                    {(warehouses as Warehouse[])?.map((data) => {
+                        return (
+                            <WarehouseCard
+                                key={data.id}
+                                address={data}
+                                update={mutateWarehouses}
+                                edit={toggleEditNewWarehouseModal}
+                            />
+                        );
+                    })}
+                </div>
+                <div>
+                    <button
+                        className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
+                        onClick={toggleAddNewWarehouseModal}
+                    >
+                        + Add New
+                    </button>
+                </div>
+            </Layout>
+
             {showAddNewWarehouseModal && (
                 <AddNewWarehouseModal
                     show={showAddNewWarehouseModal}

@@ -277,7 +277,7 @@ const Settings = () => {
                 close={toggleProfilePicPop}
             />
             <Layout>
-                <div className="w-full space-y-[30px] ">
+                <div className="w-[350px] sm:w-full space-y-[30px] ">
                     <div>
                         <p className="text-[16px] text-[#2B2B2B] leading-[24px] font-[500] ">
                             Account

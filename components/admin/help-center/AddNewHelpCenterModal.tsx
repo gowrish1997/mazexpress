@@ -64,7 +64,6 @@ const AddNewHelpCenterModal = (props: IProp) => {
     });
 
     const onSubmit: SubmitHandler<IForm> = async (data) => {
-
         try {
             const helpUpdateResult = await fetchJson(`/api/help-center`, {
                 method: "POST",
@@ -86,7 +85,7 @@ const AddNewHelpCenterModal = (props: IProp) => {
 
     return (
         <>
-            <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-50 flex flex-row justify-center items-center">
+            <div className="box-border fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.4)] z-50 flex flex-row justify-center items-center">
                 <form
                     className=" box-border flex-type6  bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] gap-y-[15px]"
                     onSubmit={handleSubmit(onSubmit)}

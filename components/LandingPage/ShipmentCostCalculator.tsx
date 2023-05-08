@@ -17,13 +17,70 @@ const schema = yup
     .object({
         // warehouseAddress_address: yup.string().required(),
         // city_name: yup.string().required(),
-        length: yup.number().required().typeError("Length is required field"),
-        width: yup.number().required().typeError("Width is required field"),
-        height: yup.number().required().typeError("height is required field"),
+        length: yup
+            .mixed()
+            .test(
+                "is-valid-age",
+                "Age must be a number between 18 and 99",
+                (value) => {
+                    return true;
+                }
+            ),
+        width: yup
+            .mixed()
+            .test(
+                "is-valid-age",
+                "Age must be a number between 18 and 99",
+                (value) => {
+                    return true;
+                }
+            ),
+        height: yup
+            .mixed()
+            .test(
+                "is-valid-age",
+                "Age must be a number between 18 and 99",
+                (value) => {
+                    return true;
+                }
+            ),
+        // length: yup.number().typeError(),
+        // // when("width", {
+        // //     is: (width) => width,
+        // //     then: yup
+        // //         .number()
+        // //         .required(
+        // //             "Length is required when length and widtht are entered"
+        // //         ),
+        // // }),
+
+        // width: yup.number().when("length", {
+        //     is: (length) => length,
+        //     then: yup
+        //         .number()
+        //         .required(
+        //             "Width is required when length and height are entered"
+        //         )
+        //         .typeError(
+        //             "Width is required when length and height are entered"
+        //         ),
+        // }),
+
+        // height: yup.number().when(["length", "width"], {
+        //     is: (width, length) => length || width,
+        //     then: yup
+        //         .number()
+        //         .required(
+        //             "Height is required when length and width are entered"
+        //         )
+        //         .typeError(
+        //             "height is required when length and height are entered"
+        //         ),
+        // }),
         weight: yup
             .number()
-            .required("Package weight is  is required field")
-            .typeError("Package weight is  is required field"),
+            .required("Package weight is required field")
+            .typeError("Package weight is required field"),
     })
     .required();
 
@@ -50,6 +107,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
         const {
             register,
             handleSubmit,
+            setError,
             getValues,
             control,
             setValue,
@@ -71,6 +129,52 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
         });
 
         const onSubmit: SubmitHandler<any> = async (data) => {
+            if (data.length && (!data.width || !data.height)) {
+                if (!data.width) {
+                    setError("width", {
+                        type: "custom",
+                        message: "width is required field",
+                    });
+                    return;
+                }
+
+                setError("height", {
+                    type: "custom",
+                    message: "height is required field",
+                });
+                return;
+            }
+            if (data.width && (!data.length || !data.height)) {
+                if (!data.length) {
+                    setError("length", {
+                        type: "custom",
+                        message: "length is required field",
+                    });
+                    return;
+                }
+                setError("height", {
+                    type: "custom",
+                    message: "height is required field",
+                });
+
+                return;
+            }
+            if (data.height && (!data.length || !data.width)) {
+                if (!data.width) {
+                    setError("width", {
+                        type: "custom",
+                        message: "width is required field",
+                    });
+                    return;
+                }
+
+                setError("length", {
+                    type: "custom",
+                    message: "length is required field",
+                });
+                return;
+            }
+            console.log(data);
             try {
                 const result = await fetchJson(`/api/shipping`, {
                     method: "POST",
@@ -97,7 +201,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                 ref={ref}
             >
                 <div className="w-[80%] flex-type6 xmd:flex-type3 p-[20px] md:p-[70px] flex-wrap space-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[40px] md:mt-[70px] ">
-                <div className="flex-1 space-y-[15px] ">
+                    <div className="flex-1 space-y-[15px] ">
                         <h1 className="text-[20px] sm:text-[24px] text-[#121212] font-[700] leading-[50px] ">
                             {" "}
                             {t("landingPage.shipmentCostCalculator.Title")}

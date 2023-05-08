@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import UserPageWrapper from "@/components/common/UserPageWrapper";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
+import Layout from "@/components/layout";
 
 const WarehousePage = () => {
     const { warehouses, mutateWarehouses, warehousesIsLoading } =
@@ -36,11 +37,13 @@ const WarehousePage = () => {
                 content={t("warehousePage.pageHeader.Title")}
                 title="Our Warehouses | MazExpress"
             />
-            <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap-3 py-5">
-                {warehouses?.map((data) => {
-                    return <WarehouseCard key={data.id} address={data} />;
-                })}
-            </div>
+            <Layout>
+                <div className="w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap">
+                    {warehouses?.map((data) => {
+                        return <WarehouseCard key={data.id} address={data} />;
+                    })}
+                </div>
+            </Layout>
         </UserPageWrapper>
     );
 };

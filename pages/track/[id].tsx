@@ -69,7 +69,7 @@ const TrackOrder = (props: any) => {
                 title="Track order | MazExpress"
             />
             <Layout>
-                <div className="flex-type2 w-full ">
+                <div className="w-[350px] flex-type2 sm:w-full ">
                     <div className="flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
                         {/* <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px]">
                             <Image
@@ -109,7 +109,7 @@ const TrackOrder = (props: any) => {
                                         key={data.id}
                                     >
                                         <p
-                                            className={`text-[#525D72] text-[14px] font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ${
+                                            className={`text-[#525D72] text-[10px] sm:text-[14px] overflow-ellipsis font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ${
                                                 data.maz_id == router.query.id
                                                     ? "bg-[#EDF5F9] text-[black]"
                                                     : ""

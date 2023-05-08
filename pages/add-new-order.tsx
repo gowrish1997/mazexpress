@@ -245,7 +245,7 @@ const AddNewOrder = () => {
                 showCalender={false}
                 title="Add New Order | MazExpress"
             />
-            <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
+            <form className="w-[350px] sm:w-full mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex-type1 gap-x-[10px] gap-y-[10px] mt-[25px] flex-wrap">
                     <div className="w-full md:w-[49%]">
                         <Controller
@@ -318,7 +318,7 @@ const AddNewOrder = () => {
                     </p>
                 )}
                 {addresses && addresses.length > 0 && (
-                    <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap-3 py-5">
+                    <div className="w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap mt-[10px] ">
                         {addresses &&
                             addresses !== null &&
                             (addresses as Address[]).map((data: Address) => {

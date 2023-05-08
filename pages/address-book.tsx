@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import UserPageWrapper from "@/components/common/UserPageWrapper";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
+import Layout from "@/components/layout";
 
 const AddressBook = () => {
     const [showEditUserAddressModal, setShowEditUserAddressModal] =
@@ -67,32 +68,37 @@ const AddressBook = () => {
                 content={t("addressBookPage.pageHeader.Title")}
                 title="Address Book | MazExpress"
             />
-            <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap-3 py-5">
-                {addresses &&
-                    (addresses as Address[])
-                        ?.filter((el) => el.status === "active")
-                        .map((data, index) => {
-                            return (
-                                <UserSavedAddress
-                                    type="address-book"
-                                    allAddresses={addresses}
-                                    key={data.id}
-                                    address={data}
-                                    edit={toggleEditUserAddressModal}
-                                    update={mutateAddresses}
-                                    // update={() => {}}
-                                />
-                            );
-                        })}
-            </div>
-            <div>
-                <button
-                    className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
-                    onClick={toggleAddNewAddressModal}
-                >
-                    {t("addressBookPage.AddNewButton")}
-                </button>
-            </div>
+            <Layout>
+                {" "}
+                {/* <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap -3 py-5"> */}
+                <div className="w-[350px] sm:w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap  ">
+                    {addresses &&
+                        (addresses as Address[])
+                            ?.filter((el) => el.status === "active")
+                            .map((data, index) => {
+                                return (
+                                    <UserSavedAddress
+                                        type="address-book"
+                                        allAddresses={addresses}
+                                        key={data.id}
+                                        address={data}
+                                        edit={toggleEditUserAddressModal}
+                                        update={mutateAddresses}
+                                        // update={() => {}}
+                                    />
+                                );
+                            })}
+                </div>
+                <div>
+                    <button
+                        className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
+                        onClick={toggleAddNewAddressModal}
+                    >
+                        {t("addressBookPage.AddNewButton")}
+                    </button>
+                </div>
+            </Layout>
+
             {showAddNewAddressModal && (
                 <AddNewAddressModal
                     show={showAddNewAddressModal}

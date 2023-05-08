@@ -98,7 +98,7 @@ const LineItem = (props: IProp) => {
                 )}
             </td>
             <td className={`td6 `} style={{}}>
-                <div className="flex flex-row items-center gap-x-[5px]">
+                <div className=" flex flex-row items-center gap-x-[5px]">
                     <span className="address_td capitalize ">
                         {props.row.address.tag}
                     </span>

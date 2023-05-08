@@ -10,7 +10,7 @@ interface IProp {
 
 const WarehouseTrackingModal = (props: IProp) => {
     return (
-        <div className=" fixed top-0 left-0 h-[100vh] bg-[rgba(0,0,0,0.4)] z-50 flex flex-row justify-center items-center">
+        <div className=" fixed top-0 left-0 h-full w-full bg-[rgba(0,0,0,0.4)] z-50 flex flex-row justify-center items-center">
             <div className=" box-border flex-type6  bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px]  gap-y-[15px]">
                 <p className="text-[22px] ">
                     Warehouse tracking

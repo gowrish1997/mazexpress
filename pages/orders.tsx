@@ -19,6 +19,7 @@ import UserPageWrapper from "@/components/common/UserPageWrapper";
 import { getSession } from "@/lib/selectOrder";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
+import Layout from "@/components/layout";
 
 const MyOrders = () => {
     const { searchKey } = React.useContext(SearchKeyContext) as any;
@@ -114,44 +115,45 @@ const MyOrders = () => {
                 pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
                 isFilterPresent={searchKey || createdDateFilterKey}
             />
-
-            <div className="flex flex-col justify-between relative flex-1 h-full">
-                {!orders?.data && !searchKey && !createdDateFilterKey ? (
-                    <div className="flex-1 flex flex-col justify-center items-center w-full ">
-                        <div className="relative h-[221px] w-[322px] ">
-                            <Image
-                                src="/noorder.png"
-                                fill
-                                style={{ objectFit: "contain" }}
-                                alt="happy"
-                                sizes="(max-width: 768px) 100vw,
+            <Layout>
+                <div className="flex flex-col justify-between relative flex-1 h-full overflow-auto">
+                    {!orders?.data && !searchKey && !createdDateFilterKey ? (
+                        <div className="flex-1 flex flex-col justify-center items-center w-full ">
+                            <div className="relative h-[221px] w-[322px] ">
+                                <Image
+                                    src="/noorder.png"
+                                    fill
+                                    style={{ objectFit: "contain" }}
+                                    alt="happy"
+                                    sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 100vw,
                 100vw"
-                                priority={true}
+                                    priority={true}
+                                />
+                            </div>
+                            <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
+                                {blankPageDiscription[0]}
+                                <br />
+                                <Link href={`/add-new-order`}>
+                                    <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
+                                        {" "}
+                                        {blankPageDiscription[1]}
+                                    </span>
+                                </Link>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <Table
+                                rows={orders?.data as any}
+                                headings={tableHeaders}
+                                type="order"
                             />
-                        </div>
-                        <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
-                            {blankPageDiscription[0]}
-                            <br />
-                            <Link href={`/add-new-order`}>
-                                <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
-                                    {" "}
-                                    {blankPageDiscription[1]}
-                                </span>
-                            </Link>
-                        </div>
-                    </div>
-                ) : (
-                    <>
-                        <Table
-                            rows={orders?.data as any}
-                            headings={tableHeaders}
-                            type="order"
-                        />
-                        <AddButton onClick={addNewOrderHandler} />
-                    </>
-                )}
-            </div>
+                            <AddButton onClick={addNewOrderHandler} />
+                        </>
+                    )}
+                </div>
+            </Layout>
         </UserPageWrapper>
     );
 };
@@ -167,7 +169,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         authOptions as any
     );
     // const { pathname } = ctx.req.url;
-    
+
     if (!session) {
         return {
             redirect: {

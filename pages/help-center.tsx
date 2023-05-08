@@ -28,11 +28,9 @@ const HelpCenter = () => {
 
     return (
         <UserPageWrapper>
-            <div>
-                {helpCenters?.data?.length > 0 && (
-                    <HelpCenterView data={helpCenters?.data} />
-                )}
-            </div>
+            {helpCenters?.data?.length > 0 && (
+                <HelpCenterView data={helpCenters?.data} />
+            )}
         </UserPageWrapper>
     );
 };
