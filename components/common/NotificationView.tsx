@@ -51,6 +51,7 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
                     params: {
                         email: "shreyan@gmail.com   ",
                     },
+
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
                     },

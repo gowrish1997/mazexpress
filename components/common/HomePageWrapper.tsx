@@ -71,7 +71,7 @@ const HomePageWrapper = (props: IProp) => {
     return (
         <>
             <div className="w-full">
-                <div className="box-border w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[12px] md:text-[14px] text-[#FFFFFF] font-[500] leading-[24px] p-[15px] ">
+                <div className="box-border w-full flex justify-center items-center h-[46px] bg-[#2B2B2B] text-[10px] md:text-[14px] text-[#FFFFFF] font-[500] leading-[12px] sm:leading-[24px] p-[15px] ">
                     {t("landingPage.Header")}
                 </div>
 

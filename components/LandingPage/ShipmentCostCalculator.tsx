@@ -96,17 +96,17 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                 className="w-full   flex flex-col  justify-start items-center   "
                 ref={ref}
             >
-                <div className="w-[80%] flex-type5 min-[1200px]:flex-type3 p-[20px] md:p-[70px] flex-wrap space-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[40px] md:mt-[70px] ">
+                <div className="w-[80%] flex-type6 xmd:flex-type3 p-[20px] md:p-[70px] flex-wrap space-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[40px] md:mt-[70px] ">
                     <div className="flex-1 space-y-[15px] ">
-                        <h1 className="text-[24px] text-[#121212] font-[700] leading-[50px] ">
+                        <h1 className="text-[20px] sm:text-[24px] text-[#121212] font-[700] leading-[50px] ">
                             {" "}
                             {t("landingPage.shipmentCostCalculator.Title")}
                         </h1>
-                        <div className="relative h-[290px] w-[334px] ">
+                        <div className="relative h-[290px] w-[280px] sm:w-[334px] ">
                             <Image src={landpageImage} fill alt="logo" />
                         </div>
                         <p
-                            className={` w-[85%] text-[16px] text-[#525D72] font-[500] leading-[25.5px]   `}
+                            className={` w-[90%] text-[16px] text-[#525D72] font-[500] leading-[25.5px]   `}
                         >
                             {t(
                                 "landingPage.shipmentCostCalculator.Description"
