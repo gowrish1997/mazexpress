@@ -71,7 +71,7 @@ const AddressBook = () => {
             <Layout>
                 {" "}
                 {/* <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap -3 py-5"> */}
-                <div className="w-[350px] sm:w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap  ">
+                <div className="w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap  ">
                     {addresses &&
                         (addresses as Address[])
                             ?.filter((el) => el.status === "active")

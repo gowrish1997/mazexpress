@@ -71,7 +71,7 @@ const HelpCenterView = (props: IProp) => {
                             return (
                                 <div
                                     key={index}
-                                    className="box-border border-[0.4px] w-[350px]  h-[240px] sm:h-[220px]  md:min-w-[49%] md:max-w-[49%] xmd:min-w-[32.5%] xmd:max-w-[32.5%] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] flex-type8  "
+                                    className="box-border border-[0.4px] w-full h-[240px] sm:h-[220px]  md:min-w-[49%] md:max-w-[49%] xmd:min-w-[32.5%] xmd:max-w-[32.5%] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] flex-type8  "
                                 >
                                     <div className="w-full">
                                         {/* <div className="flex-type3 space-x-[10px]">

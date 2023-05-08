@@ -69,7 +69,7 @@ const TrackOrder = (props: any) => {
                 title="Track order | MazExpress"
             />
             <Layout>
-                <div className="w-[350px] flex-type2 sm:w-full ">
+                <div className="flex-type2 w-full ">
                     <div className="flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
                         {/* <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px]">
                             <Image

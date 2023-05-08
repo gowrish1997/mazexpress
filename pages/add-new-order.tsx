@@ -27,6 +27,7 @@ import * as yup from "yup";
 import { GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
+import Layout from "@/components/layout";
 const schema = yup
     .object({
         address_id: yup
@@ -245,7 +246,8 @@ const AddNewOrder = () => {
                 showCalender={false}
                 title="Add New Order | MazExpress"
             />
-            <form className="w-[350px] sm:w-full mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
+            <Layout>
+            <form className="w-full mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex-type1 gap-x-[10px] gap-y-[10px] mt-[25px] flex-wrap">
                     <div className="w-full md:w-[49%]">
                         <Controller
@@ -350,6 +352,8 @@ const AddNewOrder = () => {
                     {t("addNewOrderPage.SubmitButton")}
                 </button>
             </form>
+            </Layout>
+           
             {showAddNewAddressModal && (
                 <AddNewAddressModal
                     show={showAddNewAddressModal}

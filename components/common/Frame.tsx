@@ -58,7 +58,7 @@ const Frame = (props: IFrameProps) => {
                         {props.children}
                     </div>
                 ) : (
-                    <div className={`box-border flex-1 pb-0 flex flex-col`}>
+                    <div className={`box-border  flex-1 pb-0 flex flex-col`}>
                         {props.children}
                     </div>
                 )}
