@@ -157,7 +157,7 @@ const ResetPasswordView = (props: any) => {
     };
 
     return (
-        <AuthLayout>
+        <>
             <h1
                 className={`hidden md:block text-[26px] text-[#000000] font-[600] leading-[36px]  `}
             >
@@ -239,7 +239,7 @@ const ResetPasswordView = (props: any) => {
                     </p>
                 </div>
             </form>
-        </AuthLayout>
+        </>
     );
 };
 

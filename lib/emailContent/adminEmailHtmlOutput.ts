@@ -1,5 +1,16 @@
 import mjml2html from "mjml";
-export const adminMailBody = (header:string,toName:string,bodyContent:string[],userName:string,userProfile:string,userContactNumber:string,userEmail:string) => {
+const imageHanlder = (type: string, api?: string) => {
+    return "https://mazbackend.easydesk.work/public/assets/maz_logo.png";
+};
+export const adminMailBody = (
+    header: string,
+    toName: string,
+    bodyContent: string[],
+    userName: string,
+    userProfile: string,
+    userContactNumber: string,
+    userEmail: string
+) => {
     const adminHtmlOutput = mjml2html(`
       <mjml>
       <mj-head>
@@ -32,7 +43,9 @@ export const adminMailBody = (header:string,toName:string,bodyContent:string[],u
 
       <mj-section css-class="header">
 <mj-column >
-  <mj-image align="left" width="158px" height="44px" src="/email_logo.png"></mj-image>
+  <mj-image align="left" width="158px" height="44px" src=${imageHanlder(
+      "email_logo"
+  )}></mj-image>
   </mj-column>
   </mj-section>
 
@@ -45,14 +58,14 @@ export const adminMailBody = (header:string,toName:string,bodyContent:string[],u
   <mj-text  align="left" mj-class="content_text" padding-top="20px" >
   Hi ${toName},
   </mj-text>
-  ${bodyContent.map((data)=>{
-    return   `<mj-text  align="left" mj-class="content_text" padding-top="20px">
+  ${bodyContent.map((data) => {
+      return `<mj-text  align="left" mj-class="content_text" padding-top="20px">
   ${data}
-  </mj-text>`
+  </mj-text>`;
   })}
   <mj-text  align="left" mj-class="footer_text" padding-top="5px">
 </mj-text>
-  <mj-image align="left" width="80px" height="80px" src='/email_logo.png' border-radius="50%"></mj-image> 
+  <mj-image align="left" width="80px" height="80px" src=""  border-radius="50%"></mj-image> 
   <mj-text  align="left" mj-class="footer_text" padding-top="5px">
   ${userName}
   </mj-text>

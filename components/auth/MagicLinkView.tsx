@@ -101,6 +101,7 @@ const MagicLinkView = (props: any) => {
             }
             //
         } catch (err) {
+            console.log(err)
             if (err) {
                 createToast({
                     type: "error",
