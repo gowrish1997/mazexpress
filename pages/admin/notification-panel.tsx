@@ -80,7 +80,7 @@ const NotificationPanel = () => {
                 content="Notification Panel"
                 title="Notification Panel | MazExpress Admin"
             />
-            <div className="grid grid-cols-3 gap-3 py-5">
+            <div className="w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap">
                 {notificationSettings &&
                     notificationSettings.length > 0 &&
                     notificationSettings.map((el: NotificationConfig) => {
@@ -89,14 +89,14 @@ const NotificationPanel = () => {
                         );
                     })}
             </div>
-            {/* <div>
+            <div>
                 <button
                     className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
                     onClick={toggleShowCreateNotificationModal}
                 >
                     Create notification
                 </button>
-            </div> */}
+            </div>
             {showCreateNotificationModal && (
                 <CreateNotificationModal
                     type="notification"
