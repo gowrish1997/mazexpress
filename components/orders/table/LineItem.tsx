@@ -77,7 +77,7 @@ const LineItem = (props: IProp) => {
     }, [tracking]);
 
     return (
-        <tr className="h-min text-[16px] text-[#000000] font-[400] leading-[22.4px] relative">
+        <tr className="h-min text-[10px] sm:text-[14px] text-[#000000] font-[400] leading-[22.4px] relative">
             <td className={`td1`}>{props.row.maz_id}</td>
             <td className={`td2 text-[#35C6F4]`}>
                 <Link
@@ -88,8 +88,8 @@ const LineItem = (props: IProp) => {
                     {props.row.store_link}
                 </Link>
             </td>
-            <td className={`td3`}>{props.row.reference_id}</td>
-            <td className={`td4`}>{props.row.order_weight}</td>
+            <td className={`td3 max-[1000px]:hidden `}>{props.row.reference_id}</td>
+            <td className={`td4 max-[1000px]:hidden `}>{props.row.order_weight}</td>
             <td className={`td5`}>
                 {props.row.est_delivery ? (
                     getDateInStringFormat(props.row.est_delivery)
@@ -97,7 +97,7 @@ const LineItem = (props: IProp) => {
                     <span>{"..."}</span>
                 )}
             </td>
-            <td className={`td6 `} style={{}}>
+            <td className={`td6 max-[1000px]:hidden  `} style={{}}>
                 <div className=" flex flex-row items-center gap-x-[5px]">
                     <span className="address_td capitalize ">
                         {props.row.address.tag}
@@ -115,13 +115,13 @@ const LineItem = (props: IProp) => {
                     <div className="pending__icon">
                         {orderStatusColorHandler(props.row.status)}
                     </div>
-                    <span className="ml-[5px] capitalize">
+                    <span className="sm:ml-[5px] capitalize">
                         {props.row.status}
                     </span>
                 </div>
             </td>
             <td
-                className=""
+                className="w-[2%]"
                 // onClick={(e) => optionModalHandler(e, index)}
             >
                 <div className="w-full h-full ">

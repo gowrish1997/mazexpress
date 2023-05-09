@@ -78,7 +78,7 @@ const PageHeader = (props: IProp) => {
             <Head>
                 <title>{props.title ? props.title : "MazExpress | dev"}</title>
             </Head>
-            <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px]">
+            <p className="text-[13px] sm:text-[18px] text-[#2B2B2B] font-[700] leading-[15px] table_md:leading-[25px]">
                 {props.content}
             </p>
             {router.pathname.includes("orders") && (
@@ -92,7 +92,7 @@ const PageHeader = (props: IProp) => {
 
             {((props.allLiveOrders && props.allLiveOrders.length > 0) ||
                 props.isFilterPresent) && (
-                <div className="flex-type1 gap-x-[10px]">
+                <div className="flex-type1 gap-x-[2px] table_md:gap-x-[10px]">
                     <MazStatsDropddown
                         options={perPageOptinsList()}
                         header="per_page"
@@ -101,9 +101,9 @@ const PageHeader = (props: IProp) => {
                         className="h-[38px] px-[10px]"
                         selection={[]}
                     />
-                    <div className="relative flex-type1 gap-x-[10px]">
+                    <div className="relative flex-type1 gap-x-[3px] table_md:gap-x-[10px]">
                         <div
-                            className="flex-type1 border-[1px] border-[#BBC2CF] rounded-[4px] ml-[10px] py-[7px] px-[10px] gap-x-[10px] cursor-pointer "
+                            className="flex flex-row justify-start items-center border-[1px] border-[#BBC2CF] rounded-[4px] ml-[10px] py-[7px] px-[3px] table_md:px-[10px] gap-x-[3px] cursor-pointer "
                             onClick={toggleCalender}
                             ref={trigger}
                         >
@@ -115,11 +115,11 @@ const PageHeader = (props: IProp) => {
                                     alt="button"
                                 />
                             </div>
-                            <span className="box-border font-[500] text-[16px] leading-[22.4px] text-[#35C6F4] text-center">
+                            <div className="box-border w-[60px] table_md:w-full font-[500] text-[10px] table_md:text-[16px] leading-[10px] table_md:leading-[22.4px] text-[#35C6F4] text-left">
                                 {filterDate
                                     ? getDateInStringFormat(filterDate as Date)
                                     : "No date selected"}
-                            </span>
+                            </div>
                         </div>
                         {showCalender ? (
                             <ClickOutside

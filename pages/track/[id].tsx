@@ -70,7 +70,7 @@ const TrackOrder = (props: any) => {
             />
             <Layout>
                 <div className="flex-type2 w-full ">
-                    <div className="flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
+                    <div className="box-border flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
                         {/* <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px]">
                             <Image
                                 src="/blueexclamatory.png"

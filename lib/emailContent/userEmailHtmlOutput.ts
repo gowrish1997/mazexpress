@@ -5,11 +5,34 @@ import fetchJson from "../fetchServer";
 image handler can be used to control the image based to emailType wheterh it is register confirmed or delivered or dispatched according to that we can send image url
 */
 }
-const imageHanlder =async () => {
-    console.log("image handler")
-    const data = await fetchJson(`/assets/maz_logo.png`);
-    console.log(data);
-    return data
+const imageHanlder = (type: string, api?: string) => {
+    let api_point = "";
+    switch (type) {
+        case "email_logo":
+            api_point = "/public/assets/maz_logo.png";
+            break;
+
+        case "register":
+            api_point = "/public/assets/register.png";
+            break;
+
+        case "ordered":
+            api_point = "/public/assets/order-placed.png";
+            break;
+
+        case "dispatched":
+            api_point = "/public/assets//out-for-delivery.png";
+            break;
+        case "delivered":
+            api_point = "/public/assets/delivered.png";
+            break;
+        case "bill_update":
+            api_point = `/bill_uploads/${api}`;
+            break;
+    }
+    console.log(api_point);
+    console.log("https://mazbackend.easydesk.work" + api_point);
+    return "https://mazbackend.easydesk.work" + api_point;
 };
 export const userMailBody = (
     type: string,
@@ -45,7 +68,9 @@ export const userMailBody = (
 
         <mj-section css-class="header">
     <mj-column >
-    <mj-image align="left" width="158px" height="44px" src="/email_logo.png"></mj-image>
+    <mj-image align="left" width="158px" height="44px" src=${imageHanlder(
+        "email_logo"
+    )}></mj-image>
     </mj-column>
 
 
@@ -58,7 +83,9 @@ export const userMailBody = (
             type == "ordered" ||
             type == "dispatched" ||
             type == "delivered") &&
-        `<mj-image align="left" width="433px" height="282px" src=${imageHanlder()}></mj-image>`
+        `<mj-image align="left" width="433px" height="282px" src=${imageHanlder(
+            type
+        )}></mj-image>`
     }
 
     <mj-text  align="left" color="#121A26" font-size="20px" line-height="30px"  >
@@ -69,6 +96,13 @@ export const userMailBody = (
     Hi ${toName} 👋,
     </mj-text>
 
+    ${
+        type == "bill_update" &&
+        `<mj-image align="left" width="433px" height="282px" src=${imageHanlder(
+            "bill_update",
+            linkToRedirect
+        )}></mj-image>`
+    }
     ${bodyContent.map((data) => {
         return `<mj-text  align="left" mj-class="content_text" padding-top="20px">
     ${data}

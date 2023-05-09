@@ -8,7 +8,12 @@ import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import SidebarModal from "../sidebar/SidebarModal";
 import React, { SyntheticEvent, useCallback, useRef, useState } from "react";
+import { signOut } from "next-auth/react";
+import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
+import Link from "next/link";
+import Logo from "../../../public/new_logo_blue.png";
 
 const Topbar = () => {
     const router = useRouter();
@@ -51,6 +56,19 @@ const Topbar = () => {
     );
     const searchKeyOnchangeHandler = (e) => {
         debouncedFilter(e.target.value);
+    };
+    const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
+
+    const toggleLogoutConfirmModal = () => {
+        setShowLogoutConfirmModal((prev) => !prev);
+    };
+
+    const logoutHandler = () => {
+        try {
+            signOut();
+        } catch (err) {
+            if (err) console.error(err);
+        }
     };
 
     // useEffect(() => {
@@ -95,45 +113,68 @@ const Topbar = () => {
                         />
                     </div>
                 </div>
-                <div className="w-full md:flex-1 flex flex-row-reverse justify-start items-center ">
-                    {" "}
-                    <div className="flex min-h-[65px] items-center justify-end">
-                        <span
-                            className="relative top-0.5 px-2 cursor-pointer"
-                            onClick={toggleNotificationsHandler}
-                            ref={trigger}
-                        >
-                            {notifications?.data &&
-                                notifications?.data?.length > 0 && (
-                                    <span className="rounded-full block top-[3px] h-[7px] w-[7px] left-[24px] bg-[#FF2323] absolute"></span>
-                                )}
-                            <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
-                                <Bell className="bell_svg" />
+                <div className="w-full md:flex-1 flex flex-row justify-between items-center ">
+                    <div className="md:hidden flex flex-row justify-start items-center gap-x-[10px]">
+                        <Link href={"/"} passHref>
+                            <div className="flex items-center cursor-pointer mb-[10px] ">
+                                <div className="relative w-[60px] h-[60px]  ">
+                                    <Image
+                                        priority={true}
+                                        src={Logo}
+                                        fill
+                                        style={{ objectFit: "contain" }}
+                                        alt="logo"
+                                        sizes="(max-width: 768px) 100vw,
+                (max-width: 1200px) 50vw,
+                33vw"
+                                    />
+                                </div>
+                                {/* <h3 className="font-semibold ml-4 font-[500] text-[20px]">Management</h3> */}
                             </div>
-                        </span>
+                        </Link>
+
+                        <SidebarModal logout={toggleLogoutConfirmModal} />
                     </div>
-                    <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
-                        <Image
-                            src={
-                                session?.user?.avatar_url
-                                    ? "https://mazbackend.easydesk.work/user_uploads/" +
-                                      session?.user?.avatar_url
-                                    : "/user-images/default_user.png"
-                            }
-                            fill
-                            style={{ objectFit: "cover" }}
-                            alt="profileImage"
-                            sizes="(max-width: 768px) 100vw,
+                    <div className="w-full md:flex-1 flex flex-row-reverse justify-start items-center">
+                        <div className="flex min-h-[65px] items-center justify-end">
+                            <span
+                                className="relative top-0.5 px-2 cursor-pointer"
+                                onClick={toggleNotificationsHandler}
+                                ref={trigger}
+                            >
+                                {notifications?.data &&
+                                    notifications?.data?.length > 0 && (
+                                        <span className="rounded-full block top-[3px] h-[7px] w-[7px] left-[24px] bg-[#FF2323] absolute"></span>
+                                    )}
+                                <div className="h-[30px] w-[30px] rounded-[50%] hover:bg-[#EDF5F9] flex justify-center items-center  ">
+                                    <Bell className="bell_svg" />
+                                </div>
+                            </span>
+                        </div>
+                        <div className="relative h-[30px] w-[30px] rounded-full overflow-hidden">
+                            <Image
+                                src={
+                                    session?.user?.avatar_url
+                                        ? "https://mazbackend.easydesk.work/user_uploads/" +
+                                          session?.user?.avatar_url
+                                        : "/user-images/default_user.png"
+                                }
+                                fill
+                                style={{ objectFit: "cover" }}
+                                alt="profileImage"
+                                sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 100vw,
                 100vw"
-                            onError={(e: SyntheticEvent) =>
-                                console.log("error at user image", e)
-                            }
-                        />
+                                onError={(e: SyntheticEvent) =>
+                                    console.log("error at user image", e)
+                                }
+                            />
+                        </div>
+                        <p className="hidden md:block font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
+                            {session?.user?.first_name}{" "}
+                            {session?.user?.last_name}
+                        </p>
                     </div>
-                    <p className="hidden md:block font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">
-                        {session?.user?.first_name} {session?.user?.last_name}
-                    </p>
                 </div>
             </div>
 
@@ -143,6 +184,12 @@ const Topbar = () => {
                     show={showNotifications}
                     trigger={trigger}
                     handler={smartToggleNotificationsHandler}
+                />
+            )}
+            {showLogoutConfirmModal && (
+                <LogoutConfirmModal
+                    logout={logoutHandler}
+                    close={toggleLogoutConfirmModal}
                 />
             )}
         </>

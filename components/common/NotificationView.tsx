@@ -46,20 +46,6 @@ const NotificationView = forwardRef<HTMLDivElement, IProp>(
             useState<Notification[]>();
 
         useEffect(() => {
-            axios
-                .get("https://mazbackend.easydesk.work/api/upload-user-image", {
-                    params: {
-                        email: "shreyan@gmail.com   ",
-                    },
-
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                })
-                .then((response) => {
-                    console.log(response);
-                });
-
             const getAllNotificatoin = async () => {
                 const response = await fetchJson(
                     `/api/notifications?username=${session?.user?.email}&per_page=${per_page}&page=${page}`

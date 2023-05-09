@@ -35,7 +35,7 @@ const WarehouseCard = (props: { address: Warehouse }) => {
     };
 
     return (
-        <div className="box-border w-full h-[250px] sm:h-[220px] md:min-w-[49%] md:max-w-[49%] xmd:min-w-[32.5%] xmd:max-w-[32.5%] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
+        <div className="box-border w-full h-[260px] sm:h-[220px] md:min-w-[49%] md:max-w-[49%] xmd:min-w-[32.5%] xmd:max-w-[32.5%] border-[0.4px] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] ">
             <div className="flex-type3 space-x-[10px]">
                 <p className="text-[14px] text-[#2B2B2B] font-[600] leading-[21px] ">
                     {capitalizeFirstLetter(props.address.tag)}

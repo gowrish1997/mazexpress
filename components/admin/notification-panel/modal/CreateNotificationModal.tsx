@@ -1,21 +1,21 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import attachLogo from "@/public/pin_icon.png";
-import uploadIcon from "@/public/upload_icon.png";
-import Image from "next/image";
-import UserSelect from "../UserSelect";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX } from "@fortawesome/free-solid-svg-icons";
 import ClickOutside from "@/components/common/ClickOutside";
 import { createToast } from "@/lib/toasts";
-import axios from "axios";
-import fetchServer from "@/lib/fetchServer";
-import { APIResponse } from "@/models/api.model";
-import { NotificationConfig } from "@/models/notification-config.model";
-import * as yup from "yup";
-import ReactHookFormInput from "@/components/common/ReactHookFormInput";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Order } from "@/models/order.model";
+import attachLogo from "@/public/pin_icon.png";
+import uploadIcon from "@/public/upload_icon.png";
+import { faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as yup from "yup";
+import UserSelect from "../UserSelect";
+import { user_bill_update } from "@/lib/emailContent/bodyContent";
+import { sentMail } from "@/lib/sentMail";
+import { APIResponse } from "@/models/api.model";
+import fetchServer from "@/lib/fetchServer";
 
 interface IProp {
     type: string;
@@ -42,7 +42,7 @@ const CreateNotificationModal = (props: IProp) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const fileUploadTriggerRef = useRef<HTMLButtonElement>(null);
-
+    console.log(selectedUsers);
     const {
         register,
         handleSubmit,
@@ -89,7 +89,7 @@ const CreateNotificationModal = (props: IProp) => {
                 }
             )
             .then(async (response) => {
-                console.log(response.data.data);
+                console.log(response.data.data[0].order_bill);
                 if (response.data.ok === true) {
                     createToast({
                         type: "success",
@@ -97,6 +97,44 @@ const CreateNotificationModal = (props: IProp) => {
                         title: "success",
                         timeOut: 1000,
                     });
+                    const toList = [
+                        {
+                            type: "bill_update",
+                            toType: "user",
+                            header: "Bill has generated",
+                            toName:
+                                props.order.user.first_name +
+                                " " +
+                                props.order.user.last_name,
+                            toMail: props.order.user.email,
+                            bodyContent: user_bill_update(props.order.maz_id),
+                            buttonContent: "",
+                            redirectLink: response.data.data[0].order_bill,
+                        },
+                    ];
+
+                    /**sending mail */
+
+                    sentMail(toList);
+
+                    /** sending notifications */
+                    const deliveredMessage = {
+                        title: "Bill generated",
+                        content: `Bill has generated for order with maz ID ${props.order.maz_id} please check your mail for generated bill `,
+                    };
+                    let result0_3: APIResponse<Notification> =
+                        await fetchServer(`/api/notifications`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                data: deliveredMessage,
+                                // files: [],
+                                users: [(props.order as Order).user.email],
+                                // notification_config: 1,
+                            }),
+                        });
 
                     // props.close(e);
                 }
@@ -220,7 +258,7 @@ const CreateNotificationModal = (props: IProp) => {
         <>
             <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-40 flex flex-row justify-center items-center">
                 <form
-                    className=" box-border flex-type6 bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] space-y-[10px]"
+                    className="relative box-border flex-type6 bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] space-y-[10px]"
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-2">
@@ -245,7 +283,7 @@ const CreateNotificationModal = (props: IProp) => {
                             {errors.title.message as string}
                         </p>
                     )}
-                    <div className={"w-full relative"}>
+                    <div className={"w-full"}>
                         <label
                             htmlFor={"content"}
                             className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] "
@@ -254,7 +292,7 @@ const CreateNotificationModal = (props: IProp) => {
                         </label>
                         <div
                             className={
-                                "h-[200px] w-full border-[1px] border-[#BBC2CF] rounded-[4px] relative"
+                                "h-[200px] w-full border-[1px] border-[#BBC2CF] rounded-[4px]"
                             }
                             // style={{ borderColor: props.error ? "#f02849" : "" }}
                         >
@@ -275,7 +313,7 @@ const CreateNotificationModal = (props: IProp) => {
                         )}
                     </div>
                     {props.type == "bill update" && (
-                        <div className="flex items-center cursor-pointer relative">
+                        <div className="flex items-center cursor-pointer">
                             <div className="relative h-3 w-3 ml-1">
                                 <Image
                                     src={attachLogo}
@@ -295,9 +333,9 @@ const CreateNotificationModal = (props: IProp) => {
                                 <ClickOutside
                                     handler={toggleFileInputHandler}
                                     trigger={fileUploadTriggerRef}
-                                    className="absolute bottom-[120%] -right-[160px] z-10"
+                                    className="absolute top-[20%] left-[20%] z-10"
                                 >
-                                    <div className=" shadow-lg bg-white rounded flex flex-col items-center w-[360px] h-[299px] p-5 space-y-[20px]">
+                                    <div className="shadow-lg bg-white rounded flex flex-col items-center w-[360px] h-[299px] p-5 space-y-[20px]">
                                         <div className="border p-5 w-full rounded flex flex-col items-center flex-1 justify-center">
                                             <div className="relative h-7 w-7">
                                                 <Image

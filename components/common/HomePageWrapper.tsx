@@ -221,16 +221,18 @@ const HomePageWrapper = (props: IProp) => {
                                                         {t(section[0])}
                                                     </li>
                                                 )}
-                                                <li className="">
-                                                    <button
-                                                        onClick={
-                                                            toggleLogoutConfirmModal
-                                                        }
-                                                        className="w-full bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] text-left "
-                                                    >
-                                                        {auth[2]}
-                                                    </button>
-                                                </li>
+                                                {session?.user && (
+                                                    <li className="">
+                                                        <button
+                                                            onClick={
+                                                                toggleLogoutConfirmModal
+                                                            }
+                                                            className="w-full bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] text-left "
+                                                        >
+                                                            {auth[2]}
+                                                        </button>
+                                                    </li>
+                                                )}
                                             </ul>
                                         </div>
                                     )}
@@ -367,7 +369,7 @@ const HomePageWrapper = (props: IProp) => {
                                 <LanguageSwitcher />
                             </div>
                         ) : (
-                            <div className="flex flexx-row justify-start items-center gap-x-[20px]">
+                            <div className="flex flexx-row justify-start items-center gap-x-[5px] sm:gap-x-[20px] text-[10px] sm:text-[16px] ">
                                 <Link href={"/auth/gate?mode=0"}>
                                     {auth[1]}
                                 </Link>

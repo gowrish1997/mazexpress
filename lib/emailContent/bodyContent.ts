@@ -61,11 +61,15 @@ function user_orderDelivered(order_id: string) {
 }
 function user_enquiry_reply(content: string) {
     return [
-        `Thank you for enquiry with us. we tried out best to answer your query, please feel free to contact us. We are always here to assist you.`,`Answer for you enquiry: ${content}`
+        `Thank you for enquiry with us. we tried out best to answer your query, please feel free to contact us. We are always here to assist you.`,
+        `Answer for you enquiry: ${content}`,
     ];
 }
 function user_enquiry(content: string) {
-    return [`You got new enquiry from user`, `User enquiry:${content } `];
+    return [`You got new enquiry from user`, `User enquiry:${content} `];
+}
+function user_bill_update(content: string) {
+    return [`Bill has been updated for your order with maz_ID ${content}`];
 }
 
 export {
@@ -79,4 +83,5 @@ export {
     user_passwordChangedContent,
     user_enquiry_reply,
     user_enquiry,
+    user_bill_update,
 };

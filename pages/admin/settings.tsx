@@ -320,153 +320,188 @@ const Settings = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex flex-col set_md:flex-row  w-full gap-x-[20px] max-[750px]:gap-y-[10px] items-center relative">
-                            <div className="flex-type2 gap-x-[10px] w-full items-center">
+                        <div className="w-full flex flex-col md:flex-row justify-start items-start gap-x-[20px] ">
+                            <div className="w-full flex flex-col justify-start items-start gap-y-[10px]">
+                                <div className="flex-type2 gap-x-[10px] w-full items-start">
+                                    <Controller
+                                        name="first_name"
+                                        control={control}
+                                        render={({
+                                            field: { onChange, value },
+                                        }) => (
+                                            <ReactHookFormInput
+                                                label={inputFieldLabels[0]}
+                                                name="first_name"
+                                                type="string"
+                                                value={value}
+                                                onChange={onChange}
+                                                error={
+                                                    errors.first_name
+                                                        ?.message &&
+                                                    fieldErrors[0]
+                                                }
+                                            />
+                                        )}
+                                    />
+                                    <Controller
+                                        name="last_name"
+                                        control={control}
+                                        render={({
+                                            field: { onChange, value },
+                                        }) => (
+                                            <ReactHookFormInput
+                                                label={inputFieldLabels[1]}
+                                                name="last_name"
+                                                value={value}
+                                                onChange={onChange}
+                                                type="string"
+                                                error={
+                                                    errors.last_name?.message &&
+                                                    fieldErrors[1]
+                                                }
+                                            />
+                                        )}
+                                    />
+                                </div>
                                 <Controller
-                                    name="first_name"
+                                    name="email"
                                     control={control}
                                     render={({
                                         field: { onChange, value },
                                     }) => (
                                         <ReactHookFormInput
-                                            label="First name"
-                                            name="first_name"
-                                            type="string"
+                                            label={inputFieldLabels[3]}
+                                            name="email"
                                             value={value}
                                             onChange={onChange}
-                                            error={errors.first_name?.message}
+                                            type="string"
+                                            error={
+                                                errors.email?.message &&
+                                                fieldErrors[3]
+                                            }
                                         />
                                     )}
                                 />
                                 <Controller
-                                    name="last_name"
+                                    name="phone"
                                     control={control}
                                     render={({
                                         field: { onChange, value },
                                     }) => (
                                         <ReactHookFormInput
-                                            label="Last name"
-                                            name="last_name"
+                                            label={inputFieldLabels[5]}
+                                            name="phone"
                                             value={value}
                                             onChange={onChange}
-                                            type="string"
-                                            error={errors.last_name?.message}
+                                            type="number"
+                                            error={
+                                                errors.phone?.message &&
+                                                fieldErrors[5]
+                                            }
                                         />
                                     )}
                                 />
                             </div>
-                            <Controller
-                                name="password"
-                                control={control}
-                                render={({ field: { onChange, value } }) => (
-                                    <ReactHookFormInput
-                                        label="Password"
+                            <div className="w-full flex flex-col justify-start items-start gap-y-[10px]  ">
+                                <div className="w-full flex flex-row justify-start items-start relative">
+                                    {/* <div className="flex flex-col set_md:flex-row w-full max-[750px]:gap-y-[10px] gap-x-[20px] items-center relative"> */}
+
+                                    <Controller
                                         name="password"
-                                        type={passwordType}
-                                        value={value}
-                                        error={errors.password?.message}
-                                        icon={{
-                                            isEnabled: true,
-                                            src:
-                                                passwordType === "string"
-                                                    ? "/eyeIconOpen.png"
-                                                    : "/eyeIconClose.png",
-                                        }}
-                                        onClick={togglePasswordTypeHandler}
-                                        onChange={updatePasswordChecker}
-                                        // disabled={true}
-                                        // autoComplete="off"
+                                        control={control}
+                                        render={({
+                                            field: { onChange, value },
+                                        }) => (
+                                            <ReactHookFormInput
+                                                label={inputFieldLabels[2]}
+                                                name="password"
+                                                type={passwordType}
+                                                value={value}
+                                                error={
+                                                    errors.password?.message &&
+                                                    fieldErrors[2]
+                                                }
+                                                icon={{
+                                                    isEnabled: true,
+                                                    src:
+                                                        passwordType ===
+                                                        "string"
+                                                            ? "/eyeIconOpen.png"
+                                                            : "/eyeIconClose.png",
+                                                }}
+                                                onClick={
+                                                    togglePasswordTypeHandler
+                                                }
+                                                onChange={updatePasswordChecker}
+                                                // disabled={true}
+                                                // autoComplete="off"
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
 
-                            {!passwordCheck ? (
-                                <div className="border border-red-600 block rounded-full absolute -right-7 top-[35px] flex items-center justify-center h-5 w-5">
-                                    <FontAwesomeIcon
-                                        icon={faX}
-                                        size="xs"
-                                        className="h-2 w-2 text-red-600"
-                                    />
+                                    {!passwordCheck ? (
+                                        <div
+                                            className={`border border-red-600 rounded-full absolute ${
+                                                locale == "en"
+                                                    ? "-right-7"
+                                                    : "-left-7"
+                                            } top-[35px] flex items-center justify-center h-5 w-5`}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faX}
+                                                size="xs"
+                                                className="h-2 w-2 text-red-600"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className={`border border-green-600 rounded-full absolute ${
+                                                locale == "en"
+                                                    ? "-right-7"
+                                                    : "-left-7"
+                                            }  bottom-[14px] flex items-center justify-center h-5 w-5`}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faCheck}
+                                                size="xs"
+                                                className="h-2 w-2 text-green-600"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
-                            ) : (
-                                <div className="border border-green-600 block rounded-full absolute -right-7 top-[35px] flex items-center justify-center h-5 w-5">
-                                    <FontAwesomeIcon
-                                        icon={faCheck}
-                                        size="xs"
-                                        className="h-2 w-2 text-green-600"
-                                    />
-                                </div>
-                            )}
+                                <Controller
+                                    name="newPassword"
+                                    control={control}
+                                    render={({
+                                        field: { onChange, value },
+                                    }) => (
+                                        <ReactHookFormInput
+                                            label={inputFieldLabels[4]}
+                                            name="newPassword"
+                                            type={newPasswordType}
+                                            value={value}
+                                            onChange={onChange}
+                                            error={
+                                                errors.newPassword?.message &&
+                                                fieldErrors[4]
+                                            }
+                                            icon={{
+                                                isEnabled: true,
+                                                src:
+                                                    newPasswordType === "string"
+                                                        ? "/eyeIconOpen.png"
+                                                        : "/eyeIconClose.png",
+                                            }}
+                                            onClick={
+                                                toggleNewPasswordTypeHandler
+                                            }
+                                            autoComplete="new-password"
+                                        />
+                                    )}
+                                />
+                            </div>
                         </div>
-                        <div className="flex flex-col set_md:flex-row justify-start items-center w-full max-[750px]:gap-y-[10px] gap-x-[20px]">
-                            <Controller
-                                name="email"
-                                control={control}
-                                render={({ field: { onChange, value } }) => (
-                                    <ReactHookFormInput
-                                        label="Email"
-                                        name="email"
-                                        value={value}
-                                        onChange={onChange}
-                                        type="string"
-                                        error={errors.email?.message}
-                                    />
-                                )}
-                            />
-                            <Controller
-                                name="newPassword"
-                                control={control}
-                                render={({ field: { onChange, value } }) => (
-                                    <ReactHookFormInput
-                                        label="New Password"
-                                        name="newPassword"
-                                        type={newPasswordType}
-                                        value={value}
-                                        onChange={onChange}
-                                        error={errors.newPassword?.message}
-                                        icon={{
-                                            isEnabled: true,
-                                            src:
-                                                newPasswordType === "string"
-                                                    ? "/eyeIconOpen.png"
-                                                    : "/eyeIconClose.png",
-                                        }}
-                                        onClick={toggleNewPasswordTypeHandler}
-                                        autoComplete="new-password"
-                                    />
-                                )}
-                            />
-                        </div>
-                        <div className="flex flex-col set_md:flex-row justify-start items-center w-full set_md:w-1/2 max-[750px]:gap-y-[10px] gap-x-[20px]">
-                            <Controller
-                                name="phone"
-                                control={control}
-                                render={({ field: { onChange, value } }) => (
-                                    <ReactHookFormInput
-                                        label="Mobile number"
-                                        name="phone"
-                                        value={value}
-                                        onChange={onChange}
-                                        type="number"
-                                        error={errors.phone?.message}
-                                    />
-                                )}
-                            />
 
-                            {/* <CustomDropdown
-                                label={inputFieldLabels[6]}
-                                name="lang"
-                                type="string"
-                                IconEnabled={true}
-                                register={register("lang")}
-                                error={errors.lang}
-                                options={languageOption}
-                                value={getValues("lang")}
-                                setValue={setValue}
-                                disabled={true}
-                                className="text-[14px] text-[#2B2B2B] font-[600] leading-[19px] "
-                            /> */}
-                        </div>
                         <div className="flex-type3 w-full  mt-[10px] ">
                             <div className="font-[500]">
                                 <p className="text-[14px] text-[#2B2B2B] leading-[19px] font-[600] ">

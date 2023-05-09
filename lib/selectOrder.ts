@@ -8,6 +8,7 @@ import { User } from "@/models/user.model";
 import fetchServer from "./fetchServer";
 import { sentMail } from "./sentMail";
 import { getToken } from "next-auth/jwt";
+import { nanoid } from "nanoid";
 
 export const getSession = async (req) => {
     const session = await getToken({ req });
@@ -332,5 +333,143 @@ export const singleOrderAction = async (
         );
 
         // console.log(result0_3);
+    }
+};
+const userSidebarPanel = [
+    {
+        id: nanoid(),
+        title: "Add New Order",
+        icon: "/orders.png",
+        path: "/add-new-order",
+    },
+    {
+        id: nanoid(),
+        title: "My Orders",
+        icon: "/orders.png",
+        path: "/orders",
+    },
+    {
+        id: nanoid(),
+        title: "Order Tracking",
+        icon: "/location.png",
+        path: "/track",
+    },
+    {
+        id: nanoid(),
+        title: "Warehouse",
+        icon: "/warehouse.png",
+        path: "/warehouse",
+    },
+    {
+        id: nanoid(),
+        title: "Address Book",
+        icon: "/address.png",
+        path: "/address-book",
+    },
+    {
+        id: nanoid(),
+        title: "Settings",
+        icon: "/settings.png",
+        path: "/settings",
+    },
+    {
+        id: nanoid(),
+        title: "Help center",
+        icon: "/help.png",
+        path: "/help-center",
+    },
+];
+const adminSidebarPanel = [
+    {
+        id: nanoid(),
+        title: "Dashboard",
+        icon: "/orders.png",
+        path: "/admin",
+    },
+    {
+        id: nanoid(),
+        title: "Live Orders",
+        icon: "/location.png",
+        path: "/admin/live-orders",
+    },
+    {
+        id: nanoid(),
+        title: "Pending Orders",
+        icon: "/location.png",
+        path: "/admin/pending",
+    },
+    {
+        id: nanoid(),
+        title: "Today Shipments",
+        icon: "/warehouse.png",
+        path: "/admin/shipments",
+    },
+    {
+        id: nanoid(),
+        title: "Out From Warehouse",
+        icon: "/warehouse.png",
+        path: "/admin/in-transit",
+    },
+    {
+        id: nanoid(),
+        title: "Delivered Order",
+        icon: "/address.png",
+        path: "/admin/delivered",
+    },
+    {
+        id: nanoid(),
+        title: "Warehouse",
+        icon: "/settings.png",
+        path: "/admin/warehouse",
+    },
+    {
+        id: nanoid(),
+        title: "User Base",
+        icon: "/help.png",
+        path: "/admin/users",
+    },
+    {
+        id: nanoid(),
+        title: "Admin Base",
+        icon: "/help.png",
+        path: "/admin/admins",
+    },
+    {
+        id: nanoid(),
+        title: "Notification Panel",
+        icon: "/address.png",
+        path: "/admin/notification-panel",
+    },
+    {
+        id: nanoid(),
+        title: "Settings",
+        icon: "/settings.png",
+        path: "/admin/settings",
+    },
+    {
+        id: nanoid(),
+        title: "Help center",
+        icon: "/help.png",
+        path: "/admin/help-center",
+    },
+    {
+        id: nanoid(),
+        title: "Enquiry Base",
+        icon: "/help.png",
+        path: "/admin/enquiry-base",
+    },
+    {
+        id: nanoid(),
+        title: "Settings (Shipping cost)",
+        icon: "/help.png",
+        path: "/admin/shipping-cost",
+    },
+];
+
+export const sidebarContentHandler = (admin: boolean) => {
+    if (admin) {
+        return adminSidebarPanel;
+    } else {
+        return userSidebarPanel;
     }
 };

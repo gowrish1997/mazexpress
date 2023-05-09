@@ -15,6 +15,7 @@ module.exports = {
             add_md: "1100px",
             add_sm: "650px",
             set_md: "750px",
+            table_md:"1000px"
 
             // => @media (min-width: 640px) { ... }
         },

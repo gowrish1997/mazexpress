@@ -174,12 +174,42 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                 });
                 return;
             }
-            console.log(data);
+
+            if (!data.length && data.weight) {
+                console.log("contain weight");
+                try {
+                    const result = await fetchJson(
+                        `/api/shipping/weightcalc?weight=${data.weight?.toFixed(
+                            2
+                        )}`,
+                        {
+                            method: "GET",
+                            headers: { "Content-Type": "application/json" },
+                        }
+                    );
+
+                    if (result.data) {
+                        setMessage("");
+                        setCost(result.data[0].cost);
+                    } else {
+                        setCost(0);
+                        console.log(result.msg);
+                        setMessage(result.msg);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+                return;
+            }
             try {
+                console.log(" not contain weight");
                 const result = await fetchJson(`/api/shipping`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data),
+                    body: JSON.stringify({
+                        ...data,
+                        weight: data.weight?.toFixed(2),
+                    }),
                 });
 
                 if (result.data) {
@@ -366,11 +396,11 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                             </div>
                         </form>
                         <div>
-                            <p className="text-[20px] text-[#121212] font-[700] leading-[50px] mb-[5px] mt-[20px] ">
+                            <p className="text-[14px] sm:text-[20px] text-[#121212] font-[700] leading-[50px] mb-[5px] mt-[20px] ">
                                 Shipment cost:
                                 {cost ? (
                                     <span className="text-[#35C6F4] ml-[5px] ">
-                                        {Math.ceil(cost)} $
+                                        {cost.toFixed(2)} $
                                     </span>
                                 ) : (
                                     <span className="capitalize ml-[5px] text-[14px] text-[#f02849] mb-[-10px] leading-[16px]">

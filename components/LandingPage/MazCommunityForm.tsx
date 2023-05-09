@@ -177,5 +177,5 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
         </div>
     );
 });
-MazCommunityForm.displayName="MazCommunityForm"
+MazCommunityForm.displayName = "MazCommunityForm";
 export default MazCommunityForm;
