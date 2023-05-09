@@ -69,6 +69,15 @@ const CreateNotificationModal = (props: IProp) => {
     }, []);
 
     const onSubmit: SubmitHandler<any> = async (data) => {
+        if (selectedUsers.length == 0) {
+            createToast({
+                type: "error",
+                message: "Please select atleast one user",
+                title: "Error",
+                timeOut: 1000,
+            });
+            return;
+        }
         if (props.type == "bill update") {
             if (files.length == 0) {
                 setErr_msg("Bill is required field");
