@@ -94,14 +94,14 @@ const MagicLinkView = (props: any) => {
             if (magicLink) {
                 createToast({
                     type: "success",
-                    message: "please check your email for magic link.",
-                    title: "Magic link created.",
+                    message: "Please check your email for password reset link",
+                    title: "Success",
                     timeOut: 2000,
                 });
             }
             //
         } catch (err) {
-            console.log(err)
+            console.log(err);
             if (err) {
                 createToast({
                     type: "error",
