@@ -26,7 +26,7 @@ export const authOptions = {
                     //     let avatar = user.data[0].avatar_url;
                     //     avatar.replace(/['"]+/g, "");
                     //     avatar =
-                    //         `https://mazbackend.easydesk.work/user_uploads/` +
+                    //         `https://mazbackend.easydesk.work/user/` +
                     //         avatar;
                     //     user.data[0].avatar_url = avatar;
                     // }

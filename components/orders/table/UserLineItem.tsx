@@ -45,7 +45,7 @@ const UserLineItem = (props: IProp) => {
                         <Image
                             src={
                                 (props.row as User).avatar_url
-                                    ?"https://mazbackend.easydesk.work/user_uploads/" +
+                                    ?"https://mazbackend.easydesk.work/user/" +
                                       (props.row as User).avatar_url
                                     :"/user-images/default_user.png"
                             }

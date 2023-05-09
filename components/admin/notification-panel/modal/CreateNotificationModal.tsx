@@ -42,7 +42,7 @@ const CreateNotificationModal = (props: IProp) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const fileUploadTriggerRef = useRef<HTMLButtonElement>(null);
-    console.log(selectedUsers);
+
     const {
         register,
         handleSubmit,
@@ -69,79 +69,108 @@ const CreateNotificationModal = (props: IProp) => {
     }, []);
 
     const onSubmit: SubmitHandler<any> = async (data) => {
-        if (files.length == 0) {
-            setErr_msg("Bill is required field");
-            return;
-        }
-        console.log("send", data);
-        let formData = new FormData();
+        if (props.type == "bill update") {
+            if (files.length == 0) {
+                setErr_msg("Bill is required field");
+                return;
+            }
+            console.log("send", data);
+            let formData = new FormData();
 
-        formData.append("maz_id", props.order.maz_id);
-        formData.append("bill_file", data.order_bill);
-        console.log(formData);
+            formData.append("maz_id", props.order.maz_id);
+            formData.append("bill_file", data.order_bill);
+            console.log(formData);
 
-        axios
-            .post(
-                "https://mazbackend.easydesk.work/api/upload-bill-image",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }
-            )
-            .then(async (response) => {
-                console.log(response.data.data[0].order_bill);
-                if (response.data.ok === true) {
-                    createToast({
-                        type: "success",
-                        message: "Bill updated",
-                        title: "success",
-                        timeOut: 1000,
-                    });
-                    const toList = [
-                        {
-                            type: "bill_update",
-                            toType: "user",
-                            header: "Bill has generated",
-                            toName:
-                                props.order.user.first_name +
-                                " " +
-                                props.order.user.last_name,
-                            toMail: props.order.user.email,
-                            bodyContent: user_bill_update(props.order.maz_id),
-                            buttonContent: "",
-                            redirectLink: response.data.data[0].order_bill,
-                        },
-                    ];
-
-                    /**sending mail */
-
-                    sentMail(toList);
-
-                    /** sending notifications */
-                    const deliveredMessage = {
-                        title: "Bill generated",
-                        content: `Bill has generated for order with maz ID ${props.order.maz_id} please check your mail for generated bill `,
-                    };
-                    let result0_3: APIResponse<Notification> =
-                        await fetchServer(`/api/notifications`, {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                data: deliveredMessage,
-                                // files: [],
-                                users: [(props.order as Order).user.email],
-                                // notification_config: 1,
-                            }),
+            axios
+                .post(
+                    "https://mazbackend.easydesk.work/api/upload-bill-image",
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    }
+                )
+                .then(async (response) => {
+                    console.log(response.data.data[0].order_bill);
+                    if (response.data.ok === true) {
+                        createToast({
+                            type: "success",
+                            message: "Bill updated",
+                            title: "success",
+                            timeOut: 1000,
                         });
+                        const toList = [
+                            {
+                                type: "bill_update",
+                                toType: "user",
+                                header: "Bill has generated",
+                                toName:
+                                    props.order.user.first_name +
+                                    " " +
+                                    props.order.user.last_name,
+                                toMail: props.order.user.email,
+                                bodyContent: user_bill_update(
+                                    props.order.maz_id
+                                ),
+                                buttonContent: "",
+                                redirectLink: response.data.data[0].order_bill,
+                            },
+                        ];
 
-                    // props.close(e);
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+                        /**sending mail */
+
+                        sentMail(toList);
+
+                        /** sending notifications */
+                        const deliveredMessage = {
+                            title: "Bill generated",
+                            content: `Bill has generated for order with maz ID ${props.order.maz_id} please check your mail for generated bill `,
+                        };
+                        let result0_3: APIResponse<Notification> =
+                            await fetchServer(`/api/notifications`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    data: deliveredMessage,
+                                    // files: [],
+                                    users: [(props.order as Order).user.email],
+                                    // notification_config: 1,
+                                }),
+                            });
+
+                        props.close();
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        } else {
+            try {
+                const result0_3: APIResponse<Notification> = await fetchServer(
+                    "/api/notifications",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            data: data,
+                            // files: [],
+                            users: selectedUsers,
+                            // notification_config: 1,
+                        }),
+                    }
+                );
+                createToast({
+                    type: "success",
+                    message: "Notifications sent to selected users",
+                    title: "success",
+                    timeOut: 1000,
+                });
+                props.close();
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
 
         // console.log("to", selectedUsers);
 

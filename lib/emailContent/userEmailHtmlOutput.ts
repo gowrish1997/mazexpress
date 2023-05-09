@@ -27,7 +27,7 @@ const imageHanlder = (type: string, api?: string) => {
             api_point = "/public/assets/delivered.png";
             break;
         case "bill_update":
-            api_point = `/bill_uploads/${api}`;
+            api_point = `/bill/${api}`;
             break;
     }
     console.log(api_point);

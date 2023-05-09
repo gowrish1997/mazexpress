@@ -35,7 +35,7 @@ const RecentCustomers = () => {
                                     <Image
                                         src={
                                             data?.avatar_url
-                                                ?"https://mazbackend.easydesk.work/user_uploads/" +
+                                                ?"https://mazbackend.easydesk.work/user/" +
                                                   data?.avatar_url
                                                 :"/user-images/default_user.png"
                                         }
