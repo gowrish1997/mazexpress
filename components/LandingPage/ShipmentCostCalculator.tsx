@@ -78,9 +78,14 @@ const schema = yup
         //         ),
         // }),
         weight: yup
-            .number()
-            .required("Package weight is required field")
-            .typeError("Package weight is required field"),
+            .mixed()
+            .test(
+                "is-valid-age",
+                "Age must be a number between 18 and 99",
+                (value) => {
+                    return true;
+                }
+            ),
     })
     .required();
 
@@ -129,6 +134,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
         });
 
         const onSubmit: SubmitHandler<any> = async (data) => {
+            console.log(data);
             if (data.length && (!data.width || !data.height)) {
                 if (!data.width) {
                     setError("width", {
@@ -179,9 +185,9 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                 console.log("contain weight");
                 try {
                     const result = await fetchJson(
-                        `/api/shipping/weightcalc?weight=${data.weight?.toFixed(
-                            2
-                        )}`,
+                        `/api/shipping/weightcalc?weight=${parseInt(
+                            data.weight
+                        )?.toFixed(2)}`,
                         {
                             method: "GET",
                             headers: { "Content-Type": "application/json" },
@@ -208,7 +214,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         ...data,
-                        weight: data.weight?.toFixed(2),
+                        weight:data.weight?parseInt(data.weight)?.toFixed(2):0,
                     }),
                 });
 
