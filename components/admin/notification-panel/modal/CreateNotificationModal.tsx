@@ -72,7 +72,7 @@ const CreateNotificationModal = (props: IProp) => {
         if (selectedUsers.length == 0) {
             createToast({
                 type: "error",
-                message: "Please select atleast one user",
+                message: "Please select at least one user",
                 title: "Error",
                 timeOut: 1000,
             });
@@ -83,12 +83,11 @@ const CreateNotificationModal = (props: IProp) => {
                 setErr_msg("Bill is required field");
                 return;
             }
-            console.log("send", data);
+            console.log("bill update");
             let formData = new FormData();
 
             formData.append("maz_id", props.order.maz_id);
             formData.append("bill_file", data.order_bill);
-            console.log(formData);
 
             axios
                 .post(
@@ -294,7 +293,7 @@ const CreateNotificationModal = (props: IProp) => {
 
     return (
         <>
-            <div className="box-border fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] z-40 flex flex-row justify-center items-center">
+            <div className="box-border fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.4)] z-40 flex flex-row justify-center items-center">
                 <form
                     className="relative box-border flex-type6 bg-[#ffffff] rounded-[8px] py-[30px] px-[25px] w-[600px] space-y-[10px]"
                     onSubmit={handleSubmit(onSubmit)}
