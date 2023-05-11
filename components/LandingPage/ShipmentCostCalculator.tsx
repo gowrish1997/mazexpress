@@ -183,11 +183,12 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
 
             if (!data.length && data.weight) {
                 console.log("contain weight");
+                console.log(parseFloat(data.weight)?.toFixed(2));
                 try {
                     const result = await fetchJson(
-                        `/api/shipping/weightcalc?weight=${parseInt(
+                        `/api/shipping/weightcalc?weight=${parseFloat(
                             data.weight
-                        )?.toFixed(2)}`,
+                        )?.toFixed(3)}`,
                         {
                             method: "GET",
                             headers: { "Content-Type": "application/json" },
@@ -196,6 +197,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
 
                     if (result.data) {
                         setMessage("");
+                        console.log(result.data[0].cost);
                         setCost(result.data[0].cost);
                     } else {
                         setCost(0);
@@ -214,7 +216,9 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         ...data,
-                        weight:data.weight?parseInt(data.weight)?.toFixed(2):0,
+                        weight: data.weight
+                            ? parseFloat(data.weight)?.toFixed(2)
+                            : 0,
                     }),
                 });
 
