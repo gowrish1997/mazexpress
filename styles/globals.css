@@ -685,6 +685,10 @@ input::-webkit-inner-spin-button {
 .enquiry_base_table .td4 {
     width: 48.5%;
 }
+.enquiry_base_table .th5,
+.enquiry_base_table .td5 {
+    width: 1.5%;
+}
 
 .enquiry_base_table .th1,
 .enquiry_base_table .th2,
@@ -1214,7 +1218,7 @@ input[type="checkbox"]:disabled {
     border: 1px solid black;
     margin-left: 5px;
 }
-@media only screen and (max-width:650px) {
+@media only screen and (max-width: 650px) {
     .page-item {
         box-sizing: border-box;
         display: flex;

@@ -43,7 +43,7 @@ const EnquiryLineItem = (props: IProp) => {
                     <td className={`td4`}>{props.row.message}</td>
 
                     <td
-                        className=""
+                        className="td5"
                         ref={trigger}
                         // onClick={(e) => optionModalHandler(e, index)}
                     >
