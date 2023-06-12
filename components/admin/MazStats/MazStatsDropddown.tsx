@@ -60,7 +60,7 @@ const MazStatsDropddown = (props: IProp) => {
                 <ClickOutside
                     handler={smartToggleGateHandler}
                     trigger={trigger}
-                    className="w-full"
+                    className="w-full "
                 >
                     <div className="w-full bg-[white] box-border absolute  border-[1px] border-[#ccc] rounded-[4px] p-[5px] space-y-[4px] z-20  ">
                         {props.options.map((data, index) => {

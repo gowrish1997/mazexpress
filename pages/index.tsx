@@ -86,7 +86,7 @@ const Index = () => {
                 ) => {
                     return (
                         <div className="w-full">
-                            <div className="px-[30px] xmd:px-[150px]  ">
+                            <div className="px-[10px] md:px-[30px] xmd:px-[150px]  ">
                                 <div className="w-[100%] flex flex-row justify-center ">
                                     <div className="w-[75%] mt-[30px] ">
                                         <h1 className="text-center text-[36px]  text-[#000000] font-[900] leading-[40px]  mt-[25px] md:mt-[40px] ">

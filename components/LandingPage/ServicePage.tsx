@@ -27,7 +27,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
             className="w-full bg-[#F9FDFF] mt-[30px] flex flex-col  justify-start items-center py-[70px] "
             ref={ref}
         >
-            <div className="w-[80%] flex flex-row justify-between items-start  gap-x-[50px]">
+            <div className="w-[92%] flex flex-row justify-between items-start  gap-x-[50px]">
                 <div className="hidden min-[1300px]:block relative w-[526px] h-[580px] ">
                     <Image src={Truck} fill alt="truck" />
                 </div>

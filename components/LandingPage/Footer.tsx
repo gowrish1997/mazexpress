@@ -33,7 +33,7 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
 
     return (
         <div
-            className=" bg-[#2B2B2B] mt-[40px] md:mt-[100px] px-[40px] xmd:px-[120px] py-[30px] md:py-[70px] space-y-[30px]"
+            className=" bg-[#2B2B2B] mt-[40px] md:mt-[100px] px-[15px] xmd:px-[120px] py-[15px] md:py-[70px] space-y-[30px]"
             ref={ref}
         >
             <div className="w-[100%] flex flex-col sm:flex-row max-[500px]:gap-y-[30px] justify-between items-baseline">

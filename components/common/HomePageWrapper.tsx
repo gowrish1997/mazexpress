@@ -75,7 +75,7 @@ const HomePageWrapper = (props: IProp) => {
                     {t("landingPage.Header")}
                 </div>
 
-                <div className="sticky top-0 px-[30px] xmd:px-[150px] bg-[#ffffff] z-30 pb-[10px] ">
+                <div className="sticky top-0 px-[10px] md:px-[30px] xmd:px-[150px] bg-[#ffffff] z-30 pb-[10px] ">
                     <div className=" w-full flex flex-row justify-between items-end h-[80px] text-[14px] text-[#121212] font-[500] leading-[24px] ">
                         <div className="flex flex-row justify-between items-end gap-x-[20px] ">
                             <div className="relative h-[47px] w-[60px] ">
