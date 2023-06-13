@@ -52,7 +52,7 @@ const SidebarModal = (props: IProp) => {
   };
   return (
     <div
-      className="xmd:hidden flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]"
+      className=" xmd:hidden flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] max-[800px]:relative"
       style={
         showOptionModal
           ? {
@@ -77,8 +77,10 @@ const SidebarModal = (props: IProp) => {
       </div>
       {showOptionModal && (
         <div
-          className={`absolute top-[150px] ${
-            locale == "en" ? "left-[65px]" : "right-[68px]"
+          className={`absolute top-0 md:top-[120px] ${
+            locale == "en"
+              ? "left-[35px] md:left-[60px]"
+              : "right-[35px] md:right-[60px]"
           }  w-[200px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] flex flex-col justify-between items-start p-[5px]`}
           style={{
             boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",

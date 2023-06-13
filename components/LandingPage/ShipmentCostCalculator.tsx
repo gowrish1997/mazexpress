@@ -234,7 +234,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
         className="w-full   flex flex-col  justify-start items-center   "
         ref={ref}
       >
-        <div className="w-[95%] flex-type6 xmd:flex-type3 p-[10px] md:p-[70px] flex-wrap space-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[40px] md:mt-[70px] ">
+        <div className="w-[95%] sm:w-[90%] xmd:w-[80%]  flex-type6 min-[900px]:flex-type3 p-[10px] md:p-[70px] flex-wrap gap-x-[30px] gap-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[40px] md:mt-[70px] ">
           <div className="flex-1 space-y-[15px] ">
             <h1 className="text-[20px] sm:text-[24px] text-[#121212] font-[700] leading-[50px] ">
               {" "}

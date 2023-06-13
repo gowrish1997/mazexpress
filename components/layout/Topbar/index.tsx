@@ -14,6 +14,7 @@ import { signOut } from "next-auth/react";
 import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import Link from "next/link";
 import Logo from "../../../public/new_logo_blue.png";
+import New_logo from "@/public/new_logo_blue.png";
 
 const Topbar = () => {
   const router = useRouter();
@@ -77,7 +78,7 @@ const Topbar = () => {
   // }, [user, notificationsIsLoading]);
 
   // if(!notifications) return <div>notifications loading</div>
-console.log(session?.user?.avatar_url)
+  console.log(session?.user?.avatar_url);
   return (
     <>
       <div className="flex flex-col-reverse md:flex-row w-full  min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-30">
@@ -113,29 +114,26 @@ console.log(session?.user?.avatar_url)
           </div>
         </div>
         <div className="w-full md:flex-1 flex flex-row justify-between items-center ">
-          <div className="md:hidden flex flex-row justify-start items-center gap-x-[10px]">
+          <div className="md:hidden flex flex-row justify-start items-center  gap-x-[10px]">
             <Link href={"/"} passHref>
               <div className="flex items-center cursor-pointer mb-[10px] ">
-                <div className="relative w-[60px] h-[60px]  ">
-                  <Image
-                    priority={true}
-                    src={Logo}
-                    fill
-                    style={{ objectFit: "contain" }}
-                    alt="logo"
-                    sizes="(max-width: 768px) 100vw,
-                (max-width: 1200px) 50vw,
-                33vw"
-                  />
+                <div className="flex flex-col justify-start items-start gap-x-[7px] ">
+                  <div className="relative h-[47px] w-[70px] ">
+                    <Image src={New_logo} fill alt="logo" />
+                  </div>
+                  <p className="text-[#143055] text-[16px] font-[800] ">
+                    Express
+                  </p>
                 </div>
                 {/* <h3 className="font-semibold ml-4 font-[500] text-[20px]">Management</h3> */}
               </div>
             </Link>
-
-            <SidebarModal logout={toggleLogoutConfirmModal} />
+            <div className="mb-[22px] ">
+              <SidebarModal logout={toggleLogoutConfirmModal} />
+            </div>
           </div>
           <div className="w-full md:flex-1 flex flex-row-reverse justify-start items-center">
-            <div className="flex min-h-[65px] items-center justify-end">
+            <div className="flex min-h-[65px] items-center justify-end  ">
               <span
                 className="relative top-0.5 px-2 cursor-pointer"
                 onClick={toggleNotificationsHandler}
@@ -163,9 +161,7 @@ console.log(session?.user?.avatar_url)
                 sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 100vw,
                 100vw"
-                onError={(e: SyntheticEvent) =>
-                  console.log("")
-                }
+                onError={(e: SyntheticEvent) => console.log("")}
               />
             </div>
             <p className="hidden md:block font-[600] text-[#525D72] text-[14px] leading-[19px] mx-2">

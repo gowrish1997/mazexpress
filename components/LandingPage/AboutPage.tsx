@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import Icon from "../../public/Icon.png";
 import Profile from "../../public/image.png";
+import Footer from "./Footer";
 
 const About = React.forwardRef<HTMLDivElement>((props, ref) => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div
-      className="w-full flex flex-col  justify-start items-center pb-[70px]"
+      className="w-full flex flex-col  justify-start items-center"
       ref={ref}
     >
       <div className="bg-[#35C6F4] w-full mt-[60px] flex flex-row justify-center ">
@@ -59,6 +60,9 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
             );
           })}
         </div>
+      </div>
+      <div className="w-full" >
+        <Footer  />
       </div>
     </div>
   );
