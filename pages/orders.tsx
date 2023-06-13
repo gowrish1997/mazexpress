@@ -67,7 +67,7 @@ const MyOrders = () => {
     const tableHeaders: string[] = t("indexPage.orderTable.TableHeader", {
         returnObjects: true,
     });
-    console.log(router);
+   
     useEffect(() => {
         let dir = router.locale == "ar" ? "rtl" : "ltr";
         let lang = router.locale == "ar" ? "ar" : "en";

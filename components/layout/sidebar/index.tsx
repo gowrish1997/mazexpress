@@ -22,7 +22,7 @@ const Sidebar = () => {
         returnObjects: true,
     });
     const { data: session, update }: { data: any; update: any } = useSession();
-    console.log("sidebar");
+   
 
     const transalateSidebarContentHandler = () => {
         // console.log(user?.is_admin);
@@ -49,7 +49,7 @@ const Sidebar = () => {
 
     return (
         <>
-            <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] relative w-full ">
+            <div className="text-md bg-[#FFFFFF] border-r border-[#F0F0F0] relative w-full">
                 <Header />
                 <div className="flex flex-col justify-between items-start px-6 pb-[60px] h-[89vh] overflow-y-auto box-border overflow-x-hidden slimScrollBar">
                     <div className=" w-full box-border  flex-col font-semibold pb-2 leading-[140%] flex-1 space-y-[8px]">

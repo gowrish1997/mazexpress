@@ -82,7 +82,7 @@ export default function handler(
       case "PUT":
         // clear file
         f.writeFile(filePath, "", function () {
-          console.log("cleared file");
+       
         });
         // write new lines
         // console.log(Object.keys(req.body))

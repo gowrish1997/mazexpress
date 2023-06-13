@@ -55,7 +55,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                             timeOut: 2000,
                         });
                     } catch (error) {
-                        console.error(error);
+                  
                         createToast({
                             type: "error",
                             title: "Failed",
@@ -87,7 +87,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                             timeOut: 2000,
                         });
                     } catch (error) {
-                        console.error(error);
+                      
                         createToast({
                             type: "error",
                             title: "Failed",
@@ -157,7 +157,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 timeOut: 2000,
                             });
                         } catch (error) {
-                            console.error(error);
+                      
                             createToast({
                                 type: "error",
                                 title: "Failed creating notification",
@@ -188,7 +188,7 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                                 timeOut: 2000,
                             });
                         } catch (error) {
-                            console.error(error);
+                         
                             createToast({
                                 type: "error",
                                 title: "Failed creating notification",
@@ -203,10 +203,10 @@ const LiveOrderOptionModal = forwardRef<HTMLDivElement, IProps>(
                     }
                     break;
                 case "user_base":
-                    console.log("user_base");
+                  
                     break;
                 default:
-                    console.log("default");
+                   
                     break;
             }
         };

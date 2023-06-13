@@ -50,7 +50,7 @@ export const authOptions = {
     //         return token;
     //     },
     //     jwt({ token, trigger, session }) {
-    //         console.log(session);
+    //        
     //         if (trigger === "update" && session?.name) {
     //             // Note, that `session` can be any arbitrary object, remember to validate it!
     //             token = session;

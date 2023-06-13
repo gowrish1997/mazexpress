@@ -32,7 +32,7 @@ const tableHeaders = [
 ];
 
 const Intransit = () => {
-    console.log("callign intranist");
+   
     const router = useRouter();
     const { searchKey } = React.useContext(SearchKeyContext) as any;
     const [itemsPerPage, setItemPerPage] = useState(25);
@@ -77,7 +77,7 @@ const Intransit = () => {
         setSort(value);
     };
     const selectOrderHandler = (value: string, type: string) => {
-        console.log(value);
+     
         selectOrder(
             value,
             type,
@@ -149,7 +149,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
     const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
     // const { pathname } = ctx.req.url;
-    console.log(session);
+ 
     if (!session) {
         return {
             redirect: {

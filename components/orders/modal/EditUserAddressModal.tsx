@@ -105,7 +105,7 @@ const EditUserAddressModal = (props: IProp) => {
                     body: JSON.stringify(address),
                 }
             );
-            console.log(addressResult);
+         
 
             if (addressResult.ok) {
                 // set default if checked

@@ -95,7 +95,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
     const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
     // const { pathname } = ctx.req.url;
-    console.log(session);
+  
     if (!session) {
         return {
             redirect: {

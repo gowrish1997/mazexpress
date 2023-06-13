@@ -86,7 +86,7 @@ export class AuthManager {
           this.white_list_users = this.white_list_users.map((el) => {
             if (el.id === response.data.data[0].id) {
               // alter
-              console.log("in map");
+
               const newone: IWhiteListedUser = {
                 ...el,
                 ...response.data.data[0],
@@ -151,7 +151,6 @@ export class AuthManager {
         )
         .then((response) => {
           // add user to whitelist
-          console.log(response);
 
           if (response.data.data.length > 0) {
             const whitelist_id = nanoid();
@@ -242,7 +241,7 @@ export class AuthManager {
         )
         .then((response) => {
           // removes from global whitelist
-          console.log(response);
+
           this.white_list_users = this.white_list_users.filter(
             (el) => el.whitelist_id !== id
           );

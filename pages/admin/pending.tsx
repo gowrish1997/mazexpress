@@ -144,7 +144,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     // console.log("redders", ctx.req.cookies);
     const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
 
-    console.log(session);
+
     if (!session) {
         return {
             redirect: {

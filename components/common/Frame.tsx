@@ -36,7 +36,7 @@ const Frame = (props: IFrameProps) => {
                     router.pathname == "/404" ||
                     router.pathname == "/TermsAndCondition"
                 ) && (
-                    <div className="hidden md:block w-[100px]  xmd:w-[250px] lg:w-[400px] xlg:w-[500px] fixed h-screen z-40">
+                    <div className="hidden md:block w-[100px]  xmd:w-[250px] lg:w-[400px] xlg:w-[500px] fixed h-screen z-50">
                         <Sidebar />
                     </div>
                 )}
@@ -58,7 +58,7 @@ const Frame = (props: IFrameProps) => {
                         {props.children}
                     </div>
                 ) : (
-                    <div className={`box-border  flex-1 pb-0 flex flex-col`}>
+                    <div className={`z-0 box-border  flex-1 pb-0 flex flex-col`}>
                         {props.children}
                     </div>
                 )}

@@ -106,7 +106,7 @@ export const bulkActionHandler = async (
             ? new Date(rowFixed?.est_delivery)
             : null;
         let newDeliveryDate = new Date();
-        console.log(newDeliveryDate);
+       
         if (status == "at-warehouse") {
             newDeliveryDate.setDate(newDeliveryDate.getDate() + 7);
         }
@@ -229,7 +229,7 @@ export const singleOrderAction = async (
         ? new Date(rowFixed?.est_delivery)
         : null;
     let newDeliveryDate = new Date();
-    console.log(newDeliveryDate);
+    
     if (status == "at-warehouse") {
         newDeliveryDate.setDate(newDeliveryDate.getDate() + 7);
     }
@@ -245,7 +245,7 @@ export const singleOrderAction = async (
                         : estimateDelivery,
             }),
         });
-        console.log(result0);
+      
     }
 
     if (status == "out-for-delivery") {

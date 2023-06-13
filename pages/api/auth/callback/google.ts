@@ -16,7 +16,7 @@ export default async function handler(
         const user: APIResponse<User> = await fetchJson(
           `/api/users/${payload.email}`
         );
-        console.log(user);
+
         if (user.data && user.data.length > 0) {
           // existing user log them in
           const logged_in = await fetchJson(`/api/auth/login`, {
@@ -45,7 +45,7 @@ export default async function handler(
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ provider: "google", payload: payload }),
           });
-          console.log(newuser)
+
           if (newuser.data && newuser.data.length > 0) {
             // success
             // set Main user here

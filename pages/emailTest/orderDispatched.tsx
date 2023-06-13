@@ -20,7 +20,7 @@ const OrderDispatched = () => {
     axios
       .post("/api/emailTemplate", toList)
       .then((data) => {
-        console.log(data.data.body[0].html);
+       
         // console.log(data.data.body.html);
         // setHtmlCode(data.data.body);
       })

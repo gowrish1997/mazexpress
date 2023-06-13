@@ -14,138 +14,134 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 const NotificationPanel = () => {
-    const router = useRouter();
-    const [showCreateNotificationModal, setShowCreateNotificationModal] =
-        useState<boolean>(false);
+  const router = useRouter();
+  const [showCreateNotificationModal, setShowCreateNotificationModal] =
+    useState<boolean>(false);
 
-    const {
-        notificationSettings,
-        mutateNotificationSettings,
-        notificationSettingsIsLoading,
-    } = useNotificationSettings();
+  const {
+    notificationSettings,
+    mutateNotificationSettings,
+    notificationSettingsIsLoading,
+  } = useNotificationSettings();
 
-    const { locales, locale: activeLocale } = router;
+  const { locales, locale: activeLocale } = router;
 
-    useEffect(() => {
-        // console.log("use efft");
-        router.push(router.asPath, router.asPath, { locale: "en" });
-    }, []);
+  useEffect(() => {
+    // console.log("use efft");
+    router.push(router.asPath, router.asPath, { locale: "en" });
+  }, []);
 
-    const toggle = async (id: string) => {
-        // send put to notification settings
-        if (notificationSettings !== undefined) {
-            let setTo = notificationSettings?.find(
-                (el) => el.id === id
-            )?.is_enabled;
-            if (setTo) {
-                setTo = false;
-            } else {
-                setTo = true;
-            }
-            let facelift = [...notificationSettings];
-            let match = facelift.find((el: NotificationConfig) => el.id === id);
-            // console.log("match", match);
-            if (match !== undefined) {
-                // facelift.find(
-                //   (el) => el.id_notification_config === id
-                // ).is_enabled_notification_config = setTo;
-                // mutateNotificationSettings(facelift, false);
-                await fetchServer(`/api/notification-settings/${id}`, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        is_enabled: setTo,
-                    }),
-                });
-                await mutateNotificationSettings();
-            }
-        }
-    };
-
-    const toggleShowCreateNotificationModal = () => {
-        setShowCreateNotificationModal((prev) => !prev);
-    };
-
-    useEffect(() => {
-        // console.log(notificationSettings);
-    }, [notificationSettings]);
-
-    if (notificationSettingsIsLoading) {
-        return <div>Loading</div>;
+  const toggle = async (id: string) => {
+    // send put to notification settings
+    if (notificationSettings !== undefined) {
+      let setTo = notificationSettings?.find((el) => el.id === id)?.is_enabled;
+      if (setTo) {
+        setTo = false;
+      } else {
+        setTo = true;
+      }
+      let facelift = [...notificationSettings];
+      let match = facelift.find((el: NotificationConfig) => el.id === id);
+      // console.log("match", match);
+      if (match !== undefined) {
+        // facelift.find(
+        //   (el) => el.id_notification_config === id
+        // ).is_enabled_notification_config = setTo;
+        // mutateNotificationSettings(facelift, false);
+        await fetchServer(`/api/notification-settings/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            is_enabled: setTo,
+          }),
+        });
+        await mutateNotificationSettings();
+      }
     }
+  };
 
-    return (
-        <AdminPageWrapper>
-            <PageHeader
-                content="Notification Panel"
-                title="Notification Panel | MazExpress Admin"
-            />
-            <div className="w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap">
-                {notificationSettings &&
-                    notificationSettings.length > 0 &&
-                    notificationSettings.map((el: NotificationConfig) => {
-                        return (
-                            <ConfigCard data={el} toggle={toggle} key={el.id} />
-                        );
-                    })}
-            </div>
-            <div>
-                <button
-                    className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
-                    onClick={toggleShowCreateNotificationModal}
-                >
-                    Create notification
-                </button>
-            </div>
-            {showCreateNotificationModal && (
-                <CreateNotificationModal
-                    type="notification"
-                    show={showCreateNotificationModal}
-                    close={toggleShowCreateNotificationModal}
-                    // update={() => new Promise((resolve, reject) => {})}
-                />
-            )}
-        </AdminPageWrapper>
-    );
+  const toggleShowCreateNotificationModal = () => {
+    setShowCreateNotificationModal((prev) => !prev);
+  };
+
+  useEffect(() => {
+    // console.log(notificationSettings);
+  }, [notificationSettings]);
+
+  if (notificationSettingsIsLoading) {
+    return <div>Loading</div>;
+  }
+
+  return (
+    <AdminPageWrapper>
+      <PageHeader
+        content="Notification Panel"
+        title="Notification Panel | MazExpress Admin"
+      />
+      <div className="w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap">
+        {notificationSettings &&
+          notificationSettings.length > 0 &&
+          notificationSettings.map((el: NotificationConfig) => {
+            return <ConfigCard data={el} toggle={toggle} key={el.id} />;
+          })}
+      </div>
+      <div>
+        <button
+          className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
+          onClick={toggleShowCreateNotificationModal}
+        >
+          Create notification
+        </button>
+      </div>
+      {showCreateNotificationModal && (
+        <CreateNotificationModal
+          type="notification"
+          show={showCreateNotificationModal}
+          close={toggleShowCreateNotificationModal}
+          // update={() => new Promise((resolve, reject) => {})}
+        />
+      )}
+    </AdminPageWrapper>
+  );
 };
 
 export default NotificationPanel;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
-    // const { pathname } = ctx.req.url;
-    console.log(session);
-    if (!session) {
-        return {
-            redirect: {
-                destination: `/auth/gate?mode=1`,
-                permanent: false,
-            },
-        };
-    }
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
+  // const { pathname } = ctx.req.url;
 
-    if (ctx.locale == "ar" && ((session as any)?.user as any).is_admin) {
-        return {
-            redirect: {
-                destination: `${ctx.resolvedUrl}`,
-                permanent: false,
-            },
-        };
-    }
-    if (!((session as any)?.user as any).is_admin) {
-        return {
-            redirect: {
-                destination: `/`,
-                permanent: false,
-            },
-        };
-    }
+  if (!session) {
     return {
-        props: {
-            ...(await serverSideTranslations(ctx.locale, ["common"])),
-        },
+      redirect: {
+        destination: `/auth/gate?mode=1`,
+        permanent: false,
+      },
     };
+  }
+
+  if (ctx.locale == "ar" && ((session as any)?.user as any).is_admin) {
+    return {
+      redirect: {
+        destination: `${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    };
+  }
+  if (!((session as any)?.user as any).is_admin) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
+    },
+  };
 }

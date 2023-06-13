@@ -32,7 +32,7 @@ const RegisterSample = () => {
         axios
             .post("/api/emailTemplate", toList)
             .then((data) => {
-                console.log(data.data.body[1].html);
+            
                 // console.log(data.data.body.html);
                 // setHtmlCode(data.data.body);
             })

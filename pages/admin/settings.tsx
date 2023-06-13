@@ -140,7 +140,7 @@ const Settings = () => {
             | "is_notifications_enabled"
         > & { newPassword: string }
     > = async (data) => {
-        console.log("settings submission", data);
+   
         let picked: Pick<
             User,
             | "first_name"
@@ -551,7 +551,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
     const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
     // const { pathname } = ctx.req.url;
-    console.log(session);
+
     if (!session) {
         return {
             redirect: {

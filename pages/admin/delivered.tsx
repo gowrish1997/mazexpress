@@ -16,107 +16,105 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 const tableHeaders = [
-    "Customer",
-    "MAZ Tracking ID",
-    "Store Link",
-    "Reference ID",
-    "Created Date",
-    "Delivered",
-    "Status",
+  "Customer",
+  "MAZ Tracking ID",
+  "Store Link",
+  "Reference ID",
+  "Created Date",
+  "Delivered",
+  "Status",
 ];
 
 const DeliveredOrders = () => {
-    const router = useRouter();
-    const { searchKey } = React.useContext(SearchKeyContext) as any;
-    const [itemsPerPage, setItemPerPage] = useState(25);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [sort, setSort] = useState("desc");
-    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-        Date | string
-    >("");
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        search: searchKey,
-        per_page: itemsPerPage,
-        page: currentPage,
-        date: getDateInDBFormat(createdDateFilterKey as Date),
-        status: ["delivered"],
-        sort: sort,
-    });
+  const router = useRouter();
+  const { searchKey } = React.useContext(SearchKeyContext) as any;
+  const [itemsPerPage, setItemPerPage] = useState(25);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [sort, setSort] = useState("desc");
+  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+    Date | string
+  >("");
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    search: searchKey,
+    per_page: itemsPerPage,
+    page: currentPage,
+    date: getDateInDBFormat(createdDateFilterKey as Date),
+    status: ["delivered"],
+    sort: sort,
+  });
 
-    const { locales, locale: activeLocale } = router;
+  const { locales, locale: activeLocale } = router;
 
-    // useEffect(() => {
-    //   console.log("use efft");
-    //   router.push(router.asPath, router.asPath, { locale: "en" });
-    // }, []);
+  // useEffect(() => {
+  //   console.log("use efft");
+  //   router.push(router.asPath, router.asPath, { locale: "en" });
+  // }, []);
 
-    const [selectedOrder, setSelectedOrder] = useState<string[]>();
+  const [selectedOrder, setSelectedOrder] = useState<string[]>();
 
-    const currentPageHandler = (value: number) => {
-        setCurrentPage(value);
-    };
-    const itemPerPageHandler = useCallback((value: string | number) => {
-        setCurrentPage(0);
-        setItemPerPage(value as number);
-    }, []);
+  const currentPageHandler = (value: number) => {
+    setCurrentPage(value);
+  };
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
+    setItemPerPage(value as number);
+  }, []);
 
-    const filterByCreatedDate = (value: Date | string) => {
-        setCreatedDateFilterKey(value);
-    };
-    const sortHandler = (value) => {
-        setSort(value);
-    };
-    // const selectOrderHandler = (value: string, type: string) => {
-    //     selectOrder(value, type, setSelectedOrder);
-    // };
+  const filterByCreatedDate = (value: Date | string) => {
+    setCreatedDateFilterKey(value);
+  };
+  const sortHandler = (value) => {
+    setSort(value);
+  };
+  // const selectOrderHandler = (value: string, type: string) => {
+  //     selectOrder(value, type, setSelectedOrder);
+  // };
 
-    if (ordersIsLoading) {
-        return <LoadingPage />;
-    }
-    if (ordersError) {
-        return <div>some error happened</div>;
-    }
-    return (
-        <AdminPageWrapper>
-            <div>
-                <DeliveredPageHeader
-                    content="Delivered"
-                    allLiveOrders={orders?.data as Order[]}
-                    filterByDate={filterByCreatedDate}
-                    title="Delivered orders | MazExpress Admin"
-                    pageCount={Math.ceil(
-                        (orders?.count as number) / itemsPerPage
-                    )}
-                    itemsPerPage={itemsPerPage}
-                    createdDateFilterKey={createdDateFilterKey}
-                    currentPageHandler={currentPageHandler}
-                    currentPage={currentPage}
-                    itemPerPageHandler={itemPerPageHandler!}
-                    isFilterPresent={searchKey || createdDateFilterKey}
-                    sorting={sortHandler}
-                    sortValue={sort}
-                />
+  if (ordersIsLoading) {
+    return <LoadingPage />;
+  }
+  if (ordersError) {
+    return <div>some error happened</div>;
+  }
+  return (
+    <AdminPageWrapper>
+      <div>
+        <DeliveredPageHeader
+          content="Delivered"
+          allLiveOrders={orders?.data as Order[]}
+          filterByDate={filterByCreatedDate}
+          title="Delivered orders | MazExpress Admin"
+          pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
+          itemsPerPage={itemsPerPage}
+          createdDateFilterKey={createdDateFilterKey}
+          currentPageHandler={currentPageHandler}
+          currentPage={currentPage}
+          itemPerPageHandler={itemPerPageHandler!}
+          isFilterPresent={searchKey || createdDateFilterKey}
+          sorting={sortHandler}
+          sortValue={sort}
+        />
 
-                <div className="flex flex-col justify-between relative flex-1 h-full">
-                    {!orders?.data && !searchKey && !createdDateFilterKey ? (
-                        <BlankPage />
-                    ) : (
-                        <>
-                            <Table
-                                rows={orders?.data as Order[]}
-                                headings={tableHeaders}
-                                type="delivered"
-                                // onSelect={selectOrderHandler}
-                            />
-                        </>
-                    )}
-                </div>
-                {selectedOrder?.length! > 0 && (
-                    <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedOrder?.length} orders are selected`}</div>
-                )}
-            </div>
-        </AdminPageWrapper>
-    );
+        <div className="flex flex-col justify-between relative flex-1 h-full">
+          {!orders?.data && !searchKey && !createdDateFilterKey ? (
+            <BlankPage />
+          ) : (
+            <>
+              <Table
+                rows={orders?.data as Order[]}
+                headings={tableHeaders}
+                type="delivered"
+                // onSelect={selectOrderHandler}
+              />
+            </>
+          )}
+        </div>
+        {selectedOrder?.length! > 0 && (
+          <div className="fixed bottom-0 bg-[#EDF5F9] w-full py-[10px] -ml-[27px] pl-[20px] rounded-[4px] text-[14px] text-[#606060] font-[500] leading-[19.6px]">{`${selectedOrder?.length} orders are selected`}</div>
+        )}
+      </div>
+    </AdminPageWrapper>
+  );
 };
 
 export default DeliveredOrders;
@@ -131,40 +129,40 @@ export default DeliveredOrders;
 //     };
 // }
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
-    // const { pathname } = ctx.req.url;
-    console.log(session);
-    if (!session) {
-        return {
-            redirect: {
-                destination: `/auth/gate?mode=1`,
-                permanent: false,
-            },
-        };
-    }
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
+  // const { pathname } = ctx.req.url;
 
-    if (ctx.locale == "ar" && ((session as any)?.user as any).is_admin) {
-        return {
-            redirect: {
-                destination: `${ctx.resolvedUrl}`,
-                permanent: false,
-            },
-        };
-    }
-    if (!((session as any)?.user as any).is_admin) {
-        return {
-            redirect: {
-                destination: `/`,
-                permanent: false,
-            },
-        };
-    }
+  if (!session) {
     return {
-        props: {
-            ...(await serverSideTranslations(ctx.locale, ["common"])),
-        },
+      redirect: {
+        destination: `/auth/gate?mode=1`,
+        permanent: false,
+      },
     };
+  }
+
+  if (ctx.locale == "ar" && ((session as any)?.user as any).is_admin) {
+    return {
+      redirect: {
+        destination: `${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    };
+  }
+  if (!((session as any)?.user as any).is_admin) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
+    },
+  };
 }

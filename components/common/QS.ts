@@ -23,9 +23,7 @@ export class QS {
 
   public clg(arg?: any) {
     if (arg === "pd") {
-      console.log(Object.getOwnPropertyDescriptors(this));
       return;
     }
-    console.log(this.stringified);
   }
 }

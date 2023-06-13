@@ -94,7 +94,7 @@ const LiveOrders = () => {
     if (ordersError) {
         return <div>some error happened</div>;
     }
-    console.log(orders || !statusFilterKey.includes("all status"));
+    
 
     return (
         <AdminPageWrapper>
@@ -151,7 +151,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
     const session = await getServerSession<any>(ctx.req, ctx.res, authOptions);
     // const { pathname } = ctx.req.url;
-    console.log(session);
+    
     if (!session) {
         return {
             redirect: {

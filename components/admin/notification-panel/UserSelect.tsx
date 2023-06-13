@@ -24,7 +24,7 @@ const UserSelect = (props: IProp) => {
     const triggerRef = useRef(null);
 
     useEffect(() => {
-        console.log("running user effect");
+       
         setFilteredUsers(users?.data as User[]);
     }, [users]);
 
@@ -76,7 +76,7 @@ const UserSelect = (props: IProp) => {
     };
 
     const updateAllHandler = (e: any) => {
-        console.log(users);
+      
         // mark all
         e.stopPropagation();
 

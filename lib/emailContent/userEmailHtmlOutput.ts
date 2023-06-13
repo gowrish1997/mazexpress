@@ -1,48 +1,47 @@
 import mjml2html from "mjml";
 import fetchJson from "../fetchServer";
 {
-    /**
+  /**
 image handler can be used to control the image based to emailType wheterh it is register confirmed or delivered or dispatched according to that we can send image url
 */
 }
 const imageHanlder = (type: string, api?: string) => {
-    let api_point = "";
-    switch (type) {
-        case "email_logo":
-            api_point = "/public/assets/maz_logo.png";
-            break;
+  let api_point = "";
+  switch (type) {
+    case "email_logo":
+      api_point = "/public/assets/maz_logo.png";
+      break;
 
-        case "register":
-            api_point = "/public/assets/register.png";
-            break;
+    case "register":
+      api_point = "/public/assets/register.png";
+      break;
 
-        case "ordered":
-            api_point = "/public/assets/order-placed.png";
-            break;
+    case "ordered":
+      api_point = "/public/assets/order-placed.png";
+      break;
 
-        case "dispatched":
-            api_point = "/public/assets//out-for-delivery.png";
-            break;
-        case "delivered":
-            api_point = "/public/assets/delivered.png";
-            break;
-        case "bill_update":
-            api_point = `/bill/${api}`;
-            break;
-    }
-    console.log(api_point);
-    console.log("https://mazbackend.easydesk.work" + api_point);
-    return "https://mazbackend.easydesk.work" + api_point;
+    case "dispatched":
+      api_point = "/public/assets//out-for-delivery.png";
+      break;
+    case "delivered":
+      api_point = "/public/assets/delivered.png";
+      break;
+    case "bill_update":
+      api_point = `/bill/${api}`;
+      break;
+  }
+
+  return "https://mazbackend.easydesk.work" + api_point;
 };
 export const userMailBody = (
-    type: string,
-    header: string,
-    toName: string,
-    bodyContent: string[],
-    button: string,
-    linkToRedirect: string
+  type: string,
+  header: string,
+  toName: string,
+  bodyContent: string[],
+  button: string,
+  linkToRedirect: string
 ) => {
-    const userHtmlOutput = mjml2html(`
+  const userHtmlOutput = mjml2html(`
         <mjml>
         <mj-head>
         
@@ -69,7 +68,7 @@ export const userMailBody = (
         <mj-section css-class="header">
     <mj-column >
     <mj-image align="left" width="158px" height="44px" src=${imageHanlder(
-        "email_logo"
+      "email_logo"
     )}></mj-image>
     </mj-column>
 
@@ -79,13 +78,13 @@ export const userMailBody = (
     <mj-column>
 
     ${
-        (type == "register" ||
-            type == "ordered" ||
-            type == "dispatched" ||
-            type == "delivered") &&
-        `<mj-image align="left" width="433px" height="282px" src=${imageHanlder(
-            type
-        )}></mj-image>`
+      (type == "register" ||
+        type == "ordered" ||
+        type == "dispatched" ||
+        type == "delivered") &&
+      `<mj-image align="left" width="433px" height="282px" src=${imageHanlder(
+        type
+      )}></mj-image>`
     }
 
     <mj-text  align="left" color="#121A26" font-size="20px" line-height="30px"  >
@@ -97,22 +96,22 @@ export const userMailBody = (
     </mj-text>
 
     ${
-        type == "bill_update" &&
-        `<mj-image align="left" width="433px" height="282px" src=${imageHanlder(
-            "bill_update",
-            linkToRedirect
-        )}></mj-image>`
+      type == "bill_update" &&
+      `<mj-image align="left" width="433px" height="282px" src=${imageHanlder(
+        "bill_update",
+        linkToRedirect
+      )}></mj-image>`
     }
     ${bodyContent.map((data) => {
-        return `<mj-text  align="left" mj-class="content_text" padding-top="20px">
+      return `<mj-text  align="left" mj-class="content_text" padding-top="20px">
     ${data}
     </mj-text>`;
     })}
     ${
-        (type == "register" ||
-            type == "password_changed" ||
-            type == "forgot_password") &&
-        `  <mj-button href=${linkToRedirect}  padding-left="0px" padding-bittom="0px" padding-left="0px" align="left font-family="manRope" background-color="#35C6F4" >${button}</mj-button>`
+      (type == "register" ||
+        type == "password_changed" ||
+        type == "forgot_password") &&
+      `  <mj-button href=${linkToRedirect}  padding-left="0px" padding-bittom="0px" padding-left="0px" align="left font-family="manRope" background-color="#35C6F4" >${button}</mj-button>`
     }
 
     <mj-text  align="left" mj-class="content_text" padding-top="20px">
@@ -159,5 +158,5 @@ export const userMailBody = (
     </mj-body>
         </mjml>
   `);
-    return userHtmlOutput.html;
+  return userHtmlOutput.html;
 };

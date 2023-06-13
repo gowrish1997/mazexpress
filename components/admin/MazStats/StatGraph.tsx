@@ -188,7 +188,7 @@ const StatGraph = () => {
         ],
     };
     useEffect(() => {
-        console.log(selectedYear);
+     
         fetchJson(`/api/users/stats/${selectedYear}`).then((userscount) => {
             set_user_data(userscount.data);
         });
@@ -202,7 +202,7 @@ const StatGraph = () => {
             <div className="absolute top-[10px] right-[10px] ">
                 <SelectYear onChange={setYearHandler} value={selectedYear} />
             </div>
-        </div>
+    </div>
     );
 };
 

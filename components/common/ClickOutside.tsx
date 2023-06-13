@@ -14,9 +14,7 @@ const ClickOutside = (props: IProp) => {
     <div
       ref={wrapperRef}
       className={
-        props.className !== undefined
-          ? props.className + "" + ""
-          : "absolute"
+        props.className !== undefined ? props.className + "" + "" : "absolute"
       }
     >
       {props.children}

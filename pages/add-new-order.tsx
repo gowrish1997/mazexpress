@@ -138,7 +138,7 @@ const AddNewOrder = () => {
         address_id: string | null | undefined;
         order_weight: number | null | undefined;
     }> = async (data) => {
-        console.log(data);
+       
         const toList = [
             {
                 type: "ordered",
@@ -387,7 +387,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         authOptions as any
     );
     // const { pathname } = ctx.req.url;
-    console.log(session);
+   
     if (!session) {
         return {
             redirect: {

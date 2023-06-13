@@ -48,7 +48,7 @@ const TrackOrder = (props: any) => {
     const [packageStatus, setPackageStatus] = useState(0);
 
     useEffect(() => {
-        console.log(tracking);
+     
         if (tracking !== undefined) {
             let sorted = [...(tracking as Tracking[])];
             sorted.sort((a: any, b: any) => a?.stage - b?.stage);
