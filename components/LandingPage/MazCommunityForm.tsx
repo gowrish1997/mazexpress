@@ -96,10 +96,10 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             ref={ref}
         >
             <div className="w-[95%] sm:w-[90%] md:w-[50%] xmd:w-[32%] flex flex-col justify-start items-center gap-y-[15px] ">
-                <h1 className="text-[40px] text-center text-[#18181B] font-[700] leading-[45px] ">
+                <h1 className="w-full text-[27px] text-left text-[#18181B] font-[700] leading-[45px] ">
                     {t("landingPage.communityForm.Title")}
                 </h1>
-                <p className="w-[85%] text-[16px] text-[#525D72] font-[500] leading-[25px] text-center ">
+                <p className="w-[100%] text-[16px] text-[#525D72] font-[500] leading-[25px] text-left ">
                     {t("landingPage.communityForm.Description")}
                 </p>
                 <form

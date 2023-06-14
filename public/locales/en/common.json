@@ -205,7 +205,7 @@
       }
     },
     "communityForm": {
-      "Title": "Join ⚡️ MAZ community",
+      "Title": "Contact us  if you have any query's",
       "Description": "Drop off and pick up packages from a location that’s open when you need it.",
       "form": {
         "InputField": ["Email", "Mobile number", "Message"],

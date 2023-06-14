@@ -93,7 +93,11 @@ const Index = () => {
             <div className="w-full">
               <div className=" bg-[#35C6F4] mt-[20px] relative flex justify-center py-[60px]  ">
                 <div className="w-[95%] sm:w-[90%] xmd:w-[80%]">
-                  <div className="w-[60%] aspect-[1/0.7] absolute min-[1600px]:top-[2%] min-[1300px]:top-[7%]  min-[1100px]:top-[10%] xmd:top-[11%] table_md:top-[15%] md:top-[15%]  sm:top-[17%] add_md:top-[7%] right-0">
+                  <div
+                    className={`w-[60%] aspect-[1/0.7] absolute min-[1600px]:top-[2%] min-[1300px]:top-[7%]   xmd:top-[11%] table_md:top-[15%] md:top-[15%]  sm:top-[17%] add_md:top-[7%] ${
+                      router.locale == "en" ? "right-0" : "left-0"
+                    } `}
+                  >
                     <Image
                       src={PaperPlane}
                       fill
@@ -111,10 +115,10 @@ const Index = () => {
                           <Image src={New_logo_white} fill alt="document" />
                         </div>
                         <p className="text-[#143055] text-[27px] add_sm:text-[40px] font-[800] -mb-[11px] add_sm:-mb-[14px] ">
-                        Express
-                      </p>
+                          Express
+                        </p>
                       </div>
-                     
+
                       <p className="text-left text-[14px] add_sm:text-[16px] table_md:text-[18px]  text-[#121212] font-[700] add_sm:leading-[22px] leading-[18px] table_md:leading-[25px]  mt-[15px]  ">
                         {t("landingPage.welcome.Caption")}
                       </p>
