@@ -94,7 +94,7 @@ const Index = () => {
               <div className=" bg-[#35C6F4] mt-[20px] relative flex justify-center py-[60px]  ">
                 <div className="w-[95%] sm:w-[90%] xmd:w-[80%]">
                   <div
-                    className={`w-[60%] aspect-[1/0.7] absolute min-[1600px]:top-[2%] min-[1300px]:top-[7%]   xmd:top-[11%] table_md:top-[15%] md:top-[15%]  sm:top-[17%] add_md:top-[7%] ${
+                    className={`w-[60%] aspect-[1/0.7] absolute min-[1600px]:top-[2%] min-[1300px]:top-[7%]   xmd:top-[11%] table_md:top-[15%] md:top-[15%]  sm:top-[17%] add_md:top-[10%] ${
                       router.locale == "en" ? "right-0" : "left-0"
                     } `}
                   >

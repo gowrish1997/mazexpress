@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import MazLogo from "@/public/email_logo.png";
 import New_logo from "@/public/new_logo_blue.png";
 import LogoutConfirmModal from "./LogoutConfirmModal";
+import AuthIcon from "@/public/auth_icon.png";
 
 interface IProp {
   type: string;
@@ -83,7 +84,9 @@ const HomePageWrapper = (props: IProp) => {
                 <div className="relative h-[47px] w-[60px] ">
                   <Image src={New_logo} fill alt="logo" />
                 </div>
-                <p className="text-[#143055] text-[26px] font-[800] ">Express</p>
+                <p className="text-[#143055] text-[26px] font-[800] ">
+                  Express
+                </p>
               </div>
 
               <div className="table_md:hidden relative ">
@@ -337,14 +340,25 @@ const HomePageWrapper = (props: IProp) => {
                 <LanguageSwitcher />
               </div>
             ) : (
-              <div className="flex flexx-row justify-start items-center gap-x-[5px] sm:gap-x-[20px] text-[10px] sm:text-[16px]  table_md:-mb-[12px] ">
-                <Link href={"/auth/gate?mode=0"}>{auth[1]}</Link>
+              <div className="flex flexx-row justify-start items-center gap-x-[8px] sm:gap-x-[20px] text-[10px] sm:text-[16px]  table_md:-mb-[12px] ">
+                <Link
+                  href={"/auth/gate?mode=0"}
+                  className="hidden add_sm:block "
+                >
+                  {auth[1]}
+                </Link>
                 <Link
                   href={"/auth/gate?mode=1"}
-                  className="bg-[#35C6F4] text-[#FFFFFF] rounded-[15px] px-[15px] py-[5px]"
+                  className="bg-[#35C6F4] text-[#FFFFFF] rounded-[15px] px-[15px] py-[5px] hidden add_sm:block "
                 >
                   {auth[0]}
                 </Link>
+                <div
+                  className="relative h-[18px] w-[18px] add_sm:hidden cursor-pointer"
+                  onClick={() => router.push("/auth/gate?mode=1")}
+                >
+                  <Image src={AuthIcon} fill alt="logo" />
+                </div>
 
                 <LanguageSwitcher />
               </div>
