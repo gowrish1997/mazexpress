@@ -30,9 +30,12 @@ const Expertize = () => {
             {t("landingPage.expertize.Description")}
           </p> */}
             <div className="flex flex-row justify-start items-start flex-wrap gap-x-[15px] gap-y-[15px] ">
-              {ExpertizeContent.map((data) => {
+              {ExpertizeContent.map((data, index) => {
                 return (
-                  <div className="w-[220px] flex flex-row justify-start items-start gap-x-[10px]  ">
+                  <div
+                    className="w-[220px] flex flex-row justify-start items-start gap-x-[10px] "
+                    key={index}
+                  >
                     <div className="h-[24px] w-[24px] relative">
                       <Image
                         src={Icon}
