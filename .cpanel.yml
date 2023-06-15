@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/d1dzqivdvgg9/public_html
+    - export DEPLOYPATH=/home/d1dzqivdvgg9/public_html/mazexpress
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp style.css $DEPLOYPATH
