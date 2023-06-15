@@ -126,9 +126,12 @@ const OurCustomer = React.forwardRef<HTMLDivElement>((props, ref) => {
             Our customers choose us
           </h1>
           <div className="w-full flex flex-row justify-center items-center gap-x-[10px] sm:gap-x-[40px] ">
-            {content.map((data) => {
+            {content.map((data, index) => {
               return (
-                <div className="flex flex-col justify-start items-center gap-y-[6px] sm:gap-y-[10px] ">
+                <div
+                  key={index}
+                  className="flex flex-col justify-start items-center gap-y-[6px] sm:gap-y-[10px] "
+                >
                   <p className="text-[26px] add_sm:text-[45px] xmd:text-[60px] text-[#FFFFFF] leading-[37px] add_sm:leading-[56px] xmd:leading-[72px] font-[800]">
                     {data.value}
                   </p>
