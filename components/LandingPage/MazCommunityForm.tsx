@@ -97,12 +97,12 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
       className="flex flex-col justify-start items-center mt-[40px] md:mt-[100px] "
       ref={ref}
     >
-      <div className="w-[95%] sm:w-[90%] xmd:w-[80%]  flex flex-col-reverse justify-start items-start min-[900px]:flex-type3 gap-x-[30px] rounded-[8px] ">
-        <div className="w-full min-[900px]:flex-1 h-full rounded-[16px]">
-          <h1 className="w-full text-[23px] text-left text-[#18181B] font-[700] leading-[45px] ">
+      <div className="w-[95%] sm:w-[90%] xmd:w-[80%]  flex flex-col-reverse justify-start items-start min-[800px]:flex-type10 gap-x-[30px] gap-y-[15px] rounded-[8px] ">
+        <div className="w-full min-[800px]:flex-1 h-full rounded-[16px]">
+          <h1 className="w-full text-[20px] table_md:text-[23px] text-left text-[#18181B] font-[700]  leading-[30px] mb-[5px] ">
             {t("landingPage.communityForm.Title")}
           </h1>
-          <p className="w-[100%] text-[16px] text-[#525D72] font-[500] leading-[25px] text-left ">
+          <p className="w-[100%] text-[16px] text-[#525D72] font-[500] leading-[18px] min-[900px]:leading-[25px] text-left mb-[5px]">
             {t("landingPage.communityForm.Description")}
           </p>
           <form
@@ -177,7 +177,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             </button>
           </form>
         </div>
-        <div className="relative w-[100%] max-[900px]:aspect-[1/0.5]  min-[900px]:flex-1 min-[900px]:h-[450px]  ">
+        <div className="relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[460px]  ">
           <Image src={Map} fill alt="logo" />
         </div>
       </div>
