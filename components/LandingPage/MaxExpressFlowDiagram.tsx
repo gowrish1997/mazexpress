@@ -18,7 +18,7 @@ const MaxExpressFlowDiagram = () => {
   });
 
   return (
-    <div className="w-full flex flex-row justify-start items-start mt-[60px] add_sm:mt-[70px] table_md:mt-[80px] z-10 ">
+    <div className="w-[100%] min-[900px]:w-[60%] flex flex-row justify-start items-start mt-[60px] add_sm:mt-[70px] table_md:mt-[80px] z-10 ">
       <div className="w-[100%] flex flex-col sm:flex-row justify-between items-center  sm:items-start gap-x-[10px] table_md:gap-x-[20px] gap-y-[10px] ">
         <div className="w-full flex flex-row sm:flex-col justify-start items-center sm:items-start gap-y-[20px] gap-x-[10px] ">
           <div className="h-[56px] w-[56px] relative">
@@ -35,7 +35,7 @@ const MaxExpressFlowDiagram = () => {
         </div>
         <div className="sm:mt-[20px]">
           <div
-            className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[17px] w-[60px] table_md:w-[83px] relative  ${
+            className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[40px] w-[40px]  relative  ${
               locale == "ar" && "rotate-180"
             }  `}
           >
@@ -62,7 +62,7 @@ const MaxExpressFlowDiagram = () => {
         </div>
         <div className="sm:mt-[20px]">
           <div
-            className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[17px] w-[60px] table_md:w-[83px] relative ${
+            className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[40px] w-[40px] relative ${
               locale == "ar" && "rotate-180"
             }  `}
           >
@@ -89,7 +89,7 @@ const MaxExpressFlowDiagram = () => {
         </div>
         <div className="sm:mt-[20px]">
           <div
-            className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[17px] w-[60px] table_md:w-[83px] relative ${
+            className={`rotate-90 sm:rotate-0 max-[500px]:my-[50px] h-[40px] w-[40px] relative ${
               locale == "ar" && "rotate-180"
             }  `}
           >

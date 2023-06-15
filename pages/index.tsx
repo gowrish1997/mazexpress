@@ -21,6 +21,7 @@ import Image from "next/image";
 import MazLogo from "@/public/Maz_logo.png";
 import Expertize from "@/components/LandingPage/Expertize";
 import New_logo_white from "@/public/new_logo_white.png";
+import OurCustomer from "@/components/LandingPage/OurCustomer";
 
 const Index = () => {
   const router = useRouter();
@@ -94,8 +95,8 @@ const Index = () => {
               <div className=" bg-[#35C6F4] mt-[20px] relative flex justify-center py-[60px]  ">
                 <div className="w-[95%] sm:w-[90%] xmd:w-[80%]">
                   <div
-                    className={`w-[60%] aspect-[1/0.7] absolute min-[1600px]:top-[2%] min-[1300px]:top-[7%]   xmd:top-[11%] table_md:top-[15%] md:top-[15%]  sm:top-[17%] add_md:top-[10%] ${
-                      router.locale == "en" ? "right-0" : "left-0"
+                    className={`w-[55%] aspect-[1/0.8] top-[3%] absolute min-[1600px]:-top-[20%] min-[1300px]:-top-[13%]  xmd:-top-[5%] add_md:-top-[0%] table_md:top-[2%] md:top-[0%]  sm:top-[2%]  ${
+                      router.locale == "en" ? "right-[8%]" : "left-[8%]"
                     } `}
                   >
                     <Image
@@ -119,73 +120,45 @@ const Index = () => {
                         </p>
                       </div>
 
-                      <p className="text-left text-[14px] add_sm:text-[16px] table_md:text-[18px]  text-[#121212] font-[700] add_sm:leading-[22px] leading-[18px] table_md:leading-[25px]  mt-[15px]  ">
+                      <p className="w-[100%] min-[900px]:w-[35%] text-left text-[14px] add_sm:text-[16px] table_md:text-[18px]  text-[#121212] font-[700] add_sm:leading-[22px] leading-[18px] table_md:leading-[25px]  mt-[15px]  ">
                         {t("landingPage.welcome.Caption")}
                       </p>
                     </div>
                   </div>
-
-                  <MaxExpressFlowDiagram />
-                  <div className="w-[100%] add_sm:w-[500px]  bg-[#FFFFFF] rounded-[4px] mt-[70px] py-[20px] sm:py-[40px] px-[20px] ">
-                    <p className=" text-[14px] text-[#000000] font-[400] leading-[24px] mt-[10px] mb-[10px] ">
-                      {t("landingPage.trackOrder.CaptionPart1")}
-                    </p>
-                    <div className="w-full h-[35px] sm:h-[56px] flex flex-row justify-start max-[500px]:items-center max-[500px]:gap-y-[10px] gap-x-[20px]">
-                      <input
-                        className="w-full h-full border-[1px] border-[#8794AD]  px-[10px] rounded-[25px]"
-                        placeholder={
-                          t("landingPage.trackOrder.Placeholder") as string
-                        }
-                        onChange={trackingIdInputHandler}
-                      />
-                      <button
-                        className="h-full bg-[#35C6F4] rounded-[10px] px-[10px] text-[12px] sm:text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
-                        onClick={openPackageTrackingModal}
-                      >
-                        {t("landingPage.trackOrder.SubmitButton")}
-                      </button>
-                    </div>
-                    {trackingIdError && (
-                      <p className="mt-[5px] text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                        {" "}
-                        {t("landingPage.trackOrder.Error")}
+                  <div className="flex flex-col min-[900px]:flex-row justify-start items-start min-[900px]:items-center gap-x-[50px] ">
+                    {" "}
+                    <MaxExpressFlowDiagram />
+                    <div className="max-[500px]:w-[100%] max-[900px]:w-[400px] flex-1 bg-[#FFFFFF] rounded-[4px] mt-[70px] py-[20px] sm:py-[40px] px-[20px] z-20 ">
+                      <p className=" text-[14px] text-[#000000] font-[400] leading-[24px] mt-[10px] mb-[10px] ">
+                        {t("landingPage.trackOrder.CaptionPart1")}
                       </p>
-                    )}
+                      <div className="w-full h-[35px] sm:h-[56px] flex flex-row justify-start max-[500px]:items-center max-[500px]:gap-y-[10px] gap-x-[20px]">
+                        <input
+                          className="w-full h-full border-[1px] border-[#8794AD]  px-[10px] rounded-[25px]"
+                          placeholder={
+                            t("landingPage.trackOrder.Placeholder") as string
+                          }
+                          onChange={trackingIdInputHandler}
+                        />
+                        <button
+                          className="h-full bg-[#35C6F4] rounded-[10px] px-[10px] text-[12px] sm:text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
+                          onClick={openPackageTrackingModal}
+                        >
+                          {t("landingPage.trackOrder.SubmitButton")}
+                        </button>
+                      </div>
+                      {trackingIdError && (
+                        <p className="mt-[5px] text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
+                          {" "}
+                          {t("landingPage.trackOrder.Error")}
+                        </p>
+                      )}
+                    </div>
                   </div>
-
-                  {/* <div
-                  className="flex-type5 mt-[70px] w-[100%]"
-                  ref={trackingSectionRef}
-                >
-                  <div className="w-full md:w-[65%] flex flex-col  sm:flex-row justify-start max-[500px]:items-center max-[500px]:gap-y-[10px] gap-x-[20px]">
-                    <input
-                      className="w-full border-[1px] border-[#8794AD] h-[40px] md:h-[56px] px-[10px] rounded-[25px]"
-                      placeholder={
-                        t("landingPage.trackOrder.Placeholder") as string
-                      }
-                      onChange={trackingIdInputHandler}
-                    />
-                    <button
-                      className=" h-[40px] md:h-[56px] bg-[#35C6F4] w-[140px] rounded-[30px] px-[10px] text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
-                      onClick={openPackageTrackingModal}
-                    >
-                      {t("landingPage.trackOrder.SubmitButton")}
-                    </button>
-                  </div>
-                  {trackingIdError && (
-                    <p className="mt-[5px] text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
-                      {" "}
-                      {t("landingPage.trackOrder.Error")}
-                    </p>
-                  )}
-                  <p className="text-center text-[14px] text-[#000000] font-[400] leading-[24px] mt-[10px] ">
-                    {t("landingPage.trackOrder.CaptionPart1")}
-                  </p>
-                </div> */}
                 </div>
               </div>
               <Expertize />
-
+              <OurCustomer />
               <div id="shipmentCalculatorSection">
                 <ShipmentCostCalculator ref={shipmentCalculatorSectionRef} />
               </div>

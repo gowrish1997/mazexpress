@@ -14,7 +14,7 @@ const Expertize = () => {
   });
   return (
     <div className="w-full   flex flex-row  justify-center items mt-[100px]">
-      <div className="w-[95%] sm:w-[90%] xmd:w-[70%]">
+      <div className="w-[95%] sm:w-[90%] min-[1300px]:w-[60%]">
         <p className="md:hidden  text-[30px] add_sm:text-[35px] xmd:text-[52px] leading-[50px] add_sm:leading-[56px] xmd:leading-[62px] text-[#35C6F4] font-[700]  ">
           {" "}
           {t("landingPage.expertize.Title")}
@@ -25,10 +25,10 @@ const Expertize = () => {
               {" "}
               {t("landingPage.expertize.Title")}
             </p>
-            {/* <p className=" text-[21px] leading-[24px] xmd:leading-[28px] xmd:text-[24px]   text-[#2B2B2B] font-[600]    ">
+            <p className="text-[21px] leading-[24px] xmd:leading-[28px] xmd:text-[27px]   text-[#2B2B2B] font-[600]    ">
             {" "}
             {t("landingPage.expertize.Description")}
-          </p> */}
+          </p>
             <div className="flex flex-row justify-start items-start flex-wrap gap-x-[15px] gap-y-[15px] ">
               {ExpertizeContent.map((data, index) => {
                 return (

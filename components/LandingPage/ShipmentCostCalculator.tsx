@@ -12,6 +12,7 @@ import CusotmDropdown from "./CustomDropdown";
 import ReactHookFormInput from "../common/ReactHookFormInput";
 import Multiply from "../../public/multiply.png";
 import fetchJson from "@/lib/fetchServer";
+import VerticalPlane from "@/public/VerticalPlane.png";
 
 const schema = yup
   .object({
@@ -44,39 +45,7 @@ const schema = yup
           return true;
         }
       ),
-    // length: yup.number().typeError(),
-    // // when("width", {
-    // //     is: (width) => width,
-    // //     then: yup
-    // //         .number()
-    // //         .required(
-    // //             "Length is required when length and widtht are entered"
-    // //         ),
-    // // }),
 
-    // width: yup.number().when("length", {
-    //     is: (length) => length,
-    //     then: yup
-    //         .number()
-    //         .required(
-    //             "Width is required when length and height are entered"
-    //         )
-    //         .typeError(
-    //             "Width is required when length and height are entered"
-    //         ),
-    // }),
-
-    // height: yup.number().when(["length", "width"], {
-    //     is: (width, length) => length || width,
-    //     then: yup
-    //         .number()
-    //         .required(
-    //             "Height is required when length and width are entered"
-    //         )
-    //         .typeError(
-    //             "height is required when length and height are entered"
-    //         ),
-    // }),
     weight: yup
       .mixed()
       .test(
@@ -234,64 +203,22 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
         className="w-full   flex flex-col  justify-start items-center   "
         ref={ref}
       >
-        <div className="w-[95%] sm:w-[90%] xmd:w-[80%]  flex-type6 min-[900px]:flex-type3 p-[10px] md:p-[70px] flex-wrap gap-x-[30px] gap-y-[40px] bg-[#F5F5F5] rounded-[8px] mt-[40px] md:mt-[70px] ">
-          <div className="flex-1 space-y-[15px] ">
-            <h1 className="text-[20px] sm:text-[24px] text-[#121212] font-[700] leading-[50px] ">
-              {" "}
-              {t("landingPage.shipmentCostCalculator.Title")}
-            </h1>
-            <div className="relative h-[290px] w-[280px] sm:w-[334px] ">
-              <Image src={landpageImage} fill alt="logo" />
-            </div>
-            <p
-              className={` w-[90%] text-[16px] text-[#525D72] font-[500] leading-[25.5px]   `}
-            >
-              {t("landingPage.shipmentCostCalculator.Description")}
-            </p>
+        <div className="w-[95%] sm:w-[90%] xmd:w-[80%]  flex-type6 min-[900px]:flex-type3 p-[10px] md:p-[70px] flex-wrap gap-x-[30px] bg-[#ECF3FB] rounded-[8px] mt-[40px] md:mt-[70px] ">
+        <h1 className="min-[900px]:hidden w-full text-[23px] sm:text-[26px] text-left text-[#18181B] font-[700] leading-[35px] mb-[10px] ">
+            {t("landingPage.shipmentCostCalculator.Title")}
+          </h1>
+          <div className="relative w-[100%] max-[900px]:aspect-[1/0.5]  min-[900px]:flex-1 min-[900px]:h-[470px]  ">
+            <Image src={VerticalPlane} fill alt="logo" />
           </div>
-          <div className="flex-1 h-full bg-[#FFFFFF] rounded-[16px] py-[50px] px-[30px] ">
+
+          <div className="flex-1 h-full bg-[#FFFFFF] rounded-[16px] pt-[20px] pb-[50px] px-[30px] ">
+          <h1 className="hidden min-[900px]:block w-full text-[23px] text-left text-[#18181B] font-[700] leading-[45px] mb-[10px] ">
+            {t("landingPage.shipmentCostCalculator.Title")}
+          </h1>
             <form
               className="flex-1 h-full space-y-[20px] "
               onSubmit={handleSubmit(onSubmit)}
             >
-              {/* <CusotmDropdown
-                                label={inputField[0].label}
-                                name="warehouseAddress_address"
-                                type="string"
-                                IconEnabled={false}
-                                register={register("warehouseAddress_address")}
-                                error={
-                                    errors.warehouseAddress_address &&
-                                    (fieldErrors[0] as string)
-                                }
-                                // options={[
-                                //     { value: "gowrish", label: "gowrish" },
-                                //     { value: "gowrish", label: "gowrish" },
-                                // ]}
-                                placeHolder={inputField[0].placeholder}
-                                disabled={true}
-                                value={getValues("warehouseAddress_address")}
-                                setValue={setValue}
-                            />
-                            <CusotmDropdown
-                                label={inputField[1].label}
-                                name="city_name"
-                                type="string"
-                                IconEnabled={false}
-                                register={register("city_name")}
-                                error={
-                                    errors.city_name &&
-                                    (fieldErrors[1] as string)
-                                }
-                                // options={[
-                                //     { value: "gowrish", label: "gowrish" },
-                                //     { value: "gowrish", label: "gowrish" },
-                                // ]}
-                                placeHolder={inputField[1].placeholder}
-                                disabled={true}
-                                value={getValues("city_name")}
-                                setValue={setValue}
-                            /> */}
               <div className={"w-full flex-type6"}>
                 <label
                   htmlFor="Dimensions ( Optional )"
