@@ -70,7 +70,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
           </div>
         </div>
       </div>
-      <div className="w-[95%] sm:w-[90%] xmd:w-[80%] flex flex-row flex-wrap justify-start mt-[60px] add_sm:mt-[65px] xmd:mt-[80px] gap-x-[15px] items-stretch ">
+      <div className="w-[95%] sm:w-[90%] xmd:w-[80%] flex flex-row flex-wrap justify-start mt-[60px] add_sm:mt-[65px] xmd:mt-[80px] gap-x-[15px] gap-y-[15px] items-stretch ">
         {content.map((data, index) => {
           return (
             <div
