@@ -17,6 +17,8 @@ import MazLogo from "@/public/email_logo.png";
 import New_logo from "@/public/new_logo_blue.png";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 import AuthIcon from "@/public/auth_icon.png";
+import MazCommunityForm from "../LandingPage/MazCommunityForm";
+import Footer from "../LandingPage/Footer";
 
 interface IProp {
   type: string;
@@ -372,6 +374,12 @@ const HomePageWrapper = (props: IProp) => {
               supportSectionRef
             )
           : props.render()}
+        <div id="enquirySection">
+          <MazCommunityForm ref={enquirySectionRef} />
+        </div>
+        <div className="w-full" id="supportSection">
+          <Footer />
+        </div>
       </div>
 
       {showLogoutConfirmModal && (

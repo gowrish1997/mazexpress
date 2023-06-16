@@ -75,7 +75,7 @@ const MaxExpressFlowDiagram = () => {
           </div>
         </div>
         <div className="w-full flex flex-row sm:flex-col justify-start items-center sm:items-start gap-y-[20px] gap-x-[10px]">
-          <div className="h-[56px] w-[56px] relative">
+          <div className="h-[56px] w-[56px] relative sm:mt-[10px]">
             <Image
               src={Plane}
               fill

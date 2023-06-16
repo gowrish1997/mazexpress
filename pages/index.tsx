@@ -92,20 +92,14 @@ const Index = () => {
         ) => {
           return (
             <div className="w-full">
-              <div className=" bg-[#35C6F4] mt-[20px] relative flex justify-center py-[60px]  ">
+              <div
+                className=" bg-[#35C6F4] mt-[20px] relative flex justify-center py-[60px] bg-[length:0] min-[600px]:bg-[length:60%_50%] md:bg-[length:60%_60%] min-[900px]:bg-[length:60%_80%] min-[1100px]:bg-[length:60%_100%] bg-[right_top] "
+                style={{
+                  backgroundImage: `url('/paperplane.png')`,
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
                 <div className="w-[95%] sm:w-[90%] xmd:w-[80%]">
-                  <div
-                    className={`w-[55%] aspect-[1/0.8] top-[3%] absolute min-[1600px]:-top-[20%] min-[1300px]:-top-[13%]  xmd:-top-[5%] add_md:-top-[0%] table_md:top-[2%] md:top-[0%]  sm:top-[2%]  ${
-                      router.locale == "en" ? "right-[8%]" : "left-[8%]"
-                    } `}
-                  >
-                    <Image
-                      src={PaperPlane}
-                      fill
-                      style={{ objectFit: "contain" }}
-                      alt="document"
-                    />
-                  </div>
                   <div className="w-[100%] flex flex-row justify-start ">
                     <div className="w-[100%] z-20">
                       {/* <h1 className="text-left text-[36px]  text-[#000000] font-[900] leading-[40px]   ">
@@ -134,7 +128,7 @@ const Index = () => {
                       </p>
                       <div className="w-full h-[35px] sm:h-[56px] flex flex-row justify-start max-[500px]:items-center max-[500px]:gap-y-[10px] gap-x-[20px]">
                         <input
-                          className="w-full h-full border-[1px] border-[#8794AD]  px-[10px] rounded-[25px]"
+                          className="w-full h-full border-[1px] border-[#8794AD]  px-[10px] rounded-[6px]"
                           placeholder={
                             t("landingPage.trackOrder.Placeholder") as string
                           }
@@ -162,12 +156,8 @@ const Index = () => {
               <div id="shipmentCalculatorSection">
                 <ShipmentCostCalculator ref={shipmentCalculatorSectionRef} />
               </div>
-              <div id="enquirySection">
-                <MazCommunityForm ref={enquirySectionRef} />
-              </div>
-              <div id="supportSection">
-                <Footer ref={supportSectionRef} />
-              </div>
+
+            
             </div>
           );
         }}

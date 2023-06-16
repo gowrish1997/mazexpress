@@ -6,10 +6,18 @@ import Location from "../../public/blue_location.png";
 import Vehicle from "../../public/blue_vehicle.png";
 import Warehouse from "../../public/blue_warehouse.png";
 import Ship from "../../public/ship.png";
-import Truck from "../../public/truck.png";
-import Footer from "./Footer";
+import serviceWarehouse from "@/public/serviceWarehouse.png";
+import serviceShip from "@/public/serviceShip.png";
+import serviceSeaship from "@/public/serviceSeaShip.png";
+import serviceOnline from "@/public/ServiceOnine.png";
 
 const pngImages = [Warehouse, Vehicle, Location, Ship];
+const serviceImage = [
+  serviceWarehouse,
+  serviceShip,
+  serviceSeaship,
+  serviceOnline,
+];
 
 const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
   const router = useRouter();
@@ -25,45 +33,152 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div
-      className="w-full bg-[#F9FDFF] mt-[30px] flex flex-col  justify-start items-center pt-[70px] "
+      className="w-full bg-[#F9FDFF] mt-[30px] flex flex-col  justify-start items-center"
       ref={ref}
     >
-      <div className="w-[92%] flex flex-row justify-between items-start  gap-x-[50px]">
-        <div className="hidden min-[1300px]:block relative w-[526px] h-[580px] ">
-          <Image src={Truck} fill alt="truck" />
-        </div>
-        <div className="flex-1">
-          <p className="text-[30px] text-[#121212] font-[500] leading-[50px] ">
-            {t("landingPage.service.Title")}
-          </p>
-          <div className="mt-[20px] flex flex-col justify-start items-start  gap-y-[50px]">
-            {content.map((data, index) => {
-              return (
-                <div
-                  key={index}
-                  className="flex flex-row justify-start items-start gap-[10px] "
-                >
-                  <div className="relative w-[20px] h-[20px] ">
-                    <Image src={pngImages[index]} alt="cloud" fill />
-                  </div>
+      <div
+        className="w-full h-[350px] add_sm:h-[400px] xmd:h-[500px] relative "
+        style={{
+          backgroundImage: `url('/servicePlaneLayer.png'),url('/serviceplane.png')`,
+          backgroundPosition: "center center,center center,",
+          backgroundRepeat: "no-repeat,no-repeat",
 
-                  <p className="flex-1 -mt-[5px] text-[16px] text-[ #18181B] font-[400] leading-[28px]  ">
-                    <span className="text-[18px] text-[#090914] font-[600] leading-[28px]">
-                      {data.Title}
-                    </span>
-                    {data.Content}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+          backgroundSize: "cover,cover",
+        }}
+      >
+        {" "}
+        <div className="absolute top-[25%]  flex flex-col justify-start items-center gap-y-[20px] ">
+          <h1
+            className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#FFFFFF] font-[700] "
+            style={{ fontFamily: "manRope" }}
+          >
+            {t("landingPage.service.Title")}
+          </h1>
+          <p className="text-[16px] add_sm:text-[18px] xmd:text-[22px] leading-[24px] add_sm:leading-[28px] xmd:leading-[30px] text-[#FFFFFF] font-[400] w-[80%] add_sm:w-[70%] xmd:w-[55%] text-center">
+            {t("landingPage.service.Description")}
+          </p>
         </div>
       </div>
-      <div className="w-full">
-        <Footer />
+      <div className="w-[95%] sm:w-[80%] table_md:w-[60%] flex flex-col justify-start items-center  gap-y-[20px] mt-[50px]">
+        <h1 className="text-[26px] add_sm:text-[32px] xmd:text-[40px] leading-[20px] add_sm:leading-[24px] xmd:leading-[49px] text-[#1B1F29] font-[700]">
+          {t("landingPage.service.Caption")}
+        </h1>
+        <p className="text-[16px] add_sm:text-[18px] xmd:text-[18px] leading-[20px] add_sm:leading-[24px] xmd:leading-[28px] text-[#1B1F29] font-[400]  text-center">
+          {t("landingPage.service.Desc")}
+        </p>
+      </div>
+      <div className="w-[95%] table_md:w-[75%] min-[1400px]:w-[60%] flex flex-col justify-start items-center mt-[50px] gap-y-[30px] add_sm:gap-y-[60px]">
+        {content.map((data, index) => {
+          return (
+            <div
+              className={`w-full flex ${
+                index % 2 == 0
+                  ? "flex-col add_sm:flex-row "
+                  : "flex-col add_sm:flex-row-reverse"
+              } justify-center items-start gap-x-[30px] gap-y-[10px] `}
+              key={index}
+            >
+              <div className="add_sm:hidden">
+                <div
+                  className={` flex flex-row  items-center justify-start gap-x-[5px]  `}
+                >
+                  <div className="w-[22px] aspect-square relative ">
+                    <Image
+                      src={pngImages[index]}
+                      fill
+                      style={{ objectFit: "fill" }}
+                      alt="document"
+                    />
+                  </div>
+                  <p className="text-[13px] md:text-[16px] xmd:text-[18px] leading-[21px] md:leading-[22px] xmd:leading-[28px] font-[600] text-[#475569] ">
+                    {" "}
+                    {data.Title}
+                  </p>
+                </div>
+                <h1 className="text-[20px] md:text-[24px] xmd:text-[30px] leading-[33px] md:leading-[36px]  xmd:leading-[45px] font-[700] text-[#090914] ">
+                  {" "}
+                  {data.Title}
+                </h1>
+              </div>
+              <div className="w-[100%] aspect-[1/0.5] add_sm:w-[40%]  min-[1600px]:w-[35%] add_sm:aspect-square relative ">
+                <Image
+                  src={serviceImage[index]}
+                  fill
+                  style={{ objectFit: "fill" }}
+                  alt="document"
+                />
+              </div>
+              <div
+                className={`w-[100%] add_sm:w-[50%] min-[1700px]:w-[40%] flex flex-col justify-start ${
+                  index % 2 == 0 ? "items-start" : "items-end"
+                } `}
+              >
+                <div className="hidden add_sm:block ">
+                  <div
+                    className={`flex flex-row  items-center justify-start gap-x-[5px]  `}
+                  >
+                    <div className="w-[22px] aspect-square relative ">
+                      <Image
+                        src={pngImages[index]}
+                        fill
+                        style={{ objectFit: "fill" }}
+                        alt="document"
+                      />
+                    </div>
+                    <p className="text-[13px] md:text-[16px] xmd:text-[18px] leading-[21px] md:leading-[22px] xmd:leading-[28px] font-[600] text-[#475569] ">
+                      {" "}
+                      {data.Title}
+                    </p>
+                  </div>
+                  <h1 className="text-[20px] md:text-[24px] xmd:text-[30px] leading-[33px] md:leading-[36px]  xmd:leading-[45px] font-[700] text-[#090914] ">
+                    {" "}
+                    {data.Title}
+                  </h1>
+                </div>
+                <div
+                  className={`text-[13px] md:text-[18px] xmd:text-[20px] leading-[21px] md:leading-[22px] xmd:leading-[28px] font-[400] text-[#606060] text-left ${
+                    index % 2 == 0 ? "add_sm:text-left" : "add_sm:text-right"
+                  }`}
+                >
+                  {data.Content}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 });
 Service.displayName = "Service";
 export default Service;
+
+// <div className="hidden min-[1300px]:block relative w-[526px] h-[580px] ">
+// <Image src={Truck} fill alt="truck" />
+// </div>
+// <div className="flex-1">
+// <p className="text-[30px] text-[#121212] font-[500] leading-[50px] ">
+//   {t("landingPage.service.Title")}
+// </p>
+// <div className="mt-[20px] flex flex-col justify-start items-start  gap-y-[50px]">
+//   {content.map((data, index) => {
+//     return (
+//       <div
+//         key={index}
+//         className="flex flex-row justify-start items-start gap-[10px] "
+//       >
+//         <div className="relative w-[20px] h-[20px] ">
+//           <Image src={pngImages[index]} alt="cloud" fill />
+//         </div>
+
+//         <p className="flex-1 -mt-[5px] text-[16px] text-[ #18181B] font-[400] leading-[28px]  ">
+//           <span className="text-[18px] text-[#090914] font-[600] leading-[28px]">
+//             {data.Title}
+//           </span>
+//           {data.Content}
+//         </p>
+//       </div>
+//     );
+//   })}
+// </div>
+// </div>

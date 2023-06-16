@@ -1,68 +1,104 @@
+import AboutPlane from "@/public/aboutPlane.png";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
-import Icon from "../../public/Icon.png";
-import Profile from "../../public/image.png";
 import Footer from "./Footer";
+import AboutShip from "@/public/aboutShip.png";
+import AbputGoods from "@/public/Aboutgoods.png";
+import AboutShipPlane from "@/public/ShipPlane.png";
+import AboutTruck from "@/public/AboutTruck.png";
+import AboutCustomer from "@/public/AboutCusotmer.png";
+
+const aboutImage = [AbputGoods, AboutShipPlane, AboutTruck, AboutCustomer];
 
 const About = React.forwardRef<HTMLDivElement>((props, ref) => {
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
 
-  var content: string[] = t("landingPage.about.Content", {
-    returnObjects: true,
-  });
+  var content: { Title: string; Desc: string }[] = t(
+    "landingPage.about.Content",
+    {
+      returnObjects: true,
+    }
+  );
 
   return (
     <div
-      className="w-full flex flex-col  justify-start items-center"
+      className="w-full flex flex-col  justify-center items-center"
       ref={ref}
     >
-      <div className="bg-[#35C6F4] w-full mt-[60px] flex flex-row justify-center ">
-        <div className="box-border w-[93%] flex flex-col-reverse add_sm:flex-row justify-between items-center  gap-x-[15px] relative px-[10px] py-[25px] ">
-          <div className="box-border flex flex-col justify-start add_sm:w-[65%] add_sm:py-[60px] ">
-            <p className="text-[12px] md:text-[14px] xmd:text-[16px] mt-[20px] text-[#000000] font-[500] leading-[25.5px]">
-              {t("landingPage.about.Title")}
-            </p>
-            <p className="text-[20px] md:text-[30px] xmd:text-[38px] text-[#2B2B2B]  font-[600] md:font-[600] xmd:font-[700] text-left leading-[23.5px] md:leading-[34px] xmd:leading-[45px] ">
-              {t("landingPage.about.Description")}
-            </p>
-          </div>
-          <div className="w-[35%]">
-            <div className="relative h-[150px] w-[150px] md:w-[250px] md:h-[250px] xmd:h-[300px] xmd:w-[300px] ">
-              <Image src={Profile} fill alt="imag" />
-            </div>
+      <div className="w-full h-[350px] add_sm:h-[400px] xmd:h-[500px] relative ">
+        <div className="h-full w-full relative">
+          <Image
+            src={AboutPlane}
+            fill
+            style={{ objectFit: "fill" }}
+            alt="docfument"
+          />
+        </div>
+        <div className="absolute top-[25%]  flex flex-col justify-start items-center gap-y-[20px] ">
+          <h1 className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#090914] font-[700]">
+            {t("landingPage.about.Title")}
+          </h1>
+          <p className="text-[16px] add_sm:text-[18px] xmd:text-[22px] leading-[24px] add_sm:leading-[28px] xmd:leading-[30px] text-[#606060] font-[600] w-[80%] add_sm:w-[70%] xmd:w-[55%] text-center">
+            {t("landingPage.about.Description")}
+          </p>
+        </div>
+      </div>
+      <h1 className="w-[95%] sm:hidden text-[20px] add_sm:text-[27px] xmd:text-[45px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] text-[#090914] font-[700] mt-[60px] ">
+        {t("landingPage.about.Caption")}
+      </h1>
+      <div className="w-[95%] sm:w-[90%] xmd:w-[80%] flex flex-col-reverse sm:flex-row  justify-between items-center  sm:mt-[60px] xmd:mt-[80px] ">
+        <div className="w-[100%] md:w-[45%] flex flex-col justify-start items-start gap-y-[10px] ">
+          <h1 className="hidden sm:block text-[22px] add_sm:text-[27px] xmd:text-[45px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] text-[#090914] font-[700]">
+            {t("landingPage.about.Caption")}
+          </h1>
+          <p className=" w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] leading-[20px] add_sm:leading-[24px] xmd:leading-[30px] text-[#606060] font-[600] text-left">
+            {t("landingPage.about.Desc")}
+          </p>
+        </div>
+        <div className="w-[100%] sm:w-[50%] min-[900px]:w-[45%] ">
+          <div className="w-[100%] aspect-[1/0.5] sm:aspect-[1/1] relative">
+            <Image
+              src={AboutShip}
+              fill
+              style={{ objectFit: "fill" }}
+              alt="docfument"
+            />
           </div>
         </div>
       </div>
-      {/* <div className="w-[100%] flex flex-row justify-between items-center  gap-x-[15px] relative">
-                <div className="absolute h-[350px] w-[112px] top-0 left-[4%]">
-                    <Image src={Line} fill alt="line" />
-                </div>
-            </div> */}
-      <div className="w-full bg-[#F9FDFF] flex flex-row justify-center ">
-        <div className="w-[93%] mt-[70px] flex flex-row justify-start items-start flex-wrap  gap-x-[120px] ">
-          {content.map((data, index) => {
-            return (
-              <div
-                key={index}
-                className="w-[100%] xmd:w-[43%]  mt-[40px] flex flex-row justify-start items-start gap-x-[5px] "
-              >
-                <div className="relative h-[22px] w-[22px] ">
-                  <Image src={Icon} fill alt="imag" />
-                </div>
-                <p className="flex-1 text-[18px] text-[#090914] leading-[27px] font-[500] -mt-[5px] font-manRope">
-                  {data}
+      <div className="w-[95%] sm:w-[90%] xmd:w-[80%] flex flex-row flex-wrap justify-start mt-[60px] add_sm:mt-[65px] xmd:mt-[80px] gap-x-[15px] items-stretch ">
+        {content.map((data, index) => {
+          return (
+            <div
+              className="border-[1px] border-[#DCDCDC] rounded-[8px] w-[100%] sm:w-[48%] table_md:flex-1 p-[15px] flex flex-col  justify-between gap-y-[20px] "
+              key={index}
+            >
+              <div className="flex flex-col gap-y-[10px]">
+                {" "}
+                <p className="text-[15px] add_sm:text-[17px] xmd:text-[20px] leading-[20px] add_sm:leading-[23px] xmd:leading-[27px] text-[#090914] font-[600]">
+                  {data.Title}
+                </p>
+                <p className="text-[13px] add_sm:text-[14px] xmd:text-[16px] leading-[16px] add_sm:leading-[19px] xmd:leading-[22px] text-[#474747] font-[500]">
+                  {data.Desc}
                 </p>
               </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="w-full" >
-        <Footer  />
+
+              <div className="w-full aspect-[1/0.4] sm:aspect-[1/0.7] min-[700px]:aspect-[1/0.5]  table_md:aspect-square relative">
+                <Image
+                  src={aboutImage[index]}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  alt="docfument"
+                  className="rounded-[10px] "
+                />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

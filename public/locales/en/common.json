@@ -129,32 +129,48 @@
     "about": {
       "Title": "About MAZ express",
       "Description": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",
+      "Caption": "MAZ Express Logistics Around the Libya",
+      "Desc": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",
       "Content": [
-        "We specialize in providing warehousing services in Istanbul for customers who shop online from Turkish retailers. Our warehouse is equipped with security measures to ensure that your goods are safe and secure. We have a team of experienced professionals who manage our warehouse operations and ensure that your goods are handled with care and precision.",
-        "We understand that every customer has unique shipping needs, which is why we offer a wide range of transportation solutions tailored to meet your specific requirements. Whether you need air, sea, or land transportation services, we have the expertise and resources to get your goods where they need to go.",
-        "So, if you're looking for a reliable logistics partner to help you with your shipping needs, look no further than our company. Contact us today to learn more about our services and how we can help you streamline your shipping operations.",
-        "Once your orders are placed, we collect them from the retailers and prepare them for shipment to Libya. Our transportation services are designed to be fast, reliable, and cost-effective. We work with a network of trusted carriers to ensure that your goods arrive at their destination on time and in perfect condition.",
-        "Our commitment to customer satisfaction is what sets us apart from other logistics providers. We are dedicated to providing exceptional customer service and communication throughout the entire shipping process. Our team is always available to answer your questions and address any concerns you may have."
+        {
+          "Title": "warehousing services",
+          "Desc": "We specialize in providing warehousing services in Istanbul for customers who shop online from Turkish retailers. Our warehouse is equipped with security measures to ensure that your goods are safe and secure."
+        },
+        {
+          "Title": "Shipping ",
+          "Desc": "Once your orders are placed, we collect them from the retailers and prepare them for shipment to Libya. Our transportation services are designed to be fast, reliable, and cost-effective."
+        },
+        {
+          "Title": "Customer-First Logistics",
+          "Desc": "Our commitment to customer satisfaction is what sets us apart from other logistics providers. We are dedicated to providing exceptional customer service and communication throughout the entire shipping process. "
+        },
+        {
+          "Title": "Transportation",
+          "Desc": "We understand that every customer has unique shipping needs, which is why we offer a wide range of transportation solutions tailored to meet your specific requirements. "
+        }
       ]
     },
     "service": {
-      "Title": "Services we offer",
+      "Title": "MAZ express",
+      "Description": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",
+      "Caption": "Services we offer",
+      "Desc": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",
       "content": [
         {
-          "Title": "Warehousing:",
-          "Content": " Our warehousing service enables customers to shop from Turkish online retailers and conveniently send their shipment to our ITurkish-based warehouse. We provide secure, storage and handle the consolidation and shipment of your orders to Libya by air or sea, as per your preferences."
+          "Title": "Warehousing",
+          "Content": " We specialize in providing warehousing services in Istanbul for customers who shop online from Turkish retailers. Our warehouse is equipped with security measures to ensure that your goods are safe and secure. We have a team of experienced professionals who manage our warehouse operations and ensure that your goods are handled with care and precision."
         },
         {
-          "Title": "Shipping:",
-          "Content": " We offer a wide range of shipping containers to ensure that we can accommodate any shipping need."
+          "Title": "Shipping",
+          "Content": "We understand that every customer has unique shipping needs, which is why we offer a wide range of transportation solutions tailored to meet your specific requirements. Whether you need air, sea, or land transportation services, we have the expertise and resources to get your goods where they need to go.."
         },
         {
-          "Title": "Sea shipping:",
-          "Content": " Our sea shipping service is reliable and efficient, with regular departures and arrivals to and from Libya. We handle all the necessary logistics, including customs clearance and documentation."
+          "Title": "Sea shipping",
+          "Content": " So, if you're looking for a reliable logistics partner to help you with your shipping needs, look no further than our company. Contact us today to learn more about our services and how we can help you streamline your shipping operations."
         },
         {
-          "Title": "Online tracking:",
-          "Content": " Our online tracking system allows clients to monitor the status of their shipment from pickup to delivery, providing real-time updates and peace of mind."
+          "Title": "Online tracking",
+          "Content": " Once your orders are placed, we collect them from the retailers and prepare them for shipment to Libya. Our transportation services are designed to be fast, reliable, and cost-effective. We work with a network of trusted carriers to ensure that your goods arrive at their destination on time and in perfect condition."
         }
       ]
     },
@@ -176,6 +192,25 @@
         "Shipping",
         "100+ Employees",
         "One-stop logistics solution"
+      ]
+    },
+    "ourCustomer": {
+      "content": [
+        {
+          "value": "500+",
+          "title": "Global customers",
+          "desc": "We’ve helped over 4,000 amazing global companies."
+        },
+        {
+          "value": "100+",
+          "title": "Success rate",
+          "desc": "Our customers have reported ~100% Satisfaction rate."
+        },
+        {
+          "value": "2k+",
+          "title": "Orders delivered",
+          "desc": "Our app has been downloaded over 10k times."
+        }
       ]
     },
     "shipmentCostCalculator": {

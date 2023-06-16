@@ -203,18 +203,18 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
         className="w-full   flex flex-col  justify-start items-center   "
         ref={ref}
       >
-        <div className="w-[95%] sm:w-[90%] xmd:w-[80%]  flex-type6 min-[900px]:flex-type3 p-[10px] md:p-[70px] flex-wrap gap-x-[30px] bg-[#ECF3FB] rounded-[8px] mt-[40px] md:mt-[70px] ">
-        <h1 className="min-[900px]:hidden w-full text-[23px] sm:text-[26px] text-left text-[#18181B] font-[700] leading-[35px] mb-[10px] ">
+        <div className="w-[95%] sm:w-[90%] xmd:w-[80%] min-[1650px]:w-[60%]  flex-type6 min-[900px]:flex-type3 flex-wrap bg-[#ECF3FB] rounded-[8px] mt-[40px] md:mt-[70px] max-[600px]:p-[15px] max-[900px]:p-[40px] ">
+          <h1 className="min-[900px]:hidden w-full text-[23px] sm:text-[26px] text-left text-[#18181B] font-[700] leading-[30px] table_md:leading-[35px] mb-[10px] ">
             {t("landingPage.shipmentCostCalculator.Title")}
           </h1>
-          <div className="relative w-[100%] max-[900px]:aspect-[1/0.5]  min-[900px]:flex-1 min-[900px]:h-[470px]  ">
+          <div className="relative w-[100%] max-[900px]:aspect-[1/0.5]  min-[900px]:flex-1 min-[900px]:h-[570px]  ">
             <Image src={VerticalPlane} fill alt="logo" />
           </div>
 
-          <div className="flex-1 h-full bg-[#FFFFFF] rounded-[16px] pt-[20px] pb-[50px] px-[30px] ">
-          <h1 className="hidden min-[900px]:block w-full text-[23px] text-left text-[#18181B] font-[700] leading-[45px] mb-[10px] ">
-            {t("landingPage.shipmentCostCalculator.Title")}
-          </h1>
+          <div className="w-full flex-1 h-full bg-[#FFFFFF] rounded-[16px] pt-[20px] pb-[50px] px-[30px] min-[900px]:mx-[60px] ">
+            <h1 className="hidden min-[900px]:block w-full text-[23px] text-left text-[#18181B] font-[700] leading-[30px] table_md:leading-[35px] mb-[10px] ">
+              {t("landingPage.shipmentCostCalculator.Title")}
+            </h1>
             <form
               className="flex-1 h-full space-y-[20px] "
               onSubmit={handleSubmit(onSubmit)}

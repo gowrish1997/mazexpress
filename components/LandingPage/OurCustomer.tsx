@@ -1,112 +1,17 @@
-import { user_enquiry } from "@/lib/emailContent/bodyContent";
-import fetchJson from "@/lib/fetchServer";
-import { sentMail } from "@/lib/sentMail";
-import { createToast } from "@/lib/toasts";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as yup from "yup";
-import Customer from "../../public/customer.png";
-
-const content = [
-  {
-    value: "500+",
-    title: "Global customers",
-    desc: "We’ve helped over 4,000 amazing global companies.",
-  },
-  {
-    value: "100+",
-    title: "Success rate",
-    desc: "Our customers have reported ~100% Satisfaction rate.",
-  },
-  {
-    value: "2k+",
-    title: "Orders delivered",
-    desc: "Our app has been downloaded over 10k times.",
-  },
-];
-
-const schema = yup
-  .object({
-    email: yup.string().required(),
-    message: yup.string().required(),
-    mobile: yup
-      .number()
-      .test(
-        "len",
-        "Must be exactly 9 digits",
-        (val) => val?.toString().length === 9
-      )
-      .required()
-      .typeError("Mobile number is required field"),
-  })
-  .required();
 
 const OurCustomer = React.forwardRef<HTMLDivElement>((props, ref) => {
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
-
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    control,
-    setValue,
-    reset,
-    formState: { errors },
-  } = useForm<any>({
-    resolver: yupResolver(schema),
-  });
-
-  var inputFieldLabel: string[] = t(
-    "landingPage.communityForm.form.InputField",
-    { returnObjects: true }
-  );
-  var fieldErrors: string[] = t("landingPage.communityForm.form.Errors", {
-    returnObjects: true,
-  });
-
-  const onSubmit: SubmitHandler<any> = async (data) => {
-    // console.log(data);
-    const toList = [
-      {
-        type: "enquiry",
-        toType: "admin",
-        header: "New enquiry ✨",
-        toName: "admin",
-        bodyContent: user_enquiry(data.message),
-        userName: "",
-        userProfile: "",
-        userContactNumber: data.mobile,
-        userEmail: data?.email,
-      },
-    ];
-
-    try {
-      const result0 = await fetchJson(`/api/contact-form`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      createToast({
-        type: "success",
-        title: "success",
-        message: `Enquiry submitted successfully`,
-        timeOut: 2000,
-      });
-      try {
-        sentMail(toList);
-      } catch (error) {
-        console.error(error);
-      }
-    } catch (error) {
-      console.error(error);
+  var content: { value: string; title: string; desc: string }[] = t(
+    "landingPage.ourCustomer.content",
+    {
+      returnObjects: true,
     }
-  };
+  );
 
   return (
     <div
