@@ -120,13 +120,13 @@ const HomePageWrapper = (props: IProp) => {
                     <div
                       className={`absolute top-[0px] ${
                         locale == "en" ? "left-[36px]" : "right-[36px]"
-                      }  w-[200px] bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-10 flex flex-col justify-between items-start p-[5px]`}
+                      } w-[130px]  bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-10 flex flex-col justify-between items-start p-[5px]`}
                       style={{
                         boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
                       }}
                       // ref={ref}
                     >
-                      <ul className=" w-full text-[#121212] text-[14px] font-[400] leading-[39px]  ">
+                      <ul className=" w-full text-[#121212] text-[10px] font-[400] leading-[20px]  ">
                         {/* <li
                        className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
                        onClick={() =>
