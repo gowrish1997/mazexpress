@@ -82,16 +82,7 @@ const HomePageWrapper = (props: IProp) => {
         <div className="sticky -top-[3px] px-[10px] md:px-[30px] xmd:px-[150px] bg-[#ffffff] z-30 py-[20px] ">
           <div className=" w-full flex flex-row justify-between items-end  text-[14px] text-[#121212] font-[500] leading-[24px] ">
             <div className="flex flex-row justify-between items-end gap-x-[20px] ">
-              <div className="flex flex-row justify-start items-end gap-x-[7px] ">
-                <div className="relative h-[47px] w-[60px] ">
-                  <Image src={New_logo} fill alt="logo" />
-                </div>
-                <p className="text-[#143055] text-[26px] font-[800] ">
-                  Express
-                </p>
-              </div>
-
-              <div className="table_md:hidden relative ">
+            <div className="table_md:hidden relative ">
                 <div
                   className="flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]"
                   style={
@@ -224,6 +215,16 @@ const HomePageWrapper = (props: IProp) => {
                   )}
                 </div>
               </div>
+              <div className="flex flex-row justify-start items-end gap-x-[7px] ">
+                <div className="relative h-[47px] w-[60px] ">
+                  <Image src={New_logo} fill alt="logo" />
+                </div>
+                <p className="text-[#143055] text-[26px] font-[800] ">
+                  Express
+                </p>
+              </div>
+
+              
 
               <ul className=" flex-type3 gap-x-[20px] hidden table_md:flex -mb-[5px]  ">
                 {/* <li
