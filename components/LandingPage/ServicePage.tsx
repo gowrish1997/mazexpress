@@ -113,7 +113,9 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                   index % 2 == 0 ? "items-start" : "items-end"
                 } `}
               >
-                <div className="hidden add_sm:block ">
+                <div className={`hidden add_sm:flex flex-col justify-start ${
+                  index % 2 == 0 ? "items-start" : "items-end"
+                }`}>
                   <div
                     className={`flex flex-row  items-center justify-start gap-x-[5px]  `}
                   >
