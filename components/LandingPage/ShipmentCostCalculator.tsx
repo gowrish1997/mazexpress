@@ -207,14 +207,17 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
           <h1 className="min-[900px]:hidden w-full text-[23px] sm:text-[26px] text-left text-[#18181B] font-[700] leading-[30px] table_md:leading-[35px] mb-[10px] ">
             {t("landingPage.shipmentCostCalculator.Title")}
           </h1>
-          <div className="relative w-[100%] max-[900px]:aspect-[1/0.5]  min-[900px]:flex-1 min-[900px]:h-[570px]  ">
+          <div className="relative w-[100%] max-[900px]:aspect-[1/0.5]  min-[900px]:flex-1 min-[900px]:h-[670px]  ">
             <Image src={VerticalPlane} fill alt="logo" />
           </div>
 
-          <div className="w-full flex-1 h-full bg-[#FFFFFF] rounded-[16px] pt-[20px] pb-[50px] px-[30px] min-[900px]:mx-[60px] ">
+          <div className="w-full flex-1 h-full bg-[#FFFFFF]  min-[900px]:rounded-[16px] min-[900px]:py-[70px] py-[20px] px-[30px] min-[900px]:mx-[60px] space-y-[10px] min-[900px]:space-y-[25px] ">
             <h1 className="hidden min-[900px]:block w-full text-[23px] text-left text-[#18181B] font-[700] leading-[30px] table_md:leading-[35px] mb-[10px] ">
               {t("landingPage.shipmentCostCalculator.Title")}
             </h1>
+            <p className="mb-[10px] ">
+              {t("landingPage.shipmentCostCalculator.Description")}
+            </p>
             <form
               className="flex-1 h-full space-y-[20px] "
               onSubmit={handleSubmit(onSubmit)}
@@ -286,13 +289,37 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                 </div>
               </div>
 
-              <button
+              {/* <button
                 type="submit"
                 className="w-full h-[46px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
               >
                 {t("landingPage.shipmentCostCalculator.form.SubmitButton")}
-              </button>
-              <div
+              </button> */}
+
+              <div className="w-full text-[14px] sm:text-[20px] text-[#121212] font-[700] leading-[50px]  mt-[20px] flex flex-row justify-between items-center ">
+                <button
+                  type="submit"
+                  className=" h-[46px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[20px] "
+                >
+                  {t("landingPage.shipmentCostCalculator.form.SubmitButton")}
+                </button>
+                {cost ? (
+                  <p className="capitalize text-[20px] text-[#000000] mb-[-10px] leading-[16px]">
+                    {cost.toFixed(2)} $
+                  </p>
+                ) : (
+                  <p className="capitalize text-[20px] text-[#000000] mb-[-10px] leading-[16px]">
+                    00$
+                  </p>
+                )}
+              </div>
+              {message && (
+                <p className="text-[12px] text-[#f02849] leading-[16px]">
+                  {message}
+                </p>
+              )}
+
+              {/* <div
                 className="w-full text-center text-[14px] text-[#35C6F4] font-[500] leading-[19px] cursor-pointer "
                 onClick={() => {
                   reset();
@@ -301,22 +328,8 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                 }}
               >
                 {t("landingPage.shipmentCostCalculator.form.ResetButton")}
-              </div>
+              </div> */}
             </form>
-            <div>
-              <p className="text-[14px] sm:text-[20px] text-[#121212] font-[700] leading-[50px] mb-[5px] mt-[20px] ">
-                Shipment cost:
-                {cost ? (
-                  <span className="text-[#35C6F4] ml-[5px] ">
-                    {cost.toFixed(2)} $
-                  </span>
-                ) : (
-                  <span className="capitalize ml-[5px] text-[14px] text-[#f02849] mb-[-10px] leading-[16px]">
-                    {message}
-                  </span>
-                )}
-              </p>
-            </div>
           </div>
         </div>
       </div>

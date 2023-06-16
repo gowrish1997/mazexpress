@@ -119,7 +119,7 @@
     },
 
     "trackOrder": {
-      "Placeholder": "Tracking Number",
+      "Placeholder": "Enter MAZ ID No. here",
       "Error": "Please enter valid maz tracking ID",
       "SubmitButton": "Submit",
       "CaptionPart1": "Track your shipment",

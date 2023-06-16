@@ -5,23 +5,20 @@
 
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 
-import Footer from "@/components/LandingPage/Footer";
-import MazCommunityForm from "@/components/LandingPage/MazCommunityForm";
+import Expertize from "@/components/LandingPage/Expertize";
+import MaxExpressFlowDiagram from "@/components/LandingPage/MaxExpressFlowDiagram";
+import OurCustomer from "@/components/LandingPage/OurCustomer";
 import PackageTrackingModal from "@/components/LandingPage/PackageTrackingModal";
 import ShipmentCostCalculator from "@/components/LandingPage/ShipmentCostCalculator";
 import HomePageWrapper from "@/components/common/HomePageWrapper";
 import fetchServer from "@/lib/fetchServer";
 import { useScrollspy } from "@/lib/hooks/useScrollSpy";
+import New_logo_white from "@/public/new_logo_white.png";
 import { i18n, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next/router";
-import MaxExpressFlowDiagram from "@/components/LandingPage/MaxExpressFlowDiagram";
-import PaperPlane from "@/public/paperplane.png";
 import Image from "next/image";
-import MazLogo from "@/public/Maz_logo.png";
-import Expertize from "@/components/LandingPage/Expertize";
-import New_logo_white from "@/public/new_logo_white.png";
-import OurCustomer from "@/components/LandingPage/OurCustomer";
+import { useRouter } from "next/router";
+import HomepageNavbar from "@/components/common/HomepageNavbar";
 
 const Index = () => {
   const router = useRouter();
@@ -93,13 +90,22 @@ const Index = () => {
           return (
             <div className="w-full">
               <div
-                className=" bg-[#35C6F4] mt-[20px] relative flex justify-center py-[60px] bg-[length:0] min-[600px]:bg-[length:60%_50%] md:bg-[length:60%_60%] min-[900px]:bg-[length:60%_80%] min-[1100px]:bg-[length:60%_100%] bg-[right_top] "
+                className=" bg-[#35C6F4] relative flex flex-col justify-center items-center bg-[length:0] min-[600px]:bg-[length:45%_40%] md:bg-[length:50%_50%] min-[900px]:bg-[length:50%_65%]  min-[1200px]:bg-[length:50%_80%] md:bg-[right_10%_top_100px] bg-[right_0%_top_120px] pb-[100px] "
                 style={{
                   backgroundImage: `url('/paperplane.png')`,
                   backgroundRepeat: "no-repeat",
                 }}
               >
-                <div className="w-[95%] sm:w-[90%] xmd:w-[80%]">
+                <div className="w-full">
+                  <HomepageNavbar
+                    color="#000000"
+                    shipmentCalculatorSectionRef={shipmentCalculatorSectionRef}
+                    enquirySectionRef={enquirySectionRef}
+                    supportSectionRef={supportSectionRef}
+                  />
+                </div>
+
+                <div className="w-[95%] sm:w-[90%] xmd:w-[80%] mt-[80px]">
                   <div className="w-[100%] flex flex-row justify-start ">
                     <div className="w-[100%] z-20">
                       {/* <h1 className="text-left text-[36px]  text-[#000000] font-[900] leading-[40px]   ">
@@ -123,7 +129,7 @@ const Index = () => {
                     {" "}
                     <MaxExpressFlowDiagram />
                     <div className="max-[500px]:w-[100%] max-[900px]:w-[400px] flex-1 bg-[#FFFFFF] rounded-[4px] mt-[70px] py-[20px] sm:py-[40px] px-[20px] z-20 ">
-                      <p className=" text-[14px] text-[#000000] font-[400] leading-[24px] mt-[10px] mb-[10px] ">
+                      <p className=" text-[14px] text-[#000000] font-[600] leading-[24px] mt-[10px] mb-[10px] ">
                         {t("landingPage.trackOrder.CaptionPart1")}
                       </p>
                       <div className="w-full h-[35px] sm:h-[56px] flex flex-row justify-start max-[500px]:items-center max-[500px]:gap-y-[10px] gap-x-[20px]">
@@ -156,8 +162,6 @@ const Index = () => {
               <div id="shipmentCalculatorSection">
                 <ShipmentCostCalculator ref={shipmentCalculatorSectionRef} />
               </div>
-
-            
             </div>
           );
         }}

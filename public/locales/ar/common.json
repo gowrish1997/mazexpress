@@ -109,7 +109,7 @@
       "Auth": ["تسجيل الدخول", "تسجيل الدخول", "تسجيل خروج"]
     },
     "trackOrder": {
-      "Placeholder": "عدد تتبع",
+      "Placeholder": "أدخل رقم معرف MAZ هنا",
       "Error": "الرجاء إدخال معرف تتبع maz صالح",
       "SubmitButton": "يُقدِّم",
       "CaptionPart1": "تتبع شحنتك",

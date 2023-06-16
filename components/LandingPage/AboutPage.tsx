@@ -9,6 +9,7 @@ import AbputGoods from "@/public/Aboutgoods.png";
 import AboutShipPlane from "@/public/ShipPlane.png";
 import AboutTruck from "@/public/AboutTruck.png";
 import AboutCustomer from "@/public/AboutCusotmer.png";
+import HomepageNavbar from "../common/HomepageNavbar";
 
 const aboutImage = [AbputGoods, AboutShipPlane, AboutTruck, AboutCustomer];
 
@@ -29,15 +30,20 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
       className="w-full flex flex-col  justify-center items-center"
       ref={ref}
     >
-      <div className="w-full h-[350px] add_sm:h-[400px] xmd:h-[500px] relative ">
-        <div className="h-full w-full relative">
-          <Image
-            src={AboutPlane}
-            fill
-            style={{ objectFit: "fill" }}
-            alt="docfument"
-          />
+      <div
+        className="w-full h-[350px] add_sm:h-[400px] xmd:h-[500px] relative "
+        style={{
+          backgroundImage: `url('/aboutPlane.png')`,
+          backgroundPosition: "center center,",
+          backgroundRepeat: "no-repeat",
+
+          backgroundSize: "cover",
+        }}
+      >
+        <div className=" ">
+          <HomepageNavbar color="#121212" />
         </div>
+
         <div className="absolute top-[25%]  flex flex-col justify-start items-center gap-y-[20px] ">
           <h1 className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#090914] font-[700]">
             {t("landingPage.about.Title")}

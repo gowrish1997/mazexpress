@@ -10,6 +10,7 @@ import serviceWarehouse from "@/public/serviceWarehouse.png";
 import serviceShip from "@/public/serviceShip.png";
 import serviceSeaship from "@/public/serviceSeaShip.png";
 import serviceOnline from "@/public/ServiceOnine.png";
+import HomepageNavbar from "../common/HomepageNavbar";
 
 const pngImages = [Warehouse, Vehicle, Location, Ship];
 const serviceImage = [
@@ -33,7 +34,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div
-      className="w-full bg-[#F9FDFF] mt-[30px] flex flex-col  justify-start items-center"
+      className="w-full bg-[#F9FDFF]  flex flex-col  justify-start items-center"
       ref={ref}
     >
       <div
@@ -46,7 +47,9 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
           backgroundSize: "cover,cover",
         }}
       >
-        {" "}
+        <div className="">
+          <HomepageNavbar color="#FFFFFF" />
+        </div>
         <div className="absolute top-[25%]  flex flex-col justify-start items-center gap-y-[20px] ">
           <h1
             className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#FFFFFF] font-[700] "
@@ -113,9 +116,11 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                   index % 2 == 0 ? "items-start" : "items-end"
                 } `}
               >
-                <div className={`hidden add_sm:flex flex-col justify-start ${
-                  index % 2 == 0 ? "items-start" : "items-end"
-                }`}>
+                <div
+                  className={`hidden add_sm:flex flex-col justify-start ${
+                    index % 2 == 0 ? "items-start" : "items-end"
+                  }`}
+                >
                   <div
                     className={`flex flex-row  items-center justify-start gap-x-[5px]  `}
                   >

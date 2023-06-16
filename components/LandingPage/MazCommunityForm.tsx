@@ -106,10 +106,25 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             {t("landingPage.communityForm.Description")}
           </p>
           <form
-            className=" w-full rounded-[16px]  space-y-[20px]"
+            className=" w-full rounded-[16px]  space-y-[20px] community_form"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Controller
+            <div className=" flex flex-col justify-start items-start rounded-[5px]  ">
+              <input
+                id="email"
+                type="string"
+                {...register("email")}
+                className="community_form w-full h-[55px] lg:h-[55px] xlg:h-[70px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5] px-[10px] "
+                placeholder={inputFieldLabel[0]}
+              />
+              {errors.email && (
+                <p className="text-[12px] text-[#f02849] leading-[16px] mt-[5px] ">
+                  {fieldErrors[0]}
+                </p>
+              )}
+            </div>
+
+            {/* <Controller
               name="email"
               control={control}
               render={({ field: { onChange, value } }) => (
@@ -122,8 +137,22 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
                   className="rounded-l-[4px] rounded-r-none"
                 />
               )}
-            />
-            <Controller
+            /> */}
+            <div className=" flex flex-col justify-start items-start rounded-[5px]  ">
+              <input
+                id="mobile"
+                type="number"
+                {...register("mobile")}
+                className="community_form w-full h-[55px] lg:h-[55px] xlg:h-[70px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5] px-[10px] "
+                placeholder={inputFieldLabel[1]}
+              />
+              {errors.mobile && (
+                <p className="text-[12px] text-[#f02849] leading-[16px] mt-[5px] ">
+                  {fieldErrors[1]}
+                </p>
+              )}
+            </div>
+            {/* <Controller
               name="mobile"
               control={control}
               render={({ field: { onChange, value } }) => (
@@ -136,31 +165,33 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
                   className="rounded-l-[4px] rounded-r-none"
                 />
               )}
-            />
+            /> */}
 
             <div className={"w-full flex-type6"}>
-              <label
+              {/* <label
                 htmlFor="Message"
                 className="text-[14px] text-[#707070] font-[400] leading-[19px] mb-[5px] "
               >
                 {inputFieldLabel[2]}
-              </label>
+              </label> */}
               <div
                 className={
-                  "flex-type1 w-full border-[1px] border-[#BBC2CF] rounded-[4px] box-border h-[100px] relative" +
+                  "flex flex-col justify-start items-start w-full border-[1px]  rounded-[4px] box-border h-[220px] relative bg-[#F5F5F5] py-[15px] px-[15px] " +
                   " "
                 }
-                style={
-                  {
-                    // borderColor: errors.user_message?.message ? "#f02849" : "",
-                  }
-                }
               >
+                <p className="text-[15px] ">Message</p>
                 <textarea
-                  className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] resize-none p-[5px]"
+                  className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] resize-none p-[10px] bg-transparent"
                   {...register("message")}
                   name="message"
                 ></textarea>
+                <button
+                  type="submit"
+                  className="px-[20px] h-[50px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
+                >
+                  {t("landingPage.communityForm.form.SubmitButton")}
+                </button>
               </div>
               {errors.message?.message && (
                 <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
@@ -168,17 +199,10 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
                 </p>
               )}
             </div>
-
-            <button
-              type="submit"
-              className="w-full h-[46px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
-            >
-              {t("landingPage.communityForm.form.SubmitButton")}
-            </button>
           </form>
         </div>
         <div className="relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[460px]  ">
-          <Image src={Map} fill alt="logo" />
+          <Image src={Map} alt="logo" fill />
         </div>
       </div>
     </div>

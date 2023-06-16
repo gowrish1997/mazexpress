@@ -52,7 +52,7 @@ const SidebarModal = (props: IProp) => {
   };
   return (
     <div
-      className=" xmd:hidden flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] max-[800px]:relative"
+      className=" xmd:hidden flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[#121212] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF] max-[800px]:relative z-[20]"
       style={
         showOptionModal
           ? {
