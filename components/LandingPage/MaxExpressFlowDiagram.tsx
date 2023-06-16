@@ -35,7 +35,7 @@ const MaxExpressFlowDiagram = () => {
         </div>
         <div className="sm:mt-[20px]">
           <div
-            className={`rotate-90 sm:rotate-0 max-[500px]:my-[10px] h-[40px] w-[40px]  relative  ${
+            className={`rotate-90 sm:rotate-0 max-[500px]:my-[10px] h-[40px] w-[40px] sm:ml-[30px]  relative  ${
               locale == "ar" && "rotate-180"
             }  `}
           >
@@ -62,7 +62,7 @@ const MaxExpressFlowDiagram = () => {
         </div>
         <div className="sm:mt-[20px]">
           <div
-            className={`rotate-90 sm:rotate-0 max-[500px]:my-[10px] h-[40px] w-[40px] relative ${
+            className={`rotate-90 sm:rotate-0 max-[500px]:my-[10px] h-[40px] w-[40px] relative sm:ml-[30px] ${
               locale == "ar" && "rotate-180"
             }  `}
           >
@@ -89,7 +89,7 @@ const MaxExpressFlowDiagram = () => {
         </div>
         <div className="sm:mt-[20px]">
           <div
-            className={`rotate-90 sm:rotate-0 max-[500px]:my-[10px] h-[40px] w-[40px] relative ${
+            className={`rotate-90 sm:rotate-0 max-[500px]:my-[10px] h-[40px] w-[40px] relative sm:ml-[30px] ${
               locale == "ar" && "rotate-180"
             }  `}
           >
