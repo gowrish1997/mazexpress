@@ -55,19 +55,20 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     // console.log(data);
-    const toList = [
-      {
-        type: "enquiry",
-        toType: "admin",
-        header: "New enquiry ✨",
-        toName: "admin",
-        bodyContent: user_enquiry(data.message),
-        userName: "",
-        userProfile: "",
-        userContactNumber: data.mobile,
-        userEmail: data?.email,
-      },
-    ];
+    // const toList = [
+    //   {
+    //     type: "enquiry",
+    //     toType: "admin",
+    //     header: "New enquiry ✨",
+    //     toName: "admin",
+    //     bodyContent: user_enquiry(data.message),
+    //     userName: "",
+    //     userProfile: "",
+    //     userContactNumber: data.mobile,
+    //     userEmail: data?.email,
+    //     subject: "New enquiry from user",
+    //   },
+    // ];
 
     try {
       const result0 = await fetchJson(`/api/contact-form`, {
@@ -83,7 +84,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
         timeOut: 2000,
       });
       try {
-        sentMail(toList);
+        // sentMail(toList);
       } catch (error) {
         console.error(error);
       }
@@ -106,9 +107,11 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
           >
             {t("landingPage.communityForm.Title")}
           </h1>
-          <p className={` text-[16px] text-[#525D72] font-[500] leading-[18px] min-[900px]:leading-[25px] ${
+          <p
+            className={` text-[16px] text-[#525D72] font-[500] leading-[18px] min-[900px]:leading-[25px] ${
               router.locale == "en" ? "text-left" : "text-right"
-            } mb-[5px]`}>
+            } mb-[5px]`}
+          >
             {t("landingPage.communityForm.Description")}
           </p>
           <form
