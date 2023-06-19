@@ -90,7 +90,7 @@ const CreateNotificationModal = (props: IProp) => {
 
       axios
         .post(
-          "https://mazbackend.easydesk.work/api/upload-bill-image",
+          "https://api.mazexpress.com.ly/api/upload-bill-image",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },

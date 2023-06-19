@@ -31,7 +31,7 @@ const imageHanlder = (type: string, api?: string) => {
       break;
   }
 
-  return "https://mazbackend.easydesk.work" + api_point;
+  return "https://api.mazexpress.com.ly" + api_point;
 };
 export const userMailBody = (
   type: string,

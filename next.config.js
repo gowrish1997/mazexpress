@@ -19,7 +19,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "mazbackend.easydesk.work",
+        hostname: "api.mazexpress.com.ly",
         port: "",
         pathname: "/**",
       },

@@ -299,7 +299,7 @@ const Settings = () => {
                                     <Image
                                         src={
                                             session?.user?.avatar_url
-                                                ? "https://mazbackend.easydesk.work/user/" +
+                                                ? "https://api.mazexpress.com.ly/user/" +
                                                   session?.user?.avatar_url
                                                 : "/user-images/default_user.png"
                                         }

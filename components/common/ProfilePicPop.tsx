@@ -73,7 +73,7 @@ const ProfilePicPop = (props: IProp) => {
 
       axios
         .post(
-          "https://mazbackend.easydesk.work/api/upload-user-image",
+          "https://api.mazexpress.com.ly/api/upload-user-image",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -129,7 +129,7 @@ const ProfilePicPop = (props: IProp) => {
               <Image
                 src={
                   session?.user?.avatar_url
-                    ? "https://mazbackend.easydesk.work/user/" +
+                    ? "https://api.mazexpress.com.ly/user/" +
                       session?.user?.avatar_url
                     : "/user-images/default_user.png"
                 }

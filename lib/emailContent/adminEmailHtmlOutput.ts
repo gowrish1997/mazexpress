@@ -1,6 +1,6 @@
 import mjml2html from "mjml";
 const imageHanlder = (type: string, api?: string) => {
-    return "https://mazbackend.easydesk.work/public/assets/maz_logo.png";
+    return "https://api.mazexpress.com.ly/public/assets/maz_logo.png";
 };
 export const adminMailBody = (
     header: string,

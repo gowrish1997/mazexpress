@@ -165,7 +165,7 @@ const SignUpContent = (props: IProp) => {
         redirectLink: `${
           process.env.NODE_ENV !== "production"
             ? "http://localhost:3000/auth/gate?mode=1"
-            : "https://mazexpress.easydesk.work/auth/gate?mode=1"
+            : "https://mazexpress.com.ly/auth/gate?mode=1"
         }`,
       },
     ];

@@ -84,7 +84,7 @@ const AdminLineItem = (props: IProp) => {
                         <Image
                             src={
                                 (props.row as User).avatar_url
-                                    ? "https://mazbackend.easydesk.work/user/" +
+                                    ? "https://api.mazexpress.com.ly/user/" +
                                       (props.row as User).avatar_url
                                     : "/user-images/default_user.png"
                             }

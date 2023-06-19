@@ -129,7 +129,7 @@ const UserSelect = (props: IProp) => {
                             <div className="w-7 h-7 rounded-full relative overflow-hidden">
                                 <Image
                                     src={
-                                        `https://mazbackend.easydesk.work/user/` +
+                                        `https://api.mazexpress.com.ly/user/` +
                                             (users?.data as User[])
                                                 ?.find(
                                                     (el) =>
@@ -246,7 +246,7 @@ const UserSelect = (props: IProp) => {
                                             <Image
                                                 src={
                                                     el.avatar_url
-                                                        ? `https://mazbackend.easydesk.work/user/` +
+                                                        ? `https://api.mazexpress.com.ly/user/` +
                                                           el.avatar_url
                                                         : "/user-images/default_user.png"
                                                 }
