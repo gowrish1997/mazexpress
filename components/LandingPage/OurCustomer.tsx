@@ -28,7 +28,7 @@ const OurCustomer = React.forwardRef<HTMLDivElement>((props, ref) => {
       >
         <div className="w-[100%] table_md:w-[80%] xmd:w-[70%] flex flex-col justify-start items-center gap-[20px] add_sm:gap-[35px] xmd:gap-y-[50px] px-[10px]  ">
           <h1 className="text-[22px] xmd:text-[40px] add_sm:text-[32px] text-[#FFFFFF] leading-[27.5px] font-[700]  ">
-            Our customers choose us
+            {t("landingPage.ourCustomer.Title")}
           </h1>
           <div className="w-full flex flex-row justify-center items-center gap-x-[10px] sm:gap-x-[40px] ">
             {content.map((data, index) => {

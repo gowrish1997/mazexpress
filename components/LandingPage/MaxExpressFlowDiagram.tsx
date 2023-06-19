@@ -31,9 +31,13 @@ const MaxExpressFlowDiagram = () => {
               />
             </div>
             <div
-              className={`hidden sm:block rotate-90 sm:rotate-0  h-[40px] w-[60px] min-[1400px]:w-[80px]  ml-[10px] table_md:ml-[20px]  min-[1400px]:ml-[50px]  relative  ${
-                locale == "ar" && "rotate-180"
-              }  `}
+              className={`hidden sm:block ${
+                locale == "ar" ? "rotate-180" : "rotate-0"
+              }  h-[40px] w-[60px] min-[1400px]:w-[80px] ${
+                locale == "ar"
+                  ? "mr-[10px] table_md:mr-[20px]  min-[1400px]:mr-[50px]"
+                  : "ml-[10px] table_md:ml-[20px]  min-[1400px]:ml-[50px]"
+              }    relative   `}
             >
               <Image
                 src={Flowarrow}
@@ -44,7 +48,11 @@ const MaxExpressFlowDiagram = () => {
             </div>
           </div>
 
-          <p className="box-border text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-left z-10 ">
+          <p
+            className={`box-border text-[14px] text-[#2B2B2B] font-[700] leading-[20px] ${
+              router.locale == "en" ? "text-left" : "text-right"
+            } z-10 `}
+          >
             {flowText[0]}
           </p>
         </div>
@@ -73,9 +81,13 @@ const MaxExpressFlowDiagram = () => {
               />
             </div>
             <div
-              className={`hidden sm:block rotate-90 sm:rotate-0  h-[40px] w-[60px] min-[1400px]:w-[80px] ml-[10px] table_md:ml-[20px]  min-[1400px]:ml-[50px]   relative  ${
-                locale == "ar" && "rotate-180"
-              }  `}
+              className={`hidden sm:block  ${
+                locale == "ar" ? "rotate-180" : "rotate-0"
+              }  h-[40px] w-[60px] min-[1400px]:w-[80px] ${
+                locale == "ar"
+                  ? "mr-[10px] table_md:mr-[20px]  min-[1400px]:mr-[50px]"
+                  : "ml-[10px] table_md:ml-[20px]  min-[1400px]:ml-[50px]"
+              }   relative    `}
             >
               <Image
                 src={Flowarrow}
@@ -86,7 +98,9 @@ const MaxExpressFlowDiagram = () => {
             </div>
           </div>
 
-          <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-left z-10   ">
+          <p className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px]${
+              router.locale == "en" ? "text-left" : "text-right"
+            } z-10   `}>
             {flowText[1]}
           </p>
         </div>
@@ -115,9 +129,13 @@ const MaxExpressFlowDiagram = () => {
               />
             </div>
             <div
-              className={`hidden sm:block rotate-90 sm:rotate-0  h-[40px] w-[60px] min-[1400px]:w-[80px]  ml-[10px] table_md:ml-[20px]  min-[1400px]:ml-[50px]  relative  ${
-                locale == "ar" && "rotate-180"
-              }  `}
+              className={`hidden sm:block  ${
+                locale == "ar" ? "rotate-180" : "rotate-0"
+              }  h-[40px] w-[60px] min-[1400px]:w-[80px]  ${
+                locale == "ar"
+                  ? "mr-[10px] table_md:mr-[20px]  min-[1400px]:mr-[50px]"
+                  : "ml-[10px] table_md:ml-[20px]  min-[1400px]:ml-[50px]"
+              }  relative   `}
             >
               <Image
                 src={Flowarrow}
@@ -128,7 +146,9 @@ const MaxExpressFlowDiagram = () => {
             </div>
           </div>
 
-          <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-left z-10  ">
+          <p className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] ${
+              router.locale == "en" ? "text-left" : "text-right"
+            } z-10  `}>
             {flowText[2]}
           </p>
         </div>
@@ -155,7 +175,9 @@ const MaxExpressFlowDiagram = () => {
               alt="document"
             />
           </div>
-          <p className=" box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] text-left  z-10  ">
+          <p className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] ${
+              router.locale == "en" ? "text-left" : "text-right"
+            }  z-10  `}>
             {flowText[3]}
           </p>
         </div>

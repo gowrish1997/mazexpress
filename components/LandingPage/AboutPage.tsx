@@ -61,7 +61,11 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
           <h1 className="hidden sm:block text-[22px] add_sm:text-[27px] xmd:text-[45px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] text-[#090914] font-[700]">
             {t("landingPage.about.Caption")}
           </h1>
-          <p className=" w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] leading-[20px] add_sm:leading-[24px] xmd:leading-[36px] text-[#606060] font-[600] text-left">
+          <p
+            className={`w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] leading-[20px] add_sm:leading-[24px] xmd:leading-[36px] text-[#606060] font-[600]  ${
+              router.locale == "en" ? "text-left" : "text-right"
+            }`}
+          >
             {t("landingPage.about.Desc")}
           </p>
         </div>

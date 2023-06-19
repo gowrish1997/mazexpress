@@ -9,7 +9,7 @@ const AuthLayout = (props: any) => {
   const { locale } = router;
   return (
     <div
-      className="flex h-screen w-screen overflow-y-auto max-[800px]:bg-[#35C6F4] max-[800px]:bg-[url('/signin.png')] "
+      className="flex h-screen w-screen overflow-y-auto max-[800px]:bg-[url('/signin.png')] "
       style={{
         backgroundPosition: "center center,",
         backgroundRepeat: "no-repeat",
@@ -18,7 +18,7 @@ const AuthLayout = (props: any) => {
       }}
     >
       <div
-        className="hidden md:flex flex-row justify-center items-center w-[100%] md:w-[45%] min-[900px]:w-[40%]  xmd:w-[35%] h-[100vh] fixed bg-[#35C6F4] "
+        className="hidden md:flex flex-row justify-center items-center w-[100%] md:w-[45%] min-[900px]:w-[40%]  xmd:w-[35%] h-[100vh] fixed  "
         style={{
           backgroundImage: `url('/signin.png')`,
           backgroundPosition: "center center,",
@@ -51,11 +51,11 @@ const AuthLayout = (props: any) => {
       <div
         className={`flex flex-1 justify-center items-start ${
           locale == "en"
-            ? "md:ml-[45%] min-[900px]:ml-[40%] "
-            : "md:mr-[45%] min-[900px]:mr-[40%]"
+            ? "md:ml-[40%] min-[900px]:ml-[35%] "
+            : "md:mr-[40%] min-[900px]:mr-[35%]"
         }  pt-10 `}
       >
-        <div className="w-[90%] sm:w-[60%] md:w-[75%] min-[900px]:w-[55%] xmd:w-[47%] space-y-[20px] flex flex-col justify-start items-center md:items-start  bg-white max-[800px]:p-[30px] rounded-[6px] ">
+        <div className="w-[90%] sm:w-[60%] md:w-[70%] min-[900px]:w-[55%] xmd:w-[47%] space-y-[20px] flex flex-col justify-start items-center md:items-start  bg-white max-[800px]:p-[30px] rounded-[6px] ">
           {" "}
           {props.children}
         </div>

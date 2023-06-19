@@ -189,6 +189,7 @@
       ]
     },
     "ourCustomer": {
+      "Title": " عملائنا يختاروننا",
       "content": [
         {
           "value": "500+",
@@ -209,7 +210,7 @@
     },
     "shipmentCostCalculator": {
       "Title": "حاسبة تكلفة الشحن",
-      "Discription": "قم بتسليم واستلام الطرود من موقع مفتوح عند الحاجة.",
+      "Description": "قم بتسليم واستلام الطرود من موقع مفتوح عند الحاجة.",
       "form": {
         "InputField": [
           {

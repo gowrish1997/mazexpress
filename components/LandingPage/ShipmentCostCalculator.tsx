@@ -212,7 +212,11 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
           </div>
 
           <div className="w-full flex-1 h-full bg-[#FFFFFF]  min-[900px]:rounded-[16px] min-[900px]:py-[70px] py-[20px] px-[30px] min-[900px]:mx-[60px] space-y-[10px] min-[900px]:space-y-[25px] ">
-            <h1 className="hidden min-[900px]:block w-full text-[23px] text-left text-[#18181B] font-[700] leading-[30px] table_md:leading-[35px] mb-[10px] ">
+            <h1
+              className={`hidden min-[900px]:block w-full text-[23px] ${
+                router.locale == "en" ? "text-left" : "text-right"
+              } text-[#18181B] font-[700] leading-[30px] table_md:leading-[35px] mb-[10px] `}
+            >
               {t("landingPage.shipmentCostCalculator.Title")}
             </h1>
             <p className="mb-[10px] ">

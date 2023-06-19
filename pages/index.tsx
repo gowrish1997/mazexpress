@@ -90,9 +90,16 @@ const Index = () => {
           return (
             <div className="w-full">
               <div
-                className=" bg-[#35C6F4] relative flex flex-col justify-center items-center bg-[length:0] min-[600px]:bg-[length:45%_40%] md:bg-[length:50%_50%] min-[900px]:bg-[length:50%_65%]  min-[1200px]:bg-[length:50%_80%] md:bg-[right_10%_top_100px] bg-[right_0%_top_120px] pb-[100px] "
+                className={`bg-[#35C6F4] relative flex flex-col justify-center items-center bg-[length:0] min-[600px]:bg-[length:45%_40%] md:bg-[length:50%_50%] min-[900px]:bg-[length:50%_65%]  min-[1200px]:bg-[length:50%_80%] ${
+                  router.locale == "en"
+                    ? "md:bg-[right_10%_top_100px] bg-[right_0%_top_120px]"
+                    : "md:bg-[left_10%_top_100px] bg-[left_0%_top_120px]"
+                }  pb-[100px] ${
+                  router.locale == "en"
+                    ? "bg-[url('/paperplane.png')]"
+                    : "bg-[url('/reversePlane.png')]"
+                }    `}
                 style={{
-                  backgroundImage: `url('/paperplane.png')`,
                   backgroundRepeat: "no-repeat",
                 }}
               >
@@ -120,7 +127,11 @@ const Index = () => {
                         </p>
                       </div>
 
-                      <p className="w-[100%] min-[900px]:w-[35%] text-left text-[14px] add_sm:text-[16px] table_md:text-[18px]  text-[#121212] font-[700] add_sm:leading-[22px] leading-[18px] table_md:leading-[25px]  mt-[15px]  ">
+                      <p
+                        className={`w-[100%] min-[900px]:w-[35%] ${
+                          router.locale == "en" ? "text-left" : "text-right"
+                        } text-[14px] add_sm:text-[16px] table_md:text-[18px]  text-[#121212] font-[700] add_sm:leading-[22px] leading-[18px] table_md:leading-[25px]  mt-[15px]  `}
+                      >
                         {t("landingPage.welcome.Caption")}
                       </p>
                     </div>

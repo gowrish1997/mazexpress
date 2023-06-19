@@ -99,10 +99,16 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
     >
       <div className="w-[95%] sm:w-[90%] xmd:w-[80%]  flex flex-col-reverse justify-start items-start min-[800px]:flex-type10 gap-x-[30px] gap-y-[15px] rounded-[8px] ">
         <div className="w-full min-[800px]:flex-1 h-full rounded-[16px]">
-          <h1 className="w-full text-[20px] table_md:text-[23px] text-left text-[#18181B] font-[700]  leading-[30px] mb-[5px] ">
+          <h1
+            className={` text-[20px] table_md:text-[23px] ${
+              router.locale == "en" ? "text-left" : "text-right"
+            } text-[#18181B] font-[700]  leading-[30px] mb-[5px] `}
+          >
             {t("landingPage.communityForm.Title")}
           </h1>
-          <p className="w-[100%] text-[16px] text-[#525D72] font-[500] leading-[18px] min-[900px]:leading-[25px] text-left mb-[5px]">
+          <p className={` text-[16px] text-[#525D72] font-[500] leading-[18px] min-[900px]:leading-[25px] ${
+              router.locale == "en" ? "text-left" : "text-right"
+            } mb-[5px]`}>
             {t("landingPage.communityForm.Description")}
           </p>
           <form
@@ -152,7 +158,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
                   " "
                 }
               >
-                <p className="text-[15px] ">Message</p>
+                <p className="text-[15px] ">{inputFieldLabel[2]}</p>
                 <textarea
                   className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] resize-none p-[10px] bg-transparent"
                   {...register("message")}

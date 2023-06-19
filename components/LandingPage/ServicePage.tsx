@@ -143,8 +143,20 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </h1>
                 </div>
                 <div
-                  className={`text-[13px] md:text-[18px] xmd:text-[21px] min-[1400px]:text-[24px] leading-[21px] md:leading-[22px] xmd:leading-[30px] min-[1400px]:leading-[36px] font-[400] text-[#606060] text-left ${
-                    index % 2 == 0 ? "add_sm:text-left" : "add_sm:text-right"
+                  className={`text-[13px] md:text-[18px] xmd:text-[21px] min-[1400px]:text-[24px] leading-[21px] md:leading-[22px] xmd:leading-[30px] min-[1400px]:leading-[36px] font-[400] text-[#606060] ${
+                    router.locale == "en" ? "text-left" : "text-right"
+                  } ${
+                    index % 2 == 0
+                      ? `${
+                          router.locale == "en"
+                            ? "add_sm:text-left"
+                            : "add_sm:text-right"
+                        } `
+                      : `${
+                          router.locale == "en"
+                            ? "add_sm:text-right"
+                            : "add_sm:text-left"
+                        }`
                   }`}
                 >
                   {data.Content}
