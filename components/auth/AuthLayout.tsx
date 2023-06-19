@@ -9,7 +9,7 @@ const AuthLayout = (props: any) => {
   const { locale } = router;
   return (
     <div
-      className={`flex h-screen w-screen overflow-y-auto max-[800px]:bg-[url('/signin.png')] `}
+      className={`flex h-screen w-screen overflow-y-auto max-[600px]:bg-[#35C6F4]  min-[600px]:bg-[url('/signin.png')] md:bg-[url('')] `}
       style={{
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -53,9 +53,9 @@ const AuthLayout = (props: any) => {
           locale == "en"
             ? "md:ml-[40%] min-[900px]:ml-[32%] "
             : "md:mr-[40%] min-[900px]:mr-[32%]"
-        }  pt-10 `}
+        } mt-[80px] `}
       >
-        <div className="w-[90%] sm:w-[60%] md:w-[70%] min-[900px]:w-[55%] xmd:w-[47%] space-y-[20px] flex flex-col justify-start items-center md:items-start  bg-white max-[800px]:p-[30px] rounded-[6px] ">
+        <div className="w-[90%]  min-[600px]:w-[70%] md:w-[70%] min-[900px]:w-[55%] xmd:w-[40%] space-y-[20px] flex flex-col justify-start items-center md:items-start  bg-white max-[800px]:p-[30px] rounded-[6px] ">
           {" "}
           {props.children}
         </div>
