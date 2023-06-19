@@ -124,20 +124,6 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
               )}
             </div>
 
-            {/* <Controller
-              name="email"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <ReactHookFormInput
-                  onChange={onChange}
-                  label={inputFieldLabel[0]}
-                  type="email"
-                  value={value}
-                  error={errors.email?.message && fieldErrors[0]}
-                  className="rounded-l-[4px] rounded-r-none"
-                />
-              )}
-            /> */}
             <div className=" flex flex-col justify-start items-start rounded-[5px]  ">
               <input
                 id="mobile"
@@ -152,20 +138,6 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
                 </p>
               )}
             </div>
-            {/* <Controller
-              name="mobile"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <ReactHookFormInput
-                  onChange={onChange}
-                  label={inputFieldLabel[1]}
-                  type="number"
-                  value={value}
-                  error={errors.mobile && fieldErrors[1]}
-                  className="rounded-l-[4px] rounded-r-none"
-                />
-              )}
-            /> */}
 
             <div className={"w-full flex-type6"}>
               {/* <label
