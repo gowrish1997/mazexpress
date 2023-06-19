@@ -34,7 +34,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
         className="w-full h-[350px] add_sm:h-[400px] xmd:h-[500px] relative "
         style={{
           backgroundImage: `url('/aboutPlane.png')`,
-          backgroundPosition: "center center,",
+          backgroundPosition: "bottom",
           backgroundRepeat: "no-repeat",
 
           backgroundSize: "cover",

@@ -41,7 +41,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
         className="w-full h-[350px] add_sm:h-[400px] xmd:h-[500px] relative "
         style={{
           backgroundImage: `url('/servicePlaneLayer.png'),url('/serviceplane.png')`,
-          backgroundPosition: "center center,center center,",
+          backgroundPosition: "center center,center center",
           backgroundRepeat: "no-repeat,no-repeat",
 
           backgroundSize: "cover,cover",
