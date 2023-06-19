@@ -12,4 +12,5 @@ declare module "react-chartjs-2";
 declare module "next-auth/react";
 declare module "@fortawesome/react-fontawesome";
 declare module "@fortawesome/free-solid-svg-icons";
+declare module "@sendgrid/mail";
 
