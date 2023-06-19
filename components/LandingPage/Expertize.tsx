@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import expertizeImage from "@/public/Expertize.png";
+import expertizeImage from "@/public/expertize_group.png";
+import expertizeImage1 from "@/public/Expertize.png";
 import Icon from "@/public/BluebgIcon.png";
 
 const Expertize = () => {
@@ -53,9 +54,17 @@ const Expertize = () => {
             </div>
           </div>
 
-          <div className="w-[100%] md:w-[40%] aspect-[1/0.5] md:aspect-[1/1.2] table_md:aspect-[1/1] relative">
+          <div className="hidden md:block w-[100%] md:w-[40%] aspect-[1/0.5] md:aspect-[1/1.2] table_md:aspect-[1/1] relative">
             <Image
               src={expertizeImage}
+              fill
+              alt="docfument"
+              className="rounded-[20px] "
+            />
+          </div>
+          <div className="md:hidden w-[100%] md:w-[40%] aspect-[1/0.5] md:aspect-[1/1.2] table_md:aspect-[1/1] relative">
+            <Image
+              src={expertizeImage1}
               fill
               alt="docfument"
               className="rounded-[20px] "
