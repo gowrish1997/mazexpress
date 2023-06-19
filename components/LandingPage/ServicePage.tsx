@@ -57,20 +57,20 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
           >
             {t("landingPage.service.Title")}
           </h1>
-          <p className="text-[16px] add_sm:text-[18px] xmd:text-[22px] leading-[24px] add_sm:leading-[28px] xmd:leading-[30px] text-[#FFFFFF] font-[400] w-[80%] add_sm:w-[70%] xmd:w-[55%] text-center">
+          <p className="text-[14px] add_sm:text-[18px] xmd:text-[22px] leading-[22px] add_sm:leading-[28px] xmd:leading-[30px] text-[#FFFFFF] font-[400] w-[80%] add_sm:w-[70%] xmd:w-[45%] text-center">
             {t("landingPage.service.Description")}
           </p>
         </div>
       </div>
-      <div className="w-[95%] sm:w-[80%] table_md:w-[60%] flex flex-col justify-start items-center  gap-y-[20px] mt-[50px]">
+      <div className="w-[95%] sm:w-[80%] table_md:w-[57%] min-[1600px]:w-[45%] flex flex-col justify-start items-center  gap-y-[20px] mt-[50px]">
         <h1 className="text-[26px] add_sm:text-[32px] xmd:text-[40px] leading-[20px] add_sm:leading-[24px] xmd:leading-[49px] text-[#1B1F29] font-[700]">
           {t("landingPage.service.Caption")}
         </h1>
-        <p className="text-[16px] add_sm:text-[18px] xmd:text-[18px] leading-[20px] add_sm:leading-[24px] xmd:leading-[28px] text-[#1B1F29] font-[400]  text-center">
+        <p className="text-[14px] add_sm:text-[18px] xmd:text-[18px] leading-[20px] add_sm:leading-[24px] xmd:leading-[28px] text-[#1B1F29] font-[400]  text-center">
           {t("landingPage.service.Desc")}
         </p>
       </div>
-      <div className="w-[95%] table_md:w-[75%] min-[1400px]:w-[60%] flex flex-col justify-start items-center mt-[50px] gap-y-[30px] add_sm:gap-y-[60px]">
+      <div className="w-[95%] table_md:w-[80%] flex flex-col justify-start items-center mt-[50px] gap-y-[30px] add_sm:gap-y-[60px]">
         {content.map((data, index) => {
           return (
             <div
@@ -103,7 +103,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                   {data.Title}
                 </h1>
               </div>
-              <div className="w-[100%] aspect-[1/0.5] add_sm:w-[40%]  min-[1600px]:w-[35%] add_sm:aspect-square relative ">
+              <div className="w-[100%] aspect-[1/0.5] add_sm:w-[32%]  min-[1600px]:w-[28%] add_sm:aspect-square relative ">
                 <Image
                   src={serviceImage[index]}
                   fill
@@ -143,7 +143,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </h1>
                 </div>
                 <div
-                  className={`text-[13px] md:text-[18px] xmd:text-[20px] leading-[21px] md:leading-[22px] xmd:leading-[28px] font-[400] text-[#606060] text-left ${
+                  className={`text-[13px] md:text-[18px] xmd:text-[21px] min-[1400px]:text-[24px] leading-[21px] md:leading-[22px] xmd:leading-[30px] min-[1400px]:leading-[36px] font-[400] text-[#606060] text-left ${
                     index % 2 == 0 ? "add_sm:text-left" : "add_sm:text-right"
                   }`}
                 >

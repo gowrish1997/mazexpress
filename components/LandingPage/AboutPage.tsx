@@ -48,7 +48,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
           <h1 className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#090914] font-[700]">
             {t("landingPage.about.Title")}
           </h1>
-          <p className="text-[16px] add_sm:text-[18px] xmd:text-[22px] leading-[24px] add_sm:leading-[28px] xmd:leading-[30px] text-[#606060] font-[600] w-[80%] add_sm:w-[70%] xmd:w-[55%] text-center">
+          <p className="text-[14px] add_sm:text-[18px] xmd:text-[22px] leading-[22px] add_sm:leading-[28px] xmd:leading-[30px] text-[#606060] font-[600] w-[80%] add_sm:w-[70%] xmd:w-[55%] text-center">
             {t("landingPage.about.Description")}
           </p>
         </div>
@@ -61,7 +61,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
           <h1 className="hidden sm:block text-[22px] add_sm:text-[27px] xmd:text-[45px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] text-[#090914] font-[700]">
             {t("landingPage.about.Caption")}
           </h1>
-          <p className=" w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] leading-[20px] add_sm:leading-[24px] xmd:leading-[30px] text-[#606060] font-[600] text-left">
+          <p className=" w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] leading-[20px] add_sm:leading-[24px] xmd:leading-[36px] text-[#606060] font-[600] text-left">
             {t("landingPage.about.Desc")}
           </p>
         </div>
@@ -80,7 +80,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
         {content.map((data, index) => {
           return (
             <div
-              className="border-[1px] border-[#DCDCDC] rounded-[8px] w-[100%] sm:w-[48%] table_md:flex-1 p-[15px] flex flex-col  justify-between gap-y-[20px] "
+              className="border-[1px] border-[#DCDCDC] rounded-[8px] w-[100%] sm:w-[48%] table_md:flex-1 p-[15px] flex flex-col  justify-between gap-y-[20px]  hover:bg-[#F1F5F9] "
               key={index}
             >
               <div className="flex flex-col gap-y-[10px]">
