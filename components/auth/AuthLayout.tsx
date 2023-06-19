@@ -9,7 +9,7 @@ const AuthLayout = (props: any) => {
   const { locale } = router;
   return (
     <div
-      className={`flex h-screen w-screen overflow-y-auto max-[600px]:bg-[#35C6F4]  min-[600px]:bg-[url('/signin.png')] md:bg-[url('')] `}
+      className={`flex h-screen w-screen overflow-y-auto max-[600px]:bg-[#35C6F4]  min-[600px]:bg-[url('/signin.png')] md:bg-none `}
       style={{
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
