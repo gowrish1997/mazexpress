@@ -50,7 +50,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
         <div className="">
           <HomepageNavbar color="#FFFFFF" />
         </div>
-        <div className="absolute top-[25%]  flex flex-col justify-start items-center gap-y-[20px] ">
+        <div className="w-[100%] absolute top-[25%]  left-0 flex flex-col justify-start items-center gap-y-[20px] ">
           <h1
             className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#FFFFFF] font-[700] "
             style={{ fontFamily: "manRope" }}

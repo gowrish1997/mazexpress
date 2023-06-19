@@ -44,7 +44,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
           <HomepageNavbar color="#121212" />
         </div>
 
-        <div className="absolute top-[25%]  flex flex-col justify-start items-center gap-y-[20px] ">
+        <div className="absolute top-[25%] left-0 w-[100%] flex flex-col justify-start items-center gap-y-[20px] ">
           <h1 className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#090914] font-[700]">
             {t("landingPage.about.Title")}
           </h1>

@@ -51,8 +51,8 @@ const AuthLayout = (props: any) => {
       <div
         className={`flex flex-1 justify-center items-start ${
           locale == "en"
-            ? "md:ml-[40%] min-[900px]:ml-[35%] "
-            : "md:mr-[40%] min-[900px]:mr-[35%]"
+            ? "md:ml-[40%] min-[900px]:ml-[32%] "
+            : "md:mr-[40%] min-[900px]:mr-[32%]"
         }  pt-10 `}
       >
         <div className="w-[90%] sm:w-[60%] md:w-[70%] min-[900px]:w-[55%] xmd:w-[47%] space-y-[20px] flex flex-col justify-start items-center md:items-start  bg-white max-[800px]:p-[30px] rounded-[6px] ">
