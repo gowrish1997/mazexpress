@@ -80,7 +80,7 @@ const ProfilePicPop = (props: IProp) => {
           }
         )
         .then(async (response) => {
-          console.log(response.data.data[0].profile_image);
+         
           if (response.data.ok === true) {
             createToast({
               type: "success",
@@ -100,7 +100,7 @@ const ProfilePicPop = (props: IProp) => {
         });
     }
   };
-console.log(session?.user?.avatar_url)
+
   return (
     <>
       {props.show && (

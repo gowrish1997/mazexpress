@@ -20,7 +20,7 @@ export const authOptions = {
         );
 
         const user = await res.json();
-        console.log(user);
+        
 
         if (user.data) {
           // if (user.data[0].avatar_url) {
@@ -31,7 +31,7 @@ export const authOptions = {
           //         avatar;
           //     user.data[0].avatar_url = avatar;
           // }
-          console.log(user.data[0]);
+       
           return user.data[0];
         } else {
           throw new Error(user.msg);

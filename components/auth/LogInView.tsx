@@ -71,7 +71,7 @@ const LogInComponent = (props: any) => {
         // callbackUrl: `https://mazexpress.com.ly/`,
         redirect: false,
       });
-      console.log(returnDate);
+
       if (returnDate.ok) {
         router.push(
           process.env.NODE_ENV !== "production"
@@ -82,7 +82,7 @@ const LogInComponent = (props: any) => {
         throw new Error(returnDate.error);
       }
     } catch (error) {
-      console.log(error);
+    
       createToast({
         type: "error",
         message: (error as Error).message,

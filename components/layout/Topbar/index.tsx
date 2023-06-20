@@ -1,20 +1,18 @@
 import { SearchKeyContext } from "@/components/common/Frame";
+import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import NotificationView from "@/components/common/NotificationView";
 import useNotifications from "@/lib/hooks/useNotifications";
 import Bell from "@/public/bell_svg.svg";
+import New_logo from "@/public/new_logo_blue.png";
 import searchIcon from "@/public/search.png";
 import debounce from "lodash.debounce";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import SidebarModal from "../sidebar/SidebarModal";
-import React, { SyntheticEvent, useCallback, useRef, useState } from "react";
-import { signOut } from "next-auth/react";
-import LogoutConfirmModal from "@/components/common/LogoutConfirmModal";
 import Link from "next/link";
-import Logo from "../../../public/new_logo_blue.png";
-import New_logo from "@/public/new_logo_blue.png";
+import { useRouter } from "next/router";
+import React, { SyntheticEvent, useCallback, useRef, useState } from "react";
+import SidebarModal from "../sidebar/SidebarModal";
 
 const Topbar = () => {
   const router = useRouter();
@@ -83,7 +81,7 @@ const Topbar = () => {
   // }, [user, notificationsIsLoading]);
 
   // if(!notifications) return <div>notifications loading</div>
-  console.log(session?.user?.avatar_url);
+  console.log("whtile logout iam callin this");
   return (
     <>
       <div className="flex flex-col-reverse md:flex-row w-full  min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-30">
