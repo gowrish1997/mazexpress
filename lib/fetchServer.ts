@@ -43,43 +43,6 @@ export default async function fetchJson<JSON = any>(
       response,
       data,
     });
-  } else if (process.env.NEXT_PUBLIC_C4) {
-    // run code for frontend dev
-    // console.log("c4 fetch called");
-    // console.log(process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST)
-    // console.log(input)
-    const response = await fetch(
-      `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
-      init
-        ? {
-            ...init,
-            headers: {
-              ...init.headers,
-              "x-access-token": session?.user?.token,
-            },
-          }
-        : {
-            headers: {
-              "Content-Type": "application/json",
-              "x-access-token": session?.user?.token,
-            },
-          }
-    );
-    // if the server replies, there's always some data in json
-    // if there's a network error, it will throw at the previous line
-    const data = await response.json();
-
-    // response.ok is true when res.status is 2xx
-    // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-    if (response.ok) {
-      // console.log(data);
-      return data;
-    }
-    throw new FetchError({
-      message: response.statusText,
-      response,
-      data,
-    });
   } else {
     // console.log(process.env.NEXT_PUBLIC_SERVER_HOST, process.env.NEXT_PUBLIC_SERVER_PORT)
     // console.log("dev fetch called");
