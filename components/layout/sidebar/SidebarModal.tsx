@@ -43,9 +43,9 @@ const SidebarModal = (props: IProp) => {
     setShowOptionModal((prev) => !prev);
   };
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     try {
-      signOut();
+      await update({});
     } catch (err) {
       if (err) console.error(err);
     }
