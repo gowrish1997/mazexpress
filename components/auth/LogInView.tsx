@@ -63,15 +63,21 @@ const LogInComponent = (props: any) => {
         username: data.username,
         password: data.password,
 
-        callbackUrl: `${
+        // callbackUrl: `${
+        //   process.env.NODE_ENV !== "development"
+        //     ? `http://localhost:3000/`
+        //     : `https://${process.env.NEXT_PUBLIC_HOST}/`
+        // }`,
+        // callbackUrl: `https://mazexpress.com.ly/`,
+        redirect: false,
+      });
+      console.log(returnDate);
+      if (returnDate.ok) {
+        router.push(
           process.env.NODE_ENV !== "production"
             ? `http://localhost:3000/`
             : `https://${process.env.NEXT_PUBLIC_HOST}/`
-        }`,
-        redirect: false,
-      });
-      if (returnDate.ok) {
-        router.push(returnDate.url);
+        );
       } else {
         throw new Error(returnDate.error);
       }
