@@ -26,9 +26,7 @@ const Topbar = () => {
   // console.log(user)
   const { setSearchKey } = React.useContext(SearchKeyContext) as any;
   const { data: session, update }: { data: any; update: any } = useSession();
-  if (!session) {
-    return;
-  }
+
   const { notifications, notificationsIsLoading, mutateNotifications } =
     useNotifications({
       username: session?.user?.email,

@@ -1,77 +1,73 @@
 import PageHeader from "@/components/common/PageHeader";
 import Layout from "@/components/layout";
 import useOrders from "@/lib/hooks/useOrders";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import TrackingPageView from "@/components/ordertracking/TrackingPageView";
-import useAuthorization from "@/lib/hooks/useAuthorization";
+
+import LoadingPage from "@/components/common/LoadingPage";
+import UserPageWrapper from "@/components/common/UserPageWrapper";
 import useTracking from "@/lib/hooks/useTracking";
 import { Order } from "@/models/order.model";
 import { Tracking } from "@/models/tracking.model";
+import { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth/next";
+import { useSession } from "next-auth/react";
 import { i18n, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import LoadingPage from "@/components/common/LoadingPage";
-import { useSession } from "next-auth/react";
-import UserPageWrapper from "@/components/common/UserPageWrapper";
-import { getServerSession } from "next-auth/next";
-import { GetServerSidePropsContext } from "next";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { APIResponse } from "@/models/api.model";
-import fetchServer from "@/lib/fetchServer";
 
 const TrackOrder = (props: any) => {
-    const router = useRouter();
-    const { data: session, update }: { data: any; update: any } = useSession();
-    const [per_page, setPer_page] = useState(10);
-    const { orders, ordersIsLoading } = useOrders({
-        username: session?.user?.email as string,
-        per_page: per_page,
-    });
+  const router = useRouter();
+  const { data: session, update }: { data: any; update: any } = useSession();
+  const [per_page, setPer_page] = useState(10);
+  const { orders, ordersIsLoading } = useOrders({
+    username: session?.user?.email as string,
+    per_page: per_page,
+  });
 
-    const { tracking, mutateTracking, trackingIsLoading } = useTracking({
-        maz_id: router.query.id as string,
-    });
-    // console.log(tracking);
-    const { t } = useTranslation("common");
-    const { locale } = router;
+  const { tracking, mutateTracking, trackingIsLoading } = useTracking({
+    maz_id: router.query.id as string,
+  });
+  // console.log(tracking);
+  const { t } = useTranslation("common");
+  const { locale } = router;
 
-    useEffect(() => {
-        let dir = router.locale == "ar" ? "rtl" : "ltr";
-        let lang = router.locale == "ar" ? "ar" : "en";
-        document.querySelector("html")?.setAttribute("dir", dir);
-        document.querySelector("html")?.setAttribute("lang", lang);
-    }, [router.locale]);
+  useEffect(() => {
+    let dir = router.locale == "ar" ? "rtl" : "ltr";
+    let lang = router.locale == "ar" ? "ar" : "en";
+    document.querySelector("html")?.setAttribute("dir", dir);
+    document.querySelector("html")?.setAttribute("lang", lang);
+  }, [router.locale]);
 
-    const [packageStatus, setPackageStatus] = useState(0);
+  const [packageStatus, setPackageStatus] = useState(0);
 
-    useEffect(() => {
-     
-        if (tracking !== undefined) {
-            let sorted = [...(tracking as Tracking[])];
-            sorted.sort((a: any, b: any) => a?.stage - b?.stage);
-            setPackageStatus(sorted.pop()?.stage!);
-        }
-    }, [tracking]);
+  useEffect(() => {
+    if (tracking !== undefined) {
+      let sorted = [...(tracking as Tracking[])];
+      sorted.sort((a: any, b: any) => a?.stage - b?.stage);
+      setPackageStatus(sorted.pop()?.stage!);
+    }
+  }, [tracking]);
 
-    const loadMoreNotificationHandler = async () => {
-        setPer_page((data) => data + 5);
-    };
+  const loadMoreNotificationHandler = async () => {
+    setPer_page((data) => data + 5);
+  };
 
-    if (trackingIsLoading) return <LoadingPage />;
-    return (
-        <UserPageWrapper>
-            <PageHeader
-                content={t("trackingView.pageHeader.Title")}
-                className="border-none pb-[10px]"
-                title="Track order | MazExpress"
-            />
-            <Layout>
-                <div className="flex-type2 w-full ">
-                    <div className="box-border flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
-                        {/* <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px]">
+  if (trackingIsLoading) return <LoadingPage />;
+  return (
+    <UserPageWrapper>
+      <PageHeader
+        content={t("trackingView.pageHeader.Title")}
+        className="border-none pb-[10px]"
+        title="Track order | MazExpress"
+      />
+      <Layout>
+        <div className="flex-type2 w-full ">
+          <div className="box-border flex-type6 w-3/4 pr-[20px] gap-y-[35px] ">
+            {/* <div className="flex-type1 gap-x-[10px] bg-[#EDF5F9] p-[10px] rounded-[6px]">
                             <Image
                                 src="/blueexclamatory.png"
                                 alt="icon"
@@ -86,108 +82,103 @@ const TrackOrder = (props: any) => {
                             </p>
                         </div> */}
 
-                        <TrackingPageView
-                            packageStatus={packageStatus}
-                            trackingDetail={tracking as Tracking[]}
-                        />
-                    </div>
-                    <div
-                        className={`w-1/4 h-full ${
-                            locale == "en"
-                                ? "pl-[20px] border-l-[0.4px] border-l-[#BBC2CF]"
-                                : "pr-[20px] border-r-[0.4px] border-r-[#BBC2CF]"
-                        }  space-y-[5px] `}
+            <TrackingPageView
+              packageStatus={packageStatus}
+              trackingDetail={tracking as Tracking[]}
+            />
+          </div>
+          <div
+            className={`w-1/4 h-full ${
+              locale == "en"
+                ? "pl-[20px] border-l-[0.4px] border-l-[#BBC2CF]"
+                : "pr-[20px] border-r-[0.4px] border-r-[#BBC2CF]"
+            }  space-y-[5px] `}
+          >
+            <div className="text-[#2B2B2B] text-[14px] leading-[21px] font-[500] border-b-[1px] border-b-[#BBC2CF] pb-[20px] ">
+              {t("trackingView.listOfTrackingId.Title")}
+            </div>
+            <div className="space-y-[10px]">
+              {(orders?.data as Order[])?.map((data) => {
+                return (
+                  <Link href={`/track/${data.maz_id}`} key={data.id}>
+                    <p
+                      className={`text-[#525D72] text-[10px] sm:text-[14px] overflow-ellipsis font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ${
+                        data.maz_id == router.query.id
+                          ? "bg-[#EDF5F9] text-[black]"
+                          : ""
+                      }`}
                     >
-                        <div className="text-[#2B2B2B] text-[14px] leading-[21px] font-[500] border-b-[1px] border-b-[#BBC2CF] pb-[20px] ">
-                            {t("trackingView.listOfTrackingId.Title")}
-                        </div>
-                        <div className="space-y-[10px]">
-                            {(orders?.data as Order[])?.map((data) => {
-                                return (
-                                    <Link
-                                        href={`/track/${data.maz_id}`}
-                                        key={data.id}
-                                    >
-                                        <p
-                                            className={`text-[#525D72] text-[10px] sm:text-[14px] overflow-ellipsis font-[500] leading-[21px] px-[5px] py-[15px] cursor-pointer hover:text-[#2B2B2B] hover:bg-[#EDF5F9] rounded-[4px] ${
-                                                data.maz_id == router.query.id
-                                                    ? "bg-[#EDF5F9] text-[black]"
-                                                    : ""
-                                            }`}
-                                        >
-                                            {data.maz_id}
-                                        </p>
-                                    </Link>
-                                );
-                            })}
-                        </div>
-                        {orders?.count > per_page && (
-                            <p
-                                className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
-                                onClick={loadMoreNotificationHandler}
-                            >
-                                {router.locale == "en"
-                                    ? " load more..."
-                                    : "تحميل المزيد"}
-                            </p>
-                        )}
-                    </div>
-                </div>
-            </Layout>
-        </UserPageWrapper>
-    );
+                      {data.maz_id}
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
+            {orders?.count > per_page && (
+              <p
+                className="text-[#35C6F4] text-[14px] font-[500] leading-[18px] cursor-pointer"
+                onClick={loadMoreNotificationHandler}
+              >
+                {router.locale == "en" ? " load more..." : "تحميل المزيد"}
+              </p>
+            )}
+          </div>
+        </div>
+      </Layout>
+    </UserPageWrapper>
+  );
 };
 
 export default TrackOrder;
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    const session = await getServerSession(
-        ctx.req as any,
-        ctx.res as any,
-        authOptions as any
-    );
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  const session = await getServerSession(
+    ctx.req as any,
+    ctx.res as any,
+    authOptions as any
+  );
 
-    // const { pathname } = ctx.req.url;
+  // const { pathname } = ctx.req.url;
 
-    if (!session) {
-        return {
-            redirect: {
-                destination: `/auth/gate?mode=1`,
-                permanent: false,
-            },
-        };
-    }
-
-    if (
-        (ctx.locale == "en" ? "english" : "arabic") !=
-        ((session as any)?.user as any).lang
-    ) {
-        return {
-            redirect: {
-                destination:
-                    ((session as any)?.user as any).lang === "english"
-                        ? `${ctx.resolvedUrl}`
-                        : `/ar${ctx.resolvedUrl}`,
-                permanent: false,
-            },
-        };
-    }
-    if (((session as any)?.user as any).is_admin) {
-        return {
-            redirect: {
-                destination: `/`,
-                permanent: false,
-            },
-        };
-    }
-
+  if (!session) {
     return {
-        props: {
-            ...(await serverSideTranslations(ctx.locale, ["common"])),
-        },
+      redirect: {
+        destination: `/auth/gate?mode=1`,
+        permanent: false,
+      },
     };
+  }
+
+  if (
+    (ctx.locale == "en" ? "english" : "arabic") !=
+    ((session as any)?.user as any).lang
+  ) {
+    return {
+      redirect: {
+        destination:
+          ((session as any)?.user as any).lang === "english"
+            ? `${ctx.resolvedUrl}`
+            : `/ar${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    };
+  }
+  if (((session as any)?.user as any).is_admin) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
+    },
+  };
 }
 
 // export const getStaticPaths = async () => {
