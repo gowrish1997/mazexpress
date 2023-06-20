@@ -72,15 +72,13 @@ const ProfilePicPop = (props: IProp) => {
       formData.append("email", session.user?.email);
 
       axios
-        .post(
-          "https://api.mazexpress.com.ly/api/upload-user-image",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        )
+        .post("https://api.mazexpress.com.ly/api/upload-user-image", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-access-token": session?.user?.token,
+          },
+        })
         .then(async (response) => {
-         
           if (response.data.ok === true) {
             createToast({
               type: "success",

@@ -16,6 +16,7 @@ import { user_bill_update } from "@/lib/emailContent/bodyContent";
 import { sentMail } from "@/lib/sentMail";
 import { APIResponse } from "@/models/api.model";
 import fetchServer from "@/lib/fetchServer";
+import { useSession } from "next-auth/react";
 
 interface IProp {
   type: string;
@@ -34,6 +35,7 @@ const schema = yup
   .required();
 
 const CreateNotificationModal = (props: IProp) => {
+  const { data: session }: { data: any; update: any } = useSession();
   const [showFileInputModal, setShowFileInputModal] = useState<boolean>(false);
   const [err_msg, setErr_msg] = useState("");
   const [files, setFiles] = useState<any>([]);
@@ -82,20 +84,19 @@ const CreateNotificationModal = (props: IProp) => {
         setErr_msg("Bill is required field");
         return;
       }
-      
+
       let formData = new FormData();
 
       formData.append("maz_id", props.order.maz_id);
       formData.append("bill_file", data.order_bill);
 
       axios
-        .post(
-          "https://api.mazexpress.com.ly/api/upload-bill-image",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        )
+        .post("https://api.mazexpress.com.ly/api/upload-bill-image", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-access-token": session?.user?.token,
+          },
+        })
         .then(async (response) => {
           if (response.data.ok === true) {
             createToast({

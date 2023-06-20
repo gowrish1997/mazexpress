@@ -1,17 +1,17 @@
-import { forwardRef, RefObject, useEffect, useState } from "react";
-import EachNotification from "./EachNotification";
-import fetchServer from "@/lib/fetchServer";
-import useNotifications from "@/lib/hooks/useNotifications";
-import Cancel from "../../public/cancel_svg.svg";
-import ClickOutside from "./ClickOutside";
+import {
+  default as fetchJson,
+  default as fetchServer,
+} from "@/lib/fetchServer";
+import { createToast } from "@/lib/toasts";
+import { Notification } from "@/models/notification.model";
+import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
-import { Notification } from "@/models/notification.model";
+import { forwardRef, RefObject, useEffect, useState } from "react";
+import Cancel from "../../public/cancel_svg.svg";
 import NotificatoinDetailModal from "../admin/modal/NotificatoinDetailModal";
-import fetchJson from "@/lib/fetchServer";
-import { createToast } from "@/lib/toasts";
-import axios from "axios";
+import ClickOutside from "./ClickOutside";
+import EachNotification from "./EachNotification";
 
 interface IProp {
   close: () => void;
