@@ -98,7 +98,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
       className="flex flex-col justify-start items-center mt-[40px] md:mt-[100px] "
       ref={ref}
     >
-      <div className="w-[95%] sm:w-[90%] xmd:w-[80%]  flex flex-col-reverse justify-start items-start min-[800px]:flex-type10 gap-x-[30px] gap-y-[15px] rounded-[8px] ">
+      <div className="w-[95%] sm:w-[90%] xmd:w-[80%] min-[1650px]:w-[60%] flex flex-col-reverse justify-start items-start min-[800px]:flex-type10 gap-x-[30px] gap-y-[15px] rounded-[8px] ">
         <div className="w-full min-[800px]:flex-1 h-full rounded-[16px]">
           <h1
             className={` text-[20px] table_md:text-[23px] ${
@@ -123,7 +123,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
                 id="email"
                 type="string"
                 {...register("email")}
-                className="community_form w-full h-[55px] lg:h-[55px] xlg:h-[70px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5] px-[10px] "
+                className="community_form w-full h-[55px] min-[1600px]:h-[60px] text-[18px] text-[#2B2B2B] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5]  px-[15px] py-[20px] "
                 placeholder={inputFieldLabel[0]}
               />
               {errors.email && (
@@ -138,7 +138,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
                 id="mobile"
                 type="number"
                 {...register("mobile")}
-                className="community_form w-full h-[55px] lg:h-[55px] xlg:h-[70px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5] px-[10px] "
+                className="community_form w-full h-[55px] min-[1600px]:h-[60px] text-[18px] text-[#2B2B2B] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5] px-[15px] py-[20px] "
                 placeholder={inputFieldLabel[1]}
               />
               {errors.mobile && (
@@ -182,7 +182,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             </div>
           </form>
         </div>
-        <div className="relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[460px]  ">
+        <div className="relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[470px]  ">
           <Image src={Map} alt="logo" fill />
         </div>
       </div>
