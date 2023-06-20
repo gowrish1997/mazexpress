@@ -7,8 +7,6 @@ export default async function fetchJson<JSON = any>(
   init?: RequestInit
 ): Promise<JSON> {
   const session = await getSession({ input });
-  console.log(session.user.token);
-  console.log(init);
 
   const environment = process.env.NODE_ENV;
   if (environment === "production") {
@@ -16,7 +14,13 @@ export default async function fetchJson<JSON = any>(
     const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
-        ? init
+        ? {
+            ...init,
+            headers: {
+              ...init.headers,
+              "x-access-token": session?.user?.token,
+            },
+          }
         : {
             headers: {
               "Content-Type": "application/json",
@@ -47,7 +51,13 @@ export default async function fetchJson<JSON = any>(
     const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
-        ? init
+        ? {
+            ...init,
+            headers: {
+              ...init.headers,
+              "x-access-token": session?.user?.token,
+            },
+          }
         : {
             headers: {
               "Content-Type": "application/json",
@@ -76,7 +86,13 @@ export default async function fetchJson<JSON = any>(
     const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}` + input,
       init
-        ? init
+        ? {
+            ...init,
+            headers: {
+              ...init.headers,
+              "x-access-token": session?.user?.token,
+            },
+          }
         : {
             headers: {
               "Content-Type": "application/json",
