@@ -2,7 +2,7 @@ import { APIResponse } from "@/models/api.model";
 import { Warehouse } from "@/models/warehouse.model";
 
 import useSWR from "swr";
-import fetchJson from "../fetchSelf";
+import fetchJson from "../fetchServer";
 
 interface IProp {}
 export default function useWarehouses() {

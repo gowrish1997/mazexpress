@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import LanguageSwitcher from "@/components/LandingPage/LanguageSwitcher";
-import AuthIcon from "@/public/auth_icon.png";
+import AuthIcon from "@/public/authIcon.svg";
 import New_logo from "@/public/new_logo_blue.png";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
+
 import { useRouter } from "next/router";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 import New_logo_white from "@/public/new_logo_white.png";
@@ -313,10 +314,16 @@ const HomepageNavbar = (props: {
                 {auth[0]}
               </Link>
               <div
-                className="relative h-[18px] w-[18px] add_sm:hidden cursor-pointer"
+                className=" h-[18px] w-[18px] add_sm:hidden cursor-pointer rounded-[50%]  flex justify-center items-center"
                 onClick={() => router.push("/auth/gate?mode=1")}
               >
-                <Image src={AuthIcon} fill alt="logo" />
+                <AuthIcon
+                  className={`${
+                    router.pathname == "/services"
+                      ? "auth_icon_svg_service"
+                      : "auth_icon_svg"
+                  }`}
+                />
               </div>
 
               <LanguageSwitcher color={props.color} />

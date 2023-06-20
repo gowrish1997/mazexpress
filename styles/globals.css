@@ -74,8 +74,7 @@ body {
   font-size: 16px;
   line-height: 21px;
   font-weight: 500;
-  color: #2B2B2B !important;
-
+  color: #2b2b2b !important;
 }
 
 input::-webkit-outer-spin-button,
@@ -1152,6 +1151,14 @@ abbr:where([title]) {
 .bell_svg path:hover {
   fill: transparent;
   stroke: #030303;
+}
+.auth_icon_svg path {
+  fill: transparent;
+  stroke: #030303;
+}
+.auth_icon_svg_service path {
+  fill: transparent;
+  stroke: white;
 }
 .cancel_svg path {
   stroke: #525d72;
