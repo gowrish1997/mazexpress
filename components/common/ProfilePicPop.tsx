@@ -100,7 +100,7 @@ const ProfilePicPop = (props: IProp) => {
         });
     }
   };
-
+console.log(session?.user?.avatar_url)
   return (
     <>
       {props.show && (
