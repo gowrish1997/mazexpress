@@ -51,9 +51,14 @@ const HomepageNavbar = (props: {
     setShowLogoutConfirmModal((prev) => !prev);
   };
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     try {
-      signOut();
+      await update(null);
+      router.push(
+        process.env.NODE_ENV !== "production"
+          ? `http://localhost:3000/auth/gate?mode=1`
+          : `https://${process.env.NEXT_PUBLIC_HOST}/auth/gate?mode=1`
+      );
     } catch (err) {
       if (err) console.error(err);
     }
