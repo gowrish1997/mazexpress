@@ -275,7 +275,9 @@ const HomepageNavbar = (props: {
           </ul>
           {session?.user ? (
             <div className="flex items-center gap-x-[15px] table_md:-mb-[11px]">
-              <div className="flex items-center gap-x-[10px]">
+              <div
+                className={`flex items-center gap-x-[10px] text-[${props.color}]`}
+              >
                 {/* <p>{session.user.email}</p> */}
                 {session.user.is_admin ? (
                   <Link href={"/admin"}>
@@ -290,12 +292,12 @@ const HomepageNavbar = (props: {
               <div className="hidden min-[850px]:block">
                 <button
                   onClick={toggleLogoutConfirmModal}
-                  className="bg-[#35C6F4] text-[#FFFFFF] rounded-[15px] px-[15px] py-[5px] "
+                  className="bg-[#FFFFFF] text-[#000000] rounded-[4px] px-[15px] py-[5px] "
                 >
                   {auth[2]}
                 </button>
               </div>
-              <LanguageSwitcher />
+              <LanguageSwitcher color={props.color} />
             </div>
           ) : (
             <div
@@ -317,7 +319,7 @@ const HomepageNavbar = (props: {
                 <Image src={AuthIcon} fill alt="logo" />
               </div>
 
-              <LanguageSwitcher />
+              <LanguageSwitcher color={props.color} />
             </div>
           )}
         </div>
