@@ -45,7 +45,7 @@ const SidebarModal = (props: IProp) => {
 
   const logoutHandler = async () => {
     try {
-      await update({});
+      await update(null);
     } catch (err) {
       if (err) console.error(err);
     }

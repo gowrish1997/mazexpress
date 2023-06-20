@@ -63,9 +63,9 @@ const Topbar = () => {
     setShowLogoutConfirmModal((prev) => !prev);
   };
 
-  const logoutHandler =async () => {
+  const logoutHandler = async () => {
     try {
-      await update({})
+      await update(null);
     } catch (err) {
       if (err) console.error(err);
     }
@@ -115,7 +115,7 @@ const Topbar = () => {
         </div>
         <div className="w-full md:flex-1 flex flex-row justify-between items-center ">
           <div className="md:hidden flex flex-row justify-start items-center  gap-x-[10px]">
-          <div className="mb-[22px] ">
+            <div className="mb-[22px] ">
               <SidebarModal logout={toggleLogoutConfirmModal} />
             </div>
             <Link href={"/"} passHref>
@@ -131,7 +131,6 @@ const Topbar = () => {
                 {/* <h3 className="font-semibold ml-4 font-[500] text-[20px]">Management</h3> */}
               </div>
             </Link>
-           
           </div>
           <div className="w-full md:flex-1 flex flex-row-reverse justify-start items-center">
             <div className="flex min-h-[65px] items-center justify-end  ">
