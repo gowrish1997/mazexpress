@@ -157,18 +157,22 @@
       "Desc": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",
       "content": [
         {
+          "Intro": "Warehouse",
           "Title": "Warehousing",
           "Content": " We specialize in providing warehousing services in Istanbul for customers who shop online from Turkish retailers. Our warehouse is equipped with security measures to ensure that your goods are safe and secure. We have a team of experienced professionals who manage our warehouse operations and ensure that your goods are handled with care and precision."
         },
         {
+          "Intro": "Shipping",
           "Title": "Shipping",
           "Content": "We understand that every customer has unique shipping needs, which is why we offer a wide range of transportation solutions tailored to meet your specific requirements. Whether you need air, sea, or land transportation services, we have the expertise and resources to get your goods where they need to go.."
         },
         {
+          "Intro": "Sea Shipping",
           "Title": "Sea shipping",
           "Content": " So, if you're looking for a reliable logistics partner to help you with your shipping needs, look no further than our company. Contact us today to learn more about our services and how we can help you streamline your shipping operations."
         },
         {
+          "Intro": "Tracking",
           "Title": "Online tracking",
           "Content": " Once your orders are placed, we collect them from the retailers and prepare them for shipment to Libya. Our transportation services are designed to be fast, reliable, and cost-effective. We work with a network of trusted carriers to ensure that your goods arrive at their destination on time and in perfect condition."
         }
@@ -195,7 +199,7 @@
       ]
     },
     "ourCustomer": {
-      "Title":" our customers choose us",
+      "Title": " our customers choose us",
       "content": [
         {
           "value": "500+",

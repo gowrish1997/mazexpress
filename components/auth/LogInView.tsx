@@ -10,7 +10,6 @@ import * as yup from "yup";
 import { signIn } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import logo from "../../public/new_logo_blue.png";
-import LogInWithMail from "./LogInWithMail";
 type Inputs = {
   password: string;
   username: string;

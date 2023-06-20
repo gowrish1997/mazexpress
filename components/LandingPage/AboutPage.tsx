@@ -1,17 +1,15 @@
-import AboutPlane from "@/public/aboutPlane.png";
+import AboutCustomer from "@/public/AboutCusotmer.png";
+import AboutTruck from "@/public/AboutTruck.png";
+import AboutGoods from "@/public/Aboutgoods.png";
+import AboutShipPlane from "@/public/ShipPlane.png";
+import AboutShip from "@/public/aboutblueImage.png";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
-import Footer from "./Footer";
-import AboutShip from "@/public/aboutShip.png";
-import AbputGoods from "@/public/Aboutgoods.png";
-import AboutShipPlane from "@/public/ShipPlane.png";
-import AboutTruck from "@/public/AboutTruck.png";
-import AboutCustomer from "@/public/AboutCusotmer.png";
 import HomepageNavbar from "../common/HomepageNavbar";
 
-const aboutImage = [AbputGoods, AboutShipPlane, AboutTruck, AboutCustomer];
+const aboutImage = [AboutGoods, AboutShipPlane, AboutTruck, AboutCustomer];
 
 const About = React.forwardRef<HTMLDivElement>((props, ref) => {
   const router = useRouter();
@@ -53,16 +51,16 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
           </p>
         </div>
       </div>
-      <h1 className="w-[95%] sm:hidden text-[20px] add_sm:text-[27px] xmd:text-[45px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] text-[#090914] font-[700] mt-[60px] ">
+      <h1 className="w-[95%] sm:hidden text-[20px] add_sm:text-[27px] xmd:text-[45px] min-[1650px]:text-[50px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] min-[1650px]:leading-[68px] text-[#090914] font-[700] mt-[60px] ">
         {t("landingPage.about.Caption")}
       </h1>
       <div className="w-[95%] sm:w-[90%] xmd:w-[80%] flex flex-col-reverse sm:flex-row  justify-between items-center  sm:mt-[60px] xmd:mt-[80px] ">
         <div className="w-[100%] md:w-[45%] flex flex-col justify-start items-start gap-y-[10px] ">
-          <h1 className="hidden sm:block text-[22px] add_sm:text-[27px] xmd:text-[45px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] text-[#090914] font-[700]">
+          <h1 className="hidden sm:block text-[22px] add_sm:text-[27px] xmd:text-[45px] min-[1650px]:text-[50px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] min-[1650px]:leading-[68px] text-[#090914] font-[700]">
             {t("landingPage.about.Caption")}
           </h1>
           <p
-            className={`w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] leading-[20px] add_sm:leading-[24px] xmd:leading-[36px] text-[#606060] font-[600]  ${
+            className={`w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] min-[1650px]:text-[24px] leading-[20px] add_sm:leading-[24px] xmd:leading-[36px] text-[#606060] font-[600]  ${
               router.locale == "en" ? "text-left" : "text-right"
             }`}
           >
@@ -89,7 +87,7 @@ const About = React.forwardRef<HTMLDivElement>((props, ref) => {
             >
               <div className="flex flex-col gap-y-[10px]">
                 {" "}
-                <p className="text-[15px] add_sm:text-[17px] xmd:text-[20px] leading-[20px] add_sm:leading-[23px] xmd:leading-[27px] text-[#090914] font-[600]">
+                <p className="text-[15px] add_sm:text-[17px] xmd:text-[20px] min-[1650px]:text-[24px] leading-[20px] add_sm:leading-[23px] xmd:leading-[27px] min-[1650px]:leading-[33px] text-[#090914] font-[600]">
                   {data.Title}
                 </p>
                 <p className="text-[13px] add_sm:text-[14px] xmd:text-[16px] leading-[16px] add_sm:leading-[19px] xmd:leading-[22px] text-[#474747] font-[500]">

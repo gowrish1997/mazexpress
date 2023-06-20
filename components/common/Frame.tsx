@@ -31,7 +31,7 @@ const Frame = (props: IFrameProps) => {
       <div className="flex bg-[#FFFFFF] relative min-h-screen w-full">
         {!(
           router.pathname == "/" ||
-          router.pathname.includes("/auth") ||
+          router.pathname == "/auth/gate" ||
           router.pathname == "/about" ||
           router.pathname == "/services" ||
           router.pathname == "/404" ||
@@ -43,7 +43,7 @@ const Frame = (props: IFrameProps) => {
         )}
         {!(
           router.pathname == "/" ||
-          router.pathname.includes("/auth") ||
+          router.pathname == "/auth/gate" ||
           router.pathname == "/about" ||
           router.pathname == "/services" ||
           router.pathname == "/404" ||

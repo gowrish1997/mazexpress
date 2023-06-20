@@ -12,7 +12,7 @@ import serviceSeaship from "@/public/serviceSeaShip.png";
 import serviceOnline from "@/public/ServiceOnine.png";
 import HomepageNavbar from "../common/HomepageNavbar";
 
-const pngImages = [Warehouse, Vehicle, Location, Ship];
+const pngImages = [Warehouse, Vehicle, Ship, Location];
 const serviceImage = [
   serviceWarehouse,
   serviceShip,
@@ -25,7 +25,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
   const { t } = useTranslation("");
   const { locale } = router;
 
-  var content: { Title: string; Content: string }[] = t(
+  var content: { Intro: string; Title: string; Content: string }[] = t(
     "landingPage.service.content",
     {
       returnObjects: true,
@@ -95,7 +95,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </div>
                   <p className="text-[13px] md:text-[16px] xmd:text-[18px] leading-[21px] md:leading-[22px] xmd:leading-[28px] font-[600] text-[#475569] ">
                     {" "}
-                    {data.Title}
+                    {data.Intro}
                   </p>
                 </div>
                 <h1 className="text-[20px] md:text-[24px] xmd:text-[30px] leading-[33px] md:leading-[36px]  xmd:leading-[45px] font-[700] text-[#090914] ">
@@ -122,7 +122,9 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                   }`}
                 >
                   <div
-                    className={`flex flex-row  items-center justify-start gap-x-[5px]  `}
+                    className={`flex ${
+                      index % 2 == 0 ? "flex-row" : "flex-row-reverse"
+                    }  items-center justify-start gap-x-[5px]  `}
                   >
                     <div className="w-[22px] aspect-square relative ">
                       <Image
@@ -134,7 +136,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
                     </div>
                     <p className="text-[13px] md:text-[16px] xmd:text-[18px] leading-[21px] md:leading-[22px] xmd:leading-[28px] font-[600] text-[#475569] ">
                       {" "}
-                      {data.Title}
+                      {data.Intro}
                     </p>
                   </div>
                   <h1 className="text-[20px] md:text-[24px] xmd:text-[30px] leading-[33px] md:leading-[36px]  xmd:leading-[45px] font-[700] text-[#090914] ">
