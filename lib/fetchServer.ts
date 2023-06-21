@@ -61,7 +61,7 @@ export default async function fetchJson<JSON = any>(
               "Content-Type": "application/json",
               "x-access-token": session?.user?.token,
             },
-          }
+        }
     );
 
     // const response = await fetch(

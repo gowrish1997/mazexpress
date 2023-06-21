@@ -182,17 +182,9 @@ const ResetPasswordView = (props: any) => {
         <ReactHookFormInput
           label={inputFieldLabel[0]}
           name="password"
-          type={passwordType}
+          type="password"
           register={register("password")}
           error={errors.password?.message && inputFieldErrors[0]}
-          icon={{
-            isEnabled: true,
-            src:
-              passwordType === "password"
-                ? "/eyeIconClose.png"
-                : "/eyeIconOpen.png",
-          }}
-          onClick={togglePasswordTypeHandler}
         />
 
         <ReactHookFormInput
