@@ -1,5 +1,6 @@
 import { user_enquiry } from "@/lib/emailContent/bodyContent";
 import fetchJson from "@/lib/fetchServer";
+import { sentMail } from "@/lib/sentMail";
 import { createToast } from "@/lib/toasts";
 import Map from "@/public/LibiyaMap.png";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -83,7 +84,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
         timeOut: 2000,
       });
       try {
-        // sentMail(toList);
+        sentMail(toList);
       } catch (error) {
         console.error(error);
       }
