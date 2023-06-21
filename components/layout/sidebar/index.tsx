@@ -41,6 +41,7 @@ const Sidebar = () => {
   const logoutHandler = async () => {
     try {
       await update(null);
+      localStorage.removeItem("nextauth.message");
       router.push(
         process.env.NODE_ENV !== "production"
           ? `http://localhost:3000/auth/gate?mode=1`
