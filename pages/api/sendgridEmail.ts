@@ -32,7 +32,7 @@ export default async function handler(
   const toList = req.body.map((data: IBody) => {
     if (data.toType == "admin") {
       return {
-        from: "info@mazexpress.com.ly",
+        from: "Maz express",
         to:
           data.type == "enquiry"
             ? "zeomohamedali@gmail.com"
@@ -52,7 +52,7 @@ export default async function handler(
       };
     } else {
       return {
-        from: "info@mazexpress.com.ly",
+        from: "Maz express",
         to: data.toMail,
         subject: `New Message from maz express team`,
         html: `<p>${userMailBody(
