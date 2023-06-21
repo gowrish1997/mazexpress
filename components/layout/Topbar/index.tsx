@@ -81,7 +81,7 @@ const Topbar = () => {
   // }, [user, notificationsIsLoading]);
 
   // if(!notifications) return <div>notifications loading</div>
-  console.log("whtile logout iam callin this");
+
   return (
     <>
       <div className="flex flex-col-reverse md:flex-row w-full  min-h-[60px] py-5 items-center justify-between sticky top-0 bg-[#ffffff] z-30">

@@ -6,7 +6,6 @@ export default async function fetchJson<JSON = any>(
   input: RequestInfo,
   init?: RequestInit
 ): Promise<JSON> {
-  console.log(input, init);
   const session = await getSession({ input });
 
   const environment = process.env.NODE_ENV;

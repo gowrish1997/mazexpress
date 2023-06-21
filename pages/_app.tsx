@@ -3,6 +3,7 @@ import fetchServer, { FetchError } from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
 import "@/styles/globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { useSession } from "next-auth/react";
 import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
 import type { AppProps } from "next/app";
@@ -96,12 +97,14 @@ function App({ Component, pageProps }: AppProps) {
         value={{
           fetcher: fetchServer,
           onError: (err) => {
-            createToast({
-              type: "error",
-              title: err.name,
-              message: err.message,
-              timeOut: 3000,
-            });
+            if (pageProps.session) {
+              createToast({
+                type: "error",
+                title: err.name,
+                message: err.message,
+                timeOut: 3000,
+              });
+            }
           },
         }}
       >
