@@ -98,9 +98,11 @@ const MaxExpressFlowDiagram = () => {
             </div>
           </div>
 
-          <p className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px]${
+          <p
+            className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px]${
               router.locale == "en" ? "text-left" : "text-right"
-            } z-10   `}>
+            } z-10   `}
+          >
             {flowText[1]}
           </p>
         </div>
@@ -120,7 +122,11 @@ const MaxExpressFlowDiagram = () => {
         </div>
         <div className="w-full flex flex-row sm:flex-col justify-start items-center sm:items-start gap-y-[20px] gap-x-[10px]">
           <div className="flex flex-row justify-start items-center ">
-            <div className="h-[56px] w-[56px] relative sm:mt-[5px]">
+            <div
+              className={`h-[56px] w-[56px] relative sm:mt-[5px] ${
+                locale == "ar" ? "transform -scale-x-100" : ""
+              }`}
+            >
               <Image
                 src={Plane}
                 fill
@@ -146,9 +152,11 @@ const MaxExpressFlowDiagram = () => {
             </div>
           </div>
 
-          <p className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] ${
+          <p
+            className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] ${
               router.locale == "en" ? "text-left" : "text-right"
-            } z-10  `}>
+            } z-10  `}
+          >
             {flowText[2]}
           </p>
         </div>
@@ -175,9 +183,11 @@ const MaxExpressFlowDiagram = () => {
               alt="document"
             />
           </div>
-          <p className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] ${
+          <p
+            className={` box-border  text-[14px] text-[#2B2B2B] font-[700] leading-[20px] ${
               router.locale == "en" ? "text-left" : "text-right"
-            }  z-10  `}>
+            }  z-10  `}
+          >
             {flowText[3]}
           </p>
         </div>
