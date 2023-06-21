@@ -2,10 +2,9 @@ import sendgrid from "@sendgrid/mail";
 
 sendgrid.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY as string);
 
-import type { NextApiRequest, NextApiResponse } from "next";
-import { userMailBody } from "@/lib/emailContent/userEmailHtmlOutput";
 import { adminMailBody } from "@/lib/emailContent/adminEmailHtmlOutput";
-import nodemailer from "nodemailer";
+import { userMailBody } from "@/lib/emailContent/userEmailHtmlOutput";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 interface IBody {
   type: string;
@@ -34,7 +33,10 @@ export default async function handler(
     if (data.toType == "admin") {
       return {
         from: "info@mazexpress.com.ly",
-        to: "info@mazexpress.com.ly",
+        to:
+          data.type == "enquiry"
+            ? "zeomohamedali@gmail.com"
+            : "info@mazexpress.com.ly",
         subject: data.subject
           ? data.subject
           : `New Message from maz express team`,

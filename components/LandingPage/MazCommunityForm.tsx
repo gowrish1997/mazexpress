@@ -1,16 +1,15 @@
 import { user_enquiry } from "@/lib/emailContent/bodyContent";
 import fetchJson from "@/lib/fetchServer";
-import { sentMail } from "@/lib/sentMail";
 import { createToast } from "@/lib/toasts";
+import Map from "@/public/LibiyaMap.png";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
-import ReactHookFormInput from "../common/ReactHookFormInput";
-import Map from "@/public/LibiyaMap.png";
-import Image from "next/image";
+
 
 const schema = yup
   .object({
@@ -55,20 +54,20 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     // console.log(data);
-    // const toList = [
-    //   {
-    //     type: "enquiry",
-    //     toType: "admin",
-    //     header: "New enquiry ✨",
-    //     toName: "admin",
-    //     bodyContent: user_enquiry(data.message),
-    //     userName: "",
-    //     userProfile: "",
-    //     userContactNumber: data.mobile,
-    //     userEmail: data?.email,
-    //     subject: "New enquiry from user",
-    //   },
-    // ];
+    const toList = [
+      {
+        type: "enquiry",
+        toType: "admin",
+        header: "New enquiry ✨",
+        toName: "admin",
+        bodyContent: user_enquiry(data.message),
+        userName: "",
+        userProfile: "",
+        userContactNumber: data.mobile,
+        userEmail: data?.email,
+        subject: "New enquiry from user",
+      },
+    ];
 
     try {
       const result0 = await fetchJson(`/api/contact-form`, {
