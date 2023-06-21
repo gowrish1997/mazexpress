@@ -192,7 +192,7 @@ const ResetPasswordView = (props: any) => {
                 ? "/eyeIconClose.png"
                 : "/eyeIconOpen.png",
           }}
-          onClick={toggleConfirmPasswordTypeHandler}
+          onClick={togglePasswordTypeHandler}
         />
 
         <ReactHookFormInput
