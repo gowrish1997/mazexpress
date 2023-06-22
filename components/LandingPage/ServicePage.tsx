@@ -80,7 +80,7 @@ const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
           {t("landingPage.service.Desc")}
         </p>
       </div>
-      <div className="w-[95%] table_md:w-[80%] flex flex-col justify-start items-center mt-[50px] gap-y-[30px] add_sm:gap-y-[60px]">
+      <div className="w-[95%] table_md:w-[80%] min-[1650px]:w-[60%] flex flex-col justify-start items-center mt-[50px] gap-y-[30px] add_sm:gap-y-[60px]">
         {content.map((data, index) => {
           return (
             <div
@@ -88,7 +88,7 @@ const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                 index % 2 == 0
                   ? "flex-col add_sm:flex-row "
                   : "flex-col add_sm:flex-row-reverse"
-              } justify-center items-start gap-x-[30px] gap-y-[10px] `}
+              } justify-center items-start gap-x-[40px]  gap-y-[10px] `}
               key={index}
             >
               <div className="add_sm:hidden">
@@ -113,21 +113,28 @@ const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                   {data.Title}
                 </h1>
               </div>
-              <div className="w-[100%] aspect-[1/0.5] add_sm:w-[32%]  min-[1600px]:w-[28%] add_sm:aspect-square relative ">
-                <Image
-                  src={serviceImage[index]}
-                  fill
-                  style={{ objectFit: "fill" }}
-                  alt="document"
-                />
-              </div>
               <div
-                className={`w-[100%] add_sm:w-[50%] min-[1700px]:w-[40%] flex flex-col justify-start ${
+                className={`w-[100%] add_sm:flex-1 flex flex-row    ${
+                  index % 2 == 0 ? "justify-end" : "justify-start"
+                }`}
+              >
+                <div className="relative w-[100%] add_sm:w-[85%] xmd:w-[75%] min-[1400px]:w-[65%] min-[1650px]:w-[75%] aspect-[1/0.5] add_sm:aspect-[1/0.95]  ">
+                  <Image
+                    src={serviceImage[index]}
+                    fill
+                    className="mr-0"
+                    alt="document"
+                  />
+                </div>
+              </div>
+
+              <div
+                className={`flex-1  flex flex-col justify-start ${
                   index % 2 == 0 ? "items-start" : "items-end"
                 } `}
               >
                 <div
-                  className={`hidden add_sm:flex flex-col justify-start ${
+                  className={`hidden add_sm:w-[100%] add_sm:flex flex-col justify-start ${
                     index % 2 == 0 ? "items-start" : "items-end"
                   }`}
                 >
@@ -155,7 +162,7 @@ const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                   </h1>
                 </div>
                 <div
-                  className={`text-[13px] md:text-[18px] xmd:text-[21px] min-[1400px]:text-[24px] leading-[21px] md:leading-[22px] xmd:leading-[30px] min-[1400px]:leading-[36px] font-[400] text-[#606060] ${
+                  className={`xmd:w-[85%] min-[1400px]:w-[80%] min-[1650px]:w-[85%] text-[14px] md:text-[19px]  xmd:text-[20px] leading-[21px] md:leading-[25px] xmd:leading-[30px]  font-[400] text-[#606060] ${
                     router.locale == "en" ? "text-left" : "text-right"
                   } ${
                     index % 2 == 0
