@@ -88,7 +88,7 @@ const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                 index % 2 == 0
                   ? "flex-col add_sm:flex-row "
                   : "flex-col add_sm:flex-row-reverse"
-              } justify-center items-start gap-x-[40px]  gap-y-[10px] `}
+              } justify-center items-start md:gap-x-[15px] table_md:gap-x-[25px] xmd:gap-x-[40px]  gap-y-[10px] `}
               key={index}
             >
               <div className="add_sm:hidden">
