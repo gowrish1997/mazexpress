@@ -54,6 +54,7 @@ const HomepageNavbar = (props: {
 
   const logoutHandler = async () => {
     try {
+      localStorage.removeItem("nextauth.message");
       signOut();
       // await update(null);
       // localStorage.removeItem("nextauth.message");

@@ -72,6 +72,7 @@ const LogInComponent = (props: any) => {
       });
 
       if (returnDate.ok) {
+        router.push(returnDate.url);
         // router.push(
         //   process.env.NODE_ENV !== "production"
         //     ? `http://localhost:3000/`
