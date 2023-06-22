@@ -1,20 +1,20 @@
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import LanguageSwitcher from "@/components/LandingPage/LanguageSwitcher";
 import AuthIcon from "@/public/authIcon.svg";
-import New_logo from "@/public/new_logo_blue.png";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
+import New_logo_white from "@/public/new_logo_white.png";
 import { useRouter } from "next/router";
 import LogoutConfirmModal from "./LogoutConfirmModal";
-import New_logo_white from "@/public/new_logo_white.png";
 
 const HomepageNavbar = (props: {
   color: string;
+  classname?: string;
   shipmentCalculatorSectionRef?: any;
   supportSectionRef?: any;
   enquirySectionRef?: any;
@@ -70,7 +70,9 @@ const HomepageNavbar = (props: {
 
   return (
     <>
-      <div className="px-[10px] md:px-[30px] xmd:px-[150px]  z-30 pt-[20px] ">
+      <div
+        className={`px-[10px] md:px-[30px] xmd:px-[150px] z-30 pt-[20px] ${props.classname}`}
+      >
         <div className=" w-full flex flex-row justify-between items-center  text-[14px] text-[#121212] font-[500] leading-[24px] ">
           <div className="flex flex-row justify-between items-center gap-x-[20px] ">
             <div className="table_md:hidden relative ">
@@ -121,38 +123,53 @@ const HomepageNavbar = (props: {
                      >
                        {t(section[0])}
                      </li> */}
+                      {router.pathname == "/about" ||
+                      router.pathname == "/services" ? (
+                        <li
+                          className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px]"
+                          onClick={() => router.push("/")}
+                        >
+                          {t(section[0])}
+                        </li>
+                      ) : (
+                        ""
+                      )}
 
                       <li
-                        className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                        className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px] "
                         onClick={() => router.push("/about")}
                       >
                         {t(section[3])}
                       </li>
                       <li
-                        className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                        className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px] "
                         onClick={() => router.push("/services")}
                       >
                         {t(section[4])}
                       </li>
-                      {!(
-                        router.pathname == "/about" ||
-                        router.pathname == "/services"
-                      ) ? (
+                      {!(router.pathname == "/TermsAndCondition") ? (
                         <>
+                          {!(
+                            router.pathname == "/about" ||
+                            router.pathname == "/services"
+                          ) ? (
+                            <li
+                              className="cursor-pointer hover:bg-[#EDF5F9]"
+                              onClick={() =>
+                                props.shipmentCalculatorSectionRef?.current?.scrollIntoView(
+                                  {
+                                    behavior: "smooth",
+                                  }
+                                )
+                              }
+                            >
+                              {t(section[1])}
+                            </li>
+                          ) : (
+                            ""
+                          )}
                           <li
-                            className={`cursor-pointer   `}
-                            onClick={() =>
-                              props.shipmentCalculatorSectionRef?.current?.scrollIntoView(
-                                {
-                                  behavior: "smooth",
-                                }
-                              )
-                            }
-                          >
-                            {t(section[1])}
-                          </li>
-                          <li
-                            className={`cursor-pointer `}
+                            className="cursor-pointer hover:bg-[#EDF5F9]"
                             onClick={() =>
                               props.enquirySectionRef?.current?.scrollIntoView({
                                 behavior: "smooth",
@@ -162,7 +179,7 @@ const HomepageNavbar = (props: {
                             {t(section[5])}
                           </li>
                           <li
-                            className={`cursor-pointer `}
+                            className={`cursor-pointer hover:bg-[#EDF5F9] `}
                             onClick={() =>
                               props.supportSectionRef?.current?.scrollIntoView({
                                 behavior: "smooth",
@@ -208,8 +225,15 @@ const HomepageNavbar = (props: {
             </div>
           </div>
           <ul
-            className={` flex-type3 gap-x-[20px] hidden table_md:flex -mb-[5px] text-[14px]  font-[500] text-[${props.color}]`}
+            className={` flex-type3 gap-x-[20px] hidden table_md:flex -mb-[5px] text-[14px]  font-[500] text-[${props.color}] ml-[140px] `}
           >
+            {router.pathname == "/about" || router.pathname == "/services" ? (
+              <li className="cursor-pointer" onClick={() => router.push("/")}>
+                {t(section[0])}
+              </li>
+            ) : (
+              ""
+            )}
             <li
               className={`cursor-pointer ${
                 router.pathname.includes("about")
@@ -230,26 +254,29 @@ const HomepageNavbar = (props: {
             >
               {t(section[4])}
             </li>
-            {!(
-              router.pathname == "/about" ||
-              router.pathname == "/services" ||
-              router.pathname == "/TermsAndCondition"
-            ) ? (
+            {!(router.pathname == "/TermsAndCondition") ? (
               <>
-                <li
-                  className={`cursor-pointer
-                   
-                    `}
-                  onClick={() =>
-                    props.shipmentCalculatorSectionRef?.current?.scrollIntoView(
-                      {
-                        behavior: "smooth",
-                      }
-                    )
-                  }
-                >
-                  {t(section[1])}
-                </li>
+                {!(
+                  router.pathname == "/about" || router.pathname == "/services"
+                ) ? (
+                  <li
+                    className={`cursor-pointer
+              
+               `}
+                    onClick={() =>
+                      props.shipmentCalculatorSectionRef?.current?.scrollIntoView(
+                        {
+                          behavior: "smooth",
+                        }
+                      )
+                    }
+                  >
+                    {t(section[1])}
+                  </li>
+                ) : (
+                  ""
+                )}
+
                 <li
                   className={`cursor-pointer `}
                   onClick={() =>

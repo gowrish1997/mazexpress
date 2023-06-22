@@ -13,6 +13,11 @@ import serviceOnline from "@/public/ServiceOnine.png";
 import HomepageNavbar from "../common/HomepageNavbar";
 
 const pngImages = [Warehouse, Vehicle, Ship, Location];
+interface Iprop {
+  calRef: React.MutableRefObject<HTMLDivElement>;
+  enquiryRef: React.MutableRefObject<HTMLDivElement>;
+  supportRef: React.MutableRefObject<HTMLDivElement>;
+}
 const serviceImage = [
   serviceWarehouse,
   serviceShip,
@@ -20,7 +25,7 @@ const serviceImage = [
   serviceOnline,
 ];
 
-const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
+const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
@@ -38,7 +43,7 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
       ref={ref}
     >
       <div
-        className="w-full h-[350px] add_sm:h-[400px] xmd:h-[500px] relative "
+        className="w-full h-[350px] add_sm:h-[400px] xmd:h-[550px] relative "
         style={{
           backgroundImage: `url('/servicePlaneLayer.png'),url('/serviceplane.png')`,
           backgroundPosition: "center center,center center",
@@ -48,16 +53,21 @@ const Service = React.forwardRef<HTMLDivElement>((props, ref) => {
         }}
       >
         <div className="">
-          <HomepageNavbar color="#FFFFFF" />
+          <HomepageNavbar
+            color="#FFFFFF"
+            shipmentCalculatorSectionRef={props.calRef}
+            enquirySectionRef={props.enquiryRef}
+            supportSectionRef={props.supportRef}
+          />
         </div>
-        <div className="w-[100%] absolute top-[25%]  left-0 flex flex-col justify-start items-center gap-y-[20px] ">
+        <div className="w-[100%] absolute top-[35%]  left-0 flex flex-col justify-start items-center gap-y-[20px] ">
           <h1
             className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#FFFFFF] font-[700] "
             style={{ fontFamily: "manRope" }}
           >
             {t("landingPage.service.Title")}
           </h1>
-          <p className="text-[14px] add_sm:text-[18px] xmd:text-[22px] leading-[22px] add_sm:leading-[28px] xmd:leading-[30px] text-[#FFFFFF] font-[400] w-[80%] add_sm:w-[70%] xmd:w-[45%] text-center">
+          <p className="text-[14px] add_sm:text-[18px] xmd:text-[22px] leading-[22px] add_sm:leading-[28px] xmd:leading-[33px] text-[#FFFFFF] font-[400] w-[80%] add_sm:w-[70%] xmd:w-[45%] min-[1650px]:w-[38%] text-center">
             {t("landingPage.service.Description")}
           </p>
         </div>

@@ -59,19 +59,28 @@ const HomePageWrapper = (props: IProp) => {
           {t("landingPage.Header")}
         </div>
 
-        {props.type == "home"
+        {/* {props.type == "home"
           ? props.render(
               shipmentCalculatorSectionRef,
               enquirySectionRef,
               supportSectionRef
             )
-          : props.render()}
-        <div id="enquirySection">
-          <MazCommunityForm ref={enquirySectionRef} />
-        </div>
-        <div className="w-full" id="supportSection">
-          <Footer ref={supportSectionRef} />
-        </div>
+          : props.render()} */}
+        {props.render(
+          shipmentCalculatorSectionRef,
+          enquirySectionRef,
+          supportSectionRef
+        )}
+        {!(router.pathname == "/TermsAndCondition") && (
+          <>
+            <div id="enquirySection">
+              <MazCommunityForm ref={enquirySectionRef} />
+            </div>
+            <div className="w-full" id="supportSection">
+              <Footer ref={supportSectionRef} />
+            </div>
+          </>
+        )}
       </div>
     </>
   );
