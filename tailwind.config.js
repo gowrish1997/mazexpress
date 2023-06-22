@@ -19,6 +19,10 @@ module.exports = {
 
       // => @media (min-width: 640px) { ... }
     },
+    fontFamily: {
+      manrope: ["manRope"],
+      inter: ["Inter"],
+    },
   },
   extend: {
     scale: {

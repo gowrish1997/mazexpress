@@ -11,7 +11,7 @@ export default function LanguageSwitcher(props: { color: string }) {
   const otherLocales = locales?.filter((locale) => locale !== activeLocale);
 
   return (
-    <span className="text-muted cursor-pointer">
+    <span className="text-muted cursor-pointer text-[16px] "> 
       {otherLocales?.map((locale) => {
         const { pathname, query, asPath } = router;
         return (

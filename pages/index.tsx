@@ -130,7 +130,7 @@ const Index = () => {
                       <p
                         className={`w-[100%] min-[900px]:w-[35%] ${
                           router.locale == "en" ? "text-left" : "text-right"
-                        } text-[14px] add_sm:text-[16px] table_md:text-[18px]  text-[#121212] font-[700] add_sm:leading-[22px] leading-[18px] table_md:leading-[25px]  mt-[15px]  `}
+                        } text-[14px] add_sm:text-[16px] table_md:text-[18px]  text-[#121212] font-[700] add_sm:leading-[22px] leading-[18px] table_md:leading-[25px]  mt-[15px] font-inter  `}
                       >
                         {t("landingPage.welcome.Caption")}
                       </p>
@@ -152,7 +152,7 @@ const Index = () => {
                           onChange={trackingIdInputHandler}
                         />
                         <button
-                          className="h-full bg-[#35C6F4] rounded-[10px] px-[10px] text-[12px] sm:text-[16px] text-[#FFFFFF] font-[400] leading-[24px]"
+                          className="h-full bg-[#35C6F4] rounded-[10px] px-[10px] text-[12px] sm:text-[16px] text-[#FFFFFF] font-[400] leading-[24px] font-manrope " 
                           onClick={openPackageTrackingModal}
                         >
                           {t("landingPage.trackOrder.SubmitButton")}

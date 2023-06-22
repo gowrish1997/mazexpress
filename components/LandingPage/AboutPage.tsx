@@ -53,24 +53,24 @@ const About = React.forwardRef<HTMLDivElement, Iprop>((props: Iprop, ref) => {
         </div>
 
         <div className="absolute top-[30%] left-0 w-[100%] flex flex-col justify-start items-center gap-y-[20px] ">
-          <h1 className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#090914] font-[700]">
+          <h1 className="text-[30px] add_sm:text-[40px] xmd:text-[50px] leading-[30px] add_sm:leading-[45px] xmd:leading-[62px] text-[#090914] font-[700] font-manrope ">
             {t("landingPage.about.Title")}
           </h1>
-          <p className="text-[14px] add_sm:text-[18px] xmd:text-[22px] leading-[22px] add_sm:leading-[28px] xmd:leading-[35px] text-[#606060] font-[600] w-[80%] add_sm:w-[70%] xmd:w-[65%] min-[1650px]:w-[53%] text-center">
+          <p className="text-[14px] add_sm:text-[18px] xmd:text-[22px] leading-[22px] add_sm:leading-[28px] xmd:leading-[35px] text-[#606060] font-[600] w-[80%] add_sm:w-[70%] xmd:w-[65%] min-[1650px]:w-[53%] text-center font-inter ">
             {t("landingPage.about.Description")}
           </p>
         </div>
       </div>
-      <h1 className="w-[95%] sm:hidden text-[20px] add_sm:text-[27px] xmd:text-[45px] min-[1650px]:text-[50px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] min-[1650px]:leading-[68px] text-[#090914] font-[700] mt-[60px] ">
+      <h1 className="w-[95%] sm:hidden text-[20px] add_sm:text-[27px] xmd:text-[45px] min-[1650px]:text-[50px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] min-[1650px]:leading-[68px] text-[#090914] font-[700] mt-[60px] font-manrope ">
         {t("landingPage.about.Caption")}
       </h1>
       <div className="w-[95%] sm:w-[90%] xmd:w-[77%] min-[1650px]:w-[72%] flex flex-col-reverse sm:flex-row  justify-between items-center  sm:mt-[60px] xmd:mt-[80px] ">
         <div className="w-[100%] md:w-[45%] flex flex-col justify-start items-start gap-y-[10px] ">
-          <h1 className="hidden sm:block text-[22px] add_sm:text-[27px] xmd:text-[45px] min-[1650px]:text-[50px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] min-[1650px]:leading-[68px] text-[#090914] font-[700]">
+          <h1 className="hidden sm:block text-[22px] add_sm:text-[27px] xmd:text-[45px] min-[1650px]:text-[50px] leading-[30px] add_sm:leading-[40px] xmd:leading-[62px] min-[1650px]:leading-[68px] text-[#090914] font-[700] font-manrope ">
             {t("landingPage.about.Caption")}
           </h1>
           <p
-            className={`w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] min-[1650px]:text-[24px] leading-[20px] add_sm:leading-[24px] xmd:leading-[36px] text-[#606060] font-[600]  ${
+            className={`w-full text-[14px] add_sm:text-[16px] xmd:text-[22px] min-[1650px]:text-[24px] leading-[20px] add_sm:leading-[24px] xmd:leading-[36px] text-[#606060] font-[600] font-inter ${
               router.locale == "en" ? "text-left" : "text-right"
             }`}
           >
@@ -100,7 +100,7 @@ const About = React.forwardRef<HTMLDivElement, Iprop>((props: Iprop, ref) => {
                 <p className="text-[15px] add_sm:text-[17px] xmd:text-[20px] min-[1650px]:text-[24px] leading-[20px] add_sm:leading-[23px] xmd:leading-[27px] min-[1650px]:leading-[33px] text-[#090914] font-[600]">
                   {data.Title}
                 </p>
-                <p className="text-[13px] add_sm:text-[14px] xmd:text-[16px] leading-[16px] add_sm:leading-[19px] xmd:leading-[22px] text-[#474747] font-[500]">
+                <p className="text-[13px] add_sm:text-[14px] xmd:text-[16px] leading-[16px] add_sm:leading-[19px] xmd:leading-[22px] text-[#474747] font-[500] font-inter ">
                   {data.Desc}
                 </p>
               </div>

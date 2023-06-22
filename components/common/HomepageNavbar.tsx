@@ -111,7 +111,7 @@ const HomepageNavbar = (props: {
                     // ref={ref}
                   >
                     <ul
-                      className={` w-full text-[#000000] text-[14px] font-[400] leading-[30px]  `}
+                      className={` w-full text-[#000000] text-[16px] font-[400] leading-[30px] font-inter  `}
                     >
                       {/* <li
                        className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
@@ -225,7 +225,7 @@ const HomepageNavbar = (props: {
             </div>
           </div>
           <ul
-            className={` flex-type3 gap-x-[20px] hidden table_md:flex -mb-[5px] text-[14px]  font-[500] text-[${props.color}] ml-[140px] `}
+            className={` flex-type3 gap-x-[20px] hidden table_md:flex -mb-[5px] text-[16px]  font-[500] text-[${props.color}] ml-[140px] `}
           >
             {router.pathname == "/about" || router.pathname == "/services" ? (
               <li className="cursor-pointer" onClick={() => router.push("/")}>
@@ -305,7 +305,7 @@ const HomepageNavbar = (props: {
             )}
           </ul>
           {session?.user ? (
-            <div className="flex items-center gap-x-[15px] table_md:-mb-[11px]">
+            <div className="text-[16px] flex items-center gap-x-[15px] table_md:-mb-[11px]">
               <div
                 className={`flex items-center gap-x-[10px] text-[${props.color}]`}
               >
@@ -332,14 +332,14 @@ const HomepageNavbar = (props: {
             </div>
           ) : (
             <div
-              className={`flex flexx-row justify-start items-center gap-x-[16px] text-[14px] text-[${props.color}] font-[500]  table_md:-mb-[12px] `}
+              className={`text-[16px] flex flexx-row justify-start items-center gap-x-[16px]  text-[${props.color}] font-[500]  table_md:-mb-[12px] `}
             >
               <Link href={"/auth/gate?mode=0"} className="hidden add_sm:block ">
                 {auth[1]}
               </Link>
               <Link
                 href={"/auth/gate?mode=1"}
-                className=" rounded-[4px] border-[1px] text-[14px] text-[#000000] font-[500] bg-[#FFFFFF] px-[15px] py-[5px] hidden add_sm:block "
+                className=" rounded-[4px] border-[1px] text-[#000000] font-[500] bg-[#FFFFFF] px-[15px] py-[5px] hidden add_sm:block "
               >
                 {auth[0]}
               </Link>

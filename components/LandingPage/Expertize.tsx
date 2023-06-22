@@ -34,7 +34,7 @@ const Expertize = () => {
               {ExpertizeContent.map((data, index) => {
                 return (
                   <div
-                    className="w-[220px] flex flex-row justify-start items-start gap-x-[10px] "
+                    className="w-[220px] flex flex-row justify-start items-start gap-x-[10px] font-inter "
                     key={index}
                   >
                     <div className="h-[24px] w-[24px] relative">

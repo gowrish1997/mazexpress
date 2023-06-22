@@ -40,10 +40,10 @@ const OurCustomer = React.forwardRef<HTMLDivElement>((props, ref) => {
                   <p className="text-[26px] add_sm:text-[45px] xmd:text-[60px] text-[#FFFFFF] leading-[37px] add_sm:leading-[56px] xmd:leading-[72px] font-[800]">
                     {data.value}
                   </p>
-                  <p className="text-center add_sm:text-[16px] text-[12px] xmd:text-[18px] text-[#FFFFFF] leading-[17px] add_sm:leading-[23px]  xmd:leading-[28px] font-[600]">
+                  <p className="text-center add_sm:text-[16px] text-[12px] xmd:text-[18px] text-[#FFFFFF] leading-[17px] add_sm:leading-[23px]  xmd:leading-[28px] font-[600] font-inter ">
                     {data.title}
                   </p>
-                  <p className="text-center text-[10px] add_sm:text-[14px] xmd:text-[16px] text-[#2B2B2B] leading-[16px] add_sm:leading-[21px] xmd:leading-[24px] font-[600]">
+                  <p className="text-center text-[10px] add_sm:text-[14px] xmd:text-[16px] text-[#2B2B2B] leading-[16px] add_sm:leading-[21px] xmd:leading-[24px] font-[600] font-inter ">
                     {data.desc}
                   </p>
                 </div>

@@ -11,7 +11,6 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 
-
 const schema = yup
   .object({
     email: yup.string().required(),
@@ -95,13 +94,13 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div
-      className="flex flex-col justify-start items-center mt-[40px] md:mt-[100px] "
+      className="flex flex-col justify-start items-center mt-[40px] md:mt-[100px] font-inter "
       ref={ref}
     >
       <div className="w-[95%] sm:w-[90%] xmd:w-[80%] min-[1650px]:w-[60%] flex flex-col-reverse justify-start items-start min-[800px]:flex-type10 gap-x-[30px] gap-y-[15px] rounded-[8px] ">
         <div className="w-full min-[800px]:flex-1 h-full rounded-[16px]">
           <h1
-            className={` text-[20px] table_md:text-[23px] ${
+            className={` text-[20px] table_md:text-[23px] font-manrope ${
               router.locale == "en" ? "text-left" : "text-right"
             } text-[#18181B] font-[700]  leading-[30px] mb-[5px] `}
           >
