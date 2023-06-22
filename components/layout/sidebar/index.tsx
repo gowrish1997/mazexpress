@@ -40,13 +40,14 @@ const Sidebar = () => {
 
   const logoutHandler = async () => {
     try {
-      await update(null);
-      localStorage.removeItem("nextauth.message");
-      router.push(
-        process.env.NODE_ENV !== "production"
-          ? `http://localhost:3000/auth/gate?mode=1`
-          : `https://${process.env.NEXT_PUBLIC_HOST}/auth/gate?mode=1`
-      );
+      signOut();
+      // await update(null);
+      // localStorage.removeItem("nextauth.message");
+      // router.push(
+      //   process.env.NODE_ENV !== "production"
+      //     ? `http://localhost:3000/auth/gate?mode=1`
+      //     : `https://${process.env.NEXT_PUBLIC_HOST}/auth/gate?mode=1`
+      // );
     } catch (err) {
       if (err) console.error(err);
     }

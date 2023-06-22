@@ -62,26 +62,25 @@ const LogInComponent = (props: any) => {
         username: data.username,
         password: data.password,
 
-        // callbackUrl: `${
-        //   process.env.NODE_ENV !== "development"
-        //     ? `http://localhost:3000/`
-        //     : `https://${process.env.NEXT_PUBLIC_HOST}/`
-        // }`,
-        // callbackUrl: `https://mazexpress.com.ly/`,
+        callbackUrl: `${
+          process.env.NODE_ENV !== "development"
+            ? `http://localhost:3000/`
+            : `https://${process.env.NEXT_PUBLIC_HOST}/`
+        }`,
+
         redirect: false,
       });
 
       if (returnDate.ok) {
-        router.push(
-          process.env.NODE_ENV !== "production"
-            ? `http://localhost:3000/`
-            : `https://${process.env.NEXT_PUBLIC_HOST}/`
-        );
+        // router.push(
+        //   process.env.NODE_ENV !== "production"
+        //     ? `http://localhost:3000/`
+        //     : `https://${process.env.NEXT_PUBLIC_HOST}/`
+        // );
       } else {
         throw new Error(returnDate.error);
       }
     } catch (error) {
-    
       createToast({
         type: "error",
         message: (error as Error).message,
