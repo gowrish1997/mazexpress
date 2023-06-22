@@ -70,12 +70,11 @@ const ResetPasswordView = (props: any) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const updateUserRes: APIResponse<User> = await fetchJson(
-        `/api/auth/validate-password`,
+        `/api/users/reset/${props.user.email}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: props.user.email,
             password: data.confirmPassword,
           }),
         }
