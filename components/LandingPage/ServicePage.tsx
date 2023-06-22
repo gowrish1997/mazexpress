@@ -115,7 +115,7 @@ const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                   index % 2 == 0 ? "justify-end" : "justify-start"
                 }`}
               >
-                <div className="relative w-[100%] add_sm:w-[85%] xmd:w-[75%] min-[1400px]:w-[71%] min-[1650px]:w-[77%] aspect-[1/0.5] add_sm:aspect-[1/0.95]  ">
+                <div className="relative w-[100%] add_sm:w-[85%] xmd:w-[75%] min-[1400px]:w-[69%] min-[1650px]:w-[77%] aspect-[1/0.5] add_sm:aspect-[1/0.95]  ">
                   <Image
                     src={serviceImage[index]}
                     fill
@@ -159,7 +159,7 @@ const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                   </h1>
                 </div>
                 <div
-                  className={`w-[100%] add_sm:w-[87%] xmd:w-[85%] min-[1400px]:w-[80%] min-[1650px]:w-[85%] text-[14px] md:text-[19px]  xmd:text-[20px] min-[1650px]:text-[20px] leading-[21px] md:leading-[25px] xmd:leading-[30px]  font-[400] text-[#606060] font-inter ${
+                  className={`w-[100%] add_sm:w-[87%] xmd:w-[85%] min-[1400px]:w-[80%] min-[1650px]:w-[85%] text-[14px] md:text-[19px] min-[1650px]:text-[20px] leading-[21px] md:leading-[25px] xmd:leading-[29px]  font-[400] text-[#606060] font-inter ${
                     router.locale == "en" ? "text-left" : "text-right"
                   } ${
                     index % 2 == 0
