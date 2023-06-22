@@ -13,6 +13,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Aboutpage from "@/components/LandingPage/AboutPage";
 
 import HomePageWrapper from "@/components/common/HomePageWrapper";
+import Head from "next/head";
 
 const About = () => {
   const router = useRouter();
@@ -31,6 +32,9 @@ const About = () => {
 
   return (
     <>
+      <Head>
+        <title>About Us</title>
+      </Head>
       <div className="w-full">
         <HomePageWrapper
           type="about"

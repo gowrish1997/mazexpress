@@ -9,6 +9,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Servicepage from "@/components/LandingPage/ServicePage";
 import HomePageWrapper from "@/components/common/HomePageWrapper";
+import Head from "next/head";
 
 const About = () => {
   const router = useRouter();
@@ -27,6 +28,9 @@ const About = () => {
 
   return (
     <>
+      <Head>
+        <title>Services</title>
+      </Head>
       <div className="w-full">
         <HomePageWrapper
           type="service"

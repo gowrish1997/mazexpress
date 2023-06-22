@@ -133,7 +133,7 @@
       "Desc": "Welcome to MAZ express, where we provide seamless and reliable transportation solutions to meet all your shipping needs. Our company’s main focus is providing efficient and effective services to our customers.",
       "Content": [
         {
-          "Title": "warehousing services",
+          "Title": "Warehousing services",
           "Desc": "We specialize in providing warehousing services in Istanbul for customers who shop online from Turkish retailers. Our warehouse is equipped with security measures to ensure that your goods are safe and secure."
         },
         {
@@ -199,7 +199,7 @@
       ]
     },
     "ourCustomer": {
-      "Title": " our customers choose us",
+      "Title": " Our customers choose us",
       "content": [
         {
           "value": "500+",
@@ -245,7 +245,7 @@
       }
     },
     "communityForm": {
-      "Title": "Contact us  if you have any query's",
+      "Title": "Contact us  if you have any queries",
       "Description": "Drop off and pick up packages from a location that’s open when you need it.",
       "form": {
         "InputField": ["Email", "Mobile number", "Message"],

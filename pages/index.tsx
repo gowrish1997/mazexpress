@@ -19,6 +19,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import HomepageNavbar from "@/components/common/HomepageNavbar";
+import Head from "next/head";
 
 const Index = () => {
   const router = useRouter();
@@ -79,6 +80,12 @@ const Index = () => {
 
   return (
     <>
+      <Head>
+        <title>
+          Mazexpress - Your One-Stop Logistics Solution for Shipping from Turkey
+          to Libya
+        </title>
+      </Head>
       <HomePageWrapper
         type="home"
         activeSection={activeSection}
@@ -152,7 +159,7 @@ const Index = () => {
                           onChange={trackingIdInputHandler}
                         />
                         <button
-                          className="h-full bg-[#35C6F4] rounded-[10px] px-[10px] text-[12px] sm:text-[16px] text-[#FFFFFF] font-[400] leading-[24px] font-manrope " 
+                          className="h-full bg-[#35C6F4] rounded-[10px] px-[10px] text-[12px] sm:text-[16px] text-[#FFFFFF] font-[400] leading-[24px] font-manrope "
                           onClick={openPackageTrackingModal}
                         >
                           {t("landingPage.trackOrder.SubmitButton")}

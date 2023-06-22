@@ -36,9 +36,12 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
       className=" bg-[#2B2B2B] mt-[40px] md:mt-[100px] px-[15px] xmd:px-[120px] py-[15px] md:py-[70px] space-y-[30px] font-inter "
       ref={ref}
     >
-      <div className="w-[100%] flex flex-col sm:flex-row max-[500px]:gap-y-[30px] justify-between items-baseline">
+      <div className="w-[100%] flex flex-col sm:flex-row max-[500px]:gap-y-[30px] gap-x-[10px] justify-between items-baseline">
         <div className="flex-1 flex flex-col justify-start items-start gap-y-[10px] ">
-          <div className="w-[100%] flex flex-row justify-start items-baseline gap-x-[20px]">
+          <div
+            className="w-[100%] flex flex-row justify-start items-baseline gap-x-[20px] cursor-pointer "
+            onClick={() => router.push("/")}
+          >
             <div className="relative h-[47px] w-[60px] ">
               <Image src={WhiteLogo} fill alt="logo" />
             </div>
@@ -47,7 +50,7 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
             </h1>
           </div>
           <div className="w-full flex-type6 gap-y-[20px] ">
-            <div className="w-[70%] flex-type4 text-[14px] text-[#BFB8AF] font-[400] leading-[21px] ">
+            <div className="w-[100%] flex flex-row justify-start items-start gap-x-[60px] text-[14px] text-[#BFB8AF] font-[400] leading-[21px] ">
               <ul className="space-y-[15px]">
                 <li className="cursor-pointer">{footerLeftSide[0]}</li>
                 <li className="cursor-pointer">{footerLeftSide[1]}</li>
@@ -60,13 +63,13 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
             </div>
           </div>
         </div>
-        <div className="flex-1 flex flex-col justify-start items-start gap-y-[10px]">
+        {/* <div className="flex-1 flex flex-col justify-start items-start gap-y-[10px]">
           <h1 className="text-[20px] text-[#FFFFFF] font-[700] leading-[30px] font-manrope ">
             {t("landingPage.footer.rightSide.Title")}
           </h1>
           <div className="w-full flex flex-row justify-start items-start">
             <div className="flex-1 flex-type6 gap-y-[20px]  ">
-              <div className="w-[70%] flex-type4 text-[14px] text-[#BFB8AF] font-[400] leading-[21px] gap-x-[10px] ">
+              <div className="w-[100%] flex flex-row justify-start items-start text-[14px] text-[#BFB8AF] font-[400] leading-[21px]  gap-x-[60px] ">
                 <ul className="space-y-[15px]">
                   {media_type1.map((data, index) => {
                     return (
@@ -100,7 +103,7 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="text-[#BFB8AF] text-[14px] leading-[20.4px] font-[400]">
