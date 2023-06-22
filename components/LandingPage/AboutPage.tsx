@@ -8,7 +8,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import HomepageNavbar from "../common/HomepageNavbar";
-import { Head } from "next/document";
 
 const aboutImage = [AboutGoods, AboutShipPlane, AboutTruck, AboutCustomer];
 interface Iprop {
@@ -31,7 +30,6 @@ const About = React.forwardRef<HTMLDivElement, Iprop>((props: Iprop, ref) => {
 
   return (
     <>
-      
       <div
         className="w-full flex flex-col  justify-center items-center"
         ref={ref}
