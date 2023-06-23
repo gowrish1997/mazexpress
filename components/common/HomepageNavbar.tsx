@@ -313,7 +313,7 @@ const HomepageNavbar = (props: {
               )}
             </ul>
             {session?.user ? (
-              <div className="text-[14px] xmd:text-[16px] flex items-center gap-x-[15px] table_md:-mb-[11px]">
+              <div className="text-[14px] xmd:text-[16px] flex items-center gap-x-[15px] table_md:-mb-[11px] -mt-[5px] ">
                 <div
                   className={`flex items-center gap-x-[10px] text-[${props.color}]`}
                 >
@@ -340,7 +340,7 @@ const HomepageNavbar = (props: {
               </div>
             ) : (
               <div
-                className={`text-[14px] xmd:text-[16px] flex flexx-row justify-start items-center gap-x-[16px]  text-[${props.color}] font-[500]  table_md:-mb-[12px] `}
+                className={`text-[14px] xmd:text-[16px] flex flexx-row justify-start items-center gap-x-[16px]  text-[${props.color}] font-[500]  table_md:-mb-[12px] -mt-[5px] `}
               >
                 <Link
                   href={"/auth/gate?mode=0"}
