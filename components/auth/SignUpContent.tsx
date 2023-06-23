@@ -397,16 +397,16 @@ const SignUpContent = (props: IProp) => {
             value={value!}
             onChange={onChange}
             name="confirmPassword"
-            type={confirmPasswordType}
+            type="password"
             error={errors.confirmPassword && inputFieldErrors[7]}
-            icon={{
-              isEnabled: true,
-              src:
-                confirmPasswordType === "string"
-                  ? "/eyeIconOpen.png"
-                  : "/eyeIconClose.png",
-            }}
-            onClick={toggleConfirmPasswordTypeHandler}
+            // icon={{
+            //   isEnabled: true,
+            //   src:
+            //     confirmPasswordType === "string"
+            //       ? "/eyeIconOpen.png"
+            //       : "/eyeIconClose.png",
+            // }}
+            // onClick={toggleConfirmPasswordTypeHandler}
           />
         )}
       />

@@ -8,13 +8,17 @@ import { useEffect } from "react";
 import UserPageWrapper from "@/components/common/UserPageWrapper";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
+import PageHeader from "@/components/common/PageHeader";
+import { useTranslation } from "next-i18next";
+import Layout from "@/components/layout";
 
 const HelpCenter = () => {
   const router = useRouter();
 
-  const { locales, locale: activeLocale } = router;
-
+  const { t } = useTranslation("common");
   const { locale } = router;
+
+  const { locales, locale: activeLocale } = router;
 
   const { helpCenters } = useHelpCenter();
 
@@ -27,9 +31,15 @@ const HelpCenter = () => {
 
   return (
     <UserPageWrapper>
-      {helpCenters?.data?.length > 0 && (
-        <HelpCenterView data={helpCenters?.data} />
-      )}
+      <PageHeader
+        content={t("helpCenterPage.pageHeader.Title")}
+        title="Our Help centers | MazExpress"
+      />
+      <Layout>
+        {helpCenters?.data?.length > 0 && (
+          <HelpCenterView data={helpCenters?.data} />
+        )}
+      </Layout>
     </UserPageWrapper>
   );
 };

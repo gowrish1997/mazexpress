@@ -442,6 +442,11 @@
       "Content": "Copy"
     }
   },
+  "helpCenterPage": {
+    "pageHeader": {
+      "Title": "Our Help centers"
+    }
+  },
   "addressBookPage": {
     "pageHeader": {
       "Title": "My Address Book"

@@ -428,6 +428,11 @@
       "Content": "ينسخ"
     }
   },
+  "helpCenterPage": {
+    "pageHeader": {
+      "Title": "مراكز المساعدة لدينا"
+    }
+  },
   "addressBookPage": {
     "pageHeader": {
       "Title": "دفتر العناوين الخاص بي"
