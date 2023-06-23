@@ -3,21 +3,13 @@
 //     co-author: raunak
 //==========================
 
-import Image from "next/image";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 
-import LanguageSwitcher from "@/components/LandingPage/LanguageSwitcher";
-import AuthIcon from "@/public/auth_icon.png";
-import New_logo from "@/public/new_logo_blue.png";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import Footer from "../LandingPage/Footer";
 import MazCommunityForm from "../LandingPage/MazCommunityForm";
-import LogoutConfirmModal from "./LogoutConfirmModal";
 
 interface IProp {
   type: string;
