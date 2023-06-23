@@ -436,7 +436,7 @@
   },
   "warehousePage": {
     "pageHeader": {
-      "Title": "Our Warehouse"
+      "Title": "Warehouses"
     },
     "warehouseCard": {
       "Content": "Copy"
@@ -444,7 +444,7 @@
   },
   "helpCenterPage": {
     "pageHeader": {
-      "Title": "Our Help centers"
+      "Title": "Help centers"
     }
   },
   "addressBookPage": {

@@ -422,7 +422,7 @@
   },
   "warehousePage": {
     "pageHeader": {
-      "Title": "مستودعاتنا"
+      "Title": "المستودعات"
     },
     "warehouseCard": {
       "Content": "ينسخ"
@@ -430,7 +430,7 @@
   },
   "helpCenterPage": {
     "pageHeader": {
-      "Title": "مراكز المساعدة لدينا"
+      "Title": "مراكز المساعدة"
     }
   },
   "addressBookPage": {
