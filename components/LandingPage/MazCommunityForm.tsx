@@ -181,7 +181,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             </div>
           </form>
         </div>
-        <div className="relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[490px]  ">
+        <div className="relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[490px] min-[1650px]:h-[500px] ">
           <Image src={Map} alt="logo" fill />
         </div>
       </div>

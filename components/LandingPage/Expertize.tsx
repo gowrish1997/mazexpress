@@ -45,7 +45,7 @@ const Expertize = () => {
                         alt="docfument"
                       />
                     </div>
-                    <p className="w-full text-[19px] text-[#000000] font-[600] leading-[28px] ">
+                    <p className="w-full text-[19px] text-[#000000] font-[500] leading-[28px] ">
                       {data}
                     </p>
                   </div>

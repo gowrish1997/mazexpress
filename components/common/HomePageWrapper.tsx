@@ -69,7 +69,12 @@ const HomePageWrapper = (props: IProp) => {
               <MazCommunityForm ref={enquirySectionRef} />
             </div>
             <div className="w-full" id="supportSection">
-              <Footer ref={supportSectionRef} />
+              <Footer
+                ref={supportSectionRef}
+                calRef={shipmentCalculatorSectionRef}
+                enquiryRef={enquirySectionRef}
+                supportRef={supportSectionRef}
+              />
             </div>
           </>
         )}

@@ -8,6 +8,11 @@ import Facebook from "../../public/facebook.png";
 import Youtube from "../../public/youtube.png";
 import Linkedin from "../../public/linkedin.png";
 import Twitter from "../../public/twitter.png";
+interface Iprop {
+  calRef: React.MutableRefObject<HTMLDivElement>;
+  enquiryRef: React.MutableRefObject<HTMLDivElement>;
+  supportRef: React.MutableRefObject<HTMLDivElement>;
+}
 
 const media_type1 = [
   { url: Instagram, label: "Instagram" },
@@ -19,7 +24,7 @@ const media_type2 = [
   { url: Twitter, label: "Twitter" },
 ];
 
-const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
+const Footer = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
@@ -33,7 +38,7 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div
-      className=" bg-[#2B2B2B] mt-[40px] md:mt-[100px] px-[15px] xmd:px-[120px] py-[15px] md:py-[70px] space-y-[30px] font-inter "
+      className=" bg-[#2B2B2B]  px-[15px] xmd:px-[120px] py-[15px] md:py-[70px] space-y-[30px] font-inter "
       ref={ref}
     >
       <div className=" flex flex-row max-[500px]:gap-y-[30px] gap-x-[10px] justify-center items-baseline">
@@ -52,13 +57,38 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
           <div className="w-full flex-type6 gap-y-[20px] ">
             <div className="w-[100%] flex flex-row justify-start items-start gap-x-[60px] text-[14px] text-[#BFB8AF] font-[400] leading-[21px] ">
               <ul className="space-y-[15px]">
-                <li className="cursor-pointer">{footerLeftSide[0]}</li>
-                <li className="cursor-pointer">{footerLeftSide[1]}</li>
-                <li className="cursor-pointer">{footerLeftSide[2]}</li>
+                <li className="cursor-pointer" onClick={() => router.push("/")}>
+                  {footerLeftSide[0]}
+                </li>
+                <li
+                  className="cursor-pointer"
+                  onClick={() =>
+                    props.calRef?.current?.scrollIntoView({
+                      behavior: "smooth",
+                    })
+                  }
+                >
+                  {footerLeftSide[1]}
+                </li>
+                <li className="">info@mazexpress</li>
               </ul>
               <ul className="space-y-[15px]">
-                <li className="cursor-pointer">{footerLeftSide[3]}</li>
-                <li className="cursor-pointer">{footerLeftSide[4]}</li>
+                <li
+                  className="cursor-pointer"
+                  onClick={() => router.push("/about")}
+                >
+                  {footerLeftSide[3]}
+                </li>
+                <li
+                  className="cursor-pointer"
+                  onClick={() =>
+                    props.enquiryRef?.current?.scrollIntoView({
+                      behavior: "smooth",
+                    })
+                  }
+                >
+                  {footerLeftSide[4]}
+                </li>
               </ul>
             </div>
           </div>

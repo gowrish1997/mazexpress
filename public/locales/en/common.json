@@ -107,7 +107,7 @@
         "Support",
         "About",
         "Service",
-        "Enquiry Form"
+        "Enquiry"
       ],
       "Auth": ["Log in", "Sign up", "Log out"]
     },

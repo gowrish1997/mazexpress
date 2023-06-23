@@ -217,7 +217,10 @@ const HomepageNavbar = (props: {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col justify-start items-end  ">
+              <div
+                className="flex flex-col justify-start items-end cursor-pointer "
+                onClick={() => router.push("/")}
+              >
                 <div className="h-[38px] w-[54px]  relative ">
                   <Image src={New_logo_white} fill alt="document" />
                 </div>
