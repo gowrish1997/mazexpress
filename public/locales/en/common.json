@@ -231,7 +231,7 @@
             "placeholder": "City",
             "label": "Delivery City (optional)"
           },
-          { "placeholder": "", "label": "Dimensions" },
+          { "placeholder": "", "label": "Dimensions (optional)" },
           { "placeholder": "", "label": "Weight*" }
         ],
         "Errors": [
@@ -239,7 +239,7 @@
           "Delivery City is a required field",
           "Weight is a required field"
         ],
-        "Dimensions": ["length", "width", "height"],
+        "Dimensions": ["Length", "Width", "Height"],
         "SubmitButton": "Calculate Cost",
         "ResetButton": "Reset"
       }

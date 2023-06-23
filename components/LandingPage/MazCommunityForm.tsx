@@ -94,7 +94,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div
-      className="flex flex-col justify-start items-center mt-[40px] md:mt-[100px] font-inter "
+      className="flex flex-col justify-start items-center mt-[20px] md:mt-[100px] font-inter bg-[#35C6F4] py-[60px] "
       ref={ref}
     >
       <div className="w-[95%] sm:w-[90%] xmd:w-[80%] min-[1650px]:w-[60%] flex flex-col-reverse justify-start items-start min-[800px]:flex-type10 gap-x-[30px] gap-y-[15px] rounded-[8px] ">
@@ -107,7 +107,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             {t("landingPage.communityForm.Title")}
           </h1>
           <p
-            className={` text-[16px] text-[#525D72] font-[500] leading-[18px] min-[900px]:leading-[25px] ${
+            className={`py-[15px] text-[16px] text-[#525D72] font-[500] leading-[18px] min-[900px]:leading-[25px] ${
               router.locale == "en" ? "text-left" : "text-right"
             } mb-[5px]`}
           >
@@ -117,12 +117,12 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             className=" w-full rounded-[16px]  space-y-[20px] community_form"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className=" flex flex-col justify-start items-start rounded-[5px]  ">
+            <div className="rounded-[4px] flex flex-col justify-start items-start ">
               <input
                 id="email"
                 type="string"
                 {...register("email")}
-                className="community_form w-full h-[55px] min-[1600px]:h-[60px] text-[18px] text-[#2B2B2B] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5]  px-[15px] py-[20px] "
+                className="rounded-[4px] community_form w-full h-[55px] min-[1600px]:h-[60px] text-[18px] text-[#2B2B2B] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5]  px-[15px] py-[20px] "
                 placeholder={inputFieldLabel[0]}
               />
               {errors.email && (
@@ -132,12 +132,12 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
               )}
             </div>
 
-            <div className=" flex flex-col justify-start items-start rounded-[5px]  ">
+            <div className="flex flex-col justify-start items-start   ">
               <input
                 id="mobile"
                 type="number"
                 {...register("mobile")}
-                className="community_form w-full h-[55px] min-[1600px]:h-[60px] text-[18px] text-[#2B2B2B] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5] px-[15px] py-[20px] "
+                className="rounded-[4px] community_form w-full h-[55px] min-[1600px]:h-[60px] text-[18px] text-[#2B2B2B] font-[700] leading-[25px] focus:outline-none  bg-[#F5F5F5] px-[15px] py-[20px] "
                 placeholder={inputFieldLabel[1]}
               />
               {errors.mobile && (
@@ -181,7 +181,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             </div>
           </form>
         </div>
-        <div className="relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[470px]  ">
+        <div className="relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[490px]  ">
           <Image src={Map} alt="logo" fill />
         </div>
       </div>

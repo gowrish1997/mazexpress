@@ -208,7 +208,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
             className={`min-[900px]:hidden w-full text-[23px] sm:text-[26px] ${
               router.locale == "en" ? "text-left" : "text-right"
             } text-[#18181B] font-[700] leading-[30px] table_md:leading-[35px] mb-[10px] `}
-          > 
+          >
             {t("landingPage.shipmentCostCalculator.Title")}
           </h1>
           <div className="relative w-[100%] max-[900px]:aspect-[1/0.5]  min-[900px]:flex-1 min-[900px]:h-[670px]  ">
@@ -223,7 +223,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
             >
               {t("landingPage.shipmentCostCalculator.Title")}
             </h1>
-            <p className="mb-[10px] ">
+            <p className="mb-[10px]">
               {t("landingPage.shipmentCostCalculator.Description")}
             </p>
             <form
@@ -313,11 +313,11 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                 </button>
                 {cost ? (
                   <p className="capitalize text-[20px] text-[#000000] mb-[-10px] leading-[16px]">
-                    {cost.toFixed(2)} $
+                    $ {cost.toFixed(2)}
                   </p>
                 ) : (
                   <p className="capitalize text-[20px] text-[#000000] mb-[-10px] leading-[16px]">
-                    00$
+                    $ 00
                   </p>
                 )}
               </div>

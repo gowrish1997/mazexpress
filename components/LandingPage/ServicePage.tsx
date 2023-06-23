@@ -77,7 +77,7 @@ const Service = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
           {t("landingPage.service.Desc")}
         </p>
       </div>
-      <div className="w-[95%] table_md:w-[80%] min-[1650px]:w-[60%] flex flex-col justify-start items-center mt-[50px] gap-y-[30px] add_sm:gap-y-[60px]">
+      <div className="w-[95%] table_md:w-[80%] min-[1650px]:w-[60%] flex flex-col justify-start items-center mt-[50px] gap-y-[30px] add_sm:gap-y-[60px] px-[10px] ">
         {content.map((data, index) => {
           return (
             <div

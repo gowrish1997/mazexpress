@@ -36,16 +36,16 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
       className=" bg-[#2B2B2B] mt-[40px] md:mt-[100px] px-[15px] xmd:px-[120px] py-[15px] md:py-[70px] space-y-[30px] font-inter "
       ref={ref}
     >
-      <div className="w-[100%] flex flex-col sm:flex-row max-[500px]:gap-y-[30px] gap-x-[10px] justify-between items-baseline">
-        <div className="flex-1 flex flex-col justify-start items-start gap-y-[10px] ">
+      <div className=" flex flex-row max-[500px]:gap-y-[30px] gap-x-[10px] justify-center items-baseline">
+        <div className="flex flex-col justify-center items-center gap-y-[10px] ">
           <div
-            className="w-[100%] flex flex-row justify-start items-baseline gap-x-[20px] cursor-pointer "
+            className="w-[100%] flex flex-row justify-center items-baseline gap-x-[20px] cursor-pointer mb-[15px] "
             onClick={() => router.push("/")}
           >
             <div className="relative h-[47px] w-[60px] ">
               <Image src={WhiteLogo} fill alt="logo" />
             </div>
-            <h1 className=" text-[20px] text-[#FFFFFF] font-[700] leading-[30px] ">
+            <h1 className="-ml-[10px] text-[20px] text-[#FFFFFF] font-[700] leading-[30px] ">
               {t("landingPage.footer.leftSide.Title")}
             </h1>
           </div>
@@ -106,7 +106,7 @@ const Footer = React.forwardRef<HTMLDivElement>((props, ref) => {
         </div> */}
       </div>
 
-      <div className="text-[#BFB8AF] text-[14px] leading-[20.4px] font-[400]">
+      <div className="text-center text-[#BFB8AF] text-[14px] leading-[20.4px] font-[400]">
         {t("landingPage.footer.Copyright")}
       </div>
     </div>

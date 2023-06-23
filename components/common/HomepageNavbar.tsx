@@ -71,49 +71,50 @@ const HomepageNavbar = (props: {
   return (
     <>
       <div
-        className={`px-[10px] md:px-[30px] xmd:px-[150px] z-30 pt-[20px] ${props.classname}`}
+        className={`w-[100%] z-30 pt-[20px] flex justify-center ${props.classname}`}
       >
-        <div className=" w-full flex flex-row justify-between items-center  text-[14px] text-[#121212] font-[500] leading-[24px] ">
-          <div className="flex flex-row justify-between items-center gap-x-[20px] ">
-            <div className="table_md:hidden relative ">
-              <div
-                className={`flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[${props.color}] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]`}
-                style={
-                  showOptionModal
-                    ? {
-                        backgroundColor: "#35C6F4",
-                        color: "#FFFFFF",
-                      }
-                    : {}
-                }
-                onClick={toggleOptionModalHandler}
-              >
+        <div className="w-[95%] sm:w-[95%] xmd:w-[90%] min-[1450px]:w-[85%] min-[1650px]:w-[80%] ">
+          <div className=" w-full flex flex-row justify-between items-center  text-[14px] text-[#121212] font-[500] leading-[24px] ">
+            <div className="flex flex-row justify-between items-center gap-x-[20px] ">
+              <div className="table_md:hidden relative ">
                 <div
-                  className="h-[15px] w-[15px] cursor-pointer flex flex-row items-center justify-center  "
-                  style={{
-                    boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
-                  }}
+                  className={`flex flex-row items-center justify-center box-border border-[1px]  rounded-[4px] text-[${props.color}] w-[35px] h-[35px] -mb-[3px] hover:bg-[#BBC2CF] hover:text-[#FFFFFF]`}
+                  style={
+                    showOptionModal
+                      ? {
+                          backgroundColor: "#35C6F4",
+                          color: "#FFFFFF",
+                        }
+                      : {}
+                  }
+                  onClick={toggleOptionModalHandler}
                 >
-                  {showOptionModal ? (
-                    <FontAwesomeIcon icon={faXmark} />
-                  ) : (
-                    <FontAwesomeIcon icon={faBars} />
-                  )}
-                </div>
-                {showOptionModal && (
                   <div
-                    className={`absolute top-[0px] ${
-                      locale == "en" ? "left-[36px]" : "right-[36px]"
-                    } w-[200px]  bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-30 flex flex-col justify-between items-start p-[5px]`}
+                    className="h-[15px] w-[15px] cursor-pointer flex flex-row items-center justify-center  "
                     style={{
                       boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
                     }}
-                    // ref={ref}
                   >
-                    <ul
-                      className={` w-full text-[#000000] text-[16px] font-[400] leading-[30px] font-inter  `}
+                    {showOptionModal ? (
+                      <FontAwesomeIcon icon={faXmark} />
+                    ) : (
+                      <FontAwesomeIcon icon={faBars} />
+                    )}
+                  </div>
+                  {showOptionModal && (
+                    <div
+                      className={`absolute top-[0px] ${
+                        locale == "en" ? "left-[36px]" : "right-[36px]"
+                      } w-[200px]  bg-[#ffffff] border-[1px] border-[#EDF5F9] rounded-[6px] z-30 flex flex-col justify-between items-start p-[5px]`}
+                      style={{
+                        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
+                      }}
+                      // ref={ref}
                     >
-                      {/* <li
+                      <ul
+                        className={` w-full text-[#000000] text-[16px] font-[400] leading-[30px] font-inter  `}
+                      >
+                        {/* <li
                        className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
                        onClick={() =>
                          trackingSectionRef?.current?.scrollIntoView({
@@ -123,242 +124,253 @@ const HomepageNavbar = (props: {
                      >
                        {t(section[0])}
                      </li> */}
-                      {router.pathname == "/about" ||
-                      router.pathname == "/services" ? (
-                        <li
-                          className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px]"
-                          onClick={() => router.push("/")}
-                        >
-                          {t(section[0])}
-                        </li>
-                      ) : (
-                        ""
-                      )}
+                        {router.pathname == "/about" ||
+                        router.pathname == "/services" ? (
+                          <li
+                            className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px]"
+                            onClick={() => router.push("/")}
+                          >
+                            {t(section[0])}
+                          </li>
+                        ) : (
+                          ""
+                        )}
 
-                      <li
-                        className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                        onClick={() => router.push("/about")}
-                      >
-                        {t(section[3])}
-                      </li>
-                      <li
-                        className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px] "
-                        onClick={() => router.push("/services")}
-                      >
-                        {t(section[4])}
-                      </li>
-                      {!(router.pathname == "/TermsAndCondition") ? (
-                        <>
-                          {!(
-                            router.pathname == "/about" ||
-                            router.pathname == "/services"
-                          ) ? (
+                        <li
+                          className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                          onClick={() => router.push("/about")}
+                        >
+                          {t(section[3])}
+                        </li>
+                        <li
+                          className="cursor-pointer hover:bg-[#EDF5F9] w-full rounded-[4px] "
+                          onClick={() => router.push("/services")}
+                        >
+                          {t(section[4])}
+                        </li>
+                        {!(router.pathname == "/TermsAndCondition") ? (
+                          <>
+                            {!(
+                              router.pathname == "/about" ||
+                              router.pathname == "/services"
+                            ) ? (
+                              <li
+                                className="cursor-pointer hover:bg-[#EDF5F9]"
+                                onClick={() =>
+                                  props.shipmentCalculatorSectionRef?.current?.scrollIntoView(
+                                    {
+                                      behavior: "smooth",
+                                    }
+                                  )
+                                }
+                              >
+                                {t(section[1])}
+                              </li>
+                            ) : (
+                              ""
+                            )}
                             <li
                               className="cursor-pointer hover:bg-[#EDF5F9]"
                               onClick={() =>
-                                props.shipmentCalculatorSectionRef?.current?.scrollIntoView(
+                                props.enquirySectionRef?.current?.scrollIntoView(
                                   {
                                     behavior: "smooth",
                                   }
                                 )
                               }
                             >
-                              {t(section[1])}
+                              {t(section[5])}
                             </li>
-                          ) : (
-                            ""
-                          )}
+                            <li
+                              className={`cursor-pointer hover:bg-[#EDF5F9] `}
+                              onClick={() =>
+                                props.supportSectionRef?.current?.scrollIntoView(
+                                  {
+                                    behavior: "smooth",
+                                  }
+                                )
+                              }
+                            >
+                              {t(section[2])}
+                            </li>
+                          </>
+                        ) : (
                           <li
-                            className="cursor-pointer hover:bg-[#EDF5F9]"
-                            onClick={() =>
-                              props.enquirySectionRef?.current?.scrollIntoView({
-                                behavior: "smooth",
-                              })
-                            }
+                            className="cursor-pointer"
+                            onClick={() => router.push("/")}
                           >
-                            {t(section[5])}
+                            {t(section[0])}
                           </li>
-                          <li
-                            className={`cursor-pointer hover:bg-[#EDF5F9] `}
-                            onClick={() =>
-                              props.supportSectionRef?.current?.scrollIntoView({
-                                behavior: "smooth",
-                              })
-                            }
-                          >
-                            {t(section[2])}
+                        )}
+                        {session?.user && (
+                          <li className="">
+                            <button
+                              onClick={toggleLogoutConfirmModal}
+                              className="w-full bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] text-left "
+                            >
+                              {auth[2]}
+                            </button>
                           </li>
-                        </>
-                      ) : (
-                        <li
-                          className="cursor-pointer"
-                          onClick={() => router.push("/")}
-                        >
-                          {t(section[0])}
-                        </li>
-                      )}
-                      {session?.user && (
-                        <li className="">
-                          <button
-                            onClick={toggleLogoutConfirmModal}
-                            className="w-full bg-[#35C6F4] text-[#FFFFFF] rounded-[4px] px-[15px] py-[5px] text-left "
-                          >
-                            {auth[2]}
-                          </button>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                )}
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col justify-start items-end  ">
-              <div className="h-[38px] w-[54px]  relative ">
-                <Image src={New_logo_white} fill alt="document" />
-              </div>
-              {/* <div className="relative h-[47px] w-[60px] ">
+              <div className="flex flex-col justify-start items-end  ">
+                <div className="h-[38px] w-[54px]  relative ">
+                  <Image src={New_logo_white} fill alt="document" />
+                </div>
+                {/* <div className="relative h-[47px] w-[60px] ">
                 <Image src={New_logo} fill alt="logo" />
               </div> */}
-              <p className={`text-[${props.color}] text-[12.5px] font-[800] `}>
-                Express
-              </p>
+                <p
+                  className={`text-[${props.color}] text-[12.5px] font-[800] `}
+                >
+                  Express
+                </p>
+              </div>
             </div>
-          </div>
-          <ul
-            className={` flex-type3 gap-x-[20px] hidden table_md:flex -mb-[5px] text-[16px]  font-[500] text-[${props.color}] ml-[140px] `}
-          >
-            {router.pathname == "/about" || router.pathname == "/services" ? (
-              <li className="cursor-pointer" onClick={() => router.push("/")}>
-                {t(section[0])}
+            <ul
+              className={` flex-type3 gap-x-[20px] hidden table_md:flex -mb-[5px] text-[14px]  xmd:text-[16px]  font-[500] text-[${props.color}] ml-[140px] `}
+            >
+              {router.pathname == "/about" || router.pathname == "/services" ? (
+                <li className="cursor-pointer" onClick={() => router.push("/")}>
+                  {t(section[0])}
+                </li>
+              ) : (
+                ""
+              )}
+              <li
+                className={`cursor-pointer ${
+                  router.pathname.includes("about")
+                    ? "border-b-[2px] border-b-[#35C6F4] pb-[2px]"
+                    : ""
+                } `}
+                onClick={() => router.push("/about")}
+              >
+                {t(section[3])}
               </li>
-            ) : (
-              ""
-            )}
-            <li
-              className={`cursor-pointer ${
-                router.pathname.includes("about")
-                  ? "border-b-[2px] border-b-[#35C6F4] pb-[2px]"
-                  : ""
-              } `}
-              onClick={() => router.push("/about")}
-            >
-              {t(section[3])}
-            </li>
-            <li
-              className={`cursor-pointer ${
-                router.pathname.includes("services")
-                  ? " border-b-[2px] border-b-[#35C6F4] pb-[2px]"
-                  : ""
-              } `}
-              onClick={() => router.push("/services")}
-            >
-              {t(section[4])}
-            </li>
-            {!(router.pathname == "/TermsAndCondition") ? (
-              <>
-                {!(
-                  router.pathname == "/about" || router.pathname == "/services"
-                ) ? (
-                  <li
-                    className={`cursor-pointer
+              <li
+                className={`cursor-pointer ${
+                  router.pathname.includes("services")
+                    ? " border-b-[2px] border-b-[#35C6F4] pb-[2px]"
+                    : ""
+                } `}
+                onClick={() => router.push("/services")}
+              >
+                {t(section[4])}
+              </li>
+              {!(router.pathname == "/TermsAndCondition") ? (
+                <>
+                  {!(
+                    router.pathname == "/about" ||
+                    router.pathname == "/services"
+                  ) ? (
+                    <li
+                      className={`cursor-pointer
               
                `}
+                      onClick={() =>
+                        props.shipmentCalculatorSectionRef?.current?.scrollIntoView(
+                          {
+                            behavior: "smooth",
+                          }
+                        )
+                      }
+                    >
+                      {t(section[1])}
+                    </li>
+                  ) : (
+                    ""
+                  )}
+
+                  <li
+                    className={`cursor-pointer `}
                     onClick={() =>
-                      props.shipmentCalculatorSectionRef?.current?.scrollIntoView(
-                        {
-                          behavior: "smooth",
-                        }
-                      )
+                      props.enquirySectionRef?.current?.scrollIntoView({
+                        behavior: "smooth",
+                      })
                     }
                   >
-                    {t(section[1])}
+                    {t(section[5])}
                   </li>
-                ) : (
-                  ""
-                )}
-
-                <li
-                  className={`cursor-pointer `}
-                  onClick={() =>
-                    props.enquirySectionRef?.current?.scrollIntoView({
-                      behavior: "smooth",
-                    })
-                  }
-                >
-                  {t(section[5])}
+                  <li
+                    className={`cursor-pointer `}
+                    onClick={() =>
+                      props.supportSectionRef?.current?.scrollIntoView({
+                        behavior: "smooth",
+                      })
+                    }
+                  >
+                    {t(section[2])}
+                  </li>
+                </>
+              ) : (
+                <li className="cursor-pointer" onClick={() => router.push("/")}>
+                  {t(section[0])}
                 </li>
-                <li
-                  className={`cursor-pointer `}
-                  onClick={() =>
-                    props.supportSectionRef?.current?.scrollIntoView({
-                      behavior: "smooth",
-                    })
-                  }
+              )}
+            </ul>
+            {session?.user ? (
+              <div className="text-[14px] xmd:text-[16px] flex items-center gap-x-[15px] table_md:-mb-[11px]">
+                <div
+                  className={`flex items-center gap-x-[10px] text-[${props.color}]`}
                 >
-                  {t(section[2])}
-                </li>
-              </>
+                  {/* <p>{session.user.email}</p> */}
+                  {session.user.is_admin ? (
+                    <Link href={"/admin"}>
+                      {locale == "en" ? "Dashboard" : "لوحة القيادة"}
+                    </Link>
+                  ) : (
+                    <Link href={"/add-new-order"}>
+                      {locale == "en" ? "Place order" : "مكان الامر"}
+                    </Link>
+                  )}
+                </div>
+                <div className="hidden min-[850px]:block">
+                  <button
+                    onClick={toggleLogoutConfirmModal}
+                    className="bg-[#FFFFFF] text-[#000000] rounded-[4px] px-[15px] py-[5px] "
+                  >
+                    {auth[2]}
+                  </button>
+                </div>
+                <LanguageSwitcher color={props.color} />
+              </div>
             ) : (
-              <li className="cursor-pointer" onClick={() => router.push("/")}>
-                {t(section[0])}
-              </li>
-            )}
-          </ul>
-          {session?.user ? (
-            <div className="text-[16px] flex items-center gap-x-[15px] table_md:-mb-[11px]">
               <div
-                className={`flex items-center gap-x-[10px] text-[${props.color}]`}
+                className={`text-[14px] xmd:text-[16px] flex flexx-row justify-start items-center gap-x-[16px]  text-[${props.color}] font-[500]  table_md:-mb-[12px] `}
               >
-                {/* <p>{session.user.email}</p> */}
-                {session.user.is_admin ? (
-                  <Link href={"/admin"}>
-                    {locale == "en" ? "Dashboard" : "لوحة القيادة"}
-                  </Link>
-                ) : (
-                  <Link href={"/add-new-order"}>
-                    {locale == "en" ? "Place order" : "مكان الامر"}
-                  </Link>
-                )}
-              </div>
-              <div className="hidden min-[850px]:block">
-                <button
-                  onClick={toggleLogoutConfirmModal}
-                  className="bg-[#FFFFFF] text-[#000000] rounded-[4px] px-[15px] py-[5px] "
+                <Link
+                  href={"/auth/gate?mode=0"}
+                  className="hidden add_sm:block "
                 >
-                  {auth[2]}
-                </button>
-              </div>
-              <LanguageSwitcher color={props.color} />
-            </div>
-          ) : (
-            <div
-              className={`text-[16px] flex flexx-row justify-start items-center gap-x-[16px]  text-[${props.color}] font-[500]  table_md:-mb-[12px] `}
-            >
-              <Link href={"/auth/gate?mode=0"} className="hidden add_sm:block ">
-                {auth[1]}
-              </Link>
-              <Link
-                href={"/auth/gate?mode=1"}
-                className=" rounded-[4px] border-[1px] text-[#000000] font-[500] bg-[#FFFFFF] px-[15px] py-[5px] hidden add_sm:block "
-              >
-                {auth[0]}
-              </Link>
-              <div
-                className=" h-[18px] w-[18px] add_sm:hidden cursor-pointer rounded-[50%]  flex justify-center items-center"
-                onClick={() => router.push("/auth/gate?mode=1")}
-              >
-                <AuthIcon
-                  className={`${
-                    router.pathname == "/services"
-                      ? "auth_icon_svg_service"
-                      : "auth_icon_svg"
-                  }`}
-                />
-              </div>
+                  {auth[1]}
+                </Link>
+                <Link
+                  href={"/auth/gate?mode=1"}
+                  className=" rounded-[4px] border-[1px] text-[#000000] font-[500] bg-[#FFFFFF] px-[15px] py-[5px] hidden add_sm:block "
+                >
+                  {auth[0]}
+                </Link>
+                <div
+                  className=" h-[18px] w-[18px] add_sm:hidden cursor-pointer rounded-[50%]  flex justify-center items-center"
+                  onClick={() => router.push("/auth/gate?mode=1")}
+                >
+                  <AuthIcon
+                    className={`${
+                      router.pathname == "/services"
+                        ? "auth_icon_svg_service"
+                        : "auth_icon_svg"
+                    }`}
+                  />
+                </div>
 
-              <LanguageSwitcher color={props.color} />
-            </div>
-          )}
+                <LanguageSwitcher color={props.color} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
       {showLogoutConfirmModal && (

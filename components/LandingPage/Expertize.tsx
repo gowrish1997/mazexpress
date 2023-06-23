@@ -16,17 +16,17 @@ const Expertize = () => {
   return (
     <div className="w-full   flex flex-row  justify-center items mt-[100px]">
       <div className="w-[95%] sm:w-[90%] min-[1300px]:w-[60%]">
-        <p className="md:hidden  text-[30px] leading-[24px] xmd:leading-[28px] xmd:text-[27px] text-[#35C6F4] font-[700] mb-[10px]  ">
+        <p className="md:hidden  text-[30px] leading-[24px] xmd:leading-[28px] xmd:text-[27px] text-[#35C6F4] font-[500] mb-[10px]  ">
           {" "}
           {t("landingPage.expertize.Title")}
         </p>
         <div className="w-full flex flex-col-reverse md:flex-row md:justify-center items-center p-[10px] gap-y-[20px]  rounded-[8px]  ">
           <div className="flex-1 flex flex-col justify-start items-start gap-y-[10px] table_md:gap-y-[20px] ">
-            <p className="text-[21px] leading-[24px] xmd:leading-[28px] xmd:text-[27px]  hidden md:block  text-[#35C6F4] font-[700]  ">
+            <p className="text-[21px] leading-[24px] xmd:leading-[28px] xmd:text-[27px]  hidden md:block  text-[#35C6F4] font-[500]  ">
               {" "}
               {t("landingPage.expertize.Title")}
             </p>
-            <p className="text-[30px] add_sm:text-[35px] xmd:text-[52px] leading-[50px] add_sm:leading-[56px] xmd:leading-[62px]   text-[#2B2B2B] font-[600] ">
+            <p className="text-[30px] add_sm:text-[35px] xmd:text-[52px] leading-[50px] add_sm:leading-[56px] xmd:leading-[62px]   text-[#2B2B2B] font-[500] ">
               {" "}
               {t("landingPage.expertize.Description")}
             </p>

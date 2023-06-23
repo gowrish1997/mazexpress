@@ -119,7 +119,7 @@ const Index = () => {
                   />
                 </div>
 
-                <div className="w-[95%] sm:w-[90%] xmd:w-[80%] mt-[80px]">
+                <div className="w-[95%] sm:w-[95%] xmd:w-[90%] min-[1450px]:w-[85%] min-[1650px]:w-[80%] mt-[80px]">
                   <div className="w-[100%] flex flex-row justify-start ">
                     <div className="w-[100%] z-20">
                       {/* <h1 className="text-left text-[36px]  text-[#000000] font-[900] leading-[40px]   ">
@@ -146,7 +146,7 @@ const Index = () => {
                   <div className="flex flex-col min-[900px]:flex-row justify-start items-start min-[900px]:items-center gap-x-[50px] ">
                     {" "}
                     <MaxExpressFlowDiagram />
-                    <div className="max-[500px]:w-[100%] max-[900px]:w-[400px] flex-1 bg-[#FFFFFF] rounded-[4px] mt-[70px] py-[20px] sm:py-[40px] px-[20px] z-20 ">
+                    <div className="max-[500px]:w-[100%] max-[900px]:w-[400px] flex-1 bg-[#FFFFFF]  mt-[70px] py-[20px] sm:py-[40px] px-[20px] z-20 rounded-[25px] ">
                       <p className=" text-[14px] text-[#000000] font-[600] leading-[24px] mt-[10px] mb-[10px] ">
                         {t("landingPage.trackOrder.CaptionPart1")}
                       </p>
