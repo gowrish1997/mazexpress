@@ -51,41 +51,27 @@ const OrdersTotalCountBar = () => {
         <ProgressBar1
           title="Delivered Orders"
           orderCount={deliveredOrders as number}
-          orderCountPer={
-            ((Math.ceil(deliveredOrders as number) / totalOrders) as number) *
-            100
-          }
+          orderCountPer={((deliveredOrders as number) / totalOrders) * 100}
         />
         <ProgressBar1
           title="In Transit"
           orderCount={inTransitOrders as number}
-          orderCountPer={
-            ((Math.ceil(inTransitOrders as number) / totalOrders) as number) *
-            100
-          }
+          orderCountPer={((inTransitOrders as number) / totalOrders) * 100}
         />
         <ProgressBar1
           title="Out For Delivery"
           orderCount={outOrders as number}
-          orderCountPer={
-            ((Math.ceil(outOrders as number) / totalOrders) as number) * 100
-          }
+          orderCountPer={((outOrders as number) / totalOrders) * 100}
         />
         <ProgressBar1
           title="At Warehouse"
           orderCount={atWarehouseOrders as number}
-          orderCountPer={
-            ((Math.ceil(atWarehouseOrders as number) / totalOrders) as number) *
-            100
-          }
+          orderCountPer={((atWarehouseOrders as number) / totalOrders) * 100}
         />
         <ProgressBar1
           title="Pending"
           orderCount={atPendingOrders as number}
-          orderCountPer={
-            ((Math.ceil(atPendingOrders as number) / totalOrders) as number) *
-            100
-          }
+          orderCountPer={((atPendingOrders as number) / totalOrders) * 100}
         />
       </div>
     </div>
