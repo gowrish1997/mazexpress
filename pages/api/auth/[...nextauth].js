@@ -10,7 +10,7 @@ export const authOptions = {
       async authorize(credentials, req) {
         const res = await fetch(
           `https://${process.env.NEXT_PUBLIC_DEPLOY_SERVER_HOST}/api/auth/login`,
-          {
+        {
             method: "POST",
             body: JSON.stringify(credentials),
             headers: {
