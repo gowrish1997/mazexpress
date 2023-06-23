@@ -67,7 +67,7 @@ const ConfigCard = (props: IProp) => {
           {props.data.desc}
         </p>
       </div>
-      {props.data.is_custom && (
+      {/* {props.data.is_custom && (
         <div className="flex items-center justify-between text-[12px] text-[#35C6F4] font-[500] leading-[17px]">
           <div className="space-x-[10px] flex items-center">
             <div
@@ -95,7 +95,7 @@ const ConfigCard = (props: IProp) => {
             </div>
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
