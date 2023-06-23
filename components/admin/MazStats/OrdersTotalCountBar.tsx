@@ -6,7 +6,13 @@ const OrdersTotalCountBar = () => {
     mutateOrderCount: mutateTotalOrders,
     orderCountIsLoading: totalOrdersIsLoading,
   } = useOrderCount({
-    status: ["delivered", "in-transit", "out-for-delivery", "at-warehouse"],
+    status: [
+      "pending",
+      "delivered",
+      "in-transit",
+      "out-for-delivery",
+      "at-warehouse",
+    ],
   });
 
   const {
