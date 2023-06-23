@@ -68,15 +68,15 @@ const AddNewAddressModal = (props: IProp) => {
     control,
     formState: { errors },
   } = useForm<Address & { default: boolean }>({
-    defaultValues: {
-      address_1: "Gold fields",
-      address_2: "Sheik street St",
-      city: "Tripoli",
-      country: "Libya",
-      default: true,
-      phone: 214441792,
-      tag: "Al Mshket Hotel",
-    },
+    // defaultValues: {
+    //   address_1: "Gold fields",
+    //   address_2: "Sheik street St",
+    //   city: "Tripoli",
+    //   country: "Libya",
+    //   default: true,
+    //   phone: 214441792,
+    //   tag: "Al Mshket Hotel",
+    // },
     resolver: yupResolver(schema),
   });
 
