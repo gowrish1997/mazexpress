@@ -340,7 +340,7 @@
   },
   "addNewOrderPage": {
     "pageHeader": {
-      "Title": "My Orders"
+      "Title": "Add New order"
     },
     "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
     "LinkPPart2": "Link here →",
