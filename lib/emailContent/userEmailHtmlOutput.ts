@@ -141,14 +141,7 @@ export const userMailBody = (
 
     <mj-section>
     <mj-column>
-    <mj-social font-size="15px" icon-size="30px" mode="horizontal">
-        <mj-social-element name="facebook" href="https://mjml.io/">
-        </mj-social-element>
-        <mj-social-element name="instagram" href="https://mjml.io/">
-        </mj-social-element>
-        <mj-social-element  name="twitter" href="https://mjml.io/">
-        </mj-social-element>
-    </mj-social>
+
     </mj-column>
     </mj-section>
 
