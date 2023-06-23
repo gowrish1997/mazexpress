@@ -9,9 +9,9 @@ import Youtube from "../../public/youtube.png";
 import Linkedin from "../../public/linkedin.png";
 import Twitter from "../../public/twitter.png";
 interface Iprop {
-  calRef: React.MutableRefObject<HTMLDivElement>;
-  enquiryRef: React.MutableRefObject<HTMLDivElement>;
-  supportRef: React.MutableRefObject<HTMLDivElement>;
+  calRef?: React.MutableRefObject<HTMLDivElement>;
+  enquiryRef?: React.MutableRefObject<HTMLDivElement>;
+  supportRef?: React.MutableRefObject<HTMLDivElement>;
 }
 
 const media_type1 = [
