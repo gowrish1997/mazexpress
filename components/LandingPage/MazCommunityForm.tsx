@@ -94,6 +94,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div
+      id="enquirySection"
       className="flex flex-col justify-start items-center mt-[20px] md:mt-[100px] font-inter bg-[#35C6F4] py-[40px] add_sm:py-[60px] "
       ref={ref}
     >

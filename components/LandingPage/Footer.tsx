@@ -67,6 +67,18 @@ const Footer = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
     }
   };
 
+  const footerContactHandler = () => {
+    console.log("iam cllaing this");
+    if (router.pathname == "/TermsAndCondition") {
+      router.push({ pathname: "/", query: { section: "enquirySection" } }, "/");
+    } else {
+      console.log("else is handler");
+      props.enquiryRef?.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div
       className=" bg-[#2B2B2B]  px-[15px] xmd:px-[120px] py-[15px] md:py-[70px] space-y-[30px] font-inter "
@@ -103,14 +115,7 @@ const Footer = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                 >
                   {footerLeftSide[3]}
                 </li>
-                <li
-                  className="cursor-pointer"
-                  onClick={() => {
-                    props.enquiryRef?.current?.scrollIntoView({
-                      behavior: "smooth",
-                    });
-                  }}
-                >
+                <li className="cursor-pointer" onClick={footerContactHandler}>
                   {footerLeftSide[4]}
                 </li>
               </ul>

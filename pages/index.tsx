@@ -62,6 +62,14 @@ const Index = () => {
         });
       }
     }
+    if (router.query.section == "enquirySection") {
+      var targetSection = document.getElementById("enquirySection");
+      if (targetSection) {
+        targetSection.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    }
   }, []);
 
   const trackingIdInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
