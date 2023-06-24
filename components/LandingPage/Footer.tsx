@@ -36,6 +36,37 @@ const Footer = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
     returnObjects: true,
   });
 
+  const footerShippingHandler = () => {
+    console.log(router.pathname);
+    if (router.pathname == "/") {
+      props.calRef?.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    } else {
+      console.log("pushing");
+      router.push(
+        { pathname: "/", query: { section: "shipmentCalculator" } },
+        "/"
+      );
+    }
+  };
+
+  const footerTrackHandler = () => {
+    if (router.pathname == "/") {
+      var targetSection = document.getElementById("shipmentTrack");
+      if (targetSection) {
+        targetSection.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    } else {
+      router.push(
+        { pathname: "/", query: { section: "shipmentTracking" } },
+        "/"
+      );
+    }
+  };
+
   return (
     <div
       className=" bg-[#2B2B2B]  px-[15px] xmd:px-[120px] py-[15px] md:py-[70px] space-y-[30px] font-inter "
@@ -57,17 +88,10 @@ const Footer = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
           <div className="w-full flex-type6 gap-y-[20px] ">
             <div className="w-[100%] flex flex-row justify-start items-start gap-x-[60px] text-[14px] text-[#BFB8AF] font-[400] leading-[21px] ">
               <ul className="space-y-[15px]">
-                <li className="cursor-pointer" onClick={() => router.push("/")}>
+                <li className="cursor-pointer" onClick={footerTrackHandler}>
                   {footerLeftSide[0]}
                 </li>
-                <li
-                  className="cursor-pointer"
-                  onClick={() =>
-                    props.calRef?.current?.scrollIntoView({
-                      behavior: "smooth",
-                    })
-                  }
-                >
+                <li className="cursor-pointer" onClick={footerShippingHandler}>
                   {footerLeftSide[1]}
                 </li>
                 <li className="">info@mazexpress</li>
@@ -81,11 +105,11 @@ const Footer = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                 </li>
                 <li
                   className="cursor-pointer"
-                  onClick={() =>
+                  onClick={() => {
                     props.enquiryRef?.current?.scrollIntoView({
                       behavior: "smooth",
-                    })
-                  }
+                    });
+                  }}
                 >
                   {footerLeftSide[4]}
                 </li>

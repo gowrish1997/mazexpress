@@ -45,6 +45,25 @@ const Index = () => {
     document.querySelector("html")?.setAttribute("lang", lang);
   }, [router.locale]);
 
+  useEffect(() => {
+    if (router.query.section == "shipmentCalculator") {
+      var targetSection = document.getElementById("shipmentCalculatorSection");
+      if (targetSection) {
+        targetSection.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    }
+    if (router.query.section == "shipmentTracking") {
+      var targetSection = document.getElementById("shipmentTrack");
+      if (targetSection) {
+        targetSection.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    }
+  }, []);
+
   const trackingIdInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const isValidMazId = await fetchServer(`/api/orders/validate-maz-id`, {
       method: "POST",
@@ -143,7 +162,10 @@ const Index = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex flex-col min-[900px]:flex-row justify-start items-start min-[900px]:items-center gap-x-[50px] ">
+                  <div
+                    id="shipmentTrack"
+                    className="flex flex-col min-[900px]:flex-row justify-start items-start min-[900px]:items-center gap-x-[50px] "
+                  >
                     {" "}
                     <MaxExpressFlowDiagram />
                     <div className="max-[500px]:w-[100%] max-[900px]:w-[400px] flex-1 bg-[#FFFFFF]  mt-[70px] py-[20px] sm:py-[40px] px-[20px] z-20 rounded-[25px] ">
