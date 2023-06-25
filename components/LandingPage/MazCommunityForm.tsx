@@ -98,7 +98,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
       className="flex flex-col justify-start items-center mt-[20px] md:mt-[100px] font-inter bg-[#35C6F4] py-[40px] add_sm:py-[60px] "
       ref={ref}
     >
-      <div className="w-[95%] sm:w-[90%] xmd:w-[80%] min-[1650px]:w-[60%] flex flex-col justify-start items-stretch   min-[800px]:flex-type10 gap-x-[30px] gap-y-[15px] rounded-[8px] ">
+      <div className="w-[95%] sm:w-[90%] xmd:w-[80%] min-[1650px]:w-[60%] flex flex-col justify-start items-stretch   min-[800px]:flex-type11 gap-x-[30px] gap-y-[15px] rounded-[8px] ">
         <div className="w-full min-[800px]:flex-1 h-full rounded-[16px]">
           <h1
             className={` text-[20px] table_md:text-[23px] font-manrope ${
@@ -182,12 +182,17 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
             </div>
           </form>
         </div>
+        <div className="flex-1 ">
+          <div className={`relative max-[800px]:aspect-[1/0.5] h-full `}>
+            <Image src={Map} alt="logo" fill objectFit="cover" />
+          </div>
+        </div>
 
-        <div
+        {/* <div
           className={`relative w-[100%] max-[800px]:aspect-[1/0.5]  min-[800px]:flex-1 min-[800px]:h-[490px] rtl:min-[800px]:h-[465px]  ltr:min-[1650px]:h-[500px] rtl:min-[1650px]:h-[477px]`}
         >
           <Image src={Map} alt="logo" fill />
-        </div>
+        </div> */}
         {/* <div
           style={{
             flex: "0 0 auto",

@@ -51,6 +51,9 @@ body {
   .flex-type10 {
     @apply flex flex-row justify-center items-start;
   }
+  .flex-type11 {
+    @apply flex flex-row justify-center items-stretch;
+  }
 
   .td5 {
     @apply w-[11%];
