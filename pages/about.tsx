@@ -33,7 +33,14 @@ const About = () => {
   return (
     <>
       <Head>
-        <title>About Us</title>
+        <title>
+          Empowering Libyan Customers with Affordable and Convenient Online
+          Shopping.
+        </title>
+        <meta
+          name="description"
+          content="MAZ Express is a logistics and finance company based in Istanbul, Turkey, dedicated to bridging the gap between Turkish online shops and Libyan customers. Discover how we simplify the shopping experience for you"
+        />
       </Head>
       <div className="w-full">
         <HomePageWrapper

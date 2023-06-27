@@ -109,9 +109,13 @@ const Index = () => {
     <>
       <Head>
         <title>
-          Mazexpress - Your One-Stop Logistics Solution for Shipping from Turkey
-          to Libya
+          MAZ express Your one-stop logistics solution for shipping from Turkey
+          to Libya.
         </title>
+        <meta
+          name="description"
+          content="Our company is committed to providing cutting-edge logistics services that are efficient, reliable, and cost-effective. Get your unique address in Turkey and enjoy hassle-free shipping to Libya."
+        />
       </Head>
       <HomePageWrapper
         type="home"

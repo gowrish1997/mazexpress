@@ -29,7 +29,13 @@ const About = () => {
   return (
     <>
       <Head>
-        <title>Services</title>
+        <title>
+          Efficient Logistics and Shipping Services for Libyan Customers
+        </title>
+        <meta
+          name="description"
+          content="Explore our tailored logistics and shipping services designed for Libyan customers. Enjoy secure and cost-effective shipping from Turkey to Libya."
+        />
       </Head>
       <div className="w-full">
         <HomePageWrapper
