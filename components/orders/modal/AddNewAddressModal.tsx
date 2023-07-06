@@ -31,8 +31,8 @@ const schema = yup
       .min(0, "Number must be greater than zero")
       .test(
         "len",
-        "Must be exactly 9 digits",
-        (val) => val?.toString().length === 9
+        "Must be exactly 10 digits",
+        (val) => val?.toString().length === 10
       )
       .required()
       .typeError("Mobile number is required field"),

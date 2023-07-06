@@ -38,7 +38,10 @@ const AuthLayout = (props: any) => {
             console.log(e);
           }}
         /> */}
-        <div className="hidden md:block absolute top-[30%] left-[30%]  ">
+        <div
+          className="hidden md:block absolute top-[30%] left-[30%] cursor-pointer "
+          onClick={() => router.push("/")}
+        >
           <div className="h-[74px] w-[105px]  relative ">
             <Image src={New_logo_white} fill alt="document" />
           </div>

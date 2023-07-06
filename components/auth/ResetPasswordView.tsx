@@ -14,6 +14,8 @@ import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import logo from "../../public/new_logo_blue.png";
+import Home from "@/public/backHome.png";
+import Back from "@/public/back.png";
 
 type Inputs = {
   password: string;
@@ -156,12 +158,26 @@ const ResetPasswordView = (props: any) => {
 
   return (
     <>
+      <div
+        className="hidden md:flex flex-row justify-start items-center gap-x-[5px] cursor-pointer -mb-[10px] "
+        onClick={() => router.push("/")}
+      >
+        <div className="relative h-[10px] w-[15px]   ">
+          <Image src={Back} fill alt="backHome" />
+        </div>
+        <div className="relative h-[20px] w-[20px]  ">
+          <Image src={Home} fill alt="backHome" />
+        </div>
+      </div>
       <h1
         className={`hidden md:block text-[26px] text-[#000000] font-[600] leading-[36px]  `}
       >
         {t("resetPasswordView.Title")}
       </h1>
-      <div className="w-full md:hidden flex flex-row justify-center items-baseline gap-x-[10px] ">
+      <div
+        className="w-full md:hidden flex flex-row justify-center items-baseline gap-x-[10px] cursor-pointer "
+        onClick={() => router.push("/")}
+      >
         <div className="h-[60px] w-[60px] relative">
           <Image src={logo} fill alt="logo" />
         </div>

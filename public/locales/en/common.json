@@ -38,7 +38,7 @@
         "Age is required field",
         "Gender is required field",
         "Email is required (Please provide valid email)",
-        "Mobile number is required field (Must be exactly 9 digits)",
+        "Mobile number is required field (Must be exactly 10 digits)",
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
         "Confirm password is required field(Passwords must match) "
       ],
@@ -251,7 +251,7 @@
         "InputField": ["Email", "Mobile number", "Message"],
         "Errors": [
           "Email is a required field",
-          "Mobile number is required field (Must be exactly 9 digits)",
+          "Mobile number is required field (Must be exactly 10 digits)",
           "Message is a required field"
         ],
 
@@ -480,7 +480,7 @@
         "Password is required field",
         "Email is required (Please provide valid email)",
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        "Mobile number is required field (Must be exactly 9 digits)"
+        "Mobile number is required field (Must be exactly 10 digits)"
       ],
 
       "notification": {

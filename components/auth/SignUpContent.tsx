@@ -3,6 +3,7 @@ import {
   admin_registerBodyContent,
   user_registerBodyContet,
 } from "@/lib/emailContent/bodyContent";
+import { useEffect } from "react";
 import fetchServer from "@/lib/fetchServer";
 import { sentMail } from "@/lib/sentMail";
 import { createToast } from "@/lib/toasts";
@@ -15,6 +16,8 @@ import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import CustomDropdown from "../LandingPage/CustomDropdown";
+import { get } from "http";
+import Link from "next/link";
 
 const schema = yup
   .object({
@@ -32,8 +35,8 @@ const schema = yup
         .min(0, "Number must be greater than zero")
         .test(
           "len",
-          "Must be exactly 9 digits",
-          (val) => val?.toString().length === 9
+          "Must be exactly 10 digits",
+          (val) => val?.toString().length === 10
         )
         .required()
         .typeError("Mobile number is required field"),
@@ -54,7 +57,10 @@ const schema = yup
           }
         ),
     }),
-    addr: yup.object({}),
+    addr: yup.object({
+      city: yup.string().required("City is required field"),
+      address_1: yup.string(),
+    }),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("user.password")], "Passwords must match")
@@ -125,12 +131,6 @@ const SignUpContent = (props: IProp) => {
     resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
-    // defaultValues: {
-    //     user: {
-    //         is_admin: true ? true : false,
-    //         first_name: "trikal",
-    //     },
-    // },
   });
 
   const onSubmit: SubmitHandler<ISignupForm> = async (data) => {
@@ -176,19 +176,6 @@ const SignUpContent = (props: IProp) => {
         body: JSON.stringify(data.user),
       });
 
-      // add address
-      // const addressResult = await fetchServer(
-      //     `/api/addresses/${userResult.data[0].email}`,
-      //     {
-      //         method: "POST",
-      //         headers: { "Content-Type": "application/json" },
-      //         body: JSON.stringify({
-      //             ...data.addr,
-      //         }),
-      //     }
-      // );
-
-      // if (userResult.ok === true && addressResult.ok === true) {
       if (userResult.ok === true) {
         // toast
         if (props.type == "admin") {
@@ -235,12 +222,6 @@ const SignUpContent = (props: IProp) => {
         message: "Please try with different email",
         timeOut: 3000,
       });
-      // if (error instanceof FetchError) {
-      //     console.error(error.data.message);
-      //     setErrorMsg(error.data.message);
-      // } else {
-      //     console.error("An unexpected error happened:");
-      // }
     }
   };
 
@@ -255,13 +236,7 @@ const SignUpContent = (props: IProp) => {
       setPasswordType("string");
     }
   };
-  const toggleConfirmPasswordTypeHandler = () => {
-    if (confirmPasswordType == "string") {
-      setConfirmPasswordType("password");
-    } else {
-      setConfirmPasswordType("string");
-    }
-  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -364,7 +339,7 @@ const SignUpContent = (props: IProp) => {
         value={getValues("addr.city")}
         setValue={setValue}
         options={cityOption}
-        // disabled={true}
+        disabled={true}
       />
       <Controller
         name="user.password"
@@ -455,15 +430,17 @@ const SignUpContent = (props: IProp) => {
               onClick={termsAndConditionHandler}
             />
 
-            <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[13px]">
-              {discription[0]}{" "}
-              <span
-                className="text-[#0057FF] cursor-pointer"
-                onClick={() => router.push("/TermsAndCondition")}
-              >
-                {discription[1]}
-              </span>
-            </p>
+            <a href="/TermsAndCondition" target="_blank">
+              <p className="text-[14px] text-[#2B2B2B] font-[500] leading-[13px]">
+                {discription[0]}{" "}
+                <span
+                  className="text-[#0057FF] cursor-pointer"
+                  // onClick={termsAndConditionRedirectHandler}
+                >
+                  {discription[1]}
+                </span>
+              </p>
+            </a>
           </div>
           <p className="text-[12px] text-[#f02849] mb-[-10px] leading-[16px]">
             {errorMsg}
