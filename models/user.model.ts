@@ -18,11 +18,10 @@ export enum UserGender {
 
 export enum UserTongue {
   E = "english",
-  A = "arabic"
+  A = "arabic",
 }
 
 export interface User {
-
   id: string;
 
   created_on: Date;
@@ -66,6 +65,5 @@ export interface User {
   notifications: Notification[];
 
   lang: UserTongue;
+  customer_id: string;
 }
-
- 
