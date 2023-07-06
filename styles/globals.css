@@ -310,19 +310,19 @@ input::-webkit-inner-spin-button {
 
 .user_table .th1,
 .user_table .td1 {
-  width: 19%;
+  width: 18%;
 }
 .user_table .th2,
 .user_table .td2 {
-  width: 15%;
+  width: 16%;
 }
 .user_table .th3,
 .user_table .td3 {
-  width: 18%;
+  width: 20%;
 }
 .user_table .th4,
 .user_table .td4 {
-  width: 14%;
+  width: 13%;
 }
 
 /* .user_table .th2 {
@@ -340,7 +340,7 @@ input::-webkit-inner-spin-button {
 
 .user_table .th7,
 .user_table .td7 {
-  width: 9%;
+  width: 8%;
 }
 .user_table .th8,
 .user_table .td8 {
