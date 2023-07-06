@@ -150,7 +150,7 @@ const Index = () => {
                   />
                 </div>
 
-                <div className="w-[95%] sm:w-[95%] xmd:w-[90%] min-[1450px]:w-[85%] min-[1650px]:w-[80%] mt-[80px]">
+                <div className="w-[95%] sm:w-[95%] xmd:w-[90%] min-[1450px]:w-[85%] min-[1650px]:w-[80%] mt-[35px] add_sm:mt-[60px] table_md:mt-[80px]">
                   <div className="w-[100%] flex flex-row justify-start ">
                     <div className="w-[100%] z-20">
                       {/* <h1 className="text-left text-[36px]  text-[#000000] font-[900] leading-[40px]   ">
