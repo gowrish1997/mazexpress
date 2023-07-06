@@ -17,11 +17,11 @@ const schema = yup
     message: yup.string().required(),
     mobile: yup
       .number()
-      .test(
-        "len",
-        "Must be exactly 10 digits",
-        (val) => val?.toString().length === 10
-      )
+      // .test(
+      //   "len",
+      //   "Must be exactly 10 digits",
+      //   (val) => val?.toString().length === 10
+      // )
       .required()
       .typeError("Mobile number is required field"),
   })

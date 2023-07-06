@@ -55,6 +55,7 @@ const AddNewOrder = () => {
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale } = router;
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const inputFieldLabels: string[] = t("addNewOrderPage.ordersForm.Labels", {
     returnObjects: true,
   });
@@ -138,6 +139,11 @@ const AddNewOrder = () => {
     address_id: string | null | undefined;
     order_weight: number | null | undefined;
   }> = async (data) => {
+    if (isButtonDisabled) {
+      return; // Exit early if the button is already disabled
+    }
+
+    setIsButtonDisabled(true);
     const toList = [
       {
         type: "ordered",
@@ -234,6 +240,7 @@ const AddNewOrder = () => {
         timeOut: 3000,
       });
     }
+    setIsButtonDisabled(false);
   };
 
   return (
@@ -337,6 +344,7 @@ const AddNewOrder = () => {
           <button
             className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
             type="submit"
+            disabled={isButtonDisabled}
           >
             {t("addNewOrderPage.SubmitButton")}
           </button>

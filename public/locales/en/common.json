@@ -38,8 +38,8 @@
         "Age is required field",
         "Gender is required field",
         "Email is required (Please provide valid email)",
-        "Mobile number is required field (Must be exactly 10 digits)",
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+        "Mobile number is required field",
+        "Must Contain 8 Characters, One Uppercase, One Lowercase and One Number ",
         "Confirm password is required field(Passwords must match) "
       ],
       "Discription": [
@@ -219,7 +219,7 @@
       ]
     },
     "shipmentCostCalculator": {
-      "Title": "Shipment Cost Calculator",
+      "Title": "Estimate Shipment Cost Calculator",
       "Description": "Drop off and pick up packages from a location that’s open when you need it.",
       "form": {
         "InputField": [
@@ -251,7 +251,7 @@
         "InputField": ["Email", "Mobile number", "Message"],
         "Errors": [
           "Email is a required field",
-          "Mobile number is required field (Must be exactly 10 digits)",
+          "Mobile number is required field",
           "Message is a required field"
         ],
 
@@ -345,11 +345,11 @@
     "LinkPPart1": "Here is a link to some fake information that contains crucial information,",
     "LinkPPart2": "Link here →",
     "ordersForm": {
-      "Labels": ["Reference ID", "Store Link", "Weight in KG"],
+      "Labels": ["Reference ID", "Store Link", "Estimated weight in KG"],
       "Errors": [
         "Reference ID is required field",
         "Store Link is required field",
-        "Weight is required field"
+        "Estimated weight is required field"
       ]
     },
     "addressBook": {
@@ -374,7 +374,7 @@
         "Address line 02 is required field",
         "Country is required field",
         "City/Town is required field",
-        "Mobile number is required field (Must be exactly 10 digits)"
+        "Mobile number is required field"
       ],
       "CityOptions": [
         { "value": "Tripoli", "label": "Tripoli" },
@@ -479,8 +479,8 @@
         "Last name is required",
         "Password is required field",
         "Email is required (Please provide valid email)",
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        "Mobile number is required field (Must be exactly 10 digits)"
+        "Must Contain 8 Characters, One Uppercase, One Lowercase and One Number",
+        "Mobile number is required field"
       ],
 
       "notification": {

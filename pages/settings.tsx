@@ -34,27 +34,21 @@ const schema = yup
       .email("Please provide valid email"),
     phone: yup
       .number()
-      .test(
-        "len",
-        "Must be exactly 10 digits",
-        (val) => val?.toString().length === 10
-      )
+      // .test(
+      //   "len",
+      //   "Must be exactly 10 digits",
+      //   (val) => val?.toString().length === 10
+      // )
       .required()
       .typeError("Mobile number is required field"),
 
     password: yup.string(),
 
-    newPassword: yup
-
-      .string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        {
-          excludeEmptyString: true,
-          message:
-            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-        }
-      ),
+    newPassword: yup.string().matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {
+      excludeEmptyString: true,
+      message:
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+    }),
 
     // avatar_url: yup.string(),
     is_notifications_enabled: yup.boolean().required(),

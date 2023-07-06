@@ -33,11 +33,11 @@ const schema = yup
       phone: yup
         .number()
         .min(0, "Number must be greater than zero")
-        .test(
-          "len",
-          "Must be exactly 10 digits",
-          (val) => val?.toString().length === 10
-        )
+        // .test(
+        //   "len",
+        //   "Must be exactly 10 digits",
+        //   (val) => val?.toString().length === 10
+        // )
         .required()
         .typeError("Mobile number is required field"),
       password: yup
@@ -48,14 +48,11 @@ const schema = yup
         // .matches(/[A-Z]/, "Password requires an uppercase letter")
         // .matches(/[^\w]/, "Password requires a symbol"),
         .string()
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          {
-            excludeEmptyString: true,
-            message:
-              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
-          }
-        ),
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {
+          excludeEmptyString: true,
+          message:
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+        }),
     }),
     addr: yup.object({
       city: yup.string().required("City is required field"),

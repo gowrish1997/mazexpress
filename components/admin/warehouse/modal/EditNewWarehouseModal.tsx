@@ -24,11 +24,11 @@ const schema = yup
     city: yup.string().required("City/Town is required field"),
     phone: yup
       .number()
-      .test(
-        "len",
-        "Must be exactly 10 digits",
-        (val) => val?.toString().length === 10
-      )
+      // .test(
+      //   "len",
+      //   "Must be exactly 10 digits",
+      //   (val) => val?.toString().length === 10
+      // )
       .required()
       .typeError("Mobile number is required field"),
     status: yup.string().required(),
@@ -76,12 +76,12 @@ const EditNewWarehouseModal = (props: IProp) => {
           <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">
             Add New Warehouse
           </p>
-          <div>
+          <div className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] border-[1px] border-[#BBC2CF] rounded-[4px] box-border">
             <input
               id="tag"
               type="string"
               {...register("tag")}
-              className="w-full h-[46px] text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none"
+              className="w-full h-full text-[18px] text-[#35C6F4] font-[700] leading-[25px] focus:outline-none px-[5px]"
               placeholder="Give first title @Home"
             />
             {errors.tag && (
