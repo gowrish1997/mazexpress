@@ -342,10 +342,15 @@ const AddNewOrder = () => {
           )}
 
           <button
-            className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px]"
+            className=" relative text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] mt-[25px] disabled:bg-[#35C6F4]/50"
             type="submit"
             disabled={isButtonDisabled}
           >
+            {isButtonDisabled && (
+              <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+              </div>
+            )}
             {t("addNewOrderPage.SubmitButton")}
           </button>
         </form>

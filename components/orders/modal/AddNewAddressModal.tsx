@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -40,6 +41,7 @@ const schema = yup
   .required();
 
 const AddNewAddressModal = (props: IProp) => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const { data: session, update }: { data: any; update: any } = useSession();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
     username: session?.user.email,
@@ -83,6 +85,11 @@ const AddNewAddressModal = (props: IProp) => {
   const onSubmit: SubmitHandler<Address & { default?: boolean }> = async (
     data
   ) => {
+    if (isButtonDisabled) {
+      return; // Exit early if the button is already disabled
+    }
+
+    setIsButtonDisabled(true);
     if (session.user) {
       let address = { ...data };
 
@@ -122,6 +129,7 @@ const AddNewAddressModal = (props: IProp) => {
 
       // set default if checked
     }
+    setIsButtonDisabled(false);
   };
 
   // const toggleDefaultAddressHandler = () => {
@@ -244,9 +252,15 @@ const AddNewAddressModal = (props: IProp) => {
             </div>
             <div className="flex-type1 gap-x-[10px] mt-[5px] ">
               <button
-                className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
+                className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] disabled:bg-[#35C6F4]/50 relative "
                 type="submit"
+                disabled={isButtonDisabled}
               >
+                {isButtonDisabled && (
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                    <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+                  </div>
+                )}
                 {t("addNewOrderPage.addressForm.SubmitButton")}
               </button>
 

@@ -73,6 +73,7 @@ interface IProp {
 }
 
 const SignUpContent = (props: IProp) => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
@@ -131,6 +132,12 @@ const SignUpContent = (props: IProp) => {
   });
 
   const onSubmit: SubmitHandler<ISignupForm> = async (data) => {
+    if (isButtonDisabled) {
+      return; // Exit early if the button is already disabled
+    }
+
+    setIsButtonDisabled(true);
+
     if (props.type == "signUp" && !terms) {
       setErrorMsg("Please accept terms and condition");
       return;
@@ -220,6 +227,7 @@ const SignUpContent = (props: IProp) => {
         timeOut: 3000,
       });
     }
+    setIsButtonDisabled(false);
   };
 
   const [passwordType, setPasswordType] = useState("password");
@@ -449,16 +457,28 @@ const SignUpContent = (props: IProp) => {
       {props.type == "signUp" ? (
         <button
           type="submit"
-          className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
+          className="relative w-full h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] disabled:bg-[#35C6F4]/50 "
+          disabled={isButtonDisabled}
         >
+          {isButtonDisabled && (
+            <div className="absolute top-0 left-0 w-full h-full flex justify-center ">
+              <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+            </div>
+          )}
+
           {submitButtons[0]}
         </button>
       ) : (
         <div className="w-full flex flex-row justify-between  items-center">
           <button
             type="submit"
-            className=" h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[15px] "
+            className="relative h-[46px] lg:h-[55px] xlg:h-[70px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[15px] disabled:bg-[#35C6F4]/50 "
           >
+            {isButtonDisabled && (
+              <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+              </div>
+            )}
             Create Admin
           </button>
           <button

@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -28,6 +28,7 @@ const schema = yup
   .required();
 
 const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const router = useRouter();
   const { t } = useTranslation("");
   const { locale } = router;
@@ -54,6 +55,11 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     // console.log(data);
+    if (isButtonDisabled) {
+      return; // Exit early if the button is already disabled
+    }
+
+    setIsButtonDisabled(true);
     const toList = [
       {
         type: "enquiry",
@@ -169,8 +175,14 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
                 ></textarea>
                 <button
                   type="submit"
-                  className="px-[20px] h-[50px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px]"
+                  className="relative px-[20px] h-[50px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] disabled:bg-[#35C6F4]/50"
+                  disabled={isButtonDisabled}
                 >
+                  {isButtonDisabled && (
+                    <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                      <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+                    </div>
+                  )}
                   {t("landingPage.communityForm.form.SubmitButton")}
                 </button>
               </div>

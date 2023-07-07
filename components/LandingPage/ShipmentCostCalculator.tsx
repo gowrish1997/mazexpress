@@ -60,6 +60,7 @@ const schema = yup
 
 const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
   (props, ref) => {
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const router = useRouter();
     const { t } = useTranslation("");
     const { locale } = router;
@@ -103,6 +104,11 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
     });
 
     const onSubmit: SubmitHandler<any> = async (data) => {
+      if (isButtonDisabled) {
+        return; // Exit early if the button is already disabled
+      }
+
+      setIsButtonDisabled(true);
       if (data.length && (!data.width || !data.height)) {
         if (!data.width) {
           setError("width", {
@@ -307,8 +313,14 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
               <div className="w-full text-[14px] sm:text-[20px] text-[#121212] font-[700] leading-[50px]  mt-[20px] flex flex-row justify-between items-center ">
                 <button
                   type="submit"
-                  className=" h-[46px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[20px] "
+                  className=" h-[46px] bg-[#35C6F4] rounded-[4px] text-[14px] text-[#FFFFFF] font-[400] leading-[19px] mt-[10px] px-[20px] disabled:bg-[#35C6F4]/50 relative "
+                  disabled={isButtonDisabled}
                 >
+                  {isButtonDisabled && (
+                    <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                      <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+                    </div>
+                  )}
                   {t("landingPage.shipmentCostCalculator.form.SubmitButton")}
                 </button>
                 {cost ? (

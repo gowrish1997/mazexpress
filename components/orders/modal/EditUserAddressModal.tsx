@@ -43,6 +43,7 @@ const schema = yup
   .required();
 
 const EditUserAddressModal = (props: IProp) => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [country, setCountry] = useState(props.address.country);
   const { data: session, update }: { data: any; update: any } = useSession();
   const { addresses, mutateAddresses, addressesIsLoading } = useAddresses({
@@ -92,6 +93,12 @@ const EditUserAddressModal = (props: IProp) => {
   const onSubmit: SubmitHandler<Address & { default?: boolean }> = async (
     data
   ) => {
+    if (isButtonDisabled) {
+      return; // Exit early if the button is already disabled
+    }
+
+    setIsButtonDisabled(true);
+
     let address = { ...data };
     delete address.default;
 
@@ -169,6 +176,7 @@ const EditUserAddressModal = (props: IProp) => {
         timeOut: 1000,
       });
     }
+    setIsButtonDisabled(false);
   };
 
   return (
@@ -295,9 +303,15 @@ const EditUserAddressModal = (props: IProp) => {
           </div>
           <div className="flex-type1 space-x-[10px] mt-[5px] ">
             <button
-              className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
+              className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] disabled:bg-[#35C6F4]/50 relative"
               type="submit"
+              disabled={isButtonDisabled}
             >
+              {isButtonDisabled && (
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                  <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+                </div>
+              )}
               {t("addNewOrderPage.editAddressForm.SubmitButton")}
             </button>
 

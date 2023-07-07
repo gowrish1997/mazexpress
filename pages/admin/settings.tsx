@@ -60,6 +60,7 @@ const schema = yup
   .required();
 
 const Settings = () => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const [newPasswordType, setNewPasswordType] = useState("password");
@@ -154,6 +155,11 @@ const Settings = () => {
     // Object.assign(picked, data)
 
     try {
+      if (isButtonDisabled) {
+        return; // Exit early if the button is already disabled
+      }
+
+      setIsButtonDisabled(true);
       // console.log(result);
       if (!passwordCheck && data.password?.length > 0) {
         createToast({
@@ -233,6 +239,7 @@ const Settings = () => {
         timeOut: 3000,
       });
     }
+    setIsButtonDisabled(false);
   };
 
   const updatePasswordChecker = async (e: string) => {
@@ -484,8 +491,14 @@ const Settings = () => {
 
             <button
               type="submit"
-              className="w-1/2 h-[46px] border-[1px] bg-[#35C6F4] rounded-[4px] text-[#FFFFFF] mt-[10px] "
+              className="w-1/2 h-[46px] border-[1px] bg-[#35C6F4] rounded-[4px] text-[#FFFFFF] mt-[10px] relative disabled:bg-[#35C6F4]/50 "
+              disabled={isButtonDisabled}
             >
+              {isButtonDisabled && (
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                  <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+                </div>
+              )}
               Update settings
             </button>
           </form>

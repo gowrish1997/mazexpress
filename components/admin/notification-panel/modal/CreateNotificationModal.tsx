@@ -40,6 +40,7 @@ const CreateNotificationModal = (props: IProp) => {
   const [err_msg, setErr_msg] = useState("");
   const [files, setFiles] = useState<any>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileUploadTriggerRef = useRef<HTMLButtonElement>(null);
@@ -70,6 +71,11 @@ const CreateNotificationModal = (props: IProp) => {
   }, []);
 
   const onSubmit: SubmitHandler<any> = async (data) => {
+    if (isButtonDisabled) {
+      return; // Exit early if the button is already disabled
+    }
+
+    setIsButtonDisabled(true);
     if (selectedUsers.length == 0) {
       createToast({
         type: "error",
@@ -178,91 +184,7 @@ const CreateNotificationModal = (props: IProp) => {
         console.log(error.message);
       }
     }
-
-    // console.log("to", selectedUsers);
-
-    // multiparty here
-    // let notificationData = {
-    //   title: data.title,
-    //   content: data.content,
-    // };
-
-    // if (data.reusable === true) {
-    //   try {
-    //     // store config for reuse
-    //     const createResult: APIResponse<NotificationConfig> = await fetchServer(
-    //       `/api/notification-settings`,
-    //       {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({
-    //           title: data.config_title,
-    //           desc: data.config_desc,
-    //           is_enabled: true,
-    //           is_custom: true,
-    //           is_reusable: true,
-    //         }),
-    //       }
-    //     );
-    //     if (createResult.ok) {
-    //       props.close();
-    //       createToast({
-    //         type: "success",
-    //         title: "Success!",
-    //         message: "Notification sent successfully",
-    //         timeOut: 1000,
-    //       });
-    //     } else {
-    //       createToast({
-    //         type: "error",
-    //         title: "Failed!",
-    //         message: "Notification was not sent contact dev",
-    //         timeOut: 1000,
-    //       });
-    //     }
-    //   } catch(err) {
-    //     console.error(err)
-    //     createToast({
-    //       type: "error",
-    //       title: "check console!",
-    //       message: "Notification was not sent contact dev",
-    //       timeOut: 1000,
-    //     });
-    //   }
-    // }
-    // // send notification normally
-    // try {
-    //   const createResult: APIResponse<Notification> = await fetchServer(
-    //     `/api/notifications`,
-    //     {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify({
-    //         data: notificationData,
-    //         users: selectedUsers,
-    //       }),
-    //     }
-    //   );
-
-    //   // console.log(createResult);
-    //   if (createResult.ok) {
-    //     props.close();
-    //     createToast({
-    //       type: "success",
-    //       title: "Success!",
-    //       message: "Notification sent successfully",
-    //       timeOut: 1000,
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   createToast({
-    //     type: "error",
-    //     title: "check console!",
-    //     message: "Notification was not sent contact dev",
-    //     timeOut: 1000,
-    //   });
-    // }
+    setIsButtonDisabled(false);
   };
 
   const uploadFilesHandler: any = (e: any) => {
@@ -463,9 +385,15 @@ const CreateNotificationModal = (props: IProp) => {
                         )} */}
           <div className="flex-type1 space-x-[10px] mt-[5px] ">
             <button
-              className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
+              className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] disabled:bg-[#35C6F4]/50 relative"
               type="submit"
+              disabled={isButtonDisabled}
             >
+              {isButtonDisabled && (
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                  <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+                </div>
+              )}
               Send Notification
             </button>
             <button

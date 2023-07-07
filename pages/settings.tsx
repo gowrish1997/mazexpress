@@ -62,6 +62,7 @@ const Settings = () => {
   const { locale } = router;
   const { data: session, update }: { data: any; update: any } = useSession();
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
   const inputFieldLabels: string[] = t(
     "settingsPage.profileForm.InputFieldLabel",
@@ -174,6 +175,11 @@ const Settings = () => {
     > & { newPassword: string }
   > = async (data) => {
     try {
+      if (isButtonDisabled) {
+        return; // Exit early if the button is already disabled
+      }
+
+      setIsButtonDisabled(true);
       // console.log(result);
       if (!passwordCheck && data.password?.length > 0) {
         createToast({
@@ -263,6 +269,7 @@ const Settings = () => {
         timeOut: 3000,
       });
     }
+    setIsButtonDisabled(false);
   };
 
   const updatePasswordChecker = async (e: string) => {
@@ -514,8 +521,14 @@ const Settings = () => {
 
             <button
               type="submit"
-              className="w-1/2 px-[5px] py-[10px] border-[1px] bg-[#35C6F4] rounded-[4px] text-[12px] set_md:text-[16px] text-[#FFFFFF] mt-[10px] "
+              className="w-1/2 px-[5px] py-[10px] border-[1px] bg-[#35C6F4] rounded-[4px] text-[12px] set_md:text-[16px] text-[#FFFFFF] mt-[10px] relative disabled:bg-[#35C6F4]/50 "
+              disabled={isButtonDisabled}
             >
+              {isButtonDisabled && (
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                  <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+                </div>
+              )}
               {t("settingsPage.profileForm.SubmitButton")}
             </button>
           </form>

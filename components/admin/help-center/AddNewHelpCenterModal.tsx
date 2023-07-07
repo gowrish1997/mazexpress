@@ -50,6 +50,7 @@ const schema = yup
   .required();
 
 const AddNewHelpCenterModal = (props: IProp) => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   // const [data, setData] = useState(props.data);
 
   const {
@@ -64,6 +65,11 @@ const AddNewHelpCenterModal = (props: IProp) => {
   });
 
   const onSubmit: SubmitHandler<IForm> = async (data) => {
+    if (isButtonDisabled) {
+      return; // Exit early if the button is already disabled
+    }
+
+    setIsButtonDisabled(true);
     try {
       const helpUpdateResult = await fetchJson(`/api/help-center`, {
         method: "POST",
@@ -81,6 +87,8 @@ const AddNewHelpCenterModal = (props: IProp) => {
     } catch (error) {
       console.error(error);
     }
+
+    setIsButtonDisabled(false);
   };
 
   return (
@@ -204,9 +212,15 @@ const AddNewHelpCenterModal = (props: IProp) => {
 
           <div className="flex-type1 space-x-[10px] mt-[5px] ">
             <button
-              className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px]"
+              className="text-[#FFFFFF] text-[14px] leading-[21px] font-[500] bg-[#35C6F4] rounded-[4px] p-[10px] disabled:bg-[#35C6F4]/50 relative"
               type="submit"
+              disabled={isButtonDisabled}
             >
+              {isButtonDisabled && (
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center ">
+                  <div className="w-[20px] h-[20px] border-[1px] border-white animate-spin rounded-full " />
+                </div>
+              )}
               Submit
             </button>
 
