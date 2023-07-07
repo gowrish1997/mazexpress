@@ -37,7 +37,7 @@ const WarehousePage = () => {
         title="Our Warehouses | MazExpress"
       />
       <Layout>
-        <div className="w-full flex flex-row justify-start items-start gap-x-[10px] gap-y-[10px] flex-wrap">
+        <div className="w-full flex flex-row justify-start items-stretch gap-x-[10px] gap-y-[10px] flex-wrap">
           {warehouses?.map((data) => {
             return <WarehouseCard key={data.id} address={data} />;
           })}

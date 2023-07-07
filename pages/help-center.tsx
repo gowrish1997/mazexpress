@@ -35,11 +35,10 @@ const HelpCenter = () => {
         content={t("helpCenterPage.pageHeader.Title")}
         title="Our Help centers | MazExpress"
       />
-      <Layout>
-        {helpCenters?.data?.length > 0 && (
-          <HelpCenterView data={helpCenters?.data} />
-        )}
-      </Layout>
+
+      {helpCenters?.data?.length > 0 && (
+        <HelpCenterView data={helpCenters?.data} />
+      )}
     </UserPageWrapper>
   );
 };
