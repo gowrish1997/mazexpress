@@ -24,12 +24,14 @@ const Header = () => {
                 onError={() => setImageError(true)}
               />
             </div> */}
-             <div className="flex flex-col justify-start items-start gap-x-[7px] ">
-                <div className="relative h-[47px] w-[70px] ">
-                  <Image src={New_logo} fill alt="logo" />
-                </div>
-                <p className="text-[#143055] text-[16px] font-[800] ">Express</p>
+            <div className="flex flex-col justify-start items-start gap-x-[7px] ">
+              <div className="relative h-[47px] w-[70px] ">
+                <Image src={New_logo} fill alt="logo" />
               </div>
+              <p className="text-[#143055] tracking-[3px] text-[17px] font-[800] ">
+                express
+              </p>
+            </div>
             {/* <h3 className="font-semibold ml-4 font-[500] text-[20px]">Management</h3> */}
           </div>
         </Link>

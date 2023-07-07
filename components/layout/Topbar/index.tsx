@@ -127,8 +127,8 @@ const Topbar = () => {
                   <div className="relative h-[47px] w-[70px] ">
                     <Image src={New_logo} fill alt="logo" />
                   </div>
-                  <p className="text-[#143055] text-[16px] font-[800] ">
-                    Express
+                  <p className="text-[#143055] tracking-[3px] text-[17px] font-[800] ">
+                    express
                   </p>
                 </div>
                 {/* <h3 className="font-semibold ml-4 font-[500] text-[20px]">Management</h3> */}

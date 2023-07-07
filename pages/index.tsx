@@ -161,7 +161,7 @@ const Index = () => {
                           <Image src={New_logo_white} fill alt="document" />
                         </div>
                         <p className="text-[#143055] text-[27px] add_sm:text-[40px] font-[800] -mb-[11px] add_sm:-mb-[14px] ">
-                          Express
+                          express
                         </p>
                       </div>
 

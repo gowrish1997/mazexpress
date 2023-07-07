@@ -218,7 +218,7 @@ const HomepageNavbar = (props: {
                 </div>
               </div>
               <div
-                className="flex flex-col justify-start items-end cursor-pointer "
+                className="flex flex-col justify-start items-start cursor-pointer "
                 onClick={() => router.push("/")}
               >
                 <div className="h-[38px] w-[54px]  relative ">
@@ -228,9 +228,9 @@ const HomepageNavbar = (props: {
                 <Image src={New_logo} fill alt="logo" />
               </div> */}
                 <p
-                  className={`text-[${props.color}] text-[12.5px] font-[800] `}
+                  className={`text-[${props.color}] text-[14px] font-[800] tracking-[2px] `}
                 >
-                  Express
+                  express
                 </p>
               </div>
             </div>

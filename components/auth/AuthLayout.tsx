@@ -48,7 +48,7 @@ const AuthLayout = (props: any) => {
           {/* <div className="relative h-[47px] w-[60px] ">
                 <Image src={New_logo} fill alt="logo" />
               </div> */}
-          <p className={` text-[25px] font-[800] `}>Express</p>
+          <p className={` text-[25px] font-[800] tracking-[4px] `}>express</p>
         </div>
       </div>
       <div

@@ -147,7 +147,7 @@ const AddNewAddressModal = (props: IProp) => {
             <p className="text-[18px] text-[#2B2B2B] font-[700] leading-[25px] mb-[10px]">
               {t("addNewOrderPage.addressForm.Title")}
             </p>
-            <div className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] border-[1px] border-[#BBC2CF] rounded-[4px] box-border ">
+            <div className="w-full h-[46px] lg:h-[55px] xlg:h-[70px] border-[1px] border-[#BBC2CF] rounded-[4px] box-border p-[1px] ">
               <input
                 id="tag"
                 type="string"

@@ -37,7 +37,7 @@ const Frame = (props: IFrameProps) => {
           router.pathname == "/404" ||
           router.pathname == "/TermsAndCondition"
         ) && (
-          <div className="hidden md:block w-[100px]  xmd:w-[250px] lg:w-[400px] xlg:w-[500px] fixed h-screen z-50">
+          <div className="hidden md:block w-[120px]  xmd:w-[250px] lg:w-[400px] xlg:w-[500px] fixed h-screen z-50">
             <Sidebar />
           </div>
         )}
