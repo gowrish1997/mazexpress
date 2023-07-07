@@ -202,6 +202,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
       } catch (error) {
         console.log(error);
       }
+      setIsButtonDisabled(false);
     };
 
     return (
