@@ -14,6 +14,7 @@ import HomePageWrapper from "@/components/common/HomePageWrapper";
 import fetchServer from "@/lib/fetchServer";
 import { useScrollspy } from "@/lib/hooks/useScrollSpy";
 import New_logo_white from "@/public/new_logo_white.png";
+import Maz_logo from "@/public/Maz_logo.png";
 import { i18n, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
@@ -156,13 +157,13 @@ const Index = () => {
                       {/* <h1 className="text-left text-[36px]  text-[#000000] font-[900] leading-[40px]   ">
                       {t("landingPage.welcome.Title")}
                     </h1> */}
-                      <div className="flex flex-row justify-start items-end gap-x-[7px] ">
-                        <div className="h-[45px] w-[70px] add_sm:h-[62px] table_md:h-[70px] add_sm:w-[80px] table_md:w-[85px] relative ">
-                          <Image src={New_logo_white} fill alt="document" />
+                      <div className="flex flex-row justify-start items-end gap-x-[12px] ">
+                        <div className="h-[60px] w-[240px] sm:h-[70px] sm:w-[321px] relative ">
+                          <Image src={Maz_logo} fill alt="document" />
                         </div>
-                        <p className="text-[#143055] text-[27px] add_sm:text-[40px] font-[800] -mb-[11px] add_sm:-mb-[14px] ">
-                          express
-                        </p>
+                        {/* <p className="text-[#143055] text-[29px] sm:text-[55px] font-[800] -mb-[11px] add_sm:-mb-[20px] ">
+                        express
+                        </p> */}
                       </div>
 
                       <p
