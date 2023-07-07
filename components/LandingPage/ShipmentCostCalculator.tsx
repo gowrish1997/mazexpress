@@ -115,6 +115,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
             type: "custom",
             message: "width is required field",
           });
+          setIsButtonDisabled(false);
           return;
         }
 
@@ -122,6 +123,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
           type: "custom",
           message: "height is required field",
         });
+        setIsButtonDisabled(false);
         return;
       }
       if (data.width && (!data.length || !data.height)) {
@@ -130,13 +132,14 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
             type: "custom",
             message: "length is required field",
           });
+          setIsButtonDisabled(false);
           return;
         }
         setError("height", {
           type: "custom",
           message: "height is required field",
         });
-
+        setIsButtonDisabled(false);
         return;
       }
       if (data.height && (!data.length || !data.width)) {
@@ -145,6 +148,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
             type: "custom",
             message: "width is required field",
           });
+          setIsButtonDisabled(false);
           return;
         }
 
@@ -152,6 +156,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
           type: "custom",
           message: "length is required field",
         });
+        setIsButtonDisabled(false);
         return;
       }
 
@@ -179,6 +184,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
         } catch (error) {
           console.log(error);
         }
+        setIsButtonDisabled(false);
         return;
       }
       try {

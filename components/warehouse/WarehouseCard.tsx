@@ -57,7 +57,7 @@ const WarehouseCard = (props: { address: Warehouse }) => {
       </p>
 
       <div className="flex flex-row justify-between items-center mt-[15px] ">
-        <div className="flex flex-row justify-start items-center gap-x-[4px] ">
+        <div className="flex flex-row justify-start items-center  ">
           <Image src="/mobile.png" height={12} width={12} alt="mobile" />
           <div className="text-[12px] text-[#2B2B2B] font-[500] leading-[17px] ml-[10px]">
             {props.address.phone}

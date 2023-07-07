@@ -96,6 +96,7 @@ const MazCommunityForm = React.forwardRef<HTMLDivElement>((props, ref) => {
     } catch (error) {
       console.error(error);
     }
+    setIsButtonDisabled(false);
   };
 
   return (
