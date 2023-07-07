@@ -23,6 +23,7 @@ interface IProp {
 const HelpCenterView = (props: IProp) => {
   const router = useRouter();
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [showEditHelpModal, setShowEditHelpModal] = useState(false);
   const [editableHelpCenter, setEditableHelpCenter] = useState<IHelpCenter>();
 
@@ -59,14 +60,14 @@ const HelpCenterView = (props: IProp) => {
   return (
     <>
       {" "}
-      <div className="w-full flex flex-row justify-start items-start gap-x-[10px] flex-wrap gap-y-[10px] ">
+      <div className="w-full flex flex-row justify-start items-stretch gap-x-[10px] flex-wrap gap-y-[10px] ">
         {/* <div className="grid add_sm:grid-cols-2 add_sm:gap-3  add_md:grid-cols-3  add_md:gap-3 py-5"> */}
         {props.data &&
           props.data.map((data, index) => {
             return (
               <div
                 key={index}
-                className="box-border border-[0.4px] w-full h-[240px] sm:h-[220px]  md:min-w-[49%] md:max-w-[49%] xmd:min-w-[32.5%] xmd:max-w-[32.5%] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] flex-type8  "
+                className="box-border border-[0.4px] w-full   md:min-w-[49%] md:max-w-[49%] xmd:min-w-[32.5%] xmd:max-w-[32.5%] border-[#BBC2CF] hover:bg-[#EDF5F9] rounded-[4px] p-[25px] flex flex-col justify-between items-start  "
               >
                 <div className="w-full">
                   {/* <div className="flex-type3 space-x-[10px]">
@@ -111,7 +112,7 @@ const HelpCenterView = (props: IProp) => {
                   </div>
                 </div>
                 {router.pathname.includes("admin") && (
-                  <div className="w-full text-[12px] text-[#35C6F4] font-[500] leading-[17px] flex justify-end">
+                  <div className="w-full text-[12px] text-[#35C6F4] font-[500] leading-[17px] flex justify-end mt-[15px]">
                     <div className="space-x-[20px] flex items-end  ">
                       <button
                         className="hover:font-[600]"
