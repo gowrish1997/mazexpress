@@ -1,11 +1,14 @@
 import fetchJson from "@/lib/fetchServer";
 import { createToast } from "@/lib/toasts";
+import { APIResponse } from "@/models/api.model";
 import { Order } from "@/models/order.model";
 import { useRouter } from "next/router";
+import { KeyedMutator } from "swr";
 
 interface IProp {
   close: () => void;
   row: Order;
+  mutateOrder?: KeyedMutator<APIResponse<Order>>;
 }
 
 const OrderCancelConfirmModal = (props: IProp) => {
@@ -41,7 +44,7 @@ const OrderCancelConfirmModal = (props: IProp) => {
         timeOut: 1000,
       });
     }
-    router.reload();
+    props.mutateOrder();
     props.close();
   };
   return (

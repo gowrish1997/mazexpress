@@ -13,9 +13,12 @@ import OrderOptionModal from "../modal/OrderOptionModal";
 import Link from "next/link";
 import copy from "copy-to-clipboard";
 import OrderCancelConfirmModal from "@/components/admin/modal/OrderCancelConfirmModal";
+import { KeyedMutator } from "swr";
+import { APIResponse } from "@/models/api.model";
 interface IProp {
   row: Order;
   type: string;
+  mutateOrder?: KeyedMutator<APIResponse<Order>>;
 }
 
 const LineItem = (props: IProp) => {
@@ -169,6 +172,7 @@ const LineItem = (props: IProp) => {
       {showOrderCancelConfirmModal && (
         <OrderCancelConfirmModal
           row={props.row}
+          mutateOrder={props.mutateOrder}
           close={toggleOrderCancelConfirmModal}
         />
       )}

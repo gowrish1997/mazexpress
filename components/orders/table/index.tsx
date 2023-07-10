@@ -122,6 +122,7 @@ const Table = (props: TableProps) => {
                                         key={nanoid()}
                                         row={data as Order}
                                         type={props.type}
+                                        mutateOrder={props.mutateOrder}
                                     />
                                 );
                             }

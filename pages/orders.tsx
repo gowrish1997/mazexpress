@@ -21,189 +21,182 @@ import React, { useCallback, useEffect, useState } from "react";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 const MyOrders = () => {
-    const { searchKey } = React.useContext(SearchKeyContext) as any;
-    // console.log(searchKey);
+  const { searchKey } = React.useContext(SearchKeyContext) as any;
+  // console.log(searchKey);
 
-    const [itemsPerPage, setItemPerPage] = useState<number>(25);
+  const [itemsPerPage, setItemPerPage] = useState<number>(25);
 
-    const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [filteredOrder, setFilteredOrder] = useState<Order[]>([]);
 
-    const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
-        Date | string
-    >("");
-    const { data: session, update }: { data: any; update: any } = useSession();
+  const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
+    Date | string
+  >("");
+  const { data: session, update }: { data: any; update: any } = useSession();
 
-    const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
-        type: "get_by_email",
-        search: searchKey,
-        username: session?.user.email,
-        per_page: itemsPerPage,
-        page: currentPage,
-        date: getDateInDBFormat(createdDateFilterKey as Date),
+  const { orders, mutateOrders, ordersIsLoading, ordersError } = useOrders({
+    type: "get_by_email",
+    search: searchKey,
+    username: session?.user.email,
+    per_page: itemsPerPage,
+    page: currentPage,
+    date: getDateInDBFormat(createdDateFilterKey as Date),
+  });
+
+  const router = useRouter();
+  const { t } = useTranslation("common");
+  const { locale } = router;
+  const blankPageDiscription: string[] = t("indexPage.blankPage.Description", {
+    returnObjects: true,
+  });
+  const tableHeaders: string[] = t("indexPage.orderTable.TableHeader", {
+    returnObjects: true,
+  });
+
+  useEffect(() => {
+    let dir = router.locale == "ar" ? "rtl" : "ltr";
+    let lang = router.locale == "ar" ? "ar" : "en";
+    document.querySelector("html")?.setAttribute("dir", dir);
+    document.querySelector("html")?.setAttribute("lang", lang);
+  }, [router.locale]);
+
+  useEffect(() => {
+    const filteredOrder = (orders.data as Order[]).filter((detail) => {
+      return detail.order_cancel != "yes";
     });
+    setFilteredOrder(filteredOrder);
+  }, [orders]);
 
-    const { orderCount, mutateOrderCount } = useOrderCount({
-        // status: statusSelection as string[],
-        status: [
-            "pending",
-            "at-warehouse",
-            "in-transit",
-            "out-for-delivery",
-            "delivered",
-        ],
+  const addNewOrderHandler = () => {
+    router.push(`/add-new-order`);
+  };
 
-        username: "gowrish@eflairwebtech.com",
-    });
+  const currentPageHandler = useCallback((value: number) => {
+    setCurrentPage(value);
+  }, []);
+  const itemPerPageHandler = useCallback((value: string | number) => {
+    setCurrentPage(0);
+    setItemPerPage(value as number);
+  }, []);
 
-    const router = useRouter();
-    const { t } = useTranslation("common");
-    const { locale } = router;
-    const blankPageDiscription: string[] = t(
-        "indexPage.blankPage.Description",
-        {
-            returnObjects: true,
-        }
-    );
-    const tableHeaders: string[] = t("indexPage.orderTable.TableHeader", {
-        returnObjects: true,
-    });
-   
-    useEffect(() => {
-        let dir = router.locale == "ar" ? "rtl" : "ltr";
-        let lang = router.locale == "ar" ? "ar" : "en";
-        document.querySelector("html")?.setAttribute("dir", dir);
-        document.querySelector("html")?.setAttribute("lang", lang);
-    }, [router.locale]);
+  const filterByCreatedDate = useCallback((value: Date | string) => {
+    // console.log(value);
+    setCreatedDateFilterKey(value);
+  }, []);
 
-    const addNewOrderHandler = () => {
-        router.push(`/add-new-order`);
-    };
+  if (ordersIsLoading) {
+    return <LoadingPage />;
+  }
 
-    const currentPageHandler = useCallback((value: number) => {
-        setCurrentPage(value);
-    }, []);
-    const itemPerPageHandler = useCallback((value: string | number) => {
-        setCurrentPage(0);
-        setItemPerPage(value as number);
-    }, []);
+  if (ordersError) throw ordersError;
 
-    const filterByCreatedDate = useCallback((value: Date | string) => {
-        // console.log(value);
-        setCreatedDateFilterKey(value);
-    }, []);
-
-    if (ordersIsLoading) {
-        return <LoadingPage />;
-    }
-
-    if (ordersError) throw ordersError;
-
-    return (
-        <UserPageWrapper>
-            <PageHeader
-                content={t("indexPage.pageHeader.Title")}
-                showCalender={true}
-                title="My Orders | MazExpress"
-                itemPerPageHandler={itemPerPageHandler!}
-                filterByDate={filterByCreatedDate}
-                currentPageHandler={currentPageHandler}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-                createdDateFilterKey={createdDateFilterKey}
-                allLiveOrders={orders?.data as Order[]}
-                pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
-                isFilterPresent={searchKey || createdDateFilterKey}
-            />
-            <Layout>
-                <div className="w-full flex flex-col justify-between relative  h-full">
-                    {!orders?.data && !searchKey && !createdDateFilterKey ? (
-                        <div className="flex-1 flex flex-col justify-center items-center w-full ">
-                            <div className="relative h-[221px] w-[322px] ">
-                                <Image
-                                    src="/noorder.png"
-                                    fill
-                                    style={{ objectFit: "contain" }}
-                                    alt="happy"
-                                    sizes="(max-width: 768px) 100vw,
+  return (
+    <UserPageWrapper>
+      <PageHeader
+        content={t("indexPage.pageHeader.Title")}
+        showCalender={true}
+        title="My Orders | MazExpress"
+        itemPerPageHandler={itemPerPageHandler!}
+        filterByDate={filterByCreatedDate}
+        currentPageHandler={currentPageHandler}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        createdDateFilterKey={createdDateFilterKey}
+        allLiveOrders={filteredOrder as Order[]}
+        pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
+        isFilterPresent={searchKey || createdDateFilterKey}
+      />
+      <Layout>
+        <div className="w-full flex flex-col justify-between relative  h-full">
+          {!filteredOrder && !searchKey && !createdDateFilterKey ? (
+            <div className="flex-1 flex flex-col justify-center items-center w-full ">
+              <div className="relative h-[221px] w-[322px] ">
+                <Image
+                  src="/noorder.png"
+                  fill
+                  style={{ objectFit: "contain" }}
+                  alt="happy"
+                  sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 100vw,
                 100vw"
-                                    priority={true}
-                                />
-                            </div>
-                            <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
-                                {blankPageDiscription[0]}
-                                <br />
-                                <Link href={`/add-new-order`}>
-                                    <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
-                                        {" "}
-                                        {blankPageDiscription[1]}
-                                    </span>
-                                </Link>
-                            </div>
-                        </div>
-                    ) : (
-                        <>
-                            <Table
-                                rows={orders?.data as any}
-                                headings={tableHeaders}
-                                type="order"
-                            />
-                            <AddButton onClick={addNewOrderHandler} />
-                        </>
-                    )}
-                </div>
-            </Layout>
-        </UserPageWrapper>
-    );
+                  priority={true}
+                />
+              </div>
+              <div className=" w-[375px] h-[122px] text-[21px] text-[#8794AD] font-[600] leading-[33px] mt-[20px] text-center ">
+                {blankPageDiscription[0]}
+                <br />
+                <Link href={`/add-new-order`}>
+                  <span className="text-[#0057FF] font-[500] p-[5px] rounded-[4px] hover:bg-[#EDF5F9] ">
+                    {" "}
+                    {blankPageDiscription[1]}
+                  </span>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <>
+              <Table
+                rows={filteredOrder as Order[]}
+                headings={tableHeaders}
+                type="order"
+                mutateOrder={mutateOrders}
+              />
+              <AddButton onClick={addNewOrderHandler} />
+            </>
+          )}
+        </div>
+      </Layout>
+    </UserPageWrapper>
+  );
 };
 
 export default MyOrders;
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-    if (process.env.NODE_ENV === "development") {
-        await i18n?.reloadResources();
-    }
-    const session = await getServerSession(
-        ctx.req as any,
-        ctx.res as any,
-        authOptions as any
-    );
-    // const { pathname } = ctx.req.url;
+  if (process.env.NODE_ENV === "development") {
+    await i18n?.reloadResources();
+  }
+  const session = await getServerSession(
+    ctx.req as any,
+    ctx.res as any,
+    authOptions as any
+  );
+  // const { pathname } = ctx.req.url;
 
-    if (!session) {
-        return {
-            redirect: {
-                destination: `/auth/gate?mode=1`,
-                permanent: false,
-            },
-        };
-    }
-
-    if (
-        (ctx.locale == "en" ? "english" : "arabic") !=
-        ((session as any)?.user as any).lang
-    ) {
-        return {
-            redirect: {
-                destination:
-                    ((session as any)?.user as any).lang === "english"
-                        ? `${ctx.resolvedUrl}`
-                        : `/ar${ctx.resolvedUrl}`,
-                permanent: false,
-            },
-        };
-    }
-    if (((session as any)?.user as any).is_admin) {
-        return {
-            redirect: {
-                destination: `/`,
-                permanent: false,
-            },
-        };
-    }
-
+  if (!session) {
     return {
-        props: {
-            ...(await serverSideTranslations(ctx.locale, ["common"])),
-        },
+      redirect: {
+        destination: `/auth/gate?mode=1`,
+        permanent: false,
+      },
     };
+  }
+
+  if (
+    (ctx.locale == "en" ? "english" : "arabic") !=
+    ((session as any)?.user as any).lang
+  ) {
+    return {
+      redirect: {
+        destination:
+          ((session as any)?.user as any).lang === "english"
+            ? `${ctx.resolvedUrl}`
+            : `/ar${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    };
+  }
+  if (((session as any)?.user as any).is_admin) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ["common"])),
+    },
+  };
 }
