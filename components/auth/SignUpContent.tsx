@@ -430,7 +430,7 @@ const SignUpContent = (props: IProp) => {
           {" "}
           <div className="flex flex-row justify-center items-center gap-x-[5px] ">
             <input
-              type="radio"
+              type="checkbox"
               checked={terms}
               onClick={termsAndConditionHandler}
             />
