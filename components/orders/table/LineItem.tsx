@@ -12,6 +12,7 @@ import YellowRadioButton from "../../../public/yellow_svg.svg";
 import OrderOptionModal from "../modal/OrderOptionModal";
 import Link from "next/link";
 import copy from "copy-to-clipboard";
+import OrderCacelConfirmModal from "@/components/admin/modal/OrderCancelConfirmModal";
 interface IProp {
   row: Order;
   type: string;
@@ -29,6 +30,12 @@ const LineItem = (props: IProp) => {
   const { data: session, update }: { data: any; update: any } = useSession();
   const [estDelivery, setEstDelivery] = useState<string>("...");
   const [gate, setGate] = useState(false);
+  const [showOrderCancelConfirmModal, setShowOrderCancelConfirmModal] =
+    useState(false);
+
+  const toggleOrderCancelConfirmModal = () => {
+    setShowOrderCancelConfirmModal((prev) => !prev);
+  };
   //   console.log(gate);
 
   function smartToggleGateHandler() {
@@ -78,78 +85,87 @@ const LineItem = (props: IProp) => {
   };
 
   return (
-    <tr className="h-min text-[10px] sm:text-[14px] text-[#000000] font-[400] leading-[22.4px] relative">
-      <td className={`td1 cursor-pointer  relative hover:font-[700] hover:text-[15px] `} onClick={copyToClipboard}>
-        {props.row.maz_id}
-      </td>
-      <td className={`td2 text-[#35C6F4]`}>
-        <Link
-          href={props.row.store_link}
-          target="_blank"
-          className="text-[#35C6F4]"
+    <>
+      <tr className="h-min text-[10px] sm:text-[14px] text-[#000000] font-[400] leading-[22.4px] relative">
+        <td
+          className={`td1 cursor-pointer  relative hover:font-[700] hover:text-[15px] `}
+          onClick={copyToClipboard}
         >
-          {props.row.store_link}
-        </Link>
-      </td>
-      <td className={`td3 max-[1000px]:hidden `}>{props.row.reference_id}</td>
-      <td className={`td4 max-[1000px]:hidden `}>{props.row.order_weight}</td>
-      <td className={`td5`}>
-        {props.row.est_delivery ? (
-          getDateInStringFormat(props.row.est_delivery)
-        ) : (
-          <span>{"..."}</span>
-        )}
-      </td>
-      <td className={`td6 max-[1000px]:hidden  `} style={{}}>
-        <div className=" flex flex-row items-center gap-x-[5px]">
-          <span className="address_td capitalize ">
-            {props.row.address.tag}
-          </span>
-
-          {session.user?.default_address === props.row.address.id && (
-            <div className="bg-[#FF645A] rounded-[4px] text-[10px] text-[#FFFFFF] font-[500] leading-[15px] py-[5px] px-[10px] ">
-              Default
-            </div>
-          )}
-        </div>
-      </td>
-      <td className={`td7 `}>
-        <div className="h-full flex flex-row justify-start items-center gap-x-[5px] ">
-          <div className="pending__icon">
-            {orderStatusColorHandler(props.row.status)}
-          </div>
-          <span className="sm:ml-[5px] capitalize">{props.row.status}</span>
-        </div>
-      </td>
-      <td
-        className="w-[2%]"
-        // onClick={(e) => optionModalHandler(e, index)}
-      >
-        <div className="w-full h-full ">
-          <div
-            onClick={toggleGateHandler}
-            ref={trigger}
-            className="cursor-pointer relative"
+          {props.row.maz_id}
+        </td>
+        <td className={`td2 text-[#35C6F4]`}>
+          <Link
+            href={props.row.store_link}
+            target="_blank"
+            className="text-[#35C6F4]"
           >
-            <Image
-              src="/editicon.png"
-              // ref={trigger}
-              height={13}
-              width={4}
-              alt="editIcon"
-            />
-          </div>
-          {gate && (
-            <OrderOptionModal
-              // ref={modalNode}
-              row={props.row}
-              handler={smartToggleGateHandler}
-              trigger={trigger}
-            />
+            {props.row.store_link}
+          </Link>
+        </td>
+        <td className={`td3 max-[1000px]:hidden `}>{props.row.reference_id}</td>
+        <td className={`td4 max-[1000px]:hidden `}>{props.row.order_weight}</td>
+        <td className={`td5`}>
+          {props.row.est_delivery ? (
+            getDateInStringFormat(props.row.est_delivery)
+          ) : (
+            <span>{"..."}</span>
           )}
-        </div>
-      </td>
-    </tr>
+        </td>
+        <td className={`td6 max-[1000px]:hidden  `} style={{}}>
+          <div className=" flex flex-row items-center gap-x-[5px]">
+            <span className="address_td capitalize ">
+              {props.row.address.tag}
+            </span>
+
+            {session.user?.default_address === props.row.address.id && (
+              <div className="bg-[#FF645A] rounded-[4px] text-[10px] text-[#FFFFFF] font-[500] leading-[15px] py-[5px] px-[10px] ">
+                Default
+              </div>
+            )}
+          </div>
+        </td>
+        <td className={`td7 `}>
+          <div className="h-full flex flex-row justify-start items-center gap-x-[5px] ">
+            <div className="pending__icon">
+              {orderStatusColorHandler(props.row.status)}
+            </div>
+            <span className="sm:ml-[5px] capitalize">{props.row.status}</span>
+          </div>
+        </td>
+        <td
+          className="w-[2%]"
+          // onClick={(e) => optionModalHandler(e, index)}
+        >
+          <div className="w-full h-full ">
+            <div
+              onClick={toggleGateHandler}
+              ref={trigger}
+              className="cursor-pointer relative"
+            >
+              <Image
+                src="/editicon.png"
+                // ref={trigger}
+                height={13}
+                width={4}
+                alt="editIcon"
+              />
+            </div>
+            {gate && (
+              <OrderOptionModal
+                // ref={modalNode}
+                row={props.row}
+                handler={smartToggleGateHandler}
+                trigger={trigger}
+                toggle={toggleOrderCancelConfirmModal}
+              />
+            )}
+          </div>
+        </td>
+      </tr>
+      {showOrderCancelConfirmModal && (
+        <OrderCacelConfirmModal close={toggleOrderCancelConfirmModal} />
+      )}
+    </>
   );
 };
 export default LineItem;
