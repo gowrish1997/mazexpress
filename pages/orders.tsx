@@ -61,7 +61,7 @@ const MyOrders = () => {
   }, [router.locale]);
 
   useEffect(() => {
-    const filteredOrder = (orders.data as Order[]).filter((detail) => {
+    const filteredOrder = (orders?.data as Order[]).filter((detail) => {
       return detail.order_cancel != "yes";
     });
     setFilteredOrder(filteredOrder);
