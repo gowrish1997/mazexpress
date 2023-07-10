@@ -1,4 +1,3 @@
-
 import { User } from "./user.model";
 import { Order } from "./order.model";
 
@@ -24,7 +23,7 @@ export interface Address {
 
   country: string;
 
-  phone: number | null;
+  phone: number | null | string;
 
   tag: string;
 

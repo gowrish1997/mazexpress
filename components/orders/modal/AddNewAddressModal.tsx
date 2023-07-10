@@ -90,8 +90,10 @@ const AddNewAddressModal = (props: IProp) => {
     }
 
     setIsButtonDisabled(true);
+
     if (session.user) {
       let address = { ...data };
+      address.phone = address.phone.toString();
 
       delete address.default;
 
