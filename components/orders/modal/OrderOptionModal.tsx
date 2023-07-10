@@ -34,7 +34,7 @@ const OrderOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
             </li>
             <li
               className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
-              onClick={props.toggle}
+              onClick={() => props.toggle()}
             >
               <div className="cursor-pointer">
                 <span className="ml-[15px] w-full ">Cancel order</span>

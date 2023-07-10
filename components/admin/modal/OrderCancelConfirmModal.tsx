@@ -2,7 +2,7 @@ interface IProp {
   close: () => void;
 }
 
-const OrderCacelConfirmModal = (props: IProp) => {
+const OrderCancelConfirmModal = (props: IProp) => {
   const confirmClickHandler = () => {
     props.close();
   };
@@ -35,4 +35,4 @@ const OrderCacelConfirmModal = (props: IProp) => {
   );
 };
 
-export default OrderCacelConfirmModal;
+export default OrderCancelConfirmModal;

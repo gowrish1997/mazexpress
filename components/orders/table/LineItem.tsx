@@ -12,7 +12,7 @@ import YellowRadioButton from "../../../public/yellow_svg.svg";
 import OrderOptionModal from "../modal/OrderOptionModal";
 import Link from "next/link";
 import copy from "copy-to-clipboard";
-import OrderCacelConfirmModal from "@/components/admin/modal/OrderCancelConfirmModal";
+import OrderCancelConfirmModal from "@/components/admin/modal/OrderCancelConfirmModal";
 interface IProp {
   row: Order;
   type: string;
@@ -163,7 +163,7 @@ const LineItem = (props: IProp) => {
         </td>
       </tr>
       {showOrderCancelConfirmModal && (
-        <OrderCacelConfirmModal close={toggleOrderCancelConfirmModal} />
+        <OrderCancelConfirmModal close={toggleOrderCancelConfirmModal} />
       )}
     </>
   );
