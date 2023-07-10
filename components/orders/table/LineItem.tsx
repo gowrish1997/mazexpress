@@ -29,6 +29,7 @@ const LineItem = (props: IProp) => {
   });
   const { data: session, update }: { data: any; update: any } = useSession();
   const [estDelivery, setEstDelivery] = useState<string>("...");
+  const [orderStage, setOrderStage] = useState(0);
   const [gate, setGate] = useState(false);
   const [showOrderCancelConfirmModal, setShowOrderCancelConfirmModal] =
     useState(false);
@@ -72,6 +73,8 @@ const LineItem = (props: IProp) => {
       let latestUpdate = [...(tracking as Tracking[])].sort(
         (a, b) => b.stage - a.stage
       )[0];
+
+      setOrderStage(latestUpdate.stage);
       let newDate = new Date(latestUpdate?.created_on);
       newDate.setDate(newDate.getDate() + 7);
       const newDateString = getDateInStringFormat(newDate);
@@ -157,13 +160,17 @@ const LineItem = (props: IProp) => {
                 handler={smartToggleGateHandler}
                 trigger={trigger}
                 toggle={toggleOrderCancelConfirmModal}
+                show={orderStage == 0}
               />
             )}
           </div>
         </td>
       </tr>
       {showOrderCancelConfirmModal && (
-        <OrderCancelConfirmModal close={toggleOrderCancelConfirmModal} />
+        <OrderCancelConfirmModal
+          row={props.row}
+          close={toggleOrderCancelConfirmModal}
+        />
       )}
     </>
   );

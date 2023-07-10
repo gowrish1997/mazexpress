@@ -10,6 +10,7 @@ interface IProps {
   trigger: RefObject<HTMLDivElement>;
   row: Order;
   toggle?: () => void;
+  show?: boolean;
 }
 export type Ref = HTMLDivElement;
 
@@ -32,6 +33,8 @@ const OrderOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
                 <span className="ml-[15px] w-full ">Track order</span>
               </div>
             </li>
+          </Link>
+          {props.show && (
             <li
               className="hover:bg-[#EDF5F9] w-full rounded-[4px] "
               onClick={() => props.toggle()}
@@ -40,7 +43,7 @@ const OrderOptionModal = forwardRef<HTMLDivElement, IProps>((props, ref) => {
                 <span className="ml-[15px] w-full ">Cancel order</span>
               </div>
             </li>
-          </Link>
+          )}
         </ul>
       </div>
     </ClickOutside>

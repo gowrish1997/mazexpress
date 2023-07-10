@@ -1,9 +1,47 @@
+import fetchJson from "@/lib/fetchServer";
+import { createToast } from "@/lib/toasts";
+import { Order } from "@/models/order.model";
+import { useRouter } from "next/router";
+
 interface IProp {
   close: () => void;
+  row: Order;
 }
 
 const OrderCancelConfirmModal = (props: IProp) => {
-  const confirmClickHandler = () => {
+  const router = useRouter();
+  const confirmClickHandler = async () => {
+    try {
+      const addressResult = await fetchJson(
+        `/api/orders/cancel/${props.row.maz_id}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            order_cancel: "yes",
+          }),
+        }
+      );
+
+      if (addressResult.ok) {
+        // set default if checked
+
+        createToast({
+          type: "success",
+          message: "Your address order was cancelled",
+          title: "Success",
+          timeOut: 1000,
+        });
+      }
+    } catch (error) {
+      createToast({
+        type: "error",
+        message: "Your address edit failed. contact admin for help.",
+        title: "Error",
+        timeOut: 1000,
+      });
+    }
+    router.reload();
     props.close();
   };
   return (
