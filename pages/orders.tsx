@@ -27,7 +27,6 @@ const MyOrders = () => {
   const [itemsPerPage, setItemPerPage] = useState<number>(25);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [filteredOrder, setFilteredOrder] = useState<Order[]>([]);
 
   const [createdDateFilterKey, setCreatedDateFilterKey] = useState<
     Date | string
@@ -59,13 +58,6 @@ const MyOrders = () => {
     document.querySelector("html")?.setAttribute("dir", dir);
     document.querySelector("html")?.setAttribute("lang", lang);
   }, [router.locale]);
-
-  useEffect(() => {
-    const filteredOrder = (orders?.data as Order[])?.filter?.((detail) => {
-      return detail.order_cancel != "yes";
-    });
-    setFilteredOrder(filteredOrder);
-  }, [orders]);
 
   const addNewOrderHandler = () => {
     router.push(`/add-new-order`);
@@ -102,13 +94,13 @@ const MyOrders = () => {
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         createdDateFilterKey={createdDateFilterKey}
-        allLiveOrders={filteredOrder as Order[]}
+        allLiveOrders={orders?.data as Order[]}
         pageCount={Math.ceil((orders?.count as number) / itemsPerPage)}
         isFilterPresent={searchKey || createdDateFilterKey}
       />
       <Layout>
         <div className="w-full flex flex-col justify-between relative  h-full">
-          {!filteredOrder && !searchKey && !createdDateFilterKey ? (
+          {!orders?.data && !searchKey && !createdDateFilterKey ? (
             <div className="flex-1 flex flex-col justify-center items-center w-full ">
               <div className="relative h-[221px] w-[322px] ">
                 <Image
@@ -136,7 +128,7 @@ const MyOrders = () => {
           ) : (
             <>
               <Table
-                rows={filteredOrder as Order[]}
+                rows={orders?.data as Order[]}
                 headings={tableHeaders}
                 type="order"
                 mutateOrder={mutateOrders}
