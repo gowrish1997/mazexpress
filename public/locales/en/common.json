@@ -231,7 +231,7 @@
             "placeholder": "City",
             "label": "Delivery City (optional)"
           },
-          { "placeholder": "", "label": "Dimensions (optional)" },
+          { "placeholder": "", "label": "Dimensions (optional) in cm" },
           { "placeholder": "", "label": "Weight*" }
         ],
         "Errors": [

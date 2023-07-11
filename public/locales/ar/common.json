@@ -225,7 +225,7 @@
             "placeholder": "مدينة",
             "label": "مدينة التوصيل (اختياري)"
           },
-          { "placeholder": "", "label": " الأبعاد (اختياري)" },
+          { "placeholder": "", "label": " الأبعاد (اختياري) بالسنتيمتر" },
           { "placeholder": "", "label": "وزن*" }
         ],
         "Errors": [
