@@ -128,7 +128,7 @@ export const userMailBody = (
     <mj-section>
     <mj-column>
     <mj-text  align="left" mj-class="footer_text">
-    Questions or faq? Contact us at faq@mazexpress.com. If you'd rather not receive this kind of email, Don’t want any more emails from Maz? Unsubscribe.
+    Questions or faq? Contact us at info@mazexpress.com.ly If you'd rather not receive this kind of email, Don’t want any more emails from Maz? Unsubscribe.
     </mj-text>
     <mj-text  align="left" mj-class="footer_text" padding-top="20px">
     100 Smith Street, Melbourne VIC 3000

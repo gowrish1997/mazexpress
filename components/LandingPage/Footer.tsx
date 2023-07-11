@@ -106,7 +106,7 @@ const Footer = React.forwardRef<HTMLDivElement, Iprop>((props, ref) => {
                 <li className="cursor-pointer" onClick={footerShippingHandler}>
                   {footerLeftSide[1]}
                 </li>
-                <li className="">info@mazexpress</li>
+                <li className="">info@mazexpress.com.ly</li>
               </ul>
               <ul className="space-y-[15px]">
                 <li
