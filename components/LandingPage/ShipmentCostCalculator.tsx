@@ -13,6 +13,7 @@ import ReactHookFormInput from "../common/ReactHookFormInput";
 import Multiply from "../../public/multiply.png";
 import fetchJson from "@/lib/fetchServer";
 import VerticalPlane from "@/public/VerticalPlane.png";
+const shipDimensions = ["length", "width", "height"];
 
 const schema = yup
   .object({
@@ -107,9 +108,10 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
       if (isButtonDisabled) {
         return; // Exit early if the button is already disabled
       }
-
+      console.log(data);
       setIsButtonDisabled(true);
       if (data.length && (!data.width || !data.height)) {
+        console.log("lenght is ther");
         if (!data.width) {
           setError("width", {
             type: "custom",
@@ -251,7 +253,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                   {inputField[2].label}
                 </label>
                 <div className="flex-type2">
-                  {dimensions.map((data, index) => {
+                  {shipDimensions.map((data, index) => {
                     return (
                       <div key={index}>
                         <div className="flex-type1">
@@ -262,7 +264,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                           >
                             <input
                               type="number"
-                              placeholder={data}
+                              placeholder={dimensions[index]}
                               {...register(data)}
                               className="w-full h-full px-[5px] rounded-[5px] focus:outline-none"
                               name={data}
