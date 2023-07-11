@@ -100,6 +100,7 @@ const EditUserAddressModal = (props: IProp) => {
     setIsButtonDisabled(true);
 
     let address = { ...data };
+    address.phone = address.phone.toString();
     delete address.default;
 
     // update address
