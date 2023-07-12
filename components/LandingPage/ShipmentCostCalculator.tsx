@@ -92,8 +92,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
       formState: { errors },
     } = useForm<any>({
       defaultValues: {
-        weight: 0.5,
-        // address_1_addresses: "V5RH+HVQ",
+          // address_1_addresses: "V5RH+HVQ",
         // address_2_addresses: "Amr Bin al A'ss St",
         // city_addresses: "Tripoli",
         // country_addresses: "Libya",
@@ -299,6 +298,7 @@ const ShipmentCostCalculator = React.forwardRef<HTMLDivElement>(
                       onChange={onChange}
                       error={errors.weight && (fieldErrors[2] as string)}
                       className="rounded-l-[4px] rounded-r-none"
+                      placeholder={inputField[3].label}
                     />
                   )}
                 />

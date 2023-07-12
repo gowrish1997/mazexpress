@@ -232,7 +232,7 @@
             "label": "Delivery City (optional)"
           },
           { "placeholder": "", "label": "Dimensions (optional) in cm" },
-          { "placeholder": "", "label": "Weight*" }
+          { "placeholder": "", "label": "Weight" }
         ],
         "Errors": [
           "Warehouse Address is a required field",
