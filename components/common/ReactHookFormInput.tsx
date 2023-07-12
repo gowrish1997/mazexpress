@@ -61,7 +61,7 @@ const ReactHookFormInput = (props: IProp) => {
           disabled={props.disabled}
           autoComplete={props.autoComplete ? props.autoComplete : "on"}
           onChange={(e) => props.onChange?.(e.target.value)}
-          placeholder={props.label}
+          placeholder={props.label == "Weight" ? props.label : ""}
         />
         {props.icon?.isEnabled ? (
           <Image
