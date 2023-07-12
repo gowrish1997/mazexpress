@@ -123,6 +123,7 @@ const ShippingCost = () => {
             <input
               type="number"
               name="per_kg"
+              step="any"
               {...register("per_kg")}
               placeholder="cost per KG"
               className="focus:outline-none border-b-[1px]  border-[#e3e3e3] ml-[10px] text-center "
@@ -142,6 +143,7 @@ const ShippingCost = () => {
               name="factor"
               {...register("factor")}
               type="number"
+              step="any"
               className="focus:outline-none border-b-[1px]  border-[#e3e3e3] ml-[10px] text-center "
             />
           </div>

@@ -57,7 +57,7 @@ const ReactHookFormInput = (props: IProp) => {
           value={props.value}
           className="w-full h-full px-[5px] rounded-[5px] focus:outline-none text-[14px] text-[#2B2B2B] font-[600] leading-[19px] placeholder:text-[#BBC2CF] placeholder:text-[15px] placeholder:font-[500] placeholder:leading-[19px] "
           name={props.name}
-          step="0.1"
+          step="any"
           disabled={props.disabled}
           autoComplete={props.autoComplete ? props.autoComplete : "on"}
           onChange={(e) => props.onChange?.(e.target.value)}
