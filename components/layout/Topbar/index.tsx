@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { SyntheticEvent, useCallback, useRef, useState } from "react";
 import SidebarModal from "../sidebar/SidebarModal";
+import Cross from "@/public/cross.png";
 
 const Topbar = () => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const Topbar = () => {
   });
   const inputRef = useRef<HTMLInputElement>();
   // console.log(user)
-  const { setSearchKey } = React.useContext(SearchKeyContext) as any;
+  const { searchKey, setSearchKey } = React.useContext(SearchKeyContext) as any;
   const { data: session, update }: { data: any; update: any } = useSession();
 
   const { notifications, notificationsIsLoading, mutateNotifications } =
@@ -55,6 +56,11 @@ const Topbar = () => {
   const searchKeyOnchangeHandler = (e) => {
     debouncedFilter(e.target.value);
   };
+
+  const deleteSearcgKeyHandler = () => {
+    setSearchKey("");
+  };
+
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
   const toggleLogoutConfirmModal = () => {
@@ -104,16 +110,28 @@ const Topbar = () => {
               locale == "en" ? "right-[10px]" : "left-[10px]"
             } top-[15px] cursor-pointer`}
           >
-            <Image
-              src={searchIcon}
-              fill
-              style={{ objectFit: "contain" }}
-              alt="search"
-              onClick={searchKeyOnchangeHandler}
-              sizes="(max-width: 768px) 100vw,
+            {searchKey ? (
+              <Image
+                src={Cross}
+                fill
+                style={{ objectFit: "contain" }}
+                alt="search"
+                onClick={deleteSearcgKeyHandler}
+                sizes="(max-width: 768px) 100vw,
                   (max-width: 1200px) 100vw,
                   100vw"
-            />
+              />
+            ) : (
+              <Image
+                src={searchIcon}
+                fill
+                style={{ objectFit: "contain" }}
+                alt="search"
+                sizes="(max-width: 768px) 100vw,
+                (max-width: 1200px) 100vw,
+                100vw"
+              />
+            )}
           </div>
         </div>
         <div className="w-full md:flex-1 flex flex-row justify-between items-center ">
