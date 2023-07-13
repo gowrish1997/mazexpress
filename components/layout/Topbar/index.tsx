@@ -59,6 +59,7 @@ const Topbar = () => {
 
   const deleteSearcgKeyHandler = () => {
     setSearchKey("");
+    inputRef.current.value = "";
   };
 
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
@@ -110,7 +111,7 @@ const Topbar = () => {
               locale == "en" ? "right-[10px]" : "left-[10px]"
             } top-[15px] cursor-pointer`}
           >
-            {searchKey ? (
+            {inputRef.current.value ? (
               <Image
                 src={Cross}
                 fill
