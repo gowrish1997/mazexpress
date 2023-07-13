@@ -111,7 +111,7 @@ const Topbar = () => {
               locale == "en" ? "right-[10px]" : "left-[10px]"
             } top-[15px] cursor-pointer`}
           >
-            {inputRef.current.value ? (
+            {inputRef?.current?.value ? (
               <Image
                 src={Cross}
                 fill
