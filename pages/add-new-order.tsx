@@ -380,6 +380,7 @@ const AddNewOrder = () => {
 
 export default AddNewOrder;
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  console.log("ctx", ctx);
   if (process.env.NODE_ENV === "development") {
     await i18n?.reloadResources();
   }
